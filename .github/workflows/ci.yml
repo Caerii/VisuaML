@@ -14,12 +14,16 @@ jobs:
           cache-dependency-path: |
             pnpm-workspace.yaml
             visuaml-client/pnpm-lock.yaml
-      - name: List files in visuaml-client
+      - name: List files in visuaml-client (for debugging)
         run: ls -la visuaml-client
-      - run: pnpm --dir visuaml-client install --frozen-lockfile
-      - run: pnpm --dir visuaml-client run lint
-      - run: pnpm --dir visuaml-client exec prettier --check .
-      - run: pnpm --dir visuaml-client run test -- --run
+      - name: Install dependencies (workspace root)
+        run: pnpm install --frozen-lockfile
+      - name: Lint visuaml-client
+        run: pnpm --filter visuaml-client run lint
+      - name: Check Prettier formatting in visuaml-client
+        run: pnpm --dir visuaml-client exec prettier --check .
+      - name: Test visuaml-client
+        run: pnpm --filter visuaml-client run test -- --run
   python:
     runs-on: ubuntu-latest
     steps:
