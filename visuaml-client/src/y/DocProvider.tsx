@@ -1,11 +1,11 @@
-import { createContext, useEffect, useContext, useState } from "react";
-import * as Y from "yjs";
-import { WebsocketProvider } from "y-websocket";
+import { createContext, useEffect, useContext, useState } from 'react';
+import * as Y from 'yjs';
+import { WebsocketProvider } from 'y-websocket';
 import { IndexeddbPersistence } from 'y-indexeddb'; // Import IndexeddbPersistence
-import { useUser } from "@clerk/clerk-react";
-import { stringToHSL } from "../lib/colors";
+import { useUser } from '@clerk/clerk-react';
+import { stringToHSL } from '../lib/colors';
 // Import the specific type for cursor data payload from usePresence.ts
-import type { CursorBroadcastData } from "./usePresence"; // Import for typing local state
+import type { CursorBroadcastData } from './usePresence'; // Import for typing local state
 
 export const ydoc = new Y.Doc();
 
@@ -13,7 +13,7 @@ export const ydoc = new Y.Doc();
 // Ensure this is only created once per ydoc instance.
 // The room name should match the one used by WebsocketProvider for consistency if needed,
 // or be unique if you want separate local persistence unrelated to the websocket room name.
-const persistence = new IndexeddbPersistence("visuaml-local-room", ydoc);
+const persistence = new IndexeddbPersistence('visuaml-local-room', ydoc);
 
 persistence.on('synced', (isSynced: boolean) => {
   console.log('IndexedDB persistence synced:', isSynced);
@@ -23,14 +23,14 @@ persistence.on('synced', (isSynced: boolean) => {
 interface YContextValue {
   ydoc: Y.Doc;
   provider: WebsocketProvider | null;
-  awareness: WebsocketProvider['awareness'] | null; 
+  awareness: WebsocketProvider['awareness'] | null;
 }
 
 // Initialize context with ydoc and null for provider/awareness initially
-const YContext = createContext<YContextValue>({ 
+const YContext = createContext<YContextValue>({
   ydoc,
   provider: null,
-  awareness: null
+  awareness: null,
 });
 
 // For typing the local awareness state
@@ -46,12 +46,12 @@ export const YDocProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     // local dev ws on :1234 – we'll spin it up next commit
-    const wsProvider = new WebsocketProvider("ws://localhost:1234", "visuaml-room", ydoc);
+    const wsProvider = new WebsocketProvider('ws://localhost:1234', 'visuaml-room', ydoc);
     setProviderState(wsProvider);
-    
+
     // Check if persistence is already established and synced
     if (persistence.synced) {
-      console.log("IndexedDB already synced upon wsProvider creation.");
+      console.log('IndexedDB already synced upon wsProvider creation.');
     }
 
     return () => {
@@ -67,35 +67,39 @@ export const YDocProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (isSignedIn && user && providerState && providerState.awareness) {
       const userColor = stringToHSL(user.id);
-      const userName = user.fullName || user.primaryEmailAddress?.emailAddress || "Anonymous";
-      
-      providerState.awareness.setLocalStateField("user", {
+      const userName = user.fullName || user.primaryEmailAddress?.emailAddress || 'Anonymous';
+
+      providerState.awareness.setLocalStateField('user', {
         id: user.id,
         name: userName,
         color: userColor,
       });
 
-      const localAwarenessState = providerState.awareness.getLocalState() as LocalClientAwarenessState | undefined;
+      const localAwarenessState = providerState.awareness.getLocalState() as
+        | LocalClientAwarenessState
+        | undefined;
       const currentCursorData = localAwarenessState?.cursor;
 
       if (currentCursorData) {
-        providerState.awareness.setLocalStateField("cursor", {
+        providerState.awareness.setLocalStateField('cursor', {
           ...currentCursorData,
           name: userName,
-          color: userColor, 
+          color: userColor,
         });
       }
     } else if (providerState && providerState.awareness) {
       // Not signed in or user cleared, remove user field from awareness
-      providerState.awareness.setLocalStateField("user", null);
+      providerState.awareness.setLocalStateField('user', null);
       // Optionally, reset cursor name/color to defaults if user signs out
-      const localAwarenessState = providerState.awareness.getLocalState() as LocalClientAwarenessState | undefined;
+      const localAwarenessState = providerState.awareness.getLocalState() as
+        | LocalClientAwarenessState
+        | undefined;
       const currentCursorData = localAwarenessState?.cursor;
       if (currentCursorData) {
-         providerState.awareness.setLocalStateField("cursor", {
+        providerState.awareness.setLocalStateField('cursor', {
           ...currentCursorData,
-          name: "Guest " + Math.floor(Math.random() * 10000), // Ensure unique enough guest name
-          color: stringToHSL("guest_" + ydoc.clientID), // Consistent guest color per clientID
+          name: 'Guest ' + Math.floor(Math.random() * 10000), // Ensure unique enough guest name
+          color: stringToHSL('guest_' + ydoc.clientID), // Consistent guest color per clientID
         });
       }
     }
@@ -112,4 +116,4 @@ export const YDocProvider: React.FC<{ children: React.ReactNode }> = ({ children
 };
 
 // useYDoc now returns the full context value
-export const useYDoc = (): YContextValue => useContext(YContext); 
+export const useYDoc = (): YContextValue => useContext(YContext);

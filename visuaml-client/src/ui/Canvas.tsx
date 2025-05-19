@@ -6,12 +6,12 @@ import {
   ReactFlowProvider,
   applyNodeChanges,
   applyEdgeChanges,
-} from "@xyflow/react";
-import type { Connection, Edge, Node, NodeChange, EdgeChange } from "@xyflow/react";
-import "@xyflow/react/dist/style.css";
-import { useSyncedGraph } from "../y/useSyncedGraph";
-import { useYDoc } from "../y/DocProvider";
-import { useRemoteCursors, type RenderableCursor } from "../y/usePresence";
+} from '@xyflow/react';
+import type { Connection, Edge, Node, NodeChange, EdgeChange } from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
+import { useSyncedGraph } from '../y/useSyncedGraph';
+import { useYDoc } from '../y/DocProvider';
+import { useRemoteCursors, type RenderableCursor } from '../y/usePresence';
 import { useCallback, useRef, useEffect } from 'react';
 import TransformerNode from './nodes/TransformerNode'; // Import custom node
 
@@ -25,7 +25,7 @@ export const Canvas: React.FC = () => {
   const { provider } = useYDoc();
   const remoteCursors = useRemoteCursors();
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  
+
   // Throttling for mouse move updates
   const animationFrameId = useRef<number | null>(null);
   const lastSentPosition = useRef<{ x: number; y: number } | null>(null);
@@ -43,24 +43,31 @@ export const Canvas: React.FC = () => {
     [edges, setEdges],
   );
 
-  const handleMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    if (!provider || !provider.awareness || !reactFlowWrapper.current) return;
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (!provider || !provider.awareness || !reactFlowWrapper.current) return;
 
-    const bounds = reactFlowWrapper.current.getBoundingClientRect();
-    const x = event.clientX - bounds.left;
-    const y = event.clientY - bounds.top;
+      const bounds = reactFlowWrapper.current.getBoundingClientRect();
+      const x = event.clientX - bounds.left;
+      const y = event.clientY - bounds.top;
 
-    if (animationFrameId.current) {
-      cancelAnimationFrame(animationFrameId.current);
-    }
-
-    animationFrameId.current = requestAnimationFrame(() => {
-      if (!lastSentPosition.current || lastSentPosition.current.x !== x || lastSentPosition.current.y !== y) {
-        provider.awareness.setLocalStateField("cursor", { x, y });
-        lastSentPosition.current = { x, y };
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
       }
-    });
-  }, [provider]);
+
+      animationFrameId.current = requestAnimationFrame(() => {
+        if (
+          !lastSentPosition.current ||
+          lastSentPosition.current.x !== x ||
+          lastSentPosition.current.y !== y
+        ) {
+          provider.awareness.setLocalStateField('cursor', { x, y });
+          lastSentPosition.current = { x, y };
+        }
+      });
+    },
+    [provider],
+  );
 
   // Cleanup animation frame on unmount
   useEffect(() => {
@@ -73,9 +80,9 @@ export const Canvas: React.FC = () => {
 
   return (
     <ReactFlowProvider>
-      <div 
-        className="w-screen h-screen relative" 
-        ref={reactFlowWrapper} 
+      <div
+        className="w-screen h-screen relative"
+        ref={reactFlowWrapper}
         onMouseMove={handleMouseMove}
       >
         <ReactFlow
@@ -107,7 +114,7 @@ export const Canvas: React.FC = () => {
               zIndex: 100, // Ensure cursors are above React Flow elements but below UI controls if any
             }}
             // Display name on hover or as a small label next to cursor
-            title={`${cursor.name} (User: ${cursor.userID || 'N/A'}, Client: ${cursor.clientID})`} 
+            title={`${cursor.name} (User: ${cursor.userID || 'N/A'}, Client: ${cursor.clientID})`}
           >
             {/* Optional: render name next to cursor dot */}
             {/* <span style={{ marginLeft: '10px', fontSize: '10px', color: cursor.color }}>{cursor.name}</span> */}
@@ -116,4 +123,4 @@ export const Canvas: React.FC = () => {
       </div>
     </ReactFlowProvider>
   );
-}; 
+};

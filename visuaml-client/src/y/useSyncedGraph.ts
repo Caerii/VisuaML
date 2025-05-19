@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
-import * as Y from "yjs";
-import { useYDoc } from "./DocProvider";
-import type { Edge, Node } from "@xyflow/react";
+import { useEffect, useState } from 'react';
+import * as Y from 'yjs';
+import { useYDoc } from './DocProvider';
+import type { Edge, Node } from '@xyflow/react';
 
 /** Hook returns React-Flow-nodes/edges arrays that stay in lock-step
     with Yjs Y.Array<Y.Map> documents called 'nodes' and 'edges'.      */
 export const useSyncedGraph = (): [
-  Node[],  (nds: Node[])  => void,
-  Edge[],  (eds: Edge[])  => void
+  Node[],
+  (nds: Node[]) => void,
+  Edge[],
+  (eds: Edge[]) => void,
 ] => {
   const { ydoc } = useYDoc();
-  const yNodes = ydoc.getArray<Y.Map<unknown>>("nodes");
-  const yEdges = ydoc.getArray<Y.Map<unknown>>("edges");
+  const yNodes = ydoc.getArray<Y.Map<unknown>>('nodes');
+  const yEdges = ydoc.getArray<Y.Map<unknown>>('edges');
 
   const mapNodeToRF = (ymap: Y.Map<unknown>) => ymap.toJSON() as unknown as Node;
   const mapEdgeToRF = (ymap: Y.Map<unknown>) => ymap.toJSON() as unknown as Edge;
@@ -58,11 +60,11 @@ export const useSyncedGraph = (): [
 
 /** Hook returns only the action functions to commit nodes/edges to Yjs. */
 export const useSyncedGraphActions = () => {
-  const { ydoc } = useYDoc(); 
+  const { ydoc } = useYDoc();
   // We need to get yNodes and yEdges again, or pass ydoc around more directly.
   // For consistency with how commitNodes/commitEdges are defined above, let's re-get them.
-  const yNodesArray = ydoc.getArray<Y.Map<unknown>>("nodes");
-  const yEdgesArray = ydoc.getArray<Y.Map<unknown>>("edges");
+  const yNodesArray = ydoc.getArray<Y.Map<unknown>>('nodes');
+  const yEdgesArray = ydoc.getArray<Y.Map<unknown>>('edges');
 
   const commitNodes = (nds: Node[]) => {
     ydoc.transact(() => {
@@ -83,4 +85,4 @@ export const useSyncedGraphActions = () => {
     });
   };
   return { commitNodes, commitEdges };
-}; 
+};

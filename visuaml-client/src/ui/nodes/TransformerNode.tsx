@@ -23,7 +23,7 @@ const TransformerNode: React.FC<RFNodeProps> = ({ data, selected, type }) => {
   const subtext = nodeData.name || nodeData.target;
 
   return (
-    <div 
+    <div
       style={{
         background: nodeColor,
         border: selected ? '2px solid #333' : '1px solid #888',
@@ -45,4 +45,4 @@ const TransformerNode: React.FC<RFNodeProps> = ({ data, selected, type }) => {
   );
 };
 
-export default TransformerNode; 
+export default TransformerNode;

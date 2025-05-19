@@ -13,7 +13,7 @@ interface TestNode {
 
 describe('TransformerNode', () => {
   it('renders without crashing', () => {
-    const node: TestNode = { data:{ layerType:'Linear', name:'fc1', color:'#fff' } };
+    const node: TestNode = { data: { layerType: 'Linear', name: 'fc1', color: '#fff' } };
     expect(() => TransformerNode(node)).not.toThrow();
   });
-}); 
+});

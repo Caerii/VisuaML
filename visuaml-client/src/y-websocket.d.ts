@@ -13,23 +13,26 @@ declare module 'y-websocket' {
         connect?: boolean;
         maxBackoffTime?: number;
         disableBc?: boolean;
-      }
+      },
     );
-    
-    on(event: 'status', callback: (status: { status: 'connected' | 'disconnected' | 'connecting' }) => void): void;
+
+    on(
+      event: 'status',
+      callback: (status: { status: 'connected' | 'disconnected' | 'connecting' }) => void,
+    ): void;
     on(event: 'synced', callback: (isSynced: boolean) => void): void;
-    on(event: 'disconnect', callback: (event: { reason: string, code: number }) => void): void;
+    on(event: 'disconnect', callback: (event: { reason: string; code: number }) => void): void;
     on(event: string, callback: (...args: unknown[]) => void): void;
 
     off(event: string, callback: (...args: unknown[]) => void): void;
     destroy(): void;
     connect(): void;
     disconnect(): void;
-    
+
     public readonly awareness: Y.Awareness;
     public readonly bcconnected: boolean;
     public readonly synced: boolean;
     public readonly wsconnected: boolean;
     public readonly wsconnecting: boolean;
   }
-} 
+}

@@ -1,11 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { YDocProvider } from "./y/DocProvider";    // (create shortly)
-import { Canvas } from "./ui/Canvas";
-import TopBar from "./ui/TopBar";
-import { ClerkProvider } from "@clerk/clerk-react";
-import { Toaster } from "sonner";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { YDocProvider } from './y/DocProvider'; // (create shortly)
+import { Canvas } from './ui/Canvas';
+import TopBar from './ui/TopBar';
+import { ClerkProvider } from '@clerk/clerk-react';
+import { Toaster } from 'sonner';
+import './index.css';
 
 // IMPORTANT: Create a .env.local file in the root of your visuaml-client project
 // and add your Clerk Publishable Key:
@@ -14,10 +14,12 @@ import "./index.css";
 const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!clerkPublishableKey) {
-  throw new Error("Missing Clerk Publishable Key. Please set VITE_CLERK_PUBLISHABLE_KEY in .env.local");
+  throw new Error(
+    'Missing Clerk Publishable Key. Please set VITE_CLERK_PUBLISHABLE_KEY in .env.local',
+  );
 }
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={clerkPublishableKey}>
       <YDocProvider>

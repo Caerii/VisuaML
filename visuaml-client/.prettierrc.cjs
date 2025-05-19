@@ -1,1 +1,1 @@
-module.exports = { singleQuote: true, semi: true, printWidth: 100 }; 
+module.exports = { singleQuote: true, semi: true, printWidth: 100 };

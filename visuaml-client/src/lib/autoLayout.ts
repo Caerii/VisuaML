@@ -1,5 +1,5 @@
-import dagre from "dagre";
-import { type Node, type Edge } from "@xyflow/react"; // Use type imports
+import dagre from 'dagre';
+import { type Node, type Edge } from '@xyflow/react'; // Use type imports
 
 interface LayoutOptions {
   rankdir?: 'TB' | 'BT' | 'LR' | 'RL'; // Top-to-bottom, Bottom-to-top, Left-to-right, Right-to-left
@@ -15,16 +15,16 @@ const DEFAULT_NODE_WIDTH = 180;
 const DEFAULT_NODE_HEIGHT = 60;
 
 export const autoLayout = (
-  nodes: Node[], 
-  edges: Edge[], 
-  options?: LayoutOptions
-): { nodes: Node[], edges: Edge[] } => {
+  nodes: Node[],
+  edges: Edge[],
+  options?: LayoutOptions,
+): { nodes: Node[]; edges: Edge[] } => {
   const g = new dagre.graphlib.Graph();
-  
+
   // Set layout options
-  const layoutOptions = { rankdir: "LR", ...options }; // Default to LR as per playbook
+  const layoutOptions = { rankdir: 'LR', ...options }; // Default to LR as per playbook
   g.setGraph(layoutOptions);
-  
+
   // Default to assigning a new object for edge labels, if not present
   g.setDefaultEdgeLabel(() => ({}));
 
@@ -46,7 +46,7 @@ export const autoLayout = (
     // Adjust position to be center of the node, React Flow uses top-left
     const x = nodeWithPosition.x - (node.width ?? DEFAULT_NODE_WIDTH) / 2;
     const y = nodeWithPosition.y - (node.height ?? DEFAULT_NODE_HEIGHT) / 2;
-    
+
     return {
       ...node,
       position: { x, y },
@@ -57,4 +57,4 @@ export const autoLayout = (
   });
 
   return { nodes: laidOutNodes, edges };
-}; 
+};

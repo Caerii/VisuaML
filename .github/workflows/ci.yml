@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
-        with: { version: 8 }
+        with: { version: 10 }
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -21,7 +21,7 @@ jobs:
       - name: List files in visuaml-client (for debugging)
         run: ls -la visuaml-client
       - name: Install dependencies (workspace root)
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Lint visuaml-client
         run: pnpm --filter visuaml-client run lint
       - name: Check Prettier formatting in visuaml-client

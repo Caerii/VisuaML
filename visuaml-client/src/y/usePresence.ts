@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useYDoc } from "./DocProvider";
+import { useEffect, useState } from 'react';
+import { useYDoc } from './DocProvider';
 
 // Define the structure of the cursor data broadcasted
 export interface CursorBroadcastData {
@@ -31,7 +31,7 @@ export interface RenderableCursor {
 interface ClientAwarenessState {
   cursor?: CursorBroadcastData;
   user?: UserAwarenessData;
-  [key: string]: unknown; 
+  [key: string]: unknown;
 }
 
 export const useRemoteCursors = (): RenderableCursor[] => {
@@ -47,7 +47,7 @@ export const useRemoteCursors = (): RenderableCursor[] => {
     const onChange = () => {
       const localClientID = ydoc.clientID;
       const newCursors: RenderableCursor[] = [];
-      
+
       provider.awareness.getStates().forEach((state: ClientAwarenessState, clientID: number) => {
         if (clientID !== localClientID && state.cursor) {
           const cursorData = state.cursor;
@@ -57,8 +57,8 @@ export const useRemoteCursors = (): RenderableCursor[] => {
             x: cursorData.x,
             y: cursorData.y,
             // Prioritize user field for name and color, fallback to cursor field
-            name: userData?.name || cursorData.name || "Anonymous",
-            color: userData?.color || cursorData.color || "#888888", // Default fallback color
+            name: userData?.name || cursorData.name || 'Anonymous',
+            color: userData?.color || cursorData.color || '#888888', // Default fallback color
             clientID,
             userID: userData?.id,
           });
@@ -67,15 +67,15 @@ export const useRemoteCursors = (): RenderableCursor[] => {
       setCursors(newCursors);
     };
 
-    provider.awareness.on("change", onChange);
+    provider.awareness.on('change', onChange);
     onChange();
 
     return () => {
       if (provider && provider.awareness) {
-        provider.awareness.off("change", onChange);
+        provider.awareness.off('change', onChange);
       }
     };
   }, [provider, provider?.awareness, ydoc.clientID]);
 
   return cursors;
-}; 
+};
