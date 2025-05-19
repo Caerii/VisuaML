@@ -3,12 +3,15 @@ on: [push, pull_request]
 jobs:
   node:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./visuaml-client
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with: { version: 8 }
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: 'pnpm' }
+        with: { node-version: 20, cache: 'pnpm', cache-dependency-path: visuaml-client/pnpm-lock.yaml }
       - run: pnpm install --frozen-lockfile
       - run: pnpm run lint
       - run: pnpm exec prettier --check .
@@ -20,5 +23,5 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install ruff pytest
-      - run: ruff check backend
-      - run: pytest -q 
+      - run: ruff check visuaml-client/backend
+      - run: pytest -q visuaml-client/backend/tests 
