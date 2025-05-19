@@ -14,6 +14,8 @@ jobs:
           cache-dependency-path: |
             pnpm-workspace.yaml
             visuaml-client/pnpm-lock.yaml
+      - name: List files in visuaml-client
+        run: ls -la visuaml-client
       - run: pnpm --dir visuaml-client install --frozen-lockfile
       - run: pnpm --dir visuaml-client run lint
       - run: pnpm --dir visuaml-client exec prettier --check .
