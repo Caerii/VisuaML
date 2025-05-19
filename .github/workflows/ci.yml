@@ -13,7 +13,9 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: |
             pnpm-workspace.yaml
-            visuaml-client/pnpm-lock.yaml
+            pnpm-lock.yaml
+      - name: List files in root (for debugging)
+        run: ls -la
       - name: List files in visuaml-client (for debugging)
         run: ls -la visuaml-client
       - name: Install dependencies (workspace root)
