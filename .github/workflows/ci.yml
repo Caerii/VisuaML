@@ -3,19 +3,19 @@ on: [push, pull_request]
 jobs:
   node:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./visuaml-client
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with: { version: 8 }
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: 'pnpm' }
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run lint
-      - run: pnpm exec prettier --check .
-      - run: pnpm run test -- --run
+        with:
+          node-version: 20
+          cache: 'pnpm'
+          cache-dependency-path: visuaml-client/pnpm-lock.yaml
+      - run: pnpm --dir visuaml-client install --frozen-lockfile
+      - run: pnpm --dir visuaml-client run lint
+      - run: pnpm --dir visuaml-client exec prettier --check .
+      - run: pnpm --dir visuaml-client run test -- --run
   python:
     runs-on: ubuntu-latest
     steps:
