@@ -1,5 +1,9 @@
-import torch, json, importlib, sys
+"""Exports a PyTorch FX graph to a JSON format for VisuaML."""
+import json
+import importlib
 import os
+import sys
+
 from torch.fx import symbolic_trace
 
 # Add the current working directory (which execa sets to projectRoot) to sys.path
@@ -7,10 +11,6 @@ from torch.fx import symbolic_trace
 current_working_directory = os.getcwd()
 if current_working_directory not in sys.path:
     sys.path.insert(0, current_working_directory)
-
-# For debugging, print sys.path and cwd (can be enabled if issues persist)
-# print(f"DEBUG: fx_export.py - sys.path: {sys.path}", file=sys.stderr)
-# print(f"DEBUG: fx_export.py - cwd: {current_working_directory}", file=sys.stderr)
 
 # Check if a module path is provided
 if len(sys.argv) < 2:
@@ -22,9 +22,8 @@ mod_path_argument = sys.argv[1]  # e.g. models.MyTinyGPT
 try:
     # The module path to import is the full path provided by the user.
     # The class name is the last component of this path.
-    module_to_import_str = mod_path_argument 
+    module_to_import_str = mod_path_argument
     class_name_str = mod_path_argument.split(".")[-1]
-    
     # print(f"DEBUG: Attempting to import module: {module_to_import_str}", file=sys.stderr)
     # print(f"DEBUG: Attempting to get class: {class_name_str}", file=sys.stderr)
 
@@ -34,7 +33,8 @@ try:
 except ImportError:
     # This error means the entire module path (e.g., models.MyTinyGPT) could not be found/imported.
     # This could be due to missing __init__.py in 'models' or 'MyTinyGPT.py' not found in 'models'.
-    print(f"Error: Could not import module '{module_to_import_str}'. Check path and ensure all necessary __init__.py files exist.")
+    print(f"Error: Could not import module '{module_to_import_str}'. "
+          "Check path and ensure all necessary __init__.py files exist.")
     sys.exit(1)
 except AttributeError:
     # This error means the module was imported, but the class was not found within it.
@@ -53,7 +53,8 @@ try:
     gm = symbolic_trace(model_instance)
 except Exception as e:
     print(f"Error during model instantiation or symbolic tracing: {e}")
-    print("Please ensure your model '{class_name_str}' can be instantiated with no arguments for this script.")
+    print("Please ensure your model "
+          f"'{class_name_str}' can be instantiated with no arguments for this script.")
     sys.exit(1)
 
 nodes = []
@@ -62,8 +63,9 @@ name_map = {}
 
 # Simple color and layerType mapping (extend as needed)
 def get_node_visual_properties(fx_node, graph_module):
+    """Determines visual properties (layer type string, color) for a graph node."""
     op_type = fx_node.op
-    layer_type_str = op_type # Default layer type to op code
+    layer_type_str = op_type  # Default layer type to op code
     color = "#cccccc"  # Default color
 
     if op_type == 'placeholder':
@@ -78,23 +80,35 @@ def get_node_visual_properties(fx_node, graph_module):
             module_instance = graph_module.get_submodule(fx_node.target)
             layer_type_str = type(module_instance).__name__
             # Assign colors based on common PyTorch layer types
-            if "Linear" in layer_type_str: color = "#add8e6" # Light blue for Linear
-            elif "Conv" in layer_type_str: color = "#90ee90" # Light green for Conv
-            elif "BatchNorm" in layer_type_str: color = "#ffd700" # Gold for BatchNorm
-            elif "ReLU" in layer_type_str or "GELU" in layer_type_str: color = "#ffcb6b" # Orange for Activations
-            elif "Dropout" in layer_type_str: color = "#d3d3d3" # Light grey for Dropout
-            elif "Embedding" in layer_type_str: color = "#dda0dd" # Plum for Embedding
-            elif "Attention" in layer_type_str: color = "#ffb6c1" # Light pink for Attention
-            else: color = "#e6e6fa" # Lavender for other modules
-        except AttributeError: # Target might not be a submodule or not exist
-            layer_type_str = str(fx_node.target) # Fallback to target string
-            color = "#f0e68c" # Khaki for unknown call_module targets
-    elif op_type == 'call_function' or op_type == 'call_method':
-        layer_type_str = str(fx_node.target.__name__ if hasattr(fx_node.target, '__name__') else fx_node.target)
-        color = "#b0e0e6" # Powder blue for functions/methods
+            if "Linear" in layer_type_str:
+                color = "#add8e6"  # Light blue for Linear
+            elif "Conv" in layer_type_str:
+                color = "#90ee90"  # Light green for Conv
+            elif "BatchNorm" in layer_type_str:
+                color = "#ffd700"  # Gold for BatchNorm
+            elif ("ReLU" in layer_type_str or
+                  "GELU" in layer_type_str):  # Orange for Activations
+                color = "#ffcb6b"
+            elif "Dropout" in layer_type_str:
+                color = "#d3d3d3"  # Light grey for Dropout
+            elif "Embedding" in layer_type_str:
+                color = "#dda0dd"  # Plum for Embedding
+            elif "Attention" in layer_type_str:
+                color = "#ffb6c1"  # Light pink for Attention
+            else:
+                color = "#e6e6fa"  # Lavender for other modules
+        except AttributeError:  # Target might not be a submodule or not exist
+            layer_type_str = str(fx_node.target)  # Fallback to target string
+            color = "#f0e68c"  # Khaki for unknown call_module targets
+    elif op_type in ('call_function', 'call_method'):
+        if hasattr(fx_node.target, '__name__'):
+            layer_type_str = str(fx_node.target.__name__)
+        else:
+            layer_type_str = str(fx_node.target)
+        color = "#b0e0e6"  # Powder blue for functions/methods
     elif op_type == 'get_attr':
         layer_type_str = f"GetAttr: {fx_node.target}"
-        color = "#fffacd" # Lemon chiffon for get_attr
+        color = "#fffacd"  # Lemon chiffon for get_attr
 
     return layer_type_str, color
 
@@ -102,7 +116,6 @@ def get_node_visual_properties(fx_node, graph_module):
 for n in gm.graph.nodes:
     name_map[n] = n.name
     layer_type, node_color = get_node_visual_properties(n, gm)
-    
     nodes.append({
         "id": n.name,
         "type": "transformer", # Use the custom node type key registered in React Flow
@@ -118,11 +131,11 @@ for n in gm.graph.nodes:
         },
         "position": {"x": 0, "y": 0}
     })
-    
     # Process input nodes to create edges
     # n.all_input_nodes includes all direct data dependencies
     for inp_node in n.all_input_nodes:
-        if inp_node.name in name_map.values(): # Ensure the source node is part of our graph representation
+        # Ensure the source node is part of our graph representation
+        if inp_node.name in name_map.values():
             edges.append({
                 "id": f"{inp_node.name}->{n.name}",
                 "source": inp_node.name,
