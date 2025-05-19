@@ -18,11 +18,9 @@ app.register(cors, {
 // Define the schema for the request body
 const ImportBodySchema = z.object({
   // Regex allows alphanumeric, underscore, and dot characters for module paths
-  modelPath: z
-    .string()
-    .regex(/^[a-zA-Z0-9_.]+$/, {
-      message: 'Invalid modelPath format. Only alphanumeric, underscores, and dots allowed.',
-    }),
+  modelPath: z.string().regex(/^[a-zA-Z0-9_.]+$/, {
+    message: 'Invalid modelPath format. Only alphanumeric, underscores, and dots allowed.',
+  }),
 });
 
 app.post('/api/import', async (req, reply) => {
