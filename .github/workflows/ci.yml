@@ -14,12 +14,14 @@ jobs:
           cache-dependency-path: |
             pnpm-workspace.yaml
             pnpm-lock.yaml
+      - name: Check pnpm version
+        run: pnpm -v
       - name: List files in root (for debugging)
         run: ls -la
       - name: List files in visuaml-client (for debugging)
         run: ls -la visuaml-client
       - name: Install dependencies (workspace root)
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
       - name: Lint visuaml-client
         run: pnpm --filter visuaml-client run lint
       - name: Check Prettier formatting in visuaml-client
