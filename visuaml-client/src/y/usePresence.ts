@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useYDoc } from './DocProvider';
+import { stringToHSL } from '../lib/colors';
 
 // Define the structure of the cursor data broadcasted
 export interface CursorBroadcastData {
@@ -53,12 +54,18 @@ export const useRemoteCursors = (): RenderableCursor[] => {
           const cursorData = state.cursor;
           const userData = state.user;
 
+          // Generate a unique color for anonymous users based on clientID
+          const defaultColor = stringToHSL(`anonymous_${clientID}`);
+          // Use modulo to get a simple guest number (1-999)
+          const guestNumber = (clientID % 999) + 1;
+          const defaultName = `Guest ${guestNumber}`;
+
           newCursors.push({
             x: cursorData.x,
             y: cursorData.y,
             // Prioritize user field for name and color, fallback to cursor field
-            name: userData?.name || cursorData.name || 'Anonymous',
-            color: userData?.color || cursorData.color || '#888888', // Default fallback color
+            name: userData?.name || cursorData.name || defaultName,
+            color: userData?.color || cursorData.color || defaultColor,
             clientID,
             userID: userData?.id,
           });

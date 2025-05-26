@@ -2,41 +2,100 @@ import { useEffect, useState } from 'react';
 import * as Y from 'yjs';
 import { useYDoc } from './DocProvider';
 import type { Edge, Node } from '@xyflow/react';
+import { useNetworkStore } from '../store/networkStore';
+import type { MLNodeData } from '../ui/nodes/types';
+
+// Helper to extract input shapes
+const extractInputShapes = (nodes: Node<MLNodeData>[]): string[] => {
+  const shapes: string[] = [];
+  nodes.forEach(node => {
+    if (node.data && node.data.op === 'placeholder' && typeof node.data.outputShape === 'string') {
+      shapes.push(node.data.outputShape);
+    }
+  });
+  return shapes;
+};
+
+// Helper to extract component types
+const extractComponentTypes = (nodes: Node<MLNodeData>[]): string[] => {
+  const types = new Set<string>();
+  nodes.forEach(node => {
+    if (node.data && typeof node.data.layerType === 'string') {
+      types.add(node.data.layerType);
+    }
+  });
+  return Array.from(types).sort();
+};
 
 /** Hook returns React-Flow-nodes/edges arrays that stay in lock-step
     with Yjs Y.Array<Y.Map> documents called 'nodes' and 'edges'.      */
 export const useSyncedGraph = (): [
-  Node[],
-  (nds: Node[]) => void,
+  Node<MLNodeData>[],
+  (nds: Node<MLNodeData>[]) => void,
   Edge[],
   (eds: Edge[]) => void,
 ] => {
   const { ydoc } = useYDoc();
   const yNodes = ydoc.getArray<Y.Map<unknown>>('nodes');
   const yEdges = ydoc.getArray<Y.Map<unknown>>('edges');
+  const ySharedNetworkName = ydoc.getText('networkNameShared');
+  const ySharedAppStatus = ydoc.getMap('sharedAppStatus'); // Get Y.Map for app status
 
-  const mapNodeToRF = (ymap: Y.Map<unknown>) => ymap.toJSON() as unknown as Node;
-  const mapEdgeToRF = (ymap: Y.Map<unknown>) => ymap.toJSON() as unknown as Edge;
+  const setNetworkFacts = useNetworkStore(state => state.setFacts); // Get setter
 
-  const [nodes, setNodes] = useState<Node[]>(yNodes.toArray().map(mapNodeToRF));
+  const mapNodeToRF = (ymap: Y.Map<unknown>): Node<MLNodeData> => ymap.toJSON() as unknown as Node<MLNodeData>;
+  const mapEdgeToRF = (ymap: Y.Map<unknown>): Edge => ymap.toJSON() as unknown as Edge;
+
+  const [nodes, setNodes] = useState<Node<MLNodeData>[]>(yNodes.toArray().map(mapNodeToRF));
   const [edges, setEdges] = useState<Edge[]>(yEdges.toArray().map(mapEdgeToRF));
 
   /* ► observe Yjs → React */
   useEffect(() => {
-    const sync = () => {
-      setNodes(yNodes.toArray().map(mapNodeToRF));
-      setEdges(yEdges.toArray().map(mapEdgeToRF));
+    const syncAllData = () => {
+      const currentNodes = yNodes.toArray().map(mapNodeToRF);
+      const currentEdges = yEdges.toArray().map(mapEdgeToRF);
+      setNodes(currentNodes);
+      setEdges(currentEdges);
+
+      const inputShapes = extractInputShapes(currentNodes);
+      const componentTypes = extractComponentTypes(currentNodes);
+      
+      const currentSharedName = ySharedNetworkName.toString();
+      // Get isLoadingGraph from Yjs, default to false if not set
+      const currentIsLoadingGraph = ySharedAppStatus.get('isLoadingGraph') as boolean | undefined ?? false;
+
+      // Get existing non-Yjs-synced facts from store only if needed, but prefer Yjs truth.
+      // For numNodes, etc., Yjs is the source of truth now via currentNodes/Edges.
+
+      setNetworkFacts({
+        // No spread of latestStoreFacts needed if all relevant fields come from Yjs
+        networkName: currentSharedName || undefined,
+        numNodes: currentNodes.length,
+        numEdges: currentEdges.length,
+        inputShapes,
+        componentTypes,
+        isLoadingGraph: currentIsLoadingGraph,
+      });
     };
-    yNodes.observe(sync);
-    yEdges.observe(sync);
+
+    yNodes.observe(syncAllData);
+    yEdges.observe(syncAllData);
+    ySharedNetworkName.observe(syncAllData); 
+    ySharedAppStatus.observe(syncAllData); // Observe shared app status
+
+    syncAllData(); // Initial sync
+
     return () => {
-      yNodes.unobserve(sync);
-      yEdges.unobserve(sync);
+      yNodes.unobserve(syncAllData);
+      yEdges.unobserve(syncAllData);
+      ySharedNetworkName.unobserve(syncAllData);
+      ySharedAppStatus.unobserve(syncAllData); // Unobserve shared app status
     };
-  }, [yNodes, yEdges]);
+  // Dependencies: yNodes, yEdges, setNetworkFacts (stable)
+  }, [yNodes, yEdges, ySharedNetworkName, ySharedAppStatus, setNetworkFacts]); // Added ySharedAppStatus
 
   /* ► React → Yjs (wrap in transact) */
-  const commitNodes = (nds: Node[]) => {
+  const commitNodes = (nds: Node<MLNodeData>[]) => {
     ydoc.transact(() => {
       yNodes.delete(0, yNodes.length);
       nds.forEach((n) => {
@@ -61,12 +120,10 @@ export const useSyncedGraph = (): [
 /** Hook returns only the action functions to commit nodes/edges to Yjs. */
 export const useSyncedGraphActions = () => {
   const { ydoc } = useYDoc();
-  // We need to get yNodes and yEdges again, or pass ydoc around more directly.
-  // For consistency with how commitNodes/commitEdges are defined above, let's re-get them.
   const yNodesArray = ydoc.getArray<Y.Map<unknown>>('nodes');
   const yEdgesArray = ydoc.getArray<Y.Map<unknown>>('edges');
 
-  const commitNodes = (nds: Node[]) => {
+  const commitNodes = (nds: Node<MLNodeData>[]) => {
     ydoc.transact(() => {
       yNodesArray.delete(0, yNodesArray.length);
       nds.forEach((n) => {

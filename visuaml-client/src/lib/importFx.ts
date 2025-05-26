@@ -19,7 +19,7 @@ export const importFxGraph = async (
 ): Promise<void> => {
   try {
     // In a real setup, the Vite dev server would proxy this to a backend
-    // that executes the fx_export.py script.
+    // that executes the visuaml backend export script.
     const response = await fetch(`/api/import?path=${encodeURIComponent(modelPath)}`);
 
     if (!response.ok) {
@@ -36,7 +36,7 @@ export const importFxGraph = async (
     }
 
     // TODO: Implement auto-layouting (e.g., with Dagre) here before committing
-    // For now, nodes will use the dummy (0,0) positions from fx_export.py
+    // For now, nodes will use the (0,0) positions from visuaml backend
     console.log('Imported FX data:', data);
 
     // Batch the updates into a single Yjs transaction if not already handled by commitNodes/Edges

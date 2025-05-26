@@ -65,7 +65,8 @@ export const YDocProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Effect to update awareness with user info when available
   useEffect(() => {
-    if (isSignedIn && user && providerState && providerState.awareness) {
+    if (providerState && providerState.awareness) {
+      if (isSignedIn && user) {
       const userColor = stringToHSL(user.id);
       const userName = user.fullName || user.primaryEmailAddress?.emailAddress || 'Anonymous';
 
@@ -87,20 +88,31 @@ export const YDocProvider: React.FC<{ children: React.ReactNode }> = ({ children
           color: userColor,
         });
       }
-    } else if (providerState && providerState.awareness) {
-      // Not signed in or user cleared, remove user field from awareness
-      providerState.awareness.setLocalStateField('user', null);
-      // Optionally, reset cursor name/color to defaults if user signs out
+      } else {
+        // Not signed in - set guest user info
+        // Use modulo to get a simple guest number (1-999)
+        const guestNumber = (ydoc.clientID % 999) + 1;
+        const guestName = `Guest ${guestNumber}`;
+        const guestColor = stringToHSL(`anonymous_${ydoc.clientID}`);
+        
+        providerState.awareness.setLocalStateField('user', {
+          id: `guest_${ydoc.clientID}`,
+          name: guestName,
+          color: guestColor,
+        });
+        
       const localAwarenessState = providerState.awareness.getLocalState() as
         | LocalClientAwarenessState
         | undefined;
       const currentCursorData = localAwarenessState?.cursor;
+        
       if (currentCursorData) {
         providerState.awareness.setLocalStateField('cursor', {
           ...currentCursorData,
-          name: 'Guest ' + Math.floor(Math.random() * 10000), // Ensure unique enough guest name
-          color: stringToHSL('guest_' + ydoc.clientID), // Consistent guest color per clientID
+            name: guestName,
+            color: guestColor,
         });
+        }
       }
     }
     // Dependencies: user object, isSignedIn status, and providerState.awareness

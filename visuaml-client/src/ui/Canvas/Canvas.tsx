@@ -1,6 +1,8 @@
+/** @fileoverview Defines the main interactive canvas for VisuaML, integrating React Flow for graph visualization, Yjs for real-time collaboration, and components for displaying network statistics and remote user cursors. */
 import {
   ReactFlow,
   Background,
+  BackgroundVariant,
   Controls,
   addEdge,
   ReactFlowProvider,
@@ -9,24 +11,23 @@ import {
 } from '@xyflow/react';
 import type { Connection, Edge, Node, NodeChange, EdgeChange } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { useSyncedGraph } from '../y/useSyncedGraph';
-import { useYDoc } from '../y/DocProvider';
-import { useRemoteCursors, type RenderableCursor } from '../y/usePresence';
+import { useSyncedGraph } from '../../y/useSyncedGraph'; // Adjusted path
+import { useYDoc } from '../../y/DocProvider'; // Adjusted path
+import { useRemoteCursors, type RenderableCursor } from '../../y/usePresence'; // Adjusted path
 import { useCallback, useRef, useEffect } from 'react';
-import TransformerNode from './nodes/TransformerNode'; // Import custom node
+import MLNode from '../nodes/MLNode/MLNode'; // Adjusted path
+import { RemoteCursor } from '../RemoteCursor/RemoteCursor'; // Adjusted path
+import styles from './styles/Canvas.module.css'; // Adjusted path
+import { NetworkStatsDisplay } from '../NetworkStatsDisplay/NetworkStatsDisplay'; // Adjusted path
 
-// LOCAL_USER_NAME and LOCAL_USER_COLOR removed as they are now handled in DocProvider or by Clerk identity
-
-// Define custom node types
-const nodeTypes = { transformer: TransformerNode };
+const nodeTypes = { transformer: MLNode };
 
 export const Canvas: React.FC = () => {
   const [nodes, setNodes, edges, setEdges] = useSyncedGraph();
   const { provider } = useYDoc();
   const remoteCursors = useRemoteCursors();
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-
-  // Throttling for mouse move updates
+  
   const animationFrameId = useRef<number | null>(null);
   const lastSentPosition = useRef<{ x: number; y: number } | null>(null);
 
@@ -42,7 +43,7 @@ export const Canvas: React.FC = () => {
     (connection: Connection) => setEdges(addEdge(connection, edges) as Edge[]),
     [edges, setEdges],
   );
-
+  
   const handleMouseMove = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       if (!provider || !provider.awareness || !reactFlowWrapper.current) return;
@@ -69,7 +70,6 @@ export const Canvas: React.FC = () => {
     [provider],
   );
 
-  // Cleanup animation frame on unmount
   useEffect(() => {
     return () => {
       if (animationFrameId.current) {
@@ -81,46 +81,51 @@ export const Canvas: React.FC = () => {
   return (
     <ReactFlowProvider>
       <div
-        className="w-screen h-screen relative"
+        className={styles.canvasWrapper}
         ref={reactFlowWrapper}
         onMouseMove={handleMouseMove}
       >
+        <NetworkStatsDisplay />
         <ReactFlow
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          nodeTypes={nodeTypes} // Register custom node types
+          nodeTypes={nodeTypes}
           fitView
+          minZoom={0.1}
+          maxZoom={4}
+          zoomOnScroll={true}
+          zoomOnPinch={true}
+          zoomOnDoubleClick={true}
+          preventScrolling={true}
         >
-          <Background />
-          <Controls />
+          <Background 
+            variant={BackgroundVariant.Dots}
+            gap={16}
+            size={1}
+            color="#e5e7eb"
+          />
+          <Controls 
+            position="top-left"
+            style={{
+              top: '50%',
+              transform: 'translateY(-50%)',
+              left: '10px'
+            }}
+          />
         </ReactFlow>
         {remoteCursors.map((cursor: RenderableCursor) => (
-          <div
+          <RemoteCursor
             key={cursor.clientID}
-            style={{
-              position: 'absolute',
-              left: `${cursor.x}px`,
-              top: `${cursor.y}px`,
-              // Adding a small offset so the dot is under the actual system cursor tip
-              transform: 'translate(0px, 0px)', // Or translate(-50%, -50%) to center on point
-              width: '8px',
-              height: '8px',
-              backgroundColor: cursor.color,
-              borderRadius: '50%',
-              pointerEvents: 'none',
-              zIndex: 100, // Ensure cursors are above React Flow elements but below UI controls if any
-            }}
-            // Display name on hover or as a small label next to cursor
-            title={`${cursor.name} (User: ${cursor.userID || 'N/A'}, Client: ${cursor.clientID})`}
-          >
-            {/* Optional: render name next to cursor dot */}
-            {/* <span style={{ marginLeft: '10px', fontSize: '10px', color: cursor.color }}>{cursor.name}</span> */}
-          </div>
+            x={cursor.x}
+            y={cursor.y}
+            name={cursor.name}
+            color={cursor.color}
+          />
         ))}
       </div>
     </ReactFlowProvider>
   );
-};
+}; 

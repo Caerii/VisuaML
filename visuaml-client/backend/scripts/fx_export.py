@@ -1,151 +1,133 @@
-"""Exports a PyTorch FX graph to a JSON format for VisuaML."""
+#!/usr/bin/env python3
+"""
+Simplified FX export script using the modular VisuaML backend.
+
+Usage: python fx_export.py models.MyModel [--abstraction-level 1] [--sample-input-args "(1, 3, 224, 224)"]
+"""
+
 import json
-import importlib
-import os
 import sys
+import os
+import argparse
+import ast # For parsing string representations of tuples/dicts
 
-from torch.fx import symbolic_trace
+# Add parent directory to path so we can import visuaml package
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Add the current working directory (which execa sets to projectRoot) to sys.path
-# to help Python find the 'models' module.
-current_working_directory = os.getcwd()
-if current_working_directory not in sys.path:
-    sys.path.insert(0, current_working_directory)
+# Add current working directory for model imports
+if os.getcwd() not in sys.path:
+    sys.path.insert(0, os.getcwd())
 
-# Check if a module path is provided
-if len(sys.argv) < 2:
-    print("Usage: python fx_export.py my_module.submodule.ModelClass")
-    sys.exit(1)
+from visuaml import export_model_graph, FilterConfig
+from visuaml.model_loader import ModelLoadError
 
-mod_path_argument = sys.argv[1]  # e.g. models.MyTinyGPT
 
-try:
-    # The module path to import is the full path provided by the user.
-    # The class name is the last component of this path.
-    module_to_import_str = mod_path_argument
-    class_name_str = mod_path_argument.split(".")[-1]
-    # print(f"DEBUG: Attempting to import module: {module_to_import_str}", file=sys.stderr)
-    # print(f"DEBUG: Attempting to get class: {class_name_str}", file=sys.stderr)
+def main():
+    """Main entry point for the FX export script."""
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(
+        description="Export PyTorch model to VisuaML graph format"
+    )
+    parser.add_argument(
+        "model_path",
+        help="Module path to the model (e.g., models.MyModel)"
+    )
+    parser.add_argument(
+        "--abstraction-level",
+        type=int,
+        default=1,
+        choices=[0, 1, 2, 3],
+        help="Abstraction level for filtering (0=show all, higher=more filtered)"
+    )
+    parser.add_argument(
+        "--no-filter",
+        action="store_true",
+        help="Disable all filtering (equivalent to --abstraction-level 0)"
+    )
+    parser.add_argument(
+        "--sample-input-args",
+        type=str,
+        default=None,
+        help="String representation of a tuple for sample model positional inputs (e.g., '(1, 3, 224, 224')"
+    )
+    parser.add_argument(
+        "--sample-input-kwargs",
+        type=str,
+        default=None,
+        help="String representation of a dict for sample model keyword inputs (e.g., \"{'param': True}\")"
+    )
+    parser.add_argument(
+        "--sample-input-dtypes",
+        type=str,
+        default=None,
+        help="String representation of a list of dtypes for sample_input_args (e.g., \"[\'float32\', \'long\']\")"
+    )
+    
+    args = parser.parse_args()
 
-    imported_target_module = importlib.import_module(module_to_import_str)
-    ModelClass = getattr(imported_target_module, class_name_str)
-
-except ImportError:
-    # This error means the entire module path (e.g., models.MyTinyGPT) could not be found/imported.
-    # This could be due to missing __init__.py in 'models' or 'MyTinyGPT.py' not found in 'models'.
-    print(f"Error: Could not import module '{module_to_import_str}'. "
-          "Check path and ensure all necessary __init__.py files exist.")
-    sys.exit(1)
-except AttributeError:
-    # This error means the module was imported, but the class was not found within it.
-    print(f"Error: Class '{class_name_str}' not found in module '{module_to_import_str}'.")
-    sys.exit(1)
-except Exception as e:
-    print(f"An unexpected error occurred during module/class loading: {e}")
-    sys.exit(1)
-
-# Instantiate the model and perform symbolic tracing
-try:
-    # Ensure the model can be instantiated without arguments for this script
-    # If your model requires arguments, this script will need modification
-    # or a wrapper model that instantiates it with defaults.
-    model_instance = ModelClass()
-    gm = symbolic_trace(model_instance)
-except Exception as e:
-    print(f"Error during model instantiation or symbolic tracing: {e}")
-    print("Please ensure your model "
-          f"'{class_name_str}' can be instantiated with no arguments for this script.")
-    sys.exit(1)
-
-nodes = []
-edges = []
-name_map = {}
-
-# Simple color and layerType mapping (extend as needed)
-def get_node_visual_properties(fx_node, graph_module):
-    """Determines visual properties (layer type string, color) for a graph node."""
-    op_type = fx_node.op
-    layer_type_str = op_type  # Default layer type to op code
-    color = "#cccccc"  # Default color
-
-    if op_type == 'placeholder':
-        layer_type_str = 'Input'
-        color = "#adebad"
-    elif op_type == 'output':
-        layer_type_str = 'Output'
-        color = "#ffb3b3"
-    elif op_type == 'call_module':
+    # Parse sample inputs for ShapeProp (for forward pass)
+    parsed_sample_input_args = None
+    if args.sample_input_args:
         try:
-            # Get the class name of the module being called
-            module_instance = graph_module.get_submodule(fx_node.target)
-            layer_type_str = type(module_instance).__name__
-            # Assign colors based on common PyTorch layer types
-            if "Linear" in layer_type_str:
-                color = "#add8e6"  # Light blue for Linear
-            elif "Conv" in layer_type_str:
-                color = "#90ee90"  # Light green for Conv
-            elif "BatchNorm" in layer_type_str:
-                color = "#ffd700"  # Gold for BatchNorm
-            elif ("ReLU" in layer_type_str or
-                  "GELU" in layer_type_str):  # Orange for Activations
-                color = "#ffcb6b"
-            elif "Dropout" in layer_type_str:
-                color = "#d3d3d3"  # Light grey for Dropout
-            elif "Embedding" in layer_type_str:
-                color = "#dda0dd"  # Plum for Embedding
-            elif "Attention" in layer_type_str:
-                color = "#ffb6c1"  # Light pink for Attention
-            else:
-                color = "#e6e6fa"  # Lavender for other modules
-        except AttributeError:  # Target might not be a submodule or not exist
-            layer_type_str = str(fx_node.target)  # Fallback to target string
-            color = "#f0e68c"  # Khaki for unknown call_module targets
-    elif op_type in ('call_function', 'call_method'):
-        if hasattr(fx_node.target, '__name__'):
-            layer_type_str = str(fx_node.target.__name__)
-        else:
-            layer_type_str = str(fx_node.target)
-        color = "#b0e0e6"  # Powder blue for functions/methods
-    elif op_type == 'get_attr':
-        layer_type_str = f"GetAttr: {fx_node.target}"
-        color = "#fffacd"  # Lemon chiffon for get_attr
+            parsed_sample_input_args = ast.literal_eval(args.sample_input_args)
+            if not isinstance(parsed_sample_input_args, tuple):
+                # If a single shape tuple like (1,10) is given, wrap it to be ((1,10),) for consistency
+                if isinstance(parsed_sample_input_args, tuple) and all(isinstance(x, int) for x in parsed_sample_input_args):
+                     parsed_sample_input_args = (parsed_sample_input_args,)
+                else:
+                    raise ValueError("Sample input args must be a tuple (e.g., '((1,10),)' or '((1,1,28,28),)').")
+        except (ValueError, SyntaxError) as e:
+            print(f"Error parsing --sample-input-args: {e}. Example: --sample-input-args \"((1, 10),)\" or for multiple inputs --sample-input-args \"((1,10), (1,20))\"", file=sys.stderr)
+            sys.exit(1) # Exit only on parsing error
 
-    return layer_type_str, color
+    parsed_sample_input_kwargs = None
+    if args.sample_input_kwargs:
+        try:
+            parsed_sample_input_kwargs = ast.literal_eval(args.sample_input_kwargs)
+            if not isinstance(parsed_sample_input_kwargs, dict):
+                raise ValueError("Sample input kwargs must be a dict.")
+        except (ValueError, SyntaxError) as e:
+            print(f"Error parsing --sample-input-kwargs: {e}. Example: --sample-input-kwargs \"{{'key': (1,5)}}\"", file=sys.stderr)
+            sys.exit(1) # Exit only on parsing error
 
-# Process graph nodes
-for n in gm.graph.nodes:
-    name_map[n] = n.name
-    layer_type, node_color = get_node_visual_properties(n, gm)
-    nodes.append({
-        "id": n.name,
-        "type": "transformer", # Use the custom node type key registered in React Flow
-        "data": {
-            "label": n.name, # Use node name as a default label in data
-            "target": str(n.target),
-            "name": n.name,
-            "op": n.op,
-            "args": str(n.args),
-            "kwargs": str(n.kwargs),
-            "layerType": layer_type,
-            "color": node_color
-        },
-        "position": {"x": 0, "y": 0}
-    })
-    # Process input nodes to create edges
-    # n.all_input_nodes includes all direct data dependencies
-    for inp_node in n.all_input_nodes:
-        # Ensure the source node is part of our graph representation
-        if inp_node.name in name_map.values():
-            edges.append({
-                "id": f"{inp_node.name}->{n.name}",
-                "source": inp_node.name,
-                "target": n.name
-            })
+    parsed_sample_input_dtypes = None
+    if args.sample_input_dtypes:
+        try:
+            parsed_sample_input_dtypes = ast.literal_eval(args.sample_input_dtypes)
+            if not isinstance(parsed_sample_input_dtypes, list) or \
+               not all(isinstance(dt, str) for dt in parsed_sample_input_dtypes):
+                raise ValueError("Sample input dtypes must be a list of strings (e.g., \"[\'float32\', \'long\']\").")
+        except (ValueError, SyntaxError) as e:
+            print(f"Error parsing --sample-input-dtypes: {e}. Example: \"[\'float32\']\"", file=sys.stderr)
+            sys.exit(1) # Exit only on parsing error
 
-# Output JSON
-output_json = {"nodes": nodes, "edges": edges}
-try:
-    print(json.dumps(output_json, indent=2)) # Added indent for readability
-except TypeError as e:
-    print(f"Error serializing graph to JSON: {e}")
-    sys.exit(1) 
+    # Configure filtering
+    filter_config = None
+    if not args.no_filter:
+        filter_config = FilterConfig(abstraction_level=args.abstraction_level)
+    
+    # Try to export the model graph
+    try:
+        graph_data = export_model_graph(
+            args.model_path, 
+            filter_config,
+            model_args=None,  # Explicitly None, as current examples don't need constructor args
+            model_kwargs=None, # Explicitly None
+            sample_input_args=parsed_sample_input_args,  # Parsed args for ShapeProp
+            sample_input_kwargs=parsed_sample_input_kwargs, # Parsed kwargs for ShapeProp
+            sample_input_dtypes=parsed_sample_input_dtypes # Pass parsed dtypes
+        )
+
+        # Output as JSON
+        print(json.dumps(graph_data, indent=2))
+        
+    except ModelLoadError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1) # Ensure this is indented under this except block
+    except Exception as e:
+        print(f"An unexpected error occurred during graph export: {e}", file=sys.stderr)
+        sys.exit(1) # Ensure this is indented and present for other exceptions
+
+
+if __name__ == "__main__":
+    main() 

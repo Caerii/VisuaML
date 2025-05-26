@@ -1,8 +1,9 @@
+/** @fileoverview Main entry point for the VisuaML client application. Sets up the Clerk provider, Yjs document provider, and renders the main layout including TopBar and Canvas. */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { YDocProvider } from './y/DocProvider'; // (create shortly)
-import { Canvas } from './ui/Canvas';
-import TopBar from './ui/TopBar';
+import { Canvas } from './ui/Canvas/Canvas';
+import TopBar from './ui/TopBar/TopBar';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { Toaster } from 'sonner';
 import './index.css';

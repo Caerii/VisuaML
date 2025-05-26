@@ -8,12 +8,32 @@ import { fileURLToPath } from 'url';
 
 dotenv.config(); // Load .env variables into process.env
 
-const app = Fastify({ logger: true });
+const app = Fastify({
+  logger: {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
+      },
+    },
+  },
+});
 
 // Register CORS plugin
 app.register(cors, {
   origin: '*', // Allow all origins for now, configure appropriately for production
 });
+
+// Define default sample inputs for models
+const defaultSampleInputs: Record<string, { args: string, dtypes: string, kwargs?: string }> = {
+  'models.SimpleNN': { args: "((1, 10),)", dtypes: "['float32']" },
+  'models.DemoNet': { args: "((1, 10),)", dtypes: "['long']" },
+  'models.MyTinyGPT': { args: "((1, 10),)", dtypes: "['float32']" },
+  'models.TestModel': { args: "((1, 3, 32, 32),)", dtypes: "['float32']" }
+  // Add other models from TopBar.tsx if they are different
+  // and ensure their forward pass signature is compatible.
+};
 
 // Define the schema for the request body
 const ImportBodySchema = z.object({
@@ -37,6 +57,24 @@ app.post('/api/import', async (req, reply) => {
     const { modelPath } = validationResult.data;
     app.log.info(`Received import request for modelPath: ${modelPath}`);
 
+    const scriptArgs = [modelPath]; // Start with modelPath
+
+    // Check for default sample inputs
+    const defaults = defaultSampleInputs[modelPath];
+    if (defaults) {
+      app.log.info(`Using default sample inputs for ${modelPath}: args=${defaults.args}, dtypes=${defaults.dtypes}`);
+      scriptArgs.push('--sample-input-args', defaults.args);
+      scriptArgs.push('--sample-input-dtypes', defaults.dtypes);
+      if (defaults.kwargs) {
+        scriptArgs.push('--sample-input-kwargs', defaults.kwargs);
+      }
+    } else {
+      app.log.warn(`No default sample inputs found for ${modelPath}. Shape propagation will be skipped.`);
+    }
+    
+    // Add other default CLI args if any, e.g. --abstraction-level
+    // For now, let fx_export.py use its own defaults for these.
+
     // Get the directory of the current module (server/index.ts)
     const __filenameCurrentModule = fileURLToPath(import.meta.url);
     const __dirnameCurrentModule = path.dirname(__filenameCurrentModule); // This will be /path/to/visuaml-client/server
@@ -47,16 +85,13 @@ app.post('/api/import', async (req, reply) => {
     // Construct absolute path to the Python script
     const scriptPath = path.resolve(projectRoot, 'backend', 'scripts', 'fx_export.py');
 
-    app.log.info(`Executing script: python ${scriptPath} ${modelPath} with CWD: ${projectRoot}`);
+    app.log.info(`Executing script: python ${scriptPath} ${scriptArgs.join(' ')} with CWD: ${projectRoot}`);
 
     const { stdout, stderr } = await execa(
-      'python',
-      [
-        scriptPath, // Use absolute path to script
-        modelPath,
-      ],
+      'python', // Reverted from 'python3' to 'python'
+      [scriptPath, ...scriptArgs], // Pass all arguments
       { cwd: projectRoot },
-    ); // Keep cwd as projectRoot for the script's internal relative path access (e.g. to models/)
+    );
 
     if (stderr) {
       app.log.error(`Error output from fx_export.py: ${stderr}`);

@@ -26,16 +26,6 @@ class MyTinyGPT(nn.Module):
         x = self.output_layer(x)
         return x
 
-# To test if this file is runnable and the class is defined:
-# if __name__ == '__main__':
-#     model = MyTinyGPT()
-#     print("MyTinyGPT model class defined and instantiated.")
-#     # To test tracing:
-#     # try:
-#     #     # For FX trace to work with this forward pass, it will create a placeholder for x_tokens.
-#     #     # No concrete input is strictly needed for symbolic_trace unless model logic demands it.
-#     #     gm = torch.fx.symbolic_trace(model)
-#     #     print("Symbolic trace successful.")
-#     #     # print(gm.graph)
-#     # except Exception as e:
-#     #     print(f"Error during symbolic trace test: {e}") 
+if __name__ == '__main__':
+    model = MyTinyGPT()
+    print("MyTinyGPT model class defined and instantiated.")
