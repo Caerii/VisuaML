@@ -9,4 +9,4 @@ describe('Smoke Tests', () => {
     // Test that we can import from our lib directory
     expect(typeof import('../lib/colors')).toBe('object');
   });
-}); 
+});
