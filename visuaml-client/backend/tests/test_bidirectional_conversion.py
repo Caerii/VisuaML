@@ -14,11 +14,11 @@ sys.path.insert(0, visuaml_client_dir)
 
 # Add the backend directory to Python path so we can import visuaml package
 backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, backend_dir)
+sys.path.append(backend_dir)
 
 # Check if open-hypergraphs is available
 try:
-    import openhypergraphs  # noqa: F401
+    import open_hypergraphs  # noqa: F401
     OPEN_HYPERGRAPHS_AVAILABLE = True
 except ImportError:
     OPEN_HYPERGRAPHS_AVAILABLE = False
