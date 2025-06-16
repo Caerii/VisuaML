@@ -1,0 +1,107 @@
+/* This file will be populated by moving the original TopBar.module.css content here. */
+
+/* visuaml-client/src/ui/TopBar.module.css */
+
+/* Color Variables (placeholders - replace with actual values from your theme) */
+:root {
+  --primary-700: #4a5568; /* Example: Slate 600 - Old header color */
+  --header-bg: #111827; /* New dark background for header */
+  --accent-400: #fbbf24; /* Example: Amber 400 */
+  --yellow-500: #f59e0b; /* Example: Amber 500 */
+  --text-white: #ffffff;
+  --text-black: #000000;
+  --text-gray-800: #1f2937;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 */
+  padding: 0.5rem 0.5rem; /* Reduced horizontal padding from 1rem to 0.5rem */
+  background-color: var(--header-bg); /* Changed to new dark background */
+  color: var(--text-white); /* text-white */
+  /* Keeping a subtle shadow, can be removed if preferred */
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the logo link wrapper */
+.logoLink {
+  display: inline-block; /* To allow transform and proper layout */
+  line-height: 0; /* Removes extra space below the image if anchor has line-height */
+  transition: transform 0.2s ease-in-out; /* Smooth transition for scaling */
+}
+
+.logoLink:hover {
+  transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+/* Styles for the logo image itself */
+.logo {
+  height: 90px; /* User updated this */
+  margin-right: 8px; /* Reduced from 16px */
+  /* margin-left: 16px; /* Removed, padding on .header handles left spacing */
+  object-fit: contain; /* Ensures the logo scales nicely without distortion */
+  vertical-align: middle; /* Better alignment if there was text next to it in the anchor */
+  user-drag: none; /* Prevent image dragging */
+  -webkit-user-drag: none; /* Prevent image dragging for Safari */
+  pointer-events: none; /* Let the anchor handle pointer events */
+}
+
+.label {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: var(--text-white);
+  margin-right: 0.5rem; /* Added for spacing between label and select */
+  white-space: nowrap; /* Prevent wrapping if space is tight */
+}
+
+.select {
+  /* flex-grow: 1; /* Removing flex-grow as min-width is set */
+  border-radius: 0.375rem; /* rounded-md */
+  padding: 0.4rem 0.75rem; /* Adjusted padding for better appearance */
+  color: var(--text-black);
+  background-color: #ffffff; /* Clean white background */
+  border: 1px solid #d1d5db; /* Lighter, more subtle border (Tailwind gray-300) */
+  outline: none;
+  min-width: 18rem;
+  cursor: pointer;
+  font-size: 0.875rem; /* Match label size */
+  line-height: 1.25rem; /* Ensure text is vertically centered if padding varies */
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+.select:focus {
+  border-color: var(--accent-400);
+  outline: 2px solid transparent; /* Remove default outline if browser adds one */
+  box-shadow: 0 0 0 2px var(--accent-400); /* Custom focus ring */
+}
+
+.select:disabled {
+  opacity: 0.6; /* Slightly adjusted opacity for disabled state */
+  cursor: default;
+}
+
+.button {
+  background-color: var(--accent-400); /* bg-accent-400 */
+  padding: 0.35rem 1rem; /* Adjusted padding slightly */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 600; /* font-semibold */
+  color: var(--text-gray-800); /* text-gray-800 */
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button:hover {
+  background-color: var(--yellow-500); /* hover:bg-yellow-500 */
+}
+
+.button:disabled {
+  opacity: 0.5; /* disabled:opacity-50 */
+  cursor: not-allowed; /* disabled:cursor-not-allowed */
+}

@@ -1,0 +1,137 @@
+/* Styles for .nodeBase, .nodeSelected, .sourceNodeLink, .transitiveHint,
+   .nodeHeaderTitle, .detailsSection, .infoField, .argumentsList will be here */
+.nodeBase {
+  border: 1px solid #777;
+  border-radius: 5px;
+  padding: 0; /* Remove padding, header/details will manage it */
+  min-width: 180px; /* Slightly wider for better header display */
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  text-align: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  /* Transition for selection removed as it might conflict with React Flow's own */
+}
+
+.nodeSelected {
+  border: 2px solid #2563eb; /* Primary blue, adjust if needed */
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+}
+
+/* ArgumentRenderer.tsx specific styles */
+.sourceNodeLink {
+  color: var(--text-black); /* Changed from --accent-400 to black */
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.sourceNodeLink:hover {
+  color: var(--primary-600); /* Example hover color */
+}
+
+.transitiveHint {
+  font-style: italic;
+  font-size: 0.9em;
+  color: #555;
+  margin-left: 4px; /* Added for spacing */
+}
+
+/* NodeHeader.tsx specific styles */
+.nodeHeader {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  background-color: rgba(0, 0, 0, 0.03); /* Subtle background for header */
+  border-top-left-radius: 4px; /* Match node's border radius */
+  border-top-right-radius: 4px;
+}
+
+.nodeHeaderSelected {
+  /* border-bottom: 1px solid #2563eb; */ /* No need if overall node is bordered */
+}
+
+.nodeHeaderTitle {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0;
+  color: #333;
+}
+
+.nodeHeaderSubtext {
+  font-size: 11px;
+  color: #666;
+  margin: 2px 0 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px; /* Prevent very long names from breaking layout */
+}
+
+/* NodeDetailsPane.tsx specific styles */
+.detailsPane {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 10px; /* Vertical padding is 0 when collapsed */
+  font-size: 12px;
+  text-align: left;
+  background-color: #fff;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  transition:
+    max-height 0.4s ease-out,
+    padding 0.4s ease-out;
+}
+
+.detailsPaneOpen {
+  max-height: 1000px; /* Large enough for any content */
+  padding: 10px;
+  transition:
+    max-height 0.5s ease-in,
+    padding 0.5s ease-in;
+}
+
+.detailsSection {
+  margin-bottom: 10px;
+}
+
+.detailsSectionTitle {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #444;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 3px;
+}
+
+/* NodeInfoFields.tsx specific styles */
+.infoField {
+  margin-bottom: 6px;
+}
+
+.infoField strong {
+  color: #555;
+  min-width: 70px; /* Align values */
+  display: inline-block;
+}
+
+.infoFieldValue {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95em;
+  word-break: break-all; /* Allow long unbroken strings to wrap */
+}
+
+/* NodeArguments.tsx specific styles */
+.argumentsList {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.argumentItem {
+  margin-bottom: 4px;
+  padding-left: 10px;
+  border-left: 2px solid #eee;
+}
+
+.argumentItem strong {
+  /* For arg name, e.g., "input:" */
+  color: #555;
+}

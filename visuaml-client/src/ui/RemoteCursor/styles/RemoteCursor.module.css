@@ -1,0 +1,27 @@
+.remoteCursorContainer {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.cursorSvg {
+  transform: translate(-5px, -5px); /* Offset to align cursor tip */
+}
+
+.nameLabel {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  /* backgroundColor: color; /* This will be handled by inline style for dynamic color */
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
