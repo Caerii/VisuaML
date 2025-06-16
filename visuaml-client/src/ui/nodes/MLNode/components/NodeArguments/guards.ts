@@ -3,4 +3,4 @@ import type { ResolvedArgValue, ResolvedArgSourceNode } from '../../../types';
 
 export const isSourceNode = (arg: ResolvedArgValue): arg is ResolvedArgSourceNode => {
   return typeof arg === 'object' && arg !== null && ('source_node' in arg || 'source_nodes' in arg);
-}; 
+};

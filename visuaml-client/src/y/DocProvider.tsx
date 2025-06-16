@@ -68,51 +68,51 @@ export const YDocProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (providerState && providerState.awareness) {
       if (isSignedIn && user) {
-      const userColor = stringToHSL(user.id);
-      const userName = user.fullName || user.primaryEmailAddress?.emailAddress || 'Anonymous';
+        const userColor = stringToHSL(user.id);
+        const userName = user.fullName || user.primaryEmailAddress?.emailAddress || 'Anonymous';
 
-      providerState.awareness.setLocalStateField('user', {
-        id: user.id,
-        name: userName,
-        color: userColor,
-      });
-
-      const localAwarenessState = providerState.awareness.getLocalState() as
-        | LocalClientAwarenessState
-        | undefined;
-      const currentCursorData = localAwarenessState?.cursor;
-
-      if (currentCursorData) {
-        providerState.awareness.setLocalStateField('cursor', {
-          ...currentCursorData,
+        providerState.awareness.setLocalStateField('user', {
+          id: user.id,
           name: userName,
           color: userColor,
         });
-      }
+
+        const localAwarenessState = providerState.awareness.getLocalState() as
+          | LocalClientAwarenessState
+          | undefined;
+        const currentCursorData = localAwarenessState?.cursor;
+
+        if (currentCursorData) {
+          providerState.awareness.setLocalStateField('cursor', {
+            ...currentCursorData,
+            name: userName,
+            color: userColor,
+          });
+        }
       } else {
         // Not signed in - set guest user info
         // Use modulo to get a simple guest number (1-999)
         const guestNumber = (ydoc.clientID % 999) + 1;
         const guestName = `Guest ${guestNumber}`;
         const guestColor = stringToHSL(`anonymous_${ydoc.clientID}`);
-        
+
         providerState.awareness.setLocalStateField('user', {
           id: `guest_${ydoc.clientID}`,
           name: guestName,
           color: guestColor,
         });
-        
-      const localAwarenessState = providerState.awareness.getLocalState() as
-        | LocalClientAwarenessState
-        | undefined;
-      const currentCursorData = localAwarenessState?.cursor;
-        
-      if (currentCursorData) {
-        providerState.awareness.setLocalStateField('cursor', {
-          ...currentCursorData,
+
+        const localAwarenessState = providerState.awareness.getLocalState() as
+          | LocalClientAwarenessState
+          | undefined;
+        const currentCursorData = localAwarenessState?.cursor;
+
+        if (currentCursorData) {
+          providerState.awareness.setLocalStateField('cursor', {
+            ...currentCursorData,
             name: guestName,
             color: guestColor,
-        });
+          });
         }
       }
     }

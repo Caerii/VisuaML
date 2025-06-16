@@ -1,1 +1,1 @@
-export { default } from './TensorVisualizer3D'; 
+export { default } from './TensorVisualizer3D';

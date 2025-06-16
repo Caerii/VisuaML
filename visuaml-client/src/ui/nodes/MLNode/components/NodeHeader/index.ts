@@ -1,1 +1,1 @@
-export { default } from './NodeHeader'; 
+export { default } from './NodeHeader';

@@ -8,7 +8,7 @@ import type { MLNodeData } from '../ui/nodes/types';
 // Helper to extract input shapes
 const extractInputShapes = (nodes: Node<MLNodeData>[]): string[] => {
   const shapes: string[] = [];
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     if (node.data && node.data.op === 'placeholder' && typeof node.data.outputShape === 'string') {
       shapes.push(node.data.outputShape);
     }
@@ -19,7 +19,7 @@ const extractInputShapes = (nodes: Node<MLNodeData>[]): string[] => {
 // Helper to extract component types
 const extractComponentTypes = (nodes: Node<MLNodeData>[]): string[] => {
   const types = new Set<string>();
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     if (node.data && typeof node.data.layerType === 'string') {
       types.add(node.data.layerType);
     }
@@ -41,7 +41,7 @@ export const useSyncedGraph = (): [
   const ySharedNetworkName = ydoc.getText('networkNameShared');
   const ySharedAppStatus = ydoc.getMap('sharedAppStatus'); // Get Y.Map for app status
 
-  const setNetworkFacts = useNetworkStore(state => state.setFacts); // Get setter
+  const setNetworkFacts = useNetworkStore((state) => state.setFacts); // Get setter
 
   const mapNodeToRF = (ymap: Y.Map<unknown>): Node<MLNodeData> => {
     const node = ymap.toJSON() as unknown as Node<MLNodeData>;
@@ -73,10 +73,11 @@ export const useSyncedGraph = (): [
 
       const inputShapes = extractInputShapes(currentNodes);
       const componentTypes = extractComponentTypes(currentNodes);
-      
+
       const currentSharedName = ySharedNetworkName.toString();
       // Get isLoadingGraph from Yjs, default to false if not set
-      const currentIsLoadingGraph = ySharedAppStatus.get('isLoadingGraph') as boolean | undefined ?? false;
+      const currentIsLoadingGraph =
+        (ySharedAppStatus.get('isLoadingGraph') as boolean | undefined) ?? false;
 
       // Get existing non-Yjs-synced facts from store only if needed, but prefer Yjs truth.
       // For numNodes, etc., Yjs is the source of truth now via currentNodes/Edges.
@@ -94,7 +95,7 @@ export const useSyncedGraph = (): [
 
     yNodes.observe(syncAllData);
     yEdges.observe(syncAllData);
-    ySharedNetworkName.observe(syncAllData); 
+    ySharedNetworkName.observe(syncAllData);
     ySharedAppStatus.observe(syncAllData); // Observe shared app status
 
     syncAllData(); // Initial sync
@@ -105,7 +106,7 @@ export const useSyncedGraph = (): [
       ySharedNetworkName.unobserve(syncAllData);
       ySharedAppStatus.unobserve(syncAllData); // Unobserve shared app status
     };
-  // Dependencies: yNodes, yEdges, setNetworkFacts (stable)
+    // Dependencies: yNodes, yEdges, setNetworkFacts (stable)
   }, [yNodes, yEdges, ySharedNetworkName, ySharedAppStatus, setNetworkFacts]); // Added ySharedAppStatus
 
   /* ► React → Yjs (wrap in transact) */

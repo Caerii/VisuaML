@@ -30,7 +30,6 @@ export interface VoxelLayout {
   totalVoxelCount: number;
 }
 
-
 // ===========================
 // CONSTANTS
 // ===========================
@@ -38,7 +37,7 @@ export const CONSTANTS = {
   COLORS: {
     DEFAULT_SLICE: ['#AFEEEE', '#ADD8E6'] as string[],
     PREVIEW: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'] as string[],
-    EDGE: '#333333'
+    EDGE: '#333333',
   },
   DIMENSIONS: {
     VOXEL_SIZE: 0.08,
@@ -47,15 +46,15 @@ export const CONSTANTS = {
     MAX_VOXELS_FULLSCREEN: 8,
     MAX_VOXELS_MINI: 4,
     PREVIEW_GRID_SIZE: 3,
-    PREVIEW_SPACING: 0.12
+    PREVIEW_SPACING: 0.12,
   },
   CAMERA: {
     FOV: 50,
     DISTANCE_MULTIPLIER_MINI: 2.5,
     DISTANCE_MULTIPLIER_FULLSCREEN: 2.0,
     MIN_DISTANCE_MINI: 0.8,
-    MIN_DISTANCE_FULLSCREEN: 0.5
-  }
+    MIN_DISTANCE_FULLSCREEN: 0.5,
+  },
 } as const;
 
 // ===========================
@@ -74,7 +73,7 @@ export const STYLES = {
     zIndex: 100,
     lineHeight: '1.3',
     fontFamily: 'monospace',
-    pointerEvents: 'none' as const
+    pointerEvents: 'none' as const,
   },
   infoCard: {
     position: 'absolute' as const,
@@ -91,7 +90,7 @@ export const STYLES = {
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
     border: '1px solid rgba(0, 0, 0, 0.1)',
     minWidth: '200px',
-    maxWidth: '300px'
+    maxWidth: '300px',
   },
   fullscreenButton: {
     position: 'absolute' as const,
@@ -106,7 +105,7 @@ export const STYLES = {
     zIndex: 10,
     display: 'flex',
     alignItems: 'center',
-    gap: '4px'
+    gap: '4px',
   },
   exitButton: {
     position: 'absolute' as const,
@@ -119,8 +118,8 @@ export const STYLES = {
     padding: '12px 16px',
     cursor: 'pointer',
     fontSize: '14px',
-    zIndex: 1000
-  }
+    zIndex: 1000,
+  },
 } as const;
 
 // ===========================
@@ -137,7 +136,10 @@ export const getCachedGeometry = (size: number): THREE.BoxGeometry => {
   return geometryCache.get(key)!;
 };
 
-export const getCachedMaterial = (roughness: number, metalness: number): THREE.MeshStandardMaterial => {
+export const getCachedMaterial = (
+  roughness: number,
+  metalness: number,
+): THREE.MeshStandardMaterial => {
   const key = `mat_${roughness}_${metalness}`;
   if (!materialCache.has(key)) {
     materialCache.set(key, new THREE.MeshStandardMaterial({ roughness, metalness }));
@@ -151,17 +153,17 @@ export const getCachedMaterial = (roughness: number, metalness: number): THREE.M
 
 export const calculateCameraPosition = (isFullscreen: boolean, shape: number[]): CameraConfig => {
   const fovInRadians = THREE.MathUtils.degToRad(CONSTANTS.CAMERA.FOV);
-  
+
   if (!isFullscreen) {
-    // Mini viewer: position camera for larger 3x3x3 preview 
+    // Mini viewer: position camera for larger 3x3x3 preview
     const spacing = 0.4; // Match the larger spacing from AnimatedTensorPreview
     const previewSize = CONSTANTS.DIMENSIONS.PREVIEW_GRID_SIZE * spacing; // Total extent of the preview
-    let dist = (previewSize / 2) / Math.tan(fovInRadians / 2);
+    let dist = previewSize / 2 / Math.tan(fovInRadians / 2);
     dist = Math.max(dist * 2.2, 1.8); // Adjust multiplier and minimum for larger preview
-    
+
     return {
       position: [dist * 0.7, dist * 0.5, dist],
-      distance: dist
+      distance: dist,
     };
   }
 
@@ -170,36 +172,53 @@ export const calculateCameraPosition = (isFullscreen: boolean, shape: number[]):
   const effectiveHeight = Math.min(height, maxVoxels);
   const effectiveWidth = Math.min(width, maxVoxels);
 
-  const planeWidth = effectiveWidth * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) - CONSTANTS.DIMENSIONS.VOXEL_GAP;
-  const planeHeight = effectiveHeight * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) - CONSTANTS.DIMENSIONS.VOXEL_GAP;
-  const stackDepth = channels * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP) - CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP;
+  const planeWidth =
+    effectiveWidth * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) -
+    CONSTANTS.DIMENSIONS.VOXEL_GAP;
+  const planeHeight =
+    effectiveHeight * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) -
+    CONSTANTS.DIMENSIONS.VOXEL_GAP;
+  const stackDepth =
+    channels * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP) -
+    CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP;
 
   const maxDim = Math.max(planeWidth, planeHeight, stackDepth);
-  let dist = (maxDim / 2) / Math.tan(fovInRadians / 2);
-  dist = Math.max(dist * CONSTANTS.CAMERA.DISTANCE_MULTIPLIER_FULLSCREEN, CONSTANTS.CAMERA.MIN_DISTANCE_FULLSCREEN);
+  let dist = maxDim / 2 / Math.tan(fovInRadians / 2);
+  dist = Math.max(
+    dist * CONSTANTS.CAMERA.DISTANCE_MULTIPLIER_FULLSCREEN,
+    CONSTANTS.CAMERA.MIN_DISTANCE_FULLSCREEN,
+  );
   dist = Math.max(dist, CONSTANTS.DIMENSIONS.VOXEL_SIZE * 5);
 
   return {
     position: [dist * 0.6, dist * 0.5, dist],
-    distance: dist
+    distance: dist,
   };
 };
 
 export const generateVoxelLayout = (
-  shape: number[], 
-  isFullscreen: boolean, 
-  sliceColors: string[]
+  shape: number[],
+  isFullscreen: boolean,
+  sliceColors: string[],
 ): VoxelLayout => {
   const [channels, height, width] = shape;
-  
-  const maxVoxelsPerAxis = isFullscreen ? CONSTANTS.DIMENSIONS.MAX_VOXELS_FULLSCREEN : CONSTANTS.DIMENSIONS.MAX_VOXELS_MINI;
+
+  const maxVoxelsPerAxis = isFullscreen
+    ? CONSTANTS.DIMENSIONS.MAX_VOXELS_FULLSCREEN
+    : CONSTANTS.DIMENSIONS.MAX_VOXELS_MINI;
   const effectiveHeight = Math.min(height, maxVoxelsPerAxis);
   const effectiveWidth = Math.min(width, maxVoxelsPerAxis);
 
-  const planeVisualWidth = effectiveWidth * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) - CONSTANTS.DIMENSIONS.VOXEL_GAP;
-  const planeVisualHeight = effectiveHeight * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) - CONSTANTS.DIMENSIONS.VOXEL_GAP;
+  const planeVisualWidth =
+    effectiveWidth * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) -
+    CONSTANTS.DIMENSIONS.VOXEL_GAP;
+  const planeVisualHeight =
+    effectiveHeight * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) -
+    CONSTANTS.DIMENSIONS.VOXEL_GAP;
 
-  const totalStackDepth = channels * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP) - CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP;
+  const totalStackDepth =
+    channels * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP) -
+    CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP;
   const groupZOffset = -totalStackDepth / 2 + CONSTANTS.DIMENSIONS.VOXEL_SIZE / 2;
 
   const totalVoxelCount = channels * effectiveHeight * effectiveWidth;
@@ -213,17 +232,25 @@ export const generateVoxelLayout = (
   let voxelIndex = 0;
 
   for (let cIndex = 0; cIndex < channels; cIndex++) {
-    const channelZPos = groupZOffset + cIndex * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP);
+    const channelZPos =
+      groupZOffset +
+      cIndex * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.CHANNEL_STACK_GAP);
     const baseColor = sliceColors[cIndex % sliceColors.length];
     color.set(baseColor);
-    
+
     const startIndex = voxelIndex;
 
     for (let hIndex = 0; hIndex < effectiveHeight; hIndex++) {
       for (let wIndex = 0; wIndex < effectiveWidth; wIndex++) {
-        const voxelX = wIndex * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) - planeVisualWidth / 2 + CONSTANTS.DIMENSIONS.VOXEL_SIZE / 2;
-        const voxelY = hIndex * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) - planeVisualHeight / 2 + CONSTANTS.DIMENSIONS.VOXEL_SIZE / 2;
-        
+        const voxelX =
+          wIndex * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) -
+          planeVisualWidth / 2 +
+          CONSTANTS.DIMENSIONS.VOXEL_SIZE / 2;
+        const voxelY =
+          hIndex * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) -
+          planeVisualHeight / 2 +
+          CONSTANTS.DIMENSIONS.VOXEL_SIZE / 2;
+
         dummy.position.set(voxelX, voxelY, channelZPos);
         dummy.updateMatrix();
         dummy.matrix.toArray(matrices, voxelIndex * 16);
@@ -236,17 +263,17 @@ export const generateVoxelLayout = (
       }
     }
 
-    bounds.push({ 
-      start: startIndex, 
-      end: voxelIndex - 1, 
-      zPos: channelZPos 
+    bounds.push({
+      start: startIndex,
+      end: voxelIndex - 1,
+      zPos: channelZPos,
     });
   }
 
-  return { 
-    instanceMatrices: matrices, 
-    instanceColors: colors, 
+  return {
+    instanceMatrices: matrices,
+    instanceColors: colors,
     channelBounds: bounds,
-    totalVoxelCount
+    totalVoxelCount,
   };
-}; 
+};

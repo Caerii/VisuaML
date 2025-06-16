@@ -32,7 +32,7 @@ export const CategoricalProvider: React.FC<CategoricalProviderProps> = ({ childr
   }, []);
 
   const togglePanel = useCallback(() => {
-    setIsVisible(prev => !prev);
+    setIsVisible((prev) => !prev);
   }, []);
 
   const clearData = useCallback(() => {
@@ -46,14 +46,10 @@ export const CategoricalProvider: React.FC<CategoricalProviderProps> = ({ childr
     showPanel,
     hidePanel,
     togglePanel,
-    clearData
+    clearData,
   };
 
-  return (
-    <CategoricalContext.Provider value={value}>
-      {children}
-    </CategoricalContext.Provider>
-  );
+  return <CategoricalContext.Provider value={value}>{children}</CategoricalContext.Provider>;
 };
 
 export const useCategoricalContext = (): CategoricalContextType => {
@@ -62,4 +58,4 @@ export const useCategoricalContext = (): CategoricalContextType => {
     throw new Error('useCategoricalContext must be used within a CategoricalProvider');
   }
   return context;
-}; 
+};

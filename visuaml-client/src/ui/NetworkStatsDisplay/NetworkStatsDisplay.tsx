@@ -1,8 +1,26 @@
 /** @fileoverview Defines the NetworkStatsDisplay component, which shows key information about the currently loaded network graph, such as node/edge counts, input shapes, and component types. It sources its data from a Zustand store and uses Material-UI components for presentation. */
 import React from 'react';
 import { useNetworkStore } from '../../store/networkStore';
-import { Paper, Typography, List, ListItem, ListItemText, Chip, Box, CircularProgress, Divider, type SxProps, type Theme } from '@mui/material';
-import { AccountTree, DataObject, ShareOutlined, Input, CategoryOutlined } from '@mui/icons-material';
+import {
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Chip,
+  Box,
+  CircularProgress,
+  Divider,
+  type SxProps,
+  type Theme,
+} from '@mui/material';
+import {
+  AccountTree,
+  DataObject,
+  ShareOutlined,
+  Input,
+  CategoryOutlined,
+} from '@mui/icons-material';
 
 export const NetworkStatsDisplay: React.FC = () => {
   const { facts } = useNetworkStore();
@@ -48,7 +66,7 @@ export const NetworkStatsDisplay: React.FC = () => {
           </Typography>
         </Box>
       )}
-      
+
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
         <DataObject sx={iconSx} />
         <Typography variant="body2">Nodes: {facts.numNodes}</Typography>
@@ -95,4 +113,4 @@ export const NetworkStatsDisplay: React.FC = () => {
       )}
     </Paper>
   );
-}; 
+};

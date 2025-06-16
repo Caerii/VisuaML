@@ -17,13 +17,13 @@ Unlike traditional approaches that treat neural networks as computational graphs
 
 ### 2. Comparison with Catgrad
 
-| Aspect | Catgrad | VisuaML Categorical |
-|--------|---------|-------------------|
-| **Purpose** | Deep learning compiler | Model visualization + categorical analysis |
-| **Input** | Categorical layer definitions | PyTorch FX graphs |
-| **Output** | Static compiled code | Open hypergraph representations |
-| **Composition** | Direct categorical composition | Bridge-based conversion |
-| **Backends** | Python, C++, CUDA | JSON, Rust macros, OpenHypergraph |
+| Aspect          | Catgrad                        | VisuaML Categorical                        |
+| --------------- | ------------------------------ | ------------------------------------------ |
+| **Purpose**     | Deep learning compiler         | Model visualization + categorical analysis |
+| **Input**       | Categorical layer definitions  | PyTorch FX graphs                          |
+| **Output**      | Static compiled code           | Open hypergraph representations            |
+| **Composition** | Direct categorical composition | Bridge-based conversion                    |
+| **Backends**    | Python, C++, CUDA              | JSON, Rust macros, OpenHypergraph          |
 
 ## Architecture
 
@@ -456,4 +456,4 @@ print(f"Hypergraph stats: {stats}")
 - [Catgrad Repository](https://github.com/statusfailed/catgrad)
 - [Open Hypergraphs Library](https://github.com/statusfailed/open-hypergraphs)
 - [Category Theory for Programmers](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/)
-- [Reverse Derivative Ascent Paper](http://catgrad.com/p/reverse-derivative-ascent/) 
+- [Reverse Derivative Ascent Paper](http://catgrad.com/p/reverse-derivative-ascent/)

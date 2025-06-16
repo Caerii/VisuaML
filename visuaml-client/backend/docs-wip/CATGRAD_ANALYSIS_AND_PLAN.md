@@ -5,12 +5,14 @@
 ### **What Catgrad Does Right**
 
 **1. Categorical Foundation**
+
 - **String Diagrams as Syntax**: Models are formal graphical syntax for Symmetric Monoidal Categories
 - **Compositional Structure**: Operations are morphisms that can be composed
 - **Type Safety**: Every morphism has well-defined input/output types
 - **Reverse Derivatives**: Uses categorical reverse derivatives, not autograd
 
 **2. Clean Architecture**
+
 ```
 catgrad/
 ├── catgrad/           # Core library
@@ -24,6 +26,7 @@ catgrad/
 ```
 
 **3. Proper Open Hypergraph Usage**
+
 - **Input/Output Boundaries**: Clear interfaces for composition
 - **Morphism Composition**: Models can be composed categorically
 - **Static Compilation**: Compiles to framework-free code
@@ -32,6 +35,7 @@ catgrad/
 ### **Key Catgrad Concepts**
 
 **Categorical Model Definition:**
+
 ```python
 # Define types
 BATCH_TYPE = ArrayType(shape=(None,), dtype=Dtype.int32)
@@ -46,6 +50,7 @@ CompiledModel, _, _ = compile_model(model, layers.sgd(0.01), layers.mse)
 ```
 
 **Compositional Structure:**
+
 ```python
 # Models can be composed
 model1 = layers.linear(A, B, C)
@@ -59,6 +64,7 @@ composed = model3 @ model2 @ model1  # Category composition
 ## 🚨 Issues with Our Current Implementation
 
 ### **1. Missing Categorical Foundation**
+
 ```python
 # ❌ Our current approach - just metadata
 def json_to_categorical(json_data):
@@ -69,12 +75,14 @@ model = layers.linear(BATCH_TYPE, INPUT_TYPE, OUTPUT_TYPE)
 ```
 
 ### **2. No Compositional Interface**
+
 - Our hypergraphs can't be composed together
 - No input/output boundaries
 - No type safety
 - No morphism structure
 
 ### **3. Incorrect Library Usage**
+
 - Trying to force PyTorch FX graphs into open-hypergraphs library
 - Should build categorical structures first, then convert
 - Missing the mathematical foundation
@@ -84,6 +92,7 @@ model = layers.linear(BATCH_TYPE, INPUT_TYPE, OUTPUT_TYPE)
 ### **Phase 1: Reorganize Codebase Structure**
 
 **New Directory Structure:**
+
 ```
 visuaml-client/backend/
 ├── visuaml/
@@ -126,6 +135,7 @@ visuaml-client/backend/
 ### **Phase 2: Implement Categorical Foundation**
 
 **1. Type System (`categorical/types.py`)**
+
 ```python
 from dataclasses import dataclass
 from typing import Tuple, Optional
@@ -140,7 +150,7 @@ class Dtype(Enum):
 class ArrayType:
     shape: Tuple[Optional[int], ...]
     dtype: Dtype
-    
+
     def __str__(self):
         return f"Array{self.shape}[{self.dtype.value}]"
 
@@ -148,50 +158,51 @@ class ArrayType:
 class TensorType:
     input_type: ArrayType
     output_type: ArrayType
-    
+
     def __str__(self):
         return f"{self.input_type} → {self.output_type}"
 ```
 
 **2. Morphisms (`categorical/morphisms.py`)**
+
 ```python
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any
 
 class Morphism(ABC):
     """Base class for categorical morphisms"""
-    
+
     def __init__(self, input_type: ArrayType, output_type: ArrayType):
         self.input_type = input_type
         self.output_type = output_type
-    
+
     @abstractmethod
     def forward(self, inputs: List[Any]) -> List[Any]:
         """Forward computation"""
         pass
-    
+
     @abstractmethod
     def to_hypergraph(self) -> Dict[str, Any]:
         """Convert to open hypergraph representation"""
         pass
-    
+
     def __matmul__(self, other: 'Morphism') -> 'Morphism':
         """Categorical composition via @ operator"""
         return ComposedMorphism(other, self)
 
 class LinearMorphism(Morphism):
     """Linear transformation morphism"""
-    
+
     def __init__(self, input_dim: int, output_dim: int):
         input_type = ArrayType((input_dim,), Dtype.FLOAT32)
         output_type = ArrayType((output_dim,), Dtype.FLOAT32)
         super().__init__(input_type, output_type)
         self.weight_shape = (output_dim, input_dim)
-    
+
     def forward(self, inputs: List[Any]) -> List[Any]:
         # Implementation for forward pass
         pass
-    
+
     def to_hypergraph(self) -> Dict[str, Any]:
         return {
             "type": "linear",
@@ -202,22 +213,23 @@ class LinearMorphism(Morphism):
 ```
 
 **3. Composition (`categorical/composition.py`)**
+
 ```python
 class ComposedMorphism(Morphism):
     """Composition of two morphisms"""
-    
+
     def __init__(self, first: Morphism, second: Morphism):
         if first.output_type != second.input_type:
             raise ValueError(f"Cannot compose: {first.output_type} ≠ {second.input_type}")
-        
+
         super().__init__(first.input_type, second.output_type)
         self.first = first
         self.second = second
-    
+
     def forward(self, inputs: List[Any]) -> List[Any]:
         intermediate = self.first.forward(inputs)
         return self.second.forward(intermediate)
-    
+
     def to_hypergraph(self) -> Dict[str, Any]:
         return {
             "type": "composition",
@@ -231,6 +243,7 @@ class ComposedMorphism(Morphism):
 ### **Phase 3: Bridge Implementation**
 
 **PyTorch Bridge (`bridges/pytorch_bridge.py`)**
+
 ```python
 from torch.fx import GraphModule, Node
 from ..categorical.morphisms import Morphism, LinearMorphism
@@ -238,24 +251,24 @@ from ..categorical.types import ArrayType, Dtype
 
 class PyTorchToCategorical:
     """Converts PyTorch FX graphs to categorical morphisms"""
-    
+
     def convert_graph(self, graph_module: GraphModule) -> Morphism:
         """Convert entire graph to categorical representation"""
         morphisms = []
-        
+
         for node in graph_module.graph.nodes:
             if node.op == 'call_function':
                 morphism = self._convert_node(node)
                 if morphism:
                     morphisms.append(morphism)
-        
+
         # Compose all morphisms
         result = morphisms[0]
         for m in morphisms[1:]:
             result = result @ m
-        
+
         return result
-    
+
     def _convert_node(self, node: Node) -> Optional[Morphism]:
         """Convert individual node to morphism"""
         if str(node.target) == 'torch.nn.functional.linear':
@@ -263,7 +276,7 @@ class PyTorchToCategorical:
             input_dim = self._get_input_dim(node)
             output_dim = self._get_output_dim(node)
             return LinearMorphism(input_dim, output_dim)
-        
+
         # Add more node type conversions
         return None
 ```
@@ -271,26 +284,27 @@ class PyTorchToCategorical:
 ### **Phase 4: Proper OpenHypergraph Integration**
 
 **Hypergraph Bridge (`bridges/hypergraph_bridge.py`)**
+
 ```python
 from open_hypergraphs import OpenHypergraph, FiniteFunction
 import numpy as np
 
 class CategoricalToOpenHypergraph:
     """Converts categorical morphisms to proper OpenHypergraph objects"""
-    
+
     def convert_morphism(self, morphism: Morphism) -> OpenHypergraph:
         """Convert morphism to OpenHypergraph with proper boundaries"""
-        
+
         # Build hypergraph structure
         hypergraph_data = morphism.to_hypergraph()
-        
+
         # Create proper input/output boundaries
         input_boundary = self._create_boundary(morphism.input_type)
         output_boundary = self._create_boundary(morphism.output_type)
-        
+
         # Build FiniteFunction for hypergraph structure
         sources, targets = self._build_hypergraph_structure(hypergraph_data)
-        
+
         # Create OpenHypergraph with proper categorical structure
         return OpenHypergraph(
             sources=sources,
@@ -298,7 +312,7 @@ class CategoricalToOpenHypergraph:
             input_boundary=input_boundary,
             output_boundary=output_boundary
         )
-    
+
     def _create_boundary(self, array_type: ArrayType) -> FiniteFunction:
         """Create proper boundary from type information"""
         # Implementation for creating categorical boundaries
@@ -308,10 +322,11 @@ class CategoricalToOpenHypergraph:
 ### **Phase 5: Clean Export System**
 
 **Categorical Exporter (`export/categorical_exporter.py`)**
+
 ```python
 class CategoricalExporter:
     """Export categorical models in various formats"""
-    
+
     def export_json(self, morphism: Morphism) -> Dict[str, Any]:
         """Export as JSON with categorical structure"""
         return {
@@ -320,12 +335,12 @@ class CategoricalExporter:
             "output_type": str(morphism.output_type),
             "composition_structure": self._analyze_composition(morphism)
         }
-    
+
     def export_open_hypergraph(self, morphism: Morphism) -> OpenHypergraph:
         """Export as proper OpenHypergraph object"""
         bridge = CategoricalToOpenHypergraph()
         return bridge.convert_morphism(morphism)
-    
+
     def export_rust_macro(self, morphism: Morphism) -> str:
         """Export as Rust macro for hellas-ai/open-hypergraphs"""
         # Generate Rust syntax from categorical structure
@@ -335,21 +350,25 @@ class CategoricalExporter:
 ## 🎯 Implementation Benefits
 
 ### **1. Proper Categorical Foundation**
+
 - Real categorical morphisms, not just metadata
 - Type-safe composition
 - Mathematical correctness
 
 ### **2. Clean Architecture**
+
 - Separation of concerns
 - Modular design
 - Easy to extend and test
 
 ### **3. True Bidirectional Conversion**
+
 - PyTorch FX → Categorical → OpenHypergraph
 - Categorical → JSON/Rust/Python
 - Composable and mathematically sound
 
 ### **4. Catgrad Compatibility**
+
 - Similar architectural patterns
 - Could integrate catgrad compilation later
 - Follows categorical best practices
@@ -363,4 +382,4 @@ class CategoricalExporter:
 5. **Implement clean export system**
 6. **Add comprehensive tests and documentation**
 
-This approach will give us a mathematically sound, well-organized, and extensible categorical hypergraph system that properly follows the patterns established by catgrad. 
+This approach will give us a mathematically sound, well-organized, and extensible categorical hypergraph system that properly follows the patterns established by catgrad.

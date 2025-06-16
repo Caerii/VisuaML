@@ -11,14 +11,10 @@ interface NodeHeaderProps {
 const NodeHeader: React.FC<NodeHeaderProps> = ({ layerDisplayName, subtext, isSelected }) => {
   return (
     <div className={`${styles.nodeHeader} ${isSelected ? styles.nodeHeaderSelected : ''}`}>
-      <div className={styles.nodeHeaderTitle}>
-        {layerDisplayName}
-      </div>
-      {subtext && (
-        <div className={styles.nodeHeaderSubtext}>{subtext}</div>
-      )}
+      <div className={styles.nodeHeaderTitle}>{layerDisplayName}</div>
+      {subtext && <div className={styles.nodeHeaderSubtext}>{subtext}</div>}
     </div>
   );
 };
 
-export default NodeHeader; 
+export default NodeHeader;

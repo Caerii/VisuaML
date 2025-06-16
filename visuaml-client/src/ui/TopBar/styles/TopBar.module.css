@@ -4,13 +4,13 @@
 
 /* Color Variables (placeholders - replace with actual values from your theme) */
 :root {
-  --primary-700: #4A5568; /* Example: Slate 600 - Old header color */
+  --primary-700: #4a5568; /* Example: Slate 600 - Old header color */
   --header-bg: #111827; /* New dark background for header */
-  --accent-400: #FBBF24;  /* Example: Amber 400 */
-  --yellow-500: #F59E0B;  /* Example: Amber 500 */
+  --accent-400: #fbbf24; /* Example: Amber 400 */
+  --yellow-500: #f59e0b; /* Example: Amber 500 */
   --text-white: #ffffff;
   --text-black: #000000;
-  --text-gray-800: #1F2937;
+  --text-gray-800: #1f2937;
 }
 
 .header {
@@ -21,7 +21,9 @@
   background-color: var(--header-bg); /* Changed to new dark background */
   color: var(--text-white); /* text-white */
   /* Keeping a subtle shadow, can be removed if preferred */
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
 }
 
 /* Styles for the logo link wrapper */
@@ -61,24 +63,26 @@
   padding: 0.4rem 0.75rem; /* Adjusted padding for better appearance */
   color: var(--text-black);
   background-color: #ffffff; /* Clean white background */
-  border: 1px solid #D1D5DB; /* Lighter, more subtle border (Tailwind gray-300) */
-  outline: none; 
-  min-width: 18rem; 
-  cursor: pointer; 
+  border: 1px solid #d1d5db; /* Lighter, more subtle border (Tailwind gray-300) */
+  outline: none;
+  min-width: 18rem;
+  cursor: pointer;
   font-size: 0.875rem; /* Match label size */
   line-height: 1.25rem; /* Ensure text is vertically centered if padding varies */
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
 }
 
 .select:focus {
-  border-color: var(--accent-400); 
+  border-color: var(--accent-400);
   outline: 2px solid transparent; /* Remove default outline if browser adds one */
   box-shadow: 0 0 0 2px var(--accent-400); /* Custom focus ring */
 }
 
 .select:disabled {
   opacity: 0.6; /* Slightly adjusted opacity for disabled state */
-  cursor: default; 
+  cursor: default;
 }
 
 .button {
@@ -88,7 +92,7 @@
   font-size: 0.875rem; /* text-sm */
   font-weight: 600; /* font-semibold */
   color: var(--text-gray-800); /* text-gray-800 */
-  border: none; 
+  border: none;
   cursor: pointer;
   transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -100,4 +104,4 @@
 .button:disabled {
   opacity: 0.5; /* disabled:opacity-50 */
   cursor: not-allowed; /* disabled:cursor-not-allowed */
-} 
+}

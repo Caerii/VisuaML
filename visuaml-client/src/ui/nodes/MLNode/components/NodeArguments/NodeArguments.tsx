@@ -16,7 +16,7 @@ const ArgumentRenderer: React.FC<ArgumentRendererProps> = ({ arg }) => {
   if (arg === null) {
     return <span>null</span>;
   }
-  
+
   if (isSourceNode(arg)) {
     const sourceText = arg.source_nodes?.length
       ? `nodes [${arg.source_nodes.join(', ')}]`
@@ -37,7 +37,7 @@ const ArgumentRenderer: React.FC<ArgumentRendererProps> = ({ arg }) => {
         {arg.map((item, index) => (
           <React.Fragment key={index}>
             <ArgumentRenderer arg={item} />
-            {index < arg.length - 1 && ", "}
+            {index < arg.length - 1 && ', '}
           </React.Fragment>
         ))}
         ]
@@ -48,22 +48,20 @@ const ArgumentRenderer: React.FC<ArgumentRendererProps> = ({ arg }) => {
   if (typeof arg === 'object') {
     return (
       <span>
-        {"{"}
+        {'{'}
         {Object.entries(arg).map(([key, value], index, arr) => (
           <React.Fragment key={key}>
-            <span style={{ fontStyle: 'italic' }}>'{key}'</span>:{" "}
-            <ArgumentRenderer arg={value} />
-            {index < arr.length - 1 && ", "}
+            <span style={{ fontStyle: 'italic' }}>'{key}'</span>: <ArgumentRenderer arg={value} />
+            {index < arr.length - 1 && ', '}
           </React.Fragment>
         ))}
-        {"}"}
+        {'}'}
       </span>
     );
   }
-  
+
   return <span>{String(arg)}</span>;
 };
-
 
 // ===========================
 // MAIN COMPONENT
@@ -90,7 +88,9 @@ const NodeArguments: React.FC<NodeArgumentsProps> = ({ args, kwargs }) => {
           <strong className={styles.infoLabel}>Args:</strong>
           <ul className={styles.argumentsList}>
             {args.map((arg, index) => (
-              <li key={index}><ArgumentRenderer arg={arg} /></li>
+              <li key={index}>
+                <ArgumentRenderer arg={arg} />
+              </li>
             ))}
           </ul>
         </div>
@@ -101,8 +101,7 @@ const NodeArguments: React.FC<NodeArgumentsProps> = ({ args, kwargs }) => {
           <ul className={styles.argumentsList}>
             {Object.entries(kwargs).map(([key, value]) => (
               <li key={key}>
-                <span className={styles.argumentKey}>{key}:</span>{' '}
-                <ArgumentRenderer arg={value} />
+                <span className={styles.argumentKey}>{key}:</span> <ArgumentRenderer arg={value} />
               </li>
             ))}
           </ul>
@@ -112,4 +111,4 @@ const NodeArguments: React.FC<NodeArgumentsProps> = ({ args, kwargs }) => {
   );
 };
 
-export default NodeArguments; 
+export default NodeArguments;

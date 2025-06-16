@@ -34,14 +34,17 @@ export const SLICE_COLORS = ['#a0c4ff', '#8ecae6', '#79d4c9'];
 export const parseShapeString = (shapeStr: string): number[] | null => {
   try {
     const parsed = JSON.parse(shapeStr.replace(/\(/g, '[').replace(/\)/g, ']'));
-    if (Array.isArray(parsed) && parsed.every(item => typeof item === 'number')) {
-      return parsed.filter(dim => dim > 0);
+    if (Array.isArray(parsed) && parsed.every((item) => typeof item === 'number')) {
+      return parsed.filter((dim) => dim > 0);
     }
     const singleNumber = parseInt(shapeStr, 10);
     if (!isNaN(singleNumber) && singleNumber > 0) return [singleNumber];
-
   } catch (e) {
-    const numbers = shapeStr.replace(/\(|\)|\[|\]/g, '').split(/[,\s]+/).map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n) && n > 0);
+    const numbers = shapeStr
+      .replace(/\(|\)|\[|\]/g, '')
+      .split(/[,\s]+/)
+      .map((s) => parseInt(s.trim(), 10))
+      .filter((n) => !isNaN(n) && n > 0);
     if (numbers.length > 0) return numbers;
     console.warn('Could not parse outputShape:', shapeStr, e);
   }
@@ -50,18 +53,27 @@ export const parseShapeString = (shapeStr: string): number[] | null => {
 
 export const processShape = (originalDims: number[] | null): ProcessedShape => {
   if (!originalDims || originalDims.length === 0) {
-    return { originalDims: [], visualDims: [], batchSize: null, processingNotes: "", numVisualDims: 0, isValid: false };
+    return {
+      originalDims: [],
+      visualDims: [],
+      batchSize: null,
+      processingNotes: '',
+      numVisualDims: 0,
+      isValid: false,
+    };
   }
 
   let batchSize: number | null = null;
   let visualDims: number[] = [...originalDims];
-  let processingNotes = "";
+  let processingNotes = '';
 
-  if (originalDims.length === 4) { // NCHW or NHWC
+  if (originalDims.length === 4) {
+    // NCHW or NHWC
     batchSize = originalDims[0];
     visualDims = originalDims.slice(1);
     processingNotes = ` (Batch size ${batchSize} omitted from visual)`;
-  } else if (originalDims.length === 2) { // N, Features
+  } else if (originalDims.length === 2) {
+    // N, Features
     batchSize = originalDims[0];
     visualDims = originalDims.slice(1);
     processingNotes = ` (Batch size ${batchSize} omitted from visual)`;
@@ -75,4 +87,4 @@ export const processShape = (originalDims: number[] | null): ProcessedShape => {
     numVisualDims: visualDims.length,
     isValid: true,
   };
-}; 
+};

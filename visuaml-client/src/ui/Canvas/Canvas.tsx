@@ -1,6 +1,12 @@
 /** @fileoverview Defines the main interactive canvas for VisuaML, integrating React Flow for graph visualization, Yjs for real-time collaboration, and components for displaying network statistics and remote user cursors. */
-import { ReactFlow, Background, BackgroundVariant, Controls, ReactFlowProvider } from '@xyflow/react';
-import type { RenderableCursor } from '../../y/usePresence'; 
+import {
+  ReactFlow,
+  Background,
+  BackgroundVariant,
+  Controls,
+  ReactFlowProvider,
+} from '@xyflow/react';
+import type { RenderableCursor } from '../../y/usePresence';
 import '@xyflow/react/dist/style.css';
 import MLNode from '../nodes/MLNode/MLNode';
 import { RemoteCursor } from '../RemoteCursor/RemoteCursor';
@@ -24,11 +30,7 @@ export const Canvas: React.FC = () => {
 
   return (
     <ReactFlowProvider>
-      <div
-        className={styles.canvasWrapper}
-        ref={reactFlowWrapper}
-        onMouseMove={handleMouseMove}
-      >
+      <div className={styles.canvasWrapper} ref={reactFlowWrapper} onMouseMove={handleMouseMove}>
         <NetworkStatsDisplay />
         <ReactFlow
           nodes={nodes}
@@ -46,18 +48,13 @@ export const Canvas: React.FC = () => {
           preventScrolling={true}
           multiSelectionKeyCode={null}
         >
-          <Background 
-            variant={BackgroundVariant.Dots}
-            gap={16}
-            size={1}
-            color="#e5e7eb"
-          />
-          <Controls 
+          <Background variant={BackgroundVariant.Dots} gap={16} size={1} color="#e5e7eb" />
+          <Controls
             position="top-left"
             style={{
               top: '50%',
               transform: 'translateY(-50%)',
-              left: '10px'
+              left: '10px',
             }}
           />
         </ReactFlow>
@@ -73,4 +70,4 @@ export const Canvas: React.FC = () => {
       </div>
     </ReactFlowProvider>
   );
-}; 
+};

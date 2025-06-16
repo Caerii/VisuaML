@@ -70,9 +70,9 @@ export interface OpenHypergraphCategoricalResponse {
 }
 
 // Union type for all possible responses
-export type OpenHypergraphResponse = 
-  | OpenHypergraphJsonResponse 
-  | OpenHypergraphMacroResponse 
+export type OpenHypergraphResponse =
+  | OpenHypergraphJsonResponse
+  | OpenHypergraphMacroResponse
   | OpenHypergraphCategoricalResponse;
 
 // Request schemas
@@ -96,4 +96,4 @@ export interface HypergraphErrorResponse {
   error: string;
   success: false;
   details?: unknown;
-} 
+}

@@ -70,12 +70,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-    <ClerkProvider publishableKey={clerkPublishableKey}>
-      <YDocProvider>
-        <MainApp />
-        <Toaster richColors position="top-right" />
-      </YDocProvider>
-    </ClerkProvider>
+      <ClerkProvider publishableKey={clerkPublishableKey}>
+        <YDocProvider>
+          <MainApp />
+          <Toaster richColors position="top-right" />
+        </YDocProvider>
+      </ClerkProvider>
     </ThemeProvider>
   </React.StrictMode>,
 );

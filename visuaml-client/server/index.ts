@@ -30,11 +30,11 @@ app.register(cors, {
 });
 
 // Define default sample inputs for models
-const defaultSampleInputs: Record<string, { args: string, dtypes: string, kwargs?: string }> = {
-  'models.SimpleNN': { args: "((1, 10),)", dtypes: '["float32"]' },
-  'models.DemoNet': { args: "((1, 10),)", dtypes: '["long"]' },
-  'models.MyTinyGPT': { args: "((1, 10),)", dtypes: '["float32"]' },
-  'models.TestModel': { args: "((1, 3, 32, 32),)", dtypes: '["float32"]' }
+const defaultSampleInputs: Record<string, { args: string; dtypes: string; kwargs?: string }> = {
+  'models.SimpleNN': { args: '((1, 10),)', dtypes: '["float32"]' },
+  'models.DemoNet': { args: '((1, 10),)', dtypes: '["long"]' },
+  'models.MyTinyGPT': { args: '((1, 10),)', dtypes: '["float32"]' },
+  'models.TestModel': { args: '((1, 3, 32, 32),)', dtypes: '["float32"]' },
   // Add other models from TopBar.tsx if they are different
   // and ensure their forward pass signature is compatible.
 };
@@ -54,7 +54,7 @@ const ImportBodySchema = z.object({
 
 // Define the schema for the export hypergraph request body
 const ExportHypergraphRequestSchema = z.object({
-  modelPath: z.string().min(1, "Model path is required"),
+  modelPath: z.string().min(1, 'Model path is required'),
   format: z.enum(['json', 'macro', 'categorical']).default('json'),
   sampleInputArgs: z.string().optional(),
   sampleInputDtypes: z.array(z.string()).optional(),
@@ -79,7 +79,9 @@ app.post('/api/import', async (req, reply) => {
     }
 
     const { modelPath, exportFormat, sampleInputArgs, sampleInputDtypes } = validationResult.data;
-    app.log.info(`Received import request for modelPath: ${modelPath}, exportFormat: ${exportFormat}`);
+    app.log.info(
+      `Received import request for modelPath: ${modelPath}, exportFormat: ${exportFormat}`,
+    );
 
     const scriptArgs = [modelPath]; // Start with modelPath
 
@@ -93,13 +95,17 @@ app.post('/api/import', async (req, reply) => {
     let inputDtypes = sampleInputDtypes;
 
     if (!inputArgs) {
-    const defaults = defaultSampleInputs[modelPath];
-    if (defaults) {
+      const defaults = defaultSampleInputs[modelPath];
+      if (defaults) {
         inputArgs = defaults.args;
         inputDtypes = defaults.dtypes ? JSON.parse(defaults.dtypes) : undefined;
-        app.log.info(`Using default sample inputs for ${modelPath}: args=${inputArgs}, dtypes=${JSON.stringify(inputDtypes)}`);
-    } else {
-      app.log.warn(`No default sample inputs found for ${modelPath}. Shape propagation will be skipped.`);
+        app.log.info(
+          `Using default sample inputs for ${modelPath}: args=${inputArgs}, dtypes=${JSON.stringify(inputDtypes)}`,
+        );
+      } else {
+        app.log.warn(
+          `No default sample inputs found for ${modelPath}. Shape propagation will be skipped.`,
+        );
       }
     }
 
@@ -109,7 +115,7 @@ app.post('/api/import', async (req, reply) => {
     if (inputDtypes && inputDtypes.length > 0) {
       scriptArgs.push('--sample-input-dtypes', JSON.stringify(inputDtypes));
     }
-    
+
     // Add other default CLI args if any, e.g. --abstraction-level
     // For now, let fx_export.py use its own defaults for these.
 
@@ -123,7 +129,9 @@ app.post('/api/import', async (req, reply) => {
     // Construct absolute path to the Python script
     const scriptPath = path.resolve(projectRoot, 'backend', 'scripts', 'fx_export.py');
 
-    app.log.info(`Executing script: python ${scriptPath} ${scriptArgs.join(' ')} with CWD: ${projectRoot}`);
+    app.log.info(
+      `Executing script: python ${scriptPath} ${scriptArgs.join(' ')} with CWD: ${projectRoot}`,
+    );
 
     const { stdout, stderr } = await execa(
       'python', // Reverted from 'python3' to 'python'
@@ -193,7 +201,9 @@ app.post('/api/export-hypergraph', async (req, reply) => {
     }
 
     const { modelPath, format, sampleInputArgs, sampleInputDtypes } = validationResult.data;
-    app.log.info(`Received export-hypergraph request for modelPath: ${modelPath}, format: ${format}`);
+    app.log.info(
+      `Received export-hypergraph request for modelPath: ${modelPath}, format: ${format}`,
+    );
 
     // Use the same fx_export.py script with the openhg format
     const exportFormat = `openhg-${format}`;
@@ -215,11 +225,9 @@ app.post('/api/export-hypergraph', async (req, reply) => {
 
     app.log.info(`Executing hypergraph export: python ${scriptPath} ${scriptArgs.join(' ')}`);
 
-    const { stdout, stderr } = await execa(
-      'python',
-      [scriptPath, ...scriptArgs],
-      { cwd: projectRoot }
-    );
+    const { stdout, stderr } = await execa('python', [scriptPath, ...scriptArgs], {
+      cwd: projectRoot,
+    });
 
     if (stderr) {
       app.log.error(`Error output from fx_export.py: ${stderr}`);
@@ -227,7 +235,6 @@ app.post('/api/export-hypergraph', async (req, reply) => {
 
     app.log.info(`Hypergraph export stdout length: ${stdout.length}`);
     reply.header('Content-Type', 'application/json').send(stdout);
-
   } catch (error: unknown) {
     app.log.error('Error in /api/export-hypergraph:', error);
     if (error instanceof ZodError) {
@@ -285,17 +292,18 @@ app.post('/api/export-all', async (req, reply) => {
     const formats = [
       { format: 'openhg-json', name: 'json' },
       { format: 'openhg-macro', name: 'macro' },
-      { format: 'openhg-categorical', name: 'categorical' }
+      { format: 'openhg-categorical', name: 'categorical' },
     ];
 
     // Generate all exports
     const exports: Record<string, unknown> = {};
-    const exportResults: Array<{ format: string; name: string; success: boolean; error?: string }> = [];
+    const exportResults: Array<{ format: string; name: string; success: boolean; error?: string }> =
+      [];
 
     for (const { format, name } of formats) {
       try {
         const scriptArgs = [modelPath, '--export-format', format];
-        
+
         if (sampleInputArgs) {
           scriptArgs.push('--sample-input-args', sampleInputArgs);
         }
@@ -304,11 +312,9 @@ app.post('/api/export-all', async (req, reply) => {
         }
 
         app.log.info(`Generating ${format} export...`);
-        const { stdout, stderr } = await execa(
-          'python',
-          [scriptPath, ...scriptArgs],
-          { cwd: projectRoot }
-        );
+        const { stdout, stderr } = await execa('python', [scriptPath, ...scriptArgs], {
+          cwd: projectRoot,
+        });
 
         if (stderr) {
           app.log.warn(`Warning in ${format} export: ${stderr}`);
@@ -319,7 +325,6 @@ app.post('/api/export-all', async (req, reply) => {
         exports[name] = result;
         exportResults.push({ format, name, success: true });
         app.log.info(`✅ ${format} export completed`);
-
       } catch (error: unknown) {
         app.log.error(`❌ Failed to generate ${format} export:`, error);
         const errorMessage = error instanceof Error ? error.message : String(error);
@@ -335,7 +340,7 @@ app.post('/api/export-all', async (req, reply) => {
       timestamp: new Date().toISOString(),
       exports,
       results: exportResults,
-      success: exportResults.every(r => r.success),
+      success: exportResults.every((r) => r.success),
       readme: `# ${modelName} Export Package
 
 Generated on: ${new Date().toISOString()}
@@ -356,13 +361,12 @@ Model: ${modelPath}
    - Arity information and conversion status
 
 ## Export Results:
-${exportResults.map(r => `- ${r.format}: ${r.success ? '✅ Success' : '❌ Failed - ' + r.error}`).join('\n')}
+${exportResults.map((r) => `- ${r.format}: ${r.success ? '✅ Success' : '❌ Failed - ' + r.error}`).join('\n')}
 
-Generated by VisuaML Export System`
+Generated by VisuaML Export System`,
     };
 
     reply.header('Content-Type', 'application/json').send(response);
-
   } catch (error: unknown) {
     app.log.error('Error in /api/export-all:', error);
     if (error instanceof ZodError) {

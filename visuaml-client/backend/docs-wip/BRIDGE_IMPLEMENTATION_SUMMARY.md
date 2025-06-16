@@ -85,14 +85,14 @@ The bridge architecture is sound and ready for production!
 
 ## Comparison: Direct Catgrad vs Our Bridge
 
-| Aspect | Direct Catgrad | Our Bridge Approach |
-|--------|----------------|-------------------|
-| **User Experience** | Must rewrite all models in catgrad DSL | ✅ Works with existing PyTorch models |
-| **Architecture Support** | Limited to catgrad's layer types | ✅ Any PyTorch architecture |
-| **Integration** | Requires new infrastructure | ✅ Builds on existing FX tracing |
-| **Adoption** | All-or-nothing migration | ✅ Gradual, incremental adoption |
-| **Mathematical Rigor** | ✅ Categorical foundations | ✅ Categorical foundations |
-| **Open Hypergraph Export** | ✅ Native support | ✅ Via our implementation |
+| Aspect                     | Direct Catgrad                         | Our Bridge Approach                   |
+| -------------------------- | -------------------------------------- | ------------------------------------- |
+| **User Experience**        | Must rewrite all models in catgrad DSL | ✅ Works with existing PyTorch models |
+| **Architecture Support**   | Limited to catgrad's layer types       | ✅ Any PyTorch architecture           |
+| **Integration**            | Requires new infrastructure            | ✅ Builds on existing FX tracing      |
+| **Adoption**               | All-or-nothing migration               | ✅ Gradual, incremental adoption      |
+| **Mathematical Rigor**     | ✅ Categorical foundations             | ✅ Categorical foundations            |
+| **Open Hypergraph Export** | ✅ Native support                      | ✅ Via our implementation             |
 
 ## Example Usage
 
@@ -127,17 +127,20 @@ export_data = hypergraph.to_dict()
 ## Benefits Achieved
 
 ### For Users
+
 - **No Learning Curve**: Continue using PyTorch as normal
 - **Any Architecture**: ResNet, Transformer, custom models all work
 - **Gradual Adoption**: Can adopt categorical features incrementally
 
 ### For Developers
+
 - **Clean Architecture**: Well-organized, maintainable code
 - **Mathematical Soundness**: Proper categorical foundations
 - **Extensibility**: Easy to add new morphism types and features
 - **Integration**: Works with existing systems
 
 ### For the Project
+
 - **Systematic Organization**: Clean separation of concerns
 - **Type Safety**: Catches composition errors early
 - **Flexibility**: Handles complex model architectures
@@ -153,9 +156,10 @@ export_data = hypergraph.to_dict()
 ## Conclusion
 
 The bridge approach successfully provides:
+
 - ✅ **Mathematical rigor** from categorical theory
-- ✅ **Practical usability** with existing PyTorch workflows  
+- ✅ **Practical usability** with existing PyTorch workflows
 - ✅ **Systematic organization** with clean architecture
 - ✅ **Flexibility** to handle any model type
 
-This is the right architectural foundation for VisuaML's categorical future! 
+This is the right architectural foundation for VisuaML's categorical future!

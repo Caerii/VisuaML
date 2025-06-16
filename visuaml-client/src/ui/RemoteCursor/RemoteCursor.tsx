@@ -34,7 +34,7 @@ export const RemoteCursor: React.FC<RemoteCursorProps> = ({ x, y, name, color })
           strokeLinejoin="round"
         />
       </svg>
-      
+
       {/* User name label */}
       <div
         className={styles.nameLabel}
@@ -46,4 +46,4 @@ export const RemoteCursor: React.FC<RemoteCursorProps> = ({ x, y, name, color })
       </div>
     </div>
   );
-}; 
+};

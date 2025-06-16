@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host --open",
     "build": "tsc -b && vite build",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint": "eslint src/**/*.ts src/**/*.tsx",
+    "test": "vitest",
     "preview": "vite preview",
     "format": "prettier --write .",
     "import": "python ./backend/scripts/fx_export.py",

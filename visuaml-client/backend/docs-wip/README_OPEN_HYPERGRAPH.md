@@ -28,7 +28,7 @@ from visuaml import export_model_open_hypergraph
 
 # Export to JSON format (default)
 result = export_model_open_hypergraph(
-    'models.SimpleNN', 
+    'models.SimpleNN',
     sample_input_args=((10,),)
 )
 
@@ -40,7 +40,7 @@ print(f"Exported {len(result['nodes'])} nodes and {len(result['hyperedges'])} hy
 ```python
 # Export to macro format (text-based representation)
 result = export_model_open_hypergraph(
-    'models.SimpleNN', 
+    'models.SimpleNN',
     sample_input_args=((10,),),
     out_format="macro"
 )
@@ -166,11 +166,13 @@ Dictionary with open-hypergraph representation
 The open-hypergraph export works with models that are compatible with PyTorch FX tracing:
 
 ✅ **Supported:**
+
 - Feedforward networks (SimpleNN, Autoencoder)
 - Convolutional networks (with proper input shapes)
 - Most standard PyTorch operations
 
 ❌ **Limitations:**
+
 - Dynamic control flow (if/else statements)
 - Dynamic tensor shapes
 - Some RNN architectures with complex state handling
@@ -204,6 +206,7 @@ The export process:
 5. **Serialization**: Outputs in JSON or macro format
 
 The implementation preserves:
+
 - Operation types and targets
 - Tensor metadata (shapes, dtypes)
 - Graph connectivity
@@ -212,6 +215,7 @@ The implementation preserves:
 ## Future Enhancements
 
 Potential improvements:
+
 - Support for more complex control flow
 - Integration with visualization tools
 - Advanced filtering options
@@ -221,6 +225,7 @@ Potential improvements:
 ## Related Work
 
 This implementation is inspired by:
+
 - [Open Hypergraphs for String Diagrams](https://arxiv.org/pdf/2305.01041) paper
 - Category theory applications to machine learning
-- String diagram representations of neural networks 
+- String diagram representations of neural networks

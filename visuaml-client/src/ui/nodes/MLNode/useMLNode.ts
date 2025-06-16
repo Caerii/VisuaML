@@ -23,4 +23,4 @@ export const useMLNode = (props: NodeProps) => {
     subtextForHeader,
     inlineDynamicStyle,
   };
-}; 
+};

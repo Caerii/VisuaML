@@ -14,7 +14,7 @@ interface NodeDetailsPaneProps {
 
 const NodeDetailsPane: React.FC<NodeDetailsPaneProps> = ({ data, nodeId, isSelected }) => {
   return (
-    <div className={`${styles.detailsPane} ${isSelected ? styles.detailsPaneOpen : ''}`} >
+    <div className={`${styles.detailsPane} ${isSelected ? styles.detailsPaneOpen : ''}`}>
       <NodeInfoFields data={data} nodeId={nodeId} />
       <NodeArguments args={data.args} kwargs={data.kwargs} />
       {data.outputShape && <OutputShapeVisualizer outputShape={data.outputShape} />}
@@ -22,4 +22,4 @@ const NodeDetailsPane: React.FC<NodeDetailsPaneProps> = ({ data, nodeId, isSelec
   );
 };
 
-export default NodeDetailsPane; 
+export default NodeDetailsPane;

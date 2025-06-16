@@ -26,7 +26,7 @@ export const autoLayout = (
     rankdir: 'LR',
     nodesep: 70,
     ranksep: 90,
-    ...options
+    ...options,
   };
   g.setGraph(layoutOptions);
 

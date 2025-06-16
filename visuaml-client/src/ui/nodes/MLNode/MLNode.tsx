@@ -8,39 +8,40 @@ import { useMLNode } from './useMLNode';
 import styles from './styles/MLNode.module.css';
 
 const MLNode: React.FC<NodeProps> = (props) => {
-  const {
-    id,
-    selected,
-    type,
-    data,
-    layerDisplayName,
-    subtextForHeader,
-    inlineDynamicStyle,
-  } = useMLNode(props);
+  const { id, selected, type, data, layerDisplayName, subtextForHeader, inlineDynamicStyle } =
+    useMLNode(props);
 
-  const nodeClasses = useMemo(() => classnames(
-    styles.nodeBase,
-    type ? `react-flow__node-${type}` : '',
-    { 
-      [styles.nodeSelected]: selected 
-    }
-  ), [type, selected]);
+  const nodeClasses = useMemo(
+    () =>
+      classnames(styles.nodeBase, type ? `react-flow__node-${type}` : '', {
+        [styles.nodeSelected]: selected,
+      }),
+    [type, selected],
+  );
 
   return (
     <div style={inlineDynamicStyle} className={nodeClasses}>
-      <Handle type="target" position={Position.Left} style={{ background: '#4b5563', width: '10px', height: '10px', borderRadius: '50%' }} />
-      
-      <NodeHeader 
-        layerDisplayName={layerDisplayName} 
-        subtext={subtextForHeader} 
+      <Handle
+        type="target"
+        position={Position.Left}
+        style={{ background: '#4b5563', width: '10px', height: '10px', borderRadius: '50%' }}
+      />
+
+      <NodeHeader
+        layerDisplayName={layerDisplayName}
+        subtext={subtextForHeader}
         isSelected={selected}
       />
 
       <NodeDetailsPane data={data} nodeId={id} isSelected={selected} />
-      
-      <Handle type="source" position={Position.Right} style={{ background: '#4b5563', width: '10px', height: '10px', borderRadius: '50%' }} />
+
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{ background: '#4b5563', width: '10px', height: '10px', borderRadius: '50%' }}
+      />
     </div>
   );
 };
 
-export default MLNode; 
+export default MLNode;

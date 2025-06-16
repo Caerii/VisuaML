@@ -11,27 +11,31 @@ This document analyzes the models that failed open-hypergraph export and provide
 **Problem**: Input shape mismatch causing tensor dimension errors.
 
 **Root Cause**:
+
 - Expected input: `(batch, channels, height, width) = (1, 1, 28, 28)`
 - Provided input: `(1, 28, 28)` - missing channel dimension
 - The model expects 4D tensors for Conv2d layers but received 3D tensors
 
 **Error Message**:
+
 ```
 RuntimeError: Expected 4D tensor for input, but got 3D tensor
 ```
 
 **Solution**:
+
 ```python
 # ❌ Wrong usage
 export_model_open_hypergraph('models.SimpleCNN', sample_input_args=((1, 28, 28),))
 
-# ✅ Correct usage  
+# ✅ Correct usage
 export_model_open_hypergraph('models.SimpleCNN', sample_input_args=((1, 1, 28, 28),))
 ```
 
 **Fixed Model**: `FixedSimpleCNN.py`
+
 - Proper input shape documentation
-- Correct linear layer size calculation (32 * 7 * 7 = 1568)
+- Correct linear layer size calculation (32 _ 7 _ 7 = 1568)
 - Successfully exports: **11 nodes, 10 hyperedges**
 
 ### 2. BasicRNN - ❌ Dynamic Operations
@@ -39,16 +43,19 @@ export_model_open_hypergraph('models.SimpleCNN', sample_input_args=((1, 1, 28, 2
 **Problem**: Multiple FX tracing incompatibilities.
 
 **Root Causes**:
+
 1. **Dynamic Tensor Creation**: Uses `x.size(0)` in `torch.zeros()` which FX can't trace
 2. **Device-dependent Operations**: Uses `.to(x.device)` which is dynamic
 3. **Conditional Logic**: Has if/else statements based on RNN type at runtime
 
 **Error Message**:
+
 ```
 torch.fx.proxy.TraceError: symbolically traced variables cannot be used as inputs to control flow
 ```
 
 **Problematic Code**:
+
 ```python
 # ❌ These patterns break FX tracing
 h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
@@ -61,11 +68,13 @@ else:
 ```
 
 **Solutions**:
+
 1. **Remove Dynamic Tensor Creation**: Let PyTorch handle hidden state initialization
 2. **Remove Device Operations**: Avoid `.to(device)` calls in forward()
 3. **Separate Model Classes**: Create distinct classes for RNN, LSTM, GRU
 
 **Fixed Models**: `FixedBasicRNN.py`
+
 - `FixedBasicRNN`: Simplified RNN without manual hidden states
 - `FixedBasicLSTM`: LSTM variant
 - `FixedBasicGRU`: GRU variant
@@ -76,26 +85,30 @@ else:
 **Problem**: Embedding layer expects Long tensor indices but receives Float tensors.
 
 **Root Cause**:
+
 - Embedding layers require integer indices (Long tensors)
 - Test provided continuous Float values instead of discrete token indices
 
 **Error Message**:
+
 ```
 RuntimeError: Expected tensor for argument #1 'indices' to have scalar type Long; but got Float
 ```
 
 **Solution**:
+
 ```python
 # ❌ Wrong usage
 export_model_open_hypergraph('models.DemoNet', sample_input_args=((1, 32),))
 
 # ✅ Correct usage
-export_model_open_hypergraph('models.DemoNet', 
+export_model_open_hypergraph('models.DemoNet',
                             sample_input_args=((1, 32),),
                             sample_input_dtypes=['long'])
 ```
 
 **Fixed Model**: `FixedDemoNet.py`
+
 - Simplified architecture (removed complex attention)
 - Proper input type handling
 - Two variants: `FixedDemoNet` and `FixedDemoNetSimple`
@@ -113,48 +126,54 @@ export_model_open_hypergraph('models.DemoNet',
 ### ❌ FX-Incompatible Patterns
 
 1. **Dynamic Tensor Creation**:
+
    ```python
    # ❌ Avoid
    h0 = torch.zeros(batch_size, hidden_size)
-   
+
    # ✅ Use
    # Let PyTorch handle initialization automatically
    ```
 
 2. **Runtime Conditionals**:
+
    ```python
    # ❌ Avoid
    if isinstance(self.layer, nn.LSTM):
        out = self.layer(x, hidden)
-   
+
    # ✅ Use separate classes instead
    ```
 
 3. **Device-dependent Operations**:
+
    ```python
    # ❌ Avoid
    tensor.to(x.device)
-   
+
    # ✅ Handle device placement outside forward()
    ```
 
 4. **Shape-dependent Logic**:
+
    ```python
    # ❌ Avoid
    if x.size(1) > 10:
        x = self.layer1(x)
-   
+
    # ✅ Use fixed architectures
    ```
 
 ## Testing Results
 
 ### Original Models
+
 - **SimpleCNN**: ❌ Shape mismatch
-- **BasicRNN**: ❌ Dynamic operations  
+- **BasicRNN**: ❌ Dynamic operations
 - **DemoNet**: ❌ Input type mismatch
 
 ### Fixed Models
+
 - **FixedSimpleCNN**: ✅ 11 nodes, 10 hyperedges
 - **FixedBasicRNN**: ✅ 4 nodes, 3 hyperedges
 - **FixedDemoNet**: ✅ 7 nodes, 6 hyperedges
@@ -162,6 +181,7 @@ export_model_open_hypergraph('models.DemoNet',
 ## Usage Examples
 
 ### Fixed SimpleCNN
+
 ```python
 from visuaml import export_model_open_hypergraph
 
@@ -172,6 +192,7 @@ result = export_model_open_hypergraph(
 ```
 
 ### Fixed BasicRNN
+
 ```python
 result = export_model_open_hypergraph(
     'models.FixedBasicRNN',
@@ -180,6 +201,7 @@ result = export_model_open_hypergraph(
 ```
 
 ### Fixed DemoNet
+
 ```python
 result = export_model_open_hypergraph(
     'models.FixedDemoNet',
@@ -191,19 +213,25 @@ result = export_model_open_hypergraph(
 ## Diagnostic Tools
 
 ### 1. Model Diagnostic Script
+
 Run `python diagnose_models.py` to analyze compatibility issues:
+
 - Identifies specific problems
 - Suggests solutions
 - Tests fixes
 
 ### 2. Fixed Model Generator
+
 Run `python create_fixed_models.py` to generate compatible versions:
+
 - Creates fixed model files
 - Tests with open-hypergraph export
 - Validates FX tracing compatibility
 
 ### 3. Test Script
+
 Run `python test_fixed_models.py` to verify all fixes work:
+
 - Tests all fixed models
 - Confirms open-hypergraph export success
 - Reports node and hyperedge counts
@@ -219,6 +247,7 @@ Run `python test_fixed_models.py` to verify all fixes work:
 ## Common Patterns and Solutions
 
 ### Pattern 1: CNN Models
+
 ```python
 # ✅ Good CNN pattern
 class FXCompatibleCNN(nn.Module):
@@ -227,7 +256,7 @@ class FXCompatibleCNN(nn.Module):
         self.conv1 = nn.Conv2d(1, 16, 3, 1, 1)
         self.pool = nn.MaxPool2d(2, 2)
         self.fc = nn.Linear(16 * 14 * 14, 10)  # Pre-calculated size
-    
+
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
         x = x.view(x.size(0), -1)  # Only dynamic dimension is batch
@@ -235,6 +264,7 @@ class FXCompatibleCNN(nn.Module):
 ```
 
 ### Pattern 2: RNN Models
+
 ```python
 # ✅ Good RNN pattern
 class FXCompatibleRNN(nn.Module):
@@ -242,13 +272,14 @@ class FXCompatibleRNN(nn.Module):
         super().__init__()
         self.rnn = nn.RNN(input_size, hidden_size, batch_first=True)
         self.fc = nn.Linear(hidden_size, output_size)
-    
+
     def forward(self, x):
         out, _ = self.rnn(x)  # Let PyTorch handle hidden states
         return self.fc(out[:, -1, :])  # Last time step
 ```
 
 ### Pattern 3: Embedding Models
+
 ```python
 # ✅ Good embedding pattern
 class FXCompatibleEmbedding(nn.Module):
@@ -257,7 +288,7 @@ class FXCompatibleEmbedding(nn.Module):
         self.embedding = nn.Embedding(vocab_size, embed_dim)
         self.lstm = nn.LSTM(embed_dim, hidden_size, batch_first=True)
         self.fc = nn.Linear(hidden_size, output_size)
-    
+
     def forward(self, x):  # x should be Long tensor
         x = self.embedding(x)
         out, (h_n, _) = self.lstm(x)
@@ -283,9 +314,10 @@ The analysis shows that most PyTorch models can be made compatible with open-hyp
 The fixed models demonstrate that even complex architectures (CNNs, RNNs, Transformers) can be successfully exported to open-hypergraph format when designed with FX compatibility in mind.
 
 ### Success Rate
+
 - **Before fixes**: 0/3 models working (0%)
 - **After fixes**: 3/3 models working (100%)
 - **Total nodes exported**: 22 nodes across all fixed models
 - **Total hyperedges exported**: 19 hyperedges across all fixed models
 
-This demonstrates that with proper understanding of FX tracing limitations and appropriate model design, virtually any PyTorch architecture can be made compatible with open-hypergraph export. 
+This demonstrates that with proper understanding of FX tracing limitations and appropriate model design, virtually any PyTorch architecture can be made compatible with open-hypergraph export.

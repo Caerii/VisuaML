@@ -1,7 +1,7 @@
 /** @fileoverview Defines the controller logic for the 3D tensor visualizer. */
 import { useState, useRef, useEffect, useMemo } from 'react';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
-import { 
+import {
   type TensorVisualizer3DProps,
   type VoxelLayout,
   type CameraConfig,
@@ -12,7 +12,7 @@ import {
 
 export const useTensorVisualizer3D = (props: TensorVisualizer3DProps) => {
   const { shape, sliceColors = CONSTANTS.COLORS.DEFAULT_SLICE } = props;
-  
+
   // STATE
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [hoveredChannelIndex, setHoveredChannelIndex] = useState<number | null>(null);
@@ -22,14 +22,14 @@ export const useTensorVisualizer3D = (props: TensorVisualizer3DProps) => {
   const controlsRef = useRef<OrbitControlsImpl>(null!);
 
   // DERIVED STATE (from Model)
-  const cameraConfig: CameraConfig = useMemo(() => 
-    calculateCameraPosition(isFullscreen, shape), 
-    [isFullscreen, shape]
+  const cameraConfig: CameraConfig = useMemo(
+    () => calculateCameraPosition(isFullscreen, shape),
+    [isFullscreen, shape],
   );
-  
-  const voxelLayout: VoxelLayout = useMemo(() =>
-    generateVoxelLayout(shape, isFullscreen, sliceColors),
-    [shape, isFullscreen, sliceColors]
+
+  const voxelLayout: VoxelLayout = useMemo(
+    () => generateVoxelLayout(shape, isFullscreen, sliceColors),
+    [shape, isFullscreen, sliceColors],
   );
 
   // FULLSCREEN LOGIC
@@ -44,7 +44,7 @@ export const useTensorVisualizer3D = (props: TensorVisualizer3DProps) => {
 
   const toggleFullscreen = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (!isFullscreen && fullscreenRef.current) {
       try {
         await fullscreenRef.current.requestFullscreen();
@@ -76,7 +76,7 @@ export const useTensorVisualizer3D = (props: TensorVisualizer3DProps) => {
     // State
     isFullscreen,
     hoveredChannelIndex,
-    
+
     // Derived data
     cameraConfig,
     voxelLayout,
@@ -92,8 +92,8 @@ export const useTensorVisualizer3D = (props: TensorVisualizer3DProps) => {
     handlePointerDown,
 
     // Original props to pass through
-    ...props
+    ...props,
   };
 };
 
-export type UseTensorVisualizer3DReturn = ReturnType<typeof useTensorVisualizer3D>; 
+export type UseTensorVisualizer3DReturn = ReturnType<typeof useTensorVisualizer3D>;

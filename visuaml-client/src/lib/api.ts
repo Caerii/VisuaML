@@ -1,6 +1,10 @@
 /** @fileoverview This file contains API service functions for interacting with the backend. */
 
-import type { ImportApiResponse, ExportHypergraphResponse, ExportFormat } from '../ui/TopBar/TopBar.model';
+import type {
+  ImportApiResponse,
+  ExportHypergraphResponse,
+  ExportFormat,
+} from '../ui/TopBar/TopBar.model';
 
 /**
  * Fetches a model from the backend and returns it.
@@ -15,22 +19,26 @@ export const importModel = async (
   modelPath: string,
   exportFormat: string = 'visuaml-json',
   sampleInputArgs?: string,
-  sampleInputDtypes?: string[]
+  sampleInputDtypes?: string[],
 ): Promise<ImportApiResponse> => {
   const response = await fetch('/api/import', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
+    body: JSON.stringify({
       modelPath,
       exportFormat,
       sampleInputArgs,
-      sampleInputDtypes
+      sampleInputDtypes,
     }),
   });
 
   if (!response.ok) {
     const errData = await response.json().catch(() => ({ message: response.statusText }));
-    const errorMessage = errData.message || errData.error || JSON.stringify(errData) || `API Error: ${response.status}`;
+    const errorMessage =
+      errData.message ||
+      errData.error ||
+      JSON.stringify(errData) ||
+      `API Error: ${response.status}`;
     throw new Error(errorMessage);
   }
 
@@ -55,29 +63,33 @@ export const exportModelHypergraph = async (
   modelPath: string,
   format: ExportFormat = 'json',
   sampleInputArgs?: string,
-  sampleInputDtypes?: string[]
+  sampleInputDtypes?: string[],
 ): Promise<ExportHypergraphResponse> => {
   const response = await fetch('/api/export-hypergraph', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      modelPath, 
+    body: JSON.stringify({
+      modelPath,
       format,
       sampleInputArgs,
-      sampleInputDtypes
+      sampleInputDtypes,
     }),
   });
 
   if (!response.ok) {
     const errData = await response.json().catch(() => ({ message: response.statusText }));
-    const errorMessage = errData.message || errData.error || JSON.stringify(errData) || `API Error: ${response.status}`;
+    const errorMessage =
+      errData.message ||
+      errData.error ||
+      JSON.stringify(errData) ||
+      `API Error: ${response.status}`;
     throw new Error(errorMessage);
   }
 
   const exportedData = await response.json();
   return {
     ...exportedData,
-    success: true
+    success: true,
   };
 };
 
@@ -94,27 +106,31 @@ export const importModelWithExport = async (
   modelPath: string,
   exportFormat: 'openhg-json' | 'openhg-macro' | 'openhg-categorical',
   sampleInputArgs?: string,
-  sampleInputDtypes?: string[]
+  sampleInputDtypes?: string[],
 ): Promise<ImportApiResponse & ExportHypergraphResponse> => {
   const response = await fetch('/api/import', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
+    body: JSON.stringify({
       modelPath,
       exportFormat,
       sampleInputArgs,
-      sampleInputDtypes
+      sampleInputDtypes,
     }),
   });
 
   if (!response.ok) {
     const errData = await response.json().catch(() => ({ message: response.statusText }));
-    const errorMessage = errData.message || errData.error || JSON.stringify(errData) || `API Error: ${response.status}`;
+    const errorMessage =
+      errData.message ||
+      errData.error ||
+      JSON.stringify(errData) ||
+      `API Error: ${response.status}`;
     throw new Error(errorMessage);
   }
 
   const result = await response.json();
-  
+
   // For openhg formats, the response includes both graph data and export data
   if (!result.nodes || !result.edges) {
     throw new Error('Invalid data format from API: nodes or edges missing.');
@@ -122,7 +138,7 @@ export const importModelWithExport = async (
 
   return {
     ...result,
-    success: true
+    success: true,
   };
 };
 
@@ -136,23 +152,27 @@ export const importModelWithExport = async (
 export const exportAllFormats = async (
   modelPath: string,
   sampleInputArgs?: string,
-  sampleInputDtypes?: string[]
+  sampleInputDtypes?: string[],
 ): Promise<import('./exportUtils').AllExportsData> => {
   const response = await fetch('/api/export-all', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
+    body: JSON.stringify({
       modelPath,
       sampleInputArgs,
-      sampleInputDtypes
+      sampleInputDtypes,
     }),
   });
 
   if (!response.ok) {
     const errData = await response.json().catch(() => ({ message: response.statusText }));
-    const errorMessage = errData.message || errData.error || JSON.stringify(errData) || `API Error: ${response.status}`;
+    const errorMessage =
+      errData.message ||
+      errData.error ||
+      JSON.stringify(errData) ||
+      `API Error: ${response.status}`;
     throw new Error(errorMessage);
   }
 
   return await response.json();
-}; 
+};

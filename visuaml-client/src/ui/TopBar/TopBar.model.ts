@@ -24,19 +24,25 @@ export interface CategoricalMorphism {
 // Define categorical hypergraph structure
 export interface CategoricalHypergraph {
   name: string;
-  hyperedges: Record<string, {
-    id: string;
-    type: string;
-    inputs: string[];
-    outputs: string[];
-    parameters?: Record<string, unknown>;
-  }>;
-  wires: Record<string, {
-    id: string;
-    type: string;
-    source?: string;
-    targets: string[];
-  }>;
+  hyperedges: Record<
+    string,
+    {
+      id: string;
+      type: string;
+      inputs: string[];
+      outputs: string[];
+      parameters?: Record<string, unknown>;
+    }
+  >;
+  wires: Record<
+    string,
+    {
+      id: string;
+      type: string;
+      source?: string;
+      targets: string[];
+    }
+  >;
   input_wires: string[];
   output_wires: string[];
   input_types: string[];
@@ -49,19 +55,19 @@ export interface ExportHypergraphResponse {
   nodes?: Record<string, unknown>[];
   hyperedges?: Record<string, unknown>[];
   metadata?: Record<string, unknown>;
-  
+
   // Macro format fields
   macro?: string;
   macro_syntax?: string; // Backend uses this field name
   json_representation?: Record<string, unknown>;
-  
+
   // Categorical format fields (enhanced)
   open_hypergraph?: unknown; // OpenHypergraph object (not serializable to JSON)
   categorical_hypergraph?: CategoricalHypergraph;
   morphisms?: CategoricalMorphism[];
   composition_chain?: string[]; // List of morphism names in composition order
   type_signature?: string; // Overall input -> output type signature
-  
+
   // Backend categorical response fields
   json_data?: {
     nodes: Record<string, unknown>[];
@@ -70,15 +76,15 @@ export interface ExportHypergraphResponse {
   };
   library_available?: boolean;
   framework_ready?: boolean;
-  
+
   // Common fields
   success: boolean;
   message?: string;
   categorical_available?: boolean;
-  
+
   // Bidirectional conversion support
   bidirectional?: boolean;
-  
+
   // Enhanced categorical analysis (frontend format)
   categorical_analysis?: {
     total_morphisms: number;
@@ -117,94 +123,94 @@ export interface ModelConfig {
 // Hardcoded model options for testing
 export const AVAILABLE_MODELS: ModelConfig[] = [
   // Working original models
-  { 
-    value: 'models.SimpleNN', 
-    label: 'SimpleNN', 
+  {
+    value: 'models.SimpleNN',
+    label: 'SimpleNN',
     category: 'working',
     sampleInputArgs: '((10,),)',
     exportCompatible: true,
-    description: 'Simple feedforward neural network'
+    description: 'Simple feedforward neural network',
   },
-  { 
-    value: 'models.Autoencoder', 
-    label: 'Autoencoder', 
+  {
+    value: 'models.Autoencoder',
+    label: 'Autoencoder',
     category: 'working',
     sampleInputArgs: '((10,),)',
     exportCompatible: true,
-    description: 'Basic autoencoder architecture'
+    description: 'Basic autoencoder architecture',
   },
-  { 
-    value: 'models.MyTinyGPT', 
-    label: 'MyTinyGPT', 
+  {
+    value: 'models.MyTinyGPT',
+    label: 'MyTinyGPT',
     category: 'working',
     exportCompatible: true,
-    description: 'Tiny GPT transformer model'
+    description: 'Tiny GPT transformer model',
   },
-  { 
-    value: 'models.TestModel', 
-    label: 'TestModel', 
+  {
+    value: 'models.TestModel',
+    label: 'TestModel',
     category: 'working',
     exportCompatible: true,
-    description: 'Test model for validation'
+    description: 'Test model for validation',
   },
-  { 
-    value: 'models.TransformerBlock', 
-    label: 'TransformerBlock', 
+  {
+    value: 'models.TransformerBlock',
+    label: 'TransformerBlock',
     category: 'working',
     exportCompatible: true,
-    description: 'Single transformer block'
+    description: 'Single transformer block',
   },
 
   // Fixed models (these work with open-hypergraph export)
-  { 
-    value: 'models.FixedSimpleCNN', 
-    label: 'FixedSimpleCNN ✅', 
+  {
+    value: 'models.FixedSimpleCNN',
+    label: 'FixedSimpleCNN ✅',
     category: 'fixed',
     sampleInputArgs: '((1, 1, 28, 28),)',
     exportCompatible: true,
-    description: 'Fixed CNN with correct input shapes'
+    description: 'Fixed CNN with correct input shapes',
   },
-  { 
-    value: 'models.FixedBasicRNN', 
-    label: 'FixedBasicRNN ✅', 
+  {
+    value: 'models.FixedBasicRNN',
+    label: 'FixedBasicRNN ✅',
     category: 'fixed',
     sampleInputArgs: '((1, 10, 10),)',
     exportCompatible: true,
-    description: 'Fixed RNN without dynamic operations'
+    description: 'Fixed RNN without dynamic operations',
   },
-  { 
-    value: 'models.FixedDemoNet', 
-    label: 'FixedDemoNet ✅', 
+  {
+    value: 'models.FixedDemoNet',
+    label: 'FixedDemoNet ✅',
     category: 'fixed',
     sampleInputArgs: '((1, 32),)',
     sampleInputDtypes: ['long'],
     exportCompatible: true,
-    description: 'Fixed embedding model with correct input types'
+    description: 'Fixed embedding model with correct input types',
   },
 
   // Original problematic models (for comparison)
-  { 
-    value: 'models.SimpleCNN', 
-    label: 'SimpleCNN ❌', 
+  {
+    value: 'models.SimpleCNN',
+    label: 'SimpleCNN ❌',
     category: 'original',
     sampleInputArgs: '((1, 28, 28),)', // Wrong shape - will fail
     exportCompatible: false,
-    description: 'Original CNN with shape issues'
+    description: 'Original CNN with shape issues',
   },
-  { 
-    value: 'models.BasicRNN', 
-    label: 'BasicRNN ❌', 
+  {
+    value: 'models.BasicRNN',
+    label: 'BasicRNN ❌',
     category: 'original',
     sampleInputArgs: '((1, 10, 10),)',
     exportCompatible: false,
-    description: 'Original RNN with dynamic operations'
+    description: 'Original RNN with dynamic operations',
   },
-  { 
-    value: 'models.DemoNet', 
-    label: 'DemoNet ❌', 
+  {
+    value: 'models.DemoNet',
+    label: 'DemoNet ❌',
     category: 'original',
     sampleInputArgs: '((3, 32, 32),)', // Wrong type - will fail
     exportCompatible: false,
-    description: 'Original embedding model with type issues'
+    description: 'Original embedding model with type issues',
   },
-]; 
+];

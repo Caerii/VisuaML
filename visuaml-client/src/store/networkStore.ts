@@ -20,4 +20,4 @@ export const useNetworkStore = create<NetworkState>((set) => ({
   facts: null,
   setFacts: (facts) => set({ facts }),
   clearFacts: () => set({ facts: null }), // Reset all facts to null
-})); 
+}));

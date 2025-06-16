@@ -11,7 +11,7 @@ export const useCanvas = () => {
   const { provider } = useYDoc();
   const remoteCursors = useRemoteCursors();
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  
+
   const animationFrameId = useRef<number | null>(null);
   const lastSentPosition = useRef<{ x: number; y: number } | null>(null);
 
@@ -29,7 +29,7 @@ export const useCanvas = () => {
     (connection: Connection) => setEdges(addEdge(connection, edges) as Edge[]),
     [edges, setEdges],
   );
-  
+
   const handleMouseMove = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       if (!provider || !provider.awareness || !reactFlowWrapper.current) return;
@@ -74,4 +74,4 @@ export const useCanvas = () => {
     handleMouseMove,
     remoteCursors,
   };
-}; 
+};

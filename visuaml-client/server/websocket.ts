@@ -13,7 +13,7 @@ const docs = new Map<string, Y.Doc>();
 
 wss.on('connection', (ws) => {
   const roomName = 'visuaml-room';
-  
+
   // Get or create document for this room
   if (!docs.has(roomName)) {
     docs.set(roomName, new Y.Doc());
@@ -25,7 +25,7 @@ wss.on('connection', (ws) => {
     try {
       const data = new Uint8Array(message as ArrayBuffer);
       Y.applyUpdate(doc, data);
-      
+
       // Broadcast to all other clients in the same room
       wss.clients.forEach((client) => {
         if (client !== ws && client.readyState === client.OPEN) {
@@ -61,4 +61,4 @@ process.on('SIGTERM', () => {
     console.log('WebSocket server closed.');
     process.exit(0);
   });
-}); 
+});

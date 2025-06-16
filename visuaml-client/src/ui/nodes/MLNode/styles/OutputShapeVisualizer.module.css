@@ -7,7 +7,7 @@
   background-color: #f9f9f9;
   text-align: center;
   position: relative; /* Ensure this is a positioning context */
-  overflow: hidden;   /* Clip any children that overflow */
+  overflow: hidden; /* Clip any children that overflow */
 }
 
 .shapeTitle {
@@ -26,14 +26,14 @@
 
 .shapeRow {
   display: flex;
-  align-items: flex-end; 
+  align-items: flex-end;
   justify-content: center; /* Center the row of blocks */
   margin-bottom: 5px;
 }
 
 .shapeBlock {
   /* background-color: #a0c4ff; */ /* Removed: Color now set inline */
-  border: 1px solid rgba(0,0,0,0.15); /* Slightly darker border for better definition */
+  border: 1px solid rgba(0, 0, 0, 0.15); /* Slightly darker border for better definition */
   margin-right: 1px; /* Reduced margin for tighter packing */
   margin-left: 1px; /* Added for symmetry when centered */
   box-sizing: border-box;
@@ -54,7 +54,7 @@
 /* For 3D visualization (stacking) */
 .channelStack {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center; /* Center the stack of slices */
   padding-bottom: 10px; /* Increased padding at the bottom of the stack */
 }
@@ -62,9 +62,9 @@
 .channelSlice {
   margin-bottom: -18px; /* Fine-tuned overlap for shorter slices */
   /* marginLeft is set inline via STAGGER_OFFSET_3D */
-  box-shadow: 0px 2px 3px rgba(0,0,0,0.2); /* Adjusted shadow for more natural depth */
-  position: relative; 
-  border: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); /* Adjusted shadow for more natural depth */
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   /* background-color removed, will be transparent to show blocks or set if needed */
   border-radius: 2px; /* Slightly round corners of slices */
 }
@@ -128,4 +128,4 @@
 
 .fullscreenButton:hover {
   background: rgba(0, 0, 0, 0.7);
-} 
+}

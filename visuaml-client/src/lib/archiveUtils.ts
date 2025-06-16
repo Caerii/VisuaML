@@ -16,14 +16,14 @@ export interface ArchiveMetadata {
 /**
  * Creates a structured archive file containing multiple files.
  * The archive uses a clear text format with separators for easy extraction.
- * 
+ *
  * @param files Array of files to include in the archive
  * @param metadata Archive metadata including model info
  * @returns Blob containing the archive content
  */
 export const createArchiveFile = (files: ArchiveFile[], metadata: ArchiveMetadata): Blob => {
   const separator = '\n' + '='.repeat(80) + '\n';
-  
+
   let archiveContent = `# VisuaML Export Archive
 # Model: ${metadata.modelName}
 # Path: ${metadata.modelPath}
@@ -35,7 +35,7 @@ export const createArchiveFile = (files: ArchiveFile[], metadata: ArchiveMetadat
 # To extract, search for "FILE:" markers and copy content between separators.
 # 
 # File List:
-${files.map(f => `#   - ${f.name}`).join('\n')}
+${files.map((f) => `#   - ${f.name}`).join('\n')}
 ${separator}`;
 
   for (const file of files) {
@@ -43,7 +43,7 @@ ${separator}`;
     archiveContent += file.content;
     archiveContent += separator;
   }
-  
+
   archiveContent += `# End of Archive
 # Total files: ${metadata.totalFiles}
 # Model: ${metadata.modelName}
@@ -54,13 +54,13 @@ ${separator}`;
 # 2. Copy content between the separator lines (80 equals signs)
 # 3. Save each section as the corresponding filename
 `;
-  
+
   return new Blob([archiveContent], { type: 'text/plain' });
 };
 
 /**
  * Downloads a blob as a file with the specified filename.
- * 
+ *
  * @param blob The blob to download
  * @param filename The filename for the download
  */
@@ -77,12 +77,15 @@ export const downloadBlob = (blob: Blob, filename: string): void => {
 
 /**
  * Creates a filename for an archive with timestamp.
- * 
+ *
  * @param modelName The name of the model
  * @param extension The file extension (default: 'archive.txt')
  * @returns Formatted filename with timestamp
  */
-export const createArchiveFilename = (modelName: string, extension: string = 'archive.txt'): string => {
+export const createArchiveFilename = (
+  modelName: string,
+  extension: string = 'archive.txt',
+): string => {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   return `${modelName}_export_${timestamp}.${extension}`;
-}; 
+};

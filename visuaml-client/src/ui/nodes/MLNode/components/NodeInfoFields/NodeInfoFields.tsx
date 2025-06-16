@@ -21,20 +21,25 @@ const NodeInfoFields: React.FC<NodeInfoFieldsProps> = ({ data, nodeId }) => {
         </div>
       )}
       <div className={styles.infoField}>
-        <strong>Operation:</strong> <span className={styles.infoFieldValue}>{data.op || 'N/A'}</span>
+        <strong>Operation:</strong>{' '}
+        <span className={styles.infoFieldValue}>{data.op || 'N/A'}</span>
       </div>
-      {data.target && String(data.target) !== data.name && String(data.target) !== data.layerType && (
-        <div className={styles.infoField}>
-          <strong>Target:</strong> <span className={styles.infoFieldValue}>{String(data.target)}</span>
-        </div>
-      )}
+      {data.target &&
+        String(data.target) !== data.name &&
+        String(data.target) !== data.layerType && (
+          <div className={styles.infoField}>
+            <strong>Target:</strong>{' '}
+            <span className={styles.infoFieldValue}>{String(data.target)}</span>
+          </div>
+        )}
       {data.outputShape && (
         <div className={styles.infoField}>
-          <strong>Output Shape:</strong> <span className={styles.infoFieldValue}>{data.outputShape}</span>
+          <strong>Output Shape:</strong>{' '}
+          <span className={styles.infoFieldValue}>{data.outputShape}</span>
         </div>
       )}
     </div>
   );
 };
 
-export default NodeInfoFields; 
+export default NodeInfoFields;

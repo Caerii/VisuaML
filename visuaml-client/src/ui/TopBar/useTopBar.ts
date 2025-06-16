@@ -7,17 +7,17 @@ import { autoLayout } from '../../lib/autoLayout';
 import { importModel, exportModelHypergraph, exportAllFormats } from '../../lib/api';
 import { toast } from 'sonner';
 import { AVAILABLE_MODELS, type ExportFormat, type ExportHypergraphResponse } from './TopBar.model';
-import { 
-  createArchiveFile, 
-  downloadBlob, 
+import {
+  createArchiveFile,
+  downloadBlob,
   createArchiveFilename,
-  type ArchiveMetadata 
+  type ArchiveMetadata,
 } from '../../lib/archiveUtils';
-import { 
-  processExportResults, 
-  generateExportSuccessMessage, 
-  generateExportErrorMessage, 
-  logExportResults 
+import {
+  processExportResults,
+  generateExportSuccessMessage,
+  generateExportErrorMessage,
+  logExportResults,
 } from '../../lib/exportUtils';
 
 // Global categorical panel state (we'll use a simple event system)
@@ -38,7 +38,7 @@ export const useTopBar = () => {
 
   const handleImportClick = async () => {
     setIsLoadingUI(true);
-    const modelDetails = AVAILABLE_MODELS.find(m => m.value === modelPath);
+    const modelDetails = AVAILABLE_MODELS.find((m) => m.value === modelPath);
     const localNetworkName = modelDetails ? modelDetails.label : modelPath;
 
     const ySharedName = ydoc.getText('networkNameShared');
@@ -53,26 +53,26 @@ export const useTopBar = () => {
     try {
       const importedData = await importModel(modelPath);
       const laidOutData = autoLayout(importedData.nodes, importedData.edges);
-      
+
       commitNodes(laidOutData.nodes);
       commitEdges(laidOutData.edges);
 
       ySharedAppStatus.set('isLoadingGraph', false);
       toast.success(`Model '${localNetworkName}' imported successfully!`);
-
     } catch (err: unknown) {
       console.error('Failed to import model:', err);
-      const message = err instanceof Error ? err.message : 'An unknown error occurred during import.';
+      const message =
+        err instanceof Error ? err.message : 'An unknown error occurred during import.';
       toast.error(message, { duration: 5000 });
-      
+
       ydoc.transact(() => {
         const yNameToClear = ydoc.getText('networkNameShared');
         if (yNameToClear.length > 0) {
-            yNameToClear.delete(0, yNameToClear.length);
+          yNameToClear.delete(0, yNameToClear.length);
         }
         ySharedAppStatus.set('isLoadingGraph', false);
       });
-      
+
       const latestFacts = useNetworkStore.getState().facts;
       setNetworkFacts({
         networkName: undefined,
@@ -100,7 +100,7 @@ export const useTopBar = () => {
   const downloadFile = (content: string, filename: string, mimeType: string) => {
     const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
-    
+
     const link = document.createElement('a');
     link.href = url;
     link.download = filename;
@@ -111,8 +111,8 @@ export const useTopBar = () => {
   };
 
   const handleExport = useCallback(async () => {
-    const modelDetails = AVAILABLE_MODELS.find(m => m.value === modelPath);
-    
+    const modelDetails = AVAILABLE_MODELS.find((m) => m.value === modelPath);
+
     if (!modelDetails) {
       toast.error('Please select a model first');
       return;
@@ -124,26 +124,26 @@ export const useTopBar = () => {
     }
 
     setIsExporting(true);
-    
+
     try {
       // Handle "Export All" format
       if (exportFormat === 'all') {
         const allResults = await exportAllFormats(
           modelPath,
           modelDetails.sampleInputArgs,
-          modelDetails.sampleInputDtypes
+          modelDetails.sampleInputDtypes,
         );
 
         if (allResults.success) {
           // Process export results into archive files
           const files = processExportResults(allResults);
-          
+
           // Create archive metadata
           const metadata: ArchiveMetadata = {
             modelName: allResults.modelName,
             modelPath: allResults.modelPath,
             timestamp: allResults.timestamp,
-            totalFiles: files.length
+            totalFiles: files.length,
           };
 
           // Create and download archive file
@@ -157,12 +157,11 @@ export const useTopBar = () => {
 
           // Enhanced logging
           logExportResults(allResults, files);
-
         } else {
           const errorMessage = generateExportErrorMessage(allResults.results);
           toast.error(errorMessage);
         }
-        
+
         return; // Early return for "all" format
       }
 
@@ -171,7 +170,7 @@ export const useTopBar = () => {
         modelPath,
         exportFormat,
         modelDetails.sampleInputArgs,
-        modelDetails.sampleInputDtypes
+        modelDetails.sampleInputDtypes,
       );
 
       if (result.success) {
@@ -181,18 +180,17 @@ export const useTopBar = () => {
           const jsonData = {
             nodes: result.nodes,
             hyperedges: result.hyperedges,
-            metadata: result.metadata
+            metadata: result.metadata,
           };
           downloadFile(
             JSON.stringify(jsonData, null, 2),
             `${modelDetails.label.replace(/[^a-zA-Z0-9]/g, '_')}_hypergraph.json`,
-            'application/json'
+            'application/json',
           );
-          
+
           const nodeCount = result.nodes?.length || 0;
           const edgeCount = result.hyperedges?.length || 0;
           toast.success(`JSON export complete: ${nodeCount} nodes, ${edgeCount} hyperedges`);
-          
         } else if (exportFormat === 'macro') {
           // Download macro file - handle both 'macro' and 'macro_syntax' field names
           const macroContent = result.macro || result.macro_syntax;
@@ -200,35 +198,34 @@ export const useTopBar = () => {
             downloadFile(
               macroContent,
               `${modelDetails.label.replace(/[^a-zA-Z0-9]/g, '_')}_hypergraph.macro`,
-              'text/plain'
+              'text/plain',
             );
             toast.success('Macro export complete - compatible with Rust crate');
           } else {
             toast.error('Macro content not found in export result');
           }
-          
         } else if (exportFormat === 'categorical') {
           // Handle categorical format - backend returns different structure
           const analysisData = result.categorical_analysis;
           const jsonData = result.json_data;
-          
+
           if (jsonData) {
             // Download the JSON hypergraph data
             downloadFile(
               JSON.stringify(jsonData, null, 2),
               `${modelDetails.label.replace(/[^a-zA-Z0-9]/g, '_')}_hypergraph_data.json`,
-              'application/json'
+              'application/json',
             );
           }
-          
+
           if (analysisData) {
             // Download categorical analysis
             downloadFile(
               JSON.stringify(analysisData, null, 2),
               `${modelDetails.label.replace(/[^a-zA-Z0-9]/g, '_')}_categorical_analysis.json`,
-              'application/json'
+              'application/json',
             );
-            
+
             // Show enhanced success message with categorical analysis
             const message = `Categorical export complete! 
 📊 ${analysisData.nodes} nodes, ${analysisData.hyperedges} hyperedges
@@ -238,7 +235,7 @@ export const useTopBar = () => {
           } else {
             toast.success('Categorical export complete - analysis data generated');
           }
-          
+
           // Enhanced logging for developers
           console.group('🔬 Categorical Export Results');
           console.log('📈 Categorical Analysis:', analysisData);
@@ -246,7 +243,7 @@ export const useTopBar = () => {
           console.log('🔧 Library Available:', result.library_available);
           console.log('🚀 Framework Ready:', result.framework_ready);
           console.groupEnd();
-          
+
           // Create a compatible structure for the categorical panel
           if (categoricalPanelCallback && analysisData) {
             const compatibleResult = {
@@ -260,18 +257,17 @@ export const useTopBar = () => {
                   wires: analysisData.nodes || 0,
                   input_boundary_size: analysisData.max_input_arity || 0,
                   output_boundary_size: analysisData.max_output_arity || 0,
-                }
-              }
+                },
+              },
             };
             categoricalPanelCallback(compatibleResult);
           }
         }
-        
+
         // Show categorical availability info
         if (result.categorical_available && exportFormat !== 'categorical') {
           console.log('Note: Categorical conversion is available for this export');
         }
-        
       } else {
         toast.error(result.message || 'Export failed');
       }
@@ -297,4 +293,4 @@ export const useTopBar = () => {
     handleExport,
     handleExportFormatChange,
   };
-}; 
+};

@@ -34,11 +34,11 @@ export const useCategoricalPanel = () => {
   }, []);
 
   const togglePanel = useCallback(() => {
-    setIsVisible(prev => !prev);
+    setIsVisible((prev) => !prev);
   }, []);
 
   const updateData = useCallback((data: Partial<CategoricalData>) => {
-    setCategoricalData(prev => prev ? { ...prev, ...data } : data as CategoricalData);
+    setCategoricalData((prev) => (prev ? { ...prev, ...data } : (data as CategoricalData)));
   }, []);
 
   const clearData = useCallback(() => {
@@ -53,6 +53,6 @@ export const useCategoricalPanel = () => {
     hidePanel,
     togglePanel,
     updateData,
-    clearData
+    clearData,
   };
-}; 
+};

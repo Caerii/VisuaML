@@ -2,7 +2,7 @@
 import { Box } from '@mui/material'; // For layout
 import { useTopBar } from './useTopBar';
 import { AVAILABLE_MODELS } from './TopBar.model';
-import styles from './styles/TopBar.module.css'; 
+import styles from './styles/TopBar.module.css';
 
 const TopBar = () => {
   const {
@@ -19,9 +19,9 @@ const TopBar = () => {
   return (
     <header className={styles.header}>
       {/* Use MUI Box for flex layout of logo and controls */}
-      <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}> 
+      <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
         <a href="/" className={styles.logoLink}>
-          <img 
+          <img
             src="/visuaml_logo.png" // Path relative to public folder
             alt="VisuaML Logo"
             className={styles.logo} // We will define this style in the CSS module
@@ -37,24 +37,24 @@ const TopBar = () => {
             value={modelPath}
             onChange={handleModelChange}
             className={styles.select}
-            disabled={isLoadingUI || isExporting} 
+            disabled={isLoadingUI || isExporting}
           >
             <optgroup label="✅ Fixed Models (Export Compatible)">
-              {AVAILABLE_MODELS.filter(m => m.category === 'fixed').map((model) => (
+              {AVAILABLE_MODELS.filter((m) => m.category === 'fixed').map((model) => (
                 <option key={model.value} value={model.value} title={model.description}>
                   {model.label}
                 </option>
               ))}
             </optgroup>
             <optgroup label="🟢 Working Models">
-              {AVAILABLE_MODELS.filter(m => m.category === 'working').map((model) => (
+              {AVAILABLE_MODELS.filter((m) => m.category === 'working').map((model) => (
                 <option key={model.value} value={model.value} title={model.description}>
                   {model.label}
                 </option>
               ))}
             </optgroup>
             <optgroup label="❌ Original Models (For Comparison)">
-              {AVAILABLE_MODELS.filter(m => m.category === 'original').map((model) => (
+              {AVAILABLE_MODELS.filter((m) => m.category === 'original').map((model) => (
                 <option key={model.value} value={model.value} title={model.description}>
                   {model.label}
                 </option>
@@ -69,11 +69,11 @@ const TopBar = () => {
           <button
             onClick={handleImportClick}
             className={styles.button}
-            disabled={isLoadingUI || isExporting} 
+            disabled={isLoadingUI || isExporting}
           >
             {isLoadingUI ? 'Importing...' : 'Import'}
           </button>
-          
+
           {/* Export controls */}
           <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
             <label htmlFor="exportFormatSelect" className={styles.label}>
@@ -94,8 +94,16 @@ const TopBar = () => {
             <button
               onClick={handleExport}
               className={styles.button}
-              disabled={isLoadingUI || isExporting || !AVAILABLE_MODELS.find(m => m.value === modelPath)?.exportCompatible}
-              title={!AVAILABLE_MODELS.find(m => m.value === modelPath)?.exportCompatible ? 'This model is not compatible with open-hypergraph export' : 'Export to open-hypergraph format'}
+              disabled={
+                isLoadingUI ||
+                isExporting ||
+                !AVAILABLE_MODELS.find((m) => m.value === modelPath)?.exportCompatible
+              }
+              title={
+                !AVAILABLE_MODELS.find((m) => m.value === modelPath)?.exportCompatible
+                  ? 'This model is not compatible with open-hypergraph export'
+                  : 'Export to open-hypergraph format'
+              }
             >
               {isExporting ? 'Exporting...' : 'Export HG'}
             </button>
@@ -106,4 +114,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar; 
+export default TopBar;
