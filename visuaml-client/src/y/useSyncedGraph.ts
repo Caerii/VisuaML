@@ -43,8 +43,19 @@ export const useSyncedGraph = (): [
 
   const setNetworkFacts = useNetworkStore(state => state.setFacts); // Get setter
 
-  const mapNodeToRF = (ymap: Y.Map<unknown>): Node<MLNodeData> => ymap.toJSON() as unknown as Node<MLNodeData>;
-  const mapEdgeToRF = (ymap: Y.Map<unknown>): Edge => ymap.toJSON() as unknown as Edge;
+  const mapNodeToRF = (ymap: Y.Map<unknown>): Node<MLNodeData> => {
+    const node = ymap.toJSON() as unknown as Node<MLNodeData>;
+    // Ensure each node has a unique key
+    node.id = node.id || `${node.data?.layerType}-${Math.random().toString(36).substr(2, 9)}`;
+    return node;
+  };
+
+  const mapEdgeToRF = (ymap: Y.Map<unknown>): Edge => {
+    const edge = ymap.toJSON() as unknown as Edge;
+    // Ensure each edge has a unique key
+    edge.id = edge.id || `${edge.source}-${edge.target}-${Math.random().toString(36).substr(2, 9)}`;
+    return edge;
+  };
 
   const [nodes, setNodes] = useState<Node<MLNodeData>[]>(yNodes.toArray().map(mapNodeToRF));
   const [edges, setEdges] = useState<Edge[]>(yEdges.toArray().map(mapEdgeToRF));
@@ -54,8 +65,11 @@ export const useSyncedGraph = (): [
     const syncAllData = () => {
       const currentNodes = yNodes.toArray().map(mapNodeToRF);
       const currentEdges = yEdges.toArray().map(mapEdgeToRF);
+      // Deduplicate edges by id to avoid React key collisions
+      const dedupedEdges = Array.from(new Map(currentEdges.map((e) => [e.id, e])).values());
+
       setNodes(currentNodes);
-      setEdges(currentEdges);
+      setEdges(dedupedEdges);
 
       const inputShapes = extractInputShapes(currentNodes);
       const componentTypes = extractComponentTypes(currentNodes);
@@ -105,9 +119,11 @@ export const useSyncedGraph = (): [
     });
   };
   const commitEdges = (eds: Edge[]) => {
+    // Deduplicate edges before committing to Yjs
+    const uniqueEdges = Array.from(new Map(eds.map((e) => [e.id, e])).values());
     ydoc.transact(() => {
       yEdges.delete(0, yEdges.length);
-      eds.forEach((e) => {
+      uniqueEdges.forEach((e) => {
         const edgeObject = { ...e };
         yEdges.push([new Y.Map(Object.entries(edgeObject))]);
       });

@@ -1,7 +1,7 @@
-/** @fileoverview Defines the NodeInfoFields component, responsible for rendering static informational fields within the MLNode's details pane, such as node name, operation type, target, and output shape. */
+/** @fileoverview Defines the NodeInfoFields component, responsible for rendering static informational fields within the MLNode's details pane. */
 import React from 'react';
-import type { MLNodeData } from '../../types'; // Adjusted path
-import styles from '../styles/MLNode.module.css'; // Adjusted path
+import type { MLNodeData } from '../../../types';
+import styles from '../../styles/MLNode.module.css';
 
 interface NodeInfoFieldsProps {
   data: MLNodeData;
@@ -10,7 +10,7 @@ interface NodeInfoFieldsProps {
 
 const NodeInfoFields: React.FC<NodeInfoFieldsProps> = ({ data, nodeId }) => {
   return (
-    <div className={styles.detailsSection}> {/* Wrap fields in a section */}
+    <div className={styles.detailsSection}>
       <div className={styles.detailsSectionTitle}>Info</div>
       <div className={styles.infoField}>
         <strong>Name:</strong> <span className={styles.infoFieldValue}>{data.name || nodeId}</span>

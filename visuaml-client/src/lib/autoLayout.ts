@@ -11,7 +11,7 @@ interface LayoutOptions {
   marginy?: number;
 }
 
-const DEFAULT_NODE_WIDTH = 180;
+const DEFAULT_NODE_WIDTH = 200;
 const DEFAULT_NODE_HEIGHT = 60;
 
 export const autoLayout = (
@@ -22,7 +22,12 @@ export const autoLayout = (
   const g = new dagre.graphlib.Graph();
 
   // Set layout options
-  const layoutOptions = { rankdir: 'LR', ...options }; // Default to LR as per playbook
+  const layoutOptions = {
+    rankdir: 'LR',
+    nodesep: 70,
+    ranksep: 90,
+    ...options
+  };
   g.setGraph(layoutOptions);
 
   // Default to assigning a new object for edge labels, if not present

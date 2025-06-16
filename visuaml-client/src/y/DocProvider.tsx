@@ -46,7 +46,8 @@ export const YDocProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     // local dev ws on :1234 – we'll spin it up next commit
-    const wsProvider = new WebsocketProvider('ws://localhost:1234', 'visuaml-room', ydoc);
+    const websocketUrl = import.meta.env.VITE_WEBSOCKET_URL || 'ws://localhost:1234';
+    const wsProvider = new WebsocketProvider(websocketUrl, 'visuaml-room', ydoc);
     setProviderState(wsProvider);
 
     // Check if persistence is already established and synced

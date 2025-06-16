@@ -1,6 +1,6 @@
-/** @fileoverview Defines the NodeHeader component, responsible for rendering the compact, always-visible part of an MLNode. It displays the layer's display name and a subtext (e.g., node name or target). */
+/** @fileoverview Defines the NodeHeader component, responsible for rendering the compact, always-visible part of an MLNode. */
 import React from 'react';
-import styles from '../styles/MLNode.module.css'; // Adjusted path
+import styles from '../../styles/MLNode.module.css';
 
 interface NodeHeaderProps {
   layerDisplayName: string;
@@ -10,11 +10,8 @@ interface NodeHeaderProps {
 
 const NodeHeader: React.FC<NodeHeaderProps> = ({ layerDisplayName, subtext, isSelected }) => {
   return (
-    // Use the .nodeHeader class for the container div
     <div className={`${styles.nodeHeader} ${isSelected ? styles.nodeHeaderSelected : ''}`}>
-      <div 
-        className={styles.nodeHeaderTitle} 
-      >
+      <div className={styles.nodeHeaderTitle}>
         {layerDisplayName}
       </div>
       {subtext && (

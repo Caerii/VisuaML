@@ -161,4 +161,22 @@ class NodeVisualizer:
             # Unknown operation type
             color = self.color_scheme.get_color_for_layer('unknown')
             
+        return NodeVisualProperties(layer_type=layer_type_str, color=color)
+    
+    def get_node_visual_properties_from_module(
+        self, 
+        module
+    ) -> NodeVisualProperties:
+        """
+        Determine visual properties for a PyTorch module (used in hook-based tracing).
+        
+        Args:
+            module: The PyTorch module
+            
+        Returns:
+            NodeVisualProperties with layer type and color
+        """
+        layer_type_str = type(module).__name__
+        color = self.color_scheme.get_color_for_layer(layer_type_str)
+        
         return NodeVisualProperties(layer_type=layer_type_str, color=color) 

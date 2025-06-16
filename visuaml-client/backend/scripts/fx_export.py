@@ -18,7 +18,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if os.getcwd() not in sys.path:
     sys.path.insert(0, os.getcwd())
 
-from visuaml import export_model_graph, FilterConfig
+from visuaml import export_model, FilterConfig
+from visuaml.graph_export import export_model_graph_with_fallback
 from visuaml.model_loader import ModelLoadError
 
 
@@ -61,6 +62,19 @@ def main():
         type=str,
         default=None,
         help="String representation of a list of dtypes for sample_input_args (e.g., \"[\'float32\', \'long\']\")"
+    )
+    parser.add_argument(
+        "--tracing-method",
+        type=str,
+        default="auto",
+        choices=["auto", "fx", "hooks", "torchscript"],
+        help="Tracing method to use (auto=try fx then hooks, fx=symbolic tracing only, hooks=execution tracing, torchscript=TorchScript tracing)"
+    )
+    parser.add_argument(
+        "--export-format",
+        type=str,
+        default="visuaml-json",
+        help="Export format (visuaml-json, openhg-json, openhg-macro, openhg-categorical)"
     )
     
     args = parser.parse_args()
@@ -108,14 +122,17 @@ def main():
     
     # Try to export the model graph
     try:
-        graph_data = export_model_graph(
-            args.model_path, 
-            filter_config,
+        # Use the new fallback function that supports open-hypergraph formats
+        graph_data = export_model_graph_with_fallback(
+            model_path=args.model_path, 
+            filter_config=filter_config,
             model_args=None,  # Explicitly None, as current examples don't need constructor args
             model_kwargs=None, # Explicitly None
             sample_input_args=parsed_sample_input_args,  # Parsed args for ShapeProp
             sample_input_kwargs=parsed_sample_input_kwargs, # Parsed kwargs for ShapeProp
-            sample_input_dtypes=parsed_sample_input_dtypes # Pass parsed dtypes
+            sample_input_dtypes=parsed_sample_input_dtypes, # Pass parsed dtypes
+            tracing_method=args.tracing_method,  # Use specified tracing method
+            export_format=args.export_format  # Support new export formats
         )
 
         # Output as JSON

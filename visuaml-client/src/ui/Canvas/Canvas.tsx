@@ -1,82 +1,26 @@
 /** @fileoverview Defines the main interactive canvas for VisuaML, integrating React Flow for graph visualization, Yjs for real-time collaboration, and components for displaying network statistics and remote user cursors. */
-import {
-  ReactFlow,
-  Background,
-  BackgroundVariant,
-  Controls,
-  addEdge,
-  ReactFlowProvider,
-  applyNodeChanges,
-  applyEdgeChanges,
-} from '@xyflow/react';
-import type { Connection, Edge, Node, NodeChange, EdgeChange } from '@xyflow/react';
+import { ReactFlow, Background, BackgroundVariant, Controls, ReactFlowProvider } from '@xyflow/react';
+import type { RenderableCursor } from '../../y/usePresence'; 
 import '@xyflow/react/dist/style.css';
-import { useSyncedGraph } from '../../y/useSyncedGraph'; // Adjusted path
-import { useYDoc } from '../../y/DocProvider'; // Adjusted path
-import { useRemoteCursors, type RenderableCursor } from '../../y/usePresence'; // Adjusted path
-import { useCallback, useRef, useEffect } from 'react';
-import MLNode from '../nodes/MLNode/MLNode'; // Adjusted path
-import { RemoteCursor } from '../RemoteCursor/RemoteCursor'; // Adjusted path
-import styles from './styles/Canvas.module.css'; // Adjusted path
-import { NetworkStatsDisplay } from '../NetworkStatsDisplay/NetworkStatsDisplay'; // Adjusted path
+import MLNode from '../nodes/MLNode/MLNode';
+import { RemoteCursor } from '../RemoteCursor/RemoteCursor';
+import styles from './styles/Canvas.module.css';
+import { NetworkStatsDisplay } from '../NetworkStatsDisplay/NetworkStatsDisplay';
+import { useCanvas } from './useCanvas';
 
 const nodeTypes = { transformer: MLNode };
 
 export const Canvas: React.FC = () => {
-  const [nodes, setNodes, edges, setEdges] = useSyncedGraph();
-  const { provider } = useYDoc();
-  const remoteCursors = useRemoteCursors();
-  const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  
-  const animationFrameId = useRef<number | null>(null);
-  const lastSentPosition = useRef<{ x: number; y: number } | null>(null);
-
-  const onNodesChange = useCallback(
-    (changes: NodeChange[]) => setNodes(applyNodeChanges(changes, nodes) as Node[]),
-    [nodes, setNodes],
-  );
-  const onEdgesChange = useCallback(
-    (changes: EdgeChange[]) => setEdges(applyEdgeChanges(changes, edges) as Edge[]),
-    [edges, setEdges],
-  );
-  const onConnect = useCallback(
-    (connection: Connection) => setEdges(addEdge(connection, edges) as Edge[]),
-    [edges, setEdges],
-  );
-  
-  const handleMouseMove = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      if (!provider || !provider.awareness || !reactFlowWrapper.current) return;
-
-      const bounds = reactFlowWrapper.current.getBoundingClientRect();
-      const x = event.clientX - bounds.left;
-      const y = event.clientY - bounds.top;
-
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-
-      animationFrameId.current = requestAnimationFrame(() => {
-        if (
-          !lastSentPosition.current ||
-          lastSentPosition.current.x !== x ||
-          lastSentPosition.current.y !== y
-        ) {
-          provider.awareness.setLocalStateField('cursor', { x, y });
-          lastSentPosition.current = { x, y };
-        }
-      });
-    },
-    [provider],
-  );
-
-  useEffect(() => {
-    return () => {
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-    };
-  }, []);
+  const {
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect,
+    reactFlowWrapper,
+    handleMouseMove,
+    remoteCursors,
+  } = useCanvas();
 
   return (
     <ReactFlowProvider>
@@ -100,6 +44,7 @@ export const Canvas: React.FC = () => {
           zoomOnPinch={true}
           zoomOnDoubleClick={true}
           preventScrolling={true}
+          multiSelectionKeyCode={null}
         >
           <Background 
             variant={BackgroundVariant.Dots}
