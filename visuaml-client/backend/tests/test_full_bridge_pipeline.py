@@ -117,7 +117,8 @@ def test_bridge_pipeline():
     print()
     print("The bridge architecture is sound and ready for production!")
     
-    return True
+    # Use assertion instead of return for pytest compatibility
+    assert True, "Bridge pipeline test completed successfully"
 
 if __name__ == "__main__":
     test_bridge_pipeline() 

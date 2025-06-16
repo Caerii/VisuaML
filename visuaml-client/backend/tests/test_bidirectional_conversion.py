@@ -6,8 +6,14 @@ Test script demonstrating bidirectional conversion between JSON and categorical 
 import sys
 import os
 
-# Add the parent directory to Python path so we can import models
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add the visuaml-client directory to Python path so we can import models
+# Go up from backend/tests/ to visuaml-client/
+visuaml_client_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, visuaml_client_dir)
+
+# Add the backend directory to Python path so we can import visuaml package
+backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, backend_dir)
 
 from visuaml import export_model_open_hypergraph
 from visuaml.openhypergraph_export import json_to_categorical, categorical_to_json

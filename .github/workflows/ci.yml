@@ -33,7 +33,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
-      - run: pip install ruff pytest
-      - run: ruff check visuaml-client/backend
-      - run: pytest -q visuaml-client/backend/tests 
+        with: 
+          python-version: "3.12"
+          cache: 'pip'
+          cache-dependency-path: 'visuaml-client/backend/requirements.txt'
+      - name: Install Python dependencies
+        run: |
+          # Install CPU-only PyTorch for faster CI
+          pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+          # Install other dependencies from requirements.txt
+          pip install numpy pandas pytest-cov black isort flake8 mypy transformers timm matplotlib seaborn
+      - name: Install development dependencies
+        run: pip install ruff pytest
+      - name: Run ruff linting
+        run: ruff check visuaml-client/backend
+      - name: Run pytest
+        run: |
+          cd visuaml-client
+          python -m pytest -q backend/tests 
