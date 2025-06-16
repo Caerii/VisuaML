@@ -41,7 +41,7 @@ def simple_linear_example():
     activation = ActivationMorphism((10,), "relu", name="relu_activation")
     layer2 = LinearMorphism(10, 3, name="output_layer")
     
-    print(f"\nMorphisms:")
+    print("\nMorphisms:")
     print(f"  {layer1}")
     print(f"  {activation}")
     print(f"  {layer2}")
@@ -121,7 +121,7 @@ def hypergraph_conversion_example(model):
         print(f"Errors: {errors}")
     
     # Show hypergraph structure
-    print(f"\nHypergraph structure:")
+    print("\nHypergraph structure:")
     hg_dict = hypergraph.to_dict()
     print(f"  Hyperedges: {len(hg_dict['hyperedges'])}")
     print(f"  Wires: {len(hg_dict['wires'])}")
@@ -144,7 +144,7 @@ def export_formats_example(model):
     print(json_str[:500] + "..." if len(json_str) > 500 else json_str)
     
     # Show parameters
-    print(f"\nModel parameters:")
+    print("\nModel parameters:")
     params = model.get_parameters()
     for key, value in params.items():
         print(f"  {key}: {value}")
@@ -195,7 +195,7 @@ def catgrad_style_demo():
 if __name__ == "__main__":
     try:
         results = catgrad_style_demo()
-        print(f"\n✅ All examples completed successfully!")
+        print("\n✅ All examples completed successfully!")
         print(f"Created {len(results)} different models/representations")
     except Exception as e:
         print(f"\n❌ Error in demo: {e}")

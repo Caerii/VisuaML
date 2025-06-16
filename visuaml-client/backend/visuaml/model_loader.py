@@ -1,7 +1,6 @@
 """Module for loading and instantiating PyTorch models."""
 
 import importlib
-import sys
 from typing import Tuple, Type, Optional
 import torch.nn as nn
 

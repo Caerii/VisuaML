@@ -6,7 +6,7 @@ that represent categorical arrows in our hypergraph system.
 """
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional, Union
+from typing import List, Dict, Any, Optional
 import uuid
 from .types import ArrayType, TensorType, Dtype
 

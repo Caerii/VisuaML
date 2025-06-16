@@ -605,7 +605,7 @@ def trace_with_torchscript(
         raise ValueError("TorchScript tracing requires sample inputs")
     
     try:
-        traced_model = torch.jit.trace(model, sample_inputs)
+        _traced_model = torch.jit.trace(model, sample_inputs)
         # TODO: Parse TorchScript graph and convert to VisuaML format
         # For now, fall back to hook-based tracing
         return trace_with_hooks(model, sample_inputs, filter_config)

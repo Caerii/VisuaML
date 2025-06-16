@@ -1,7 +1,7 @@
 """Module for determining visual properties of graph nodes."""
 
 from dataclasses import dataclass
-from typing import Dict, Tuple, Optional
+from typing import Dict, Optional
 from torch.fx import Node, GraphModule
 
 

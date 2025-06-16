@@ -7,7 +7,6 @@ This script identifies issues and provides solutions to make models compatible.
 import sys
 import os
 import torch
-import torch.nn as nn
 from torch.fx import symbolic_trace
 from torch.fx.passes.shape_prop import ShapeProp
 
@@ -126,11 +125,10 @@ def analyze_basic_rnn():
         "Create separate model classes for each RNN type"
     )
     
-    # Test with a simple input
-    sample_input = torch.randn(1, 10, 10)
+    # Test with a simple input - using underscore prefix for intentionally unused variables
     try:
         model = BasicRNN()
-        traced = symbolic_trace(model)
+        _traced = symbolic_trace(model)
         print("Unexpected: FX tracing succeeded (this usually fails)")
     except Exception as e:
         print(f"Expected: FX tracing failed as predicted: {str(e)[:100]}...")
@@ -167,14 +165,14 @@ def analyze_demo_net():
     
     try:
         # This should fail
-        output = model(sample_input_float)
+        _output = model(sample_input_float)
         print("Unexpected: Float input worked")
     except Exception as e:
         print(f"Expected: Float input failed: {str(e)[:100]}...")
     
     try:
         # This should work
-        output = model(sample_input_long)
+        _output = model(sample_input_long)
         print("Long input works correctly")
         
         # Test FX tracing with correct input

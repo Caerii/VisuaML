@@ -6,7 +6,7 @@ providing proper mathematical foundations for morphisms and compositions.
 """
 
 from dataclasses import dataclass
-from typing import Tuple, Optional, Union, List
+from typing import Tuple, Optional, Union
 from enum import Enum
 
 
@@ -152,10 +152,22 @@ def make_product_type(*types: ArrayType) -> ProductType:
 
 # Common types for convenience
 SCALAR_F32 = ArrayType((), Dtype.FLOAT32)
-VECTOR_F32 = lambda n: ArrayType((n,), Dtype.FLOAT32)
-MATRIX_F32 = lambda m, n: ArrayType((m, n), Dtype.FLOAT32)
-BATCH_VECTOR_F32 = lambda n: ArrayType((None, n), Dtype.FLOAT32)
-BATCH_MATRIX_F32 = lambda m, n: ArrayType((None, m, n), Dtype.FLOAT32)
+
+def VECTOR_F32(n: int) -> ArrayType:
+    """Create a vector type with n elements."""
+    return ArrayType((n,), Dtype.FLOAT32)
+
+def MATRIX_F32(m: int, n: int) -> ArrayType:
+    """Create a matrix type with m x n elements."""
+    return ArrayType((m, n), Dtype.FLOAT32)
+
+def BATCH_VECTOR_F32(n: int) -> ArrayType:
+    """Create a batched vector type with n elements per batch."""
+    return ArrayType((None, n), Dtype.FLOAT32)
+
+def BATCH_MATRIX_F32(m: int, n: int) -> ArrayType:
+    """Create a batched matrix type with m x n elements per batch."""
+    return ArrayType((None, m, n), Dtype.FLOAT32)
 
 
 # Import numpy for size calculation

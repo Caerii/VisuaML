@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if os.getcwd() not in sys.path:
     sys.path.insert(0, os.getcwd())
 
-from visuaml import export_model, FilterConfig
+from visuaml import FilterConfig
 from visuaml.graph_export import export_model_graph_with_fallback
 from visuaml.model_loader import ModelLoadError
 

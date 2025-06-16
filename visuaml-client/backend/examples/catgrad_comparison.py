@@ -34,7 +34,6 @@ print("Works with existing PyTorch models:")
 print()
 
 try:
-    import torch
     import torch.nn as nn
     from visuaml.categorical.morphisms import LinearMorphism
     from visuaml.categorical.types import ArrayType

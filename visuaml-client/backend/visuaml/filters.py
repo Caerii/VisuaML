@@ -1,6 +1,6 @@
 """Module for filtering graph nodes based on operation types and patterns."""
 
-from typing import Set, List, Optional, Dict, Any
+from typing import Set, List, Optional, Dict
 from dataclasses import dataclass, field
 from torch.fx import Node, GraphModule
 

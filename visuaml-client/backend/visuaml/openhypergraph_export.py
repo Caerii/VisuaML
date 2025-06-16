@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Tuple, Set, Union
+from typing import Any, Dict, List, Optional, Set, Union
 
 import torch
 from torch.fx import GraphModule, Node, symbolic_trace
@@ -11,8 +11,7 @@ from .model_loader import load_model_class, instantiate_model
 # with a clear message if the package is missing so users know to pip-install
 # it.
 try:
-    from open_hypergraphs import OpenHypergraph, Hypergraph, FiniteFunction, IndexedCoproduct  # type: ignore
-    import numpy as np
+    from open_hypergraphs import OpenHypergraph  # type: ignore
     CATEGORICAL_AVAILABLE = True
 except ModuleNotFoundError as exc:  # pragma: no cover
     CATEGORICAL_AVAILABLE = False

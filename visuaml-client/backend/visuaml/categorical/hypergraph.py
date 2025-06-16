@@ -5,7 +5,7 @@ This module provides the CategoricalHypergraph class that represents
 open hypergraphs with proper categorical structure.
 """
 
-from typing import Dict, List, Any, Optional, Set, Tuple
+from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass
 import json
 from .morphisms import Morphism
