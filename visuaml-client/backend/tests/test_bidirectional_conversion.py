@@ -5,6 +5,7 @@ Test script demonstrating bidirectional conversion between JSON and categorical 
 
 import sys
 import os
+import pytest
 
 # Add the visuaml-client directory to Python path so we can import models
 # Go up from backend/tests/ to visuaml-client/
@@ -15,9 +16,17 @@ sys.path.insert(0, visuaml_client_dir)
 backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, backend_dir)
 
+# Check if open-hypergraphs is available
+try:
+    import openhypergraphs  # noqa: F401
+    OPEN_HYPERGRAPHS_AVAILABLE = True
+except ImportError:
+    OPEN_HYPERGRAPHS_AVAILABLE = False
+
 from visuaml import export_model_open_hypergraph  # noqa: E402
 from visuaml.openhypergraph_export import json_to_categorical, categorical_to_json  # noqa: E402
 
+@pytest.mark.skipif(not OPEN_HYPERGRAPHS_AVAILABLE, reason="open-hypergraphs package not available")
 def test_bidirectional_conversion():
     """Test bidirectional conversion between JSON and categorical formats."""
     print("🔄 Testing Bidirectional Open-Hypergraph Conversion")

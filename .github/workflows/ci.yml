@@ -41,8 +41,8 @@ jobs:
         run: |
           # Install CPU-only PyTorch for faster CI
           pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-          # Install other dependencies from requirements.txt
-          pip install numpy pandas pytest-cov black isort flake8 mypy transformers timm matplotlib seaborn
+          # Install all dependencies from requirements.txt (including open-hypergraphs)
+          pip install -r visuaml-client/backend/requirements.txt
       - name: Install development dependencies
         run: pip install ruff pytest
       - name: Run ruff linting
