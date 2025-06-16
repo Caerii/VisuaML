@@ -17,9 +17,15 @@ def test_visuaml_imports():
     """Test that visuaml modules can be imported."""
     # These should work if the path is set up correctly
     try:
-        from visuaml.graph_export import export_model_graph
-        from visuaml.model_loader import load_model_class
-        from visuaml.filters import GraphFilter
+        from visuaml.graph_export import export_model_graph  # noqa: E402
+        from visuaml.model_loader import load_model_class  # noqa: E402
+        from visuaml.filters import GraphFilter  # noqa: E402
+        
+        # Actually use the imports to avoid F401 errors
+        assert export_model_graph is not None
+        assert load_model_class is not None
+        assert GraphFilter is not None
+        
         print("✅ Core visuaml modules imported successfully")
         assert True
     except ImportError as e:
@@ -30,7 +36,11 @@ def test_visuaml_imports():
 def test_optional_imports():
     """Test optional dependencies."""
     try:
-        from visuaml.openhypergraph_export import export_model_open_hypergraph
+        from visuaml.openhypergraph_export import export_model_open_hypergraph  # noqa: E402
+        
+        # Actually use the import to avoid F401 error
+        assert export_model_open_hypergraph is not None
+        
         print("✅ Optional openhypergraph module imported successfully")
     except ImportError as e:
         print(f"ℹ️ Optional import not available: {e}")

@@ -13,7 +13,7 @@ sys.path.insert(0, visuaml_client_dir)
 backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, backend_dir)
 
-from visuaml import export_model_open_hypergraph
+from visuaml import export_model_open_hypergraph  # noqa: E402
 
 def test_fixed_models():
     """Test all fixed models."""

@@ -15,8 +15,8 @@ sys.path.insert(0, visuaml_client_dir)
 backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, backend_dir)
 
-from visuaml import export_model_open_hypergraph
-from visuaml.openhypergraph_export import json_to_categorical, categorical_to_json
+from visuaml import export_model_open_hypergraph  # noqa: E402
+from visuaml.openhypergraph_export import json_to_categorical, categorical_to_json  # noqa: E402
 
 def test_bidirectional_conversion():
     """Test bidirectional conversion between JSON and categorical formats."""
