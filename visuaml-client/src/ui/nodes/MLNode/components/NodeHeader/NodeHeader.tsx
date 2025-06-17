@@ -1,6 +1,5 @@
 /** @fileoverview Defines the NodeHeader component, responsible for rendering the compact, always-visible part of an MLNode. */
 import React from 'react';
-import styles from '../../styles/MLNode.module.css';
 
 interface NodeHeaderProps {
   layerDisplayName: string;
@@ -8,11 +7,11 @@ interface NodeHeaderProps {
   isSelected: boolean;
 }
 
-const NodeHeader: React.FC<NodeHeaderProps> = ({ layerDisplayName, subtext, isSelected }) => {
+const NodeHeader: React.FC<NodeHeaderProps> = ({ layerDisplayName, subtext }) => {
   return (
-    <div className={`${styles.nodeHeader} ${isSelected ? styles.nodeHeaderSelected : ''}`}>
-      <div className={styles.nodeHeaderTitle}>{layerDisplayName}</div>
-      {subtext && <div className={styles.nodeHeaderSubtext}>{subtext}</div>}
+    <div className="ml-node__header">
+      <div className="ml-node__title">{layerDisplayName}</div>
+      {subtext && <div className="ml-node__subtitle">{subtext}</div>}
     </div>
   );
 };

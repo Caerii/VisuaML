@@ -190,7 +190,7 @@ export const useTopBar = () => {
 
           const nodeCount = result.nodes?.length || 0;
           const edgeCount = result.hyperedges?.length || 0;
-          toast.success(`JSON export complete: ${nodeCount} nodes, ${edgeCount} hyperedges`);
+          toast.success(`VisuaML Graph export complete: ${nodeCount} nodes, ${edgeCount} hyperedges`);
         } else if (exportFormat === 'macro') {
           // Download macro file - handle both 'macro' and 'macro_syntax' field names
           const macroContent = result.macro || result.macro_syntax;
@@ -200,7 +200,7 @@ export const useTopBar = () => {
               `${modelDetails.label.replace(/[^a-zA-Z0-9]/g, '_')}_hypergraph.macro`,
               'text/plain',
             );
-            toast.success('Macro export complete - compatible with Rust crate');
+            toast.success('HyperSyn Macro export complete - compatible with Rust crate');
           } else {
             toast.error('Macro content not found in export result');
           }
@@ -227,17 +227,17 @@ export const useTopBar = () => {
             );
 
             // Show enhanced success message with categorical analysis
-            const message = `Categorical export complete! 
+            const message = `Open Hypergraph export complete! 
 📊 ${analysisData.nodes} nodes, ${analysisData.hyperedges} hyperedges
 🔗 Max arity: ${analysisData.max_input_arity} inputs, ${analysisData.max_output_arity} outputs
 ✅ Complexity: ${analysisData.complexity}`;
             toast.success(message, { duration: 8000 });
           } else {
-            toast.success('Categorical export complete - analysis data generated');
+            toast.success('Open Hypergraph export complete - analysis data generated');
           }
 
           // Enhanced logging for developers
-          console.group('🔬 Categorical Export Results');
+          console.group('🔬 Open Hypergraph Export Results');
           console.log('📈 Categorical Analysis:', analysisData);
           console.log('📊 JSON Data:', jsonData);
           console.log('🔧 Library Available:', result.library_available);

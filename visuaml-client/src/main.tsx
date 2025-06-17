@@ -1,14 +1,15 @@
 /** @fileoverview Main entry point for the VisuaML client application. Sets up the Clerk provider, Yjs document provider, MUI Theme provider and renders the main layout including TopBar and Canvas. */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { YDocProvider } from './y/DocProvider'; // (create shortly)
+import { YDocProvider } from './y/DocProvider';
 import { Canvas } from './ui/Canvas/Canvas';
 import TopBar from './ui/TopBar/TopBar';
 import CategoricalPanel from './ui/CategoricalPanel/CategoricalPanel';
 import { setCategoricalPanelCallback } from './ui/TopBar/useTopBar';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { Toaster } from 'sonner';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import { neuralTheme } from './styles/theme';
 import type { ExportHypergraphResponse } from './ui/TopBar/TopBar.model';
 import './index.css';
 
@@ -24,15 +25,6 @@ if (!clerkPublishableKey) {
   );
 }
 
-const theme = createTheme({
-  // You can add basic theme customizations here later if you wish, e.g.:
-  // palette: {
-  //   primary: {
-  //     main: '#1976d2',
-  //   },
-  // },
-});
-
 const MainApp = () => {
   const [categoricalData, setCategoricalData] = useState<ExportHypergraphResponse | null>(null);
   const [showCategoricalPanel, setShowCategoricalPanel] = useState(false);
@@ -46,7 +38,7 @@ const MainApp = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+    <div className="flex-column" style={{ height: '100vh' }}>
       <TopBar />
       <div style={{ flexGrow: 1, position: 'relative' }}>
         <Canvas />
@@ -68,7 +60,7 @@ const MainApp = () => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={neuralTheme}>
       <CssBaseline />
       <ClerkProvider publishableKey={clerkPublishableKey}>
         <YDocProvider>

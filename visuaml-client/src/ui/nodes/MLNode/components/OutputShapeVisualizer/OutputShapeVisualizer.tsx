@@ -1,7 +1,6 @@
 /** @fileoverview Defines the view components for visualizing an output shape. */
 import React, { useRef, useLayoutEffect } from 'react';
 import { useViewport } from '@xyflow/react';
-import styles from '../../styles/OutputShapeVisualizer.module.css';
 import TensorVisualizer3D from '../TensorVisualizer3D';
 import { useOutputShapeVisualizer } from './useOutputShapeVisualizer';
 import { useTensorVisualizer3D } from '../TensorVisualizer3D/useTensorVisualizer3D';
@@ -34,13 +33,13 @@ const BlocksVisualizer: React.FC<{ dims: number[]; label: string }> = ({ dims, l
       blocks.push(
         <div
           key={`start-${i}`}
-          className={styles.shapeBlock}
+          className="output-shape__block"
           style={{ height: `${blockWidth}px`, width: `${blockWidth}px` }}
         />,
       );
     }
     blocks.push(
-      <div key="ellipsis-1d" className={styles.ellipsis}>
+      <div key="ellipsis-1d" className="output-shape__ellipsis">
         ...
       </div>,
     );
@@ -49,7 +48,7 @@ const BlocksVisualizer: React.FC<{ dims: number[]; label: string }> = ({ dims, l
       blocks.push(
         <div
           key={i}
-          className={styles.shapeBlock}
+          className="output-shape__block"
           style={{ height: `${blockWidth}px`, width: `${blockWidth}px` }}
         />,
       );
@@ -58,8 +57,8 @@ const BlocksVisualizer: React.FC<{ dims: number[]; label: string }> = ({ dims, l
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <div className={styles.shapeRow}>{blocks}</div>
-      <div className={styles.dimensionLabel}>
+      <div className="output-shape__row">{blocks}</div>
+      <div className="output-shape__label">
         {label} ({d1})
       </div>
     </div>
@@ -82,7 +81,7 @@ const GridVisualizer: React.FC<{ dims: number[]; label: string }> = ({ dims, lab
   return (
     <div style={{ textAlign: 'center' }}>
       <div
-        className={styles.shapeGrid}
+        className="output-shape__grid"
         style={{
           gridTemplateColumns: `repeat(${displayCols + (showColEllipsis ? 1 : 0)}, ${blockSize}px)`,
           width: `${finalGridWidth}px`,
@@ -93,18 +92,17 @@ const GridVisualizer: React.FC<{ dims: number[]; label: string }> = ({ dims, lab
             {Array.from({ length: displayCols }).map((_, c) => (
               <div
                 key={`${r}-${c}`}
-                className={styles.shapeBlock}
+                className="output-shape__block"
                 style={{
                   height: `${blockSize}px`,
                   width: `${blockSize}px`,
-                  backgroundColor: '#a0c4ff',
                 }}
               />
             ))}
             {showColEllipsis && (
               <div
                 key={`${r}-col-ellipsis`}
-                className={styles.ellipsis}
+                className="output-shape__ellipsis"
                 style={{ height: `${blockSize}px`, width: `${blockSize}px` }}
               >
                 ...
@@ -117,7 +115,7 @@ const GridVisualizer: React.FC<{ dims: number[]; label: string }> = ({ dims, lab
             {Array.from({ length: displayCols }).map((_, c) => (
               <div
                 key={`row-ellipsis-${c}`}
-                className={styles.ellipsis}
+                className="output-shape__ellipsis"
                 style={{ height: `${blockSize}px`, width: `${blockSize}px` }}
               >
                 ...
@@ -126,7 +124,7 @@ const GridVisualizer: React.FC<{ dims: number[]; label: string }> = ({ dims, lab
             {showColEllipsis && (
               <div
                 key={`corner-ellipsis`}
-                className={styles.ellipsis}
+                className="output-shape__ellipsis"
                 style={{ height: `${blockSize}px`, width: `${blockSize}px` }}
               >
                 ...
@@ -135,7 +133,7 @@ const GridVisualizer: React.FC<{ dims: number[]; label: string }> = ({ dims, lab
           </React.Fragment>
         )}
       </div>
-      <div className={styles.dimensionLabel}>
+      <div className="output-shape__label">
         {label} ({rows} x {cols})
       </div>
     </div>
@@ -143,11 +141,11 @@ const GridVisualizer: React.FC<{ dims: number[]; label: string }> = ({ dims, lab
 };
 
 const InvalidShape: React.FC<{ shapeString?: string }> = ({ shapeString }) => (
-  <div className={styles.tooManyDimsText}>Invalid or unparsable shape: {shapeString}</div>
+  <div className="output-shape__error">Invalid or unparsable shape: {shapeString}</div>
 );
 
 const TooManyDims: React.FC<{ dims: number[] }> = ({ dims }) => (
-  <div className={styles.tooManyDimsText}>
+  <div className="output-shape__error">
     Cannot visualize effective shape: ({dims.join(', ')})
   </div>
 );
@@ -193,8 +191,8 @@ const OutputShapeVisualizer: React.FC<OutputShapeVisualizerProps> = (props) => {
 
   if (!isValid) {
     return (
-      <div className={styles.visualizerContainer}>
-        <div className={styles.shapeTitle}>Output Shape</div>
+      <div className="output-shape__container">
+        <div className="output-shape__title">Output Shape</div>
         <InvalidShape shapeString={rawShapeString} />
       </div>
     );
@@ -210,17 +208,17 @@ const OutputShapeVisualizer: React.FC<OutputShapeVisualizerProps> = (props) => {
       break;
     case 3:
       visualElement = (
-        <div className={styles.threejsContainerWrapper}>
+        <div className="output-shape__threejs-container-wrapper">
           <button
             onClick={tensor3D.toggleFullscreen}
-            className={styles.fullscreenButton}
+            className="output-shape__fullscreen-button"
             title="Fullscreen"
           >
             ⛶
           </button>
           <div
             ref={threejsContainerRef}
-            className={styles.threejsContainer}
+            className="output-shape__threejs-container"
             // All dynamic styles are now set in useLayoutEffect to prevent flicker
           >
             <TensorVisualizer3D {...tensor3D} />
@@ -234,19 +232,19 @@ const OutputShapeVisualizer: React.FC<OutputShapeVisualizerProps> = (props) => {
   }
 
   return (
-    <div className={styles.visualizerContainer}>
-      <div className={styles.shapeTitle}>Output Shape Visualized{processingNotes}</div>
+    <div className="output-shape__container">
+      <div className="output-shape__title">Output Shape Visualized{processingNotes}</div>
 
       {visualElement}
 
       {numVisualDims === 3 && (
-        <div className={styles.dimensionLabel} style={{ marginTop: '0px' }}>
+        <div className="output-shape__dimension-label" style={{ marginTop: '0px' }}>
           {batchSize !== null ? 'Visualized Tensor (C,H,W):' : '3D Tensor (D,H,W):'}{' '}
           {visualDims.join('x')}
         </div>
       )}
       <div
-        className={styles.dimensionLabel}
+        className="output-shape__dimension-label"
         style={{ fontSize: '0.7em', marginTop: '8px', color: '#999' }}
       >
         Original Full Shape: ({originalDims.join(', ')})

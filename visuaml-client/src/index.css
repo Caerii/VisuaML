@@ -1,5 +1,120 @@
-/* Tailwind directives removed */
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* ===== NEURAL NETWORK INSPIRED DESIGN SYSTEM ===== */
+
+/* CSS Custom Properties - Neural/Brain-Inspired Color Palette */
+:root {
+  /* Neural Network Color Palette - Dark Base with Bright Synaptic Accents */
+  --color-neural-dark: #0a0e1a;
+  --color-neural-deeper: #1a1f2e;
+  --color-neural-deep: #2d3748;
+  --color-neural-medium: #4a5568;
+  --color-neural-light: #718096;
+  --color-neural-lighter: #a0aec0;
+  --color-neural-lightest: #e2e8f0;
+
+  /* Synaptic Connection Colors */
+  --color-synapse-blue: #4299e1;      /* Active neural pathways */
+  --color-synapse-cyan: #00d4ff;      /* Data flow */
+  --color-synapse-purple: #9f7aea;    /* Processing nodes */
+  --color-synapse-green: #48bb78;     /* Success/output */
+  --color-synapse-orange: #ed8936;    /* Attention/activation */
+  --color-synapse-pink: #ed64a6;      /* Memory/storage */
+
+  /* Node Type Colors */
+  --color-input-node: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --color-hidden-node: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  --color-output-node: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  --color-conv-node: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+  --color-pool-node: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+  --color-activation-node: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+
+  /* Background Layers */
+  --bg-primary: #0f1419;              /* Main background */
+  --bg-secondary: #1a1f2e;            /* Panel backgrounds */
+  --bg-tertiary: #2d3748;             /* Card backgrounds */
+  --bg-glass: rgba(26, 31, 46, 0.85); /* Glass panels */
+  --bg-node: rgba(45, 55, 72, 0.95);  /* Node backgrounds */
+
+  /* Text Colors */
+  --text-primary: #f7fafc;            /* Main text */
+  --text-secondary: #e2e8f0;          /* Secondary text */
+  --text-muted: #a0aec0;              /* Muted text */
+  --text-neural: #4299e1;             /* Neural accent text */
+
+  /* Typography */
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 0.75rem;   /* 12px */
+  --spacing-lg: 1rem;      /* 16px */
+  --spacing-xl: 1.5rem;    /* 24px */
+  --spacing-2xl: 2rem;     /* 32px */
+  --spacing-3xl: 3rem;     /* 48px */
+  --spacing-4xl: 4rem;     /* 64px */
+
+  /* Organic border radius */
+  --radius-sm: 0.5rem;     /* 8px */
+  --radius-md: 0.75rem;    /* 12px */
+  --radius-lg: 1rem;       /* 16px */
+  --radius-xl: 1.25rem;    /* 20px */
+  --radius-2xl: 1.5rem;    /* 24px */
+
+  /* Neural-inspired shadows with color */
+  --shadow-neural-sm: 0 2px 8px rgba(66, 153, 225, 0.1), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --shadow-neural-md: 0 4px 16px rgba(66, 153, 225, 0.15), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-neural-lg: 0 8px 32px rgba(66, 153, 225, 0.2), 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-neural-xl: 0 16px 48px rgba(66, 153, 225, 0.25), 0 8px 24px rgba(0, 0, 0, 0.6);
+
+  /* Smooth, organic transitions - Neural-inspired easing */
+  --transition-fast: 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-normal: 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-slow: 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-fluid: 600ms cubic-bezier(0.23, 1, 0.32, 1);
+  --transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition-elastic: 800ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Z-Index Scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+
+  /* Enhanced neural texture patterns */
+  --neural-texture-subtle: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='neuralNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.3' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.26 0 0 0 0 0.36 0 0 0 0 0.56 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23neuralNoise)'/%3E%3C/svg%3E");
+  
+  --neural-texture-prominent: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strongNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.26 0 0 0 0 0.36 0 0 0 0 0.56 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strongNoise)'/%3E%3C/svg%3E");
+  
+  --synapse-glow: radial-gradient(circle, rgba(66, 153, 225, 0.4) 0%, transparent 70%);
+  --synapse-pulse: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 80%);
+}
+
+/* Reset and base styles */
 html,
 body,
 #root {
@@ -7,4 +122,1264 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-family: var(--font-family-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ===== BASE UTILITY CLASSES ===== */
+
+/* Neural Container Base - Reusable glass container */
+.neural-container {
+  background: var(--bg-glass);
+  border: 1px solid rgba(66, 153, 225, 0.2);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-neural-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.neural-container--rounded { border-radius: var(--radius-xl); }
+.neural-container--sharp { border-radius: var(--radius-sm); }
+
+/* Neural Button Base - Reusable button foundation */
+.neural-button {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  border: none;
+  outline: none;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.neural-button--primary {
+  background: linear-gradient(135deg, var(--color-synapse-blue) 0%, var(--color-synapse-cyan) 100%);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-neural-md);
+}
+
+.neural-button--secondary {
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.15) 0%, rgba(159, 122, 234, 0.08) 100%);
+  border: 1px solid rgba(66, 153, 225, 0.25);
+  color: var(--text-secondary);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-radius: var(--radius-xl);
+  box-shadow: 
+    var(--shadow-neural-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 0 rgba(66, 153, 225, 0);
+  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.neural-button--secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(66, 153, 225, 0.1), transparent);
+  transition: left var(--transition-normal) ease-out;
+}
+
+.neural-button--secondary:hover {
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.25) 0%, rgba(159, 122, 234, 0.15) 100%);
+  border-color: var(--color-synapse-blue);
+  box-shadow: 
+    var(--shadow-neural-md), 
+    0 0 20px rgba(66, 153, 225, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 2px rgba(66, 153, 225, 0.1);
+  transform: translateY(-1px) scale(1.02);
+  color: var(--text-primary);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.neural-button--secondary:hover::before {
+  left: 100%;
+}
+
+.neural-button--secondary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 
+    var(--shadow-neural-sm), 
+    0 0 10px rgba(66, 153, 225, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Neural Text Utilities - Brightness and styling */
+.neural-text--bright { filter: brightness(1.4); }
+.neural-text--medium { filter: brightness(1.2); }
+.neural-text--glow { text-shadow: 0 0 4px rgba(0, 212, 255, 0.3); }
+.neural-text--primary { color: var(--text-primary); }
+.neural-text--secondary { color: var(--text-secondary); }
+.neural-text--accent { color: var(--color-synapse-cyan); }
+
+/* Neural Node Type Base - DRY node type system */
+.neural-node-type {
+  border-color: var(--node-border-color, rgba(66, 153, 225, 0.4));
+  background: linear-gradient(135deg, rgba(45, 55, 72, 0.95) 0%, var(--node-accent-color, rgba(66, 153, 225, 0.1)) 100%);
+}
+
+/* Layout Utilities */
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-column { display: flex; flex-direction: column; }
+.flex-gap-sm { gap: var(--spacing-sm); }
+.flex-gap-md { gap: var(--spacing-md); }
+.flex-gap-lg { gap: var(--spacing-lg); }
+.flex-gap-xl { gap: var(--spacing-xl); }
+
+/* Animation Utilities */
+.animate-fade-in { animation: fadeIn var(--transition-normal) ease-out; }
+.animate-synapse-pulse { animation: synapsePulse 2s ease-in-out infinite; }
+.animate-node-entrance { animation: nodeEntrance var(--transition-elastic) ease-out; }
+.animate-content-slide { animation: slideInContent var(--transition-fluid) cubic-bezier(0.23, 1, 0.32, 1); }
+
+/* ===== COMPONENT STYLES ===== */
+
+/* TopBar Component - Neural Command Center */
+.topbar {
+  background: 
+    var(--neural-texture-subtle),
+    linear-gradient(135deg, var(--color-neural-dark) 0%, var(--color-neural-deeper) 50%, var(--color-neural-deep) 100%);
+  color: var(--text-primary);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  box-shadow: var(--shadow-neural-lg);
+  border-bottom: 1px solid rgba(66, 153, 225, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.topbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-synapse-cyan), var(--color-synapse-blue), transparent);
+}
+
+.topbar__container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xl);
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.topbar__logo-link {
+  display: inline-block;
+  transition: transform var(--transition-fast);
+  filter: drop-shadow(0 2px 8px rgba(66, 153, 225, 0.4));
+}
+
+.topbar__logo-link:hover {
+  transform: scale(1.05) translateY(-1px);
+  filter: drop-shadow(0 4px 12px rgba(66, 153, 225, 0.6));
+}
+
+.topbar__logo {
+  height: 64px; /* Increased from 52px for better visibility */
+  object-fit: contain;
+  filter: brightness(1.2) saturate(1.3);
+}
+
+.topbar__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xl);
+  flex: 1;
+}
+
+.topbar__control-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.topbar__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.topbar__select {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid rgba(66, 153, 225, 0.3);
+  border-radius: var(--radius-lg);
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  min-width: 220px;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-neural-md);
+  cursor: pointer;
+  /* Remove default browser arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* Add custom gradient and arrow */
+  background-image: 
+    linear-gradient(135deg, rgba(66, 153, 225, 0.1) 0%, transparent 50%),
+    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%234299e1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: left top, right var(--spacing-md) center;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 100% 100%, 1rem;
+  padding-right: var(--spacing-3xl);
+}
+
+.topbar__select:hover {
+  border-color: var(--color-synapse-blue);
+  box-shadow: var(--shadow-neural-lg), 0 0 0 2px rgba(66, 153, 225, 0.2);
+  transform: translateY(-1px);
+}
+
+.topbar__select:focus {
+  outline: none;
+  border-color: var(--color-synapse-cyan);
+  box-shadow: var(--shadow-neural-lg), 0 0 0 3px rgba(0, 212, 255, 0.3);
+}
+
+.topbar__button {
+  /* Toned down Import button styling */
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  border: 1px solid rgba(66, 153, 225, 0.3);
+  outline: none;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-sm);
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.7) 0%, rgba(159, 122, 234, 0.6) 100%);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-neural-sm);
+  backdrop-filter: blur(8px) saturate(1.1);
+  position: relative;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: 0.025em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.topbar__button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.topbar__button:hover::before {
+  left: 100%;
+}
+
+.topbar__button:hover {
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.8) 0%, rgba(159, 122, 234, 0.7) 100%);
+  box-shadow: var(--shadow-neural-md), 0 0 12px rgba(66, 153, 225, 0.3);
+  border-color: var(--color-synapse-blue);
+  transform: translateY(-1px);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.topbar__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.topbar__button--secondary {
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.15) 0%, rgba(159, 122, 234, 0.08) 100%);
+  border: 1px solid rgba(66, 153, 225, 0.25);
+  color: var(--text-secondary);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-radius: var(--radius-xl); /* Softer edges */
+  padding: var(--spacing-md) var(--spacing-2xl); /* More padding for longer text */
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  box-shadow: 
+    var(--shadow-neural-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 0 rgba(66, 153, 225, 0);
+  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.topbar__button--secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(66, 153, 225, 0.1), transparent);
+  transition: left var(--transition-normal) ease-out;
+}
+
+.topbar__button--secondary:hover {
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.25) 0%, rgba(159, 122, 234, 0.15) 100%);
+  border-color: var(--color-synapse-blue);
+  box-shadow: 
+    var(--shadow-neural-md), 
+    0 0 20px rgba(66, 153, 225, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 2px rgba(66, 153, 225, 0.1);
+  transform: translateY(-1px) scale(1.02);
+  color: var(--text-primary);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.topbar__button--secondary:hover::before {
+  left: 100%;
+}
+
+.topbar__button--secondary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 
+    var(--shadow-neural-sm), 
+    0 0 10px rgba(66, 153, 225, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Canvas Component - Neural Field */
+.canvas {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: 
+    var(--neural-texture-subtle),
+    radial-gradient(ellipse at 20% 80%, rgba(66, 153, 225, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(159, 122, 234, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse at 40% 40%, rgba(0, 212, 255, 0.03) 0%, transparent 50%),
+    linear-gradient(135deg, var(--bg-primary) 0%, var(--color-neural-deeper) 100%);
+}
+
+.canvas__stats-panel {
+  position: absolute;
+  top: var(--spacing-lg);
+  left: var(--spacing-lg);
+  z-index: 20;
+}
+
+/* Let the React Flow wrapper handle width animation */
+.react-flow__node {
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* MLNode Component - Neural Processing Units */
+.ml-node {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px) saturate(1.2);
+  min-height: 64px;
+  border-radius: 24px;
+  border: 1px solid rgba(66, 153, 225, 0.1);
+  box-shadow:
+    var(--shadow-neural-md),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  /* CRITICAL: Fill the parent wrapper's width, but let height be determined by content. */
+  width: 100%;
+  transition:
+    transform var(--transition-bounce),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  animation-duration: var(--transition-elastic);
+}
+
+/* Expanded nodes are wider for better content display */
+.ml-node--selected {
+  /* REMOVED: width: 280px; The wrapper now controls this. */
+  border-color: var(--color-synapse-cyan);
+  box-shadow: var(--shadow-neural-xl), 0 0 32px rgba(0, 212, 255, 0.4);
+  transform: translateY(-1px) scale(1.005);
+}
+
+/* REMOVED: The :not selector is no longer needed as the wrapper handles the width logic */
+
+.react-flow__node:nth-child(1) .ml-node {
+  animation-delay: 0.05s;
+}
+
+.react-flow__node:nth-child(2) .ml-node {
+  animation-delay: 0.1s;
+}
+
+.react-flow__node:nth-child(3) .ml-node {
+  animation-delay: 0.15s;
+}
+
+.react-flow__node:nth-child(4) .ml-node {
+  animation-delay: 0.2s;
+}
+
+.react-flow__node:nth-child(5) .ml-node {
+  animation-delay: 0.25s;
+}
+
+.react-flow__node:nth-child(6) .ml-node {
+  animation-delay: 0.3s;
+}
+
+.react-flow__node:nth-child(7) .ml-node {
+  animation-delay: 0.35s;
+}
+
+.react-flow__node:nth-child(8) .ml-node {
+  animation-delay: 0.4s;
+}
+
+.react-flow__node:nth-child(9) .ml-node {
+  animation-delay: 0.45s;
+}
+
+.react-flow__node:nth-child(10) .ml-node {
+  animation-delay: 0.5s;
+}
+
+.react-flow__node:nth-child(n+11) .ml-node {
+  animation-delay: calc(0.55s + (var(--node-index, 0) * 0.05s));
+}
+
+.ml-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--neural-texture-prominent);
+  opacity: 0.8;
+  pointer-events: none;
+  border-radius: var(--radius-xl);
+  z-index: 1;
+}
+
+.ml-node:hover {
+  border-color: var(--color-synapse-blue);
+  box-shadow: var(--shadow-neural-xl), 0 0 24px rgba(66, 153, 225, 0.3);
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Removed duplicate - now handled above with width transition */
+
+/* Node Type Specific Styling - Compressed with CSS Custom Properties */
+.react-flow__node-input .ml-node {
+  --node-border-color: rgba(72, 187, 120, 0.4);
+  --node-accent-color: rgba(56, 161, 105, 0.1);
+}
+
+.react-flow__node-conv2d .ml-node,
+.react-flow__node-conv1d .ml-node {
+  --node-border-color: rgba(66, 153, 225, 0.4);
+  --node-accent-color: rgba(66, 153, 225, 0.1);
+}
+
+.react-flow__node-maxpool2d .ml-node,
+.react-flow__node-avgpool2d .ml-node {
+  --node-border-color: rgba(159, 122, 234, 0.4);
+  --node-accent-color: rgba(159, 122, 234, 0.1);
+}
+
+.react-flow__node-relu .ml-node,
+.react-flow__node-activation .ml-node {
+  --node-border-color: rgba(237, 137, 54, 0.4);
+  --node-accent-color: rgba(237, 137, 54, 0.1);
+}
+
+.react-flow__node-linear .ml-node,
+.react-flow__node-dense .ml-node {
+  --node-border-color: rgba(237, 100, 166, 0.4);
+  --node-accent-color: rgba(237, 100, 166, 0.1);
+}
+
+.react-flow__node-output .ml-node {
+  --node-border-color: rgba(0, 212, 255, 0.4);
+  --node-accent-color: rgba(0, 212, 255, 0.1);
+}
+
+/* Node Header - Always at top for consistent handle positioning */
+.ml-node__header {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-bottom: 1px solid rgba(66, 153, 225, 0.2);
+  background: linear-gradient(135deg, rgba(45, 55, 72, 0.9) 0%, rgba(74, 85, 104, 0.7) 100%);
+  /* Remove border-radius - parent overflow:hidden will clip to rounded corners */
+  position: relative;
+  z-index: 2;
+  /* CRITICAL: This ensures handles stay at header level */
+  height: 64px; /* Fixed height for consistent handle positioning */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ml-node__title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.ml-node__subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin: var(--spacing-xs) 0 0 0;
+  font-family: var(--font-family-mono);
+  opacity: 0.8;
+}
+
+.ml-node__details {
+  max-height: 0;
+  overflow: hidden;
+  transition: 
+    max-height 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+    padding 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.4s ease-out,
+    transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+    border-top-color 0.3s ease-out,
+    background 0.3s ease-out,
+    backdrop-filter 0.3s ease-out;
+  position: relative;
+  z-index: 1;
+  /* Completely transparent when collapsed */
+  background: transparent;
+  opacity: 0;
+  transform: translateY(-15px) scale(0.98);
+  backdrop-filter: none;
+  border-top: none;
+  /* Start completely collapsed */
+  padding: 0;
+  margin: 0;
+}
+
+.ml-node__details--open {
+  max-height: 800px;
+  padding: var(--spacing-xl);
+  border-top: 1px solid rgba(66, 153, 225, 0.2);
+  background: rgba(26, 31, 46, 0.8);
+  backdrop-filter: blur(4px);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  /* Remove border-radius - parent overflow:hidden will clip to rounded corners */
+}
+
+/* Node Details Content Styling */
+.ml-node__details-section {
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+  z-index: 2;
+}
+
+.ml-node__details-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-synapse-cyan);
+  margin-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+  text-shadow: 0 0 4px rgba(0, 212, 255, 0.3);
+}
+
+.ml-node__info-field {
+  display: flex;
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.ml-node__info-label {
+  font-weight: var(--font-weight-semibold);
+  min-width: 90px;
+  flex-shrink: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  /* Use neural text utilities */
+}
+
+.ml-node__info-value {
+  font-family: var(--font-family-mono);
+  color: var(--text-secondary);
+  word-break: break-all;
+  flex: 1;
+  background: rgba(45, 55, 72, 0.3);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(66, 153, 225, 0.1);
+}
+
+/* Enhanced brightness for argument labels - Use neural text utilities */
+.ml-node__info-label--bright {
+  /* Combine: neural-text--bright + neural-text--accent + neural-text--glow */
+}
+
+/* Arguments list styling */
+.ml-node__arguments-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-sm) 0;
+}
+
+.ml-node__argument-item {
+  color: var(--text-primary);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-xs) 0;
+  filter: brightness(1.3);
+  line-height: 1.4;
+}
+
+.ml-node__argument-key {
+  color: var(--color-synapse-blue);
+  font-weight: var(--font-weight-semibold);
+  filter: brightness(1.2);
+}
+
+.ml-node__source-link {
+  color: var(--color-synapse-purple);
+  font-style: italic;
+  filter: brightness(1.3);
+}
+
+.ml-node__transitive-hint {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  filter: brightness(1.2);
+}
+
+/* Output Shape Visualizer - Neural Themed */
+.output-shape__container {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  border: 1px solid rgba(66, 153, 225, 0.2);
+  border-radius: var(--radius-lg);
+  background: rgba(26, 31, 46, 0.6);
+  backdrop-filter: blur(4px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.output-shape__title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-synapse-cyan);
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 0 4px rgba(0, 212, 255, 0.3);
+}
+
+.output-shape__label,
+.output-shape__dimension-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: var(--spacing-xs);
+}
+
+.output-shape__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: var(--spacing-sm);
+  gap: 2px;
+}
+
+.output-shape__block {
+  background: linear-gradient(135deg, var(--color-synapse-blue) 0%, var(--color-synapse-purple) 100%);
+  border: 1px solid rgba(66, 153, 225, 0.3);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  font-size: var(--font-size-xs);
+  min-width: 10px;
+  min-height: 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.output-shape__grid {
+  display: grid;
+  border: 1px solid rgba(66, 153, 225, 0.2);
+  border-radius: var(--radius-sm);
+  gap: 1px;
+  background: rgba(45, 55, 72, 0.3);
+  padding: 2px;
+  margin: 0 auto;
+}
+
+.output-shape__ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  font-weight: var(--font-weight-bold);
+  color: var(--text-muted);
+  margin: 0 var(--spacing-xs);
+}
+
+.output-shape__error {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.output-shape__threejs-container-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  margin-top: var(--spacing-sm);
+  border: 1px solid rgba(66, 153, 225, 0.2);
+}
+
+.output-shape__threejs-container {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  background: var(--color-neural-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.output-shape__fullscreen-button {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  z-index: 20;
+  background: rgba(26, 31, 46, 0.8);
+  color: var(--text-primary);
+  border: 1px solid rgba(66, 153, 225, 0.4);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  line-height: 1;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(4px);
+}
+
+.output-shape__fullscreen-button:hover {
+  background: rgba(66, 153, 225, 0.2);
+  border-color: var(--color-synapse-cyan);
+  color: var(--color-synapse-cyan);
+}
+
+/* React Flow Handles - Synaptic Connection Points */
+.ml-node__handle {
+  background: linear-gradient(135deg, var(--color-neural-medium) 0%, var(--color-neural-deep) 100%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid var(--color-synapse-blue);
+  box-shadow: var(--shadow-neural-sm), 0 0 8px rgba(66, 153, 225, 0.5);
+  transition: 
+    transform var(--transition-bounce),
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  /* CRITICAL: Must be absolute for React Flow to position horizontally */
+  position: absolute;
+  /* Let React Flow handle horizontal positioning, only style appearance */
+  transform: translateY(-50%);
+  z-index: 10;
+  /* Add subtle pulse animation */
+  animation: handlePulse 3s ease-in-out infinite;
+}
+
+.ml-node__handle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--color-synapse-cyan);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.8;
+}
+
+.ml-node__handle:hover {
+  background: linear-gradient(135deg, var(--color-synapse-blue) 0%, var(--color-synapse-cyan) 100%);
+  border-color: var(--color-synapse-cyan);
+  transform: translateY(-50%) scale(1.3);
+  box-shadow: var(--shadow-neural-md), 0 0 20px rgba(0, 212, 255, 0.8);
+  animation: handleHoverPulse 0.6s ease-in-out infinite alternate;
+}
+
+.ml-node__handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  background: var(--synapse-glow);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.ml-node__handle:hover::after {
+  opacity: 1;
+}
+
+/* 
+  STYLES FOR .network-stats-* were here.
+  They have been migrated to a co-located, type-safe CSS-in-JS system
+  in visuaml-client/src/ui/NetworkStatsDisplay/NetworkStatsDisplay.styles.ts
+*/
+
+/* Scrollbar Styling - Neural Themed */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(26, 31, 46, 0.6);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--color-synapse-blue) 0%, var(--color-synapse-purple) 100%);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--color-synapse-cyan) 0%, var(--color-synapse-blue) 100%);
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-synapse-cyan);
+  outline-offset: 2px;
+}
+
+/* ===== REACT FLOW EDGE STYLING ===== */
+
+/* Default edge styling - Neural connections with flowing glow */
+.react-flow__edge-path {
+  stroke: var(--color-synapse-blue);
+  stroke-width: 2px;
+  fill: none;
+  /* Remove transition for synchronous movement */
+  filter: drop-shadow(0 0 4px rgba(66, 153, 225, 0.3));
+  /* Initial state for draw-in animation, then flowing pattern */
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: edgeDrawIn 1.2s ease-out forwards, edgeFlow 3s linear infinite 1.2s;
+}
+
+/* Staggered edge loading animations */
+.react-flow__edge:nth-child(1) .react-flow__edge-path {
+  animation-delay: 0.1s;
+}
+
+.react-flow__edge:nth-child(2) .react-flow__edge-path {
+  animation-delay: 0.2s;
+}
+
+.react-flow__edge:nth-child(3) .react-flow__edge-path {
+  animation-delay: 0.3s;
+}
+
+.react-flow__edge:nth-child(4) .react-flow__edge-path {
+  animation-delay: 0.4s;
+}
+
+.react-flow__edge:nth-child(5) .react-flow__edge-path {
+  animation-delay: 0.5s;
+}
+
+.react-flow__edge:nth-child(6) .react-flow__edge-path {
+  animation-delay: 0.6s;
+}
+
+.react-flow__edge:nth-child(7) .react-flow__edge-path {
+  animation-delay: 0.7s;
+}
+
+.react-flow__edge:nth-child(8) .react-flow__edge-path {
+  animation-delay: 0.8s;
+}
+
+.react-flow__edge:nth-child(9) .react-flow__edge-path {
+  animation-delay: 0.9s;
+}
+
+.react-flow__edge:nth-child(10) .react-flow__edge-path {
+  animation-delay: 1.0s;
+}
+
+.react-flow__edge:nth-child(11) .react-flow__edge-path {
+  animation-delay: 1.1s;
+}
+
+.react-flow__edge:nth-child(12) .react-flow__edge-path {
+  animation-delay: 1.2s;
+}
+
+/* For larger graphs, use a more general approach */
+.react-flow__edge:nth-child(n+13) .react-flow__edge-path {
+  animation-delay: calc(1.3s + (var(--edge-index, 0) * 0.1s));
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: var(--color-synapse-cyan);
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.8));
+  transition: stroke var(--transition-fast), stroke-width var(--transition-fast), filter var(--transition-fast);
+  animation: edgeFlow 1.5s linear infinite;
+  stroke-dasharray: 12 6;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--color-synapse-cyan);
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.8));
+  animation: edgeFlow 1.5s linear infinite;
+  stroke-dasharray: 10 5;
+}
+
+/* Edge markers (arrowheads) */
+.react-flow__arrowhead {
+  fill: var(--color-synapse-blue);
+  transition: fill var(--transition-fast);
+}
+
+.react-flow__edge:hover .react-flow__arrowhead {
+  fill: var(--color-synapse-cyan);
+}
+
+.react-flow__edge.selected .react-flow__arrowhead {
+  fill: var(--color-synapse-cyan);
+}
+
+/* Connection line when dragging */
+.react-flow__connection-path {
+  stroke: var(--color-synapse-purple);
+  stroke-width: 2px;
+  stroke-dasharray: 8 4;
+  animation: edgeFlow 1s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(159, 122, 234, 0.5));
+}
+
+/* React Flow canvas enhancements */
+.react-flow__renderer {
+  transition: transform var(--transition-normal) ease-out;
+}
+
+.react-flow__selection {
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid var(--color-synapse-cyan);
+}
+
+.react-flow__nodesselection-rect {
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid var(--color-synapse-cyan);
+}
+
+/* Minimap styling */
+.react-flow__minimap {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(66, 153, 225, 0.2);
+  border-radius: var(--radius-lg);
+}
+
+.react-flow__minimap-mask {
+  fill: rgba(0, 212, 255, 0.2);
+  stroke: var(--color-synapse-cyan);
+  stroke-width: 2;
+}
+
+.react-flow__minimap-node {
+  fill: var(--color-synapse-blue);
+  stroke: none;
+}
+
+/* Controls styling - Enhanced and larger */
+.react-flow__controls {
+  background: var(--bg-glass);
+  border: 1px solid rgba(66, 153, 225, 0.25);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: 
+    var(--shadow-neural-lg),
+    0 0 20px rgba(66, 153, 225, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-xs);
+  gap: var(--spacing-xs);
+}
+
+.react-flow__controls-button {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: var(--font-weight-medium);
+}
+
+.react-flow__controls-button:hover {
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.15) 0%, rgba(159, 122, 234, 0.1) 100%);
+  color: var(--color-synapse-cyan);
+  transform: scale(1.05);
+  box-shadow: 
+    0 0 12px rgba(66, 153, 225, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(66, 153, 225, 0.2);
+}
+
+.react-flow__controls-button:active {
+  transform: scale(0.95);
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.2) 0%, rgba(159, 122, 234, 0.15) 100%);
+}
+
+/* Make the controls more prominent */
+.react-flow__controls svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Utility Classes */
+/* Redundant utilities removed - now in base system */
+
+/* Fluid interaction states - removed duplicate, handled above */
+
+/* Enhanced node expansion states */
+.ml-node--expanding .ml-node__details {
+  animation: detailsExpand 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards !important;
+}
+
+.ml-node--collapsing .ml-node__details {
+  animation: detailsCollapse 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards !important;
+}
+
+/* Prevent entrance animation from interfering with expansion */
+.ml-node--expanding,
+.ml-node--collapsing {
+  animation-delay: 0s !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes synapsePulse {
+  0%, 100% { 
+    box-shadow: 0 0 8px rgba(66, 153, 225, 0.5);
+  }
+  50% { 
+    box-shadow: 0 0 16px rgba(0, 212, 255, 0.8), 0 0 32px rgba(66, 153, 225, 0.3);
+  }
+}
+
+/* ===== FLUID ANIMATION KEYFRAMES ===== */
+
+/* Smooth node expansion content animation */
+@keyframes slideInContent {
+  from { 
+    opacity: 0; 
+    transform: translateY(-15px) scale(0.98); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* Handle pulse animations for connection points */
+@keyframes handlePulse {
+  0%, 100% { 
+    box-shadow: var(--shadow-neural-sm), 0 0 8px rgba(66, 153, 225, 0.5);
+  }
+  50% { 
+    box-shadow: var(--shadow-neural-sm), 0 0 12px rgba(66, 153, 225, 0.7);
+  }
+}
+
+@keyframes handleHoverPulse {
+  0% { 
+    box-shadow: var(--shadow-neural-md), 0 0 20px rgba(0, 212, 255, 0.8);
+    transform: translateY(-50%) scale(1.3);
+  }
+  100% { 
+    box-shadow: var(--shadow-neural-lg), 0 0 28px rgba(0, 212, 255, 1);
+    transform: translateY(-50%) scale(1.35);
+  }
+}
+
+/* Edge connection flow animation */
+@keyframes edgeFlow {
+  0% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Edge draw-in animation (left to right) - preserves flowing pattern */
+@keyframes edgeDrawIn {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+    filter: drop-shadow(0 0 4px rgba(66, 153, 225, 0.3));
+  }
+  15% {
+    opacity: 1;
+  }
+  80% {
+    stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 8px rgba(66, 153, 225, 0.6));
+  }
+  100% {
+    stroke-dashoffset: 0;
+    /* Keep the flowing pattern instead of removing it */
+    stroke-dasharray: 8 4;
+    filter: drop-shadow(0 0 4px rgba(66, 153, 225, 0.3));
+  }
+}
+
+/* Node entrance animation with bounce */
+@keyframes nodeEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  60% {
+    opacity: 0.8;
+    transform: scale(1.05) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Fluid edge connection animation */
+@keyframes edgeConnect {
+  0% {
+    stroke-dasharray: 0 100;
+    opacity: 0.3;
+  }
+  50% {
+    stroke-dasharray: 50 100;
+    opacity: 0.8;
+  }
+  100% {
+    stroke-dasharray: 100 0;
+    opacity: 1;
+  }
+}
+
+/* Node expansion/collapse animations removed - using details-only animations for smoother experience */
+
+/* Details panel specific animations */
+@keyframes detailsExpand {
+  0% {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-15px) scale(0.98);
+    padding-top: 0;
+    padding-bottom: 0;
+    background: transparent;
+    backdrop-filter: none;
+    border-top: none;
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-5px) scale(0.99);
+    background: rgba(26, 31, 46, 0.4);
+    backdrop-filter: blur(2px);
+  }
+  100% {
+    max-height: 800px;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+    background: rgba(26, 31, 46, 0.8);
+    backdrop-filter: blur(4px);
+    border-top: 1px solid rgba(66, 153, 225, 0.2);
+  }
+}
+
+@keyframes detailsCollapse {
+  0% {
+    max-height: 800px;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+    background: rgba(26, 31, 46, 0.8);
+    backdrop-filter: blur(4px);
+    border-top: 1px solid rgba(66, 153, 225, 0.2);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-5px) scale(0.99);
+    background: rgba(26, 31, 46, 0.4);
+    backdrop-filter: blur(2px);
+  }
+  100% {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-15px) scale(0.98);
+    padding-top: 0;
+    padding-bottom: 0;
+    background: transparent;
+    backdrop-filter: none;
+    border-top: none;
+  }
 }
