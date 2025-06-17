@@ -2,7 +2,6 @@
 import React from 'react';
 import type { ResolvedArgValue, MLNodeData } from '../../../types';
 import { isSourceNode } from './guards';
-import styles from '../../styles/MLNode.module.css';
 
 // ===========================
 // ARGUMENT RENDERER
@@ -23,9 +22,9 @@ const ArgumentRenderer: React.FC<ArgumentRendererProps> = ({ arg }) => {
       : `node '${arg.source_node}'`;
 
     return (
-      <span className={styles.sourceNodeLink}>
+      <span className="ml-node__source-link">
         from {sourceText}
-        {arg.transitive && <span className={styles.transitiveHint}> (via filtered)</span>}
+        {arg.transitive && <span className="ml-node__transitive-hint"> (via filtered)</span>}
       </span>
     );
   }
@@ -81,14 +80,14 @@ const NodeArguments: React.FC<NodeArgumentsProps> = ({ args, kwargs }) => {
   }
 
   return (
-    <div className={styles.detailsSection}>
-      <div className={styles.detailsSectionTitle}>Arguments</div>
+    <div className="ml-node__details-section">
+      <div className="ml-node__details-title">Arguments</div>
       {hasArgs && (
-        <div className={styles.infoField}>
-          <strong className={styles.infoLabel}>Args:</strong>
-          <ul className={styles.argumentsList}>
+        <div className="ml-node__info-field">
+          <strong className="ml-node__info-label ml-node__info-label--bright">Args:</strong>
+          <ul className="ml-node__arguments-list">
             {args.map((arg, index) => (
-              <li key={index}>
+              <li key={index} className="ml-node__argument-item">
                 <ArgumentRenderer arg={arg} />
               </li>
             ))}
@@ -96,12 +95,12 @@ const NodeArguments: React.FC<NodeArgumentsProps> = ({ args, kwargs }) => {
         </div>
       )}
       {hasKwargs && (
-        <div className={styles.infoField}>
-          <strong className={styles.infoLabel}>KwArgs:</strong>
-          <ul className={styles.argumentsList}>
+        <div className="ml-node__info-field">
+          <strong className="ml-node__info-label ml-node__info-label--bright">KwArgs:</strong>
+          <ul className="ml-node__arguments-list">
             {Object.entries(kwargs).map(([key, value]) => (
-              <li key={key}>
-                <span className={styles.argumentKey}>{key}:</span> <ArgumentRenderer arg={value} />
+              <li key={key} className="ml-node__argument-item">
+                <span className="ml-node__argument-key">{key}:</span> <ArgumentRenderer arg={value} />
               </li>
             ))}
           </ul>

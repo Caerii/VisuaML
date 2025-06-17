@@ -10,7 +10,6 @@ import type { RenderableCursor } from '../../y/usePresence';
 import '@xyflow/react/dist/style.css';
 import MLNode from '../nodes/MLNode/MLNode';
 import { RemoteCursor } from '../RemoteCursor/RemoteCursor';
-import styles from './styles/Canvas.module.css';
 import { NetworkStatsDisplay } from '../NetworkStatsDisplay/NetworkStatsDisplay';
 import { useCanvas } from './useCanvas';
 
@@ -30,8 +29,10 @@ export const Canvas: React.FC = () => {
 
   return (
     <ReactFlowProvider>
-      <div className={styles.canvasWrapper} ref={reactFlowWrapper} onMouseMove={handleMouseMove}>
+      <div className="canvas" ref={reactFlowWrapper} onMouseMove={handleMouseMove}>
+        <div className="canvas__stats-panel">
         <NetworkStatsDisplay />
+        </div>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -47,8 +48,10 @@ export const Canvas: React.FC = () => {
           zoomOnDoubleClick={true}
           preventScrolling={true}
           multiSelectionKeyCode={null}
+          selectNodesOnDrag={false}
+          defaultViewport={{ x: 0, y: 0, zoom: 1 }}
         >
-          <Background variant={BackgroundVariant.Dots} gap={16} size={1} color="#e5e7eb" />
+          <Background variant={BackgroundVariant.Dots} gap={16} size={1} color="#cbd5e1" />
           <Controls
             position="top-left"
             style={{

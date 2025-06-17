@@ -16,7 +16,17 @@ export const useCanvas = () => {
   const lastSentPosition = useRef<{ x: number; y: number } | null>(null);
 
   const onNodesChange = useCallback(
-    (changes: NodeChange[]) => setNodes(applyNodeChanges(changes, nodes) as Node[]),
+    (changes: NodeChange[]) => {
+      const updatedNodes = applyNodeChanges(changes, nodes) as Node[];
+      
+      // Update node dimensions based on selection state
+      const nodesWithCorrectDimensions = updatedNodes.map(node => ({
+        ...node,
+        width: node.selected ? 280 : 180, // Match CSS: 280px when selected, 180px when not
+      }));
+      
+      setNodes(nodesWithCorrectDimensions);
+    },
     [nodes, setNodes],
   );
 

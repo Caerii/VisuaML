@@ -1,116 +1,184 @@
 /** @fileoverview Defines the NetworkStatsDisplay component, which shows key information about the currently loaded network graph, such as node/edge counts, input shapes, and component types. It sources its data from a Zustand store and uses Material-UI components for presentation. */
-import React from 'react';
+import React, { useState } from 'react';
 import { useNetworkStore } from '../../store/networkStore';
-import {
-  Paper,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Chip,
-  Box,
-  CircularProgress,
-  Divider,
-  type SxProps,
-  type Theme,
-} from '@mui/material';
-import {
-  AccountTree,
-  DataObject,
-  ShareOutlined,
-  Input,
-  CategoryOutlined,
-} from '@mui/icons-material';
+import { Typography, List, ListItem, ListItemText, Collapse } from '@mui/material';
+import * as S from './NetworkStatsDisplay.styles';
+
+// Custom neural network-themed icons
+const NeuralNetworkIcon: React.FC = () => (
+  <S.HeaderIcon>
+    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+      <circle cx="4" cy="6" r="2" opacity="0.8"/>
+      <circle cx="4" cy="12" r="2" opacity="0.8"/>
+      <circle cx="4" cy="18" r="2" opacity="0.8"/>
+      <circle cx="12" cy="4" r="2" opacity="0.9"/>
+      <circle cx="12" cy="12" r="2" opacity="0.9"/>
+      <circle cx="12" cy="20" r="2" opacity="0.9"/>
+      <circle cx="20" cy="8" r="2" opacity="1"/>
+      <circle cx="20" cy="16" r="2" opacity="1"/>
+      <path d="M6 6l4-2M6 12l6 0M6 18l4 2M14 4l4 4M14 12l6 4M14 20l4-4" 
+            stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.6"/>
+    </svg>
+  </S.HeaderIcon>
+);
+
+const NodeIcon: React.FC = () => (
+  <S.MetricIcon>
+    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
+      <circle cx="12" cy="12" r="4" opacity="0.8"/>
+      <circle cx="12" cy="12" r="1.5" opacity="1"/>
+      <path d="M12 4v2M12 18v2M4 12h2M18 12h2" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
+    </svg>
+  </S.MetricIcon>
+);
+
+const EdgeIcon: React.FC = () => (
+  <S.MetricIcon>
+    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+      <circle cx="6" cy="12" r="2" opacity="0.8"/>
+      <circle cx="18" cy="12" r="2" opacity="0.8"/>
+      <path d="M8 12h8" stroke="currentColor" strokeWidth="2" opacity="0.6"/>
+      <path d="M14 9l3 3-3 3" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <circle cx="12" cy="12" r="1" opacity="0.9"/>
+    </svg>
+  </S.MetricIcon>
+);
+
+const InputIcon: React.FC = () => (
+  <S.HeaderIcon>
+    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+      <rect x="3" y="8" width="4" height="8" rx="2" opacity="0.7"/>
+      <path d="M7 12h10" stroke="currentColor" strokeWidth="2" opacity="0.6"/>
+      <path d="M14 9l3 3-3 3" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.8"/>
+      <circle cx="19" cy="12" r="2" opacity="0.9"/>
+    </svg>
+  </S.HeaderIcon>
+);
+
+const ComponentIcon: React.FC = () => (
+  <S.HeaderIcon>
+    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+      <rect x="4" y="4" width="16" height="16" rx="3" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
+      <rect x="7" y="7" width="4" height="4" rx="1" opacity="0.7"/>
+      <rect x="13" y="7" width="4" height="4" rx="1" opacity="0.7"/>
+      <rect x="7" y="13" width="4" height="4" rx="1" opacity="0.7"/>
+      <rect x="13" y="13" width="4" height="4" rx="1" opacity="0.7"/>
+      <circle cx="12" cy="12" r="1" opacity="1"/>
+    </svg>
+  </S.HeaderIcon>
+);
+
+const CollapseIcon: React.FC<{ isExpanded: boolean }> = ({ isExpanded }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    width="16" 
+    height="16"
+    style={{ 
+      transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+      transition: 'transform 0.2s ease-out'
+    }}
+  >
+    <path d="M7 10l5 5 5-5z" opacity="0.8"/>
+  </svg>
+);
 
 export const NetworkStatsDisplay: React.FC = () => {
   const { facts } = useNetworkStore();
+  const [isExpanded, setIsExpanded] = useState(true);
 
-  const iconSx: SxProps<Theme> = { mr: 1, color: 'action.active' };
-  const titleIconSx: SxProps<Theme> = { mr: 1, color: 'primary.main' };
-  const shapesIconSx: SxProps<Theme> = { mr: 1, color: 'secondary.main' };
-  const typesIconSx: SxProps<Theme> = { mr: 1, color: 'info.main' };
-
-  const paperSx: SxProps<Theme> = {
-    p: 2,
-    minWidth: 240,
-    maxWidth: 320,
-    position: 'absolute', // This should now be fine with SxProps<Theme>
-    top: 16,
-    left: 16,
-    zIndex: 10,
-    borderRadius: '12px', // Softer edges
-    // backdropFilter: 'blur(5px)', // Optional: for a frosted glass effect if desired
-    // backgroundColor: 'rgba(255, 255, 255, 0.85)', // Optional: if using backdropFilter
-  };
+  const toggleExpanded = () => setIsExpanded(!isExpanded);
 
   if (!facts || facts.isLoadingGraph) {
     return (
-      <Paper elevation={1} sx={paperSx}>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: facts?.networkName ? 1 : 0 }}>
-          <CircularProgress size={20} sx={{ mr: 1 }} />
-          <Typography variant="subtitle1">
-            {facts?.networkName ? `${facts.networkName} - Loading...` : 'Loading network data...'}
+      <S.StatsPaper>
+        <S.LoadingContainer>
+          <S.LoadingSpinner />
+          <Typography variant="body2">
+            {facts?.networkName ? `${facts.networkName} - Loading...` : 'Loading...'}
           </Typography>
-        </Box>
-      </Paper>
+        </S.LoadingContainer>
+      </S.StatsPaper>
     );
   }
 
   return (
-    <Paper elevation={1} sx={paperSx}>
-      {facts.networkName && (
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
-          <AccountTree sx={titleIconSx} />
-          <Typography variant="h6" component="div">
-            {facts.networkName}
-          </Typography>
-        </Box>
-      )}
+    <S.StatsPaper isExpanded={isExpanded}>
+      <S.StatsHeader>
+        {facts.networkName && (
+          <>
+            <NeuralNetworkIcon />
+            <S.StatsTitle variant="subtitle1" as="div">
+              {facts.networkName}
+            </S.StatsTitle>
+          </>
+        )}
+        <S.ToggleButton 
+          onClick={toggleExpanded}
+          size="small"
+          title={isExpanded ? 'Collapse panel' : 'Expand panel'}
+        >
+          <CollapseIcon isExpanded={isExpanded} />
+        </S.ToggleButton>
+      </S.StatsHeader>
 
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-        <DataObject sx={iconSx} />
-        <Typography variant="body2">Nodes: {facts.numNodes}</Typography>
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
-        <ShareOutlined sx={iconSx} />
-        <Typography variant="body2">Edges: {facts.numEdges}</Typography>
-      </Box>
+      <Collapse in={isExpanded} timeout={300}>
+        <S.StatsContent>
+          <S.MetricsContainer>
+            <S.MetricItem>
+              <NodeIcon />
+              <Typography variant="body2">
+                Nodes: {facts.numNodes}
+              </Typography>
+            </S.MetricItem>
+            <S.MetricItem>
+              <EdgeIcon />
+              <Typography variant="body2">
+                Edges: {facts.numEdges}
+              </Typography>
+            </S.MetricItem>
+          </S.MetricsContainer>
 
-      {facts.inputShapes && facts.inputShapes.length > 0 && (
-        <Box sx={{ mb: 1.5 }}>
-          <Divider sx={{ my: 1 }} />
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-            <Input sx={shapesIconSx} />
-            <Typography variant="subtitle2">Input Shapes:</Typography>
-          </Box>
-          <List dense sx={{ py: 0 }}>
-            {facts.inputShapes.map((shape, index) => (
-              <ListItem key={index} sx={{ py: 0.2, pl: 4 }}>
-                <ListItemText primary={shape} primaryTypographyProps={{ variant: 'body2' }} />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      )}
+          {facts.inputShapes && facts.inputShapes.length > 0 && (
+            <div>
+              <S.StatsDivider />
+              <S.SectionTitle>
+                <InputIcon />
+                <Typography variant="body2">Input Shapes:</Typography>
+              </S.SectionTitle>
+              <List dense>
+                {facts.inputShapes.map((shape, index) => (
+                  <ListItem key={index}>
+                    <ListItemText primary={shape} primaryTypographyProps={{ variant: 'caption' }} />
+                  </ListItem>
+                ))}
+              </List>
+            </div>
+          )}
 
-      <Divider sx={{ my: 1 }} />
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-        <CategoryOutlined sx={typesIconSx} />
-        <Typography variant="subtitle2">
-          Component Types ({facts.componentTypes?.length || 0}):
-        </Typography>
-      </Box>
-      {facts.componentTypes && facts.componentTypes.length > 0 ? (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, pl: 4 }}>
-          {facts.componentTypes.map((type) => (
-            <Chip key={type} label={type} size="small" variant="outlined" />
-          ))}
-        </Box>
-      ) : (
-        <Typography variant="caption" sx={{ pl: 4, display: 'block' }}>
-          No component types found.
-        </Typography>
-      )}
-    </Paper>
+          <S.StatsDivider />
+          <S.SectionTitle>
+            <ComponentIcon />
+            <Typography variant="body2">
+              Components ({facts.componentTypes?.length || 0}):
+            </Typography>
+          </S.SectionTitle>
+          {facts.componentTypes && facts.componentTypes.length > 0 ? (
+            <S.ChipsContainer>
+              {facts.componentTypes.map((type) => (
+                <S.Chip key={type}>
+                  {type}
+                </S.Chip>
+              ))}
+            </S.ChipsContainer>
+          ) : (
+            <Typography variant="caption">
+              No components found.
+            </Typography>
+          )}
+        </S.StatsContent>
+      </Collapse>
+    </S.StatsPaper>
   );
 };

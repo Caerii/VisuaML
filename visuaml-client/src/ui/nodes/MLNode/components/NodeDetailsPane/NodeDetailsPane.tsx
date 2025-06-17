@@ -4,7 +4,6 @@ import NodeInfoFields from '../NodeInfoFields';
 import NodeArguments from '../NodeArguments';
 import OutputShapeVisualizer from '../OutputShapeVisualizer';
 import type { MLNodeData } from '../../../types';
-import styles from '../../styles/MLNode.module.css';
 
 interface NodeDetailsPaneProps {
   data: MLNodeData;
@@ -14,7 +13,7 @@ interface NodeDetailsPaneProps {
 
 const NodeDetailsPane: React.FC<NodeDetailsPaneProps> = ({ data, nodeId, isSelected }) => {
   return (
-    <div className={`${styles.detailsPane} ${isSelected ? styles.detailsPaneOpen : ''}`}>
+    <div className={`ml-node__details ${isSelected ? 'ml-node__details--open' : ''}`}>
       <NodeInfoFields data={data} nodeId={nodeId} />
       <NodeArguments args={data.args} kwargs={data.kwargs} />
       {data.outputShape && <OutputShapeVisualizer outputShape={data.outputShape} />}
