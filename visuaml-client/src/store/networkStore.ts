@@ -12,12 +12,17 @@ interface NetworkFacts {
 
 interface NetworkState {
   facts: NetworkFacts | null;
-  setFacts: (facts: NetworkFacts) => void;
+  isGraphInteractive: boolean;
+  setFacts: (facts: Partial<NetworkFacts>) => void;
   clearFacts: () => void;
+  setIsGraphInteractive: (isInteractive: boolean) => void;
 }
 
 export const useNetworkStore = create<NetworkState>((set) => ({
   facts: null,
-  setFacts: (facts) => set({ facts }),
-  clearFacts: () => set({ facts: null }), // Reset all facts to null
+  isGraphInteractive: true,
+  setFacts: (newFacts) =>
+    set((state) => ({ facts: { ...(state.facts ?? {}), ...newFacts } as NetworkFacts })),
+  clearFacts: () => set({ facts: null, isGraphInteractive: true }), // Also reset interaction state
+  setIsGraphInteractive: (isInteractive) => set({ isGraphInteractive: isInteractive }),
 }));

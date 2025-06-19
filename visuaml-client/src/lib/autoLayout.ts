@@ -1,5 +1,7 @@
 import dagre from 'dagre';
-import { type Node, type Edge } from '@xyflow/react'; // Use type imports
+import { type Node, type Edge } from '@xyflow/react';
+
+export type { Node, Edge };
 
 interface LayoutOptions {
   rankdir?: 'TB' | 'BT' | 'LR' | 'RL'; // Top-to-bottom, Bottom-to-top, Left-to-right, Right-to-left

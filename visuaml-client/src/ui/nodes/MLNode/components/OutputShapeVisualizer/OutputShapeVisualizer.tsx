@@ -1,9 +1,10 @@
 /** @fileoverview Defines the view components for visualizing an output shape. */
 import React, { useRef, useLayoutEffect } from 'react';
 import { useViewport } from '@xyflow/react';
-import TensorVisualizer3D from '../TensorVisualizer3D';
+import TensorVisualizer3D, {
+  type TensorVisualizer3DHandle,
+} from '../TensorVisualizer3D';
 import { useOutputShapeVisualizer } from './useOutputShapeVisualizer';
-import { useTensorVisualizer3D } from '../TensorVisualizer3D/useTensorVisualizer3D';
 import {
   MAX_DIM_DISPLAY_1D,
   NUM_EDGE_BLOCKS_1D,
@@ -168,7 +169,7 @@ const OutputShapeVisualizer: React.FC<OutputShapeVisualizerProps> = (props) => {
   const { zoom } = useViewport(); // Get current zoom level
 
   // The 3D visualizer's controller logic is hoisted here
-  const tensor3D = useTensorVisualizer3D({ shape: visualDims });
+  const visualizerRef = useRef<TensorVisualizer3DHandle>(null);
   const threejsContainerRef = useRef<HTMLDivElement>(null);
 
   // We use useLayoutEffect to apply all dynamic styles synchronously with the DOM.
@@ -210,7 +211,7 @@ const OutputShapeVisualizer: React.FC<OutputShapeVisualizerProps> = (props) => {
       visualElement = (
         <div className="output-shape__threejs-container-wrapper">
           <button
-            onClick={tensor3D.toggleFullscreen}
+            onClick={(e) => visualizerRef.current?.toggleFullscreen(e)}
             className="output-shape__fullscreen-button"
             title="Fullscreen"
           >
@@ -221,7 +222,7 @@ const OutputShapeVisualizer: React.FC<OutputShapeVisualizerProps> = (props) => {
             className="output-shape__threejs-container"
             // All dynamic styles are now set in useLayoutEffect to prevent flicker
           >
-            <TensorVisualizer3D {...tensor3D} />
+            <TensorVisualizer3D ref={visualizerRef} shape={visualDims} />
           </div>
         </div>
       );

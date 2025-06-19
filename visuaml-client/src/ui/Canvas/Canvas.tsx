@@ -12,6 +12,7 @@ import MLNode from '../nodes/MLNode/MLNode';
 import { RemoteCursor } from '../RemoteCursor/RemoteCursor';
 import { NetworkStatsDisplay } from '../NetworkStatsDisplay/NetworkStatsDisplay';
 import { useCanvas } from './useCanvas';
+import { useNetworkStore } from '../../store/networkStore';
 
 const nodeTypes = { transformer: MLNode };
 
@@ -26,6 +27,7 @@ export const Canvas: React.FC = () => {
     handleMouseMove,
     remoteCursors,
   } = useCanvas();
+  const isGraphInteractive = useNetworkStore((state) => state.isGraphInteractive);
 
   return (
     <ReactFlowProvider>
@@ -43,9 +45,11 @@ export const Canvas: React.FC = () => {
           fitView
           minZoom={0.1}
           maxZoom={4}
-          zoomOnScroll={true}
-          zoomOnPinch={true}
-          zoomOnDoubleClick={true}
+          nodesDraggable={isGraphInteractive}
+          panOnDrag={isGraphInteractive}
+          zoomOnScroll={isGraphInteractive}
+          zoomOnPinch={isGraphInteractive}
+          zoomOnDoubleClick={isGraphInteractive}
           preventScrolling={true}
           multiSelectionKeyCode={null}
           selectNodesOnDrag={false}

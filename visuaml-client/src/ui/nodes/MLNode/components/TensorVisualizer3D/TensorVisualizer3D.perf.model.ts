@@ -18,7 +18,6 @@ export interface CameraConfig {
 
 export interface InfoCardProps {
   shape: number[];
-  hoveredChannelIndex: number | null;
   sliceColors: string[];
   isFullscreen: boolean;
 }
@@ -28,6 +27,7 @@ export interface VoxelLayout {
   instanceColors: Float32Array;
   channelBounds: Array<{ start: number; end: number; zPos: number }>;
   totalVoxelCount: number;
+  visualHeight: number;
 }
 
 // ===========================
@@ -38,6 +38,7 @@ export const CONSTANTS = {
     DEFAULT_SLICE: ['#AFEEEE', '#ADD8E6'] as string[],
     PREVIEW: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'] as string[],
     EDGE: '#333333',
+    HOVER: '#F5B041',
   },
   DIMENSIONS: {
     VOXEL_SIZE: 0.08,
@@ -126,7 +127,6 @@ export const STYLES = {
 // UTILITIES & CACHING
 // ===========================
 const geometryCache = new Map<string, THREE.BoxGeometry>();
-const materialCache = new Map<string, THREE.MeshStandardMaterial>();
 
 export const getCachedGeometry = (size: number): THREE.BoxGeometry => {
   const key = `box_${size}`;
@@ -136,16 +136,6 @@ export const getCachedGeometry = (size: number): THREE.BoxGeometry => {
   return geometryCache.get(key)!;
 };
 
-export const getCachedMaterial = (
-  roughness: number,
-  metalness: number,
-): THREE.MeshStandardMaterial => {
-  const key = `mat_${roughness}_${metalness}`;
-  if (!materialCache.has(key)) {
-    materialCache.set(key, new THREE.MeshStandardMaterial({ roughness, metalness }));
-  }
-  return materialCache.get(key)!;
-};
 
 // ===========================
 // PURE LOGIC FUNCTIONS
@@ -155,11 +145,10 @@ export const calculateCameraPosition = (isFullscreen: boolean, shape: number[]):
   const fovInRadians = THREE.MathUtils.degToRad(CONSTANTS.CAMERA.FOV);
 
   if (!isFullscreen) {
-    // Mini viewer: position camera for larger 3x3x3 preview
-    const spacing = 0.4; // Match the larger spacing from AnimatedTensorPreview
-    const previewSize = CONSTANTS.DIMENSIONS.PREVIEW_GRID_SIZE * spacing; // Total extent of the preview
+    const spacing = 0.4;
+    const previewSize = CONSTANTS.DIMENSIONS.PREVIEW_GRID_SIZE * spacing;
     let dist = previewSize / 2 / Math.tan(fovInRadians / 2);
-    dist = Math.max(dist * 2.2, 1.8); // Adjust multiplier and minimum for larger preview
+    dist = Math.max(dist * 2.2, 1.8);
 
     return {
       position: [dist * 0.7, dist * 0.5, dist],
@@ -202,12 +191,20 @@ export const generateVoxelLayout = (
   sliceColors: string[],
 ): VoxelLayout => {
   const [channels, height, width] = shape;
+  let effectiveHeight = height;
+  let effectiveWidth = width;
 
-  const maxVoxelsPerAxis = isFullscreen
-    ? CONSTANTS.DIMENSIONS.MAX_VOXELS_FULLSCREEN
-    : CONSTANTS.DIMENSIONS.MAX_VOXELS_MINI;
-  const effectiveHeight = Math.min(height, maxVoxelsPerAxis);
-  const effectiveWidth = Math.min(width, maxVoxelsPerAxis);
+  if (isFullscreen) {
+    const totalVoxelCount = channels * height * width;
+    if (totalVoxelCount > 100000) {
+      const reductionFactor = Math.sqrt(totalVoxelCount / 100000);
+      effectiveHeight = Math.floor(height / reductionFactor);
+      effectiveWidth = Math.floor(width / reductionFactor);
+    }
+  } else {
+    effectiveHeight = Math.min(height, CONSTANTS.DIMENSIONS.MAX_VOXELS_MINI);
+    effectiveWidth = Math.min(width, CONSTANTS.DIMENSIONS.MAX_VOXELS_MINI);
+  }
 
   const planeVisualWidth =
     effectiveWidth * (CONSTANTS.DIMENSIONS.VOXEL_SIZE + CONSTANTS.DIMENSIONS.VOXEL_GAP) -
@@ -253,21 +250,15 @@ export const generateVoxelLayout = (
 
         dummy.position.set(voxelX, voxelY, channelZPos);
         dummy.updateMatrix();
-        dummy.matrix.toArray(matrices, voxelIndex * 16);
 
-        colors[voxelIndex * 3] = color.r;
-        colors[voxelIndex * 3 + 1] = color.g;
-        colors[voxelIndex * 3 + 2] = color.b;
+        dummy.matrix.toArray(matrices, voxelIndex * 16);
+        color.toArray(colors, voxelIndex * 3);
 
         voxelIndex++;
       }
     }
-
-    bounds.push({
-      start: startIndex,
-      end: voxelIndex - 1,
-      zPos: channelZPos,
-    });
+    const endIndex = voxelIndex - 1;
+    bounds.push({ start: startIndex, end: endIndex, zPos: channelZPos });
   }
 
   return {
@@ -275,5 +266,6 @@ export const generateVoxelLayout = (
     instanceColors: colors,
     channelBounds: bounds,
     totalVoxelCount,
+    visualHeight: planeVisualHeight,
   };
-};
+}; 
