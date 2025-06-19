@@ -3,8 +3,8 @@ import { useState, useCallback } from 'react';
 import { useSyncedGraphActions } from '../../y/useSyncedGraph';
 import { useNetworkStore } from '../../store/networkStore';
 import { useYDoc } from '../../y/DocProvider';
-import { autoLayout } from '../../lib/autoLayout';
-import { importModel, exportModelHypergraph, exportAllFormats } from '../../lib/api';
+import { autoLayout, type Node, type Edge } from '../../lib/autoLayout';
+import { importModel, exportModelHypergraph, exportAllFormats, uploadModel } from '../../lib/api';
 import { toast } from 'sonner';
 import { AVAILABLE_MODELS, type ExportFormat, type ExportHypergraphResponse } from './TopBar.model';
 import {
@@ -30,41 +30,37 @@ export const setCategoricalPanelCallback = (callback: (data: ExportHypergraphRes
 export const useTopBar = () => {
   const [modelPath, setModelPath] = useState(AVAILABLE_MODELS[0].value);
   const [isLoadingUI, setIsLoadingUI] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [exportFormat, setExportFormat] = useState<ExportFormat>('json');
   const { commitNodes, commitEdges } = useSyncedGraphActions();
   const { setFacts: setNetworkFacts } = useNetworkStore();
   const { ydoc } = useYDoc();
 
-  const handleImportClick = async () => {
-    setIsLoadingUI(true);
-    const modelDetails = AVAILABLE_MODELS.find((m) => m.value === modelPath);
-    const localNetworkName = modelDetails ? modelDetails.label : modelPath;
-
-    const ySharedName = ydoc.getText('networkNameShared');
-    const ySharedAppStatus = ydoc.getMap('sharedAppStatus');
-
-    ydoc.transact(() => {
-      ySharedName.delete(0, ySharedName.length);
-      ySharedName.insert(0, localNetworkName);
-      ySharedAppStatus.set('isLoadingGraph', true);
-    });
-
-    try {
-      const importedData = await importModel(modelPath);
+  const processImportedData = useCallback(
+    (
+      importedData: { nodes: Node[]; edges: Edge[] },
+      modelName: string,
+    ) => {
       const laidOutData = autoLayout(importedData.nodes, importedData.edges);
-
       commitNodes(laidOutData.nodes);
       commitEdges(laidOutData.edges);
 
+      const ySharedAppStatus = ydoc.getMap('sharedAppStatus');
       ySharedAppStatus.set('isLoadingGraph', false);
-      toast.success(`Model '${localNetworkName}' imported successfully!`);
-    } catch (err: unknown) {
-      console.error('Failed to import model:', err);
-      const message =
-        err instanceof Error ? err.message : 'An unknown error occurred during import.';
-      toast.error(message, { duration: 5000 });
+      toast.success(`Model '${modelName}' imported successfully!`);
+    },
+    [commitNodes, commitEdges, ydoc],
+  );
 
+  const handleImportError = useCallback(
+    (error: unknown) => {
+      console.error('Failed to import model:', error);
+      const message =
+        error instanceof Error ? error.message : 'An unknown error occurred during import.';
+      toast.error(message, { duration: 8000 }); // Increased duration for complex errors
+
+      const ySharedAppStatus = ydoc.getMap('sharedAppStatus');
       ydoc.transact(() => {
         const yNameToClear = ydoc.getText('networkNameShared');
         if (yNameToClear.length > 0) {
@@ -82,8 +78,62 @@ export const useTopBar = () => {
         inputShapes: latestFacts?.inputShapes || [],
         componentTypes: latestFacts?.componentTypes || [],
       });
+    },
+    [ydoc, setNetworkFacts],
+  );
+
+  const handleImportClick = async () => {
+    setIsLoadingUI(true);
+    const modelDetails = AVAILABLE_MODELS.find((m) => m.value === modelPath);
+    const localNetworkName = modelDetails ? modelDetails.label : modelPath;
+
+    const ySharedName = ydoc.getText('networkNameShared');
+    const ySharedAppStatus = ydoc.getMap('sharedAppStatus');
+
+    ydoc.transact(() => {
+      ySharedName.delete(0, ySharedName.length);
+      ySharedName.insert(0, localNetworkName);
+      ySharedAppStatus.set('isLoadingGraph', true);
+    });
+
+    try {
+      const importedData = await importModel(modelPath);
+      processImportedData(importedData, localNetworkName);
+    } catch (err) {
+      handleImportError(err);
     } finally {
       setIsLoadingUI(false);
+    }
+  };
+
+  const handleFileUpload = async (file: File) => {
+    if (!file) return;
+    if (!file.name.endsWith('.py')) {
+      toast.error('Invalid file type. Please upload a .py file.');
+      return;
+    }
+
+    setIsUploading(true);
+    const localNetworkName = file.name;
+
+    const ySharedName = ydoc.getText('networkNameShared');
+    const ySharedAppStatus = ydoc.getMap('sharedAppStatus');
+
+    ydoc.transact(() => {
+      ySharedName.delete(0, ySharedName.length);
+      ySharedName.insert(0, localNetworkName);
+      ySharedAppStatus.set('isLoadingGraph', true);
+    });
+
+    try {
+      const importedData = await uploadModel(file);
+      processImportedData(importedData, localNetworkName);
+      // Also update the modelPath state so the UI reflects the change, if needed.
+      // For now, we'll just display the name, but not make it a selectable option.
+    } catch (err) {
+      handleImportError(err);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -286,9 +336,11 @@ export const useTopBar = () => {
   return {
     modelPath,
     isLoadingUI,
+    isUploading,
     isExporting,
     exportFormat,
     handleImportClick,
+    handleFileUpload,
     handleModelChange,
     handleExport,
     handleExportFormatChange,

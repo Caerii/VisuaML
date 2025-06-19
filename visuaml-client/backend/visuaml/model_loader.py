@@ -1,6 +1,7 @@
 """Module for loading and instantiating PyTorch models."""
 
 import importlib
+import inspect
 from typing import Tuple, Type, Optional
 import torch.nn as nn
 
@@ -12,33 +13,48 @@ class ModelLoadError(Exception):
 
 def load_model_class(module_path: str) -> Tuple[Type[nn.Module], str]:
     """
-    Load a PyTorch model class from a module path.
+    Loads a PyTorch model class from a module path. It first attempts to
+    find a class with the same name as the last component of the path.
+    If that fails, it searches the module for the first nn.Module subclass.
+
+    This supports both explicit naming ('models.SimpleNN' where SimpleNN.py
+    contains class SimpleNN) and discovery ('user_models.my_model' where
+    my_model.py contains any nn.Module subclass).
     
     Args:
-        module_path: Full module path (e.g., 'models.MyTinyGPT')
+        module_path: Full module path (e.g., 'models.MyTinyGPT' or 'user_models.my_uploaded_file')
         
     Returns:
         Tuple of (ModelClass, class_name)
         
     Raises:
-        ModelLoadError: If module or class cannot be loaded
+        ModelLoadError: If module or class cannot be loaded or found.
     """
     try:
-        # Extract module and class names
-        class_name = module_path.split(".")[-1]
-        
-        # Import the module
+        # Import the module specified by the path
         imported_module = importlib.import_module(module_path)
         
-        # Get the class
-        model_class = getattr(imported_module, class_name)
-        
-        if not issubclass(model_class, nn.Module):
-            raise ModelLoadError(
-                f"Class '{class_name}' is not a PyTorch nn.Module"
-            )
-            
-        return model_class, class_name
+        # 1. Try to find a class with the same name as the module file.
+        # This maintains compatibility with the original example models.
+        class_name_candidate = module_path.split(".")[-1]
+        if hasattr(imported_module, class_name_candidate):
+            model_class = getattr(imported_module, class_name_candidate)
+            if inspect.isclass(model_class) and issubclass(model_class, nn.Module):
+                return model_class, class_name_candidate
+
+        # 2. If not found by name, fall back to discovery mode.
+        # This is for user-uploaded models where class name may not match file name.
+        for name, obj in inspect.getmembers(imported_module):
+            # Check if it's a class, a subclass of nn.Module, not nn.Module itself,
+            # and was defined in this module (not imported).
+            if (inspect.isclass(obj) and
+                    issubclass(obj, nn.Module) and
+                    obj is not nn.Module and
+                    obj.__module__ == imported_module.__name__):
+                return obj, name
+
+        # 3. If no suitable class is found by either method.
+        raise ModelLoadError(f"Could not find any nn.Module subclass defined in module '{module_path}'.")
         
     except ImportError as e:
         raise ModelLoadError(
@@ -46,15 +62,8 @@ def load_model_class(module_path: str) -> Tuple[Type[nn.Module], str]:
             f"Check path and ensure all necessary __init__.py files exist. "
             f"Error: {e}"
         )
-    except AttributeError as e:
-        raise ModelLoadError(
-            f"Class '{class_name}' not found in module '{module_path}'. "
-            f"Error: {e}"
-        )
     except Exception as e:
-        raise ModelLoadError(
-            f"Unexpected error loading '{module_path}': {e}"
-        )
+        raise ModelLoadError(f"An unexpected error occurred while loading model from '{module_path}': {e}")
 
 
 def instantiate_model(

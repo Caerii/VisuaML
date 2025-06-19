@@ -176,3 +176,39 @@ export const exportAllFormats = async (
 
   return await response.json();
 };
+
+/**
+ * Uploads a model file to the backend for processing.
+ * @param file The .py model file to upload.
+ * @returns A promise that resolves to the imported model data.
+ * @throws An error if the API response is not ok or the data format is invalid.
+ */
+export const uploadModel = async (file: File): Promise<ImportApiResponse> => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch('/api/upload', {
+    method: 'POST',
+    body: formData,
+    // Note: 'Content-Type' header is not set manually for FormData.
+    // The browser will set it automatically with the correct boundary.
+  });
+
+  if (!response.ok) {
+    const errData = await response.json().catch(() => ({ message: response.statusText }));
+    const errorMessage =
+      errData.message ||
+      errData.error?.stderr || // Use stderr from execa error if available
+      JSON.stringify(errData.errorDetails) ||
+      JSON.stringify(errData) ||
+      `API Error: ${response.status}`;
+    throw new Error(errorMessage);
+  }
+
+  const importedData = await response.json();
+  if (!importedData.nodes || !importedData.edges) {
+    throw new Error('Invalid data format from API: nodes or edges missing.');
+  }
+
+  return importedData;
+};

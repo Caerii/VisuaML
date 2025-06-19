@@ -1,10 +1,13 @@
 """Main module for exporting PyTorch models to VisuaML graph format."""
 
+import sys
 from typing import Dict, List, Any, Optional, Set
 from torch.fx import symbolic_trace, GraphModule, Node
 from torch.fx.passes.shape_prop import ShapeProp
 import torch
 import torch.nn as nn
+import importlib
+import inspect
 
 from .model_loader import load_model_class, instantiate_model
 from .filters import GraphFilter, FilterConfig
@@ -203,58 +206,64 @@ def export_model_graph(
         ModelLoadError: If model cannot be loaded
         Exception: If tracing or shape propagation fails
     """
-    # Load and instantiate the model
-    model_class, class_name = load_model_class(model_path)
-    model = instantiate_model(model_class, class_name, model_args=model_args, model_kwargs=model_kwargs)
+    model_class, _ = load_model_class(model_path)
+    model = instantiate_model(model_class, model_path, model_args, model_kwargs)
     model.eval()
-    
+
+    # Automatically discover sample inputs from the model's file if not provided.
+    # This allows models to be self-contained for testing and visualization.
+    if sample_input_args is None and sample_input_kwargs is None:
+        try:
+            module_name = model_class.__module__
+            imported_module = importlib.import_module(module_name)
+            
+            # Look for a SAMPLE_INPUT variable in the module.
+            if hasattr(imported_module, 'SAMPLE_INPUT'):
+                sample_input = getattr(imported_module, 'SAMPLE_INPUT')
+                
+                # Expected format: (args_tuple, dtypes_list) or just args_tuple
+                if isinstance(sample_input, tuple) and len(sample_input) > 0:
+                    if isinstance(sample_input[0], tuple): # Assumes format is (args, dtypes) or (args,)
+                        sample_input_args = sample_input[0]
+                        if len(sample_input) > 1 and isinstance(sample_input[1], list):
+                            sample_input_dtypes = sample_input[1]
+                    else: # Legacy format where SAMPLE_INPUT is just the args tuple
+                        sample_input_args = sample_input
+
+        except (ImportError, AttributeError, IndexError) as e:
+            # If discovery fails, just continue without sample inputs.
+            # This is not a critical error.
+            print(f"Info: Could not auto-discover SAMPLE_INPUT from {model_path}. "
+                  f"Proceeding without shape propagation. Error: {e}", file=sys.stderr)
+
     # Perform symbolic tracing
     try:
         graph_module = symbolic_trace(model)
     except Exception as e:
-        raise Exception(
-            f"Error during symbolic tracing of '{class_name}': {e}"
-        )
-    
-    # Perform shape propagation if sample inputs are provided
+        raise Exception(f"Error during symbolic tracing of '{model_path}': {e}")
+
+    # Perform shape propagation only if sample inputs are available
     if sample_input_args is not None:
         try:
-            if not isinstance(sample_input_args, tuple):
-                sample_input_args = (sample_input_args,)
-            
-            # Ensure dtypes list matches args length if provided
-            if sample_input_dtypes and len(sample_input_dtypes) != len(sample_input_args):
-                raise ValueError(
-                    "Length of sample_input_dtypes must match length of sample_input_args."
-                )
-
             actual_sample_inputs = []
-            for i, arg_shape_or_tensor in enumerate(sample_input_args):
-                dtype_str = sample_input_dtypes[i] if sample_input_dtypes else 'float32'
-                if dtype_str == 'long':
-                    current_dtype = torch.long
-                elif dtype_str == 'float16':
-                    current_dtype = torch.float16
-                # Add more dtypes as needed
-                else:
-                    current_dtype = torch.float32 # Default
-                
-                if isinstance(arg_shape_or_tensor, tuple) and all(isinstance(x, int) for x in arg_shape_or_tensor):
-                    actual_sample_inputs.append(torch.ones(arg_shape_or_tensor, dtype=current_dtype))
-                else:
-                    # If it's not a shape tuple, assume it's a pre-constructed tensor or other input type
-                    # This path might need more robust handling if users can provide actual tensors directly.
-                    actual_sample_inputs.append(arg_shape_or_tensor) 
-            
+            # Create sample tensors based on shape and dtype
+            if sample_input_dtypes and len(sample_input_dtypes) == len(sample_input_args):
+                for arg_shape, dt_str in zip(sample_input_args, sample_input_dtypes):
+                    dtype = getattr(torch, dt_str, torch.float32)
+                    actual_sample_inputs.append(torch.randn(arg_shape, dtype=dtype))
+            else:  # Fallback for no dtypes
+                for arg_shape in sample_input_args:
+                    actual_sample_inputs.append(torch.randn(arg_shape))
+
             sp = ShapeProp(graph_module)
             sp.propagate(*actual_sample_inputs, **(sample_input_kwargs or {}))
             # Shape info is now in node.meta['tensor_meta'] for each node
         except Exception as e:
-            error_message = f"Error during shape propagation for '{class_name}': {e}. "
+            error_message = f"Error during shape propagation for '{model_path}': {e}. "
             error_message += f"Sample args: {sample_input_args}, dtypes: {sample_input_dtypes}, kwargs: {sample_input_kwargs}."
             raise Exception(error_message)
             
-    return create_graph_json(graph_module, filter_config) 
+    return create_graph_json(graph_module, filter_config)
 
 
 def export_model_graph_with_fallback(
@@ -269,100 +278,94 @@ def export_model_graph_with_fallback(
     export_format: str = "visuaml-json",
 ) -> Dict[str, Any]:
     """
-    Export a PyTorch model to VisuaML graph format with multiple tracing methods.
-    
-    Args:
-        model_path: Module path to the model (e.g., 'models.MyModel')
-        filter_config: Optional filter configuration
-        model_args: Optional arguments for model constructor
-        model_kwargs: Optional keyword arguments for model constructor
-        sample_input_args: Optional sample positional inputs for shape propagation
-        sample_input_kwargs: Optional sample keyword inputs for shape propagation
-        sample_input_dtypes: Optional list of sample input dtypes for shape propagation
-        tracing_method: Tracing method to use ("auto", "fx", "hooks", "torchscript")
-        export_format: Output format for the model graph
-        
-    Returns:
-        Dictionary with 'nodes' and 'edges' lists
-        
-    Raises:
-        ModelLoadError: If model cannot be loaded
-        Exception: If all tracing methods fail
+    Traces a model using the specified method, with FX as the preferred default.
+    If FX tracing fails, it automatically falls back to hook-based tracing.
+    This is the main entry point for model processing.
     """
-    # Load and instantiate the model
-    model_class, class_name = load_model_class(model_path)
-    model = instantiate_model(model_class, class_name, model_args=model_args, model_kwargs=model_kwargs)
-    model.eval()
+    # --- SAMPLE INPUT DISCOVERY ---
+    # This logic is placed here, at the main entry point, to ensure that
+    # sample inputs are discovered *before* any tracing method is chosen.
+    # This guarantees that fallback methods also have access to the sample data.
+    if sample_input_args is None and sample_input_kwargs is None:
+        try:
+            # We need to load the module to inspect it, which means we need the class
+            model_class_for_discovery, _ = load_model_class(model_path)
+            module_name = model_class_for_discovery.__module__
+            imported_module = importlib.import_module(module_name)
+            
+            if hasattr(imported_module, 'SAMPLE_INPUT'):
+                sample_input = getattr(imported_module, 'SAMPLE_INPUT')
+                if isinstance(sample_input, tuple) and len(sample_input) > 0:
+                    if isinstance(sample_input[0], tuple):
+                        sample_input_args = sample_input[0]
+                        if len(sample_input) > 1 and isinstance(sample_input[1], list):
+                            sample_input_dtypes = sample_input[1]
+                    else:
+                        sample_input_args = sample_input
+        except Exception as e:
+            print(f"Info: Could not auto-discover SAMPLE_INPUT from {model_path}. "
+                  f"Proceeding without shape propagation. Error: {e}", file=sys.stderr)
+
+    # --- TRACING METHOD ROUTING ---
+    if tracing_method == "fx":
+        return export_model_graph(
+            model_path, filter_config, model_args, model_kwargs,
+            sample_input_args, sample_input_kwargs, sample_input_dtypes
+        )
     
-    # Prepare sample inputs if provided
+    # Fallback for auto-tracing if fx fails
+    if tracing_method == 'auto':
+        try:
+            # First, attempt FX tracing
+            return export_model_graph(
+                model_path, filter_config, model_args, model_kwargs,
+                sample_input_args, sample_input_kwargs, sample_input_dtypes
+            )
+        except Exception as e:
+            # If FX tracing fails, we fall back to hook-based tracing
+            print(f"Info: FX tracing failed with error: {e}. Falling back to hook-based tracing.", file=sys.stderr)
+            
+            # The rest of the auto-fallback logic will now correctly use the discovered sample inputs
+            pass
+
+    # Load and instantiate the model for methods that require a model instance first
+    model_class, _ = load_model_class(model_path)
+    model = instantiate_model(model_class, model_path, model_args, model_kwargs)
+    model.eval()
+
+    # Create sample tensors from the (now possibly discovered) args
     actual_sample_inputs = None
     if sample_input_args is not None:
         actual_sample_inputs = []
-        if not isinstance(sample_input_args, tuple):
-            sample_input_args = (sample_input_args,)
-        
-        for i, arg_shape_or_tensor in enumerate(sample_input_args):
-            dtype_str = sample_input_dtypes[i] if sample_input_dtypes and i < len(sample_input_dtypes) else 'float32'
-            if dtype_str == 'long':
-                current_dtype = torch.long
-            elif dtype_str == 'float16':
-                current_dtype = torch.float16
-            else:
-                current_dtype = torch.float32
-            
-            if isinstance(arg_shape_or_tensor, tuple) and all(isinstance(x, int) for x in arg_shape_or_tensor):
-                actual_sample_inputs.append(torch.ones(arg_shape_or_tensor, dtype=current_dtype))
-            else:
-                actual_sample_inputs.append(arg_shape_or_tensor)
+        if sample_input_dtypes and len(sample_input_dtypes) == len(sample_input_args):
+            for arg_shape, dt_str in zip(sample_input_args, sample_input_dtypes):
+                dtype = getattr(torch, dt_str, torch.float32)
+                actual_sample_inputs.append(torch.ones(arg_shape, dtype=dtype))
+        else:  # Fallback for no dtypes
+            for arg_shape in sample_input_args:
+                actual_sample_inputs.append(torch.ones(arg_shape))
     
-    # Try different tracing methods based on preference
-    tracing_methods = []
-    if tracing_method == "auto":
-        tracing_methods = ["fx", "hooks"]  # Could add "torchscript", "onnx" later
-    elif tracing_method in ["fx", "hooks", "torchscript"]:
-        tracing_methods = [tracing_method]
-    else:
-        raise ValueError(f"Unknown tracing method: {tracing_method}")
-    
-    last_error = None
-    
-    # Early-out for open-hypergraph path
-    if export_format.startswith("openhg"):
-        from .openhypergraph_export import export_model_open_hypergraph
-        return export_model_open_hypergraph(
-            model_path,
-            filter_config,
-            model_args,
-            model_kwargs,
-            sample_input_args,
-            sample_input_dtypes=sample_input_dtypes,
-            sample_dtypes=sample_input_dtypes,
-            out_format=export_format.split("-", 1)[-1] if "-" in export_format else "json",
-        )
-    
-    for method in tracing_methods:
+    # If using hook-based tracing (either explicitly or as a fallback)
+    if tracing_method in ["hooks", "auto"]:
         try:
-            if method == "fx":
-                # Use existing FX symbolic tracing
-                return export_model_graph(
-                    model_path, filter_config, model_args, model_kwargs,
-                    sample_input_args, sample_input_kwargs, sample_input_dtypes
-                )
-            
-            elif method == "hooks":
-                return trace_with_hooks(model, actual_sample_inputs, filter_config)
-            
-            elif method == "torchscript":
-                return trace_with_torchscript(model, actual_sample_inputs, filter_config)
-                
+            graph_data = trace_with_hooks(model, actual_sample_inputs, filter_config)
+            # Add open-hypergraph export if requested
+            if "openhg" in export_format:
+                from .openhypergraph_export import export_to_open_hypergraph # Lazy import
+                ohg_data = export_to_open_hypergraph(graph_data, export_format)
+                graph_data.update(ohg_data) # Merge results
+            return graph_data
         except Exception as e:
-            last_error = e
-            # Don't print error messages for individual methods - only if all fail
-            continue
-    
-    # If all methods failed, raise the last error with details about what was tried
-    method_names = ", ".join(tracing_methods)
-    raise Exception(f"All tracing methods ({method_names}) failed. Last error from '{tracing_methods[-1]}': {last_error}")
+            if tracing_method == "hooks":
+                raise Exception(f"Hook-based tracing failed: {e}")
+            # If auto fails here, we've run out of options
+            raise Exception(f"All tracing methods failed. Hook-based fallback failed with: {e}")
+
+    # If using TorchScript tracing
+    if tracing_method == "torchscript":
+        return trace_with_torchscript(model, actual_sample_inputs, filter_config)
+
+    raise Exception(f"Unknown tracing method: {tracing_method}")
 
 
 def trace_with_hooks(

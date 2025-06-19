@@ -2,11 +2,14 @@
 
 import Fastify from 'fastify';
 import cors from '@fastify/cors'; // Updated import
+import multipart from '@fastify/multipart';
 import { execa, type ExecaError } from 'execa'; // Import ExecaError type
 import { z, ZodError } from 'zod'; // Import ZodError type
 import * as dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
+import { finished } from 'stream/promises';
 
 // Type imports will be added as needed
 
@@ -28,6 +31,9 @@ const app = Fastify({
 app.register(cors, {
   origin: '*', // Allow all origins for now, configure appropriately for production
 });
+
+// Register the multipart plugin
+app.register(multipart);
 
 // Define default sample inputs for models
 const defaultSampleInputs: Record<string, { args: string; dtypes: string; kwargs?: string }> = {
@@ -65,6 +71,81 @@ const ExportAllRequestSchema = z.object({
   modelPath: z.string().min(1, 'Model path is required'),
   sampleInputArgs: z.string().optional(),
   sampleInputDtypes: z.array(z.string()).optional(),
+});
+
+// POST /api/upload - Handles model file upload
+app.post('/api/upload', async (req, reply) => {
+  const data = await req.file();
+  if (!data) {
+    return reply.status(400).send({ message: 'No file uploaded.' });
+  }
+
+  // Ensure the user_models directory exists
+  const __filenameCurrentModule = fileURLToPath(import.meta.url);
+  const __dirnameCurrentModule = path.dirname(__filenameCurrentModule);
+  const projectRoot = path.resolve(__dirnameCurrentModule, '..');
+  const userModelsDir = path.resolve(projectRoot, 'backend', 'user_models');
+
+  try {
+    await fs.promises.mkdir(userModelsDir, { recursive: true });
+  } catch (error) {
+    app.log.error('Error creating user_models directory:', error);
+    return reply.status(500).send({ message: 'Failed to create directory for model.' });
+  }
+
+  // Sanitize filename and define path
+  const sanitizedFilename = data.filename.replace(/[^a-zA-Z0-9_.-]/g, '_');
+  const filePath = path.join(userModelsDir, sanitizedFilename);
+
+  // Stream file to disk
+  try {
+    await finished(data.file.pipe(fs.createWriteStream(filePath)));
+  } catch (error) {
+    app.log.error('Error saving uploaded file:', error);
+    return reply.status(500).send({ message: 'Failed to save uploaded file.' });
+  }
+
+  // Construct the model path for Python import
+  const modelName = path.basename(sanitizedFilename, '.py');
+  const modelPath = `user_models.${modelName}`;
+  app.log.info(`File uploaded and saved. Processing with modelPath: ${modelPath}`);
+
+  // Now, execute the Python script (logic adapted from /api/import)
+  try {
+    const scriptArgs = [modelPath];
+    const scriptPath = path.resolve(projectRoot, 'backend', 'scripts', 'fx_export.py');
+
+    app.log.info(`Executing script: python ${scriptPath} ${scriptArgs.join(' ')}`);
+
+    const { stdout, stderr } = await execa('python', [scriptPath, ...scriptArgs], {
+      cwd: projectRoot,
+    });
+
+    if (stderr) {
+      // Log stderr but don't fail, as some warnings are not critical errors.
+      // The Python script should exit with a non-zero code for actual errors.
+      app.log.warn(`Stderr from fx_export.py: ${stderr}`);
+    }
+
+    reply.header('Content-Type', 'application/json').send(stdout);
+  } catch (error) {
+    app.log.error('Error executing Python script for uploaded model:', error);
+    // Cleanup the uploaded file on error
+    await fs.promises.unlink(filePath).catch(cleanupError => {
+      app.log.error('Failed to cleanup uploaded file after error:', cleanupError);
+    });
+
+    const execaError = error as ExecaError;
+    reply.status(500).send({
+      message: 'Error executing Python script for uploaded model.',
+      errorDetails: {
+        command: execaError.command,
+        exitCode: execaError.exitCode,
+        stderr: execaError.stderr,
+        stdout: execaError.stdout,
+      },
+    });
+  }
 });
 
 app.post('/api/import', async (req, reply) => {
