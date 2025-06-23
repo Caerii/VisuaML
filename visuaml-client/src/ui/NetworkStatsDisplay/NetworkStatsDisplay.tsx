@@ -1,6 +1,7 @@
 /** @fileoverview Defines the NetworkStatsDisplay component, which shows key information about the currently loaded network graph, such as node/edge counts, input shapes, and component types. It sources its data from a Zustand store and uses Material-UI components for presentation. */
 import React, { useState } from 'react';
 import { useNetworkStore } from '../../store/networkStore';
+import { useSharedNetworkFacts } from '../../hooks/useSharedNetworkFacts';
 import { Typography, List, ListItem, ListItemText, Collapse } from '@mui/material';
 import * as S from './NetworkStatsDisplay.styles';
 
@@ -85,6 +86,7 @@ const CollapseIcon: React.FC<{ isExpanded: boolean }> = ({ isExpanded }) => (
 );
 
 export const NetworkStatsDisplay: React.FC = () => {
+  useSharedNetworkFacts();
   const { facts } = useNetworkStore();
   const [isExpanded, setIsExpanded] = useState(true);
 

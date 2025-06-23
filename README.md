@@ -1,173 +1,133 @@
 # VisuaML
 
-**An Interactive, Collaborative Platform for Neural Network Visualization and Export**
+**Real-Time Collaborative PyTorch Model Visualization**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
 
-VisuaML is a full-stack monorepo application designed to help researchers, developers, and students visualize, analyze, and collaborate on PyTorch neural network architectures in real-time.
+VisuaML is a web application that enables multiple users to simultaneously explore PyTorch neural network architectures as interactive graphs. Upload any model file and see its structure visualized with tensor shapes flowing between layers—all in real-time collaboration with your team.
 
 ---
 
-## 🔬 The VisuaML Philosophy: From Code to Category
-
-VisuaML represents a convergence of three foundational ideas that together constitute a new paradigm for neural network analysis:
-
-**Semantic Translation Between Paradigms**: The application performs a fundamental transformation—converting imperative PyTorch computations into declarative categorical structures. When VisuaML exports a model to "open-hypergraph" format, it executes a semantic translation that recontextualizes neural networks as mathematical morphisms. This shift from operational code to compositional mathematics enables formal reasoning about model properties, architectural soundness, and compositional behavior.
-
-**Reflexive Code Analysis and Correction**: Standard PyTorch models often resist formal tracing due to dynamic operations and type inconsistencies. VisuaML addresses this through automated metaprogramming—the system analyzes model source code, identifies incompatibilities, and generates corrected versions. This reflexive capability treats code as manipulable data, transforming models to satisfy the constraints required for categorical export while preserving their computational semantics.
-
-**Contextual Interface Intelligence**: The frontend operates as an analytical partner rather than a passive viewer. Through model categorization and compatibility metadata, the interface anticipates user needs—disabling export operations for incompatible models, surfacing categorical properties through the analysis panel, and presenting mathematical abstractions through interactive visualizations. This contextual awareness transforms the interface into a reasoning tool.
-
-### Implications for Neural Network Engineering
-
-**Formal Verification**: Categorical abstraction enables mathematical proofs about model composition, type safety, and architectural correctness—bringing software engineering rigor to deep learning systems.
-
-**Compositional Design**: Morphism-based representation encourages modular architectures where components combine with mathematical guarantees, moving beyond ad-hoc model construction toward principled system design.
-
-**Accessible Formalism**: The automated translation pipeline makes category-theoretic analysis available to practitioners without requiring expertise in both PyTorch internals and abstract mathematics.
-
----
-
-## 🌟 Core Features
+## 🌟 What You Can Do Today
 
 -   **Interactive Graph Visualization**: Explore complex model architectures with a smooth, interactive UI powered by React Flow.
     ![VisuaML Interactive Visualization](docs/media/01-interactive-graph.gif)
 -   **Real-time Collaboration**: Use live cursors and synchronized state powered by WebSockets and Yjs to collaborate with your team.
--   **Multiple Export Formats**: Export models to JSON, Rust macros (`open-hypergraphs`), and a detailed categorical analysis format.
--   **Python Backend**: A powerful backend that uses PyTorch FX to trace models and extract their structure without requiring any changes to the original model code.
--   **Monorepo Workspace**: A clean, organized `pnpm` workspace that makes managing the full-stack application straightforward.
+    ![Real-time collaboration in VisuaML](docs/media/02-real-time-collaboration.gif)
+-   **3D Tensor Visualization**: Hover over graph edges to inspect the volumetric shape of the data tensors flowing between layers.
+    ![3D Tensor Visualization](docs/media/03-3d-tensor-visualization.gif)
+-   **Upload Custom Models**: Drop any `.py` file containing a PyTorch model and automatically visualize its architecture.
+-   **Shape-Aware Analysis**: When models include `SAMPLE_INPUT`, see tensor shapes propagated through the entire network.
+-   **Multiple Export Formats**: Export models to JSON, Rust macros (`open-hypergraphs`), and detailed analysis formats.
+    ![Exporting a model to all formats in VisuaML](docs/media/04-export-formal-analysis.gif)
+
+## 🔬 Research Vision: Building Toward Formal Neural Network Analysis
+
+VisuaML's collaborative visualization platform serves as the foundation for a more ambitious research program in formal methods for neural networks. Our long-term vision includes:
+
+### **Semantic Translation Between Paradigms**
+Moving beyond current PyTorch FX tracing to develop true semantic translation—converting imperative neural computations into compositional categorical structures that enable mathematical reasoning about model properties, architectural soundness, and compositional behavior.
+
+### **Automated Model Verification**
+Building on current error reporting to create metaprogramming tools that analyze model source code, identify formal incompatibilities, and generate corrected versions while preserving computational semantics. This reflexive capability would treat code as manipulable data.
+
+### **Formal Verification Infrastructure**
+Extending the categorical export format to enable integration with proof assistants and type systems, supporting mathematical proofs about model composition, type safety, and architectural correctness—bringing software engineering rigor to deep learning systems.
+
+### **Compositional Design Tools**
+Developing interactive tools for principled model construction where components combine with mathematical guarantees, moving beyond ad-hoc architectures toward compositional design with formal foundations.
+
+### **Collaborative Interpretability Research**
+Integrating mechanistic interpretability tools (TransformerLens, SAELens, Captum) into the collaborative platform, enabling teams to simultaneously analyze attention circuits, sparse features, and causal interventions on the same model—transforming interpretability from isolated analysis into collaborative discovery.
+
+**Research Impact**: Making category-theoretic analysis accessible to practitioners without requiring expertise in both PyTorch internals and abstract mathematics, while enabling new forms of collaborative formal modeling and mechanistic understanding.
+
+> 📖 **Learn More**: See our detailed [Research Roadmap](docs/FUTURE_DIRECTIONS.md) for comprehensive discussion of theoretical foundations and implementation strategies.
+
+## 🔧 How It Works
+
+VisuaML uses PyTorch's built-in `torch.fx.symbolic_trace()` to extract computational graphs from neural networks. The frontend renders these graphs using React Flow, with Y.js handling real-time synchronization between multiple users.
+
+**Current Limitations:**
+- Only works with models that PyTorch can symbolically trace
+- Dynamic control flow (loops, conditionals) may break the tracer  
+- Very large models may be slow to render
+- Shape propagation requires manually defining `SAMPLE_INPUT` in your model file
+
+---
 
 ## 🏗️ Architecture Overview
 
-This repository is a **pnpm workspace**, which manages the different parts of the VisuaML application. The primary package is `visuaml-client`, which contains the entire user-facing application.
+This repository is organized as a **pnpm workspace** managing the full-stack VisuaML application:
 
 ```
 VisuaML/
-├── docs/                    # 📚 Documentation
-│   ├── ARCHITECTURE.md      # Detailed system architecture
-│   ├── FUTURE_DIRECTIONS.md # Research roadmap and vision
-│   ├── MULTIPLAYER.md       # Real-time collaboration features
-│   ├── CONTRIBUTING.md      # Contribution guidelines
-│   ├── CLIENT_README.md     # Client-specific documentation
-│   └── LICENSE              # MIT License
-├── visuaml-client/          # The main application package
-│   ├── src/                 # React/TypeScript Frontend
-│   ├── server/              # Node.js API Server (for model processing)
-│   ├── backend/             # Python Backend (for PyTorch model tracing)
+├── docs/                    # 📚 Documentation and research roadmap
+├── visuaml-client/          # Main application package
+│   ├── src/                 # React/TypeScript frontend  
+│   ├── server/              # Node.js API server
+│   ├── backend/             # Python PyTorch processing
 │   └── models/              # Example PyTorch models
-├── package.json             # Root configuration for the workspace
-├── pnpm-lock.yaml           # Manages all dependencies for the workspace
-└── pnpm-workspace.yaml      # Defines the packages in the workspace
+└── package.json             # Workspace configuration
 ```
 
 ## 🚀 Getting Started
-
-These instructions will set up the entire VisuaML application from the root of the repository.
 
 ### Prerequisites
 
 -   [**Node.js**](https://nodejs.org/en/) (v18+ recommended)
 -   [**pnpm**](https://pnpm.io/installation) package manager (`npm install -g pnpm`)
--   [**Python**](https://www.python.org/downloads/) (v3.11+ recommended) and `pip`
+-   [**Python**](https://www.python.org/downloads/) (v3.11+ recommended) with PyTorch
 
-> **🐍 Python Setup Required**: VisuaML requires Python 3.11+ for backend ML functionality. See [`visuaml-client/PYTHON_SETUP.md`](visuaml-client/PYTHON_SETUP.md) for detailed setup instructions.
+> **🐍 Python Setup Required**: See [`visuaml-client/PYTHON_SETUP.md`](visuaml-client/PYTHON_SETUP.md) for detailed Python environment setup.
 
-### 1. Clone the Repository
+### Quick Start
 
-   ```bash
-   git clone https://github.com/caerii/VisuaML.git
-   cd VisuaML
-   ```
-
-### 2. Install Dependencies
-   
-Run `pnpm install` from the root directory. This will install all Node.js and Python dependencies for the entire workspace.
-
-   ```bash
-# This single command installs everything needed for all packages.
+```bash
+# 1. Clone and install dependencies
+git clone https://github.com/caerii/VisuaML.git
+cd VisuaML
 pnpm install
-```
-> **Note:** The `pnpm install` command automatically runs a `postinstall` script that installs the Python packages listed in `visuaml-client/backend/requirements.txt`.
 
-### 3. Set Up Environment Variables
-
-Create your environment configuration file and set up Python path:
-
-```bash
-# Navigate to the client directory
+# 2. Configure Python environment  
 cd visuaml-client
-
-# Copy the example file
 cp env.example .env.local
-```
+# Edit .env.local to set your Python path
 
-Now, edit `visuaml-client/.env.local` to configure your Python environment:
-
-```bash
-# Set your Python path (most important for development)
-VISUAML_PYTHON="/path/to/your/python"
-
-# Optional: Add Clerk authentication key
-VITE_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key_here"
-```
-
-### 4. Verify Python Setup
-
-Run the environment checker to ensure everything is configured correctly:
-
-```bash
-# From visuaml-client directory  
+# 3. Verify setup
 pnpm run check-python
 ```
 
-This will verify your Python version, packages, and backend functionality.
+### Running the Application
 
-## 🖥️ Running the Application
-
-To run VisuaML, you need to start three separate services: the **API server**, the **WebSocket server**, and the **frontend**. Run each command in a separate terminal from the **root directory**.
-
-> **💡 Tip**: Make sure you've completed the Python setup and verification steps above before starting the servers.
-
-### Terminal 1: Start the API Server
-
-This server handles requests to process and export PyTorch models.
+Start three services in separate terminals from the **root directory**:
 
 ```bash
+# Terminal 1: API Server (handles model processing)
 pnpm --filter visuaml-client run api
-```
 
-### Terminal 2: Start the WebSocket Server
-
-This server manages real-time collaboration and live cursors.
-
-```bash
+# Terminal 2: WebSocket Server (real-time collaboration)  
 pnpm --filter visuaml-client run ws
-```
 
-### Terminal 3: Start the Frontend
-
-This is the main web interface that you will interact with.
-
-```bash
+# Terminal 3: Frontend (main web interface)
 pnpm --filter visuaml-client run dev
 ```
 
-Once all services are running, you can access the VisuaML application at **`http://localhost:5173`**.
+Access VisuaML at **`http://localhost:5173`**
 
 ## 📚 Documentation
 
-For comprehensive documentation, please see the [`docs/`](docs/) folder:
-
-- **[Architecture Guide](docs/ARCHITECTURE.md)** - Detailed system architecture and technical design
-- **[Future Directions](docs/FUTURE_DIRECTIONS.md)** - Research roadmap and interpretability infrastructure vision
+- **[Research Roadmap](docs/FUTURE_DIRECTIONS.md)** - Theoretical foundations and long-term vision
+- **[Architecture Guide](docs/ARCHITECTURE.md)** - Detailed system design and technical implementation  
 - **[Multiplayer Features](docs/MULTIPLAYER.md)** - Real-time collaboration capabilities
 - **[Contributing Guidelines](docs/CONTRIBUTING.md)** - How to contribute to the project
-- **[Client Documentation](docs/CLIENT_README.md)** - Client-specific setup and usage
 
 ## 🤝 Contributing
 
-We welcome contributions! The VisuaML project is open source and community-driven. Please read our [**Contributing Guidelines**](docs/CONTRIBUTING.md) to get started.
+We welcome contributions to both current functionality and future research directions! Whether you're interested in improving the visualization engine, expanding PyTorch model support, or advancing formal methods integration, there are opportunities to contribute.
+
+Please read our [**Contributing Guidelines**](docs/CONTRIBUTING.md) to get started.
 
 ## 📄 License
 

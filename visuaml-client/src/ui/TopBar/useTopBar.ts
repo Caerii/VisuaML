@@ -1,7 +1,6 @@
 /** @fileoverview Controller hook for the TopBar component. It manages UI state, triggers model imports, and coordinates updates to global state (Y.js, Zustand). */
 import { useState, useCallback } from 'react';
-import { useSyncedGraphActions } from '../../y/useSyncedGraph';
-import { useNetworkStore } from '../../store/networkStore';
+import * as Y from 'yjs';
 import { useYDoc } from '../../y/DocProvider';
 import { autoLayout, type Node, type Edge } from '../../lib/autoLayout';
 import { importModel, exportModelHypergraph, exportAllFormats, uploadModel } from '../../lib/api';
@@ -33,8 +32,6 @@ export const useTopBar = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [exportFormat, setExportFormat] = useState<ExportFormat>('json');
-  const { commitNodes, commitEdges } = useSyncedGraphActions();
-  const { setFacts: setNetworkFacts } = useNetworkStore();
   const { ydoc } = useYDoc();
 
   const processImportedData = useCallback(
@@ -42,15 +39,45 @@ export const useTopBar = () => {
       importedData: { nodes: Node[]; edges: Edge[] },
       modelName: string,
     ) => {
-      const laidOutData = autoLayout(importedData.nodes, importedData.edges);
-      commitNodes(laidOutData.nodes);
-      commitEdges(laidOutData.edges);
+      // --- ATOMIC GRAPH RESET AND UPDATE ---
+      // This is the single source of truth for updating the graph.
+      // It happens in one transaction to ensure consistency across all clients.
+      ydoc.transact(() => {
+        // 1. Clear all previous graph data
+        const yNodes = ydoc.getArray<Y.Map<unknown>>('nodes');
+        const yEdges = ydoc.getArray<Y.Map<unknown>>('edges');
+        yNodes.delete(0, yNodes.length);
+        yEdges.delete(0, yEdges.length);
 
-      const ySharedAppStatus = ydoc.getMap('sharedAppStatus');
-      ySharedAppStatus.set('isLoadingGraph', false);
+        // 2. Add new graph data
+        const laidOutData = autoLayout(importedData.nodes, importedData.edges);
+        laidOutData.nodes.forEach(node => {
+          yNodes.push([new Y.Map(Object.entries(node))]);
+        });
+        laidOutData.edges.forEach(edge => {
+          yEdges.push([new Y.Map(Object.entries(edge))]);
+        });
+        
+        // 3. Set the authoritative network facts
+        const inputNodes = laidOutData.nodes.filter((n) => n.data.op === 'placeholder');
+        const inputShapes = inputNodes.map(
+          (n) => n.data.outputShape || 'N/A'
+        );
+        const componentTypes = [
+          ...new Set(laidOutData.nodes.map((n) => n.data.layerType || 'unknown')),
+        ];
+        const ySharedFacts = ydoc.getMap('sharedNetworkFacts');
+        ySharedFacts.set('networkName', modelName);
+        ySharedFacts.set('numNodes', laidOutData.nodes.length);
+        ySharedFacts.set('numEdges', laidOutData.edges.length);
+        ySharedFacts.set('inputShapes', inputShapes);
+        ySharedFacts.set('componentTypes', componentTypes);
+        ySharedFacts.set('isLoadingGraph', false);
+      });
+
       toast.success(`Model '${modelName}' imported successfully!`);
     },
-    [commitNodes, commitEdges, ydoc],
+    [ydoc],
   );
 
   const handleImportError = useCallback(
@@ -60,26 +87,22 @@ export const useTopBar = () => {
         error instanceof Error ? error.message : 'An unknown error occurred during import.';
       toast.error(message, { duration: 8000 }); // Increased duration for complex errors
 
-      const ySharedAppStatus = ydoc.getMap('sharedAppStatus');
+      const ySharedFacts = ydoc.getMap('sharedNetworkFacts');
       ydoc.transact(() => {
+        ySharedFacts.set('networkName', 'Failed to load');
+        ySharedFacts.set('numNodes', 0);
+        ySharedFacts.set('numEdges', 0);
+        ySharedFacts.set('inputShapes', []);
+        ySharedFacts.set('componentTypes', []);
+        ySharedFacts.set('isLoadingGraph', false);
+
         const yNameToClear = ydoc.getText('networkNameShared');
         if (yNameToClear.length > 0) {
           yNameToClear.delete(0, yNameToClear.length);
         }
-        ySharedAppStatus.set('isLoadingGraph', false);
-      });
-
-      const latestFacts = useNetworkStore.getState().facts;
-      setNetworkFacts({
-        networkName: undefined,
-        isLoadingGraph: false,
-        numNodes: latestFacts?.numNodes || 0,
-        numEdges: latestFacts?.numEdges || 0,
-        inputShapes: latestFacts?.inputShapes || [],
-        componentTypes: latestFacts?.componentTypes || [],
       });
     },
-    [ydoc, setNetworkFacts],
+    [ydoc],
   );
 
   const handleImportClick = async () => {
@@ -87,17 +110,13 @@ export const useTopBar = () => {
     const modelDetails = AVAILABLE_MODELS.find((m) => m.value === modelPath);
     const localNetworkName = modelDetails ? modelDetails.label : modelPath;
 
-    const ySharedName = ydoc.getText('networkNameShared');
-    const ySharedAppStatus = ydoc.getMap('sharedAppStatus');
-
-    ydoc.transact(() => {
-      ySharedName.delete(0, ySharedName.length);
-      ySharedName.insert(0, localNetworkName);
-      ySharedAppStatus.set('isLoadingGraph', true);
-    });
-
+    // Set loading state for all clients
+    const ySharedFacts = ydoc.getMap('sharedNetworkFacts');
+    ySharedFacts.set('isLoadingGraph', true);
+    
     try {
       const importedData = await importModel(modelPath);
+      // Let the processor handle the definitive state update
       processImportedData(importedData, localNetworkName);
     } catch (err) {
       handleImportError(err);
@@ -115,21 +134,15 @@ export const useTopBar = () => {
 
     setIsUploading(true);
     const localNetworkName = file.name;
-
-    const ySharedName = ydoc.getText('networkNameShared');
-    const ySharedAppStatus = ydoc.getMap('sharedAppStatus');
-
-    ydoc.transact(() => {
-      ySharedName.delete(0, ySharedName.length);
-      ySharedName.insert(0, localNetworkName);
-      ySharedAppStatus.set('isLoadingGraph', true);
-    });
+    
+    // Set loading state for all clients
+    const ySharedFacts = ydoc.getMap('sharedNetworkFacts');
+    ySharedFacts.set('isLoadingGraph', true);
 
     try {
       const importedData = await uploadModel(file);
+      // Let the processor handle the definitive state update
       processImportedData(importedData, localNetworkName);
-      // Also update the modelPath state so the UI reflects the change, if needed.
-      // For now, we'll just display the name, but not make it a selectable option.
     } catch (err) {
       handleImportError(err);
     } finally {

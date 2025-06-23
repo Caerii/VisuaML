@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface NetworkFacts {
+export interface NetworkFacts {
   numNodes: number;
   numEdges: number;
   inputShapes: string[];
@@ -13,7 +13,7 @@ interface NetworkFacts {
 interface NetworkState {
   facts: NetworkFacts | null;
   isGraphInteractive: boolean;
-  setFacts: (facts: Partial<NetworkFacts>) => void;
+  setFacts: (facts: NetworkFacts) => void;
   clearFacts: () => void;
   setIsGraphInteractive: (isInteractive: boolean) => void;
 }
@@ -21,8 +21,7 @@ interface NetworkState {
 export const useNetworkStore = create<NetworkState>((set) => ({
   facts: null,
   isGraphInteractive: true,
-  setFacts: (newFacts) =>
-    set((state) => ({ facts: { ...(state.facts ?? {}), ...newFacts } as NetworkFacts })),
+  setFacts: (newFacts) => set({ facts: newFacts }),
   clearFacts: () => set({ facts: null, isGraphInteractive: true }), // Also reset interaction state
   setIsGraphInteractive: (isInteractive) => set({ isGraphInteractive: isInteractive }),
 }));
