@@ -40,9 +40,22 @@ interface LocalClientAwarenessState {
   [key: string]: unknown; // Changed to unknown
 }
 
+// Safe hook to use Clerk only when available
+const useSafeClerkUser = () => {
+  try {
+    // Check if we have access to Clerk context
+    const userHook = useUser();
+    return userHook;
+  } catch (error) {
+    // If we're not inside ClerkProvider, return safe defaults
+    console.log('Clerk not available, running without authentication');
+    return { user: null, isSignedIn: false, isLoaded: true };
+  }
+};
+
 export const YDocProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [providerState, setProviderState] = useState<WebsocketProvider | null>(null);
-  const { user, isSignedIn } = useUser();
+  const { user, isSignedIn } = useSafeClerkUser();
 
   useEffect(() => {
     // local dev ws on :1234 – we'll spin it up next commit

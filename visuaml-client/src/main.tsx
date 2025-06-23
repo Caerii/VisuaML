@@ -13,17 +13,12 @@ import { neuralTheme } from './styles/theme';
 import type { ExportHypergraphResponse } from './ui/TopBar/TopBar.model';
 import './index.css';
 
-// IMPORTANT: Create a .env.local file in the root of your visuaml-client project
-// and add your Clerk Publishable Key:
+// OPTIONAL: Create a .env.local file in the root of your visuaml-client project
+// and add your Clerk Publishable Key for authentication features:
 // VITE_CLERK_PUBLISHABLE_KEY="your_publishable_key_here"
 // You can get your key from your Clerk dashboard.
+// If not provided, the app will run without authentication.
 const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
-if (!clerkPublishableKey) {
-  throw new Error(
-    'Missing Clerk Publishable Key. Please set VITE_CLERK_PUBLISHABLE_KEY in .env.local',
-  );
-}
 
 const MainApp = () => {
   const [categoricalData, setCategoricalData] = useState<ExportHypergraphResponse | null>(null);
@@ -58,16 +53,27 @@ const MainApp = () => {
   );
 };
 
+const AppWithOptionalClerk = () => {
+  const content = (
+    <YDocProvider>
+      <MainApp />
+      <Toaster richColors position="top-right" />
+    </YDocProvider>
+  );
+
+  // Only wrap with ClerkProvider if we have a publishable key
+  if (clerkPublishableKey) {
+    return <ClerkProvider publishableKey={clerkPublishableKey}>{content}</ClerkProvider>;
+  }
+
+  return content;
+};
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={neuralTheme}>
       <CssBaseline />
-      <ClerkProvider publishableKey={clerkPublishableKey}>
-        <YDocProvider>
-          <MainApp />
-          <Toaster richColors position="top-right" />
-        </YDocProvider>
-      </ClerkProvider>
+      <AppWithOptionalClerk />
     </ThemeProvider>
   </React.StrictMode>,
 );

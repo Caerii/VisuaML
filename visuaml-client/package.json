@@ -10,10 +10,11 @@
     "test": "vitest",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "import": "python ./backend/scripts/fx_export.py",
+    "check-python": "node scripts/check-python.js",
+    "import": "${VISUAML_PYTHON:-python} ./backend/scripts/fx_export.py",
     "api": "cross-env TS_NODE_PROJECT=./tsconfig.node.json node --loader ts-node/esm ./server/index.ts",
     "ws": "cross-env HOST=0.0.0.0 node ./node_modules/y-websocket/bin/server.js --port 1234",
-    "postinstall": "pip install -r backend/requirements.txt"
+    "postinstall": "${VISUAML_PYTHON:-python} -m pip install -r backend/requirements.txt"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.31.4",
@@ -43,6 +44,12 @@
     "yjs": "13.6.27",
     "zod": "^3.25.4",
     "zustand": "^5.0.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "^19.1.0",
+      "react-dom": "^19.1.0"
+    }
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
