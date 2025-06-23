@@ -13,7 +13,9 @@ import { finished } from 'stream/promises';
 
 // Type imports will be added as needed
 
-dotenv.config(); // Load .env variables into process.env
+// Load environment variables from .env.local and .env files
+dotenv.config({ path: '.env.local' }); // Load .env.local first (higher priority)
+dotenv.config(); // Load .env as fallback
 
 const app = Fastify({
   logger: {
@@ -34,6 +36,9 @@ app.register(cors, {
 
 // Register the multipart plugin
 app.register(multipart);
+
+// At the top of the file, add Python detection
+const PYTHON_COMMAND = process.env.VISUAML_PYTHON || 'python';
 
 // Define default sample inputs for models
 const defaultSampleInputs: Record<string, { args: string; dtypes: string; kwargs?: string }> = {
@@ -115,10 +120,11 @@ app.post('/api/upload', async (req, reply) => {
     const scriptArgs = [modelPath];
     const scriptPath = path.resolve(projectRoot, 'backend', 'scripts', 'fx_export.py');
 
-    app.log.info(`Executing script: python ${scriptPath} ${scriptArgs.join(' ')}`);
+    app.log.info(`Executing script: ${PYTHON_COMMAND} ${scriptPath} ${scriptArgs.join(' ')}`);
 
-    const { stdout, stderr } = await execa('python', [scriptPath, ...scriptArgs], {
+    const { stdout, stderr } = await execa(PYTHON_COMMAND, [scriptPath, ...scriptArgs], {
       cwd: projectRoot,
+      env: { ...process.env, KMP_DUPLICATE_LIB_OK: 'TRUE' },
     });
 
     if (stderr) {
@@ -211,13 +217,13 @@ app.post('/api/import', async (req, reply) => {
     const scriptPath = path.resolve(projectRoot, 'backend', 'scripts', 'fx_export.py');
 
     app.log.info(
-      `Executing script: python ${scriptPath} ${scriptArgs.join(' ')} with CWD: ${projectRoot}`,
+      `Executing script: ${PYTHON_COMMAND} ${scriptPath} ${scriptArgs.join(' ')} with CWD: ${projectRoot}`,
     );
 
     const { stdout, stderr } = await execa(
-      'python', // Reverted from 'python3' to 'python'
+      PYTHON_COMMAND, // Use environment variable or fallback to 'python'
       [scriptPath, ...scriptArgs], // Pass all arguments
-      { cwd: projectRoot },
+      { cwd: projectRoot, env: { ...process.env, KMP_DUPLICATE_LIB_OK: 'TRUE' } },
     );
 
     if (stderr) {
@@ -304,10 +310,11 @@ app.post('/api/export-hypergraph', async (req, reply) => {
     const projectRoot = path.resolve(__dirnameCurrentModule, '..');
     const scriptPath = path.resolve(projectRoot, 'backend', 'scripts', 'fx_export.py');
 
-    app.log.info(`Executing hypergraph export: python ${scriptPath} ${scriptArgs.join(' ')}`);
+    app.log.info(`Executing hypergraph export: ${PYTHON_COMMAND} ${scriptPath} ${scriptArgs.join(' ')}`);
 
-    const { stdout, stderr } = await execa('python', [scriptPath, ...scriptArgs], {
+    const { stdout, stderr } = await execa(PYTHON_COMMAND, [scriptPath, ...scriptArgs], {
       cwd: projectRoot,
+      env: { ...process.env, KMP_DUPLICATE_LIB_OK: 'TRUE' },
     });
 
     if (stderr) {
@@ -393,8 +400,9 @@ app.post('/api/export-all', async (req, reply) => {
         }
 
         app.log.info(`Generating ${format} export...`);
-        const { stdout, stderr } = await execa('python', [scriptPath, ...scriptArgs], {
+        const { stdout, stderr } = await execa(PYTHON_COMMAND, [scriptPath, ...scriptArgs], {
           cwd: projectRoot,
+          env: { ...process.env, KMP_DUPLICATE_LIB_OK: 'TRUE' },
         });
 
         if (stderr) {

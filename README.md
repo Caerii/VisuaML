@@ -68,7 +68,9 @@ These instructions will set up the entire VisuaML application from the root of t
 
 -   [**Node.js**](https://nodejs.org/en/) (v18+ recommended)
 -   [**pnpm**](https://pnpm.io/installation) package manager (`npm install -g pnpm`)
--   [**Python**](https://www.python.org/downloads/) (v3.8+ recommended) and `pip`
+-   [**Python**](https://www.python.org/downloads/) (v3.11+ recommended) and `pip`
+
+> **🐍 Python Setup Required**: VisuaML requires Python 3.11+ for backend ML functionality. See [`visuaml-client/PYTHON_SETUP.md`](visuaml-client/PYTHON_SETUP.md) for detailed setup instructions.
 
 ### 1. Clone the Repository
 
@@ -89,25 +91,42 @@ pnpm install
 
 ### 3. Set Up Environment Variables
 
-The application uses an environment file for configuration, primarily for the Clerk authentication provider (not yet implemented).
+Create your environment configuration file and set up Python path:
 
 ```bash
-# Navigate to the client directory to create the .env file
+# Navigate to the client directory
 cd visuaml-client
 
 # Copy the example file
-cp .env.example .env.local
+cp env.example .env.local
 ```
 
-Now, open `visuaml-client/.env.local` and add your **Clerk Publishable Key**.
+Now, edit `visuaml-client/.env.local` to configure your Python environment:
 
+```bash
+# Set your Python path (most important for development)
+VISUAML_PYTHON="/path/to/your/python"
+
+# Optional: Add Clerk authentication key
+VITE_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key_here"
 ```
-VITE_CLERK_PUBLISHABLE_KEY="your_publishable_key_here"
-   ```
+
+### 4. Verify Python Setup
+
+Run the environment checker to ensure everything is configured correctly:
+
+```bash
+# From visuaml-client directory  
+pnpm run check-python
+```
+
+This will verify your Python version, packages, and backend functionality.
 
 ## 🖥️ Running the Application
 
 To run VisuaML, you need to start three separate services: the **API server**, the **WebSocket server**, and the **frontend**. Run each command in a separate terminal from the **root directory**.
+
+> **💡 Tip**: Make sure you've completed the Python setup and verification steps above before starting the servers.
 
 ### Terminal 1: Start the API Server
 
