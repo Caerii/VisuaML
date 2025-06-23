@@ -282,6 +282,22 @@ def export_model_graph_with_fallback(
     If FX tracing fails, it automatically falls back to hook-based tracing.
     This is the main entry point for model processing.
     """
+    # --- EARLY EXIT FOR DEDICATED EXPORT FORMATS ---
+    # If a specialized export format is requested, use the dedicated export function
+    # instead of the standard VisuaML graph generation pipeline.
+    if export_format.startswith("openhg"):
+        from .openhypergraph_export import export_model_open_hypergraph
+        return export_model_open_hypergraph(
+            model_path,
+            filter_config,
+            model_args,
+            model_kwargs,
+            sample_input_args,
+            sample_input_kwargs=sample_input_kwargs,
+            sample_input_dtypes=sample_input_dtypes,
+            out_format=export_format.split("-", 1)[-1],
+        )
+
     # --- SAMPLE INPUT DISCOVERY ---
     # This logic is placed here, at the main entry point, to ensure that
     # sample inputs are discovered *before* any tracing method is chosen.

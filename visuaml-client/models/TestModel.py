@@ -1,6 +1,12 @@
 import torch
 import torch.nn as nn
 
+# The SAMPLE_INPUT variable will be used by the VisuaML backend to
+# automatically perform shape propagation, enabling shape visualizations
+# on the graph edges without manual input from the user.
+# Format: ( (tuple_of_input_shapes), [list_of_input_dtypes] )
+SAMPLE_INPUT = (((1, 3, 32, 32),), ['float32'])
+
 class TestModel(nn.Module):
     def __init__(self):
         super().__init__()

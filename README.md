@@ -32,6 +32,7 @@ VisuaML represents a convergence of three foundational ideas that together const
 ## 🌟 Core Features
 
 -   **Interactive Graph Visualization**: Explore complex model architectures with a smooth, interactive UI powered by React Flow.
+    ![VisuaML Interactive Visualization](docs/media/01-interactive-graph.gif)
 -   **Real-time Collaboration**: Use live cursors and synchronized state powered by WebSockets and Yjs to collaborate with your team.
 -   **Multiple Export Formats**: Export models to JSON, Rust macros (`open-hypergraphs`), and a detailed categorical analysis format.
 -   **Python Backend**: A powerful backend that uses PyTorch FX to trace models and extract their structure without requiring any changes to the original model code.
