@@ -5,7 +5,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
 
-VisuaML is a web application that enables multiple users to simultaneously explore PyTorch neural network architectures as interactive graphs. Upload any model file and see its structure visualized with tensor shapes flowing between layers—all in real-time collaboration with your team.
+VisuaML is a web application that enables multiple users to simultaneously explore PyTorch neural network architectures as interactive graphs. Upload any model file and see its structure visualized with tensor shapes flowing between layers—all in real-time collaboration with your team. It is meant to bridge the advantages afforded by category theory ("precisely, the universal algebra of monads valued in a 2-category of parametric maps" (Gavranović)), and current workflows.
+
+"Categorical Deep Learning: An Algebraic Theory of Architectures" (https://arxiv.org/abs/2402.15332).
+"Position: Categorical Deep Learning is an Algebraic Theory of All Architectures" (https://arxiv.org/abs/2402.15332).
+"Fundamental Components of Deep Learning: A category-theoretic approach" (https://arxiv.org/abs/2403.13001).
 
 ---
 
