@@ -32,7 +32,7 @@ import { useNetworkStore } from '../../../../../store/networkStore';
 const AnimatedTensorPreview: React.FC = () => {
   const groupRef = useRef<THREE.Group>(null!);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.x += delta * 0.2;
       groupRef.current.rotation.y += delta * 0.3;
@@ -168,8 +168,8 @@ const Scene: React.FC<SceneProps> = ({ voxelLayout, cameraDistance, onHover }) =
   const light1Ref = useRef<THREE.PointLight>(null!);
   const light2Ref = useRef<THREE.PointLight>(null!);
 
-  useFrame(({ clock }) => {
-    const elapsedTime = clock.getElapsedTime();
+  useFrame((_state) => {
+    const elapsedTime = _state.clock.getElapsedTime();
     light1Ref.current.position.x = Math.sin(elapsedTime * 0.7) * 10;
     light1Ref.current.position.z = Math.cos(elapsedTime * 0.7) * 10;
     light2Ref.current.position.x = Math.sin(elapsedTime * 0.5) * -12;
