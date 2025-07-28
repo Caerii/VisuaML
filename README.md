@@ -1,5 +1,7 @@
 # VisuaML
 
+![VisuaML Logo](visuaml-client/public/visuaml_logo.png)
+
 Web Hosted version (WIP Dev test) here: [**VisuaML.com**](https://VisuaML.com).
 
 **Real-Time Collaborative PyTorch Model Visualization**
