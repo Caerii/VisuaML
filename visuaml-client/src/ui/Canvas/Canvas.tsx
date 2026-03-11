@@ -22,7 +22,7 @@ const nodeTypes = { transformer: MLNode };
 /** Fits the view to nodes at a comfortable scale when the graph first loads (e.g. after Simple CNN auto-load). */
 function FitViewOnFirstLoad() {
   const { fitView } = useReactFlow();
-  const nodeCount = useStore((s) => s.nodeInternals.size);
+  const nodeCount = useStore((s) => (s?.nodeInternals?.size ?? 0));
   const hasFitted = useRef(false);
 
   useEffect(() => {
