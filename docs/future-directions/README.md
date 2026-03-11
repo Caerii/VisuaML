@@ -33,6 +33,9 @@ Applications to AI safety, alignment research, and verifiable AI systems.
 
 ## Additional Directions
 
+### [Categorical Neural Architecture Search](categorical-neural-architecture-search.md)
+Revolutionary approach to NAS using categorical deep learning to search over the entire open-source ML ecosystem. Enables type-safe composition of components from any framework, automatic validation, and systematic exploration using categorical operations.
+
 ### Technical Roadmap *(Coming Soon)*
 Concrete implementation plans and development milestones.
 
