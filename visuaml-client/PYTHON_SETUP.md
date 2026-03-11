@@ -1,8 +1,32 @@
 # Python Environment Setup for VisuaML
 
-VisuaML requires **Python 3.11+** for the backend machine learning functionality.
+VisuaML uses **Python 3.11+** for the backend (model import, export, and demo generation). The rest of the app (frontend, demos, WebSocket) runs without Python.
 
-## Quick Setup
+## When is Python needed?
+
+- **Not needed for:** Running the frontend, using built-in demo networks, or real-time collaboration.
+- **Needed for:** API server (model processing), custom model upload/export, and generating demo networks from real models (`pnpm generate-demos-fast`).
+
+## Installing Python dependencies
+
+`pnpm install` does **not** install Python packages by default (so installs stay fast). You should see:
+
+`Skipping Python deps (fast install).` and `To install backend Python deps run: pnpm run install-python-deps (from repo root)`.
+
+**If you see pip running on every `pnpm install`:** You likely have `INSTALL_PYTHON_DEPS=1` set in your environment. Unset it (or set `INSTALL_PYTHON_DEPS=0`) so that only Node deps install. Use the one-time command below when you need Python instead.
+
+**One-time install when you need the backend:**
+```bash
+# From repo root (recommended)
+pnpm run install-python-deps
+
+# Or from visuaml-client directory
+cd visuaml-client && pnpm run install-python-deps
+```
+
+This runs `pip install -r backend/requirements.txt` **once**. That file includes PyTorch, transformers, timm, matplotlib, and other heavy packages, so the first run can take several minutes and download a lot. To force-skip Python on install (e.g. in CI): `SKIP_PYTHON_INSTALL=1 pnpm install`.
+
+## Quick Setup (Python environment)
 
 ### Option 1: Using Conda (Recommended)
 

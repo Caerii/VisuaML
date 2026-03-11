@@ -16,7 +16,8 @@
     "import": "${VISUAML_PYTHON:-python} ./backend/scripts/fx_export.py",
     "api": "cross-env TS_NODE_PROJECT=./tsconfig.node.json node --loader ts-node/esm ./server/index.ts",
     "ws": "cross-env HOST=0.0.0.0 node ./node_modules/y-websocket/bin/server.js --port 1234",
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js",
+    "install-python-deps": "cross-env INSTALL_PYTHON_DEPS=1 node scripts/postinstall.js"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.31.4",

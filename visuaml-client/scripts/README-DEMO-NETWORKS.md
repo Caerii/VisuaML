@@ -1,6 +1,6 @@
 # Demo Networks Generation
 
-The demo networks are client-side examples that work without backend servers. They can be generated from actual models in the monorepo.
+The demo networks are client-side examples that work **without** the API server. The app ships with built-in demos; you can optionally generate demos from real models (requires Python and this script).
 
 ## Generating Demo Networks
 
@@ -45,4 +45,4 @@ Currently, the demo networks use hardcoded placeholder data that matches the str
 
 ## Integration
 
-The `demoNetworks.ts` file will automatically use the generated JSON files if they exist, falling back to hardcoded demos if they don't. This allows the app to work immediately while providing a path to use real model data.
+The app uses `src/lib/demoNetworks/` (and re-exports from `src/lib/demoNetworks.ts`). It does **not** require Python or the API to run; built-in demos are always available. Generated JSON in `src/lib/demo-networks/` can replace or supplement them if you run the generator.

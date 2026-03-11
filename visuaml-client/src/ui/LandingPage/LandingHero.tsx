@@ -80,6 +80,14 @@ export function LandingHero({ onGetStartedClick }: LandingHeroProps) {
             <Box component="span" sx={{ fontSize: '0.9em', opacity: 0.8 }}>
               explore architectures, understand tensor flow, collaborate with your team
             </Box>
+            <br />
+            <Box component="span" sx={{ fontSize: '0.85em', opacity: 0.7, fontStyle: 'italic' }}>
+              Think TypeScript for ML — typed composition, ergonomics, and a web runtime
+            </Box>
+            <br />
+            <Box component="span" sx={{ fontSize: '0.85em', opacity: 0.65 }}>
+              Open source (MIT) — run locally or contribute on GitHub
+            </Box>
           </Typography>
 
           {/* CTA Buttons - Clean, minimal with underline */}
@@ -178,6 +186,36 @@ export function LandingHero({ onGetStartedClick }: LandingHeroProps) {
               }}
             >
               About the vision →
+            </Button>
+            <Button
+              component="a"
+              href="https://github.com/caerii/VisuaML"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="text"
+              sx={{
+                color: 'rgba(255, 255, 255, 0.5)',
+                textTransform: 'uppercase',
+                fontWeight: 400,
+                letterSpacing: '0.2em',
+                fontSize: { xs: 'clamp(0.7rem, 1.3vw, 0.8rem)', md: 'clamp(0.75rem, 1.2vw, 0.85rem)', lg: 'clamp(0.75rem, 1vw, 0.8rem)' },
+                px: 0,
+                pb: 1,
+                borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: 0,
+                whiteSpace: 'nowrap',
+                alignSelf: 'flex-start',
+                ...HERO_TYPOGRAPHY_STYLES,
+                textDecoration: 'none',
+                '&:hover': {
+                  borderColor: 'rgba(255, 255, 255, 0.35)',
+                  color: 'rgba(255, 255, 255, 0.75)',
+                  bgcolor: 'transparent',
+                },
+                transition: 'all 0.3s',
+              }}
+            >
+              Open source on GitHub →
             </Button>
           </Stack>
         </Stack>

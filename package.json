@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "build": "pnpm --filter visuaml-client run build"
+        "build": "pnpm --filter visuaml-client run build",
+        "install-python-deps": "pnpm --filter visuaml-client run install-python-deps"
     },
     "pnpm": {
         "overrides": {

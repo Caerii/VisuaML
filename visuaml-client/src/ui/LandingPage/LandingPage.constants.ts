@@ -9,51 +9,51 @@ export const LANDING_SECTIONS: LandingSectionData[] = [
     id: 'the-problem',
     title: 'The problem',
     content: [
-      'Understanding neural network architectures is hard. PyTorch models have layers, connections, and data flow that are difficult to visualize and reason about.',
-      'Current visualization tools show static graphs or require manual configuration. They don\'t capture dynamic tensor flow or enable collaborative exploration.',
-      'Bridging imperative PyTorch code and formal mathematical structures enables reasoning about model properties, composition, and correctness.',
+      'Understanding neural network architectures is hard. PyTorch models have layers, connections, and data flow that are difficult to visualize and reason about. Static diagrams and manual configs don\'t scale.',
+      'Current visualization tools show static graphs or require manual configuration. They don\'t capture dynamic tensor flow, shape propagation, or enable collaborative exploration. Bridging imperative PyTorch code and formal mathematical structures (category theory, open-hypergraphs) enables reasoning about model properties, composition, and correctness.',
+      'VisuaML is open source (MIT). The full codebase is on GitHub—frontend, API, and Python backend—so you can run it locally, contribute, or integrate the export pipeline into your own tools.',
     ],
   },
   {
     id: 'what-is-this',
     title: 'What is VisuaML?',
     content: [
-      'Real-time collaborative platform for visualizing PyTorch neural network architectures. Upload a PyTorch model file and see its structure as an interactive graph with tensor shapes flowing between layers.',
-      'We bridge category theory and practical deep learning workflows. By translating PyTorch models into categorical structures (open-hypergraphs), we enable formal reasoning about model composition and properties.',
-      'Collaborative model exploration: multiple team members inspect architectures, understand data flow, and export models to formal mathematical representations.',
-      'Future: Neural Architecture Search powered by categorical deep learning. Search across the open-source ML ecosystem—all frameworks, all primitives, automatically discoverable and composable with type-safe validation.',
+      'Think TypeScript for ML: a typed, compositional layer on top of PyTorch (and eventually other frameworks), with ergonomics and a web runtime for visualization and collaboration. VisuaML is a real-time collaborative platform for visualizing PyTorch neural network architectures. Upload a `.py` file containing your model; the backend uses PyTorch FX symbolic tracing to extract the computational graph, then the frontend renders it as an interactive graph (React Flow) with tensor shapes on edges and 3D shape previews on hover.',
+      'We bridge category theory and practical deep learning. Models are translated into categorical structures (open-hypergraphs), enabling formal reasoning about composition and properties. Export targets include JSON hypergraphs, Rust macros for the open-hypergraphs crate, and categorical analysis output.',
+      'Tech stack: React + TypeScript (Vite), Node.js/Fastify API server, Python backend (PyTorch FX, optional transformers/timm). Real-time sync is Yjs over WebSockets. Demo networks work without the API; custom model upload and export require the Python backend.',
+      'Future: Neural Architecture Search over the open-source ML ecosystem with type-safe composition; catgrad integration for faster evaluation; collaborative interpretability tooling.',
     ],
   },
   {
     id: 'how-it-works',
     title: 'How it works',
     content: [
-      'Upload a `.py` file with your PyTorch model. PyTorch FX tracing extracts the computational graph.',
-      'The graph is visualized as an interactive network: nodes represent operations, edges show tensor flow. Hover over edges to see 3D tensor shapes.',
-      'Multiple users explore the same model with live cursor tracking and synchronized state. Changes propagate through WebSockets and Yjs.',
-      'Export models to multiple formats: JSON for integration, Rust macros for open-hypergraphs, and detailed categorical analysis for formal verification.',
-      'Future: Search over architectures using categorical NAS. All ML primitives become composable morphisms—search the open-source ecosystem, leverage catgrad for 10-20x faster evaluation, and discover optimal architectures.',
+      'Upload a `.py` file with your PyTorch model (and optional SAMPLE_INPUT for shape propagation). The API runs PyTorch\'s torch.fx.symbolic_trace() to obtain a GraphModule; the graph is serialized and sent to the client.',
+      'The frontend renders nodes (ops/layers) and edges (tensor flow). You can pan, zoom, select nodes, and hover edges to see 3D tensor dimensions. Layout uses dagre; state is managed with Zustand.',
+      'Multi-user editing: Yjs maintains a CRDT of the graph document; a WebSocket server (y-websocket) syncs updates. Cursors and presence are shared so multiple people can explore the same model at once.',
+      'Export: JSON (hypergraph), Rust macros for hellas-ai/open-hypergraphs, and a detailed analysis format. The Python backend performs the categorical translation; the frontend triggers export and downloads the result.',
+      'Future: Categorical NAS over PyTorch/TensorFlow/JAX/HuggingFace primitives; catgrad for 10–20x faster evaluation via framework-free compilation.',
     ],
     technicalDetails: [
       {
         label: 'PyTorch FX tracing',
-        description: 'Uses PyTorch\'s built-in symbolic tracing to extract computational graphs from neural networks. Works with any symbolically traceable model, automatically handling layer extraction and connection mapping.',
+        description: 'Backend uses torch.fx.symbolic_trace() to extract a GraphModule from your model. Works with symbolically traceable models; dynamic control flow can limit tracing. Graph is sent to the client as JSON for visualization.',
       },
       {
-        label: 'Categorical morphisms',
-        description: 'All ML components become typed morphisms with automatic composition validation. Future: Search over PyTorch, TensorFlow, JAX, and HuggingFace components seamlessly.',
-      },
-      {
-        label: 'Catgrad integration',
-        description: 'Future: Compile architectures to framework-free static code for 10-20x faster evaluation. No autograd overhead, optimized Python/C++/CUDA generation.',
+        label: 'Frontend pipeline',
+        description: 'React + TypeScript (Vite), React Flow for the graph, Three.js (via R3F) for 3D tensor shapes. Zustand for app state; Yjs for collaborative state. API and WebSocket servers run separately (Fastify + y-websocket).',
       },
       {
         label: 'Real-time collaboration',
-        description: 'Powered by Yjs (CRDT-based) and WebSockets for conflict-free synchronization. Multiple users explore, zoom, and interact with the same model.',
+        description: 'Yjs CRDTs with y-websocket. Graph document and cursor/presence sync over WebSockets. Conflict-free; multiple users can pan, zoom, and select without overwriting each other.',
       },
       {
         label: 'Categorical export',
-        description: 'Translates imperative PyTorch code into compositional categorical structures (open-hypergraphs). Enables formal reasoning about model properties, type safety, and architectural correctness using category theory.',
+        description: 'Python backend translates the FX graph into open-hypergraph form. Export formats: JSON hypergraph, Rust macro (open-hypergraphs crate), and human-readable categorical analysis. Enables downstream use in proof assistants or verification tools.',
+      },
+      {
+        label: 'Run locally',
+        description: 'pnpm workspace: pnpm install (Node only), optional pnpm run install-python-deps for the backend. Start api, ws, and dev from repo root. Demo networks work without Python; custom upload/export need the API and Python.',
       },
     ],
   },
@@ -61,11 +61,9 @@ export const LANDING_SECTIONS: LandingSectionData[] = [
     id: 'what-we-are-building',
     title: 'What we\'re building',
     content: [
-      'Neural Architecture Search: Search across the open-source ML ecosystem using categorical deep learning. ML primitives become composable morphisms with type-safe composition, enabling automatic architecture discovery across PyTorch, TensorFlow, JAX, and HuggingFace.',
-      'Catgrad-accelerated evaluation: Integrate with catgrad for 10-20x faster architecture evaluation through framework-free static compilation. Compile architectures to optimized Python, C++, or CUDA code without autograd overhead.',
-      'Transformer/LLM architecture search: Use catgrad-LLM to search over attention mechanisms, transformer blocks, and full LLM architectures. Compose pre-trained components from any framework with automatic type validation.',
-      'Universal primitive library: Transform millions of open-source ML components into searchable categorical morphisms. Discover, validate, and compose components from the ML ecosystem automatically.',
-      'Collaborative interpretability research: Integrate mechanistic interpretability tools for analysis of attention circuits, sparse features, and causal interventions across teams.',
+      'Neural Architecture Search over the open-source ML ecosystem: ML primitives as composable morphisms with type-safe composition; automatic architecture discovery across PyTorch, TensorFlow, JAX, and HuggingFace.',
+      'Catgrad-accelerated evaluation: 10–20x faster evaluation via framework-free static compilation (Python/C++/CUDA), no autograd overhead. Catgrad-LLM for transformer/LLM search (attention, blocks, full LLMs) with pre-trained components from any framework.',
+      'Universal primitive library: Ingest and type-check millions of ML components as categorical morphisms; discover and compose from the ecosystem. Collaborative interpretability: integrate mechanistic interpretability tools (attention circuits, sparse features, causal interventions) into the same real-time collaboration layer.',
     ],
     differentiators: [
       {

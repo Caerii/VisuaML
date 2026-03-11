@@ -9,7 +9,7 @@ Web Hosted version (WIP Dev test) here: [**VisuaML.com**](https://VisuaML.com).
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
 
-VisuaML is a web application that enables multiple users to simultaneously explore PyTorch neural network architectures as interactive graphs. Upload any model file and see its structure visualized with tensor shapes flowing between layers—all in real-time collaboration with your team. It is meant to bridge the advantages afforded by category theory ("precisely, the universal algebra of monads valued in a 2-category of parametric maps" (Gavranović)), and current workflows.
+VisuaML is a web application that enables multiple users to simultaneously explore PyTorch neural network architectures as interactive graphs. Think **TypeScript for ML**: a typed, compositional layer on top of PyTorch with ergonomics and a web runtime for visualization and real-time collaboration. Upload any model file and see its structure visualized with tensor shapes flowing between layers. It bridges the advantages afforded by category theory ("precisely, the universal algebra of monads valued in a 2-category of parametric maps" (Gavranović)) and current workflows.
 
 "Categorical Deep Learning: An Algebraic Theory of Architectures" (https://arxiv.org/abs/2402.15332).
 "Position: Categorical Deep Learning is an Algebraic Theory of All Architectures" (https://arxiv.org/abs/2402.15332).
@@ -67,62 +67,76 @@ VisuaML uses PyTorch's built-in `torch.fx.symbolic_trace()` to extract computati
 
 ## 🏗️ Architecture Overview
 
-This repository is organized as a **pnpm workspace** managing the full-stack VisuaML application:
+This repository is a **pnpm workspace** with one main package:
+
+| Location | Role |
+|----------|------|
+| **Repo root** | Run `pnpm run <script>` (e.g. `build`, `install-python-deps`) or `pnpm --filter visuaml-client run <script>` for other client scripts |
+| **visuaml-client/** | Main app: React frontend, Node.js API server, Python backend (PyTorch FX) |
+| **docs/** | Documentation and research roadmap |
 
 ```
 VisuaML/
 ├── docs/                    # 📚 Documentation and research roadmap
 ├── visuaml-client/          # Main application package
-│   ├── src/                 # React/TypeScript frontend  
+│   ├── src/                 # React/TypeScript frontend
 │   ├── server/              # Node.js API server
 │   ├── backend/             # Python PyTorch processing
 │   └── models/              # Example PyTorch models
-└── package.json             # Workspace configuration
+└── package.json             # Workspace root (overrides, scripts)
 ```
+
+**Install behavior:** `pnpm install` only installs Node dependencies (fast). It does **not** run `pip install` by default; you should see *"Skipping Python deps"* in the log. If you see pip downloading lots of packages (PyTorch, transformers, matplotlib, etc.) on every install, you likely have `INSTALL_PYTHON_DEPS=1` set—unset it so installs stay fast. When you need the Python backend, run `pnpm run install-python-deps` once from the repo root (see below).
+
+**Root scripts (from repo root):** `pnpm run build` — build the client; `pnpm run install-python-deps` — one-time install of backend Python deps. All other scripts (dev, api, ws, etc.) use `pnpm --filter visuaml-client run <script>`.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
--   [**Node.js**](https://nodejs.org/en/) (v18+ recommended)
--   [**pnpm**](https://pnpm.io/installation) package manager (`npm install -g pnpm`)
--   [**Python**](https://www.python.org/downloads/) (v3.11+ recommended) with PyTorch
-
-> **🐍 Python Setup Required**: See [`visuaml-client/PYTHON_SETUP.md`](visuaml-client/PYTHON_SETUP.md) for detailed Python environment setup.
+- [**Node.js**](https://nodejs.org/en/) (v18+)
+- [**pnpm**](https://pnpm.io/installation) (`npm install -g pnpm`)
+- **Python 3.11+** (only if you need backend: model import, export, or demo generation). See [visuaml-client/PYTHON_SETUP.md](visuaml-client/PYTHON_SETUP.md).
 
 ### Quick Start
 
 ```bash
-# 1. Clone and install dependencies
+# 1. Clone and install (Node only — fast)
 git clone https://github.com/caerii/VisuaML.git
 cd VisuaML
 pnpm install
+```
 
-# 2. Configure Python environment  
+You can run the **frontend and demos** immediately (no Python required). For **model import/export and API processing**, install Python dependencies once:
+
+```bash
+# 2. (Optional) Install backend Python dependencies (from repo root)
+pnpm run install-python-deps
+```
+
+Then configure the Python path if needed:
+
+```bash
 cd visuaml-client
 cp env.example .env.local
-# Edit .env.local to set your Python path
+# Edit .env.local: set VISUAML_PYTHON to your python.exe path
 
-# 3. Verify setup
+# Verify Python setup
 pnpm run check-python
 ```
 
 ### Running the Application
 
-Start three services in separate terminals from the **root directory**:
+From the **repo root**, start three services in separate terminals:
 
 ```bash
-# Terminal 1: API Server (handles model processing)
-pnpm --filter visuaml-client run api
-
-# Terminal 2: WebSocket Server (real-time collaboration)  
-pnpm --filter visuaml-client run ws
-
-# Terminal 3: Frontend (main web interface)
-pnpm --filter visuaml-client run dev
+# From repo root — start each in a separate terminal:
+pnpm --filter visuaml-client run api    # Terminal 1: API (requires Python deps)
+pnpm --filter visuaml-client run ws     # Terminal 2: WebSocket (multiplayer)
+pnpm --filter visuaml-client run dev    # Terminal 3: Frontend
 ```
 
-Access VisuaML at **`http://localhost:5173`**
+Open **http://localhost:5173**. You can use **Demo Networks** from the dropdown without the API server; for custom model upload and export, the API (and Python deps) must be running.
 
 ## 📚 Documentation
 

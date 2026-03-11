@@ -62,13 +62,15 @@ This folder contains comprehensive documentation for the VisuaML project. Below 
 
 ## 🚀 Getting Started
 
-If you're new to VisuaML, we recommend reading the documentation in this order:
+**Install:** From the [repository root](../README.md), run `pnpm install` (Node only; fast). To use the API and model import/export, run `pnpm run install-python-deps` once from the root. See the [main README](../README.md) and [CLIENT_README.md](CLIENT_README.md) for full steps.
 
-1. **[CLIENT_README.md](CLIENT_README.md)** - Start here for setup and basic usage
-2. **[ARCHITECTURE.md](ARCHITECTURE.md)** - Understand the system design
-3. **[MULTIPLAYER.md](MULTIPLAYER.md)** - Learn about collaboration features
-4. **[FUTURE_DIRECTIONS.md](FUTURE_DIRECTIONS.md)** - Explore the research vision
-5. **[CONTRIBUTING.md](CONTRIBUTING.md)** - Join the development effort
+If you're new to VisuaML, we recommend reading in this order:
+
+1. **[CLIENT_README.md](CLIENT_README.md)** - Setup and basic usage
+2. **[ARCHITECTURE.md](ARCHITECTURE.md)** - System design
+3. **[MULTIPLAYER.md](MULTIPLAYER.md)** - Collaboration features
+4. **[FUTURE_DIRECTIONS.md](FUTURE_DIRECTIONS.md)** - Research vision
+5. **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
 
 ## 🔗 Quick Links
 

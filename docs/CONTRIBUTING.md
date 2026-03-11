@@ -6,8 +6,8 @@ Thank you for your interest in contributing to VisuaML! This guide will help you
 
 ### Prerequisites
 
-- **Node.js** 18+ and npm/pnpm
-- **Python** 3.8+ with PyTorch
+- **Node.js** 18+ and **pnpm** (repo is a pnpm workspace)
+- **Python** 3.11+ (only if you need the API/model import/export; see [visuaml-client/PYTHON_SETUP.md](../visuaml-client/PYTHON_SETUP.md))
 - **Git** for version control
 - **Basic knowledge** of React, TypeScript, and PyTorch
 
@@ -16,31 +16,30 @@ Thank you for your interest in contributing to VisuaML! This guide will help you
 1. **Fork and clone the repository**
    ```bash
    git clone https://github.com/Caerii/VisuaML.git
-   cd VisuaML/visuaml-client
+   cd VisuaML
    ```
 
-2. **Install dependencies**
+2. **Install dependencies** (from repo root)
    ```bash
-   npm install
-   pip install -r backend/requirements.txt
+   pnpm install
+   ```
+   Optional, for API and model import/export:
+   ```bash
+   pnpm run install-python-deps
    ```
 
 3. **Set up environment**
    ```bash
-   cp .env.example .env.local
-   # Add your Clerk publishable key
+   cd visuaml-client
+   cp env.example .env.local
+   # Edit .env.local: VISUAML_PYTHON, Clerk publishable key, etc.
    ```
 
-4. **Start development servers**
+4. **Start development servers** (from repo root, one per terminal)
    ```bash
-   # Terminal 1: API server
-   npm run api
-   
-   # Terminal 2: WebSocket server (multiplayer)
-   npm run ws
-   
-   # Terminal 3: Frontend
-   npm run dev
+   pnpm --filter visuaml-client run api    # Terminal 1: API (needs Python deps)
+   pnpm --filter visuaml-client run ws     # Terminal 2: WebSocket (multiplayer)
+   pnpm --filter visuaml-client run dev   # Terminal 3: Frontend
    ```
 
 ## 📋 How to Contribute
@@ -77,17 +76,17 @@ Follow our coding standards (see below) and make your changes.
 
 ### 3. Test Your Changes
 
+From repo root (client tests):
 ```bash
-# Frontend tests
-npm run test
-npm run lint
-npm run type-check
+pnpm --filter visuaml-client run test
+pnpm --filter visuaml-client run lint
+# type-check if available: pnpm --filter visuaml-client run type-check
+```
 
-# Backend tests
-cd backend && python -m pytest
-
-# Integration tests
-python test_export_frontend.py
+Backend tests (from visuaml-client directory):
+```bash
+cd visuaml-client/backend && python -m pytest
+# Integration: from visuaml-client, python test_export_frontend.py (if present)
 ```
 
 ### 4. Commit Your Changes

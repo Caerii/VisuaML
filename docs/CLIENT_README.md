@@ -40,51 +40,50 @@ VisuaML/
 
 ### Prerequisites
 
-- **Node.js** 18+ and npm/pnpm
-- **Python** 3.8+ with PyTorch
+- **Node.js** 18+ and **pnpm** (recommended; the repo is a pnpm workspace)
+- **Python** 3.11+ with PyTorch (only if you need model import/export or demo generation)
 - **Git** for version control
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-org/VisuaML.git
-   cd VisuaML/visuaml-client
-   ```
+Run all commands from the **repository root** (`VisuaML/`), not from `visuaml-client/`.
 
-2. **Install dependencies**
+1. **Clone and install Node dependencies**
    ```bash
-   # Frontend dependencies
-   npm install
-   
-   # Python dependencies
-   pip install torch torchvision torchaudio
-   pip install -r backend/requirements.txt
+   git clone https://github.com/caerii/VisuaML.git
+   cd VisuaML
+   pnpm install
    ```
+   This installs only Node packages and finishes quickly. It does **not** install Python dependencies by default.
+
+2. **Optional: Install Python backend dependencies**
+   Only needed for model import, export, and running the API server (or for generating demo networks from models). From repo root:
+   ```bash
+   pnpm run install-python-deps
+   ```
+   See [visuaml-client/PYTHON_SETUP.md](../visuaml-client/PYTHON_SETUP.md) for Python environment setup (Conda, venv, `VISUAML_PYTHON`).
 
 3. **Set up environment**
    ```bash
-   # Copy environment template
-   cp .env.example .env.local
-   
-   # Add your Clerk publishable key (for authentication)
-   echo "VITE_CLERK_PUBLISHABLE_KEY=your_key_here" >> .env.local
+   cd visuaml-client
+   cp env.example .env.local
+   # Edit .env.local: VISUAML_PYTHON, VITE_CLERK_PUBLISHABLE_KEY, etc.
    ```
 
-4. **Start development servers**
+4. **Start development servers** (from repo root)
    ```bash
-   # Terminal 1: Start API server
-   npm run api
-   
-   # Terminal 2: Start WebSocket server (for multiplayer)
-   npm run ws
-   
-   # Terminal 3: Start frontend
-   npm run dev
+   # Terminal 1: API server (requires Python deps)
+   pnpm --filter visuaml-client run api
+
+   # Terminal 2: WebSocket server (multiplayer)
+   pnpm --filter visuaml-client run ws
+
+   # Terminal 3: Frontend
+   pnpm --filter visuaml-client run dev
    ```
 
 5. **Open the application**
-   Navigate to `http://localhost:5173`
+   Navigate to `http://localhost:5173`. **Demo networks** work without the API; custom model upload and export require the API (and Python).
 
 ## 📖 Usage
 
@@ -99,7 +98,7 @@ VisuaML/
 
 VisuaML supports real-time collaboration with multiple users:
 
-1. **Start the WebSocket server**: `npm run ws`
+1. **Start the WebSocket server**: `pnpm --filter visuaml-client run ws` (or from client dir: `pnpm run ws`)
 2. **Open multiple browser windows** to the same URL
 3. **Load a model** in one window and watch it sync to others
 4. **See live cursors** of other users as they navigate
@@ -168,18 +167,23 @@ For detailed multiplayer setup and features, see [MULTIPLAYER.md](MULTIPLAYER.md
 
 ### Development Scripts
 
-```bash
-# Frontend development
-npm run dev          # Start dev server
-npm run build        # Build for production
-npm run preview      # Preview production build
-npm run lint         # Run ESLint
-npm run type-check   # TypeScript checking
+Run from **repo root** with `pnpm --filter visuaml-client run <script>`, or from `visuaml-client/` with `pnpm run <script>`:
 
-# Backend development
-npm run api          # Start API server
-npm run ws           # Start WebSocket server (multiplayer)
-python -m pytest    # Run Python tests
+```bash
+# Frontend
+pnpm run dev          # Dev server
+pnpm run build        # Production build
+pnpm run preview      # Preview production build
+pnpm run lint         # ESLint
+
+# Backend / full stack
+pnpm run install-python-deps   # Install Python deps (once)
+pnpm run check-python          # Verify Python setup
+pnpm run api                   # API server
+pnpm run ws                    # WebSocket server (multiplayer)
+
+# Demo networks (optional; requires Python)
+pnpm run generate-demos-fast    # Generate demos from models
 ```
 
 ### Code Organization

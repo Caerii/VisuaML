@@ -1,5 +1,5 @@
 /** @fileoverview Controller hook for the TopBar component. It manages UI state, triggers model imports, and coordinates updates to global state (Y.js, Zustand). */
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import * as Y from 'yjs';
 import { useYDoc } from '../../y/DocProvider';
 import { autoLayout, type Node, type Edge } from '../../lib/autoLayout';
@@ -43,6 +43,7 @@ export const useTopBar = () => {
     (
       importedData: { nodes: Node[]; edges: Edge[] },
       modelName: string,
+      options?: { silent?: boolean },
     ) => {
       // --- ATOMIC GRAPH RESET AND UPDATE ---
       // This is the single source of truth for updating the graph.
@@ -80,10 +81,30 @@ export const useTopBar = () => {
         ySharedFacts.set('isLoadingGraph', false);
       });
 
-      toast.success(`Model '${modelName}' imported successfully!`);
+      if (!options?.silent) {
+        toast.success(`Model '${modelName}' imported successfully!`);
+      }
     },
     [ydoc],
   );
+
+  // Auto-load Simple CNN demo when app opens with empty graph (e.g. from "Try it" / "Get started")
+  const hasAutoLoadedDefaultRef = useRef(false);
+  useEffect(() => {
+    if (hasAutoLoadedDefaultRef.current) return;
+    const yNodes = ydoc.getArray<Y.Map<unknown>>('nodes');
+    if (yNodes.length > 0) return;
+    const defaultDemoId = DEMO_NETWORKS[0]?.id; // Simple CNN (Demo)
+    if (!defaultDemoId || !isDemoNetwork(defaultDemoId)) return;
+    const demo = getDemoNetwork(defaultDemoId);
+    if (!demo) return;
+    hasAutoLoadedDefaultRef.current = true;
+    processImportedData(
+      { nodes: demo.nodes, edges: demo.edges },
+      demo.name,
+      { silent: true },
+    );
+  }, [ydoc, processImportedData]);
 
   const handleImportError = useCallback(
     (error: unknown) => {

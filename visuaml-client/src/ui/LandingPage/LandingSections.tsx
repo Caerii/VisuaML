@@ -117,6 +117,35 @@ export function LandingSections({ onGetStartedClick }: LandingSectionsProps) {
                     >
                       Read the docs →
                     </SectionButton>
+                    <Box
+                      component="a"
+                      href="https://github.com/caerii/VisuaML"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        background: 'none',
+                        border: 'none',
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.15)',
+                        fontSize: { xs: 'clamp(0.75rem, 1.5vw, 0.875rem)', md: '0.875rem' },
+                        fontWeight: 400,
+                        letterSpacing: '0.2em',
+                        textTransform: 'uppercase',
+                        px: 0,
+                        pb: 1,
+                        whiteSpace: 'nowrap',
+                        cursor: 'pointer',
+                        fontFamily: "'Inter', sans-serif",
+                        transition: 'all 0.3s',
+                        textDecoration: 'none',
+                        '&:hover': {
+                          borderColor: 'rgba(255, 255, 255, 0.35)',
+                          color: 'rgba(255, 255, 255, 0.8)',
+                        },
+                      }}
+                    >
+                      View source on GitHub →
+                    </Box>
                   </Stack>
                 )}
 
