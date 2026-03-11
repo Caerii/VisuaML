@@ -1,0 +1,14 @@
+# Minimal requirements for demo network generation
+# Only includes what's needed to run generate-demo-networks.py
+# (excludes optional dependencies like open-hypergraphs that require scipy)
+
+# Core PyTorch dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Data processing (minimal)
+numpy>=1.21.0
+
+# Note: open-hypergraphs is excluded here because it requires scipy,
+# which needs a Fortran compiler on Windows. Demo generation doesn't need it.

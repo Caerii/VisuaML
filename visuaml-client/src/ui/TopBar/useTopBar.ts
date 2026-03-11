@@ -6,6 +6,7 @@ import { autoLayout, type Node, type Edge } from '../../lib/autoLayout';
 import { importModel, exportModelHypergraph, exportAllFormats, uploadModel } from '../../lib/api';
 import { toast } from 'sonner';
 import { AVAILABLE_MODELS, type ExportFormat, type ExportHypergraphResponse } from './TopBar.model';
+import { getDemoNetwork, isDemoNetwork, DEMO_NETWORKS } from '../../lib/demoNetworks';
 import {
   createArchiveFile,
   downloadBlob,
@@ -27,7 +28,11 @@ export const setCategoricalPanelCallback = (callback: (data: ExportHypergraphRes
 };
 
 export const useTopBar = () => {
-  const [modelPath, setModelPath] = useState(AVAILABLE_MODELS[0].value);
+  // Default to first demo network if available, otherwise first available model
+  const defaultModelPath = DEMO_NETWORKS.length > 0 
+    ? DEMO_NETWORKS[0].id 
+    : AVAILABLE_MODELS[0].value;
+  const [modelPath, setModelPath] = useState(defaultModelPath);
   const [isLoadingUI, setIsLoadingUI] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
@@ -107,6 +112,31 @@ export const useTopBar = () => {
 
   const handleImportClick = async () => {
     setIsLoadingUI(true);
+    
+    // Check if this is a demo network (works without servers)
+    if (isDemoNetwork(modelPath)) {
+      const demoNetwork = getDemoNetwork(modelPath);
+      if (demoNetwork) {
+        const ySharedFacts = ydoc.getMap('sharedNetworkFacts');
+        ySharedFacts.set('isLoadingGraph', true);
+        
+        try {
+          // Demo networks are already laid out, just process them
+          processImportedData(
+            { nodes: demoNetwork.nodes, edges: demoNetwork.edges },
+            demoNetwork.name,
+          );
+          toast.info(`Demo network '${demoNetwork.name}' loaded (no server required)`);
+        } catch (err) {
+          handleImportError(err);
+        } finally {
+          setIsLoadingUI(false);
+        }
+        return;
+      }
+    }
+
+    // Regular model import (requires server)
     const modelDetails = AVAILABLE_MODELS.find((m) => m.value === modelPath);
     const localNetworkName = modelDetails ? modelDetails.label : modelPath;
 
@@ -174,6 +204,12 @@ export const useTopBar = () => {
   };
 
   const handleExport = useCallback(async () => {
+    // Demo networks don't support export (they're client-side only)
+    if (isDemoNetwork(modelPath)) {
+      toast.info('Demo networks are client-side only and cannot be exported. Upload a model file to export.');
+      return;
+    }
+
     const modelDetails = AVAILABLE_MODELS.find((m) => m.value === modelPath);
 
     if (!modelDetails) {

@@ -1,6 +1,7 @@
 /** @fileoverview Defines the TopBar component, which includes controls for selecting a model and initiating the import process. It interacts with the Yjs document for shared state and the Zustand store for network facts. */
 import { useTopBar } from './useTopBar';
 import { AVAILABLE_MODELS } from './TopBar.model';
+import { DEMO_NETWORKS, type DemoNetwork } from '../../lib/demoNetworks';
 import { useRef } from 'react';
 
 const TopBar = () => {
@@ -53,6 +54,13 @@ const TopBar = () => {
               className="topbar__select"
               disabled={isLoadingUI || isExporting || isUploading}
             >
+              <optgroup label="🎮 Demo Networks (No Server Required)">
+                {DEMO_NETWORKS.map((demo: DemoNetwork) => (
+                  <option key={demo.id} value={demo.id} title={demo.description}>
+                    {demo.name} (Demo)
+                  </option>
+                ))}
+              </optgroup>
               <optgroup label="✅ Fixed Models (Export Compatible)">
                 {AVAILABLE_MODELS.filter((m) => m.category === 'fixed').map((model) => (
                   <option key={model.value} value={model.value} title={model.description}>
@@ -125,12 +133,15 @@ const TopBar = () => {
               disabled={
                 isLoadingUI ||
                 isExporting ||
+                DEMO_NETWORKS.some((d: DemoNetwork) => d.id === modelPath) ||
                 !AVAILABLE_MODELS.find((m) => m.value === modelPath)?.exportCompatible
               }
               title={
-                !AVAILABLE_MODELS.find((m) => m.value === modelPath)?.exportCompatible
-                  ? 'This model is not compatible with open-hypergraph export'
-                  : 'Export to open-hypergraph format'
+                DEMO_NETWORKS.some((d: DemoNetwork) => d.id === modelPath)
+                  ? 'Demo networks are client-side only and cannot be exported'
+                  : !AVAILABLE_MODELS.find((m) => m.value === modelPath)?.exportCompatible
+                    ? 'This model is not compatible with open-hypergraph export'
+                    : 'Export to open-hypergraph format'
               }
             >
               {isExporting 

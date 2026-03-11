@@ -1,0 +1,12 @@
+[project]
+name = "visuaml-client"
+version = "0.0.0"
+description = "VisuaML client application with Python backend"
+requires-python = ">=3.11"
+# Dependencies are managed via requirements.txt files
+# This pyproject.toml exists primarily for uv to find the project
+# For demo generation, use requirements-demo.txt instead
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = []
