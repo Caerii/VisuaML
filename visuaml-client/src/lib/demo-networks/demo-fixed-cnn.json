@@ -1,0 +1,351 @@
+{
+  "id": "demo-fixed-cnn",
+  "name": "Fixed Simple CNN",
+  "description": "A fixed CNN model compatible with open-hypergraph export",
+  "nodes": [
+    {
+      "id": "x",
+      "type": "transformer",
+      "data": {
+        "label": "x",
+        "target": "x",
+        "name": "x",
+        "op": "placeholder",
+        "args": [],
+        "kwargs": {},
+        "layerType": "Input",
+        "color": "#adebad",
+        "outputShape": "[1, 1, 28, 28]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "conv1",
+      "type": "transformer",
+      "data": {
+        "label": "conv1",
+        "target": "conv1",
+        "name": "conv1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "x"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Conv2d",
+        "color": "#90ee90",
+        "outputShape": "[1, 16, 28, 28]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "relu1",
+      "type": "transformer",
+      "data": {
+        "label": "relu1",
+        "target": "relu1",
+        "name": "relu1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "conv1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 16, 28, 28]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "pool1",
+      "type": "transformer",
+      "data": {
+        "label": "pool1",
+        "target": "pool1",
+        "name": "pool1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "relu1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "MaxPool2d",
+        "color": "#87ceeb",
+        "outputShape": "[1, 16, 14, 14]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "conv2",
+      "type": "transformer",
+      "data": {
+        "label": "conv2",
+        "target": "conv2",
+        "name": "conv2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "pool1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Conv2d",
+        "color": "#90ee90",
+        "outputShape": "[1, 32, 14, 14]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "relu2",
+      "type": "transformer",
+      "data": {
+        "label": "relu2",
+        "target": "relu2",
+        "name": "relu2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "conv2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 32, 14, 14]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "pool2",
+      "type": "transformer",
+      "data": {
+        "label": "pool2",
+        "target": "pool2",
+        "name": "pool2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "relu2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "MaxPool2d",
+        "color": "#87ceeb",
+        "outputShape": "[1, 32, 7, 7]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "size",
+      "type": "transformer",
+      "data": {
+        "label": "size",
+        "target": "size",
+        "name": "size",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "pool2"
+          },
+          0
+        ],
+        "kwargs": {},
+        "layerType": "size",
+        "color": "#b0e0e6",
+        "outputShape": null
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "view",
+      "type": "transformer",
+      "data": {
+        "label": "view",
+        "target": "view",
+        "name": "view",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "pool2"
+          },
+          {
+            "source_node": "size"
+          },
+          -1
+        ],
+        "kwargs": {},
+        "layerType": "view",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 1568]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "fc",
+      "type": "transformer",
+      "data": {
+        "label": "fc",
+        "target": "fc",
+        "name": "fc",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "view"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 10]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "output",
+      "type": "transformer",
+      "data": {
+        "label": "output",
+        "target": "output",
+        "name": "output",
+        "op": "output",
+        "args": [
+          {
+            "source_node": "fc"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Output",
+        "color": "#ffb3b3",
+        "outputShape": "[1, 10]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "x->conv1",
+      "source": "x",
+      "target": "conv1",
+      "data": {
+        "sourceOutputShape": "[1, 1, 28, 28]"
+      }
+    },
+    {
+      "id": "conv1->relu1",
+      "source": "conv1",
+      "target": "relu1",
+      "data": {
+        "sourceOutputShape": "[1, 16, 28, 28]"
+      }
+    },
+    {
+      "id": "relu1->pool1",
+      "source": "relu1",
+      "target": "pool1",
+      "data": {
+        "sourceOutputShape": "[1, 16, 28, 28]"
+      }
+    },
+    {
+      "id": "pool1->conv2",
+      "source": "pool1",
+      "target": "conv2",
+      "data": {
+        "sourceOutputShape": "[1, 16, 14, 14]"
+      }
+    },
+    {
+      "id": "conv2->relu2",
+      "source": "conv2",
+      "target": "relu2",
+      "data": {
+        "sourceOutputShape": "[1, 32, 14, 14]"
+      }
+    },
+    {
+      "id": "relu2->pool2",
+      "source": "relu2",
+      "target": "pool2",
+      "data": {
+        "sourceOutputShape": "[1, 32, 14, 14]"
+      }
+    },
+    {
+      "id": "pool2->size",
+      "source": "pool2",
+      "target": "size",
+      "data": {
+        "sourceOutputShape": "[1, 32, 7, 7]"
+      }
+    },
+    {
+      "id": "pool2->view",
+      "source": "pool2",
+      "target": "view",
+      "data": {
+        "sourceOutputShape": "[1, 32, 7, 7]"
+      }
+    },
+    {
+      "id": "size->view",
+      "source": "size",
+      "target": "view",
+      "data": {
+        "sourceOutputShape": null
+      }
+    },
+    {
+      "id": "view->fc",
+      "source": "view",
+      "target": "fc",
+      "data": {
+        "sourceOutputShape": "[1, 1568]"
+      }
+    },
+    {
+      "id": "fc->output",
+      "source": "fc",
+      "target": "output",
+      "data": {
+        "sourceOutputShape": "[1, 10]"
+      }
+    }
+  ]
+}

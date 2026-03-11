@@ -1,0 +1,245 @@
+{
+  "id": "demo-simple-mlp",
+  "name": "Simple MLP",
+  "description": "A multi-layer perceptron for classification",
+  "nodes": [
+    {
+      "id": "x",
+      "type": "transformer",
+      "data": {
+        "label": "x",
+        "target": "x",
+        "name": "x",
+        "op": "placeholder",
+        "args": [],
+        "kwargs": {},
+        "layerType": "Input",
+        "color": "#adebad",
+        "outputShape": "[10]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "fc1",
+      "type": "transformer",
+      "data": {
+        "label": "fc1",
+        "target": "fc1",
+        "name": "fc1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "x"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[32]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "relu1",
+      "type": "transformer",
+      "data": {
+        "label": "relu1",
+        "target": "relu1",
+        "name": "relu1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "fc1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[32]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "fc2",
+      "type": "transformer",
+      "data": {
+        "label": "fc2",
+        "target": "fc2",
+        "name": "fc2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "relu1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[16]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "relu2",
+      "type": "transformer",
+      "data": {
+        "label": "relu2",
+        "target": "relu2",
+        "name": "relu2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "fc2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[16]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "fc3",
+      "type": "transformer",
+      "data": {
+        "label": "fc3",
+        "target": "fc3",
+        "name": "fc3",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "relu2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[8]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "output",
+      "type": "transformer",
+      "data": {
+        "label": "output",
+        "target": "output",
+        "name": "output",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "fc3"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[3]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "output_1",
+      "type": "transformer",
+      "data": {
+        "label": "output_1",
+        "target": "output",
+        "name": "output_1",
+        "op": "output",
+        "args": [
+          {
+            "source_node": "output"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Output",
+        "color": "#ffb3b3",
+        "outputShape": "[3]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "x->fc1",
+      "source": "x",
+      "target": "fc1",
+      "data": {
+        "sourceOutputShape": "[10]"
+      }
+    },
+    {
+      "id": "fc1->relu1",
+      "source": "fc1",
+      "target": "relu1",
+      "data": {
+        "sourceOutputShape": "[32]"
+      }
+    },
+    {
+      "id": "relu1->fc2",
+      "source": "relu1",
+      "target": "fc2",
+      "data": {
+        "sourceOutputShape": "[32]"
+      }
+    },
+    {
+      "id": "fc2->relu2",
+      "source": "fc2",
+      "target": "relu2",
+      "data": {
+        "sourceOutputShape": "[16]"
+      }
+    },
+    {
+      "id": "relu2->fc3",
+      "source": "relu2",
+      "target": "fc3",
+      "data": {
+        "sourceOutputShape": "[16]"
+      }
+    },
+    {
+      "id": "fc3->output",
+      "source": "fc3",
+      "target": "output",
+      "data": {
+        "sourceOutputShape": "[8]"
+      }
+    },
+    {
+      "id": "output->output_1",
+      "source": "output",
+      "target": "output_1",
+      "data": {
+        "sourceOutputShape": "[3]"
+      }
+    }
+  ]
+}

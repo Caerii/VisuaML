@@ -1,0 +1,1228 @@
+{
+  "id": "demo-transformer",
+  "name": "Transformer Block",
+  "description": "Multi-head self-attention with positional encoding and feedforward network",
+  "nodes": [
+    {
+      "id": "src",
+      "type": "transformer",
+      "data": {
+        "label": "src",
+        "target": "src",
+        "name": "src",
+        "op": "placeholder",
+        "args": [],
+        "kwargs": {},
+        "layerType": "Input",
+        "color": "#adebad",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "transpose",
+      "type": "transformer",
+      "data": {
+        "label": "transpose",
+        "target": "transpose",
+        "name": "transpose",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "src"
+          },
+          0,
+          1
+        ],
+        "kwargs": {},
+        "layerType": "transpose",
+        "color": "#b0e0e6",
+        "outputShape": "[10, 1, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "mul",
+      "type": "transformer",
+      "data": {
+        "label": "mul",
+        "target": "<built-in function mul>",
+        "name": "mul",
+        "op": "call_function",
+        "args": [
+          {
+            "source_node": "transpose"
+          },
+          22.627416997969522
+        ],
+        "kwargs": {},
+        "layerType": "mul",
+        "color": "#b0e0e6",
+        "outputShape": "[10, 1, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "add",
+      "type": "transformer",
+      "data": {
+        "label": "add",
+        "target": "<built-in function add>",
+        "name": "add",
+        "op": "call_function",
+        "args": [
+          {
+            "source_node": "mul"
+          },
+          {
+            "source_node": "_tensor_constant0 (filtered)",
+            "transitive": false
+          }
+        ],
+        "kwargs": {},
+        "layerType": "add",
+        "color": "#b0e0e6",
+        "outputShape": "[10, 1, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "transpose_1",
+      "type": "transformer",
+      "data": {
+        "label": "transpose_1",
+        "target": "transpose",
+        "name": "transpose_1",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "add"
+          },
+          0,
+          1
+        ],
+        "kwargs": {},
+        "layerType": "transpose",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "attention_q_linear",
+      "type": "transformer",
+      "data": {
+        "label": "attention_q_linear",
+        "target": "attention.q_linear",
+        "name": "attention_q_linear",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "transpose_1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "attention_k_linear",
+      "type": "transformer",
+      "data": {
+        "label": "attention_k_linear",
+        "target": "attention.k_linear",
+        "name": "attention_k_linear",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "transpose_1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "attention_v_linear",
+      "type": "transformer",
+      "data": {
+        "label": "attention_v_linear",
+        "target": "attention.v_linear",
+        "name": "attention_v_linear",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "transpose_1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "view",
+      "type": "transformer",
+      "data": {
+        "label": "view",
+        "target": "view",
+        "name": "view",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "attention_q_linear"
+          },
+          {
+            "source_node": "transpose_1",
+            "transitive": true
+          },
+          {
+            "source_node": "transpose_1",
+            "transitive": true
+          },
+          8,
+          64
+        ],
+        "kwargs": {},
+        "layerType": "view",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 10, 8, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "transpose_2",
+      "type": "transformer",
+      "data": {
+        "label": "transpose_2",
+        "target": "transpose",
+        "name": "transpose_2",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "view"
+          },
+          1,
+          2
+        ],
+        "kwargs": {},
+        "layerType": "transpose",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 8, 10, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "view_1",
+      "type": "transformer",
+      "data": {
+        "label": "view_1",
+        "target": "view",
+        "name": "view_1",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "attention_k_linear"
+          },
+          {
+            "source_node": "transpose_1",
+            "transitive": true
+          },
+          {
+            "source_node": "transpose_1",
+            "transitive": true
+          },
+          8,
+          64
+        ],
+        "kwargs": {},
+        "layerType": "view",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 10, 8, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "transpose_3",
+      "type": "transformer",
+      "data": {
+        "label": "transpose_3",
+        "target": "transpose",
+        "name": "transpose_3",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "view_1"
+          },
+          1,
+          2
+        ],
+        "kwargs": {},
+        "layerType": "transpose",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 8, 10, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "view_2",
+      "type": "transformer",
+      "data": {
+        "label": "view_2",
+        "target": "view",
+        "name": "view_2",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "attention_v_linear"
+          },
+          {
+            "source_node": "transpose_1",
+            "transitive": true
+          },
+          {
+            "source_node": "transpose_1",
+            "transitive": true
+          },
+          8,
+          64
+        ],
+        "kwargs": {},
+        "layerType": "view",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 10, 8, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "transpose_4",
+      "type": "transformer",
+      "data": {
+        "label": "transpose_4",
+        "target": "transpose",
+        "name": "transpose_4",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "view_2"
+          },
+          1,
+          2
+        ],
+        "kwargs": {},
+        "layerType": "transpose",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 8, 10, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "transpose_5",
+      "type": "transformer",
+      "data": {
+        "label": "transpose_5",
+        "target": "transpose",
+        "name": "transpose_5",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "transpose_3"
+          },
+          -2,
+          -1
+        ],
+        "kwargs": {},
+        "layerType": "transpose",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 8, 64, 10]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "matmul",
+      "type": "transformer",
+      "data": {
+        "label": "matmul",
+        "target": "<built-in method matmul of type object at 0x00007FF9BB0B48E0>",
+        "name": "matmul",
+        "op": "call_function",
+        "args": [
+          {
+            "source_node": "transpose_2"
+          },
+          {
+            "source_node": "transpose_5"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "matmul",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 8, 10, 10]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "truediv",
+      "type": "transformer",
+      "data": {
+        "label": "truediv",
+        "target": "<built-in function truediv>",
+        "name": "truediv",
+        "op": "call_function",
+        "args": [
+          {
+            "source_node": "matmul"
+          },
+          8.0
+        ],
+        "kwargs": {},
+        "layerType": "truediv",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 8, 10, 10]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "softmax",
+      "type": "transformer",
+      "data": {
+        "label": "softmax",
+        "target": "<built-in method softmax of type object at 0x00007FF9BB0B48E0>",
+        "name": "softmax",
+        "op": "call_function",
+        "args": [
+          {
+            "source_node": "truediv"
+          }
+        ],
+        "kwargs": {
+          "dim": -1
+        },
+        "layerType": "softmax",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 8, 10, 10]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "matmul_1",
+      "type": "transformer",
+      "data": {
+        "label": "matmul_1",
+        "target": "<built-in method matmul of type object at 0x00007FF9BB0B48E0>",
+        "name": "matmul_1",
+        "op": "call_function",
+        "args": [
+          {
+            "source_node": "softmax"
+          },
+          {
+            "source_node": "transpose_4"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "matmul",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 8, 10, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "transpose_6",
+      "type": "transformer",
+      "data": {
+        "label": "transpose_6",
+        "target": "transpose",
+        "name": "transpose_6",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "matmul_1"
+          },
+          1,
+          2
+        ],
+        "kwargs": {},
+        "layerType": "transpose",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 10, 8, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "contiguous",
+      "type": "transformer",
+      "data": {
+        "label": "contiguous",
+        "target": "contiguous",
+        "name": "contiguous",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "transpose_6"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "contiguous",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 10, 8, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "view_3",
+      "type": "transformer",
+      "data": {
+        "label": "view_3",
+        "target": "view",
+        "name": "view_3",
+        "op": "call_method",
+        "args": [
+          {
+            "source_node": "contiguous"
+          },
+          {
+            "source_node": "transpose_1",
+            "transitive": true
+          },
+          {
+            "source_node": "transpose_1",
+            "transitive": true
+          },
+          {
+            "source_node": "transpose_1",
+            "transitive": true
+          }
+        ],
+        "kwargs": {},
+        "layerType": "view",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "attention_out_linear",
+      "type": "transformer",
+      "data": {
+        "label": "attention_out_linear",
+        "target": "attention.out_linear",
+        "name": "attention_out_linear",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "view_3"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "dropout",
+      "type": "transformer",
+      "data": {
+        "label": "dropout",
+        "target": "dropout",
+        "name": "dropout",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "attention_out_linear"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Dropout",
+        "color": "#d3d3d3",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "add_1",
+      "type": "transformer",
+      "data": {
+        "label": "add_1",
+        "target": "<built-in function add>",
+        "name": "add_1",
+        "op": "call_function",
+        "args": [
+          {
+            "source_node": "transpose_1"
+          },
+          {
+            "source_node": "dropout"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "add",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "norm1",
+      "type": "transformer",
+      "data": {
+        "label": "norm1",
+        "target": "norm1",
+        "name": "norm1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "add_1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "LayerNorm",
+        "color": "#ffda44",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "ffn_0",
+      "type": "transformer",
+      "data": {
+        "label": "ffn_0",
+        "target": "ffn.0",
+        "name": "ffn_0",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "norm1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 10, 2048]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "ffn_1",
+      "type": "transformer",
+      "data": {
+        "label": "ffn_1",
+        "target": "ffn.1",
+        "name": "ffn_1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "ffn_0"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 10, 2048]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "ffn_2",
+      "type": "transformer",
+      "data": {
+        "label": "ffn_2",
+        "target": "ffn.2",
+        "name": "ffn_2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "ffn_1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "dropout_1",
+      "type": "transformer",
+      "data": {
+        "label": "dropout_1",
+        "target": "dropout",
+        "name": "dropout_1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "ffn_2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Dropout",
+        "color": "#d3d3d3",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "add_2",
+      "type": "transformer",
+      "data": {
+        "label": "add_2",
+        "target": "<built-in function add>",
+        "name": "add_2",
+        "op": "call_function",
+        "args": [
+          {
+            "source_node": "norm1"
+          },
+          {
+            "source_node": "dropout_1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "add",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "norm2",
+      "type": "transformer",
+      "data": {
+        "label": "norm2",
+        "target": "norm2",
+        "name": "norm2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "add_2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "LayerNorm",
+        "color": "#ffda44",
+        "outputShape": "[1, 10, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "select",
+      "type": "transformer",
+      "data": {
+        "label": "select",
+        "target": "<built-in method select of type object at 0x00007FF9BB0B48E0>",
+        "name": "select",
+        "op": "call_function",
+        "args": [
+          {
+            "source_node": "norm2"
+          },
+          1,
+          0
+        ],
+        "kwargs": {},
+        "layerType": "select",
+        "color": "#b0e0e6",
+        "outputShape": "[1, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "fc_out",
+      "type": "transformer",
+      "data": {
+        "label": "fc_out",
+        "target": "fc_out",
+        "name": "fc_out",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "select"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "output",
+      "type": "transformer",
+      "data": {
+        "label": "output",
+        "target": "output",
+        "name": "output",
+        "op": "output",
+        "args": [
+          {
+            "source_node": "fc_out"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Output",
+        "color": "#ffb3b3",
+        "outputShape": "[1, 512]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "src->transpose",
+      "source": "src",
+      "target": "transpose",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "transpose->mul",
+      "source": "transpose",
+      "target": "mul",
+      "data": {
+        "sourceOutputShape": "[10, 1, 512]"
+      }
+    },
+    {
+      "id": "mul->add",
+      "source": "mul",
+      "target": "add",
+      "data": {
+        "sourceOutputShape": "[10, 1, 512]"
+      }
+    },
+    {
+      "id": "add->transpose_1",
+      "source": "add",
+      "target": "transpose_1",
+      "data": {
+        "sourceOutputShape": "[10, 1, 512]"
+      }
+    },
+    {
+      "id": "transpose_1->attention_q_linear",
+      "source": "transpose_1",
+      "target": "attention_q_linear",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "transpose_1->attention_k_linear",
+      "source": "transpose_1",
+      "target": "attention_k_linear",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "transpose_1->attention_v_linear",
+      "source": "transpose_1",
+      "target": "attention_v_linear",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "attention_q_linear->view",
+      "source": "attention_q_linear",
+      "target": "view",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "transpose_1->view",
+      "source": "transpose_1",
+      "target": "view",
+      "data": {
+        "transitive": true,
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "view->transpose_2",
+      "source": "view",
+      "target": "transpose_2",
+      "data": {
+        "sourceOutputShape": "[1, 10, 8, 64]"
+      }
+    },
+    {
+      "id": "attention_k_linear->view_1",
+      "source": "attention_k_linear",
+      "target": "view_1",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "transpose_1->view_1",
+      "source": "transpose_1",
+      "target": "view_1",
+      "data": {
+        "transitive": true,
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "view_1->transpose_3",
+      "source": "view_1",
+      "target": "transpose_3",
+      "data": {
+        "sourceOutputShape": "[1, 10, 8, 64]"
+      }
+    },
+    {
+      "id": "attention_v_linear->view_2",
+      "source": "attention_v_linear",
+      "target": "view_2",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "transpose_1->view_2",
+      "source": "transpose_1",
+      "target": "view_2",
+      "data": {
+        "transitive": true,
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "view_2->transpose_4",
+      "source": "view_2",
+      "target": "transpose_4",
+      "data": {
+        "sourceOutputShape": "[1, 10, 8, 64]"
+      }
+    },
+    {
+      "id": "transpose_3->transpose_5",
+      "source": "transpose_3",
+      "target": "transpose_5",
+      "data": {
+        "sourceOutputShape": "[1, 8, 10, 64]"
+      }
+    },
+    {
+      "id": "transpose_2->matmul",
+      "source": "transpose_2",
+      "target": "matmul",
+      "data": {
+        "sourceOutputShape": "[1, 8, 10, 64]"
+      }
+    },
+    {
+      "id": "transpose_5->matmul",
+      "source": "transpose_5",
+      "target": "matmul",
+      "data": {
+        "sourceOutputShape": "[1, 8, 64, 10]"
+      }
+    },
+    {
+      "id": "matmul->truediv",
+      "source": "matmul",
+      "target": "truediv",
+      "data": {
+        "sourceOutputShape": "[1, 8, 10, 10]"
+      }
+    },
+    {
+      "id": "truediv->softmax",
+      "source": "truediv",
+      "target": "softmax",
+      "data": {
+        "sourceOutputShape": "[1, 8, 10, 10]"
+      }
+    },
+    {
+      "id": "softmax->matmul_1",
+      "source": "softmax",
+      "target": "matmul_1",
+      "data": {
+        "sourceOutputShape": "[1, 8, 10, 10]"
+      }
+    },
+    {
+      "id": "transpose_4->matmul_1",
+      "source": "transpose_4",
+      "target": "matmul_1",
+      "data": {
+        "sourceOutputShape": "[1, 8, 10, 64]"
+      }
+    },
+    {
+      "id": "matmul_1->transpose_6",
+      "source": "matmul_1",
+      "target": "transpose_6",
+      "data": {
+        "sourceOutputShape": "[1, 8, 10, 64]"
+      }
+    },
+    {
+      "id": "transpose_6->contiguous",
+      "source": "transpose_6",
+      "target": "contiguous",
+      "data": {
+        "sourceOutputShape": "[1, 10, 8, 64]"
+      }
+    },
+    {
+      "id": "contiguous->view_3",
+      "source": "contiguous",
+      "target": "view_3",
+      "data": {
+        "sourceOutputShape": "[1, 10, 8, 64]"
+      }
+    },
+    {
+      "id": "transpose_1->view_3",
+      "source": "transpose_1",
+      "target": "view_3",
+      "data": {
+        "transitive": true,
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "view_3->attention_out_linear",
+      "source": "view_3",
+      "target": "attention_out_linear",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "attention_out_linear->dropout",
+      "source": "attention_out_linear",
+      "target": "dropout",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "transpose_1->add_1",
+      "source": "transpose_1",
+      "target": "add_1",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "dropout->add_1",
+      "source": "dropout",
+      "target": "add_1",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "add_1->norm1",
+      "source": "add_1",
+      "target": "norm1",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "norm1->ffn_0",
+      "source": "norm1",
+      "target": "ffn_0",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "ffn_0->ffn_1",
+      "source": "ffn_0",
+      "target": "ffn_1",
+      "data": {
+        "sourceOutputShape": "[1, 10, 2048]"
+      }
+    },
+    {
+      "id": "ffn_1->ffn_2",
+      "source": "ffn_1",
+      "target": "ffn_2",
+      "data": {
+        "sourceOutputShape": "[1, 10, 2048]"
+      }
+    },
+    {
+      "id": "ffn_2->dropout_1",
+      "source": "ffn_2",
+      "target": "dropout_1",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "norm1->add_2",
+      "source": "norm1",
+      "target": "add_2",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "dropout_1->add_2",
+      "source": "dropout_1",
+      "target": "add_2",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "add_2->norm2",
+      "source": "add_2",
+      "target": "norm2",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "norm2->select",
+      "source": "norm2",
+      "target": "select",
+      "data": {
+        "sourceOutputShape": "[1, 10, 512]"
+      }
+    },
+    {
+      "id": "select->fc_out",
+      "source": "select",
+      "target": "fc_out",
+      "data": {
+        "sourceOutputShape": "[1, 512]"
+      }
+    },
+    {
+      "id": "fc_out->output",
+      "source": "fc_out",
+      "target": "output",
+      "data": {
+        "sourceOutputShape": "[1, 512]"
+      }
+    }
+  ]
+}

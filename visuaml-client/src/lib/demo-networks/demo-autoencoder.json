@@ -1,0 +1,431 @@
+{
+  "id": "demo-autoencoder",
+  "name": "Autoencoder",
+  "description": "Encoder-decoder architecture with bottleneck for dimensionality reduction",
+  "nodes": [
+    {
+      "id": "x",
+      "type": "transformer",
+      "data": {
+        "label": "x",
+        "target": "x",
+        "name": "x",
+        "op": "placeholder",
+        "args": [],
+        "kwargs": {},
+        "layerType": "Input",
+        "color": "#adebad",
+        "outputShape": "[1, 784]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "encoder_0",
+      "type": "transformer",
+      "data": {
+        "label": "encoder_0",
+        "target": "encoder.0",
+        "name": "encoder_0",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "x"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 128]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "encoder_1",
+      "type": "transformer",
+      "data": {
+        "label": "encoder_1",
+        "target": "encoder.1",
+        "name": "encoder_1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "encoder_0"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 128]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "encoder_2",
+      "type": "transformer",
+      "data": {
+        "label": "encoder_2",
+        "target": "encoder.2",
+        "name": "encoder_2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "encoder_1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "encoder_3",
+      "type": "transformer",
+      "data": {
+        "label": "encoder_3",
+        "target": "encoder.3",
+        "name": "encoder_3",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "encoder_2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "encoder_4",
+      "type": "transformer",
+      "data": {
+        "label": "encoder_4",
+        "target": "encoder.4",
+        "name": "encoder_4",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "encoder_3"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 32]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "encoder_5",
+      "type": "transformer",
+      "data": {
+        "label": "encoder_5",
+        "target": "encoder.5",
+        "name": "encoder_5",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "encoder_4"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 32]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "decoder_0",
+      "type": "transformer",
+      "data": {
+        "label": "decoder_0",
+        "target": "decoder.0",
+        "name": "decoder_0",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "encoder_5"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "decoder_1",
+      "type": "transformer",
+      "data": {
+        "label": "decoder_1",
+        "target": "decoder.1",
+        "name": "decoder_1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "decoder_0"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 64]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "decoder_2",
+      "type": "transformer",
+      "data": {
+        "label": "decoder_2",
+        "target": "decoder.2",
+        "name": "decoder_2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "decoder_1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 128]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "decoder_3",
+      "type": "transformer",
+      "data": {
+        "label": "decoder_3",
+        "target": "decoder.3",
+        "name": "decoder_3",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "decoder_2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 128]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "decoder_4",
+      "type": "transformer",
+      "data": {
+        "label": "decoder_4",
+        "target": "decoder.4",
+        "name": "decoder_4",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "decoder_3"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 784]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "decoder_5",
+      "type": "transformer",
+      "data": {
+        "label": "decoder_5",
+        "target": "decoder.5",
+        "name": "decoder_5",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "decoder_4"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Sigmoid",
+        "color": "#ffa500",
+        "outputShape": "[1, 784]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "output",
+      "type": "transformer",
+      "data": {
+        "label": "output",
+        "target": "output",
+        "name": "output",
+        "op": "output",
+        "args": [
+          {
+            "source_node": "decoder_5"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Output",
+        "color": "#ffb3b3",
+        "outputShape": "[1, 784]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "x->encoder_0",
+      "source": "x",
+      "target": "encoder_0",
+      "data": {
+        "sourceOutputShape": "[1, 784]"
+      }
+    },
+    {
+      "id": "encoder_0->encoder_1",
+      "source": "encoder_0",
+      "target": "encoder_1",
+      "data": {
+        "sourceOutputShape": "[1, 128]"
+      }
+    },
+    {
+      "id": "encoder_1->encoder_2",
+      "source": "encoder_1",
+      "target": "encoder_2",
+      "data": {
+        "sourceOutputShape": "[1, 128]"
+      }
+    },
+    {
+      "id": "encoder_2->encoder_3",
+      "source": "encoder_2",
+      "target": "encoder_3",
+      "data": {
+        "sourceOutputShape": "[1, 64]"
+      }
+    },
+    {
+      "id": "encoder_3->encoder_4",
+      "source": "encoder_3",
+      "target": "encoder_4",
+      "data": {
+        "sourceOutputShape": "[1, 64]"
+      }
+    },
+    {
+      "id": "encoder_4->encoder_5",
+      "source": "encoder_4",
+      "target": "encoder_5",
+      "data": {
+        "sourceOutputShape": "[1, 32]"
+      }
+    },
+    {
+      "id": "encoder_5->decoder_0",
+      "source": "encoder_5",
+      "target": "decoder_0",
+      "data": {
+        "sourceOutputShape": "[1, 32]"
+      }
+    },
+    {
+      "id": "decoder_0->decoder_1",
+      "source": "decoder_0",
+      "target": "decoder_1",
+      "data": {
+        "sourceOutputShape": "[1, 64]"
+      }
+    },
+    {
+      "id": "decoder_1->decoder_2",
+      "source": "decoder_1",
+      "target": "decoder_2",
+      "data": {
+        "sourceOutputShape": "[1, 64]"
+      }
+    },
+    {
+      "id": "decoder_2->decoder_3",
+      "source": "decoder_2",
+      "target": "decoder_3",
+      "data": {
+        "sourceOutputShape": "[1, 128]"
+      }
+    },
+    {
+      "id": "decoder_3->decoder_4",
+      "source": "decoder_3",
+      "target": "decoder_4",
+      "data": {
+        "sourceOutputShape": "[1, 128]"
+      }
+    },
+    {
+      "id": "decoder_4->decoder_5",
+      "source": "decoder_4",
+      "target": "decoder_5",
+      "data": {
+        "sourceOutputShape": "[1, 784]"
+      }
+    },
+    {
+      "id": "decoder_5->output",
+      "source": "decoder_5",
+      "target": "output",
+      "data": {
+        "sourceOutputShape": "[1, 784]"
+      }
+    }
+  ]
+}

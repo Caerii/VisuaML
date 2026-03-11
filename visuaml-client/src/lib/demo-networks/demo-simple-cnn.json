@@ -1,0 +1,400 @@
+{
+  "id": "demo-simple-cnn",
+  "name": "Simple CNN",
+  "description": "A simple convolutional neural network for image classification",
+  "nodes": [
+    {
+      "id": "x",
+      "type": "transformer",
+      "data": {
+        "label": "x",
+        "target": "x",
+        "name": "x",
+        "op": "placeholder",
+        "args": [],
+        "kwargs": {},
+        "layerType": "Input",
+        "color": "#adebad",
+        "outputShape": "[1, 3, 32, 32]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "conv1",
+      "type": "transformer",
+      "data": {
+        "label": "conv1",
+        "target": "conv1",
+        "name": "conv1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "x"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Conv2d",
+        "color": "#90ee90",
+        "outputShape": "[1, 16, 32, 32]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "relu1",
+      "type": "transformer",
+      "data": {
+        "label": "relu1",
+        "target": "relu1",
+        "name": "relu1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "conv1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 16, 32, 32]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "pool1",
+      "type": "transformer",
+      "data": {
+        "label": "pool1",
+        "target": "pool1",
+        "name": "pool1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "relu1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "MaxPool2d",
+        "color": "#87ceeb",
+        "outputShape": "[1, 16, 16, 16]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "conv2",
+      "type": "transformer",
+      "data": {
+        "label": "conv2",
+        "target": "conv2",
+        "name": "conv2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "pool1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Conv2d",
+        "color": "#90ee90",
+        "outputShape": "[1, 32, 16, 16]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "relu2",
+      "type": "transformer",
+      "data": {
+        "label": "relu2",
+        "target": "relu2",
+        "name": "relu2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "conv2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 32, 16, 16]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "pool2",
+      "type": "transformer",
+      "data": {
+        "label": "pool2",
+        "target": "pool2",
+        "name": "pool2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "relu2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "MaxPool2d",
+        "color": "#87ceeb",
+        "outputShape": "[1, 32, 8, 8]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "flatten",
+      "type": "transformer",
+      "data": {
+        "label": "flatten",
+        "target": "flatten",
+        "name": "flatten",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "pool2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Flatten",
+        "color": "#f0e68c",
+        "outputShape": "[1, 2048]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "fc1",
+      "type": "transformer",
+      "data": {
+        "label": "fc1",
+        "target": "fc1",
+        "name": "fc1",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "flatten"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 128]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "relu3",
+      "type": "transformer",
+      "data": {
+        "label": "relu3",
+        "target": "relu3",
+        "name": "relu3",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "fc1"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "ReLU",
+        "color": "#ffcb6b",
+        "outputShape": "[1, 128]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "dropout",
+      "type": "transformer",
+      "data": {
+        "label": "dropout",
+        "target": "dropout",
+        "name": "dropout",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "relu3"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Dropout",
+        "color": "#d3d3d3",
+        "outputShape": "[1, 128]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "fc2",
+      "type": "transformer",
+      "data": {
+        "label": "fc2",
+        "target": "fc2",
+        "name": "fc2",
+        "op": "call_module",
+        "args": [
+          {
+            "source_node": "dropout"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Linear",
+        "color": "#add8e6",
+        "outputShape": "[1, 10]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "output",
+      "type": "transformer",
+      "data": {
+        "label": "output",
+        "target": "output",
+        "name": "output",
+        "op": "output",
+        "args": [
+          {
+            "source_node": "fc2"
+          }
+        ],
+        "kwargs": {},
+        "layerType": "Output",
+        "color": "#ffb3b3",
+        "outputShape": "[1, 10]"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "x->conv1",
+      "source": "x",
+      "target": "conv1",
+      "data": {
+        "sourceOutputShape": "[1, 3, 32, 32]"
+      }
+    },
+    {
+      "id": "conv1->relu1",
+      "source": "conv1",
+      "target": "relu1",
+      "data": {
+        "sourceOutputShape": "[1, 16, 32, 32]"
+      }
+    },
+    {
+      "id": "relu1->pool1",
+      "source": "relu1",
+      "target": "pool1",
+      "data": {
+        "sourceOutputShape": "[1, 16, 32, 32]"
+      }
+    },
+    {
+      "id": "pool1->conv2",
+      "source": "pool1",
+      "target": "conv2",
+      "data": {
+        "sourceOutputShape": "[1, 16, 16, 16]"
+      }
+    },
+    {
+      "id": "conv2->relu2",
+      "source": "conv2",
+      "target": "relu2",
+      "data": {
+        "sourceOutputShape": "[1, 32, 16, 16]"
+      }
+    },
+    {
+      "id": "relu2->pool2",
+      "source": "relu2",
+      "target": "pool2",
+      "data": {
+        "sourceOutputShape": "[1, 32, 16, 16]"
+      }
+    },
+    {
+      "id": "pool2->flatten",
+      "source": "pool2",
+      "target": "flatten",
+      "data": {
+        "sourceOutputShape": "[1, 32, 8, 8]"
+      }
+    },
+    {
+      "id": "flatten->fc1",
+      "source": "flatten",
+      "target": "fc1",
+      "data": {
+        "sourceOutputShape": "[1, 2048]"
+      }
+    },
+    {
+      "id": "fc1->relu3",
+      "source": "fc1",
+      "target": "relu3",
+      "data": {
+        "sourceOutputShape": "[1, 128]"
+      }
+    },
+    {
+      "id": "relu3->dropout",
+      "source": "relu3",
+      "target": "dropout",
+      "data": {
+        "sourceOutputShape": "[1, 128]"
+      }
+    },
+    {
+      "id": "dropout->fc2",
+      "source": "dropout",
+      "target": "fc2",
+      "data": {
+        "sourceOutputShape": "[1, 128]"
+      }
+    },
+    {
+      "id": "fc2->output",
+      "source": "fc2",
+      "target": "output",
+      "data": {
+        "sourceOutputShape": "[1, 10]"
+      }
+    }
+  ]
+}
