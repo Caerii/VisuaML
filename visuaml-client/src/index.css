@@ -116,17 +116,23 @@
 
 /* Reset and base styles */
 html,
-body,
-#root {
+body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   font-family: var(--font-family-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg-primary);
   color: var(--text-primary);
+}
+
+#root {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 * {
