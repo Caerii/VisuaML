@@ -347,6 +347,31 @@ export function CompilerLabPage() {
                 </p>
               </>
             )}
+            {report.hypothetical_placement_robustness && (
+              <div className="compiler-detail">
+                <h3>Placement sensitivity</h3>
+                <p>
+                  {report.hypothetical_placement_robustness.scenarios.length} hypothetical cost
+                  profiles evaluated.
+                </p>
+                <p>
+                  Minimum worst-case regret:{' '}
+                  {formatNumber(report.hypothetical_placement_robustness.preferred.worst_regret)}
+                  {' '}abstract cost units.
+                </p>
+                <p>
+                  Robust candidate: {' '}
+                  {report.hypothetical_placement_robustness.preferred.device_nodes.join(', ') ||
+                    'all operations on host'}
+                </p>
+                <p className="compiler-muted">
+                  {report.hypothetical_placement_robustness.search ===
+                  'exhaustive-minimax-regret'
+                    ? 'Exact over the admitted binary placements.'
+                    : 'Restricted candidate search; not an exact minimax guarantee.'}
+                </p>
+              </div>
+            )}
             <h2>Selected operation</h2>
             {detail ? (
               <div className="compiler-detail">
