@@ -25,6 +25,7 @@ jobs:
           node-version: 22
       - run: pip install ruff==0.17.4
       - run: pnpm install --frozen-lockfile
+      # v5 cleanup rerun: preserve existing quality gates after reviewed fixes
       - name: Apply reviewed legacy backend remediation
         run: python scripts/repair_legacy_quality.py
       - name: Apply mechanical Ruff fixes and Python formatting
