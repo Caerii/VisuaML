@@ -19,7 +19,6 @@ try:
         DEFAULT_POLICY,
         ResourcePolicy,
         validate_portable_ir,
-        IRContractError,
     )
 except ImportError:  # standalone PyTorch-free deployment directory
     from ir_contract import DEFAULT_POLICY, ResourcePolicy, validate_portable_ir
