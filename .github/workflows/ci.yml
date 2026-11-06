@@ -28,6 +28,8 @@ jobs:
         run: pnpm --dir visuaml-client exec prettier --check .
       - name: Test visuaml-client
         run: pnpm --filter visuaml-client run test -- --run
+      - name: Typecheck and build visuaml-client
+        run: pnpm --filter visuaml-client run build
   python:
     runs-on: ubuntu-latest
     steps:
@@ -39,10 +41,10 @@ jobs:
           cache-dependency-path: 'visuaml-client/backend/requirements.txt'
       - name: Install Python dependencies
         run: |
-          # Install CPU-only PyTorch for faster CI
-          pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-          # Install all dependencies from requirements.txt (including open-hypergraphs)
-          pip install -r visuaml-client/backend/requirements.txt
+          # Pin CPU-only PyTorch to the requirements' version to avoid
+          # downloading a second GPU/CUDA distribution during pip resolution.
+          python -m pip install torch==2.9.1+cpu torchvision==0.24.1+cpu torchaudio==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r visuaml-client/backend/requirements.txt
       - name: Install development dependencies
         run: pip install ruff pytest
       - name: Run ruff linting

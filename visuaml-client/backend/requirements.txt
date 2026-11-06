@@ -29,5 +29,7 @@ timm==1.0.24
 matplotlib==3.9.2
 seaborn==0.13.2
 
-# Categorical/Hypergraph support
-open-hypergraphs==0.1.2
+# Legacy categorical/hypergraph export is optional. open-hypergraphs==0.1.2
+# requires NumPy ~=1.23.3 and conflicts with the supported NumPy 2.x stack.
+# Install it in a separate compatible environment if that legacy functionality
+# is needed; the main compiler lab does not depend on it.
