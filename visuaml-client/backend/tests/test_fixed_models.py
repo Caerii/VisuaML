@@ -44,7 +44,7 @@ def test_fixed_models():
         print(
             f"   ✅ Success: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges"
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"   ❌ Failed: {str(e)[:100]}...")
 
     # Test FixedBasicRNN
@@ -56,7 +56,7 @@ def test_fixed_models():
         print(
             f"   ✅ Success: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges"
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"   ❌ Failed: {str(e)[:100]}...")
 
     # Test FixedDemoNet
@@ -70,7 +70,7 @@ def test_fixed_models():
         print(
             f"   ✅ Success: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges"
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"   ❌ Failed: {str(e)[:100]}...")
 
     print("\n" + "=" * 50)

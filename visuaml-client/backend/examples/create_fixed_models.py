@@ -56,7 +56,7 @@ if __name__ == '__main__':
         traced = symbolic_trace(model)
         print("FX tracing successful!")
         
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"Error with FixedSimpleCNN: {e}")
 
 # Usage for open-hypergraph export:
@@ -153,7 +153,7 @@ if __name__ == '__main__':
         traced_gru = symbolic_trace(model_gru)
         print("GRU FX tracing successful!")
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"Error with Fixed RNN models: {e}")
 
 # Usage for open-hypergraph export:
@@ -247,7 +247,7 @@ if __name__ == '__main__':
         traced_simple = symbolic_trace(model_simple)
         print("Simple version FX tracing successful!")
         
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"Error with FixedDemoNet: {e}")
 
 # Usage for open-hypergraph export:
@@ -279,7 +279,7 @@ def test_fixed_models():
         print(
             f"✅ FixedSimpleCNN: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges"
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"❌ FixedSimpleCNN failed: {str(e)[:100]}...")
 
     # Test FixedBasicRNN
@@ -290,7 +290,7 @@ def test_fixed_models():
         print(
             f"✅ FixedBasicRNN: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges"
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"❌ FixedBasicRNN failed: {str(e)[:100]}...")
 
     # Test FixedDemoNet
@@ -303,7 +303,7 @@ def test_fixed_models():
         print(
             f"✅ FixedDemoNet: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges"
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"❌ FixedDemoNet failed: {str(e)[:100]}...")
 
 

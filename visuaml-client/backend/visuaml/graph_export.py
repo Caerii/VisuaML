@@ -284,8 +284,8 @@ def export_model_graph(
     # Perform symbolic tracing
     try:
         graph_module = symbolic_trace(model)
-    except Exception as e:
-        raise Exception(f"Error during symbolic tracing of '{model_path}': {e}")
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
+        raise RuntimeError(f"Error during symbolic tracing of '{model_path}': {e}")
 
     # Perform shape propagation only if sample inputs are available
     if sample_input_args is not None:
@@ -305,10 +305,10 @@ def export_model_graph(
             sp = ShapeProp(graph_module)
             sp.propagate(*actual_sample_inputs, **(sample_input_kwargs or {}))
             # Shape info is now in node.meta['tensor_meta'] for each node
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
             error_message = f"Error during shape propagation for '{model_path}': {e}. "
             error_message += f"Sample args: {sample_input_args}, dtypes: {sample_input_dtypes}, kwargs: {sample_input_kwargs}."
-            raise Exception(error_message)
+            raise RuntimeError(error_message)
 
     return create_graph_json(graph_module, filter_config)
 
@@ -366,7 +366,7 @@ def export_model_graph_with_fallback(
                             sample_input_dtypes = sample_input[1]
                     else:
                         sample_input_args = sample_input
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
             print(
                 f"Info: Could not auto-discover SAMPLE_INPUT from {model_path}. "
                 f"Proceeding without shape propagation. Error: {e}",
@@ -398,7 +398,7 @@ def export_model_graph_with_fallback(
                 sample_input_kwargs,
                 sample_input_dtypes,
             )
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
             # If FX tracing fails, we fall back to hook-based tracing
             print(
                 f"Info: FX tracing failed with error: {e}. Falling back to hook-based tracing.",
@@ -437,11 +437,11 @@ def export_model_graph_with_fallback(
                 ohg_data = export_to_open_hypergraph(graph_data, export_format)
                 graph_data.update(ohg_data)  # Merge results
             return graph_data
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
             if tracing_method == "hooks":
-                raise Exception(f"Hook-based tracing failed: {e}")
+                raise RuntimeError(f"Hook-based tracing failed: {e}")
             # If auto fails here, we've run out of options
-            raise Exception(
+            raise RuntimeError(
                 f"All tracing methods failed. Hook-based fallback failed with: {e}"
             )
 
@@ -449,7 +449,7 @@ def export_model_graph_with_fallback(
     if tracing_method == "torchscript":
         return trace_with_torchscript(model, actual_sample_inputs, filter_config)
 
-    raise Exception(f"Unknown tracing method: {tracing_method}")
+    raise RuntimeError(f"Unknown tracing method: {tracing_method}")
 
 
 def trace_with_hooks(
@@ -642,7 +642,7 @@ def _generate_default_sample_inputs(model: nn.Module) -> list[torch.Tensor] | No
         # Default fallback
         return [torch.randn(1, 10)]
 
-    except Exception:
+    except Exception:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         return None
 
 
@@ -725,5 +725,5 @@ def trace_with_torchscript(
         # TODO: Parse TorchScript graph and convert to VisuaML format
         # For now, fall back to hook-based tracing
         return trace_with_hooks(model, sample_inputs, filter_config)
-    except Exception as e:
-        raise Exception(f"TorchScript tracing failed: {e}")
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
+        raise RuntimeError(f"TorchScript tracing failed: {e}")

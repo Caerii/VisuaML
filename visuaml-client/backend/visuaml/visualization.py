@@ -1,6 +1,7 @@
 """Module for determining visual properties of graph nodes."""
 
 from dataclasses import dataclass
+from typing import ClassVar
 
 from torch.fx import GraphModule, Node
 
@@ -17,7 +18,7 @@ class NodeColorScheme:
     """Manages color assignments for different node types."""
 
     # Default colors for different layer types
-    DEFAULT_COLORS: dict[str, str] = {
+    DEFAULT_COLORS: ClassVar[dict[str, str]] = {
         # Input/Output
         "Input": "#adebad",  # Light green
         "Output": "#ffb3b3",  # Light red

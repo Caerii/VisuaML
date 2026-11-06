@@ -90,7 +90,7 @@ def analyze_simple_cnn():
         sp.propagate(correct_input)
         print("Shape propagation successful")
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         diagnostic.add_issue(
             "FX Tracing/Shape Propagation Error",
             f"Error during tracing or shape propagation: {e!s}",
@@ -133,7 +133,7 @@ def analyze_basic_rnn():
         model = BasicRNN()
         _traced = symbolic_trace(model)
         print("Unexpected: FX tracing succeeded (this usually fails)")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"Expected: FX tracing failed as predicted: {str(e)[:100]}...")
 
     diagnostic.print_report("BasicRNN")
@@ -171,7 +171,7 @@ def analyze_demo_net():
         # This should fail
         _output = model(sample_input_float)
         print("Unexpected: Float input worked")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"Expected: Float input failed: {str(e)[:100]}...")
 
     try:
@@ -188,7 +188,7 @@ def analyze_demo_net():
         sp.propagate(sample_input_long)
         print("Shape propagation successful")
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"Long input failed: {str(e)[:100]}...")
         diagnostic.add_issue(
             "Additional Issues",
@@ -213,7 +213,7 @@ def test_fixes():
             sample_input_args=((1, 1, 28, 28),),  # Correct shape
         )
         print(f"SimpleCNN fixed! Generated {len(result['nodes'])} nodes")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"SimpleCNN still fails: {str(e)[:100]}...")
 
     # Test DemoNet fix
@@ -225,7 +225,7 @@ def test_fixes():
             sample_input_dtypes=["long"],  # Correct dtype
         )
         print(f"DemoNet fixed! Generated {len(result['nodes'])} nodes")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"DemoNet still fails: {str(e)[:100]}...")
 
 

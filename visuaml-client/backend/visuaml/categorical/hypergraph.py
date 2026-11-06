@@ -341,10 +341,9 @@ class CategoricalHypergraph:
             return False
 
         for wire_id in self.wires:
-            if wire_id not in visited:
-                if has_cycle(wire_id):
-                    errors.append(f"Cycle detected involving wire {wire_id}")
-                    break
+            if wire_id not in visited and has_cycle(wire_id):
+                errors.append(f"Cycle detected involving wire {wire_id}")
+                break
 
         return len(errors) == 0, errors
 

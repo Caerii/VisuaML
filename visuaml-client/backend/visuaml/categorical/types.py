@@ -7,7 +7,6 @@ providing proper mathematical foundations for morphisms and compositions.
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Union
 
 
 class Dtype(Enum):
@@ -132,7 +131,7 @@ class ProductType:
 
 # Type aliases for convenience
 Shape = tuple[int | None, ...]
-TypeLike = Union[ArrayType, TensorType, ProductType]
+TypeLike = ArrayType | TensorType | ProductType
 
 
 def make_array_type(shape: Shape, dtype: Dtype | str = Dtype.FLOAT32) -> ArrayType:

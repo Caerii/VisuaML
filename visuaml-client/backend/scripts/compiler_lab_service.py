@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Read-only, allowlisted VisuaML Compiler Lab API for the interactive frontend.
 
 Deliberately does NOT load submitted Python files, arbitrary model paths, packages,
@@ -52,7 +51,7 @@ def main() -> int:
             raise ValueError("Compiler analysis response exceeds limit")
         print(payload)
         return 0
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(
             f"Compiler Lab analysis failed: {type(exc).__name__}: {exc}",
             file=sys.stderr,

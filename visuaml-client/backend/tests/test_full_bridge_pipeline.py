@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Test the complete bridge pipeline:
 PyTorch Model → FX Tracing → Categorical Morphisms → Open Hypergraphs → VisuaML Export
@@ -44,7 +43,7 @@ def test_bridge_pipeline():
         print("✓ FX tracing successful")
         print(f"  Graph nodes: {len(list(traced.graph.nodes))}")
         print()
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"✗ FX tracing failed: {e}")
         print()
 
@@ -75,7 +74,7 @@ def test_bridge_pipeline():
         print(f"  Wires: {len(hypergraph.wires)}")
         print()
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"✗ Categorical morphism creation failed: {e}")
         print()
 
@@ -89,7 +88,7 @@ def test_bridge_pipeline():
         print(f"  Hyperedges: {len(export_result.get('hyperedges', {}))}")
         print()
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"✗ VisuaML export failed: {e}")
         print()
 
@@ -106,7 +105,7 @@ def test_bridge_pipeline():
         )
         print("✓ Integration test passed (or gracefully handled)")
         print()
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"✗ Integration test failed: {e}")
         print()
 

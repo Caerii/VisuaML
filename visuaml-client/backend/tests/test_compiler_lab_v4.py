@@ -50,7 +50,11 @@ def test_compiler_lab_service_end_to_end_mlp():
 )
 def test_compiler_lab_rejects_unbounded_or_unknown_scenarios(args):
     completed = subprocess.run(
-        [sys.executable, str(SCRIPT), *args], capture_output=True, text=True, timeout=60
+        [sys.executable, str(SCRIPT), *args],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=60,
     )
     assert completed.returncode != 0
     assert not completed.stdout.strip().startswith("{")

@@ -203,7 +203,7 @@ if __name__ == "__main__":
         results = catgrad_style_demo()
         print("\n✅ All examples completed successfully!")
         print(f"Created {len(results)} different models/representations")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"\n❌ Error in demo: {e}")
         import traceback
 

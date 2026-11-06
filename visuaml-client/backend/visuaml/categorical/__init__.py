@@ -17,21 +17,17 @@ from .morphisms import ActivationMorphism, ComposedMorphism, LinearMorphism, Mor
 from .types import ArrayType, Dtype, TensorType
 
 __all__ = [
-    # Types
-    "Dtype",
-    "ArrayType",
-    "TensorType",
-    # Morphisms
-    "Morphism",
-    "LinearMorphism",
     "ActivationMorphism",
+    "ArrayType",
+    "CategoricalHypergraph",
     "ComposedMorphism",
-    # Composition
+    "Dtype",
+    "LinearMorphism",
+    "Morphism",
+    "TensorType",
     "compose",
     "parallel",
     "tensor_product",
-    # Hypergraphs
-    "CategoricalHypergraph",
 ]
 
 __version__ = "0.1.0"

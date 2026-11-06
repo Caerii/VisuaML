@@ -114,7 +114,7 @@ def test_aot_hash_checks_detect_constant_corruption(small, tmp_path):
     p, x = small
     directory = compile_numpy_aot(p).write(tmp_path / "compile")
     _, old = load_bundle(directory)
-    key = sorted(old)[0]
+    key = min(old)
     old[key] = old[key].copy()
     old[key].flat[0] += 1
     np.savez_compressed(directory / "constants.npz", **old)
@@ -191,7 +191,7 @@ def test_nested_comparison_catches_mismatch():
 
 
 def test_graph_digest_changes_with_weights_and_is_stable(small):
-    p, x = small
+    p, _ = small
     d1 = graph_digest(p.graph_module)
     d2 = graph_digest(copy.deepcopy(p.graph_module))
     assert d1 == d2
@@ -200,7 +200,7 @@ def test_graph_digest_changes_with_weights_and_is_stable(small):
 
 
 def test_cost_report_contract(small):
-    p, x = small
+    p, _ = small
     result = cost_report(p)
     assert result.peak_live_activation_bytes > 0
     assert result.parameter_bytes > 0
@@ -229,7 +229,7 @@ def test_backend_registry_and_capability_contracts(small):
 
 
 def test_partition_reports_unsupported_and_cuts(small):
-    p, x = small
+    p, _ = small
     capabilities = BackendCapabilities(
         "hypothetical-photonic",
         "test-v1",

@@ -129,7 +129,7 @@ def test_v3_manifest_policy_denies_excessive_budget(sample_artifact):
 
 
 def test_v3_loader_archive_and_manifest_budget(sample_artifact, tmp_path):
-    artifact, x = sample_artifact
+    artifact, _ = sample_artifact
     root = artifact.write(tmp_path / "artifact")
     with pytest.raises(BundleError, match="Manifest byte budget"):
         load_bundle(root, policy=ResourcePolicy(max_manifest_bytes=1))

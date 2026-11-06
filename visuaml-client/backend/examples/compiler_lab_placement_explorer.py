@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Render a portable, offline *hypothetical* accelerator placement explorer.
 
 Input: one or more compiler_lab_demo.py analysis.json files with v3 sweep data.

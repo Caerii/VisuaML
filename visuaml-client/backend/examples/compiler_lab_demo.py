@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Produce inspectable VisuaML compiler-lab artifacts for three concrete workloads.
 
 Run with PYTHONPATH=visuaml-client/backend python
@@ -19,11 +18,11 @@ from torch import nn
 from visuaml.compiler_lab.analysis import cost_report, graph_digest
 from visuaml.compiler_lab.backends import BackendCapabilities, default_registry
 from visuaml.compiler_lab.numpy_runtime import run_bundle
-from visuaml.compiler_lab.placement_robustness import analyze_placement_sensitivity
 from visuaml.compiler_lab.placement_optimizer import (
     HypotheticalCostModel,
     optimize_binary_placement,
 )
+from visuaml.compiler_lab.placement_robustness import analyze_placement_sensitivity
 from visuaml.compiler_lab.torch_target import TorchExportArtifact, TorchExportBackend
 from visuaml.compiler_lab.verification import apply_verified_passes, verify_outputs
 from visuaml.compiler_spike import LoweringPlan, Placement, capture, to_visuaml_graph

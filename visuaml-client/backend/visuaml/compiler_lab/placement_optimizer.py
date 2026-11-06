@@ -127,14 +127,14 @@ class _Flow:
                 break
             at = [0] * n
 
-            def dfs(u: int, pushed: float) -> float:
+            def dfs(u: int, pushed: float, at: list[int], levels: list[int]) -> float:
                 if u == t:
                     return pushed
                 while at[u] < len(self.g[u]):
                     e = self.g[u][at[u]]
                     v, cap, rev = e
                     if cap > eps and levels[v] == levels[u] + 1:
-                        sent = dfs(int(v), min(pushed, float(cap)))
+                        sent = dfs(int(v), min(pushed, float(cap)), at, levels)
                         if sent > eps:
                             e[1] = float(cap) - sent
                             r = self.g[int(v)][int(rev)]
@@ -144,7 +144,7 @@ class _Flow:
                 return 0.0
 
             while True:
-                sent = dfs(s, float("inf"))
+                sent = dfs(s, float("inf"), at, levels)
                 if sent <= eps:
                     break
                 flow += sent
@@ -190,11 +190,12 @@ def optimize_binary_placement(
                     f"Forward reference or missing producer: {dep}->{n.id}"
                 )
         before.add(n.id)
-        if n.op not in {"input", "output", "constant"}:
-            if not n.tensors or any(t.bytes is None for t in n.tensors):
-                raise PlacementError(
-                    f"Unknown output bytes for {n.id}; refusing to guess transfer cost"
-                )
+        if n.op not in {"input", "output", "constant"} and (
+            not n.tensors or any(t.bytes is None for t in n.tensors)
+        ):
+            raise PlacementError(
+                f"Unknown output bytes for {n.id}; refusing to guess transfer cost"
+            )
         specs[n.id] = sum(t.bytes or 0 for t in n.tensors)
 
     source, sink = len(nodes), len(nodes) + 1

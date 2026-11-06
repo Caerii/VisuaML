@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Simplified FX export script using the modular VisuaML backend.
 
@@ -93,7 +92,7 @@ def main():
                     raise ValueError(
                         "Sample input args must be a tuple (e.g., '((1,10),)' or '((1,1,28,28),)')."
                     )
-        except (ValueError, SyntaxError) as e:
+        except (ValueError, TypeError, SyntaxError) as e:
             print(
                 f'Error parsing --sample-input-args: {e}. Example: --sample-input-args "((1, 10),)" or for multiple inputs --sample-input-args "((1,10), (1,20))"',
                 file=sys.stderr,
@@ -105,8 +104,8 @@ def main():
         try:
             parsed_sample_input_kwargs = ast.literal_eval(args.sample_input_kwargs)
             if not isinstance(parsed_sample_input_kwargs, dict):
-                raise ValueError("Sample input kwargs must be a dict.")
-        except (ValueError, SyntaxError) as e:
+                raise TypeError("Sample input kwargs must be a dict.")
+        except (ValueError, TypeError, SyntaxError) as e:
             print(
                 f"Error parsing --sample-input-kwargs: {e}. Example: --sample-input-kwargs \"{{'key': (1,5)}}\"",
                 file=sys.stderr,
@@ -123,7 +122,7 @@ def main():
                 raise ValueError(
                     "Sample input dtypes must be a list of strings (e.g., \"['float32', 'long']\")."
                 )
-        except (ValueError, SyntaxError) as e:
+        except (ValueError, TypeError, SyntaxError) as e:
             print(
                 f"Error parsing --sample-input-dtypes: {e}. Example: \"['float32']\"",
                 file=sys.stderr,
@@ -156,7 +155,7 @@ def main():
     except ModelLoadError as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)  # Ensure this is indented under this except block
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"An unexpected error occurred during graph export: {e}", file=sys.stderr)
         sys.exit(1)  # Ensure this is indented and present for other exceptions
 

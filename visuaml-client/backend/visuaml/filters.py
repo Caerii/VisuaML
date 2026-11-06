@@ -40,13 +40,10 @@ class FilterConfig:
             return True
 
         # Level 2: Also filter tensor operations
-        if (
+        return (
             self.abstraction_level >= 2
             and op_name in self.operation_categories["tensor_ops"]
-        ):
-            return True
-
-        return False
+        )
 
 
 class GraphFilter:

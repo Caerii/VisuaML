@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Test script demonstrating bidirectional conversion between JSON and categorical OpenHypergraph formats.
 """
@@ -203,7 +202,7 @@ def test_bidirectional_conversion():
     except ImportError as e:
         print(f"   ❌ Categorical conversion not available: {e}")
         print("   💡 Install with: pip install open-hypergraphs")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         print(f"   ❌ Conversion failed: {e}")
         import traceback
 

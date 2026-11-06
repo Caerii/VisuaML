@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Final demonstration of open-hypergraph export functionality."""
 
 import os

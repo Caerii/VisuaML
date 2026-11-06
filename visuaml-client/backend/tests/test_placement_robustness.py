@@ -1,35 +1,50 @@
 """V5: rigorous minimax-regret placement under hypothetical cost uncertainty."""
 
-from dataclasses import replace
-import json
 import itertools
+import json
+from dataclasses import replace
 
 import pytest
-
-from visuaml.compiler_spike import OpRecord, ProgramIR, TensorSpec
 from visuaml.compiler_lab.backends import BackendCapabilities
 from visuaml.compiler_lab.placement_optimizer import (
-    HypotheticalCostModel, PlacementError, optimize_binary_placement,
+    HypotheticalCostModel,
+    PlacementError,
+    optimize_binary_placement,
 )
 from visuaml.compiler_lab.placement_robustness import analyze_placement_sensitivity
+from visuaml.compiler_spike import OpRecord, ProgramIR, TensorSpec
 
 
 def setup():
     spec = TensorSpec(("1", "4"), "torch.float32", 16)
-    ir = ProgramIR((
-        OpRecord("x", "input", "", (), (spec,), 0, ()),
-        OpRecord("a", "matmul", "", ("x",), (spec,), 600, ()),
-        OpRecord("b", "relu", "", ("a",), (spec,), 40, ()),
-        OpRecord("c", "matmul", "", ("b",), (spec,), 600, ()),
-        OpRecord("out", "output", "", ("c",), (), 0, ()),
-    ), ("x",), ("c",))
-    caps = BackendCapabilities("hypothetical", "1", frozenset({"matmul"}),
-                               frozenset({"relu"}), frozenset({"torch.float32"}))
-    profiles = [HypotheticalCostModel(
-        name=f"transfer-{v}", host_op_costs={"matmul": 30, "relu": 3},
-        device_op_costs={"matmul": 2}, transfer_bytes_per_unit=16,
-        transfer_overhead=v,
-    ) for v in (0., 1., 5., 80.)]
+    ir = ProgramIR(
+        (
+            OpRecord("x", "input", "", (), (spec,), 0, ()),
+            OpRecord("a", "matmul", "", ("x",), (spec,), 600, ()),
+            OpRecord("b", "relu", "", ("a",), (spec,), 40, ()),
+            OpRecord("c", "matmul", "", ("b",), (spec,), 600, ()),
+            OpRecord("out", "output", "", ("c",), (), 0, ()),
+        ),
+        ("x",),
+        ("c",),
+    )
+    caps = BackendCapabilities(
+        "hypothetical",
+        "1",
+        frozenset({"matmul"}),
+        frozenset({"relu"}),
+        frozenset({"torch.float32"}),
+    )
+    profiles = [
+        HypotheticalCostModel(
+            name=f"transfer-{v}",
+            host_op_costs={"matmul": 30, "relu": 3},
+            device_op_costs={"matmul": 2},
+            transfer_bytes_per_unit=16,
+            transfer_overhead=v,
+        )
+        for v in (0.0, 1.0, 5.0, 80.0)
+    ]
     return ir, caps, profiles
 
 
@@ -55,11 +70,16 @@ def test_minimax_regret_agrees_with_independent_exhaustive_cost():
     optima = [optimize_binary_placement(ir, caps, p) for p in profiles]
     brute = float("inf")
     for use_a, use_c in itertools.product((False, True), repeat=2):
-        plan = {"x": "host", "a": "device" if use_a else "host",
-                "b": "host", "c": "device" if use_c else "host", "out": "host"}
+        plan = {
+            "x": "host",
+            "a": "device" if use_a else "host",
+            "b": "host",
+            "c": "device" if use_c else "host",
+            "out": "host",
+        }
         regrets = []
         for profile, optimum in zip(profiles, optima):
-            cost = 0.
+            cost = 0.0
             for a in optimum.assignments:
                 if a.assigned is None:
                     raise AssertionError
@@ -67,7 +87,10 @@ def test_minimax_regret_agrees_with_independent_exhaustive_cost():
             for node in ir.nodes:
                 for dep in node.inputs:
                     if plan[dep] != plan[node.id]:
-                        cost += profile.transfer_overhead + 16 / profile.transfer_bytes_per_unit
+                        cost += (
+                            profile.transfer_overhead
+                            + 16 / profile.transfer_bytes_per_unit
+                        )
             regrets.append(cost - optimum.estimated_total_cost)
         brute = min(brute, max(regrets))
     assert got.preferred.worst_regret == pytest.approx(brute)

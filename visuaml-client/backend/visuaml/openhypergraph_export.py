@@ -115,19 +115,16 @@ def categorical_to_json(
         ) from _IMPORT_ERROR
 
     # Handle dictionary input (from our simplified categorical analysis)
-    if isinstance(categorical_data, dict):
-        if "json_data" in categorical_data:
-            # Return the original JSON data with additional metadata
-            result = categorical_data["json_data"].copy()
-            result["metadata"] = {
-                **(result.get("metadata", {})),
-                **(metadata or {}),
-                "categorical_analysis": categorical_data.get(
-                    "categorical_analysis", {}
-                ),
-                "conversion_type": "from_categorical_analysis",
-            }
-            return result
+    if isinstance(categorical_data, dict) and "json_data" in categorical_data:
+        # Return the original JSON data with additional metadata
+        result = categorical_data["json_data"].copy()
+        result["metadata"] = {
+            **(result.get("metadata", {})),
+            **(metadata or {}),
+            "categorical_analysis": categorical_data.get("categorical_analysis", {}),
+            "conversion_type": "from_categorical_analysis",
+        }
+        return result
 
     # If it's an actual OpenHypergraph object, we'd need complex extraction
     # For now, return a placeholder structure
@@ -339,8 +336,8 @@ def export_model_open_hypergraph(
     # Perform symbolic tracing
     try:
         graph_module = symbolic_trace(model)
-    except Exception as e:
-        raise Exception(f"Error during symbolic tracing of '{class_name}': {e}")
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
+        raise RuntimeError(f"Error during symbolic tracing of '{class_name}': {e}")
 
     # Perform shape propagation if sample inputs are provided
     if sample_input_args is not None:
@@ -377,10 +374,10 @@ def export_model_open_hypergraph(
 
             sp = ShapeProp(graph_module)
             sp.propagate(*actual_sample_inputs, **(sample_input_kwargs or {}))
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
             error_message = f"Error during shape propagation for '{class_name}': {e}. "
             error_message += f"Sample args: {sample_input_args}, dtypes: {sample_input_dtypes}, kwargs: {sample_input_kwargs}."
-            raise Exception(error_message)
+            raise RuntimeError(error_message)
 
     # Apply filters
     graph_filter = GraphFilter(filter_config)

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Comparison: Direct Catgrad vs Our Bridge Approach
 """
@@ -24,7 +23,7 @@ try:
     print("Pros: Official library, mathematically correct")
     print("Cons: Must rewrite all PyTorch models, limited layer types")
 
-except Exception as e:
+except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
     print(f"Error with catgrad: {e}")
 
 print()
@@ -57,7 +56,7 @@ try:
     print("Pros: Works with any PyTorch model, leverages existing infrastructure")
     print("Cons: Custom implementation (but mathematically sound)")
 
-except Exception as e:
+except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
     print(f"Error with our approach: {e}")
 
 print()

@@ -65,7 +65,7 @@ def load_model_class(module_path: str) -> tuple[type[nn.Module], str]:
             f"Check path and ensure all necessary __init__.py files exist. "
             f"Error: {e}"
         )
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         raise ModelLoadError(
             f"An unexpected error occurred while loading model from '{module_path}': {e}"
         )
@@ -94,11 +94,11 @@ def instantiate_model(
     """
     try:
         if model_args is None:
-            model_args = tuple()
+            model_args = ()
         if model_kwargs is None:
             model_kwargs = {}
         return model_class(*model_args, **model_kwargs)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - third-party/model/test boundary catches unknown exceptions
         raise ModelLoadError(
             f"Error instantiating model '{class_name}' with provided arguments: {e}. "
             f"Ensure the model can be instantiated with these arguments."

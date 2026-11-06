@@ -356,17 +356,16 @@ export function CompilerLabPage() {
                 </p>
                 <p>
                   Minimum worst-case regret:{' '}
-                  {formatNumber(report.hypothetical_placement_robustness.preferred.worst_regret)}
-                  {' '}abstract cost units.
+                  {formatNumber(report.hypothetical_placement_robustness.preferred.worst_regret)}{' '}
+                  abstract cost units.
                 </p>
                 <p>
-                  Robust candidate: {' '}
+                  Robust candidate:{' '}
                   {report.hypothetical_placement_robustness.preferred.device_nodes.join(', ') ||
                     'all operations on host'}
                 </p>
                 <p className="compiler-muted">
-                  {report.hypothetical_placement_robustness.search ===
-                  'exhaustive-minimax-regret'
+                  {report.hypothetical_placement_robustness.search === 'exhaustive-minimax-regret'
                     ? 'Exact over the admitted binary placements.'
                     : 'Restricted candidate search; not an exact minimax guarantee.'}
                 </p>

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Build an offline VisuaML-like interactive inspector from analysis.json.
 
 No external JS/CDN and no model execution in the browser. This is a useful
