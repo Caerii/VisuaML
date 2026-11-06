@@ -5,6 +5,8 @@ import json
 from dataclasses import replace
 
 import pytest
+
+from examples.compiler_lab_demo import run
 from visuaml.compiler_lab.backends import BackendCapabilities
 from visuaml.compiler_lab.placement_optimizer import (
     HypotheticalCostModel,
@@ -144,3 +146,14 @@ def test_per_profile_optimum_always_zero_regret():
     # that one assignment achieves zero regret across all of them.
     assert all(s.optimum_cost <= s.all_host_cost for s in result.scenarios)
     assert result.preferred.worst_regret > 0
+
+
+def test_mlp_executable_report_contains_robustness(tmp_path):
+    """Verify the actual report consumed by VisuaML's read-only compiler API."""
+    report = run("mlp", tmp_path / "mlp", seed=19)
+    sensitivity = report["hypothetical_placement_robustness"]
+    assert sensitivity["schema"] == "visuaml.placement-sensitivity.v1"
+    assert len(sensitivity["scenarios"]) == len(report["hypothetical_partition_sweep"]) == 5
+    assert sensitivity["preferred"]["worst_regret"] >= 0
+    assert report["witness"]["passed"]
+    assert report["torch_export_roundtrip"]["passed"]
