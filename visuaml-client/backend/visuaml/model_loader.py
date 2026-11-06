@@ -2,17 +2,15 @@
 
 import importlib
 import inspect
-from typing import Tuple, Type, Optional
-import torch.nn as nn
+
+from torch import nn
 
 
 class ModelLoadError(Exception):
     """Custom exception for model loading errors."""
 
-    pass
 
-
-def load_model_class(module_path: str) -> Tuple[Type[nn.Module], str]:
+def load_model_class(module_path: str) -> tuple[type[nn.Module], str]:
     """
     Loads a PyTorch model class from a module path. It first attempts to
     find a class with the same name as the last component of the path.
@@ -74,10 +72,10 @@ def load_model_class(module_path: str) -> Tuple[Type[nn.Module], str]:
 
 
 def instantiate_model(
-    model_class: Type[nn.Module],
+    model_class: type[nn.Module],
     class_name: str,
-    model_args: Optional[tuple] = None,
-    model_kwargs: Optional[dict] = None,
+    model_args: tuple | None = None,
+    model_kwargs: dict | None = None,
 ) -> nn.Module:
     """
     Instantiate a model from its class.

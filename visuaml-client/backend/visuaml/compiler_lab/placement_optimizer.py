@@ -13,11 +13,13 @@ are not modeled. We reject unknown tensor sizes rather than invent bytes.
 from __future__ import annotations
 
 from collections import deque
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass
 from math import isfinite
-from typing import Any, Mapping
+from typing import Any
 
 from visuaml.compiler_spike import ProgramIR
+
 from .backends import BackendCapabilities
 
 

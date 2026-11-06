@@ -5,11 +5,11 @@ Simplified FX export script using the modular VisuaML backend.
 Usage: python fx_export.py models.MyModel [--abstraction-level 1] [--sample-input-args "(1, 3, 224, 224)"]
 """
 
-import json
-import sys
-import os
 import argparse
 import ast  # For parsing string representations of tuples/dicts
+import json
+import os
+import sys
 
 # Add parent directory to path so we can import visuaml package
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

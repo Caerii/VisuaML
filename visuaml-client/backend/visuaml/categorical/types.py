@@ -6,8 +6,8 @@ providing proper mathematical foundations for morphisms and compositions.
 """
 
 from dataclasses import dataclass
-from typing import Tuple, Optional, Union
 from enum import Enum
+from typing import Union
 
 
 class Dtype(Enum):
@@ -33,7 +33,7 @@ class ArrayType:
         dtype: Data type of the array
     """
 
-    shape: Tuple[Optional[int], ...]
+    shape: tuple[int | None, ...]
     dtype: Dtype
 
     def __str__(self):
@@ -54,7 +54,7 @@ class ArrayType:
         return len(self.shape)
 
     @property
-    def size(self) -> Optional[int]:
+    def size(self) -> int | None:
         """Total size if all dimensions are known."""
         if any(d is None for d in self.shape):
             return None
@@ -116,7 +116,7 @@ class ProductType:
         types: List of array types in the product
     """
 
-    types: Tuple[ArrayType, ...]
+    types: tuple[ArrayType, ...]
 
     def __str__(self):
         return " ⊗ ".join(str(t) for t in self.types)
@@ -131,13 +131,11 @@ class ProductType:
 
 
 # Type aliases for convenience
-Shape = Tuple[Optional[int], ...]
+Shape = tuple[int | None, ...]
 TypeLike = Union[ArrayType, TensorType, ProductType]
 
 
-def make_array_type(
-    shape: Shape, dtype: Union[Dtype, str] = Dtype.FLOAT32
-) -> ArrayType:
+def make_array_type(shape: Shape, dtype: Dtype | str = Dtype.FLOAT32) -> ArrayType:
     """Convenience function to create ArrayType."""
     if isinstance(dtype, str):
         dtype = Dtype(dtype)
@@ -145,7 +143,7 @@ def make_array_type(
 
 
 def make_tensor_type(
-    input_shape: Shape, output_shape: Shape, dtype: Union[Dtype, str] = Dtype.FLOAT32
+    input_shape: Shape, output_shape: Shape, dtype: Dtype | str = Dtype.FLOAT32
 ) -> TensorType:
     """Convenience function to create TensorType."""
     if isinstance(dtype, str):

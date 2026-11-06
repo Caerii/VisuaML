@@ -1,11 +1,11 @@
-from typing import Any, Dict, List, Optional, Set, Union
+from typing import Any, Union
 
 import torch
 from torch.fx import GraphModule, Node, symbolic_trace
 from torch.fx.passes.shape_prop import ShapeProp
 
 from .filters import FilterConfig, GraphFilter
-from .model_loader import load_model_class, instantiate_model
+from .model_loader import instantiate_model, load_model_class
 
 # open-hypergraphs is a small pure-python dependency. The import will fail
 # with a clear message if the package is missing so users know to pip-install
@@ -18,14 +18,14 @@ except ModuleNotFoundError as exc:  # pragma: no cover
     CATEGORICAL_AVAILABLE = False
     _IMPORT_ERROR = exc
 
-__all__ = ["export_model_open_hypergraph", "json_to_categorical", "categorical_to_json"]
+__all__ = ["categorical_to_json", "export_model_open_hypergraph", "json_to_categorical"]
 
 # -----------------------------------------------------------------------------
 # BIDIRECTIONAL CONVERSION UTILITIES
 # -----------------------------------------------------------------------------
 
 
-def json_to_categorical(json_data: Dict[str, Any]) -> Dict[str, Any]:
+def json_to_categorical(json_data: dict[str, Any]) -> dict[str, Any]:
     """
     Convert JSON hypergraph representation to categorical analysis.
 
@@ -94,9 +94,9 @@ def json_to_categorical(json_data: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def categorical_to_json(
-    categorical_data: Union["OpenHypergraph", Dict[str, Any]],
-    metadata: Optional[Dict[str, Any]] = None,
-) -> Dict[str, Any]:
+    categorical_data: Union["OpenHypergraph", dict[str, Any]],
+    metadata: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """
     Convert categorical OpenHypergraph object or analysis to JSON representation.
 
@@ -150,9 +150,9 @@ def categorical_to_json(
 
 def _fx_to_categorical_hypergraph(
     gm: GraphModule,
-    included_fx_nodes: Set[Node],
+    included_fx_nodes: set[Node],
     graph_filter: GraphFilter,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Convert a filtered FX graph to categorical analysis (not full OpenHypergraph object)."""
     if not CATEGORICAL_AVAILABLE:
         raise ImportError(
@@ -169,13 +169,13 @@ def _fx_to_categorical_hypergraph(
 
 def _fx_to_open_hg(
     gm: GraphModule,
-    included_fx_nodes: Set[Node],
+    included_fx_nodes: set[Node],
     graph_filter: GraphFilter,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Convert a filtered FX graph to an open-hypergraph JSON representation."""
 
     # Build name map for all nodes
-    name_map: Dict[Node, str] = {node: node.name for node in gm.graph.nodes}
+    name_map: dict[Node, str] = {node: node.name for node in gm.graph.nodes}
 
     # Create hypergraph structure
     nodes = []
@@ -287,15 +287,15 @@ def _fx_to_open_hg(
 
 def export_model_open_hypergraph(
     model_path: str,
-    filter_config: Optional[FilterConfig] = None,
-    model_args: Optional[tuple] = None,
-    model_kwargs: Optional[dict] = None,
-    sample_input_args: Optional[tuple] = None,
-    sample_input_kwargs: Optional[dict] = None,
-    sample_input_dtypes: Optional[List[str]] = None,
-    sample_dtypes: Optional[List[str]] = None,  # Alias for compatibility
+    filter_config: FilterConfig | None = None,
+    model_args: tuple | None = None,
+    model_kwargs: dict | None = None,
+    sample_input_args: tuple | None = None,
+    sample_input_kwargs: dict | None = None,
+    sample_input_dtypes: list[str] | None = None,
+    sample_dtypes: list[str] | None = None,  # Alias for compatibility
     out_format: str = "json",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Export a PyTorch model to open-hypergraph format.
 
@@ -408,7 +408,7 @@ def export_model_open_hypergraph(
         )
 
 
-def _generate_macro_syntax(ohg_data: Dict[str, Any]) -> str:
+def _generate_macro_syntax(ohg_data: dict[str, Any]) -> str:
     """
     Generate hypersyn macro syntax from open-hypergraph JSON data.
 

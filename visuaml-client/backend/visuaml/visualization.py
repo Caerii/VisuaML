@@ -1,8 +1,8 @@
 """Module for determining visual properties of graph nodes."""
 
 from dataclasses import dataclass
-from typing import Dict, Optional
-from torch.fx import Node, GraphModule
+
+from torch.fx import GraphModule, Node
 
 
 @dataclass
@@ -17,7 +17,7 @@ class NodeColorScheme:
     """Manages color assignments for different node types."""
 
     # Default colors for different layer types
-    DEFAULT_COLORS: Dict[str, str] = {
+    DEFAULT_COLORS: dict[str, str] = {
         # Input/Output
         "Input": "#adebad",  # Light green
         "Output": "#ffb3b3",  # Light red
@@ -96,7 +96,7 @@ class NodeColorScheme:
 class NodeVisualizer:
     """Determines visual properties for graph nodes."""
 
-    def __init__(self, color_scheme: Optional[NodeColorScheme] = None):
+    def __init__(self, color_scheme: NodeColorScheme | None = None):
         self.color_scheme = color_scheme or NodeColorScheme()
 
     def get_node_visual_properties(

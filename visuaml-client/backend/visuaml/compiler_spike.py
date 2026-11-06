@@ -13,9 +13,10 @@ from __future__ import annotations
 
 import copy
 import operator
+from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from math import prod
-from typing import Any, Callable, Protocol
+from typing import Any, Protocol
 
 import numpy as np
 import torch

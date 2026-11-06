@@ -6,10 +6,10 @@ import torch
 from torch import nn
 from visuaml.compiler_spike import (
     capture,
+    compare_outputs,
     decompose_linear,
     fuse_linear_pattern,
     lower,
-    compare_outputs,
     to_visuaml_graph,
 )
 

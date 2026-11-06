@@ -1,8 +1,8 @@
 """Module for filtering graph nodes based on operation types and patterns."""
 
-from typing import Set, List, Optional, Dict
 from dataclasses import dataclass, field
-from torch.fx import Node, GraphModule
+
+from torch.fx import GraphModule, Node
 
 
 @dataclass
@@ -10,7 +10,7 @@ class FilterConfig:
     """Configuration for graph filtering."""
 
     # Operations to filter out
-    filtered_ops: Set[str] = field(
+    filtered_ops: set[str] = field(
         default_factory=lambda: {
             "getitem",  # Indexing operations like tensor[0] or tuple unpacking
             "getattr",  # Attribute access (unless it's a parameter/buffer)
@@ -18,7 +18,7 @@ class FilterConfig:
     )
 
     # Operation categories for different abstraction levels
-    operation_categories: Dict[str, Set[str]] = field(
+    operation_categories: dict[str, set[str]] = field(
         default_factory=lambda: {
             "low_level": {"getitem", "getattr", "add", "mul", "sub", "div"},
             "control_flow": {"if", "while", "for"},
@@ -52,7 +52,7 @@ class FilterConfig:
 class GraphFilter:
     """Handles filtering of FX graph nodes."""
 
-    def __init__(self, config: Optional[FilterConfig] = None):
+    def __init__(self, config: FilterConfig | None = None):
         self.config = config or FilterConfig()
 
     def should_include_node(self, node: Node, graph_module: GraphModule) -> bool:
@@ -90,8 +90,8 @@ class GraphFilter:
         return True
 
     def get_transitive_inputs(
-        self, node: Node, included_nodes: Set[Node], visited: Optional[Set[Node]] = None
-    ) -> List[Node]:
+        self, node: Node, included_nodes: set[Node], visited: set[Node] | None = None
+    ) -> list[Node]:
         """
         Get all included input nodes, traversing through filtered nodes.
 
@@ -123,7 +123,7 @@ class GraphFilter:
 
         return result
 
-    def filter_graph(self, nodes: List[Node], graph_module: GraphModule) -> Set[Node]:
+    def filter_graph(self, nodes: list[Node], graph_module: GraphModule) -> set[Node]:
         """
         Filter a list of nodes based on the current configuration.
 

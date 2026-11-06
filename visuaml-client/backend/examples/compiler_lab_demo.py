@@ -16,18 +16,16 @@ from pathlib import Path
 
 import torch
 from torch import nn
-
-from visuaml.compiler_spike import capture, to_visuaml_graph, LoweringPlan, Placement
 from visuaml.compiler_lab.analysis import cost_report, graph_digest
-from visuaml.compiler_lab.backends import default_registry
-from visuaml.compiler_lab.verification import apply_verified_passes, verify_outputs
+from visuaml.compiler_lab.backends import BackendCapabilities, default_registry
 from visuaml.compiler_lab.numpy_runtime import run_bundle
-from visuaml.compiler_lab.torch_target import TorchExportBackend, TorchExportArtifact
-from visuaml.compiler_lab.backends import BackendCapabilities
 from visuaml.compiler_lab.placement_optimizer import (
     HypotheticalCostModel,
     optimize_binary_placement,
 )
+from visuaml.compiler_lab.torch_target import TorchExportArtifact, TorchExportBackend
+from visuaml.compiler_lab.verification import apply_verified_passes, verify_outputs
+from visuaml.compiler_spike import LoweringPlan, Placement, capture, to_visuaml_graph
 
 
 class MLP(nn.Module):

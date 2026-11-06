@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Script to create fixed versions of models that fail open-hypergraph export.
 """

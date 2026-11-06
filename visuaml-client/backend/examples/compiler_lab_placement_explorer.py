@@ -12,7 +12,6 @@ import argparse
 import json
 from pathlib import Path
 
-
 HTML = r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VisuaML · Hardware–Algorithm Co-Design</title>

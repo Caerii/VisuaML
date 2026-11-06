@@ -6,8 +6,9 @@ of semantic equivalence for all possible inputs or floating point environments.
 
 from __future__ import annotations
 
+from collections.abc import Callable, Sequence
 from dataclasses import asdict, dataclass
-from typing import Any, Callable, Sequence
+from typing import Any
 
 import numpy as np
 import torch
@@ -17,8 +18,9 @@ from visuaml.compiler_spike import (
     decompose_linear,
     fuse_linear_pattern,
 )
+
 from .analysis import graph_digest, validate_graph
-from .passes import decompose_softmax, decompose_sdpa
+from .passes import decompose_sdpa, decompose_softmax
 
 
 class VerificationFailure(RuntimeError):

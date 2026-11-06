@@ -9,9 +9,10 @@ untrusted archive safe to load in an unrestricted process.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from math import prod
-from typing import Any, Mapping
+from typing import Any
 
 
 class IRContractError(ValueError):

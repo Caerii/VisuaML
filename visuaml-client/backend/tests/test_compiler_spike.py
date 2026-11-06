@@ -6,7 +6,6 @@ import numpy as np
 import pytest
 import torch
 from torch import nn
-
 from visuaml.compiler_spike import (
     NumpyBackend,
     OpticalSurrogateBackend,

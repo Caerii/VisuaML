@@ -11,10 +11,10 @@ Key concepts:
 - Hypergraphs: Open hypergraph representations
 """
 
-from .types import Dtype, ArrayType, TensorType
-from .morphisms import Morphism, LinearMorphism, ActivationMorphism, ComposedMorphism
 from .composition import compose, parallel, tensor_product
 from .hypergraph import CategoricalHypergraph
+from .morphisms import ActivationMorphism, ComposedMorphism, LinearMorphism, Morphism
+from .types import ArrayType, Dtype, TensorType
 
 __all__ = [
     # Types

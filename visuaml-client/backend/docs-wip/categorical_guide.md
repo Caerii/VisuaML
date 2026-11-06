@@ -88,13 +88,14 @@ from visuaml.categorical.composition import CompositionBuilder
 
 # Build complex models
 builder = CompositionBuilder()
-model = (builder
-    .add_linear(784, 128, name="layer1")
+model = (
+    builder.add_linear(784, 128, name="layer1")
     .add_relu((128,), name="relu1")
     .add_linear(128, 64, name="layer2")
     .add_relu((64,), name="relu2")
     .add_linear(64, 10, name="output")
-    .build("deep_classifier"))
+    .build("deep_classifier")
+)
 ```
 
 ### Parallel Composition
@@ -159,7 +160,7 @@ from visuaml.categorical.types import TensorType
 # Morphism type: input → output
 morphism_type = TensorType(
     input_type=ArrayType((784,), Dtype.FLOAT32),
-    output_type=ArrayType((10,), Dtype.FLOAT32)
+    output_type=ArrayType((10,), Dtype.FLOAT32),
 )
 
 print(morphism_type)  # Array[784:float32] → Array[10:float32]
@@ -173,10 +174,7 @@ Matrix multiplication with optional bias:
 
 ```python
 linear = LinearMorphism(
-    input_dim=784,
-    output_dim=128,
-    use_bias=True,
-    name="hidden_layer"
+    input_dim=784, output_dim=128, use_bias=True, name="hidden_layer"
 )
 
 # Get hypergraph representation
@@ -227,12 +225,12 @@ For morphisms `f: A → B` and `g: B → C`, the composition `g ∘ f: A → C` 
 
 ```python
 # Valid composition
-f = LinearMorphism(10, 5)    # Array[10:float32] → Array[5:float32]
-g = LinearMorphism(5, 3)     # Array[5:float32] → Array[3:float32]
-composed = g @ f             # Array[10:float32] → Array[3:float32]
+f = LinearMorphism(10, 5)  # Array[10:float32] → Array[5:float32]
+g = LinearMorphism(5, 3)  # Array[5:float32] → Array[3:float32]
+composed = g @ f  # Array[10:float32] → Array[3:float32]
 
 # Invalid composition (type mismatch)
-h = LinearMorphism(7, 3)     # Array[7:float32] → Array[3:float32]
+h = LinearMorphism(7, 3)  # Array[7:float32] → Array[3:float32]
 # g @ h  # Would raise ValueError
 ```
 
@@ -241,9 +239,9 @@ h = LinearMorphism(7, 3)     # Array[7:float32] → Array[3:float32]
 For morphisms `f: A → B` and `g: C → D`, the tensor product `f ⊗ g: A⊗C → B⊗D`:
 
 ```python
-f = LinearMorphism(5, 3)     # Array[5:float32] → Array[3:float32]
-g = LinearMorphism(7, 4)     # Array[7:float32] → Array[4:float32]
-parallel_fg = parallel(f, g) # Array[12:float32] → Array[7:float32]
+f = LinearMorphism(5, 3)  # Array[5:float32] → Array[3:float32]
+g = LinearMorphism(7, 4)  # Array[7:float32] → Array[4:float32]
+parallel_fg = parallel(f, g)  # Array[12:float32] → Array[7:float32]
 ```
 
 ## Hypergraph Structure
@@ -268,7 +266,7 @@ hg_dict = hypergraph.to_dict()
             "id": "layer1_matmul",
             "type": "matmul",
             "inputs": ["input", "weight"],
-            "outputs": ["output"]
+            "outputs": ["output"],
         }
     ],
     "wires": [
@@ -276,17 +274,11 @@ hg_dict = hypergraph.to_dict()
             "id": "input",
             "type": "Array[784:float32]",
             "source": None,
-            "targets": ["layer1_matmul"]
+            "targets": ["layer1_matmul"],
         }
     ],
-    "input_boundary": {
-        "wires": ["input"],
-        "types": ["Array[784:float32]"]
-    },
-    "output_boundary": {
-        "wires": ["output"],
-        "types": ["Array[10:float32]"]
-    }
+    "input_boundary": {"wires": ["input"], "types": ["Array[784:float32]"]},
+    "output_boundary": {"wires": ["output"], "types": ["Array[10:float32]"]},
 }
 ```
 
@@ -380,6 +372,7 @@ if f.can_compose_with(g):
 
 # Better: Use validation
 from visuaml.categorical.composition import validate_composition
+
 if validate_composition([f, g]):
     composed = compose(f, g)
 ```

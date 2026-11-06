@@ -8,8 +8,8 @@ this deliberately does not claim to preserve general dynamic-shape constraints.
 from __future__ import annotations
 
 import copy
-import json
 import hashlib
+import json
 from dataclasses import dataclass
 from typing import Any
 
@@ -18,8 +18,9 @@ from torch import nn
 from torch.fx.passes.shape_prop import ShapeProp
 
 from visuaml.compiler_spike import CapturedProgram, UnsupportedOperation, inspect_fx
+
 from .analysis import validate_graph
-from .aot_compile import compile_numpy_aot, AOTArtifact
+from .aot_compile import AOTArtifact, compile_numpy_aot
 
 _ATEN = {
     torch.ops.aten.linear.default: torch.nn.functional.linear,

@@ -3,8 +3,9 @@
 Test script demonstrating bidirectional conversion between JSON and categorical OpenHypergraph formats.
 """
 
-import sys
 import os
+import sys
+
 import pytest
 
 # Add the visuaml-client directory to Python path so we can import models
@@ -26,8 +27,8 @@ try:
 except ImportError:
     OPEN_HYPERGRAPHS_AVAILABLE = False
 
-from visuaml import export_model_open_hypergraph  # noqa: E402
-from visuaml.openhypergraph_export import json_to_categorical, categorical_to_json  # noqa: E402
+from visuaml import export_model_open_hypergraph
+from visuaml.openhypergraph_export import categorical_to_json, json_to_categorical
 
 
 @pytest.mark.skipif(

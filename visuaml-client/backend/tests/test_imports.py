@@ -1,7 +1,7 @@
 """Test basic imports to verify CI setup."""
 
-import sys
 import os
+import sys
 
 # Add the backend directory to Python path so we can import visuaml package
 backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,9 +20,9 @@ def test_visuaml_imports():
     """Test that visuaml modules can be imported."""
     # These should work if the path is set up correctly
     try:
-        from visuaml.graph_export import export_model_graph  # noqa: E402
-        from visuaml.model_loader import load_model_class  # noqa: E402
-        from visuaml.filters import GraphFilter  # noqa: E402
+        from visuaml.filters import GraphFilter
+        from visuaml.graph_export import export_model_graph
+        from visuaml.model_loader import load_model_class
 
         # Actually use the imports to avoid F401 errors
         assert export_model_graph is not None
@@ -40,7 +40,7 @@ def test_visuaml_imports():
 def test_optional_imports():
     """Test optional dependencies."""
     try:
-        from visuaml.openhypergraph_export import export_model_open_hypergraph  # noqa: E402
+        from visuaml.openhypergraph_export import export_model_open_hypergraph
 
         # Actually use the import to avoid F401 error
         assert export_model_open_hypergraph is not None
@@ -49,7 +49,6 @@ def test_optional_imports():
     except ImportError as e:
         print(f"ℹ️ Optional import not available: {e}")
         # This is expected if open-hypergraphs is not installed
-        pass
 
     # This should always pass
     assert True

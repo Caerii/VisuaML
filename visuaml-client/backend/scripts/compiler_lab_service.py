@@ -10,13 +10,13 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 from tempfile import TemporaryDirectory
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
-from examples.compiler_lab_demo import run  # noqa: E402
+from examples.compiler_lab_demo import run
 
 SCENARIOS = ("mlp", "attention", "assembly", "convolution")
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024

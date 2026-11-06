@@ -26,10 +26,10 @@ RuntimeError: Expected 4D tensor for input, but got 3D tensor
 
 ```python
 # ❌ Wrong usage
-export_model_open_hypergraph('models.SimpleCNN', sample_input_args=((1, 28, 28),))
+export_model_open_hypergraph("models.SimpleCNN", sample_input_args=((1, 28, 28),))
 
 # ✅ Correct usage
-export_model_open_hypergraph('models.SimpleCNN', sample_input_args=((1, 1, 28, 28),))
+export_model_open_hypergraph("models.SimpleCNN", sample_input_args=((1, 1, 28, 28),))
 ```
 
 **Fixed Model**: `FixedSimpleCNN.py`
@@ -99,12 +99,12 @@ RuntimeError: Expected tensor for argument #1 'indices' to have scalar type Long
 
 ```python
 # ❌ Wrong usage
-export_model_open_hypergraph('models.DemoNet', sample_input_args=((1, 32),))
+export_model_open_hypergraph("models.DemoNet", sample_input_args=((1, 32),))
 
 # ✅ Correct usage
-export_model_open_hypergraph('models.DemoNet',
-                            sample_input_args=((1, 32),),
-                            sample_input_dtypes=['long'])
+export_model_open_hypergraph(
+    "models.DemoNet", sample_input_args=((1, 32),), sample_input_dtypes=["long"]
+)
 ```
 
 **Fixed Model**: `FixedDemoNet.py`
@@ -186,8 +186,8 @@ export_model_open_hypergraph('models.DemoNet',
 from visuaml import export_model_open_hypergraph
 
 result = export_model_open_hypergraph(
-    'models.FixedSimpleCNN',
-    sample_input_args=((1, 1, 28, 28),)  # Correct 4D shape
+    "models.FixedSimpleCNN",
+    sample_input_args=((1, 1, 28, 28),),  # Correct 4D shape
 )
 ```
 
@@ -195,8 +195,8 @@ result = export_model_open_hypergraph(
 
 ```python
 result = export_model_open_hypergraph(
-    'models.FixedBasicRNN',
-    sample_input_args=((1, 10, 10),)  # (batch, seq_len, input_size)
+    "models.FixedBasicRNN",
+    sample_input_args=((1, 10, 10),),  # (batch, seq_len, input_size)
 )
 ```
 
@@ -204,9 +204,9 @@ result = export_model_open_hypergraph(
 
 ```python
 result = export_model_open_hypergraph(
-    'models.FixedDemoNet',
-    sample_input_args=((1, 32),),      # (batch, seq_len)
-    sample_input_dtypes=['long']       # Integer indices for embedding
+    "models.FixedDemoNet",
+    sample_input_args=((1, 32),),  # (batch, seq_len)
+    sample_input_dtypes=["long"],  # Integer indices for embedding
 )
 ```
 

@@ -4,18 +4,17 @@ import copy
 import hashlib
 import itertools
 import json
+import os
 import subprocess
 import sys
-import os
 
 import numpy as np
 import pytest
 import torch
 from torch import nn
-
-from visuaml.compiler_spike import capture, TensorSpec, OpRecord, ProgramIR
 from visuaml.compiler_lab.aot_compile import compile_numpy_aot
 from visuaml.compiler_lab.backends import BackendCapabilities
+from visuaml.compiler_lab.export_frontend import capture_export
 from visuaml.compiler_lab.ir_contract import (
     IRContractError,
     ResourcePolicy,
@@ -27,8 +26,8 @@ from visuaml.compiler_lab.placement_optimizer import (
     PlacementError,
     optimize_binary_placement,
 )
-from visuaml.compiler_lab.export_frontend import capture_export
 from visuaml.compiler_lab.verification import verify_outputs
+from visuaml.compiler_spike import OpRecord, ProgramIR, TensorSpec, capture
 
 
 class ConvNet(nn.Module):

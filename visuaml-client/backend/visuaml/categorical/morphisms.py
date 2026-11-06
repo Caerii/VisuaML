@@ -5,10 +5,11 @@ This module defines the base morphism classes and specific morphism types
 that represent categorical arrows in our hypergraph system.
 """
 
-from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional
 import uuid
-from .types import ArrayType, TensorType, Dtype
+from abc import ABC, abstractmethod
+from typing import Any
+
+from .types import ArrayType, Dtype, TensorType
 
 
 class Morphism(ABC):
@@ -20,7 +21,7 @@ class Morphism(ABC):
     """
 
     def __init__(
-        self, input_type: ArrayType, output_type: ArrayType, name: Optional[str] = None
+        self, input_type: ArrayType, output_type: ArrayType, name: str | None = None
     ):
         self.input_type = input_type
         self.output_type = output_type
@@ -28,7 +29,7 @@ class Morphism(ABC):
         self.tensor_type = TensorType(input_type, output_type)
 
     @abstractmethod
-    def forward(self, inputs: List[Any]) -> List[Any]:
+    def forward(self, inputs: list[Any]) -> list[Any]:
         """
         Forward computation of the morphism.
 
@@ -38,17 +39,15 @@ class Morphism(ABC):
         Returns:
             List of output arrays
         """
-        pass
 
     @abstractmethod
-    def to_hypergraph(self) -> Dict[str, Any]:
+    def to_hypergraph(self) -> dict[str, Any]:
         """
         Convert morphism to open hypergraph representation.
 
         Returns:
             Dictionary representing the hypergraph structure
         """
-        pass
 
     def __matmul__(self, other: "Morphism") -> "Morphism":
         """
@@ -72,7 +71,7 @@ class Morphism(ABC):
         """Check if this morphism can compose with another."""
         return self.input_type.is_compatible_with(other.output_type)
 
-    def get_parameters(self) -> Dict[str, Any]:
+    def get_parameters(self) -> dict[str, Any]:
         """Get morphism parameters for serialization."""
         return {
             "name": self.name,
@@ -94,7 +93,7 @@ class LinearMorphism(Morphism):
         input_dim: int,
         output_dim: int,
         use_bias: bool = True,
-        name: Optional[str] = None,
+        name: str | None = None,
     ):
         input_type = ArrayType((input_dim,), Dtype.FLOAT32)
         output_type = ArrayType((output_dim,), Dtype.FLOAT32)
@@ -106,7 +105,7 @@ class LinearMorphism(Morphism):
         self.weight_shape = (output_dim, input_dim)
         self.bias_shape = (output_dim,) if use_bias else None
 
-    def forward(self, inputs: List[Any]) -> List[Any]:
+    def forward(self, inputs: list[Any]) -> list[Any]:
         """Forward pass: y = Wx + b"""
         # This would be implemented with actual tensor operations
         # For now, we just return the structure
@@ -114,7 +113,7 @@ class LinearMorphism(Morphism):
             f"linear({inputs[0]}, weight={self.weight_shape}, bias={self.bias_shape})"
         ]
 
-    def to_hypergraph(self) -> Dict[str, Any]:
+    def to_hypergraph(self) -> dict[str, Any]:
         """Convert to hypergraph representation."""
         return {
             "type": "linear",
@@ -181,19 +180,17 @@ class ActivationMorphism(Morphism):
     Represents element-wise activation functions like ReLU, sigmoid, etc.
     """
 
-    def __init__(
-        self, shape: tuple, activation: str = "relu", name: Optional[str] = None
-    ):
+    def __init__(self, shape: tuple, activation: str = "relu", name: str | None = None):
         array_type = ArrayType(shape, Dtype.FLOAT32)
         super().__init__(array_type, array_type, name)
         self.activation = activation
         self.shape = shape
 
-    def forward(self, inputs: List[Any]) -> List[Any]:
+    def forward(self, inputs: list[Any]) -> list[Any]:
         """Forward pass: y = activation(x)"""
         return [f"{self.activation}({inputs[0]})"]
 
-    def to_hypergraph(self) -> Dict[str, Any]:
+    def to_hypergraph(self) -> dict[str, Any]:
         """Convert to hypergraph representation."""
         return {
             "type": "activation",
@@ -221,7 +218,7 @@ class ComposedMorphism(Morphism):
     Represents the categorical composition of morphisms.
     """
 
-    def __init__(self, first: Morphism, second: Morphism, name: Optional[str] = None):
+    def __init__(self, first: Morphism, second: Morphism, name: str | None = None):
         if not second.can_compose_with(first):
             raise ValueError(
                 f"Cannot compose morphisms: {second.output_type} ≠ {first.input_type}"
@@ -231,12 +228,12 @@ class ComposedMorphism(Morphism):
         self.first = first
         self.second = second
 
-    def forward(self, inputs: List[Any]) -> List[Any]:
+    def forward(self, inputs: list[Any]) -> list[Any]:
         """Forward pass: second(first(inputs))"""
         intermediate = self.first.forward(inputs)
         return self.second.forward(intermediate)
 
-    def to_hypergraph(self) -> Dict[str, Any]:
+    def to_hypergraph(self) -> dict[str, Any]:
         """Convert to hypergraph representation."""
         first_hg = self.first.to_hypergraph()
         second_hg = self.second.to_hypergraph()
@@ -266,14 +263,14 @@ class ComposedMorphism(Morphism):
 class IdentityMorphism(Morphism):
     """Identity morphism (no-op)."""
 
-    def __init__(self, array_type: ArrayType, name: Optional[str] = None):
+    def __init__(self, array_type: ArrayType, name: str | None = None):
         super().__init__(array_type, array_type, name)
 
-    def forward(self, inputs: List[Any]) -> List[Any]:
+    def forward(self, inputs: list[Any]) -> list[Any]:
         """Forward pass: y = x"""
         return inputs
 
-    def to_hypergraph(self) -> Dict[str, Any]:
+    def to_hypergraph(self) -> dict[str, Any]:
         """Convert to hypergraph representation."""
         return {
             "type": "identity",
@@ -300,7 +297,7 @@ class ParallelMorphism(Morphism):
     Represents f ⊗ g where inputs and outputs are combined.
     """
 
-    def __init__(self, morphisms: List[Morphism], name: Optional[str] = None):
+    def __init__(self, morphisms: list[Morphism], name: str | None = None):
         if not morphisms:
             raise ValueError("Cannot create parallel morphism with no components")
 
@@ -319,7 +316,7 @@ class ParallelMorphism(Morphism):
         super().__init__(input_type, output_type, name)
         self.morphisms = morphisms
 
-    def forward(self, inputs: List[Any]) -> List[Any]:
+    def forward(self, inputs: list[Any]) -> list[Any]:
         """Forward pass: parallel application"""
         results = []
         for i, morphism in enumerate(self.morphisms):
@@ -327,7 +324,7 @@ class ParallelMorphism(Morphism):
             results.extend(result)
         return [f"concat({results})"]
 
-    def to_hypergraph(self) -> Dict[str, Any]:
+    def to_hypergraph(self) -> dict[str, Any]:
         """Convert to hypergraph representation."""
         component_hgs = [m.to_hypergraph() for m in self.morphisms]
 
@@ -370,22 +367,22 @@ class ParallelMorphism(Morphism):
 
 # Convenience functions for creating common morphisms
 def linear(
-    input_dim: int, output_dim: int, use_bias: bool = True, name: Optional[str] = None
+    input_dim: int, output_dim: int, use_bias: bool = True, name: str | None = None
 ) -> LinearMorphism:
     """Create a linear morphism."""
     return LinearMorphism(input_dim, output_dim, use_bias, name)
 
 
-def relu(shape: tuple, name: Optional[str] = None) -> ActivationMorphism:
+def relu(shape: tuple, name: str | None = None) -> ActivationMorphism:
     """Create a ReLU activation morphism."""
     return ActivationMorphism(shape, "relu", name)
 
 
-def sigmoid(shape: tuple, name: Optional[str] = None) -> ActivationMorphism:
+def sigmoid(shape: tuple, name: str | None = None) -> ActivationMorphism:
     """Create a sigmoid activation morphism."""
     return ActivationMorphism(shape, "sigmoid", name)
 
 
-def identity(array_type: ArrayType, name: Optional[str] = None) -> IdentityMorphism:
+def identity(array_type: ArrayType, name: str | None = None) -> IdentityMorphism:
     """Create an identity morphism."""
     return IdentityMorphism(array_type, name)

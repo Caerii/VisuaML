@@ -8,8 +8,7 @@ print("Requires rewriting models in catgrad's DSL:")
 print()
 
 try:
-    import catgrad.layers as layers
-    from catgrad import NdArrayType
+    from catgrad import NdArrayType, layers
 
     # Define types
     BATCH_TYPE = NdArrayType((1,), "float32")
@@ -34,7 +33,7 @@ print("Works with existing PyTorch models:")
 print()
 
 try:
-    import torch.nn as nn
+    from torch import nn
     from visuaml.categorical.morphisms import LinearMorphism
     from visuaml.categorical.types import ArrayType
 

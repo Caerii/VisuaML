@@ -10,6 +10,7 @@ from dataclasses import asdict, dataclass
 from typing import Any, Protocol
 
 from visuaml.compiler_spike import CapturedProgram, ProgramIR, UnsupportedOperation
+
 from .aot_compile import AOTArtifact, compile_numpy_aot
 
 

@@ -19,7 +19,8 @@ from torch import nn
 from torch.fx import Node
 
 from visuaml.compiler_spike import CapturedProgram, UnsupportedOperation, _op
-from .numpy_runtime import SCHEMA, OPS, array_digest
+
+from .numpy_runtime import OPS, SCHEMA, array_digest
 
 
 @dataclass

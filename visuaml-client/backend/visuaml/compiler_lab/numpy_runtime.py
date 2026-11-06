@@ -12,7 +12,7 @@ import hashlib
 import json
 from math import prod
 from pathlib import Path
-from zipfile import ZipFile, BadZipFile
+from zipfile import BadZipFile, ZipFile
 
 try:
     from .ir_contract import (

@@ -5,12 +5,11 @@ This module provides functions for composing morphisms in various ways,
 following categorical composition rules.
 """
 
-from typing import List, Optional
-from .morphisms import Morphism, ComposedMorphism, ParallelMorphism, IdentityMorphism
+from .morphisms import ComposedMorphism, IdentityMorphism, Morphism, ParallelMorphism
 from .types import ArrayType
 
 
-def compose(*morphisms: Morphism, name: Optional[str] = None) -> Morphism:
+def compose(*morphisms: Morphism, name: str | None = None) -> Morphism:
     """
     Compose multiple morphisms sequentially (left to right).
 
@@ -48,7 +47,7 @@ def compose(*morphisms: Morphism, name: Optional[str] = None) -> Morphism:
     return result
 
 
-def parallel(*morphisms: Morphism, name: Optional[str] = None) -> ParallelMorphism:
+def parallel(*morphisms: Morphism, name: str | None = None) -> ParallelMorphism:
     """
     Compose morphisms in parallel (tensor product).
 
@@ -71,7 +70,7 @@ def parallel(*morphisms: Morphism, name: Optional[str] = None) -> ParallelMorphi
 
 
 def tensor_product(
-    left: Morphism, right: Morphism, name: Optional[str] = None
+    left: Morphism, right: Morphism, name: str | None = None
 ) -> ParallelMorphism:
     """
     Tensor product of two morphisms (f ⊗ g).
@@ -87,7 +86,7 @@ def tensor_product(
     return ParallelMorphism([left, right], name)
 
 
-def sequential(*morphisms: Morphism, name: Optional[str] = None) -> Morphism:
+def sequential(*morphisms: Morphism, name: str | None = None) -> Morphism:
     """
     Alias for compose() for clarity.
 
@@ -101,7 +100,7 @@ def sequential(*morphisms: Morphism, name: Optional[str] = None) -> Morphism:
     return compose(*morphisms, name=name)
 
 
-def chain(*morphisms: Morphism, name: Optional[str] = None) -> Morphism:
+def chain(*morphisms: Morphism, name: str | None = None) -> Morphism:
     """
     Another alias for compose() for clarity.
 
@@ -115,7 +114,7 @@ def chain(*morphisms: Morphism, name: Optional[str] = None) -> Morphism:
     return compose(*morphisms, name=name)
 
 
-def identity_for(array_type: ArrayType, name: Optional[str] = None) -> IdentityMorphism:
+def identity_for(array_type: ArrayType, name: str | None = None) -> IdentityMorphism:
     """
     Create identity morphism for a given type.
 
@@ -129,7 +128,7 @@ def identity_for(array_type: ArrayType, name: Optional[str] = None) -> IdentityM
     return IdentityMorphism(array_type, name)
 
 
-def validate_composition(morphisms: List[Morphism]) -> bool:
+def validate_composition(morphisms: list[Morphism]) -> bool:
     """
     Validate that a list of morphisms can be composed.
 
@@ -151,7 +150,7 @@ def validate_composition(morphisms: List[Morphism]) -> bool:
     return True
 
 
-def get_composition_type_signature(morphisms: List[Morphism]) -> str:
+def get_composition_type_signature(morphisms: list[Morphism]) -> str:
     """
     Get the type signature of a composition.
 
@@ -188,7 +187,7 @@ class CompositionBuilder:
     """
 
     def __init__(self):
-        self.morphisms: List[Morphism] = []
+        self.morphisms: list[Morphism] = []
 
     def add(self, morphism: Morphism) -> "CompositionBuilder":
         """Add a morphism to the composition."""
@@ -204,30 +203,28 @@ class CompositionBuilder:
         input_dim: int,
         output_dim: int,
         use_bias: bool = True,
-        name: Optional[str] = None,
+        name: str | None = None,
     ) -> "CompositionBuilder":
         """Add a linear layer."""
         from .morphisms import linear
 
         return self.add(linear(input_dim, output_dim, use_bias, name))
 
-    def add_relu(
-        self, shape: tuple, name: Optional[str] = None
-    ) -> "CompositionBuilder":
+    def add_relu(self, shape: tuple, name: str | None = None) -> "CompositionBuilder":
         """Add a ReLU activation."""
         from .morphisms import relu
 
         return self.add(relu(shape, name))
 
     def add_sigmoid(
-        self, shape: tuple, name: Optional[str] = None
+        self, shape: tuple, name: str | None = None
     ) -> "CompositionBuilder":
         """Add a sigmoid activation."""
         from .morphisms import sigmoid
 
         return self.add(sigmoid(shape, name))
 
-    def build(self, name: Optional[str] = None) -> Morphism:
+    def build(self, name: str | None = None) -> Morphism:
         """Build the final composed morphism."""
         if not self.morphisms:
             raise ValueError("Cannot build empty composition")

@@ -11,17 +11,8 @@ import numpy as np
 import pytest
 import torch
 from torch import nn
-
-from visuaml.compiler_spike import (
-    CapturedProgram,
-    UnsupportedOperation,
-    capture,
-    decompose_linear,
-    inspect_fx,
-)
+from visuaml.compiler_lab.analysis import cost_report, graph_digest
 from visuaml.compiler_lab.aot_compile import compile_numpy_aot
-from visuaml.compiler_lab.numpy_runtime import BundleError, load_bundle, run_bundle
-from visuaml.compiler_lab.analysis import graph_digest, cost_report
 from visuaml.compiler_lab.backends import (
     BackendCapabilities,
     BackendRegistry,
@@ -30,10 +21,18 @@ from visuaml.compiler_lab.backends import (
     partition,
 )
 from visuaml.compiler_lab.export_frontend import capture_export
+from visuaml.compiler_lab.numpy_runtime import BundleError, load_bundle, run_bundle
 from visuaml.compiler_lab.verification import (
     VerificationFailure,
     apply_verified_passes,
     verify_outputs,
+)
+from visuaml.compiler_spike import (
+    CapturedProgram,
+    UnsupportedOperation,
+    capture,
+    decompose_linear,
+    inspect_fx,
 )
 
 
@@ -431,8 +430,8 @@ def test_attention_demo_cli_produces_canvas_and_artifact(tmp_path):
 
 def test_second_aot_backend_torch_export_roundtrip(small, tmp_path):
     from visuaml.compiler_lab.torch_target import (
-        TorchExportBackend,
         TorchExportArtifact,
+        TorchExportBackend,
     )
 
     p, x = small

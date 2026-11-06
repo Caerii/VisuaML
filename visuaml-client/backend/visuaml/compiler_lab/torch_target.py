@@ -13,6 +13,7 @@ from typing import Any
 import torch
 
 from visuaml.compiler_spike import CapturedProgram, UnsupportedOperation
+
 from .backends import BackendCapabilities
 
 

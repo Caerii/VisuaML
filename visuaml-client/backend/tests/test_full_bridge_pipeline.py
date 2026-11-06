@@ -5,9 +5,9 @@ PyTorch Model → FX Tracing → Categorical Morphisms → Open Hypergraphs → 
 """
 
 import torch
-import torch.nn as nn
-from visuaml.categorical.morphisms import LinearMorphism, ActivationMorphism
+from torch import nn
 from visuaml.categorical.hypergraph import CategoricalHypergraph
+from visuaml.categorical.morphisms import ActivationMorphism, LinearMorphism
 from visuaml.graph_export import export_model_graph_with_fallback
 
 

@@ -82,7 +82,7 @@ def graph_digest(gm: GraphModule) -> str:
     for n in gm.graph.nodes:
         if n.op == "call_module":
             mod = gm.get_submodule(str(n.target))
-            target = f"{type(mod).__module__}.{type(mod).__qualname__}:{repr(mod)}"
+            target = f"{type(mod).__module__}.{type(mod).__qualname__}:{mod!r}"
         elif n.op == "call_function":
             target = f"{getattr(n.target, '__module__', '')}.{getattr(n.target, '__qualname__', str(n.target))}"
         else:

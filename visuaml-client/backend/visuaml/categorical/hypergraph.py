@@ -5,9 +5,10 @@ This module provides the CategoricalHypergraph class that represents
 open hypergraphs with proper categorical structure.
 """
 
-from typing import Dict, List, Any, Optional, Tuple
-from dataclasses import dataclass
 import json
+from dataclasses import dataclass
+from typing import Any
+
 from .morphisms import Morphism
 from .types import ArrayType
 
@@ -27,9 +28,9 @@ class HyperEdge:
 
     id: str
     type: str
-    inputs: List[str]
-    outputs: List[str]
-    parameters: Optional[Dict[str, Any]] = None
+    inputs: list[str]
+    outputs: list[str]
+    parameters: dict[str, Any] | None = None
 
     def __post_init__(self):
         if self.parameters is None:
@@ -50,8 +51,8 @@ class Wire:
 
     id: str
     type: str
-    source: Optional[str] = None
-    targets: Optional[List[str]] = None
+    source: str | None = None
+    targets: list[str] | None = None
 
     def __post_init__(self):
         if self.targets is None:
@@ -66,14 +67,14 @@ class CategoricalHypergraph:
     with other hypergraphs following categorical rules.
     """
 
-    def __init__(self, name: Optional[str] = None):
+    def __init__(self, name: str | None = None):
         self.name = name or "CategoricalHypergraph"
-        self.hyperedges: Dict[str, HyperEdge] = {}
-        self.wires: Dict[str, Wire] = {}
-        self.input_wires: List[str] = []
-        self.output_wires: List[str] = []
-        self.input_types: List[ArrayType] = []
-        self.output_types: List[ArrayType] = []
+        self.hyperedges: dict[str, HyperEdge] = {}
+        self.wires: dict[str, Wire] = {}
+        self.input_wires: list[str] = []
+        self.output_wires: list[str] = []
+        self.input_types: list[ArrayType] = []
+        self.output_types: list[ArrayType] = []
 
     def add_hyperedge(self, hyperedge: HyperEdge) -> None:
         """Add a hyperedge to the graph."""
@@ -92,7 +93,7 @@ class CategoricalHypergraph:
             raise ValueError(f"Wire {wire.id} already exists")
         self.wires[wire.id] = wire
 
-    def set_input_boundary(self, wire_ids: List[str], types: List[ArrayType]) -> None:
+    def set_input_boundary(self, wire_ids: list[str], types: list[ArrayType]) -> None:
         """Set the input boundary of the hypergraph."""
         if len(wire_ids) != len(types):
             raise ValueError("Number of input wires must match number of types")
@@ -104,7 +105,7 @@ class CategoricalHypergraph:
         self.input_wires = wire_ids
         self.input_types = types
 
-    def set_output_boundary(self, wire_ids: List[str], types: List[ArrayType]) -> None:
+    def set_output_boundary(self, wire_ids: list[str], types: list[ArrayType]) -> None:
         """Set the output boundary of the hypergraph."""
         if len(wire_ids) != len(types):
             raise ValueError("Number of output wires must match number of types")
@@ -215,7 +216,7 @@ class CategoricalHypergraph:
 
         return result
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert hypergraph to dictionary representation."""
         return {
             "name": self.name,
@@ -248,7 +249,7 @@ class CategoricalHypergraph:
             },
         }
 
-    def to_json(self, indent: Optional[int] = 2) -> str:
+    def to_json(self, indent: int | None = 2) -> str:
         """Convert hypergraph to JSON string."""
         return json.dumps(self.to_dict(), indent=indent)
 
@@ -291,7 +292,7 @@ class CategoricalHypergraph:
 
         return hypergraph
 
-    def validate(self) -> Tuple[bool, List[str]]:
+    def validate(self) -> tuple[bool, list[str]]:
         """
         Validate the hypergraph structure.
 
@@ -347,7 +348,7 @@ class CategoricalHypergraph:
 
         return len(errors) == 0, errors
 
-    def get_statistics(self) -> Dict[str, Any]:
+    def get_statistics(self) -> dict[str, Any]:
         """Get statistics about the hypergraph."""
         edge_types = {}
         for edge in self.hyperedges.values():

@@ -10,19 +10,19 @@ This example shows how to:
 This follows the catgrad pattern but adapted for VisuaML.
 """
 
-import sys
 import os
+import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from visuaml.categorical import (
+    ActivationMorphism,
     ArrayType,
+    CategoricalHypergraph,
     Dtype,
     LinearMorphism,
-    ActivationMorphism,
     compose,
     parallel,
-    CategoricalHypergraph,
 )
 from visuaml.categorical.composition import CompositionBuilder
 

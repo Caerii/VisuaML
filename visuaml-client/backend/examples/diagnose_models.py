@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
 """
 Diagnostic script for analyzing models that fail open-hypergraph export.
 This script identifies issues and provides solutions to make models compatible.
 """
 
-import sys
 import os
+import sys
+
 import torch
 from torch.fx import symbolic_trace
 from torch.fx.passes.shape_prop import ShapeProp
@@ -93,7 +93,7 @@ def analyze_simple_cnn():
     except Exception as e:
         diagnostic.add_issue(
             "FX Tracing/Shape Propagation Error",
-            f"Error during tracing or shape propagation: {str(e)}",
+            f"Error during tracing or shape propagation: {e!s}",
             "Check model structure for dynamic operations",
         )
 
@@ -192,7 +192,7 @@ def analyze_demo_net():
         print(f"Long input failed: {str(e)[:100]}...")
         diagnostic.add_issue(
             "Additional Issues",
-            f"Even with correct input type, model fails: {str(e)}",
+            f"Even with correct input type, model fails: {e!s}",
             "Check for other dynamic operations in the model",
         )
 

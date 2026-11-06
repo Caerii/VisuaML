@@ -1,22 +1,23 @@
 """Main module for exporting PyTorch models to VisuaML graph format."""
 
-import sys
-from typing import Dict, List, Any, Optional, Set
-from torch.fx import symbolic_trace, GraphModule, Node
-from torch.fx.passes.shape_prop import ShapeProp
-import torch
-import torch.nn as nn
 import importlib
+import sys
+from typing import Any
 
-from .model_loader import load_model_class, instantiate_model
-from .filters import GraphFilter, FilterConfig
+import torch
+from torch import nn
+from torch.fx import GraphModule, Node, symbolic_trace
+from torch.fx.passes.shape_prop import ShapeProp
+
+from .filters import FilterConfig, GraphFilter
+from .model_loader import instantiate_model, load_model_class
 from .visualization import NodeVisualizer
 
 
 def _format_arg(
     arg: Any,
-    name_map: Dict[Node, str],
-    included_fx_nodes: Set[Node],
+    name_map: dict[Node, str],
+    included_fx_nodes: set[Node],
     graph_filter: GraphFilter,  # Pass GraphFilter instance
     raw: bool = False,
 ) -> Any:
@@ -79,8 +80,8 @@ def _format_arg(
 
 def create_graph_json(
     graph_module: GraphModule,
-    filter_config: Optional[FilterConfig] = None,
-) -> Dict[str, Any]:
+    filter_config: FilterConfig | None = None,
+) -> dict[str, Any]:
     """
     Convert a PyTorch FX GraphModule to VisuaML JSON format.
     Includes shape information and humanized args/kwargs.
@@ -100,7 +101,7 @@ def create_graph_json(
 
     # Build name_map for all original nodes (before filtering)
     # This ensures that even if an arg node is filtered out, we can still refer to its original name.
-    name_map: Dict[Node, str] = {node: node.name for node in graph_module.graph.nodes}
+    name_map: dict[Node, str] = {node: node.name for node in graph_module.graph.nodes}
 
     all_fx_nodes = list(graph_module.graph.nodes)
     included_fx_nodes = graph_filter.filter_graph(all_fx_nodes, graph_module)
@@ -219,13 +220,13 @@ def create_graph_json(
 
 def export_model_graph(
     model_path: str,
-    filter_config: Optional[FilterConfig] = None,
-    model_args: Optional[tuple] = None,
-    model_kwargs: Optional[dict] = None,
-    sample_input_args: Optional[tuple] = None,
-    sample_input_kwargs: Optional[dict] = None,
-    sample_input_dtypes: Optional[List[str]] = None,
-) -> Dict[str, Any]:
+    filter_config: FilterConfig | None = None,
+    model_args: tuple | None = None,
+    model_kwargs: dict | None = None,
+    sample_input_args: tuple | None = None,
+    sample_input_kwargs: dict | None = None,
+    sample_input_dtypes: list[str] | None = None,
+) -> dict[str, Any]:
     """
     Export a PyTorch model to VisuaML graph format.
 
@@ -258,7 +259,7 @@ def export_model_graph(
 
             # Look for a SAMPLE_INPUT variable in the module.
             if hasattr(imported_module, "SAMPLE_INPUT"):
-                sample_input = getattr(imported_module, "SAMPLE_INPUT")
+                sample_input = imported_module.SAMPLE_INPUT
 
                 # Expected format: (args_tuple, dtypes_list) or just args_tuple
                 if isinstance(sample_input, tuple) and len(sample_input) > 0:
@@ -314,15 +315,15 @@ def export_model_graph(
 
 def export_model_graph_with_fallback(
     model_path: str,
-    filter_config: Optional[FilterConfig] = None,
-    model_args: Optional[tuple] = None,
-    model_kwargs: Optional[dict] = None,
-    sample_input_args: Optional[tuple] = None,
-    sample_input_kwargs: Optional[dict] = None,
-    sample_input_dtypes: Optional[List[str]] = None,
+    filter_config: FilterConfig | None = None,
+    model_args: tuple | None = None,
+    model_kwargs: dict | None = None,
+    sample_input_args: tuple | None = None,
+    sample_input_kwargs: dict | None = None,
+    sample_input_dtypes: list[str] | None = None,
     tracing_method: str = "auto",  # "auto", "fx", "hooks", "torchscript"
     export_format: str = "visuaml-json",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Traces a model using the specified method, with FX as the preferred default.
     If FX tracing fails, it automatically falls back to hook-based tracing.
@@ -357,7 +358,7 @@ def export_model_graph_with_fallback(
             imported_module = importlib.import_module(module_name)
 
             if hasattr(imported_module, "SAMPLE_INPUT"):
-                sample_input = getattr(imported_module, "SAMPLE_INPUT")
+                sample_input = imported_module.SAMPLE_INPUT
                 if isinstance(sample_input, tuple) and len(sample_input) > 0:
                     if isinstance(sample_input[0], tuple):
                         sample_input_args = sample_input[0]
@@ -405,7 +406,6 @@ def export_model_graph_with_fallback(
             )
 
             # The rest of the auto-fallback logic will now correctly use the discovered sample inputs
-            pass
 
     # Load and instantiate the model for methods that require a model instance first
     model_class, _ = load_model_class(model_path)
@@ -454,9 +454,9 @@ def export_model_graph_with_fallback(
 
 def trace_with_hooks(
     model: nn.Module,
-    sample_inputs: Optional[List[torch.Tensor]],
-    filter_config: Optional[FilterConfig] = None,
-) -> Dict[str, Any]:
+    sample_inputs: list[torch.Tensor] | None,
+    filter_config: FilterConfig | None = None,
+) -> dict[str, Any]:
     """
     Trace model execution using forward hooks.
     This works with any PyTorch model, including those with dynamic control flow.
@@ -585,7 +585,7 @@ def trace_with_hooks(
     return {"nodes": nodes_json, "edges": edges_json}
 
 
-def _generate_default_sample_inputs(model: nn.Module) -> Optional[List[torch.Tensor]]:
+def _generate_default_sample_inputs(model: nn.Module) -> list[torch.Tensor] | None:
     """
     Generate reasonable default sample inputs for common model types.
     """
@@ -647,8 +647,8 @@ def _generate_default_sample_inputs(model: nn.Module) -> Optional[List[torch.Ten
 
 
 def _static_module_analysis(
-    model: nn.Module, filter_config: Optional[FilterConfig] = None
-) -> Dict[str, Any]:
+    model: nn.Module, filter_config: FilterConfig | None = None
+) -> dict[str, Any]:
     """
     Fallback static analysis when forward pass is not possible.
     Creates nodes based on module structure without execution.
@@ -710,9 +710,9 @@ def _static_module_analysis(
 
 def trace_with_torchscript(
     model: nn.Module,
-    sample_inputs: Optional[List[torch.Tensor]],
-    filter_config: Optional[FilterConfig] = None,
-) -> Dict[str, Any]:
+    sample_inputs: list[torch.Tensor] | None,
+    filter_config: FilterConfig | None = None,
+) -> dict[str, Any]:
     """
     Trace model using TorchScript tracing.
     This can handle some dynamic behavior but may fail on complex control flow.
