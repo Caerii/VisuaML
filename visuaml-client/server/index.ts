@@ -10,6 +10,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { finished } from 'stream/promises';
+import { registerCompilerLabRoutes } from './compilerLab.ts';
 
 // Type imports will be added as needed
 
@@ -36,6 +37,7 @@ app.register(cors, {
 
 // Register the multipart plugin
 app.register(multipart);
+registerCompilerLabRoutes(app);
 
 // At the top of the file, add Python detection
 const PYTHON_COMMAND = process.env.VISUAML_PYTHON || 'python';

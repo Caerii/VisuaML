@@ -1,16 +1,18 @@
-# Compiler IR / backend spike (draft)
+# Compiler Lab status: v4 integration
 
-This branch records an opt-in experimental direction for VisuaML: trace model computations, preserve operator/tensor metadata, decompose supported operations, plan execution by backend capabilities, and compare outputs against PyTorch.
+The earlier compiler-spike proposal has now been expanded into the opt-in v4 implementation on this branch.
 
-A locally tested prototype patch was prepared alongside this branch. It currently lives in the downloadable `VisuaML_Compiler_Spike_v1.zip` artifact attached to the corresponding ChatGPT conversation; the code files were **not yet committed** to this branch. Do not merge this branch as a completed implementation.
+Source:
+- `visuaml-client/backend/visuaml/compiler_spike.py`
+- `visuaml-client/backend/visuaml/compiler_lab/`
+- `visuaml-client/backend/scripts/compiler_lab_service.py`
+- `visuaml-client/server/compilerLab.ts`
+- `visuaml-client/src/ui/CompilerLab/`
 
-## Prototype contents
+The feature flag `VISUAML_COMPILER_LAB_ENABLED=1` enables fixed-scenario analysis. The `/compiler` React route can be opened even without the backend, but analysis requires the flag, Python, and PyTorch.
 
-- `visuaml-client/backend/visuaml/compiler_spike.py` — typed FX graph analysis, linear decomposition/refusion, PyTorch/NumPy interpreter, quantization/noise *illustrative* optical surrogate, pluggable backend registration and capability planning, canvas-schema projection.
-- `visuaml-client/backend/tests/test_compiler_spike.py` — 10 local tests passed with torch 2.10 CPU and pytest 9.
-- `visuaml-client/backend/examples/compiler_spike_demo.py` — runnable comparison demo.
-- `docs/COMPILER_SPIKE.md` — setup and limitations.
+Validation on the extracted v4 overlay: 74 Python tests passed and one optional cross-repository selection-parity test skipped. The full Node dependency-resolved build and actual stateful neural-assemblies parity remain unverified.
 
-To apply the prototype, unzip its files into the repository root. Do not conflate the optical surrogate with Ayo hardware: it does not model a real device.
+The code contains no Ayo hardware backend. All placement costs are hypothetical analytical units; PyTorch/NumPy output comparisons are sampled numerical witnesses, not proofs.
 
-Next: publish the code to this branch, connect a read-only analysis endpoint, compare with the neural-assemblies reference engine, then add physically calibrated backends and larger-model import support.
+See `docs/COMPILER_LAB_V4.md` and `visuaml-client/COMPILER_LAB_INTEGRATION.md`.
