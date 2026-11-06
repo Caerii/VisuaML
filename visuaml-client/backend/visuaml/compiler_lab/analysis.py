@@ -144,7 +144,6 @@ def validate_graph(gm: GraphModule) -> tuple[GraphDiagnostic, ...]:
 def cost_report(program: CapturedProgram) -> CostReport:
     gm, ir = program.graph_module, program.ir
     warnings = validate_graph(gm)
-    records = {n.id: n for n in ir.nodes}
     nodes = list(gm.graph.nodes)
     index = {n.name: i for i, n in enumerate(nodes)}
     last_use = {n.name: i for i, n in enumerate(nodes)}
