@@ -11,6 +11,10 @@ The compiler's existing binary min-cut planner optimizes a **declared additive, 
 - Larger programs: candidate search among per-scenario optima and all-host; explicitly labeled **non-exact**.
 - Closed-world admission for profiles, missing tensor transfer sizes, nonfinite objective values, and illegal device placements.
 
+## Reproducible provenance contract
+
+The `visuaml.placement-sensitivity.v2` report retains each full hypothetical cost model, the explicitly declared backend capabilities, and `input_sha256`, a deterministic digest of the serialized IR, backend contract and ordered scenario definitions. A digest is an integrity fingerprint, not a proof of equivalence or device calibration.
+
 ## Demo integration
 
 `examples/compiler_lab_demo.py` includes a `hypothetical_placement_robustness` object alongside the existing `hypothetical_partition_sweep` report. The `/compiler` React route renders a sensitivity summary. CPU witness validation and the original backends remain unchanged.
