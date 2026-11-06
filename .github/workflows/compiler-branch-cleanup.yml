@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: pip install ruff==0.14.4
+      - run: pip install ruff==0.17.4
       - run: pnpm install --frozen-lockfile
       - name: Apply mechanical Ruff fixes and Python formatting
         run: |
