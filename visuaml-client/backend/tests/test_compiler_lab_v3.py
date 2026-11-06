@@ -201,6 +201,24 @@ def test_v3_graph_cut_all_host_when_transfer_is_expensive():
     assert result.estimated_total_cost == result.all_host_baseline
 
 
+def test_v3_graph_cut_large_explicit_cost_never_forces_unsupported_device():
+    """A finite-infinity sentinel must account for explicit costs >1e12."""
+    ir = _tiny_ir()
+    caps = BackendCapabilities(name='only-matmul', revision='1',
+                               native_ops=frozenset({'matmul'}), fallback_ops=frozenset(),
+                               supported_dtypes=frozenset({'torch.float32'}))
+    model = HypotheticalCostModel(
+        host_op_costs={'matmul': 2e13, 'relu': 4e13},
+        device_op_costs={'matmul': 1.0},
+        transfer_overhead=0.0, transfer_bytes_per_unit=16.0,
+    )
+    got = optimize_binary_placement(ir, caps, model)
+    assignments = {a.node: a.assigned for a in got.assignments}
+    assert assignments['b'] == 'host'
+    assert got.estimated_total_cost <= got.all_host_baseline
+    assert abs(got.estimated_total_cost - _brute(ir, caps, model)) <= 1e-12 * got.all_host_baseline
+
+
 def test_v3_graph_cut_rejects_missing_cost_and_invalid_graph():
     ir = _tiny_ir()
     caps = BackendCapabilities('hypo','1',frozenset({'matmul'}),frozenset(),frozenset({'torch.float32'}))

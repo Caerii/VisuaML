@@ -24,12 +24,12 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Lint visuaml-client
         run: pnpm --filter visuaml-client run lint
-      - name: Check Prettier formatting in visuaml-client
-        run: pnpm --dir visuaml-client exec prettier --check .
       - name: Test visuaml-client
         run: pnpm --filter visuaml-client run test -- --run
       - name: Typecheck and build visuaml-client
         run: pnpm --filter visuaml-client run build
+      - name: Repository-wide Prettier check (existing formatting debt)
+        run: pnpm --dir visuaml-client exec prettier --check .
   python:
     runs-on: ubuntu-latest
     steps:
@@ -47,9 +47,9 @@ jobs:
           python -m pip install -r visuaml-client/backend/requirements.txt
       - name: Install development dependencies
         run: pip install ruff pytest
-      - name: Run ruff linting
-        run: ruff check visuaml-client/backend
       - name: Run pytest
         run: |
           cd visuaml-client
-          python -m pytest -q backend/tests 
+          python -m pytest -q backend/tests
+      - name: Repository-wide Ruff check (existing lint debt)
+        run: ruff check visuaml-client/backend 

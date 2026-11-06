@@ -182,7 +182,15 @@ def optimize_binary_placement(ir: ProgramIR, capabilities: BackendCapabilities,
     costs_all_host = 0.0
     # A conservative finite infinity, larger than every possible valid cost.
     edge_pairs = [(dep, n.id) for n in nodes for dep in n.inputs]
+    # An invalid (unsupported) device choice must cost more than every feasible
+    # all-host assignment, including arbitrary user-provided explicit op costs.
+    # Ignoring overrides here makes the purported exact solver select a backend
+    # that cannot execute an operator whenever host costs exceed the sentinel.
+    explicit = [*(costs.host_op_costs or {}).values(),
+                *(costs.device_op_costs or {}).values()]
+    max_override = max([0.0, *explicit])
     max_unary = len(nodes) * (costs.host_overhead + costs.device_overhead + 1 +
+                             max_override +
                              sum((n.estimated_flops or 0) for n in nodes) /
                              min(costs.host_flops_per_unit, costs.device_flops_per_unit))
     max_transfer = sum(costs.transfer_overhead + specs[dep] / costs.transfer_bytes_per_unit
@@ -234,6 +242,8 @@ def optimize_binary_placement(ir: ProgramIR, capabilities: BackendCapabilities,
     for n in nodes:
         host, device = node_costs[n.id]
         assignment = 'device' if index[n.id] in src_side else 'host'
+        if assignment == 'device' and device is None:
+            raise RuntimeError(f'Cut assigned unsupported operation {n.id} to device')
         selected[n.id] = assignment
         unary += device if assignment == 'device' else host
         greedy = 'device' if device is not None and device < host else 'host'
