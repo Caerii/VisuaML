@@ -39,6 +39,9 @@ export type PassReceipt = {
 };
 export type Assignment = { node: string; op: string; assigned: string; host_cost: number; device_cost: number | null };
 export type Placement = {
+  schema: string;
+  profile: string;
+  backend: string;
   estimated_total_cost: number;
   all_host_baseline: number;
   savings_vs_all_host: number;
