@@ -5,6 +5,7 @@ Input: one or more compiler_lab_demo.py analysis.json files with v3 sweep data.
 No hardware measurement and no execution in browser. Plans are precomputed
 from the exact binary-cut solver, not recomputed from arbitrary JS data.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -12,7 +13,7 @@ import json
 from pathlib import Path
 
 
-HTML = r'''<!doctype html>
+HTML = r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VisuaML · Hardware–Algorithm Co-Design</title>
 <style>
@@ -72,27 +73,29 @@ for(let e of edges){let a=pos[e.source],b=pos[e.target];if(!a||!b)continue;let c
 svg.append(el('path',{d:`M${a.x+154},${a.y+30} C${a.x+175},${a.y+30} ${b.x-17},${b.y+30} ${b.x},${b.y+30}`,stroke:cross?'#f1b573':'#537491','stroke-width':cross?2.7:1.3,fill:'none'}))}
 for(let n of nodes){let p0=pos[n.id], info=mapping[n.id],isDev=info?.assigned==='device';let group=el('g',{transform:`translate(${p0.x},${p0.y})`,style:'cursor:pointer'});group.append(el('rect',{width:154,height:62,rx:8,fill:isDev?'#17463a':'#1a2b44',stroke:isDev?'#61e5bc':'#6687b0','stroke-width':1.3}));group.append(el('text',{x:9,y:24,fill:'#f3f7ff','font-size':12,'font-weight':'bold'},(n.data.label||n.id).slice(0,19)));group.append(el('text',{x:9,y:43,fill:isDev?'#7affcb':'#a4c1e2','font-size':11},n.data.op+' · '+(isDev?'device':'host')));group.addEventListener('click',()=>{let box=$('selected');box.replaceChildren();for(let [k,v] of [['Node',n.id],['Operator',n.data.op],['Output',n.data.outputShape||'unknown'],['Placement',info?.assigned||'unknown'],['Host model',info?.host_cost],['Device model',info?.device_cost??'not available']]){let row=document.createElement('p');let strong=document.createElement('b');strong.textContent=k+': ';row.append(strong,document.createTextNode(String(v)));box.append(row)}});svg.append(group)}
 }render();})();
-</script></body></html>'''
+</script></body></html>"""
 
 
 def build(reports: list[Path], output: Path) -> Path:
     data = {}
     for path in reports:
-        report = json.loads(path.read_text(encoding='utf-8'))
-        if not report.get('hypothetical_partition_sweep'):
-            raise ValueError(f'Report lacks v3 placement profiles: {path}')
-        data[report['scenario']] = report
+        report = json.loads(path.read_text(encoding="utf-8"))
+        if not report.get("hypothetical_partition_sweep"):
+            raise ValueError(f"Report lacks v3 placement profiles: {path}")
+        data[report["scenario"]] = report
     if not data:
-        raise ValueError('At least one report is required')
-    payload = json.dumps(data, separators=(',', ':'), allow_nan=False).replace('<', '\\u003c')
+        raise ValueError("At least one report is required")
+    payload = json.dumps(data, separators=(",", ":"), allow_nan=False).replace(
+        "<", "\\u003c"
+    )
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(HTML.replace('__DATA__', payload), encoding='utf-8')
+    output.write_text(HTML.replace("__DATA__", payload), encoding="utf-8")
     return output
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--analysis', nargs='+', type=Path, required=True)
-    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument("--analysis", nargs="+", type=Path, required=True)
+    parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     print(build(args.analysis, args.out))

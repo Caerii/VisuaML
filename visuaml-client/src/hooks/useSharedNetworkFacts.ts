@@ -25,4 +25,4 @@ export const useSharedNetworkFacts = () => {
       ySharedFacts.unobserve(syncFacts);
     };
   }, [ydoc, setFacts]);
-}; 
+};

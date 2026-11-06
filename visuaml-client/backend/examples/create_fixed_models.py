@@ -5,6 +5,7 @@ Script to create fixed versions of models that fail open-hypergraph export.
 
 import os
 
+
 def create_fixed_simple_cnn():
     """Create a fixed version of SimpleCNN."""
     fixed_code = '''import torch
@@ -62,10 +63,11 @@ if __name__ == '__main__':
 # Usage for open-hypergraph export:
 # export_model_open_hypergraph('models.FixedSimpleCNN', sample_input_args=((1, 1, 28, 28),))
 '''
-    
-    with open('../models/FixedSimpleCNN.py', 'w', encoding='utf-8') as f:
+
+    with open("../models/FixedSimpleCNN.py", "w", encoding="utf-8") as f:
         f.write(fixed_code)
     print("Created FixedSimpleCNN.py")
+
 
 def create_fixed_basic_rnn():
     """Create a fixed version of BasicRNN."""
@@ -158,10 +160,11 @@ if __name__ == '__main__':
 # Usage for open-hypergraph export:
 # export_model_open_hypergraph('models.FixedBasicRNN', sample_input_args=((1, 10, 10),))
 '''
-    
-    with open('../models/FixedBasicRNN.py', 'w', encoding='utf-8') as f:
+
+    with open("../models/FixedBasicRNN.py", "w", encoding="utf-8") as f:
         f.write(fixed_code)
     print("Created FixedBasicRNN.py")
+
 
 def create_fixed_demo_net():
     """Create a fixed version of DemoNet."""
@@ -253,65 +256,72 @@ if __name__ == '__main__':
 #                              sample_input_args=((1, 32),),
 #                              sample_input_dtypes=['long'])
 '''
-    
-    with open('../models/FixedDemoNet.py', 'w', encoding='utf-8') as f:
+
+    with open("../models/FixedDemoNet.py", "w", encoding="utf-8") as f:
         f.write(fixed_code)
     print("Created FixedDemoNet.py")
+
 
 def test_fixed_models():
     """Test the fixed models with open-hypergraph export."""
     print("\nTesting fixed models with open-hypergraph export...")
-    
+
     import sys
+
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    
+
     from visuaml import export_model_open_hypergraph
-    
+
     # Test FixedSimpleCNN
     try:
         result = export_model_open_hypergraph(
-            'models.FixedSimpleCNN', 
-            sample_input_args=((1, 1, 28, 28),)
+            "models.FixedSimpleCNN", sample_input_args=((1, 1, 28, 28),)
         )
-        print(f"✅ FixedSimpleCNN: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges")
+        print(
+            f"✅ FixedSimpleCNN: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges"
+        )
     except Exception as e:
         print(f"❌ FixedSimpleCNN failed: {str(e)[:100]}...")
-    
+
     # Test FixedBasicRNN
     try:
         result = export_model_open_hypergraph(
-            'models.FixedBasicRNN', 
-            sample_input_args=((1, 10, 10),)
+            "models.FixedBasicRNN", sample_input_args=((1, 10, 10),)
         )
-        print(f"✅ FixedBasicRNN: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges")
+        print(
+            f"✅ FixedBasicRNN: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges"
+        )
     except Exception as e:
         print(f"❌ FixedBasicRNN failed: {str(e)[:100]}...")
-    
+
     # Test FixedDemoNet
     try:
         result = export_model_open_hypergraph(
-            'models.FixedDemoNet', 
+            "models.FixedDemoNet",
             sample_input_args=((1, 32),),
-            sample_input_dtypes=['long']
+            sample_input_dtypes=["long"],
         )
-        print(f"✅ FixedDemoNet: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges")
+        print(
+            f"✅ FixedDemoNet: {len(result['nodes'])} nodes, {len(result['hyperedges'])} hyperedges"
+        )
     except Exception as e:
         print(f"❌ FixedDemoNet failed: {str(e)[:100]}...")
+
 
 def main():
     """Create all fixed models."""
     print("Creating fixed versions of problematic models...")
-    
+
     create_fixed_simple_cnn()
     create_fixed_basic_rnn()
     create_fixed_demo_net()
-    
+
     print("\nFixed models created! Testing with open-hypergraph export...")
     test_fixed_models()
-    
-    print("\n" + "="*60)
+
+    print("\n" + "=" * 60)
     print("SUMMARY: Model Fixes for Open-Hypergraph Compatibility")
-    print("="*60)
+    print("=" * 60)
     print("1. FixedSimpleCNN.py - Correct input shapes and layer sizes")
     print("2. FixedBasicRNN.py - Removed dynamic operations, separate RNN types")
     print("3. FixedDemoNet.py - Simplified architecture, proper input types")
@@ -320,5 +330,6 @@ def main():
     print("- Shape propagation")
     print("- Open-hypergraph export")
 
+
 if __name__ == "__main__":
-    main() 
+    main()

@@ -8,6 +8,7 @@ import torch.nn as nn
 
 class ModelLoadError(Exception):
     """Custom exception for model loading errors."""
+
     pass
 
 
@@ -20,20 +21,20 @@ def load_model_class(module_path: str) -> Tuple[Type[nn.Module], str]:
     This supports both explicit naming ('models.SimpleNN' where SimpleNN.py
     contains class SimpleNN) and discovery ('user_models.my_model' where
     my_model.py contains any nn.Module subclass).
-    
+
     Args:
         module_path: Full module path (e.g., 'models.MyTinyGPT' or 'user_models.my_uploaded_file')
-        
+
     Returns:
         Tuple of (ModelClass, class_name)
-        
+
     Raises:
         ModelLoadError: If module or class cannot be loaded or found.
     """
     try:
         # Import the module specified by the path
         imported_module = importlib.import_module(module_path)
-        
+
         # 1. Try to find a class with the same name as the module file.
         # This maintains compatibility with the original example models.
         class_name_candidate = module_path.split(".")[-1]
@@ -47,15 +48,19 @@ def load_model_class(module_path: str) -> Tuple[Type[nn.Module], str]:
         for name, obj in inspect.getmembers(imported_module):
             # Check if it's a class, a subclass of nn.Module, not nn.Module itself,
             # and was defined in this module (not imported).
-            if (inspect.isclass(obj) and
-                    issubclass(obj, nn.Module) and
-                    obj is not nn.Module and
-                    obj.__module__ == imported_module.__name__):
+            if (
+                inspect.isclass(obj)
+                and issubclass(obj, nn.Module)
+                and obj is not nn.Module
+                and obj.__module__ == imported_module.__name__
+            ):
                 return obj, name
 
         # 3. If no suitable class is found by either method.
-        raise ModelLoadError(f"Could not find any nn.Module subclass defined in module '{module_path}'.")
-        
+        raise ModelLoadError(
+            f"Could not find any nn.Module subclass defined in module '{module_path}'."
+        )
+
     except ImportError as e:
         raise ModelLoadError(
             f"Could not import module '{module_path}'. "
@@ -63,27 +68,29 @@ def load_model_class(module_path: str) -> Tuple[Type[nn.Module], str]:
             f"Error: {e}"
         )
     except Exception as e:
-        raise ModelLoadError(f"An unexpected error occurred while loading model from '{module_path}': {e}")
+        raise ModelLoadError(
+            f"An unexpected error occurred while loading model from '{module_path}': {e}"
+        )
 
 
 def instantiate_model(
-    model_class: Type[nn.Module], 
+    model_class: Type[nn.Module],
     class_name: str,
     model_args: Optional[tuple] = None,
-    model_kwargs: Optional[dict] = None
+    model_kwargs: Optional[dict] = None,
 ) -> nn.Module:
     """
     Instantiate a model from its class.
-    
+
     Args:
         model_class: The model class to instantiate
         class_name: Name of the class (for error messages)
         model_args: Optional positional arguments for model constructor
         model_kwargs: Optional keyword arguments for model constructor
-        
+
     Returns:
         Instantiated model
-        
+
     Raises:
         ModelLoadError: If model cannot be instantiated
     """
@@ -97,4 +104,4 @@ def instantiate_model(
         raise ModelLoadError(
             f"Error instantiating model '{class_name}' with provided arguments: {e}. "
             f"Ensure the model can be instantiated with these arguments."
-        ) 
+        )

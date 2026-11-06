@@ -5,11 +5,11 @@ They accept only a fixed documented subset. Algebraic rewrites may change
 floating-point rounding and device execution cost, so numeric witnesses are
 required to decide whether to accept the rewrite for a given workload.
 """
+
 from __future__ import annotations
 
 import copy
 import math
-from typing import Any
 
 import torch
 from torch import nn
@@ -31,18 +31,27 @@ def _complete(gm, example_inputs):
     return CapturedProgram(gm, inspect_fx(gm))
 
 
-def decompose_softmax(program: CapturedProgram, *example_inputs: torch.Tensor) -> CapturedProgram:
+def decompose_softmax(
+    program: CapturedProgram, *example_inputs: torch.Tensor
+) -> CapturedProgram:
     """Stable softmax -> amax/sub/exp/sum/div, preserving chosen reduction dim."""
     gm = _fresh(program)
     graph = gm.graph
     for node in list(graph.nodes):
         dim = None
-        if node.op == "call_module" and isinstance(gm.get_submodule(str(node.target)), nn.Softmax):
+        if node.op == "call_module" and isinstance(
+            gm.get_submodule(str(node.target)), nn.Softmax
+        ):
             dim = gm.get_submodule(str(node.target)).dim
-        elif node.op == "call_function" and node.target in {torch.softmax, torch.nn.functional.softmax}:
+        elif node.op == "call_function" and node.target in {
+            torch.softmax,
+            torch.nn.functional.softmax,
+        }:
             dim = node.kwargs.get("dim", node.args[1] if len(node.args) > 1 else None)
             if node.kwargs.get("dtype") is not None or len(node.args) > 2:
-                raise UnsupportedOperation("Softmax dtype conversion is not supported by this pass")
+                raise UnsupportedOperation(
+                    "Softmax dtype conversion is not supported by this pass"
+                )
         elif node.op == "call_method" and node.target == "softmax":
             dim = node.kwargs.get("dim", node.args[1] if len(node.args) > 1 else None)
         else:
@@ -61,7 +70,9 @@ def decompose_softmax(program: CapturedProgram, *example_inputs: torch.Tensor) -
     return _complete(gm, example_inputs)
 
 
-def decompose_sdpa(program: CapturedProgram, *example_inputs: torch.Tensor) -> CapturedProgram:
+def decompose_sdpa(
+    program: CapturedProgram, *example_inputs: torch.Tensor
+) -> CapturedProgram:
     """Restricted scaled-dot-product attention -> transpose/matmul/scale/softmax/matmul.
 
     Supports only inference with no mask, no dropout, no causal masking or GQA.
@@ -77,17 +88,29 @@ def decompose_sdpa(program: CapturedProgram, *example_inputs: torch.Tensor) -> C
         if len(node.args) < 3:
             raise UnsupportedOperation("SDPA needs q, k, v")
         q, k, v = node.args[:3]
-        mask = node.kwargs.get("attn_mask", node.args[3] if len(node.args) > 3 else None)
-        dropout = node.kwargs.get("dropout_p", node.args[4] if len(node.args) > 4 else 0)
-        causal = node.kwargs.get("is_causal", node.args[5] if len(node.args) > 5 else False)
+        mask = node.kwargs.get(
+            "attn_mask", node.args[3] if len(node.args) > 3 else None
+        )
+        dropout = node.kwargs.get(
+            "dropout_p", node.args[4] if len(node.args) > 4 else 0
+        )
+        causal = node.kwargs.get(
+            "is_causal", node.args[5] if len(node.args) > 5 else False
+        )
         gqa = node.kwargs.get("enable_gqa", False)
         scale = node.kwargs.get("scale")
         if mask is not None or dropout != 0 or causal or gqa:
-            raise UnsupportedOperation("SDPA decomposition supports only unmasked, no-dropout, noncausal, non-GQA attention")
+            raise UnsupportedOperation(
+                "SDPA decomposition supports only unmasked, no-dropout, noncausal, non-GQA attention"
+            )
         if not isinstance(q, torch.fx.Node) or not isinstance(k, torch.fx.Node):
             raise UnsupportedOperation("SDPA inputs must be FX tensors")
         qmeta = q.meta.get("tensor_meta")
-        if qmeta is None or len(qmeta.shape) < 2 or not isinstance(qmeta.shape[-1], int):
+        if (
+            qmeta is None
+            or len(qmeta.shape) < 2
+            or not isinstance(qmeta.shape[-1], int)
+        ):
             raise UnsupportedOperation("SDPA requires known query head dimension")
         head_dim = int(qmeta.shape[-1])
         if head_dim < 1:

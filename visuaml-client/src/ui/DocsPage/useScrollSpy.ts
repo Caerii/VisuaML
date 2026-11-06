@@ -6,7 +6,11 @@ export interface UseScrollSpyOptions {
   containerRef?: RefObject<HTMLElement>;
 }
 
-export function useScrollSpy({ sectionIds, offset = 0, containerRef }: UseScrollSpyOptions): string {
+export function useScrollSpy({
+  sectionIds,
+  offset = 0,
+  containerRef,
+}: UseScrollSpyOptions): string {
   const [activeSection, setActiveSection] = useState<string>(sectionIds[0] || '');
 
   useEffect(() => {

@@ -352,8 +352,7 @@ const InfoCard: React.FC<
                 width: '12px',
                 height: '12px',
                 borderRadius: '3px',
-                backgroundColor:
-                  sliceColors[hoveredVoxelInfo.channelIndex % sliceColors.length],
+                backgroundColor: sliceColors[hoveredVoxelInfo.channelIndex % sliceColors.length],
                 border: '1px solid rgba(0,0,0,0.1)',
               }}
             />
@@ -385,15 +384,14 @@ const TensorVisualizerContainer = forwardRef<TensorVisualizer3DHandle, TensorVis
     const [hoveredVoxelInfo, setHoveredVoxelInfo] = useState<HoverInfo | null>(null);
     const setIsGraphInteractive = useNetworkStore((state) => state.setIsGraphInteractive);
 
-    const cameraConfig = useMemo(() => calculateCameraPosition(isFullscreen, shape), [
-      isFullscreen,
-      shape,
-    ]);
-    const voxelLayout = useMemo(() => generateVoxelLayout(shape, isFullscreen, sliceColors), [
-      shape,
-      isFullscreen,
-      sliceColors,
-    ]);
+    const cameraConfig = useMemo(
+      () => calculateCameraPosition(isFullscreen, shape),
+      [isFullscreen, shape],
+    );
+    const voxelLayout = useMemo(
+      () => generateVoxelLayout(shape, isFullscreen, sliceColors),
+      [shape, isFullscreen, sliceColors],
+    );
 
     useEffect(() => {
       const handleFullscreenChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -485,4 +483,4 @@ const TensorVisualizerContainer = forwardRef<TensorVisualizer3DHandle, TensorVis
   },
 );
 
-export default TensorVisualizerContainer; 
+export default TensorVisualizerContainer;

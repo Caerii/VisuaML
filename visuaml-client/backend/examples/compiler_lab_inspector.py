@@ -5,13 +5,14 @@ No external JS/CDN and no model execution in the browser. This is a useful
 presentation surface and integration design reference, not a modification
 of VisuaML's existing React frontend.
 """
+
 from __future__ import annotations
 
 import argparse
 import json
 from pathlib import Path
 
-HTML = r'''<!DOCTYPE html>
+HTML = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -60,7 +61,7 @@ for(let n of nodes){let p=pos[n.id];let g=el('g',{class:'node'+(selected===n.id?
 }
 function render(){let st=report.stages[stageIndex],c=st.cost;$('nodeCount').textContent=fmt(c.node_count);$('flops').textContent=fmt(c.known_flops);$('memory').textContent=fmt(c.peak_live_activation_bytes);$('digest').textContent=st.graph_sha256.slice(0,10)+'…';$('stageControls').replaceChildren(...report.stages.map((s,i)=>{let b=document.createElement('button');b.className='stage'+(i===stageIndex?' active':'');b.textContent=(i+1)+'. '+s.name.replaceAll('_',' ');b.addEventListener('click',()=>{stageIndex=i;selected=null;render()});return b}));$('nodeTitle').textContent='Select an operation';let label=document.createElement('dt'),value=document.createElement('dd');label.textContent='Stage';value.textContent=st.name.replaceAll('_',' ');$('nodeInfo').replaceChildren(label,value);$('checks').replaceChildren();for(let [name,d] of [['NumPy AOT',report.witness],['Torch export',report.torch_export_roundtrip]]){let card=document.createElement('div');card.className='receipt';let err=Math.max(...d.leaves.map(x=>x.max_abs_error));card.textContent=`${name} · ${d.passed?'PASS':'FAIL'} · max abs ${err.toExponential(2)}`;$('checks').appendChild(card)}$('receipts').replaceChildren();for(let r of report.passes){let card=document.createElement('div');card.className='receipt';let a=document.createElement('div');a.className='name';a.textContent=r.pass_name+' · '+(r.passed?'PASS':'FAIL');let b=document.createElement('div');b.className='desc';b.textContent=`${r.before_nodes}→${r.after_nodes} nodes · ${r.witnesses_checked} witnesses · max abs ${Number(r.max_abs_error).toExponential(2)}`;card.append(a,b);$('receipts').appendChild(card)}buildGraph(st);}
 render();})();
-</script></body></html>'''
+</script></body></html>"""
 
 
 def generate(analysis: Path, target: Path) -> Path:

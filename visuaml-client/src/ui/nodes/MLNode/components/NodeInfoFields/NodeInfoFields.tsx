@@ -12,12 +12,12 @@ const NodeInfoFields: React.FC<NodeInfoFieldsProps> = ({ data, nodeId }) => {
     <div className="ml-node__details-section">
       <div className="ml-node__details-title">Info</div>
       <div className="ml-node__info-field">
-        <strong className="ml-node__info-label">Name:</strong> 
+        <strong className="ml-node__info-label">Name:</strong>
         <span className="ml-node__info-value">{data.name || nodeId}</span>
       </div>
       {data.layerType && data.op !== data.layerType && (
         <div className="ml-node__info-field">
-          <strong className="ml-node__info-label">Type:</strong> 
+          <strong className="ml-node__info-label">Type:</strong>
           <span className="ml-node__info-value">{data.layerType}</span>
         </div>
       )}

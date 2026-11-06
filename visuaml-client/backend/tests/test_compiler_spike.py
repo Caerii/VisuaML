@@ -1,4 +1,5 @@
 """Run with: PYTHONPATH=visuaml-client/backend pytest -q visuaml-client/backend/tests/test_compiler_spike.py"""
+
 import json
 
 import numpy as np
@@ -7,8 +8,17 @@ import torch
 from torch import nn
 
 from visuaml.compiler_spike import (
-    Backend, NumpyBackend, OpticalSurrogateBackend, UnsupportedOperation,
-    capture, compare_outputs, decompose_linear, fuse_linear_pattern, lower, plan, register_backend, to_visuaml_graph,
+    NumpyBackend,
+    OpticalSurrogateBackend,
+    UnsupportedOperation,
+    capture,
+    compare_outputs,
+    decompose_linear,
+    fuse_linear_pattern,
+    lower,
+    plan,
+    register_backend,
+    to_visuaml_graph,
 )
 
 
@@ -87,6 +97,7 @@ def test_unsupported_operation_fails_closed():
     class Unsupported(nn.Module):
         def forward(self, x):
             return torch.sin(x)
+
     captured = capture(Unsupported(), torch.randn(2, 3))
     with pytest.raises(UnsupportedOperation, match="unsupported nodes"):
         lower(captured, "numpy")
@@ -110,8 +121,10 @@ def test_custom_backend_extensible():
         name = "my-new-backend"
         native_ops = frozenset({"linear", "relu"})
         fallback_ops = frozenset()
+
         def run(self, gm, *args):
             return gm(*args)
+
     register_backend(CustomBackend())
     x = torch.randn(2, 4)
     captured = capture(MLP(), x)
@@ -136,12 +149,19 @@ def test_biasless_linear_decomposition():
         def __init__(self):
             super().__init__()
             self.linear = nn.Linear(3, 2, bias=False)
+
         def forward(self, x):
             return self.linear(x)
+
     x = torch.randn(4, 3)
     base = capture(Biasless(), x)
     rewritten = decompose_linear(base, x)
-    assert compare_outputs(base.graph_module(x), rewritten.graph_module(x))["max_abs_error"] < 1e-6
+    assert (
+        compare_outputs(base.graph_module(x), rewritten.graph_module(x))[
+            "max_abs_error"
+        ]
+        < 1e-6
+    )
     assert not any(x.op == "add" for x in rewritten.ir.nodes)
 
 
@@ -153,5 +173,15 @@ def test_decompose_then_fuse_linear():
     re_fused = fuse_linear_pattern(lowered, x)
     assert [n.op for n in re_fused.ir.nodes].count("linear") == 2
     assert [n.op for n in re_fused.ir.nodes].count("matmul") == 0
-    assert compare_outputs(source.graph_module(x), re_fused.graph_module(x))["max_abs_error"] < 1e-5
-    assert compare_outputs(source.graph_module(x), lower(re_fused, "numpy").run(x))["max_abs_error"] < 1e-5
+    assert (
+        compare_outputs(source.graph_module(x), re_fused.graph_module(x))[
+            "max_abs_error"
+        ]
+        < 1e-5
+    )
+    assert (
+        compare_outputs(source.graph_module(x), lower(re_fused, "numpy").run(x))[
+            "max_abs_error"
+        ]
+        < 1e-5
+    )

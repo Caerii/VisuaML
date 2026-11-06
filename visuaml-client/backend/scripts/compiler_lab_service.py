@@ -5,18 +5,18 @@ Deliberately does NOT load submitted Python files, arbitrary model paths, packag
 or artifact archives. The returned partition sweep is a hypothetical cost-model
 exercise, not an executable multi-device backend.
 """
+
 from __future__ import annotations
 
 import argparse
 import json
-import os
 from pathlib import Path
 import sys
 from tempfile import TemporaryDirectory
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
-from examples.compiler_lab_demo import run   # noqa: E402
+from examples.compiler_lab_demo import run  # noqa: E402
 
 SCENARIOS = ("mlp", "attention", "assembly", "convolution")
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
@@ -53,8 +53,12 @@ def main() -> int:
         print(payload)
         return 0
     except Exception as exc:
-        print(f"Compiler Lab analysis failed: {type(exc).__name__}: {exc}", file=sys.stderr)
+        print(
+            f"Compiler Lab analysis failed: {type(exc).__name__}: {exc}",
+            file=sys.stderr,
+        )
         return 1
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

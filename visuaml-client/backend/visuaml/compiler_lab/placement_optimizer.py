@@ -9,6 +9,7 @@ selection, or an end-to-end multi-device performance prediction.
 One producer-to-consumer edge counts one transfer; repeated values and caching
 are not modeled. We reject unknown tensor sizes rather than invent bytes.
 """
+
 from __future__ import annotations
 
 from collections import deque
@@ -28,7 +29,7 @@ class PlacementError(ValueError):
 class HypotheticalCostModel:
     """All costs are abstract units; none are claimed hardware measurements."""
 
-    name: str = 'illustrative-profile-v1'
+    name: str = "illustrative-profile-v1"
     host_overhead: float = 1.0
     device_overhead: float = 4.0
     host_flops_per_unit: float = 500.0
@@ -39,17 +40,25 @@ class HypotheticalCostModel:
     device_op_costs: Mapping[str, float] | None = None
 
     def __post_init__(self) -> None:
-        for k in ('host_overhead', 'device_overhead', 'transfer_overhead'):
+        for k in ("host_overhead", "device_overhead", "transfer_overhead"):
             v = getattr(self, k)
             if not isfinite(v) or v < 0:
-                raise PlacementError(f'{k} must be finite and nonnegative')
-        for k in ('host_flops_per_unit', 'device_flops_per_unit', 'transfer_bytes_per_unit'):
+                raise PlacementError(f"{k} must be finite and nonnegative")
+        for k in (
+            "host_flops_per_unit",
+            "device_flops_per_unit",
+            "transfer_bytes_per_unit",
+        ):
             v = getattr(self, k)
             if not isfinite(v) or v <= 0:
-                raise PlacementError(f'{k} must be finite and positive')
+                raise PlacementError(f"{k} must be finite and positive")
         for costs in (self.host_op_costs, self.device_op_costs):
-            if costs is not None and any(not isfinite(v) or v < 0 for v in costs.values()):
-                raise PlacementError('Explicit per-op costs must be finite and nonnegative')
+            if costs is not None and any(
+                not isfinite(v) or v < 0 for v in costs.values()
+            ):
+                raise PlacementError(
+                    "Explicit per-op costs must be finite and nonnegative"
+                )
 
 
 @dataclass(frozen=True)
@@ -92,7 +101,7 @@ class _Flow:
 
     def add(self, u: int, v: int, capacity: float) -> None:
         if capacity < 0:
-            raise PlacementError('Negative cut capacity')
+            raise PlacementError("Negative cut capacity")
         f: list[float | int] = [v, capacity, len(self.g[v])]
         b: list[float | int] = [u, 0.0, len(self.g[u])]
         self.g[u].append(f)
@@ -115,6 +124,7 @@ class _Flow:
             if levels[t] < 0:
                 break
             at = [0] * n
+
             def dfs(u: int, pushed: float) -> float:
                 if u == t:
                     return pushed
@@ -130,8 +140,9 @@ class _Flow:
                             return sent
                     at[u] += 1
                 return 0.0
+
             while True:
-                sent = dfs(s, float('inf'))
+                sent = dfs(s, float("inf"))
                 if sent <= eps:
                     break
                 flow += sent
@@ -147,9 +158,13 @@ class _Flow:
         return flow, reachable
 
 
-def optimize_binary_placement(ir: ProgramIR, capabilities: BackendCapabilities,
-                              costs: HypotheticalCostModel | None = None,
-                              *, max_nodes: int = 500) -> OptimizedPlacement:
+def optimize_binary_placement(
+    ir: ProgramIR,
+    capabilities: BackendCapabilities,
+    costs: HypotheticalCostModel | None = None,
+    *,
+    max_nodes: int = 500,
+) -> OptimizedPlacement:
     """Exact binary optimum for the DECLARED estimated objective.
 
     Requires concrete tensor sizes to avoid making up transfer economics.
@@ -159,21 +174,25 @@ def optimize_binary_placement(ir: ProgramIR, capabilities: BackendCapabilities,
     costs = costs or HypotheticalCostModel()
     nodes = list(ir.nodes)
     if len(nodes) > max_nodes:
-        raise PlacementError('Graph exceeds exact graph-cut size admission limit')
+        raise PlacementError("Graph exceeds exact graph-cut size admission limit")
     names = [n.id for n in nodes]
     if len(set(names)) != len(names):
-        raise PlacementError('Duplicate IR value IDs')
+        raise PlacementError("Duplicate IR value IDs")
     index = {n: i for i, n in enumerate(names)}
     before: set[str] = set()
     specs: dict[str, int] = {}
     for n in nodes:
         for dep in n.inputs:
             if dep not in before:
-                raise PlacementError(f'Forward reference or missing producer: {dep}->{n.id}')
+                raise PlacementError(
+                    f"Forward reference or missing producer: {dep}->{n.id}"
+                )
         before.add(n.id)
-        if n.op not in {'input', 'output', 'constant'}:
+        if n.op not in {"input", "output", "constant"}:
             if not n.tensors or any(t.bytes is None for t in n.tensors):
-                raise PlacementError(f'Unknown output bytes for {n.id}; refusing to guess transfer cost')
+                raise PlacementError(
+                    f"Unknown output bytes for {n.id}; refusing to guess transfer cost"
+                )
         specs[n.id] = sum(t.bytes or 0 for t in n.tensors)
 
     source, sink = len(nodes), len(nodes) + 1
@@ -186,27 +205,39 @@ def optimize_binary_placement(ir: ProgramIR, capabilities: BackendCapabilities,
     # all-host assignment, including arbitrary user-provided explicit op costs.
     # Ignoring overrides here makes the purported exact solver select a backend
     # that cannot execute an operator whenever host costs exceed the sentinel.
-    explicit = [*(costs.host_op_costs or {}).values(),
-                *(costs.device_op_costs or {}).values()]
+    explicit = [
+        *(costs.host_op_costs or {}).values(),
+        *(costs.device_op_costs or {}).values(),
+    ]
     max_override = max([0.0, *explicit])
-    max_unary = len(nodes) * (costs.host_overhead + costs.device_overhead + 1 +
-                             max_override +
-                             sum((n.estimated_flops or 0) for n in nodes) /
-                             min(costs.host_flops_per_unit, costs.device_flops_per_unit))
-    max_transfer = sum(costs.transfer_overhead + specs[dep] / costs.transfer_bytes_per_unit
-                       for dep, _ in edge_pairs)
+    max_unary = len(nodes) * (
+        costs.host_overhead
+        + costs.device_overhead
+        + 1
+        + max_override
+        + sum((n.estimated_flops or 0) for n in nodes)
+        / min(costs.host_flops_per_unit, costs.device_flops_per_unit)
+    )
+    max_transfer = sum(
+        costs.transfer_overhead + specs[dep] / costs.transfer_bytes_per_unit
+        for dep, _ in edge_pairs
+    )
     infinite = max(1e12, (max_unary + max_transfer + 1) * 8)
     if not isfinite(infinite):
-        raise PlacementError('Non-finite optimization objective')
+        raise PlacementError("Non-finite optimization objective")
 
     for n in nodes:
-        special = n.op in {'input', 'constant', 'output'}
+        special = n.op in {"input", "constant", "output"}
         operations = capabilities.native_ops
-        supported = (not special and
-                     (n.op in operations or '*' in operations) and
-                     all(v.dtype in capabilities.supported_dtypes for v in n.tensors) and
-                     (capabilities.max_tensor_rank is None or
-                      all(len(v.shape) <= capabilities.max_tensor_rank for v in n.tensors)))
+        supported = (
+            not special
+            and (n.op in operations or "*" in operations)
+            and all(v.dtype in capabilities.supported_dtypes for v in n.tensors)
+            and (
+                capabilities.max_tensor_rank is None
+                or all(len(v.shape) <= capabilities.max_tensor_rank for v in n.tensors)
+            )
+        )
         flop = n.estimated_flops
         host_explicit = (costs.host_op_costs or {}).get(n.op)
         device_explicit = (costs.device_op_costs or {}).get(n.op)
@@ -214,14 +245,27 @@ def optimize_binary_placement(ir: ProgramIR, capabilities: BackendCapabilities,
             host, device = 0.0, None
         else:
             if flop is None and host_explicit is None:
-                raise PlacementError(f'Missing static cost for {n.id}; provide explicit host op cost')
-            host = host_explicit if host_explicit is not None else costs.host_overhead + flop / costs.host_flops_per_unit
-            device = (device_explicit if device_explicit is not None else
-                      (costs.device_overhead + flop / costs.device_flops_per_unit) if flop is not None else None)
+                raise PlacementError(
+                    f"Missing static cost for {n.id}; provide explicit host op cost"
+                )
+            host = (
+                host_explicit
+                if host_explicit is not None
+                else costs.host_overhead + flop / costs.host_flops_per_unit
+            )
+            device = (
+                device_explicit
+                if device_explicit is not None
+                else (costs.device_overhead + flop / costs.device_flops_per_unit)
+                if flop is not None
+                else None
+            )
             if not supported:
                 device = None
             if supported and device is None:
-                raise PlacementError(f'Missing device cost for supported operation {n.op}')
+                raise PlacementError(
+                    f"Missing device cost for supported operation {n.op}"
+                )
         assert host is not None
         costs_all_host += host
         node_costs[n.id] = (host, device)
@@ -241,14 +285,14 @@ def optimize_binary_placement(ir: ProgramIR, capabilities: BackendCapabilities,
     greedy_unary = 0.0
     for n in nodes:
         host, device = node_costs[n.id]
-        assignment = 'device' if index[n.id] in src_side else 'host'
-        if assignment == 'device' and device is None:
-            raise RuntimeError(f'Cut assigned unsupported operation {n.id} to device')
+        assignment = "device" if index[n.id] in src_side else "host"
+        if assignment == "device" and device is None:
+            raise RuntimeError(f"Cut assigned unsupported operation {n.id} to device")
         selected[n.id] = assignment
-        unary += device if assignment == 'device' else host
-        greedy = 'device' if device is not None and device < host else 'host'
+        unary += device if assignment == "device" else host
+        greedy = "device" if device is not None and device < host else "host"
         greedy_labels[n.id] = greedy
-        greedy_unary += device if greedy == 'device' else host
+        greedy_unary += device if greedy == "device" else host
         assignments.append(CostedAssignment(n.id, n.op, assignment, host, device))
     boundaries: list[CrossBoundary] = []
     greedy_edge = 0.0
@@ -260,12 +304,20 @@ def optimize_binary_placement(ir: ProgramIR, capabilities: BackendCapabilities,
             greedy_edge += c
     total = unary + sum(e.estimated_cost for e in boundaries)
     if total > costs_all_host + 1e-6:
-        raise RuntimeError('Graph cut violated all-host baseline; implementation bug')
+        raise RuntimeError("Graph cut violated all-host baseline; implementation bug")
     return OptimizedPlacement(
-        'visuaml.binary-cut-placement.v1', costs.name, capabilities.name,
-        tuple(assignments), tuple(boundaries), total, costs_all_host,
-        greedy_unary + greedy_edge, costs_all_host - total,
-        ('Optimization is exact only for the supplied additive binary objective.',
-         'Profile costs are illustrative; no real hardware benchmarking or execution occurs.',
-         'Repeated transfers, caching, IO conversion, kernel fusion and memory limits are not modeled.'),
+        "visuaml.binary-cut-placement.v1",
+        costs.name,
+        capabilities.name,
+        tuple(assignments),
+        tuple(boundaries),
+        total,
+        costs_all_host,
+        greedy_unary + greedy_edge,
+        costs_all_host - total,
+        (
+            "Optimization is exact only for the supplied additive binary objective.",
+            "Profile costs are illustrative; no real hardware benchmarking or execution occurs.",
+            "Repeated transfers, caching, IO conversion, kernel fusion and memory limits are not modeled.",
+        ),
     )

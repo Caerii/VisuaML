@@ -3,6 +3,7 @@
 This artifact requires the PyTorch runtime (unlike the NumPy-AOT target).
 It is not CUDA code generation or an accelerator compiler on its own.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -24,7 +25,11 @@ class TorchExportArtifact:
         if len(args) != len(self.input_specs):
             raise UnsupportedOperation("Torch-export input arity differs from capture")
         for i, (arg, (shape, dtype)) in enumerate(zip(args, self.input_specs)):
-            if not isinstance(arg, torch.Tensor) or tuple(arg.shape) != shape or arg.dtype != dtype:
+            if (
+                not isinstance(arg, torch.Tensor)
+                or tuple(arg.shape) != shape
+                or arg.dtype != dtype
+            ):
                 raise UnsupportedOperation(f"Input {i} violates fixed export contract")
 
     def run(self, *args: torch.Tensor) -> Any:
@@ -39,29 +44,49 @@ class TorchExportArtifact:
         return target
 
     @classmethod
-    def load(cls, path: str | Path, input_specs: tuple[tuple[tuple[int, ...], torch.dtype], ...]):
+    def load(
+        cls,
+        path: str | Path,
+        input_specs: tuple[tuple[tuple[int, ...], torch.dtype], ...],
+    ):
         return cls(torch.export.load(path), input_specs)
 
 
 class TorchExportBackend:
     capabilities = BackendCapabilities(
-        name="torch-export", revision="1", native_ops=frozenset({"*"}),
-        fallback_ops=frozenset(), supported_dtypes=frozenset({
-            "torch.float16", "torch.float32", "torch.float64", "torch.bfloat16",
-            "torch.int64", "torch.int32", "torch.bool",
-        }), description="PyTorch ExportedProgram AOT; runtime still requires PyTorch",
+        name="torch-export",
+        revision="1",
+        native_ops=frozenset({"*"}),
+        fallback_ops=frozenset(),
+        supported_dtypes=frozenset(
+            {
+                "torch.float16",
+                "torch.float32",
+                "torch.float64",
+                "torch.bfloat16",
+                "torch.int64",
+                "torch.int32",
+                "torch.bool",
+            }
+        ),
+        description="PyTorch ExportedProgram AOT; runtime still requires PyTorch",
     )
 
     def __init__(self, example_inputs: tuple[torch.Tensor, ...]):
-        if not example_inputs or any(not isinstance(v, torch.Tensor) for v in example_inputs):
+        if not example_inputs or any(
+            not isinstance(v, torch.Tensor) for v in example_inputs
+        ):
             raise ValueError("Export backend needs concrete example tensors")
         self.inputs = example_inputs
 
     def compile(self, program: CapturedProgram) -> TorchExportArtifact:
         try:
             with torch.no_grad():
-                exported = torch.export.export(program.graph_module.eval(), self.inputs, strict=True)
+                exported = torch.export.export(
+                    program.graph_module.eval(), self.inputs, strict=True
+                )
         except Exception as exc:
             raise UnsupportedOperation(f"Torch AOT export failed: {exc}") from exc
-        return TorchExportArtifact(exported,
-                                   tuple((tuple(x.shape), x.dtype) for x in self.inputs))
+        return TorchExportArtifact(
+            exported, tuple((tuple(x.shape), x.dtype) for x in self.inputs)
+        )

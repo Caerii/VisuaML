@@ -63,9 +63,15 @@ class ProgramIR:
             "nodes": len(self.nodes),
             "operators": by_op,
             "estimated_flops": sum(n.estimated_flops or 0 for n in self.nodes),
-            "unknown_flop_nodes": [n.id for n in self.nodes if n.estimated_flops is None],
-            "tensor_output_bytes": sum(t.bytes or 0 for n in self.nodes for t in n.tensors),
-            "unknown_tensor_bytes": [n.id for n in self.nodes if any(t.bytes is None for t in n.tensors)],
+            "unknown_flop_nodes": [
+                n.id for n in self.nodes if n.estimated_flops is None
+            ],
+            "tensor_output_bytes": sum(
+                t.bytes or 0 for n in self.nodes for t in n.tensors
+            ),
+            "unknown_tensor_bytes": [
+                n.id for n in self.nodes if any(t.bytes is None for t in n.tensors)
+            ],
         }
 
 
@@ -84,33 +90,80 @@ def _op(node: Node, gm: GraphModule) -> str:
         return "constant"
     if node.op == "call_module":
         mod = gm.get_submodule(str(node.target))
-        for cls, name in ((nn.Linear, "linear"), (nn.Conv2d, "conv2d"), (nn.ReLU, "relu"),
-                          (nn.Sigmoid, "sigmoid"), (nn.Tanh, "tanh"),
-                          (nn.Softmax, "softmax"), (nn.GELU, "gelu"), (nn.LayerNorm, "layer_norm")):
+        for cls, name in (
+            (nn.Linear, "linear"),
+            (nn.Conv2d, "conv2d"),
+            (nn.ReLU, "relu"),
+            (nn.Sigmoid, "sigmoid"),
+            (nn.Tanh, "tanh"),
+            (nn.Softmax, "softmax"),
+            (nn.GELU, "gelu"),
+            (nn.LayerNorm, "layer_norm"),
+        ):
             if isinstance(mod, cls):
                 return name
         return f"module:{type(mod).__name__}"
     if node.op == "call_method":
         name = str(node.target)
-        return name if name in {"relu", "reshape", "view", "transpose", "flatten", "scatter", "sigmoid", "tanh", "contiguous", "permute", "softmax", "exp", "sum", "amax", "rsqrt", "gelu"} else f"method:{name}"
+        return (
+            name
+            if name
+            in {
+                "relu",
+                "reshape",
+                "view",
+                "transpose",
+                "flatten",
+                "scatter",
+                "sigmoid",
+                "tanh",
+                "contiguous",
+                "permute",
+                "softmax",
+                "exp",
+                "sum",
+                "amax",
+                "rsqrt",
+                "gelu",
+            }
+            else f"method:{name}"
+        )
     if node.op == "call_function":
         t = node.target
         mapping = {
-            torch.matmul: "matmul", operator.matmul: "matmul",
-            torch.mm: "matmul", torch.bmm: "matmul",
-            torch.add: "add", operator.add: "add",
-            torch.sub: "sub", operator.sub: "sub",
-            torch.mul: "mul", operator.mul: "mul",
-            torch.relu: "relu", torch.sigmoid: "sigmoid", torch.tanh: "tanh",
-            torch.topk: "topk", torch.argsort: "argsort", torch.zeros_like: "zeros_like",
+            torch.matmul: "matmul",
+            operator.matmul: "matmul",
+            torch.mm: "matmul",
+            torch.bmm: "matmul",
+            torch.add: "add",
+            operator.add: "add",
+            torch.sub: "sub",
+            operator.sub: "sub",
+            torch.mul: "mul",
+            operator.mul: "mul",
+            torch.relu: "relu",
+            torch.sigmoid: "sigmoid",
+            torch.tanh: "tanh",
+            torch.topk: "topk",
+            torch.argsort: "argsort",
+            torch.zeros_like: "zeros_like",
             operator.getitem: "getitem",
-            torch.nn.functional.linear: "linear", torch.nn.functional.conv2d: "conv2d",
+            torch.nn.functional.linear: "linear",
+            torch.nn.functional.conv2d: "conv2d",
             torch.nn.functional.relu: "relu",
-            torch.softmax: "softmax", torch.nn.functional.softmax: "softmax",
-            torch.nn.functional.gelu: "gelu", torch.nn.functional.layer_norm: "layer_norm",
-            torch.exp: "exp", torch.sum: "sum", torch.amax: "amax", torch.rsqrt: "rsqrt",
-            torch.div: "div", operator.truediv: "div", torch.transpose: "transpose",
-            torch.permute: "permute", torch.nn.functional.scaled_dot_product_attention: "sdpa",
+            torch.softmax: "softmax",
+            torch.nn.functional.softmax: "softmax",
+            torch.nn.functional.gelu: "gelu",
+            torch.nn.functional.layer_norm: "layer_norm",
+            torch.exp: "exp",
+            torch.sum: "sum",
+            torch.amax: "amax",
+            torch.rsqrt: "rsqrt",
+            torch.div: "div",
+            operator.truediv: "div",
+            torch.transpose: "transpose",
+            torch.permute: "permute",
+            torch.nn.functional.scaled_dot_product_attention: "sdpa",
         }
         return mapping.get(t, f"function:{getattr(t, '__name__', str(t))}")
     return f"unknown:{node.op}"
@@ -122,7 +175,11 @@ def _tensor_spec(meta: Any) -> TensorSpec | None:
     shape = tuple(str(d) for d in meta.shape)
     dtype = meta.dtype
     concrete = all(isinstance(x, int) for x in meta.shape)
-    nbytes = int(prod(meta.shape) * torch.empty((), dtype=dtype).element_size()) if concrete else None
+    nbytes = (
+        int(prod(meta.shape) * torch.empty((), dtype=dtype).element_size())
+        if concrete
+        else None
+    )
     return TensorSpec(shape=shape, dtype=str(dtype), bytes=nbytes)
 
 
@@ -137,8 +194,20 @@ def _tensors(node: Node) -> tuple[TensorSpec, ...]:
     return ()
 
 
-def _flops(node: Node, kind: str, gm: GraphModule, tensors: tuple[TensorSpec, ...]) -> int | None:
-    if kind in {"input", "output", "constant", "getitem", "transpose", "view", "reshape", "flatten", "contiguous"}:
+def _flops(
+    node: Node, kind: str, gm: GraphModule, tensors: tuple[TensorSpec, ...]
+) -> int | None:
+    if kind in {
+        "input",
+        "output",
+        "constant",
+        "getitem",
+        "transpose",
+        "view",
+        "reshape",
+        "flatten",
+        "contiguous",
+    }:
         return 0
     if not tensors or not all(s.isdecimal() for s in tensors[0].shape):
         return None
@@ -147,11 +216,26 @@ def _flops(node: Node, kind: str, gm: GraphModule, tensors: tuple[TensorSpec, ..
         if node.op == "call_module":
             module = gm.get_submodule(str(node.target))
             if isinstance(module, nn.Conv2d):
-                return 2 * prod(shape) * (module.in_channels // module.groups) * prod(module.kernel_size)
+                return (
+                    2
+                    * prod(shape)
+                    * (module.in_channels // module.groups)
+                    * prod(module.kernel_size)
+                )
         if len(node.args) >= 2 and isinstance(node.args[1], Node):
             wm = node.args[1].meta.get("tensor_meta")
-            if wm is not None and len(wm.shape) == 4 and all(isinstance(d, int) for d in wm.shape):
-                return 2 * prod(shape) * int(wm.shape[1]) * int(wm.shape[2]) * int(wm.shape[3])
+            if (
+                wm is not None
+                and len(wm.shape) == 4
+                and all(isinstance(d, int) for d in wm.shape)
+            ):
+                return (
+                    2
+                    * prod(shape)
+                    * int(wm.shape[1])
+                    * int(wm.shape[2])
+                    * int(wm.shape[3])
+                )
         return None
     if kind == "linear":
         if node.op == "call_module":
@@ -159,18 +243,40 @@ def _flops(node: Node, kind: str, gm: GraphModule, tensors: tuple[TensorSpec, ..
             return 2 * prod(shape) * module.in_features
         if len(node.args) >= 2 and isinstance(node.args[1], Node):
             weight_meta = node.args[1].meta.get("tensor_meta")
-            if weight_meta is not None and len(weight_meta.shape) >= 2 and isinstance(weight_meta.shape[-1], int):
+            if (
+                weight_meta is not None
+                and len(weight_meta.shape) >= 2
+                and isinstance(weight_meta.shape[-1], int)
+            ):
                 return 2 * prod(shape) * int(weight_meta.shape[-1])
         return None
     if kind == "matmul":
         # Only compute a count when the RHS inner dimension is statically known.
         rhs = node.args[1] if len(node.args) > 1 else None
         meta = rhs.meta.get("tensor_meta") if isinstance(rhs, Node) else None
-        if meta is not None and hasattr(meta, "shape") and len(meta.shape) >= 2 and isinstance(meta.shape[-2], int):
+        if (
+            meta is not None
+            and hasattr(meta, "shape")
+            and len(meta.shape) >= 2
+            and isinstance(meta.shape[-2], int)
+        ):
             return 2 * prod(shape) * int(meta.shape[-2])
         return None
-    if kind in {"add", "sub", "mul", "div", "relu", "sigmoid", "tanh", "exp", "rsqrt", "gelu"}:
-        return prod(shape)  # Approximate scalar-operation count, not device instructions.
+    if kind in {
+        "add",
+        "sub",
+        "mul",
+        "div",
+        "relu",
+        "sigmoid",
+        "tanh",
+        "exp",
+        "rsqrt",
+        "gelu",
+    }:
+        return prod(
+            shape
+        )  # Approximate scalar-operation count, not device instructions.
     return None
 
 
@@ -185,20 +291,30 @@ def inspect_fx(gm: GraphModule) -> ProgramIR:
             placeholders.append(node.name)
         if kind == "output":
             outputs.extend(n.name for n in node.all_input_nodes)
-        decomposition = ("transpose(weight)", "matmul(input, weight.T)", "add(bias)") if kind == "linear" else ()
-        records.append(OpRecord(
-            id=node.name, op=kind, target=str(node.target),
-            inputs=tuple(n.name for n in node.all_input_nodes),
-            tensors=specs,
-            estimated_flops=_flops(node, kind, gm, specs),
-            decomposition=decomposition,
-        ))
+        decomposition = (
+            ("transpose(weight)", "matmul(input, weight.T)", "add(bias)")
+            if kind == "linear"
+            else ()
+        )
+        records.append(
+            OpRecord(
+                id=node.name,
+                op=kind,
+                target=str(node.target),
+                inputs=tuple(n.name for n in node.all_input_nodes),
+                tensors=specs,
+                estimated_flops=_flops(node, kind, gm, specs),
+                decomposition=decomposition,
+            )
+        )
     return ProgramIR(tuple(records), tuple(placeholders), tuple(outputs))
 
 
 def capture(model: nn.Module, *example_inputs: torch.Tensor) -> CapturedProgram:
     """Trace a deterministic tensor computation. FX limitations apply."""
-    if not example_inputs or not all(isinstance(x, torch.Tensor) for x in example_inputs):
+    if not example_inputs or not all(
+        isinstance(x, torch.Tensor) for x in example_inputs
+    ):
         raise ValueError("capture requires at least one example torch.Tensor")
     model = copy.deepcopy(model).eval()
     gm = symbolic_trace(model)
@@ -207,7 +323,9 @@ def capture(model: nn.Module, *example_inputs: torch.Tensor) -> CapturedProgram:
     return CapturedProgram(gm, inspect_fx(gm))
 
 
-def decompose_linear(captured: CapturedProgram, *example_inputs: torch.Tensor) -> CapturedProgram:
+def decompose_linear(
+    captured: CapturedProgram, *example_inputs: torch.Tensor
+) -> CapturedProgram:
     """Lower nn.Linear layers into transpose+matmul+add FX nodes.
 
     The rewrite is algebraic, not guaranteed bitwise identical to fused GEMM.
@@ -216,11 +334,15 @@ def decompose_linear(captured: CapturedProgram, *example_inputs: torch.Tensor) -
     gm = copy.deepcopy(captured.graph_module)
     graph = gm.graph
     for node in list(graph.nodes):
-        if node.op != "call_module" or not isinstance(gm.get_submodule(str(node.target)), nn.Linear):
+        if node.op != "call_module" or not isinstance(
+            gm.get_submodule(str(node.target)), nn.Linear
+        ):
             continue
         mod = gm.get_submodule(str(node.target))
         if len(node.args) != 1 or node.kwargs:
-            raise UnsupportedOperation(f"Cannot decompose unsupported Linear invocation: {node.name}")
+            raise UnsupportedOperation(
+                f"Cannot decompose unsupported Linear invocation: {node.name}"
+            )
         with graph.inserting_before(node):
             weight = graph.get_attr(f"{node.target}.weight")
             wt = graph.call_method("transpose", (weight, 0, 1))
@@ -237,7 +359,9 @@ def decompose_linear(captured: CapturedProgram, *example_inputs: torch.Tensor) -
     return CapturedProgram(gm, inspect_fx(gm))
 
 
-def fuse_linear_pattern(captured: CapturedProgram, *example_inputs: torch.Tensor) -> CapturedProgram:
+def fuse_linear_pattern(
+    captured: CapturedProgram, *example_inputs: torch.Tensor
+) -> CapturedProgram:
     """Fuse a safe structural pattern: add(matmul(x, weight.T), bias) -> linear.
 
     Pattern fusion only. It is *not* a general e-graph optimizer or a promise
@@ -247,15 +371,27 @@ def fuse_linear_pattern(captured: CapturedProgram, *example_inputs: torch.Tensor
     gm = copy.deepcopy(captured.graph_module)
     graph = gm.graph
     for node in list(graph.nodes):
-        if node.op != "call_function" or node.target not in (torch.add, operator.add) or len(node.args) != 2:
+        if (
+            node.op != "call_function"
+            or node.target not in (torch.add, operator.add)
+            or len(node.args) != 2
+        ):
             continue
         matmul, bias = node.args
-        if not isinstance(matmul, Node) or matmul.op != "call_function" or matmul.target not in (torch.matmul, operator.matmul):
+        if (
+            not isinstance(matmul, Node)
+            or matmul.op != "call_function"
+            or matmul.target not in (torch.matmul, operator.matmul)
+        ):
             continue
         if len(matmul.users) != 1 or len(matmul.args) != 2:
             continue
         x, transposed = matmul.args
-        if not isinstance(transposed, Node) or transposed.op != "call_method" or transposed.target != "transpose":
+        if (
+            not isinstance(transposed, Node)
+            or transposed.op != "call_method"
+            or transposed.target != "transpose"
+        ):
             continue
         if len(transposed.args) != 3 or transposed.args[1:] != (0, 1):
             continue
@@ -348,7 +484,9 @@ def plan(ir: ProgramIR, backend: Backend) -> LoweringPlan:
     return LoweringPlan(backend.name, tuple(positions), tuple(unsupported), len(cuts))
 
 
-def to_visuaml_graph(ir: ProgramIR, placement: LoweringPlan | None = None) -> dict[str, Any]:
+def to_visuaml_graph(
+    ir: ProgramIR, placement: LoweringPlan | None = None
+) -> dict[str, Any]:
     """Project semantic IR onto VisuaML's existing React Flow graph schema.
 
     The displayed coordinates are initial layout hints, not a Dagre/ELK pass.
@@ -360,39 +498,52 @@ def to_visuaml_graph(ir: ProgramIR, placement: LoweringPlan | None = None) -> di
     for index, node in enumerate(ir.nodes):
         spec = node.tensors[0] if node.tensors else None
         assigned = placement_by_id.get(node.id)
-        nodes.append({
-            "id": node.id,
-            "type": "transformer",
-            "data": {
-                "label": node.op,
-                "name": node.id,
-                "target": node.target,
-                "op": node.op,
-                "args": [],
-                "kwargs": {},
-                "layerType": node.op,
-                "color": "#0d9488" if assigned and assigned.reason == "native" else "#64748b",
-                "outputShape": str(list(spec.shape)) if spec else None,
-                "estimatedFlops": node.estimated_flops,
-                "decomposition": list(node.decomposition),
-                "tensors": [asdict(t) for t in node.tensors],
-                "backend": assigned.device if assigned else None,
-                "loweringReason": assigned.reason if assigned else None,
-            },
-            "position": {"x": 240 * (index % 4), "y": 140 * (index // 4)},
-        })
+        nodes.append(
+            {
+                "id": node.id,
+                "type": "transformer",
+                "data": {
+                    "label": node.op,
+                    "name": node.id,
+                    "target": node.target,
+                    "op": node.op,
+                    "args": [],
+                    "kwargs": {},
+                    "layerType": node.op,
+                    "color": "#0d9488"
+                    if assigned and assigned.reason == "native"
+                    else "#64748b",
+                    "outputShape": str(list(spec.shape)) if spec else None,
+                    "estimatedFlops": node.estimated_flops,
+                    "decomposition": list(node.decomposition),
+                    "tensors": [asdict(t) for t in node.tensors],
+                    "backend": assigned.device if assigned else None,
+                    "loweringReason": assigned.reason if assigned else None,
+                },
+                "position": {"x": 240 * (index % 4), "y": 140 * (index // 4)},
+            }
+        )
         for source in node.inputs:
-            edges.append({
-                "id": f"{source}->{node.id}",
-                "source": source,
-                "target": node.id,
-                "data": {},
-            })
+            edges.append(
+                {
+                    "id": f"{source}->{node.id}",
+                    "source": source,
+                    "target": node.id,
+                    "data": {},
+                }
+            )
     return {"nodes": nodes, "edges": edges}
 
 
 class _NumpyInterpreter(Interpreter):
-    def __init__(self, gm: GraphModule, *, quant_bits: int | None = None, noise_std: float = 0.0, seed: int = 0):
+    def __init__(
+        self,
+        gm: GraphModule,
+        *,
+        quant_bits: int | None = None,
+        noise_std: float = 0.0,
+        seed: int = 0,
+    ):
         super().__init__(gm)
         self.bits = quant_bits
         self.noise_std = noise_std
@@ -431,13 +582,23 @@ class _NumpyInterpreter(Interpreter):
         if isinstance(module, nn.Softmax):
             return self.call_function(torch.softmax, (args[0],), {"dim": module.dim})
         if isinstance(module, nn.GELU):
-            return self.call_function(torch.nn.functional.gelu, (args[0],), {"approximate": module.approximate})
-        raise UnsupportedOperation(f"NumPy backend cannot execute module {target}: {type(module).__name__}")
+            return self.call_function(
+                torch.nn.functional.gelu,
+                (args[0],),
+                {"approximate": module.approximate},
+            )
+        raise UnsupportedOperation(
+            f"NumPy backend cannot execute module {target}: {type(module).__name__}"
+        )
 
     def call_method(self, target: str, args: tuple, kwargs: dict) -> Any:
         x, *rest = args
         if target in {"reshape", "view"}:
-            shape = rest if len(rest) != 1 or not isinstance(rest[0], (list, tuple)) else rest[0]
+            shape = (
+                rest
+                if len(rest) != 1 or not isinstance(rest[0], (list, tuple))
+                else rest[0]
+            )
             return np.reshape(x, shape)
         if target == "transpose":
             return np.swapaxes(x, int(rest[0]), int(rest[1]))
@@ -446,7 +607,11 @@ class _NumpyInterpreter(Interpreter):
             end = int(rest[1]) if len(rest) > 1 else -1
             start %= x.ndim
             end %= x.ndim
-            shape = x.shape[:start] + (int(prod(x.shape[start:end + 1])),) + x.shape[end + 1:]
+            shape = (
+                x.shape[:start]
+                + (int(prod(x.shape[start : end + 1])),)
+                + x.shape[end + 1 :]
+            )
             return x.reshape(shape)
         if target == "relu":
             return np.maximum(x, 0)
@@ -457,14 +622,25 @@ class _NumpyInterpreter(Interpreter):
         if target == "contiguous":
             return np.ascontiguousarray(x)
         if target == "permute":
-            axes = rest[0] if len(rest) == 1 and isinstance(rest[0], (tuple, list)) else rest
+            axes = (
+                rest[0]
+                if len(rest) == 1 and isinstance(rest[0], (tuple, list))
+                else rest
+            )
             return np.transpose(x, axes)
         if target == "softmax":
             return self.call_function(torch.softmax, (x, *rest), kwargs)
         if target == "scatter":
             dim, indices, value = rest
             result = x.copy()
-            np.put_along_axis(result, indices.astype(np.int64), value if isinstance(value, np.ndarray) else np.full(indices.shape, value), axis=dim)
+            np.put_along_axis(
+                result,
+                indices.astype(np.int64),
+                value
+                if isinstance(value, np.ndarray)
+                else np.full(indices.shape, value),
+                axis=dim,
+            )
             return result
         raise UnsupportedOperation(f"NumPy backend cannot execute method {target}")
 
@@ -495,8 +671,11 @@ class _NumpyInterpreter(Interpreter):
             return 1 / np.sqrt(args[0])
         if kind in {"sum", "amax"}:
             reducer = np.sum if kind == "sum" else np.max
-            return reducer(args[0], axis=kwargs.get("dim", args[1] if len(args) > 1 else None),
-                           keepdims=kwargs.get("keepdim", args[2] if len(args) > 2 else False))
+            return reducer(
+                args[0],
+                axis=kwargs.get("dim", args[1] if len(args) > 1 else None),
+                keepdims=kwargs.get("keepdim", args[2] if len(args) > 2 else False),
+            )
         if kind == "permute":
             return np.transpose(args[0], args[1])
         if kind == "transpose":
@@ -508,12 +687,19 @@ class _NumpyInterpreter(Interpreter):
             return ex / np.sum(ex, axis=dim, keepdims=True)
         if kind == "gelu":
             import math
+
             x = args[0]
             mode = kwargs.get("approximate", args[1] if len(args) > 1 else "none")
             if mode == "tanh":
-                return 0.5 * x * (1 + np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3)))
+                return (
+                    0.5 * x * (1 + np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3)))
+                )
             if mode == "none":
-                return 0.5 * x * (1 + np.vectorize(math.erf)(x / np.sqrt(2)).astype(x.dtype))
+                return (
+                    0.5
+                    * x
+                    * (1 + np.vectorize(math.erf)(x / np.sqrt(2)).astype(x.dtype))
+                )
             raise UnsupportedOperation(f"Unsupported GELU approximation: {mode}")
         if kind == "relu":
             return np.maximum(args[0], 0)
@@ -535,13 +721,17 @@ class _NumpyInterpreter(Interpreter):
             largest = kwargs.get("largest", True)
             sorted_ = kwargs.get("sorted", True)
             if not largest or not sorted_:
-                raise UnsupportedOperation("NumPy topk subset requires largest=True, sorted=True")
+                raise UnsupportedOperation(
+                    "NumPy topk subset requires largest=True, sorted=True"
+                )
             indices = np.argsort(-x, axis=dim)
             indices = np.take(indices, range(k), axis=dim)
             return np.take_along_axis(x, indices, axis=dim), indices
         if kind == "zeros_like":
             return np.zeros_like(args[0])
-        raise UnsupportedOperation(f"NumPy backend cannot execute {getattr(target, '__name__', target)}")
+        raise UnsupportedOperation(
+            f"NumPy backend cannot execute {getattr(target, '__name__', target)}"
+        )
 
 
 def _function_kind(target: Callable) -> str:
@@ -572,11 +762,36 @@ class ReferenceBackend:
 @dataclass
 class NumpyBackend:
     name: str = "numpy"
-    native_ops: frozenset[str] = frozenset({
-        "linear", "matmul", "add", "sub", "mul", "relu", "sigmoid", "tanh",
-        "topk", "zeros_like", "getitem", "scatter", "transpose", "reshape", "view", "flatten", "contiguous",
-        "permute", "softmax", "exp", "sum", "amax", "rsqrt", "div", "gelu", "argsort",
-    })
+    native_ops: frozenset[str] = frozenset(
+        {
+            "linear",
+            "matmul",
+            "add",
+            "sub",
+            "mul",
+            "relu",
+            "sigmoid",
+            "tanh",
+            "topk",
+            "zeros_like",
+            "getitem",
+            "scatter",
+            "transpose",
+            "reshape",
+            "view",
+            "flatten",
+            "contiguous",
+            "permute",
+            "softmax",
+            "exp",
+            "sum",
+            "amax",
+            "rsqrt",
+            "div",
+            "gelu",
+            "argsort",
+        }
+    )
     fallback_ops: frozenset[str] = frozenset()
 
     def run(self, gm: GraphModule, *args: Any) -> Any:
@@ -586,27 +801,54 @@ class NumpyBackend:
 @dataclass
 class OpticalSurrogateBackend(NumpyBackend):
     """Nonphysical quantized/noisy linear surrogate; NOT an Ayo device model."""
+
     name: str = "optical-surrogate"
     native_ops: frozenset[str] = frozenset({"matmul", "linear"})
-    fallback_ops: frozenset[str] = frozenset({
-        "add", "sub", "mul", "relu", "sigmoid", "tanh", "topk", "zeros_like", "getitem",
-        "scatter", "transpose", "reshape", "view", "flatten", "contiguous",
-        "permute", "softmax", "exp", "sum", "amax", "rsqrt", "div", "gelu", "argsort",
-    })
+    fallback_ops: frozenset[str] = frozenset(
+        {
+            "add",
+            "sub",
+            "mul",
+            "relu",
+            "sigmoid",
+            "tanh",
+            "topk",
+            "zeros_like",
+            "getitem",
+            "scatter",
+            "transpose",
+            "reshape",
+            "view",
+            "flatten",
+            "contiguous",
+            "permute",
+            "softmax",
+            "exp",
+            "sum",
+            "amax",
+            "rsqrt",
+            "div",
+            "gelu",
+            "argsort",
+        }
+    )
     quant_bits: int = 8
     noise_std: float = 0.0
     seed: int = 42
 
     def run(self, gm: GraphModule, *args: Any) -> Any:
-        return _NumpyInterpreter(gm, quant_bits=self.quant_bits,
-                                 noise_std=self.noise_std, seed=self.seed).run(*(_to_numpy(x) for x in args))
+        return _NumpyInterpreter(
+            gm, quant_bits=self.quant_bits, noise_std=self.noise_std, seed=self.seed
+        ).run(*(_to_numpy(x) for x in args))
 
 
 def lower(captured: CapturedProgram, backend_name: str):
     backend = BACKENDS[backend_name]
     planned = plan(captured.ir, backend)
     if planned.unsupported:
-        raise UnsupportedOperation(f"Backend {backend_name} unsupported nodes: {', '.join(planned.unsupported)}")
+        raise UnsupportedOperation(
+            f"Backend {backend_name} unsupported nodes: {', '.join(planned.unsupported)}"
+        )
     return LoweredProgram(captured, backend, planned)
 
 
@@ -632,9 +874,12 @@ def compare_outputs(reference: Any, candidate: Any) -> dict[str, Any]:
     if a.shape != b.shape:
         raise ValueError(f"Output shapes differ: {a.shape} vs {b.shape}")
     delta = np.abs(a.astype(np.float64) - b.astype(np.float64))
-    return {"shape": list(a.shape), "max_abs_error": float(np.max(delta)) if delta.size else 0.0,
-            "mean_abs_error": float(np.mean(delta)) if delta.size else 0.0,
-            "all_finite": bool(np.all(np.isfinite(a)) and np.all(np.isfinite(b)))}
+    return {
+        "shape": list(a.shape),
+        "max_abs_error": float(np.max(delta)) if delta.size else 0.0,
+        "mean_abs_error": float(np.mean(delta)) if delta.size else 0.0,
+        "all_finite": bool(np.all(np.isfinite(a)) and np.all(np.isfinite(b))),
+    }
 
 
 register_backend(ReferenceBackend())

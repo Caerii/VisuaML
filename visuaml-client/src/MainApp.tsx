@@ -32,9 +32,22 @@ export const MainApp = () => {
     <YDocProvider>
       <div className="flex-column" style={{ height: '100vh' }}>
         <TopBar />
-        <a href="/compiler" style={{ position: 'absolute', zIndex: 20, right: 22, top: 92,
-          padding: '8px 13px', borderRadius: 9, background: '#0c514d', color: '#e5fff8',
-          textDecoration: 'none', fontSize: 13, fontWeight: 700 }}>
+        <a
+          href="/compiler"
+          style={{
+            position: 'absolute',
+            zIndex: 20,
+            right: 22,
+            top: 92,
+            padding: '8px 13px',
+            borderRadius: 9,
+            background: '#0c514d',
+            color: '#e5fff8',
+            textDecoration: 'none',
+            fontSize: 13,
+            fontWeight: 700,
+          }}
+        >
           Compiler Lab ↗
         </a>
         <div style={{ flexGrow: 1, position: 'relative' }}>

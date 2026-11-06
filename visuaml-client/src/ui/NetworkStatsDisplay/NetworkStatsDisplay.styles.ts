@@ -208,4 +208,4 @@ export const Chip = styled('div')(({ theme }) => ({
     transform: 'translateY(-1px) scale(1.02)',
     background: 'linear-gradient(135deg, rgba(66, 153, 225, 0.1) 0%, rgba(74, 85, 104, 0.8) 100%)',
   },
-})); 
+}));

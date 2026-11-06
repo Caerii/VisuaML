@@ -18,13 +18,20 @@ from .hypergraph import CategoricalHypergraph
 
 __all__ = [
     # Types
-    'Dtype', 'ArrayType', 'TensorType',
+    "Dtype",
+    "ArrayType",
+    "TensorType",
     # Morphisms
-    'Morphism', 'LinearMorphism', 'ActivationMorphism', 'ComposedMorphism',
+    "Morphism",
+    "LinearMorphism",
+    "ActivationMorphism",
+    "ComposedMorphism",
     # Composition
-    'compose', 'parallel', 'tensor_product',
+    "compose",
+    "parallel",
+    "tensor_product",
     # Hypergraphs
-    'CategoricalHypergraph'
+    "CategoricalHypergraph",
 ]
 
-__version__ = "0.1.0" 
+__version__ = "0.1.0"

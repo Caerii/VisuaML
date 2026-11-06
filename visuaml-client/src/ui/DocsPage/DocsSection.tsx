@@ -31,7 +31,10 @@ export function DocsSection({ id, title, children }: DocsSectionProps) {
     >
       <Typography sx={SECTION_TITLE_STYLES}>{title}</Typography>
       <Box>{children}</Box>
-      <Divider className="docs-section-divider" sx={{ borderColor: 'rgba(255, 255, 255, 0.08)', pt: 2.5 }} />
+      <Divider
+        className="docs-section-divider"
+        sx={{ borderColor: 'rgba(255, 255, 255, 0.08)', pt: 2.5 }}
+      />
     </Stack>
   );
 }

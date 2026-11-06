@@ -1,9 +1,17 @@
 """Small working example: PYTHONPATH=visuaml-client/backend python visuaml-client/backend/examples/compiler_spike_demo.py"""
+
 import json
 
 import torch
 from torch import nn
-from visuaml.compiler_spike import capture, decompose_linear, fuse_linear_pattern, lower, compare_outputs, to_visuaml_graph
+from visuaml.compiler_spike import (
+    capture,
+    decompose_linear,
+    fuse_linear_pattern,
+    lower,
+    compare_outputs,
+    to_visuaml_graph,
+)
 
 
 class SmallModel(nn.Module):
@@ -28,9 +36,17 @@ def main():
     reference = original.graph_module(x)
     for b in ("torch", "numpy", "optical-surrogate"):
         result = lower(decomposed, b)
-        print(b, json.dumps({"visual_graph": to_visuaml_graph(decomposed.ir, result.plan),
-                             "placement": result.plan.as_dict(),
-                             "sample_error": compare_outputs(reference, result.run(x))}, indent=2))
+        print(
+            b,
+            json.dumps(
+                {
+                    "visual_graph": to_visuaml_graph(decomposed.ir, result.plan),
+                    "placement": result.plan.as_dict(),
+                    "sample_error": compare_outputs(reference, result.run(x)),
+                },
+                indent=2,
+            ),
+        )
 
 
 if __name__ == "__main__":

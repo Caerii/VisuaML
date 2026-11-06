@@ -139,7 +139,7 @@ app.post('/api/upload', async (req, reply) => {
   } catch (error) {
     app.log.error('Error executing Python script for uploaded model:', error);
     // Cleanup the uploaded file on error
-    await fs.promises.unlink(filePath).catch(cleanupError => {
+    await fs.promises.unlink(filePath).catch((cleanupError) => {
       app.log.error('Failed to cleanup uploaded file after error:', cleanupError);
     });
 
@@ -312,7 +312,9 @@ app.post('/api/export-hypergraph', async (req, reply) => {
     const projectRoot = path.resolve(__dirnameCurrentModule, '..');
     const scriptPath = path.resolve(projectRoot, 'backend', 'scripts', 'fx_export.py');
 
-    app.log.info(`Executing hypergraph export: ${PYTHON_COMMAND} ${scriptPath} ${scriptArgs.join(' ')}`);
+    app.log.info(
+      `Executing hypergraph export: ${PYTHON_COMMAND} ${scriptPath} ${scriptArgs.join(' ')}`,
+    );
 
     const { stdout, stderr } = await execa(PYTHON_COMMAND, [scriptPath, ...scriptArgs], {
       cwd: projectRoot,

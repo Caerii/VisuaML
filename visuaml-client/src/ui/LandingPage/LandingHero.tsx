@@ -36,13 +36,20 @@ export function LandingHero({ onGetStartedClick }: LandingHeroProps) {
         },
       }}
     >
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1, py: { xs: 8, md: 12 }, px: { xs: 4, md: 6, lg: 8 } }}>
+      <Container
+        maxWidth="lg"
+        sx={{ position: 'relative', zIndex: 1, py: { xs: 8, md: 12 }, px: { xs: 4, md: 6, lg: 8 } }}
+      >
         <Stack spacing={6} alignItems="flex-start" textAlign="left" maxWidth="900px">
           {/* Main Heading - Clean, minimal */}
           <Typography
             variant="h1"
             sx={{
-              fontSize: { xs: 'clamp(2rem, 6vw, 4rem)', md: 'clamp(2.5rem, 5vw, 5rem)', lg: 'clamp(3rem, 4.5vw, 6rem)' },
+              fontSize: {
+                xs: 'clamp(2rem, 6vw, 4rem)',
+                md: 'clamp(2.5rem, 5vw, 5rem)',
+                lg: 'clamp(3rem, 4.5vw, 6rem)',
+              },
               fontWeight: 200,
               lineHeight: 0.9,
               letterSpacing: '-0.05em',
@@ -64,7 +71,11 @@ export function LandingHero({ onGetStartedClick }: LandingHeroProps) {
           <Typography
             variant="body1"
             sx={{
-              fontSize: { xs: 'clamp(0.7rem, 1.8vw, 0.8rem)', md: 'clamp(0.75rem, 1.3vw, 0.875rem)', lg: 'clamp(0.8rem, 1vw, 0.9rem)' },
+              fontSize: {
+                xs: 'clamp(0.7rem, 1.8vw, 0.8rem)',
+                md: 'clamp(0.75rem, 1.3vw, 0.875rem)',
+                lg: 'clamp(0.8rem, 1vw, 0.9rem)',
+              },
               fontWeight: 300,
               letterSpacing: '0.08em',
               color: 'rgba(255, 255, 255, 0.6)',
@@ -100,7 +111,11 @@ export function LandingHero({ onGetStartedClick }: LandingHeroProps) {
                 textTransform: 'uppercase',
                 fontWeight: 400,
                 letterSpacing: '0.2em',
-                fontSize: { xs: 'clamp(0.7rem, 1.3vw, 0.8rem)', md: 'clamp(0.75rem, 1.2vw, 0.85rem)', lg: 'clamp(0.75rem, 1vw, 0.8rem)' },
+                fontSize: {
+                  xs: 'clamp(0.7rem, 1.3vw, 0.8rem)',
+                  md: 'clamp(0.75rem, 1.2vw, 0.85rem)',
+                  lg: 'clamp(0.75rem, 1vw, 0.8rem)',
+                },
                 px: 0,
                 pb: 1,
                 borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
@@ -134,7 +149,11 @@ export function LandingHero({ onGetStartedClick }: LandingHeroProps) {
                 textTransform: 'uppercase',
                 fontWeight: 400,
                 letterSpacing: '0.2em',
-                fontSize: { xs: 'clamp(0.7rem, 1.3vw, 0.8rem)', md: 'clamp(0.75rem, 1.2vw, 0.85rem)', lg: 'clamp(0.75rem, 1vw, 0.8rem)' },
+                fontSize: {
+                  xs: 'clamp(0.7rem, 1.3vw, 0.8rem)',
+                  md: 'clamp(0.75rem, 1.2vw, 0.85rem)',
+                  lg: 'clamp(0.75rem, 1vw, 0.8rem)',
+                },
                 px: 0,
                 pb: 1,
                 borderBottom: '1px solid rgba(66, 153, 225, 0.3)',
@@ -169,7 +188,11 @@ export function LandingHero({ onGetStartedClick }: LandingHeroProps) {
                 textTransform: 'uppercase',
                 fontWeight: 400,
                 letterSpacing: '0.2em',
-                fontSize: { xs: 'clamp(0.7rem, 1.3vw, 0.8rem)', md: 'clamp(0.75rem, 1.2vw, 0.85rem)', lg: 'clamp(0.75rem, 1vw, 0.8rem)' },
+                fontSize: {
+                  xs: 'clamp(0.7rem, 1.3vw, 0.8rem)',
+                  md: 'clamp(0.75rem, 1.2vw, 0.85rem)',
+                  lg: 'clamp(0.75rem, 1vw, 0.8rem)',
+                },
                 px: 0,
                 pb: 1,
                 borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
@@ -198,7 +221,11 @@ export function LandingHero({ onGetStartedClick }: LandingHeroProps) {
                 textTransform: 'uppercase',
                 fontWeight: 400,
                 letterSpacing: '0.2em',
-                fontSize: { xs: 'clamp(0.7rem, 1.3vw, 0.8rem)', md: 'clamp(0.75rem, 1.2vw, 0.85rem)', lg: 'clamp(0.75rem, 1vw, 0.8rem)' },
+                fontSize: {
+                  xs: 'clamp(0.7rem, 1.3vw, 0.8rem)',
+                  md: 'clamp(0.75rem, 1.2vw, 0.85rem)',
+                  lg: 'clamp(0.75rem, 1vw, 0.8rem)',
+                },
                 px: 0,
                 pb: 1,
                 borderBottom: '1px solid rgba(255, 255, 255, 0.08)',

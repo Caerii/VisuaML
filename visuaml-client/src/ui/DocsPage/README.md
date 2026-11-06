@@ -23,18 +23,23 @@ DocsPage/
 ## Components
 
 ### DocsPage
+
 Main documentation page with layout, header, and content sections.
 
 ### DocsContent
+
 Contains all documentation sections (Get Started, Features, Usage, etc.).
 
 ### DocsSection
+
 Reusable section wrapper with consistent styling and scroll margin.
 
 ### DocsTableOfContents
+
 Sticky table of contents for desktop, collapsible for mobile.
 
 ### useScrollSpy
+
 Custom hook that tracks which section is currently in view.
 
 ## Usage
@@ -43,7 +48,7 @@ Custom hook that tracks which section is currently in view.
 import { DocsPage } from '../ui/DocsPage';
 
 // Route: /docs
-<Route path="/docs" element={<DocsPage />} />
+<Route path="/docs" element={<DocsPage />} />;
 ```
 
 ## Design Principles

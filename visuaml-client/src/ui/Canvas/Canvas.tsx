@@ -22,7 +22,7 @@ const nodeTypes = { transformer: MLNode };
 /** Fits the view to nodes at a comfortable scale when the graph first loads (e.g. after Simple CNN auto-load). */
 function FitViewOnFirstLoad() {
   const { fitView } = useReactFlow();
-  const nodeCount = useStore((s) => (s.nodes?.length ?? 0));
+  const nodeCount = useStore((s) => s.nodes?.length ?? 0);
   const hasFitted = useRef(false);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const Canvas: React.FC = () => {
     <ReactFlowProvider>
       <div className="canvas" ref={reactFlowWrapper} onMouseMove={handleMouseMove}>
         <div className="canvas__stats-panel">
-        <NetworkStatsDisplay />
+          <NetworkStatsDisplay />
         </div>
         <ReactFlow
           nodes={nodes}
