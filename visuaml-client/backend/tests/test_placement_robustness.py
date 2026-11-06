@@ -1,52 +1,35 @@
 """V5: rigorous minimax-regret placement under hypothetical cost uncertainty."""
 
-import itertools
-import json
 from dataclasses import replace
+import json
+import itertools
 
 import pytest
 
-from examples.compiler_lab_demo import run
+from visuaml.compiler_spike import OpRecord, ProgramIR, TensorSpec
 from visuaml.compiler_lab.backends import BackendCapabilities
 from visuaml.compiler_lab.placement_optimizer import (
-    HypotheticalCostModel,
-    PlacementError,
-    optimize_binary_placement,
+    HypotheticalCostModel, PlacementError, optimize_binary_placement,
 )
 from visuaml.compiler_lab.placement_robustness import analyze_placement_sensitivity
-from visuaml.compiler_spike import OpRecord, ProgramIR, TensorSpec
 
 
 def setup():
     spec = TensorSpec(("1", "4"), "torch.float32", 16)
-    ir = ProgramIR(
-        (
-            OpRecord("x", "input", "", (), (spec,), 0, ()),
-            OpRecord("a", "matmul", "", ("x",), (spec,), 600, ()),
-            OpRecord("b", "relu", "", ("a",), (spec,), 40, ()),
-            OpRecord("c", "matmul", "", ("b",), (spec,), 600, ()),
-            OpRecord("out", "output", "", ("c",), (), 0, ()),
-        ),
-        ("x",),
-        ("c",),
-    )
-    caps = BackendCapabilities(
-        "hypothetical",
-        "1",
-        frozenset({"matmul"}),
-        frozenset({"relu"}),
-        frozenset({"torch.float32"}),
-    )
-    profiles = [
-        HypotheticalCostModel(
-            name=f"transfer-{v}",
-            host_op_costs={"matmul": 30, "relu": 3},
-            device_op_costs={"matmul": 2},
-            transfer_bytes_per_unit=16,
-            transfer_overhead=v,
-        )
-        for v in (0.0, 1.0, 5.0, 80.0)
-    ]
+    ir = ProgramIR((
+        OpRecord("x", "input", "", (), (spec,), 0, ()),
+        OpRecord("a", "matmul", "", ("x",), (spec,), 600, ()),
+        OpRecord("b", "relu", "", ("a",), (spec,), 40, ()),
+        OpRecord("c", "matmul", "", ("b",), (spec,), 600, ()),
+        OpRecord("out", "output", "", ("c",), (), 0, ()),
+    ), ("x",), ("c",))
+    caps = BackendCapabilities("hypothetical", "1", frozenset({"matmul"}),
+                               frozenset({"relu"}), frozenset({"torch.float32"}))
+    profiles = [HypotheticalCostModel(
+        name=f"transfer-{v}", host_op_costs={"matmul": 30, "relu": 3},
+        device_op_costs={"matmul": 2}, transfer_bytes_per_unit=16,
+        transfer_overhead=v,
+    ) for v in (0., 1., 5., 80.)]
     return ir, caps, profiles
 
 
@@ -55,6 +38,10 @@ def test_sensitivity_aggregate_has_reproducible_witnesses():
     report = analyze_placement_sensitivity(ir, caps, profiles)
     assert report.search == "exhaustive-minimax-regret"
     assert report.candidates_checked == 4  # only two legal device nodes
+    assert len(report.input_sha256) == 64
+    assert report.backend_contract["native_ops"] == ["matmul"]
+    assert report.scenarios[0].cost_model["transfer_overhead"] == 0.0
+    assert report.input_sha256 == analyze_placement_sensitivity(ir, caps, profiles).input_sha256
     assert [s.profile for s in report.scenarios] == [p.name for p in profiles]
     for sc, profile in zip(report.scenarios, profiles):
         optimum = optimize_binary_placement(ir, caps, profile)
@@ -72,16 +59,11 @@ def test_minimax_regret_agrees_with_independent_exhaustive_cost():
     optima = [optimize_binary_placement(ir, caps, p) for p in profiles]
     brute = float("inf")
     for use_a, use_c in itertools.product((False, True), repeat=2):
-        plan = {
-            "x": "host",
-            "a": "device" if use_a else "host",
-            "b": "host",
-            "c": "device" if use_c else "host",
-            "out": "host",
-        }
+        plan = {"x": "host", "a": "device" if use_a else "host",
+                "b": "host", "c": "device" if use_c else "host", "out": "host"}
         regrets = []
         for profile, optimum in zip(profiles, optima):
-            cost = 0.0
+            cost = 0.
             for a in optimum.assignments:
                 if a.assigned is None:
                     raise AssertionError
@@ -89,10 +71,7 @@ def test_minimax_regret_agrees_with_independent_exhaustive_cost():
             for node in ir.nodes:
                 for dep in node.inputs:
                     if plan[dep] != plan[node.id]:
-                        cost += (
-                            profile.transfer_overhead
-                            + 16 / profile.transfer_bytes_per_unit
-                        )
+                        cost += profile.transfer_overhead + 16 / profile.transfer_bytes_per_unit
             regrets.append(cost - optimum.estimated_total_cost)
         brute = min(brute, max(regrets))
     assert got.preferred.worst_regret == pytest.approx(brute)
@@ -149,11 +128,24 @@ def test_per_profile_optimum_always_zero_regret():
 
 
 def test_mlp_executable_report_contains_robustness(tmp_path):
-    """Verify the actual report consumed by VisuaML's read-only compiler API."""
+    """Exercise the same report shape returned by the read-only compiler API."""
+    from examples.compiler_lab_demo import run
+
     report = run("mlp", tmp_path / "mlp", seed=19)
     sensitivity = report["hypothetical_placement_robustness"]
-    assert sensitivity["schema"] == "visuaml.placement-sensitivity.v1"
+    assert sensitivity["schema"] == "visuaml.placement-sensitivity.v2"
     assert len(sensitivity["scenarios"]) == len(report["hypothetical_partition_sweep"]) == 5
     assert sensitivity["preferred"]["worst_regret"] >= 0
     assert report["witness"]["passed"]
     assert report["torch_export_roundtrip"]["passed"]
+
+
+def test_digest_changes_when_cost_assumptions_change():
+    ir, caps, profiles = setup()
+    first = analyze_placement_sensitivity(ir, caps, profiles)
+    modified = profiles.copy()
+    modified[1] = replace(modified[1], transfer_overhead=12.5)
+    second = analyze_placement_sensitivity(ir, caps, modified)
+    assert first.input_sha256 != second.input_sha256
+    assert first.scenarios[1].cost_model["transfer_overhead"] == 1.0
+    assert second.scenarios[1].cost_model["transfer_overhead"] == 12.5
