@@ -60,6 +60,21 @@ export type Placement = {
   boundaries: { producer: string; consumer: string; bytes: number; estimated_cost: number }[];
   warnings: string[];
 };
+export type PlacementRobustness = {
+  schema: string;
+  search: string;
+  candidates_checked: number;
+  scenarios: { profile: string; optimum_cost: number; device_nodes: string[] }[];
+  preferred: {
+    device_nodes: string[];
+    worst_regret: number;
+    worst_cost: number;
+    mean_regret: number;
+  };
+  node_device_frequency: [string, number][];
+  warnings: string[];
+};
+
 export type CompilerReport = {
   schema: string;
   scenario: Scenario;
@@ -73,6 +88,7 @@ export type CompilerReport = {
   };
   torch_export_roundtrip: { passed: boolean };
   hypothetical_partition_sweep: { transfer_overhead: number; partition: Placement }[];
+  hypothetical_placement_robustness?: PlacementRobustness;
   limitations: string[];
 };
 
