@@ -19,6 +19,7 @@ from torch import nn
 from visuaml.compiler_lab.analysis import cost_report, graph_digest
 from visuaml.compiler_lab.backends import BackendCapabilities, default_registry
 from visuaml.compiler_lab.numpy_runtime import run_bundle
+from visuaml.compiler_lab.placement_robustness import analyze_placement_sensitivity
 from visuaml.compiler_lab.placement_optimizer import (
     HypotheticalCostModel,
     optimize_binary_placement,
@@ -152,6 +153,7 @@ def run(scenario: str, out: Path, seed: int) -> dict:
         op: 2.0 for op in computational_ops if op in device_capabilities.native_ops
     }
     placement_sweep = []
+    cost_scenarios = []
     for transfer_overhead in (0.0, 2.0, 10.0, 40.0, 100.0):
         profile = HypotheticalCostModel(
             name=f"illustrative-boundary-{transfer_overhead:g}",
@@ -160,6 +162,7 @@ def run(scenario: str, out: Path, seed: int) -> dict:
             transfer_overhead=transfer_overhead,
             transfer_bytes_per_unit=512.0,
         )
+        cost_scenarios.append(profile)
         placement_sweep.append(
             {
                 "transfer_overhead": transfer_overhead,
@@ -181,6 +184,9 @@ def run(scenario: str, out: Path, seed: int) -> dict:
         "stages": stages,
         "backend": lowered.placement.as_dict(),
         "hypothetical_partition_sweep": placement_sweep,
+        "hypothetical_placement_robustness": analyze_placement_sensitivity(
+            pipeline.captured.ir, device_capabilities, cost_scenarios
+        ).as_dict(),
         "witness": report.as_dict(),
         "torch_export_roundtrip": torch_report.as_dict(),
         "canvas": graph_for_stage(pipeline.captured, with_placement=True),
