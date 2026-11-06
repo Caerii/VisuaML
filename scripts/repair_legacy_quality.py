@@ -92,7 +92,20 @@ def rewrite_one(path: Path) -> bool:
         )
     if rel == "tests/test_compiler_lab.py":
         source = source.replace('key = sorted(old)[0]', 'key = min(old)')
-        source = source.replace('p, x = small\n', 'p, _ = small\n')
+        for test_name in (
+            "test_graph_digest_changes_with_weights_and_is_stable",
+            "test_cost_report_contract",
+            "test_partition_reports_unsupported_and_cuts",
+        ):
+            source = re.sub(
+                rf"(def {test_name}\(small\):\n\s*)p, x = small",
+                r"\1p, _ = small",
+                source,
+            )
+    if rel == "tests/test_compiler_lab_v4.py":
+        source = exact_replace(source,
+            "capture_output=True, text=True, timeout=60",
+            "check=False, capture_output=True, text=True, timeout=60")
     if rel == "tests/test_compiler_lab_v3.py":
         source = exact_replace(
             source,
@@ -134,6 +147,28 @@ def rewrite_one(path: Path) -> bool:
     "parallel",
     "tensor_product",
 ]''' + source[stop+1:]
+    if rel == "visuaml/categorical/types.py":
+        source = exact_replace(source,
+            "TypeLike = Union[ArrayType, TensorType, ProductType]",
+            "TypeLike = ArrayType | TensorType | ProductType")
+    if rel == "visuaml/openhypergraph_export.py":
+        old = """if isinstance(categorical_data, dict):
+        if "json_data" in categorical_data:
+            # Return the original JSON data with additional metadata"""
+        if old in source:
+            # The body runs only when both predicates hold; dedent that block.
+            first = source.index(old)
+            last = source.index("    # If it's an actual OpenHypergraph object", first)
+            block = source[first:last]
+            block = block.replace(
+                'if isinstance(categorical_data, dict):\n'
+                '        if "json_data" in categorical_data:',
+                'if isinstance(categorical_data, dict) and "json_data" in categorical_data:',
+                1)
+            lines = block.splitlines(keepends=True)
+            source = source[:first] + "".join(
+                line[4:] if line.startswith("        ") else line for line in lines
+            ) + source[last:]
     if rel == "visuaml/filters.py":
         source = exact_replace(source,
             '        if (\n'
@@ -148,8 +183,8 @@ def rewrite_one(path: Path) -> bool:
             '        )')
     if rel == "visuaml/categorical/hypergraph.py":
         source = exact_replace(source,
-            'if wire_id not in visited:\n                if has_cycle(wire_id):\n                    return True',
-            'if wire_id not in visited and has_cycle(wire_id):\n                return True')
+            'if wire_id not in visited:\n                if has_cycle(wire_id):\n                    errors.append(f"Cycle detected involving wire {wire_id}")\n                    break',
+            'if wire_id not in visited and has_cycle(wire_id):\n                errors.append(f"Cycle detected involving wire {wire_id}")\n                break')
 
     if source != original:
         path.write_text(source, encoding="utf-8")
