@@ -8,7 +8,11 @@ import numpy as np
 import pytest
 
 from visuaml.compiler_lab.effect_ir import EffectIRError, assert_effect_trace_preserved
-from visuaml.compiler_lab.multifiber_bridge import MultiFiberConfig, execute_multifiber, multifiber_program
+from visuaml.compiler_lab.multifiber_bridge import (
+    MultiFiberConfig,
+    execute_multifiber,
+    multifiber_program,
+)
 
 
 def example(seed: int = 28):

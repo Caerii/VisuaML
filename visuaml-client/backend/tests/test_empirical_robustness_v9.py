@@ -8,7 +8,10 @@ import pytest
 from visuaml.compiler_lab.backends import BackendCapabilities
 from visuaml.compiler_lab.calibration_evidence import validate_latency_holdout
 from visuaml.compiler_lab.empirical_robustness import optimize_with_empirical_envelopes
-from visuaml.compiler_lab.hardware_calibration import CalibrationError, LatencyObservation
+from visuaml.compiler_lab.hardware_calibration import (
+    CalibrationError,
+    LatencyObservation,
+)
 from visuaml.compiler_spike import OpRecord, ProgramIR, TensorSpec
 
 
