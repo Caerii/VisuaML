@@ -10,6 +10,7 @@ jobs:
     if: github.repository == 'Caerii/VisuaML'
     runs-on: ubuntu-latest
     timeout-minutes: 14
+    # Re-run after the F841 test-binding correction.
     steps:
       - uses: actions/checkout@v4
         with:
