@@ -283,7 +283,7 @@ def _validate_scan(
 def selective_conv_scan_numpy(
     x: np.ndarray, w: ScanWeights, state: ScanState
 ) -> tuple[np.ndarray, ScanState]:
-    batch, steps, d, k = _validate_scan(x, w, state)
+    _batch, steps, _d, _k = _validate_scan(x, w, state)
     tail = state.convolution.copy()
     recurrent = state.recurrent.copy()
     ys = []
@@ -300,7 +300,7 @@ def selective_conv_scan_numpy(
 def selective_conv_scan_torch(
     x: np.ndarray, w: ScanWeights, state: ScanState
 ) -> tuple[np.ndarray, ScanState]:
-    batch, steps, d, k = _validate_scan(x, w, state)
+    _batch, steps, d, k = _validate_scan(x, w, state)
     tx = _torch(x)
     initial = _torch(state.convolution)
     # Causal grouped Conv1d is distinct from NumPy's explicit window multiplication.
