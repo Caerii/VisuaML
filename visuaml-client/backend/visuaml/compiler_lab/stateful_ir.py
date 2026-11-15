@@ -78,7 +78,9 @@ def validate_stateful_ir(program: StatefulProgram) -> None:
         names.add(instr.name)
         if not set(instr.inputs) <= values:
             raise StatefulIRError(f"Use before definition in {instr.name}")
-        if len(set(instr.outputs)) != len(instr.outputs) or any(x in values or not x for x in instr.outputs):
+        if len(set(instr.outputs)) != len(instr.outputs) or any(
+            x in values or not x for x in instr.outputs
+        ):
             raise StatefulIRError(f"Duplicate or invalid SSA output in {instr.name}")
         reads = dict(instr.reads)
         writes = dict(instr.writes)
@@ -91,14 +93,24 @@ def validate_stateful_ir(program: StatefulProgram) -> None:
                 raise StatefulIRError(f"Stale state read: {instr.name}/{key}")
         if instr.op in EFFECT_OPS:
             effects.append(instr.op)
-            if instr.token_in != token or not instr.token_out or instr.token_out == token:
+            if (
+                instr.token_in != token
+                or not instr.token_out
+                or instr.token_out == token
+            ):
                 raise StatefulIRError("Effect token does not follow the prior write")
             if len(writes) != 1 or len(reads) != 1 or set(writes) != set(reads):
-                raise StatefulIRError("Each effect must read and write its own state cell")
+                raise StatefulIRError(
+                    "Each effect must read and write its own state cell"
+                )
             key = next(iter(writes))
             if writes[key] != versions[key] + 1:
                 raise StatefulIRError("State version must increase by exactly one")
-            expected_key = {"hebbian_write": "weights", "refraction_write": "bias", "publish_winners": "winners"}[instr.op]
+            expected_key = {
+                "hebbian_write": "weights",
+                "refraction_write": "bias",
+                "publish_winners": "winners",
+            }[instr.op]
             if key != expected_key:
                 raise StatefulIRError("Effect operation has wrong state effect")
             if instr.outputs:
@@ -109,14 +121,24 @@ def validate_stateful_ir(program: StatefulProgram) -> None:
             if instr.writes or instr.token_in or instr.token_out:
                 raise StatefulIRError("Pure operation declares an effect")
             source_reads.append(instr.op)
-            if instr.op not in {"snapshot_previous_winners", "read_external_source", "weighted_drive", "subtract_refraction", "stable_k_winners"}:
+            if instr.op not in {
+                "snapshot_previous_winners",
+                "read_external_source",
+                "weighted_drive",
+                "subtract_refraction",
+                "stable_k_winners",
+            }:
                 raise StatefulIRError("Unknown pure stateful operator")
         values.update(instr.outputs)
     # This is a deliberately narrow, admitted computational dialect. A different
     # stateful algorithm must declare a NEW schema and its own semantic rules.
     expected_pure = [
-        "snapshot_previous_winners" if program.source_mode == "recurrent" else "read_external_source",
-        "weighted_drive", "subtract_refraction", "stable_k_winners",
+        "snapshot_previous_winners"
+        if program.source_mode == "recurrent"
+        else "read_external_source",
+        "weighted_drive",
+        "subtract_refraction",
+        "stable_k_winners",
     ]
     if source_reads != expected_pure or effects != list(EFFECT_OPS):
         raise StatefulIRError("Step is missing or reorders required reads/writes")
@@ -126,25 +148,84 @@ def validate_stateful_ir(program: StatefulProgram) -> None:
     # the correct effects while rewriting their inputs to unrelated values.
     canonical = make_assembly_step_ir_unchecked(program.source_mode)
     if program.instructions != canonical.instructions:
-        raise StatefulIRError("Noncanonical step wiring; requires a new dialect contract")
+        raise StatefulIRError(
+            "Noncanonical step wiring; requires a new dialect contract"
+        )
 
 
-def make_assembly_step_ir_unchecked(source_mode: Literal["external", "recurrent"]) -> StatefulProgram:
+def make_assembly_step_ir_unchecked(
+    source_mode: Literal["external", "recurrent"],
+) -> StatefulProgram:
     """Internal canonical template, split out to avoid recursive validation."""
     source = (
-        Instruction("source", "snapshot_previous_winners", outputs=("source_indices",), reads=(("winners", 0),))
+        Instruction(
+            "source",
+            "snapshot_previous_winners",
+            outputs=("source_indices",),
+            reads=(("winners", 0),),
+        )
         if source_mode == "recurrent"
-        else Instruction("source", "read_external_source", inputs=("given_source",), outputs=("source_indices",))
+        else Instruction(
+            "source",
+            "read_external_source",
+            inputs=("given_source",),
+            outputs=("source_indices",),
+        )
     )
-    return StatefulProgram(source_mode, () if source_mode == "recurrent" else ("given_source",), (
-        source,
-        Instruction("drive", "weighted_drive", inputs=("source_indices",), outputs=("raw_drive",), reads=(("weights", 0),)),
-        Instruction("inhibit", "subtract_refraction", inputs=("raw_drive",), outputs=("net_drive",), reads=(("bias", 0),)),
-        Instruction("select", "stable_k_winners", inputs=("net_drive",), outputs=("selected",)),
-        Instruction("learn", "hebbian_write", inputs=("source_indices", "selected"), reads=(("weights", 0),), writes=(("weights", 1),), token_in="state_0", token_out="state_1"),
-        Instruction("refraction", "refraction_write", inputs=("raw_drive", "selected"), reads=(("bias", 0),), writes=(("bias", 1),), token_in="state_1", token_out="state_2"),
-        Instruction("publish", "publish_winners", inputs=("selected",), reads=(("winners", 0),), writes=(("winners", 1),), token_in="state_2", token_out="state_3"),
-    ))
+    return StatefulProgram(
+        source_mode,
+        () if source_mode == "recurrent" else ("given_source",),
+        (
+            source,
+            Instruction(
+                "drive",
+                "weighted_drive",
+                inputs=("source_indices",),
+                outputs=("raw_drive",),
+                reads=(("weights", 0),),
+            ),
+            Instruction(
+                "inhibit",
+                "subtract_refraction",
+                inputs=("raw_drive",),
+                outputs=("net_drive",),
+                reads=(("bias", 0),),
+            ),
+            Instruction(
+                "select",
+                "stable_k_winners",
+                inputs=("net_drive",),
+                outputs=("selected",),
+            ),
+            Instruction(
+                "learn",
+                "hebbian_write",
+                inputs=("source_indices", "selected"),
+                reads=(("weights", 0),),
+                writes=(("weights", 1),),
+                token_in="state_0",
+                token_out="state_1",
+            ),
+            Instruction(
+                "refraction",
+                "refraction_write",
+                inputs=("raw_drive", "selected"),
+                reads=(("bias", 0),),
+                writes=(("bias", 1),),
+                token_in="state_1",
+                token_out="state_2",
+            ),
+            Instruction(
+                "publish",
+                "publish_winners",
+                inputs=("selected",),
+                reads=(("winners", 0),),
+                writes=(("winners", 1),),
+                token_in="state_2",
+                token_out="state_3",
+            ),
+        ),
+    )
 
 
 def assert_effects_preserved(before: StatefulProgram, after: StatefulProgram) -> None:

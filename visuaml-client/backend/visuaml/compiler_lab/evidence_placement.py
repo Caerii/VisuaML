@@ -8,6 +8,7 @@ one producer-consumer boundary. Units are MICROSECONDS throughout.
 Admission is not cryptographic provenance and not device execution. The
 minimum cut is optimal only under this additive, non-overlapped model.
 """
+
 from __future__ import annotations
 
 import json
@@ -70,52 +71,94 @@ def optimize_with_evidence(
     Every graph edge must be covered by the transfer evidence, even if a
     particular placement ends up not crossing that edge.
     """
-    if any(not isinstance(x, str) or not x.strip() for x in
-           (host_hardware_id, device_hardware_id, transfer_hardware_id)):
+    if any(
+        not isinstance(x, str) or not x.strip()
+        for x in (host_hardware_id, device_hardware_id, transfer_hardware_id)
+    ):
         raise CalibrationError("Hardware identities must be nonempty")
     if type(allow_synthetic) is not bool:
         raise CalibrationError("Synthetic admission must be a boolean")
     special = {"input", "output", "constant"}
     op_names = {n.op for n in ir.nodes if n.op not in special}
     native_names = {
-        n.op for n in ir.nodes
-        if n.op not in special and (n.op in capabilities.native_ops or "*" in capabilities.native_ops)
+        n.op
+        for n in ir.nodes
+        if n.op not in special
+        and (n.op in capabilities.native_ops or "*" in capabilities.native_ops)
         and all(t.dtype in capabilities.supported_dtypes for t in n.tensors)
-        and (capabilities.max_tensor_rank is None
-             or all(len(t.shape) <= capabilities.max_tensor_rank for t in n.tensors))
+        and (
+            capabilities.max_tensor_rank is None
+            or all(len(t.shape) <= capabilities.max_tensor_rank for t in n.tensors)
+        )
     }
     if set(host) != op_names or set(device) != native_names:
-        raise CalibrationError("Operator evidence coverage must exactly match host and native workloads")
-    admitted_host = {op: admit_latency_for_planning(ev, allow_synthetic=allow_synthetic) for op, ev in host.items()}
-    admitted_device = {op: admit_latency_for_planning(ev, allow_synthetic=allow_synthetic) for op, ev in device.items()}
-    admitted_transfer = admit_latency_for_planning(transfer, allow_synthetic=allow_synthetic)
+        raise CalibrationError(
+            "Operator evidence coverage must exactly match host and native workloads"
+        )
+    admitted_host = {
+        op: admit_latency_for_planning(ev, allow_synthetic=allow_synthetic)
+        for op, ev in host.items()
+    }
+    admitted_device = {
+        op: admit_latency_for_planning(ev, allow_synthetic=allow_synthetic)
+        for op, ev in device.items()
+    }
+    admitted_transfer = admit_latency_for_planning(
+        transfer, allow_synthetic=allow_synthetic
+    )
     for op, a in admitted_host.items():
         if (a.hardware_id, a.operation) != (host_hardware_id, op):
-            raise CalibrationError(f"Host evidence does not identify requested host/op {op}")
+            raise CalibrationError(
+                f"Host evidence does not identify requested host/op {op}"
+            )
     for op, a in admitted_device.items():
         if (a.hardware_id, a.operation) != (device_hardware_id, op):
-            raise CalibrationError(f"Device evidence does not identify requested device/op {op}")
-    if (admitted_transfer.hardware_id, admitted_transfer.operation) != (transfer_hardware_id, "transfer"):
-        raise CalibrationError("Transfer evidence must identify the link and 'transfer' operation")
-    kinds = {x.source_kind for x in (*admitted_host.values(), *admitted_device.values(), admitted_transfer)}
+            raise CalibrationError(
+                f"Device evidence does not identify requested device/op {op}"
+            )
+    if (admitted_transfer.hardware_id, admitted_transfer.operation) != (
+        transfer_hardware_id,
+        "transfer",
+    ):
+        raise CalibrationError(
+            "Transfer evidence must identify the link and 'transfer' operation"
+        )
+    kinds = {
+        x.source_kind
+        for x in (*admitted_host.values(), *admitted_device.values(), admitted_transfer)
+    }
     if len(kinds) != 1:
-        raise CalibrationError("Mixed measured/synthetic evidence cannot enter one placement objective")
+        raise CalibrationError(
+            "Mixed measured/synthetic evidence cannot enter one placement objective"
+        )
     if admitted_transfer.us_per_byte <= 0:
-        raise CalibrationError("Transfer coefficient must be strictly positive to define transfer cost")
+        raise CalibrationError(
+            "Transfer coefficient must be strictly positive to define transfer cost"
+        )
     per_node_host: dict[str, float] = {}
     per_node_device: dict[str, float] = {}
     tensor_bytes: dict[str, int] = {}
     digests: list[tuple[str, str, str]] = []
-    for area, group in (("host", admitted_host), ("device", admitted_device), ("transfer", {"transfer": admitted_transfer})):
+    for area, group in (
+        ("host", admitted_host),
+        ("device", admitted_device),
+        ("transfer", {"transfer": admitted_transfer}),
+    ):
         for op, evidence in group.items():
-            digests.append((f"{area}:{op}", evidence.calibration_sha256, evidence.holdout_sha256))
+            digests.append(
+                (f"{area}:{op}", evidence.calibration_sha256, evidence.holdout_sha256)
+            )
     for n in ir.nodes:
         if any(t.bytes is None or t.bytes < 0 for t in n.tensors):
             raise PlacementError(f"Unknown or negative output bytes: {n.id}")
         tensor_bytes[n.id] = sum(t.bytes for t in n.tensors if t.bytes is not None)
         if n.op in special:
             continue
-        if n.estimated_flops is None or type(n.estimated_flops) is not int or n.estimated_flops < 0:
+        if (
+            n.estimated_flops is None
+            or type(n.estimated_flops) is not int
+            or n.estimated_flops < 0
+        ):
             raise PlacementError(f"Unknown or invalid declared work for {n.id}")
         work, count = n.estimated_flops, tensor_bytes[n.id]
         per_node_host[n.id] = admitted_host[n.op].estimate_us(work, count)
@@ -164,12 +207,25 @@ def optimize_with_evidence(
         "dtypes": sorted(capabilities.supported_dtypes),
         "max_tensor_rank": capabilities.max_tensor_rank,
     }
-    digest = sha256(json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+    digest = sha256(
+        json.dumps(
+            payload, sort_keys=True, separators=(",", ":"), allow_nan=False
+        ).encode()
+    ).hexdigest()
     return EvidencePlacementReport(
-        "visuaml.evidence-placement.v1", digest, next(iter(kinds)), "microseconds",
-        host_hardware_id, device_hardware_id, transfer_hardware_id,
-        tuple(digests), tuple(sorted(per_node_host.items())),
-        tuple(sorted(per_node_device.items())), overhead, perbyte, placement,
+        "visuaml.evidence-placement.v1",
+        digest,
+        next(iter(kinds)),
+        "microseconds",
+        host_hardware_id,
+        device_hardware_id,
+        transfer_hardware_id,
+        tuple(digests),
+        tuple(sorted(per_node_host.items())),
+        tuple(sorted(per_node_device.items())),
+        overhead,
+        perbyte,
+        placement,
         (
             "Provenance and measurement source-kind are provider-declared, not independently authenticated.",
             "The objective sums independently fitted operator and per-edge transfer latencies; it does not model concurrency, shared transfers, or memory limits.",

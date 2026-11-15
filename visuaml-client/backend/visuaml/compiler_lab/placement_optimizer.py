@@ -56,7 +56,12 @@ class HypotheticalCostModel:
             v = getattr(self, k)
             if not isfinite(v) or v <= 0:
                 raise PlacementError(f"{k} must be finite and positive")
-        for costs in (self.host_op_costs, self.device_op_costs, self.host_node_costs, self.device_node_costs):
+        for costs in (
+            self.host_op_costs,
+            self.device_op_costs,
+            self.host_node_costs,
+            self.device_node_costs,
+        ):
             if costs is not None and any(
                 not isfinite(v) or v < 0 for v in costs.values()
             ):
@@ -246,8 +251,12 @@ def optimize_binary_placement(
             )
         )
         flop = n.estimated_flops
-        host_explicit = (costs.host_node_costs or {}).get(n.id, (costs.host_op_costs or {}).get(n.op))
-        device_explicit = (costs.device_node_costs or {}).get(n.id, (costs.device_op_costs or {}).get(n.op))
+        host_explicit = (costs.host_node_costs or {}).get(
+            n.id, (costs.host_op_costs or {}).get(n.op)
+        )
+        device_explicit = (costs.device_node_costs or {}).get(
+            n.id, (costs.device_op_costs or {}).get(n.op)
+        )
         if special:
             host, device = 0.0, None
         else:

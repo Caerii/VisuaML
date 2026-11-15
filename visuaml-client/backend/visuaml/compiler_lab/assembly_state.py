@@ -23,15 +23,23 @@ class AssemblyStateError(ValueError):
 
 def _finite_float32(array: np.ndarray, label: str, ndim: int) -> np.ndarray:
     value = np.asarray(array)
-    if value.ndim != ndim or value.dtype != np.float32 or not np.all(np.isfinite(value)):
+    if (
+        value.ndim != ndim
+        or value.dtype != np.float32
+        or not np.all(np.isfinite(value))
+    ):
         raise AssemblyStateError(f"{label} requires finite float32 rank-{ndim} values")
     return value.copy()
 
 
-def _indices(value: np.ndarray, length: int, *, allow_empty: bool = False) -> np.ndarray:
+def _indices(
+    value: np.ndarray, length: int, *, allow_empty: bool = False
+) -> np.ndarray:
     arr = np.asarray(value)
     if arr.ndim != 1 or arr.dtype.kind not in "iu" or arr.dtype.kind == "b":
-        raise AssemblyStateError("Winner indices require a one-dimensional integer array")
+        raise AssemblyStateError(
+            "Winner indices require a one-dimensional integer array"
+        )
     if (not allow_empty and arr.size == 0) or np.any(arr < 0) or np.any(arr >= length):
         raise AssemblyStateError("Winner indices must be nonempty and in range")
     if arr.size and np.unique(arr).size != arr.size:
@@ -49,7 +57,11 @@ class AssemblyState:
     def __post_init__(self) -> None:
         weights = _finite_float32(self.weights, "weights", 2)
         bias = _finite_float32(self.bias, "bias", 1)
-        if weights.shape[0] == 0 or weights.shape[1] == 0 or weights.shape[1] != bias.size:
+        if (
+            weights.shape[0] == 0
+            or weights.shape[1] == 0
+            or weights.shape[1] != bias.size
+        ):
             raise AssemblyStateError("Incompatible weight and bias dimensions")
         winners = _indices(self.winners, weights.shape[1])
         if type(self.step_index) is not int or self.step_index < 0:
@@ -86,7 +98,11 @@ class StepConfig:
             v = getattr(self, name)
             if isinstance(v, bool) or not np.isfinite(v) or v < 0:
                 raise AssemblyStateError(f"{name} must be finite and nonnegative")
-        if self.weight_ceiling is not None and (isinstance(self.weight_ceiling, bool) or not np.isfinite(self.weight_ceiling) or self.weight_ceiling <= 0):
+        if self.weight_ceiling is not None and (
+            isinstance(self.weight_ceiling, bool)
+            or not np.isfinite(self.weight_ceiling)
+            or self.weight_ceiling <= 0
+        ):
             raise AssemblyStateError("weight ceiling must be positive and finite")
         if type(self.learning_enabled) is not bool:
             raise AssemblyStateError("learning_enabled must be a boolean")
@@ -107,6 +123,7 @@ class AssemblyReceipt:
 
     def as_dict(self) -> dict:
         from dataclasses import asdict
+
         return asdict(self)
 
 
@@ -134,8 +151,13 @@ def step_assembly(
     if config.k > state.weights.shape[1]:
         raise AssemblyStateError("k exceeds target population")
     if source_mode == "recurrent":
-        if external_source is not None or state.weights.shape[0] != state.weights.shape[1]:
-            raise AssemblyStateError("Recurrent mode requires square weights and no external source")
+        if (
+            external_source is not None
+            or state.weights.shape[0] != state.weights.shape[1]
+        ):
+            raise AssemblyStateError(
+                "Recurrent mode requires square weights and no external source"
+            )
         source = state.winners.copy()
     elif source_mode == "external":
         if external_source is None:
@@ -168,16 +190,25 @@ def step_assembly(
             raise AssemblyStateError("Update produced non-finite state")
         output_state = AssemblyState(weights, bias, selected, state.step_index + 1)
     receipt = AssemblyReceipt(
-        state.step_index, tuple(int(x) for x in source), tuple(int(x) for x in selected),
-        tuple(float(x) for x in raw), tuple(float(x) for x in net),
-        state.digest(), output_state.digest(), ir.fingerprint(),
-        bool(commit and config.learning_enabled), commit,
+        state.step_index,
+        tuple(int(x) for x in source),
+        tuple(int(x) for x in selected),
+        tuple(float(x) for x in raw),
+        tuple(float(x) for x in net),
+        state.digest(),
+        output_state.digest(),
+        ir.fingerprint(),
+        bool(commit and config.learning_enabled),
+        commit,
     )
     return output_state, receipt
 
 
 def run_assembly_schedule(
-    state: AssemblyState, config: StepConfig, steps: int, *,
+    state: AssemblyState,
+    config: StepConfig,
+    steps: int,
+    *,
     source_mode: Literal["external", "recurrent"] = "recurrent",
     external_source: np.ndarray | None = None,
 ) -> tuple[AssemblyState, tuple[AssemblyReceipt, ...]]:
@@ -185,6 +216,8 @@ def run_assembly_schedule(
         raise AssemblyStateError("Steps outside supported 0..10000 range")
     receipts: list[AssemblyReceipt] = []
     for _ in range(steps):
-        state, receipt = step_assembly(state, config, source_mode=source_mode, external_source=external_source)
+        state, receipt = step_assembly(
+            state, config, source_mode=source_mode, external_source=external_source
+        )
         receipts.append(receipt)
     return state, tuple(receipts)

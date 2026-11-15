@@ -5,11 +5,13 @@ accelerator execution. Timings include Python overhead; no overlap, DMA, PCIe,
 optical conversion, or GPU speedup is implied. Only explicit, pure operators
 are admitted. Capturing arbitrary PyTorch model source is not a sandbox.
 """
+
 from __future__ import annotations
 
 import time
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass
-from typing import Any, Mapping
+from typing import Any
 
 import numpy as np
 import torch
@@ -25,7 +27,9 @@ class HybridExecutionError(ValueError):
     """Unsupported executable placement or violated runtime contract."""
 
 
-DEVICE_OPERATIONS = frozenset({"matmul", "add", "sub", "mul", "relu", "sigmoid", "tanh", "linear"})
+DEVICE_OPERATIONS = frozenset(
+    {"matmul", "add", "sub", "mul", "relu", "sigmoid", "tanh", "linear"}
+)
 
 
 @dataclass(frozen=True)
@@ -92,8 +96,13 @@ def _convert(value: Any, destination: str) -> Any:
         return {k: _convert(v, destination) for k, v in value.items()}
     if destination == "device":
         if isinstance(value, torch.Tensor):
-            if value.device.type != "cpu" or value.dtype not in (torch.float32, torch.float64):
-                raise HybridExecutionError("NumPy adapter supports only CPU float32/float64 tensors")
+            if value.device.type != "cpu" or value.dtype not in (
+                torch.float32,
+                torch.float64,
+            ):
+                raise HybridExecutionError(
+                    "NumPy adapter supports only CPU float32/float64 tensors"
+                )
             return value.detach().contiguous().numpy().copy()
         if isinstance(value, np.ndarray):
             return value.copy()
@@ -102,7 +111,9 @@ def _convert(value: Any, destination: str) -> Any:
     return value
 
 
-def _device_compute(node: Node, module: torch.fx.GraphModule, args: tuple, kwargs: dict):
+def _device_compute(
+    node: Node, module: torch.fx.GraphModule, args: tuple, kwargs: dict
+):
     kind = _op(node, module)
     if kind not in DEVICE_OPERATIONS:
         raise HybridExecutionError(f"Unsupported NumPy adapter operation: {kind}")
@@ -139,7 +150,9 @@ def _device_compute(node: Node, module: torch.fx.GraphModule, args: tuple, kwarg
 
 
 class _Interpreter(Interpreter):
-    def __init__(self, captured: CapturedProgram, placements: Mapping[str, str], max_bytes: int):
+    def __init__(
+        self, captured: CapturedProgram, placements: Mapping[str, str], max_bytes: int
+    ):
         super().__init__(captured.graph_module, garbage_collect_values=False)
         self.placements = placements
         self.max_bytes = max_bytes
@@ -148,8 +161,14 @@ class _Interpreter(Interpreter):
         self.transfers: list[RuntimeTransfer] = []
         self.peak_bytes = 0
 
-    def _copy_args(self, node: Node, destination: str, args: Any, kwargs: Any) -> tuple[Any, Any]:
-        crossings = [p for p in node.all_input_nodes if self.locations.get(p.name, "host") != destination]
+    def _copy_args(
+        self, node: Node, destination: str, args: Any, kwargs: Any
+    ) -> tuple[Any, Any]:
+        crossings = [
+            p
+            for p in node.all_input_nodes
+            if self.locations.get(p.name, "host") != destination
+        ]
         started = time.perf_counter_ns()
         converted_args = _convert(args, destination)
         converted_kwargs = _convert(kwargs, destination)
@@ -160,8 +179,15 @@ class _Interpreter(Interpreter):
             # Apportion one measured aggregate conversion, not a separate dummy copy.
             share = round(elapsed * nbytes / total_bytes) if total_bytes else 0
             origin = self.locations.get(predecessor.name, "host")
-            self.transfers.append(RuntimeTransfer(predecessor.name, node.name,
-                                                 f"{origin}->{destination}", nbytes, share))
+            self.transfers.append(
+                RuntimeTransfer(
+                    predecessor.name,
+                    node.name,
+                    f"{origin}->{destination}",
+                    nbytes,
+                    share,
+                )
+            )
         return converted_args, converted_kwargs
 
     def run_node(self, node: Node) -> Any:
@@ -178,7 +204,9 @@ class _Interpreter(Interpreter):
             destination = self.placements[node.name]
             if destination == "device" and kind not in DEVICE_OPERATIONS:
                 raise HybridExecutionError(f"Device cannot execute {kind}: {node.name}")
-            if kind.endswith("_") or kind.startswith(("function:", "module:", "method:")):
+            if kind.endswith("_") or kind.startswith(
+                ("function:", "module:", "method:")
+            ):
                 raise HybridExecutionError(f"Unsupported or mutating operator: {kind}")
             args, kwargs = self.fetch_args_kwargs_from_env(node)
             args, kwargs = self._copy_args(node, destination, args, kwargs)
@@ -194,17 +222,30 @@ class _Interpreter(Interpreter):
             else:
                 raise HybridExecutionError(f"Unsupported node category {node.op}")
             elapsed = time.perf_counter_ns() - started
-            if destination == "device" and node.op == "call_module" and kind == "linear":
+            if (
+                destination == "device"
+                and node.op == "call_module"
+                and kind == "linear"
+            ):
                 layer = self.module.get_submodule(str(node.target))
                 for part, tensor in (("weight", layer.weight), ("bias", layer.bias)):
                     if tensor is not None:
-                        self.transfers.append(RuntimeTransfer(f"{node.target}.{part}", node.name,
-                                                             "host->device", _nbytes(tensor), 0))
+                        self.transfers.append(
+                            RuntimeTransfer(
+                                f"{node.target}.{part}",
+                                node.name,
+                                "host->device",
+                                _nbytes(tensor),
+                                0,
+                            )
+                        )
                 # The weight-copy timing is included in the kernel event.
             if _nbytes(result) > self.max_bytes:
                 raise HybridExecutionError("Single output exceeds memory admission")
             self.locations[node.name] = destination
-            self.events.append(RuntimeEvent(node.name, kind, destination, elapsed, _nbytes(result)))
+            self.events.append(
+                RuntimeEvent(node.name, kind, destination, elapsed, _nbytes(result))
+            )
         # Interpreter is intentionally sequential and holds values for diagnosis.
         live = sum(_nbytes(value) for value in self.env.values()) + _nbytes(result)
         self.peak_bytes = max(self.peak_bytes, live)
@@ -228,21 +269,27 @@ def execute_hybrid(
     """
     if not isinstance(captured, CapturedProgram):
         raise HybridExecutionError("Expected captured model")
-    if type(max_retained_bytes) is not int or not 1024 <= max_retained_bytes <= 2 ** 30:
+    if type(max_retained_bytes) is not int or not 1024 <= max_retained_bytes <= 2**30:
         raise HybridExecutionError("Invalid explicit memory budget")
     gm = captured.graph_module
     nodes = tuple(gm.graph.nodes)
     if len(nodes) > 1024:
         raise HybridExecutionError("Graph exceeds node budget")
-    calls = {n.name for n in nodes if n.op in {"call_module", "call_function", "call_method"}}
+    calls = {
+        n.name for n in nodes if n.op in {"call_module", "call_function", "call_method"}
+    }
     assignments = dict(placements or {})
     if set(assignments) - calls:
-        raise HybridExecutionError("Placement specifies a nonexistent or non-compute node")
+        raise HybridExecutionError(
+            "Placement specifies a nonexistent or non-compute node"
+        )
     plan = {name: assignments.get(name, "host") for name in calls}
     if any(x not in ("host", "device") for x in plan.values()):
         raise HybridExecutionError("Unknown placement adapter")
     input_nodes = [n for n in nodes if n.op == "placeholder"]
-    if len(inputs) != len(input_nodes) or not all(isinstance(x, torch.Tensor) and x.device.type == "cpu" for x in inputs):
+    if len(inputs) != len(input_nodes) or not all(
+        isinstance(x, torch.Tensor) and x.device.type == "cpu" for x in inputs
+    ):
         raise HybridExecutionError("Input arity/type/device mismatch")
     for n, x in zip(input_nodes, inputs):
         spec = n.meta.get("tensor_meta")
@@ -256,6 +303,13 @@ def execute_hybrid(
         elapsed = time.perf_counter_ns() - started
     receipt = verify_outputs(reference, observed, atol=atol, rtol=rtol)
     if not receipt.passed:
-        raise HybridExecutionError("Hybrid execution violated differential witness contract")
-    return HybridRun(tuple(worker.events), tuple(worker.transfers), elapsed,
-                     worker.peak_bytes, observed), receipt.as_dict()
+        raise HybridExecutionError(
+            "Hybrid execution violated differential witness contract"
+        )
+    return HybridRun(
+        tuple(worker.events),
+        tuple(worker.transfers),
+        elapsed,
+        worker.peak_bytes,
+        observed,
+    ), receipt.as_dict()

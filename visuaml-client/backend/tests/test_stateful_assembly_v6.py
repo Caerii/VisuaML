@@ -21,18 +21,23 @@ from visuaml.compiler_lab.stateful_ir import (
 
 
 def initial():
-    weights = np.array([
-        [1, 0, 1, 0],
-        [0, 1, 0, 1],
-        [2, 0, 0, 0],
-        [0, 0, 0, 1],
-    ], dtype=np.float32)
+    weights = np.array(
+        [
+            [1, 0, 1, 0],
+            [0, 1, 0, 1],
+            [2, 0, 0, 0],
+            [0, 0, 0, 1],
+        ],
+        dtype=np.float32,
+    )
     return AssemblyState(weights, np.zeros(4, np.float32), np.array([0, 2]))
 
 
 def test_manual_recurrent_step_preupdate_charge_and_hebbian_snapshot():
     state = initial()
-    end, receipt = step_assembly(state, StepConfig(2, beta=0.5, refraction_strength=0.1))
+    end, receipt = step_assembly(
+        state, StepConfig(2, beta=0.5, refraction_strength=0.1)
+    )
     assert receipt.source == (0, 2)
     assert receipt.winners == (0, 2)
     np.testing.assert_array_equal(np.array(receipt.raw_drive), [3, 0, 1, 0])
@@ -60,7 +65,12 @@ def test_state_changes_across_multiple_recurrent_steps():
 
 def test_external_source_is_distinct_from_current_winners():
     state = initial()
-    end, receipt = step_assembly(state, StepConfig(1, beta=0.4), source_mode="external", external_source=np.array([1]))
+    end, receipt = step_assembly(
+        state,
+        StepConfig(1, beta=0.4),
+        source_mode="external",
+        external_source=np.array([1]),
+    )
     assert receipt.source == (1,)
     assert receipt.winners == (1,)
     assert end.weights[1, 1] == pytest.approx(1.4)
@@ -69,7 +79,9 @@ def test_external_source_is_distinct_from_current_winners():
 
 def test_nonlearning_read_advances_activity_but_not_synapses():
     state = initial()
-    end, receipt = step_assembly(state, StepConfig(1, beta=1, refraction_strength=1, learning_enabled=False))
+    end, receipt = step_assembly(
+        state, StepConfig(1, beta=1, refraction_strength=1, learning_enabled=False)
+    )
     np.testing.assert_array_equal(end.weights, state.weights)
     np.testing.assert_array_equal(end.bias, state.bias)
     assert receipt.learning_applied is False
@@ -85,7 +97,9 @@ def test_probe_does_not_mutate_any_state():
 
 
 def test_exact_tie_break_lowest_neuron_ids():
-    state = AssemblyState(np.zeros((4, 4), np.float32), np.zeros(4, np.float32), np.array([0, 1]))
+    state = AssemblyState(
+        np.zeros((4, 4), np.float32), np.zeros(4, np.float32), np.array([0, 1])
+    )
     end, receipt = step_assembly(state, StepConfig(2))
     assert receipt.winners == (0, 1)
     np.testing.assert_array_equal(end.winners, [0, 1])
@@ -99,13 +113,19 @@ def test_weight_ceiling_and_no_negative_synapses():
 
 
 def test_reproducibility_same_initial_state_and_inputs():
-    a, ar = run_assembly_schedule(initial(), StepConfig(2, beta=.1, refraction_strength=.2), 7)
-    b, br = run_assembly_schedule(initial(), StepConfig(2, beta=.1, refraction_strength=.2), 7)
+    a, ar = run_assembly_schedule(
+        initial(), StepConfig(2, beta=0.1, refraction_strength=0.2), 7
+    )
+    b, br = run_assembly_schedule(
+        initial(), StepConfig(2, beta=0.1, refraction_strength=0.2), 7
+    )
     assert a.digest() == b.digest()
     assert [r.as_dict() for r in ar] == [r.as_dict() for r in br]
 
 
-@pytest.mark.parametrize("bad", [np.array([-1]), np.array([4]), np.array([1, 1]), np.array([1.0])])
+@pytest.mark.parametrize(
+    "bad", [np.array([-1]), np.array([4]), np.array([1, 1]), np.array([1.0])]
+)
 def test_invalid_sources_fail_closed_without_mutation(bad):
     state = initial()
     before = state.digest()
@@ -115,7 +135,9 @@ def test_invalid_sources_fail_closed_without_mutation(bad):
 
 
 def test_wrong_mode_shape_and_invalid_params_rejected():
-    state = AssemblyState(np.ones((3, 4), np.float32), np.zeros(4, np.float32), np.array([0, 1]))
+    state = AssemblyState(
+        np.ones((3, 4), np.float32), np.zeros(4, np.float32), np.array([0, 1])
+    )
     with pytest.raises(AssemblyStateError, match="square"):
         step_assembly(state, StepConfig(2))
     with pytest.raises(AssemblyStateError):

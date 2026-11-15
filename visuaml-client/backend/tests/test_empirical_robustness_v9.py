@@ -21,29 +21,52 @@ def evidence(hardware, operation, coefficients, *, jitter=0.15):
     for i in range(48):
         work = 1.0 + ((i % 36) * 47) % 193
         nbytes = 16.0 + ((i % 36) * 37) % 199
-        observations.append(LatencyObservation(
-            f"{hardware}-{operation}-{i:02d}", hardware, operation,
-            "synthetic", work, nbytes,
-            a + b*work + c*nbytes + jitter*((i%5)-2)/2,
-            "v9-synthetic-fixture-not-hardware",
-        ))
+        observations.append(
+            LatencyObservation(
+                f"{hardware}-{operation}-{i:02d}",
+                hardware,
+                operation,
+                "synthetic",
+                work,
+                nbytes,
+                a + b * work + c * nbytes + jitter * ((i % 5) - 2) / 2,
+                "v9-synthetic-fixture-not-hardware",
+            )
+        )
     return validate_latency_holdout(
-        observations[:36], observations[36:],
-        allowed_max_abs_us=1.0, allowed_max_relative=0.5,
+        observations[:36],
+        observations[36:],
+        allowed_max_abs_us=1.0,
+        allowed_max_relative=0.5,
     )
 
 
 def sample():
-    def t(n): return (TensorSpec(("1", "4"), "torch.float32", n),)
-    ir = ProgramIR((
-        OpRecord("x", "input", "", (), t(48), 0, ()),
-        OpRecord("m1", "matmul", "", ("x",), t(56), 85, ()),
-        OpRecord("r", "relu", "", ("m1",), t(56), 12, ()),
-        OpRecord("m2", "matmul", "", ("r",), t(64), 133, ()),
-        OpRecord("o", "output", "", ("m2",), (), 0, ()),
-    ), ("x",), ("m2",))
-    caps = BackendCapabilities("toy-device", "r1", frozenset({"matmul"}), frozenset({"relu"}), frozenset({"torch.float32"}))
-    h = {"matmul": evidence("cpu", "matmul", (7.0, 0.3, 0.01)), "relu": evidence("cpu", "relu", (2.0, 0.04, 0.005))}
+    def t(n):
+        return (TensorSpec(("1", "4"), "torch.float32", n),)
+
+    ir = ProgramIR(
+        (
+            OpRecord("x", "input", "", (), t(48), 0, ()),
+            OpRecord("m1", "matmul", "", ("x",), t(56), 85, ()),
+            OpRecord("r", "relu", "", ("m1",), t(56), 12, ()),
+            OpRecord("m2", "matmul", "", ("r",), t(64), 133, ()),
+            OpRecord("o", "output", "", ("m2",), (), 0, ()),
+        ),
+        ("x",),
+        ("m2",),
+    )
+    caps = BackendCapabilities(
+        "toy-device",
+        "r1",
+        frozenset({"matmul"}),
+        frozenset({"relu"}),
+        frozenset({"torch.float32"}),
+    )
+    h = {
+        "matmul": evidence("cpu", "matmul", (7.0, 0.3, 0.01)),
+        "relu": evidence("cpu", "relu", (2.0, 0.04, 0.005)),
+    }
     d = {"matmul": evidence("not-real-hardware", "matmul", (0.3, 0.02, 0.001))}
     tr = evidence("link", "transfer", (0.5, 0.1, 0.007))
     return ir, caps, h, d, tr
@@ -52,9 +75,16 @@ def sample():
 def run(*, allow_synthetic=True, max_exact=12):
     ir, caps, h, d, tr = sample()
     return optimize_with_empirical_envelopes(
-        ir, caps, host_hardware_id="cpu", device_hardware_id="not-real-hardware",
-        transfer_hardware_id="link", host=h, device=d, transfer=tr,
-        allow_synthetic=allow_synthetic, max_exact_device_nodes=max_exact,
+        ir,
+        caps,
+        host_hardware_id="cpu",
+        device_hardware_id="not-real-hardware",
+        transfer_hardware_id="link",
+        host=h,
+        device=d,
+        transfer=tr,
+        allow_synthetic=allow_synthetic,
+        max_exact_device_nodes=max_exact,
     )
 
 
@@ -74,8 +104,12 @@ def test_ensemble_contains_observed_residuals_and_five_profiles():
 def test_nominal_scenario_matches_direct_evidence_fit():
     r = run()
     nominal = r.sensitivity.scenarios[0]
-    assert nominal.optimum_cost == pytest.approx(r.nominal.placement.estimated_total_cost)
-    assert nominal.device_nodes == tuple(x.node for x in r.nominal.placement.assignments if x.assigned == "device")
+    assert nominal.optimum_cost == pytest.approx(
+        r.nominal.placement.estimated_total_cost
+    )
+    assert nominal.device_nodes == tuple(
+        x.node for x in r.nominal.placement.assignments if x.assigned == "device"
+    )
 
 
 def test_synthetic_is_not_accepted_as_measured():
@@ -88,7 +122,17 @@ def test_failed_holdout_is_not_accepted():
     h = dict(h)
     h["relu"] = replace(h["relu"], passed=False)
     with pytest.raises(CalibrationError, match="Failed holdout"):
-        optimize_with_empirical_envelopes(ir, caps, host_hardware_id="cpu", device_hardware_id="not-real-hardware", transfer_hardware_id="link", host=h, device=d, transfer=tr, allow_synthetic=True)
+        optimize_with_empirical_envelopes(
+            ir,
+            caps,
+            host_hardware_id="cpu",
+            device_hardware_id="not-real-hardware",
+            transfer_hardware_id="link",
+            host=h,
+            device=d,
+            transfer=tr,
+            allow_synthetic=True,
+        )
 
 
 def test_out_of_domain_work_rejected():
@@ -96,7 +140,17 @@ def test_out_of_domain_work_rejected():
     nodes = list(ir.nodes)
     nodes[1] = replace(nodes[1], estimated_flops=90000)
     with pytest.raises(CalibrationError, match="outside"):
-        optimize_with_empirical_envelopes(replace(ir, nodes=tuple(nodes)), caps, host_hardware_id="cpu", device_hardware_id="not-real-hardware", transfer_hardware_id="link", host=h, device=d, transfer=tr, allow_synthetic=True)
+        optimize_with_empirical_envelopes(
+            replace(ir, nodes=tuple(nodes)),
+            caps,
+            host_hardware_id="cpu",
+            device_hardware_id="not-real-hardware",
+            transfer_hardware_id="link",
+            host=h,
+            device=d,
+            transfer=tr,
+            allow_synthetic=True,
+        )
 
 
 def test_changed_residuals_change_sensitivity_fingerprint():
@@ -104,7 +158,17 @@ def test_changed_residuals_change_sensitivity_fingerprint():
     first = run()
     altered = dict(h)
     altered["matmul"] = evidence("cpu", "matmul", (7.0, 0.3, 0.01), jitter=0.33)
-    second = optimize_with_empirical_envelopes(ir, caps, host_hardware_id="cpu", device_hardware_id="not-real-hardware", transfer_hardware_id="link", host=altered, device=d, transfer=tr, allow_synthetic=True)
+    second = optimize_with_empirical_envelopes(
+        ir,
+        caps,
+        host_hardware_id="cpu",
+        device_hardware_id="not-real-hardware",
+        transfer_hardware_id="link",
+        host=altered,
+        device=d,
+        transfer=tr,
+        allow_synthetic=True,
+    )
     assert first.sensitivity.input_sha256 != second.sensitivity.input_sha256
 
 

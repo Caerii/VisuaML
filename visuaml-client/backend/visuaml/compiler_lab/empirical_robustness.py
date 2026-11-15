@@ -68,11 +68,14 @@ def optimize_with_empirical_envelopes(
     ``optimize_with_evidence`` and run before building any scenarios.
     """
     nominal = optimize_with_evidence(
-        ir, capabilities,
+        ir,
+        capabilities,
         host_hardware_id=host_hardware_id,
         device_hardware_id=device_hardware_id,
         transfer_hardware_id=transfer_hardware_id,
-        host=host, device=device, transfer=transfer,
+        host=host,
+        device=device,
+        transfer=transfer,
         allow_synthetic=allow_synthetic,
     )
     host_nominal = dict(nominal.predicted_host_us)
@@ -87,9 +90,17 @@ def optimize_with_empirical_envelopes(
     def profile(name: str, *, host_sign: int, device_sign: int, transfer_sign: int):
         return HypotheticalCostModel(
             name=name,
-            host_node_costs={key: max(0.0, price + host_sign * host_delta[key]) for key, price in host_nominal.items()},
-            device_node_costs={key: max(0.0, price + device_sign * device_delta[key]) for key, price in device_nominal.items()},
-            transfer_overhead=max(0.0, nominal.transfer_overhead_us + transfer_sign * transfer_delta),
+            host_node_costs={
+                key: max(0.0, price + host_sign * host_delta[key])
+                for key, price in host_nominal.items()
+            },
+            device_node_costs={
+                key: max(0.0, price + device_sign * device_delta[key])
+                for key, price in device_nominal.items()
+            },
+            transfer_overhead=max(
+                0.0, nominal.transfer_overhead_us + transfer_sign * transfer_delta
+            ),
             transfer_bytes_per_unit=1 / nominal.transfer_us_per_byte,
         )
 
@@ -101,17 +112,25 @@ def optimize_with_empirical_envelopes(
         profile("joint-lower", host_sign=-1, device_sign=-1, transfer_sign=-1),
     )
     sensitivity = analyze_placement_sensitivity(
-        ir, capabilities, profiles,
+        ir,
+        capabilities,
+        profiles,
         max_exact_device_nodes=max_exact_device_nodes,
     )
-    errors = tuple(sorted(
-        [(f"host:{k}", v) for k, v in host_delta_by_op.items()]
-        + [(f"device:{k}", v) for k, v in device_delta_by_op.items()]
-        + [("transfer:per-edge", transfer_delta)]
-    ))
+    errors = tuple(
+        sorted(
+            [(f"host:{k}", v) for k, v in host_delta_by_op.items()]
+            + [(f"device:{k}", v) for k, v in device_delta_by_op.items()]
+            + [("transfer:per-edge", transfer_delta)]
+        )
+    )
     return EmpiricalRobustPlacement(
-        "visuaml.empirical-robust-placement.v1", "microseconds",
-        nominal.source_kind, nominal, errors, sensitivity,
+        "visuaml.empirical-robust-placement.v1",
+        "microseconds",
+        nominal.source_kind,
+        nominal,
+        errors,
+        sensitivity,
         (
             "Residual envelopes describe errors observed on this training/holdout split, NOT statistical confidence or future-error bounds.",
             "The five scenarios are illustrative perturbations of holdout-admitted additive latency estimates, not probabilities.",

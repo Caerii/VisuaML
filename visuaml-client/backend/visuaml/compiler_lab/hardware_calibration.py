@@ -63,16 +63,35 @@ class LatencyCalibration:
     residual_mean_abs_us: float
     fit_kind: str = "nonnegative-affine-ols"
 
-    def predict_us(self, *, work_units: float, bytes_moved: float, allow_extrapolation: bool = False) -> float:
+    def predict_us(
+        self,
+        *,
+        work_units: float,
+        bytes_moved: float,
+        allow_extrapolation: bool = False,
+    ) -> float:
         for value in (work_units, bytes_moved):
-            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
-                raise CalibrationError("Prediction inputs must be finite, nonnegative numbers")
+            if (
+                isinstance(value, bool)
+                or not isinstance(value, (int, float))
+                or not math.isfinite(value)
+                or value < 0
+            ):
+                raise CalibrationError(
+                    "Prediction inputs must be finite, nonnegative numbers"
+                )
         if not allow_extrapolation and not (
             self.work_unit_range[0] <= work_units <= self.work_unit_range[1]
             and self.byte_range[0] <= bytes_moved <= self.byte_range[1]
         ):
-            raise CalibrationError("Prediction extrapolates beyond the observed calibration domain")
-        return self.baseline_us + self.us_per_work_unit * work_units + self.us_per_byte * bytes_moved
+            raise CalibrationError(
+                "Prediction extrapolates beyond the observed calibration domain"
+            )
+        return (
+            self.baseline_us
+            + self.us_per_work_unit * work_units
+            + self.us_per_byte * bytes_moved
+        )
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -91,26 +110,37 @@ def calibrate_latency(records: list[LatencyObservation]) -> LatencyCalibration:
         raise CalibrationError("Only typed LatencyObservation records are accepted")
     labels = {(r.hardware_id, r.operation, r.source_kind) for r in records}
     if len(labels) != 1:
-        raise CalibrationError("Mixing hardware, operations, or measured/synthetic sources is forbidden")
+        raise CalibrationError(
+            "Mixing hardware, operations, or measured/synthetic sources is forbidden"
+        )
     ids = [r.measurement_id for r in records]
     if len(set(ids)) != len(ids):
         raise CalibrationError("Duplicate measurement IDs")
     sorted_records = sorted(records, key=lambda r: r.measurement_id)
-    X = np.array([[1.0, r.workload_units, r.bytes_moved] for r in sorted_records], dtype=np.float64)
+    X = np.array(
+        [[1.0, r.workload_units, r.bytes_moved] for r in sorted_records],
+        dtype=np.float64,
+    )
     Y = np.array([r.latency_us for r in sorted_records], dtype=np.float64)
     if np.linalg.matrix_rank(X) != 3:
-        raise CalibrationError("Cannot separately identify baseline, work and transfer coefficients")
+        raise CalibrationError(
+            "Cannot separately identify baseline, work and transfer coefficients"
+        )
     coefficients, _, rank, _ = np.linalg.lstsq(X, Y, rcond=None)
     if rank != 3 or not np.all(np.isfinite(coefficients)):
         raise CalibrationError("Unstable or rank-deficient calibration")
     if np.any(coefficients < -1e-9):
-        raise CalibrationError("Negative physical-cost coefficient; declared model is invalid for this dataset")
+        raise CalibrationError(
+            "Negative physical-cost coefficient; declared model is invalid for this dataset"
+        )
     coefficients = np.maximum(coefficients, 0)
     residuals = X @ coefficients - Y
     if not np.all(np.isfinite(residuals)):
         raise CalibrationError("Non-finite residual")
     document = [asdict(r) for r in sorted_records]
-    content = json.dumps(document, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    content = json.dumps(
+        document, sort_keys=True, separators=(",", ":"), allow_nan=False
+    )
     digest = hashlib.sha256(content.encode("utf-8")).hexdigest()
     hardware, op, source = next(iter(labels))
     return LatencyCalibration(

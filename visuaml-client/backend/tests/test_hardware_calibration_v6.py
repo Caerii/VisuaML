@@ -17,16 +17,18 @@ def fixtures():
     for i in range(18):
         units = 10.0 + (i * 23) % 97
         moved = 5.0 + (i * 37) % 101
-        out.append(LatencyObservation(
-            measurement_id=f"synthetic-{i:02d}",
-            hardware_id="synthetic-device-not-ayo",
-            operation="matmul",
-            source_kind="synthetic",
-            workload_units=units,
-            bytes_moved=moved,
-            latency_us=3.0 + 0.25 * units + 0.4 * moved,
-            provenance="unit-test-affine-fixture",
-        ))
+        out.append(
+            LatencyObservation(
+                measurement_id=f"synthetic-{i:02d}",
+                hardware_id="synthetic-device-not-ayo",
+                operation="matmul",
+                source_kind="synthetic",
+                workload_units=units,
+                bytes_moved=moved,
+                latency_us=3.0 + 0.25 * units + 0.4 * moved,
+                provenance="unit-test-affine-fixture",
+            )
+        )
     return out
 
 
@@ -81,14 +83,21 @@ def test_refuse_underdetermined_or_insufficient_datasets():
 
 
 def test_refuse_negative_latency_or_non_finite_observations():
-    for field, value in (("latency_us", -1.0), ("bytes_moved", np.inf), ("workload_units", np.nan)):
+    for field, value in (
+        ("latency_us", -1.0),
+        ("bytes_moved", np.inf),
+        ("workload_units", np.nan),
+    ):
         with pytest.raises(CalibrationError):
             replace(fixtures()[0], **{field: value})
 
 
 def test_refuse_negative_fitted_slope():
     a = fixtures()
-    a = [replace(r, latency_us=100 - 0.25 * r.workload_units + 0.4 * r.bytes_moved) for r in a]
+    a = [
+        replace(r, latency_us=100 - 0.25 * r.workload_units + 0.4 * r.bytes_moved)
+        for r in a
+    ]
     with pytest.raises(CalibrationError, match="Negative"):
         calibrate_latency(a)
 
@@ -104,12 +113,17 @@ def test_extrapolation_requires_explicit_opt_in():
     report = calibrate_latency(fixtures())
     with pytest.raises(CalibrationError, match="extrapolates"):
         report.predict_us(work_units=1000, bytes_moved=5)
-    assert report.predict_us(work_units=1000, bytes_moved=5, allow_extrapolation=True) > 0
+    assert (
+        report.predict_us(work_units=1000, bytes_moved=5, allow_extrapolation=True) > 0
+    )
 
 
 def test_residual_diagnostics_reveal_model_mismatch():
     a = fixtures()
-    b = [replace(r, latency_us=r.latency_us + (2 if i % 2 else 0)) for i, r in enumerate(a)]
+    b = [
+        replace(r, latency_us=r.latency_us + (2 if i % 2 else 0))
+        for i, r in enumerate(a)
+    ]
     report = calibrate_latency(b)
     assert report.residual_max_abs_us > 0.2
     assert report.residual_mean_abs_us > 0.1

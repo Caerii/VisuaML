@@ -37,11 +37,24 @@ def independent_step(config: MultiFiberConfig, initial: dict[str, np.ndarray]):
         for index in out[src]:
             one += out[weights][int(index)]
         drive += one
-    winners = np.array(sorted(sorted(range(config.n_c), key=lambda j: (-float(drive[j]), j))[:config.k_c]), dtype=np.int64)
-    for name, src, rate in (("ac.weights", "a.winners", config.beta_a), ("bc.weights", "b.winners", config.beta_b)):
+    winners = np.array(
+        sorted(
+            sorted(range(config.n_c), key=lambda j: (-float(drive[j]), j))[: config.k_c]
+        ),
+        dtype=np.int64,
+    )
+    for name, src, rate in (
+        ("ac.weights", "a.winners", config.beta_a),
+        ("bc.weights", "b.winners", config.beta_b),
+    ):
         for i in out[src]:
             for j in winners:
-                out[name][i, j] = np.float32(min(config.ceiling, np.float32(out[name][i, j] * np.float32(1 + rate))))
+                out[name][i, j] = np.float32(
+                    min(
+                        config.ceiling,
+                        np.float32(out[name][i, j] * np.float32(1 + rate)),
+                    )
+                )
     out["c.winners"] = winners
     return out
 
@@ -55,7 +68,9 @@ def test_five_step_independent_multifiber_reference(seed):
         run = execute_multifiber(config, state)
         assert len(run.receipts) == 1
         for name in state:
-            np.testing.assert_allclose(run.final_state[name], expected[name], atol=1e-6, rtol=0)
+            np.testing.assert_allclose(
+                run.final_state[name], expected[name], atol=1e-6, rtol=0
+            )
         state = {name: value.copy() for name, value in run.final_state.items()}
     batch = execute_multifiber(config, original, steps=5)
     assert len(batch.receipts) == 5
@@ -78,7 +93,9 @@ def test_effect_guard_rejects_removed_fiber_learning():
     config, _ = example()
     before = multifiber_program(config)
     ops = tuple(op for op in before.loops[0].instructions if op.name != "write_bc")
-    repaired = tuple(replace(op, token_in="e5") if op.name == "publish_c" else op for op in ops)
+    repaired = tuple(
+        replace(op, token_in="e5") if op.name == "publish_c" else op for op in ops
+    )
     after = replace(before, loops=(replace(before.loops[0], instructions=repaired),))
     with pytest.raises(EffectIRError, match="rewired"):
         assert_effect_trace_preserved(before, after)
@@ -110,8 +127,10 @@ def test_digests_include_learning_rates():
     assert a.digest() != b.digest()
 
 
-@pytest.mark.skipif(importlib.util.find_spec("neural_assemblies") is None,
-                    reason="Pinned Caerii/assemblies required for independent three-area engine parity")
+@pytest.mark.skipif(
+    importlib.util.find_spec("neural_assemblies") is None,
+    reason="Pinned Caerii/assemblies required for independent three-area engine parity",
+)
 def test_pinned_explicit_engine_multi_fiber_parity():
     from neural_assemblies.core.numpy_engine._explicit import NumpyExplicitEngine
 
@@ -130,7 +149,19 @@ def test_pinned_explicit_engine_multi_fiber_parity():
     for _ in range(5):
         engine.project_into("C", [], ["A", "B"])
         got = execute_multifiber(cfg, state)
-        np.testing.assert_array_equal(np.sort(engine.get_winners("C")), got.final_state["c.winners"])
-        np.testing.assert_allclose(engine._area_conns["A"]["C"].weights, got.final_state["ac.weights"], atol=1e-6, rtol=0)
-        np.testing.assert_allclose(engine._area_conns["B"]["C"].weights, got.final_state["bc.weights"], atol=1e-6, rtol=0)
+        np.testing.assert_array_equal(
+            np.sort(engine.get_winners("C")), got.final_state["c.winners"]
+        )
+        np.testing.assert_allclose(
+            engine._area_conns["A"]["C"].weights,
+            got.final_state["ac.weights"],
+            atol=1e-6,
+            rtol=0,
+        )
+        np.testing.assert_allclose(
+            engine._area_conns["B"]["C"].weights,
+            got.final_state["bc.weights"],
+            atol=1e-6,
+            rtol=0,
+        )
         state = {name: value.copy() for name, value in got.final_state.items()}

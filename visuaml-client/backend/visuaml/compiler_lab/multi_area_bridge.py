@@ -42,7 +42,9 @@ class ReciprocalConfig:
     def __post_init__(self) -> None:
         if any(type(x) is not int for x in (self.n_a, self.n_b, self.k_a, self.k_b)):
             raise EffectIRError("Population and assembly sizes must be integers")
-        if not (1 <= self.k_a <= self.n_a <= 1024 and 1 <= self.k_b <= self.n_b <= 1024):
+        if not (
+            1 <= self.k_a <= self.n_a <= 1024 and 1 <= self.k_b <= self.n_b <= 1024
+        ):
             raise EffectIRError("Invalid population or winner dimensions")
         for field in ("beta_a", "beta_b", "ceiling"):
             value = getattr(self, field)
@@ -58,20 +60,108 @@ def reciprocal_program(config: ReciprocalConfig, *, steps: int = 1) -> EffectPro
         raise EffectIRError("Reciprocal iteration count must be in [1, 128]")
     op = Instruction
     instructions = (
-        op("read_a", "read", output="a0", cell="a.winners", token_in="e0", token_out="e1", revision=0),
-        op("read_ab", "read", output="ab0", cell="ab.weights", token_in="e1", token_out="e2", revision=0),
+        op(
+            "read_a",
+            "read",
+            output="a0",
+            cell="a.winners",
+            token_in="e0",
+            token_out="e1",
+            revision=0,
+        ),
+        op(
+            "read_ab",
+            "read",
+            output="ab0",
+            cell="ab.weights",
+            token_in="e1",
+            token_out="e2",
+            revision=0,
+        ),
         op("b_drive", "gather_sum", args=("ab0", "a0"), output="bd"),
-        op("choose_b", "topk_indices", args=("bd",), output="b1", params=(("k", config.k_b),)),
-        op("learn_ab", "hebbian_update", args=("ab0", "a0", "b1"), output="ab1", params=(("beta", config.beta_b), ("ceiling", config.ceiling))),
-        op("write_ab", "write", args=("ab1",), cell="ab.weights", token_in="e2", token_out="e3", revision=0),
-        op("write_b", "write", args=("b1",), cell="b.winners", token_in="e3", token_out="e4", revision=0),
-        op("read_b", "read", output="b_now", cell="b.winners", token_in="e4", token_out="e5", revision=1),
-        op("read_ba", "read", output="ba0", cell="ba.weights", token_in="e5", token_out="e6", revision=0),
+        op(
+            "choose_b",
+            "topk_indices",
+            args=("bd",),
+            output="b1",
+            params=(("k", config.k_b),),
+        ),
+        op(
+            "learn_ab",
+            "hebbian_update",
+            args=("ab0", "a0", "b1"),
+            output="ab1",
+            params=(("beta", config.beta_b), ("ceiling", config.ceiling)),
+        ),
+        op(
+            "write_ab",
+            "write",
+            args=("ab1",),
+            cell="ab.weights",
+            token_in="e2",
+            token_out="e3",
+            revision=0,
+        ),
+        op(
+            "write_b",
+            "write",
+            args=("b1",),
+            cell="b.winners",
+            token_in="e3",
+            token_out="e4",
+            revision=0,
+        ),
+        op(
+            "read_b",
+            "read",
+            output="b_now",
+            cell="b.winners",
+            token_in="e4",
+            token_out="e5",
+            revision=1,
+        ),
+        op(
+            "read_ba",
+            "read",
+            output="ba0",
+            cell="ba.weights",
+            token_in="e5",
+            token_out="e6",
+            revision=0,
+        ),
         op("a_drive", "gather_sum", args=("ba0", "b_now"), output="ad"),
-        op("choose_a", "topk_indices", args=("ad",), output="a1", params=(("k", config.k_a),)),
-        op("learn_ba", "hebbian_update", args=("ba0", "b_now", "a1"), output="ba1", params=(("beta", config.beta_a), ("ceiling", config.ceiling))),
-        op("write_ba", "write", args=("ba1",), cell="ba.weights", token_in="e6", token_out="e7", revision=0),
-        op("write_a", "write", args=("a1",), cell="a.winners", token_in="e7", token_out="e8", revision=0),
+        op(
+            "choose_a",
+            "topk_indices",
+            args=("ad",),
+            output="a1",
+            params=(("k", config.k_a),),
+        ),
+        op(
+            "learn_ba",
+            "hebbian_update",
+            args=("ba0", "b_now", "a1"),
+            output="ba1",
+            params=(("beta", config.beta_a), ("ceiling", config.ceiling)),
+        ),
+        op(
+            "write_ba",
+            "write",
+            args=("ba1",),
+            cell="ba.weights",
+            token_in="e6",
+            token_out="e7",
+            revision=0,
+        ),
+        op(
+            "write_a",
+            "write",
+            args=("a1",),
+            cell="a.winners",
+            token_in="e7",
+            token_out="e8",
+            revision=0,
+        ),
     )
     t = TensorType
     program = EffectProgram(
@@ -100,10 +190,27 @@ def execute_reciprocal(
         raise EffectIRError("Missing or unexpected reciprocal state slots")
     for name in ("ab.weights", "ba.weights"):
         weights = np.asarray(initial_state[name])
-        if weights.dtype != np.float32 or not np.all(np.isfinite(weights)) or np.any(weights < 0) or np.any(weights > config.ceiling):
-            raise EffectIRError("Reference admission requires finite nonnegative weights <= ceiling")
+        if (
+            weights.dtype != np.float32
+            or not np.all(np.isfinite(weights))
+            or np.any(weights < 0)
+            or np.any(weights > config.ceiling)
+        ):
+            raise EffectIRError(
+                "Reference admission requires finite nonnegative weights <= ceiling"
+            )
     for name, bound in (("a.winners", config.n_a), ("b.winners", config.n_b)):
         values = np.asarray(initial_state[name])
-        if values.dtype != np.int64 or values.ndim != 1 or np.any(values < 0) or np.any(values >= bound) or len(np.unique(values)) != len(values):
-            raise EffectIRError("Reference admission requires distinct valid neuron IDs")
-    return execute_effect_program(reciprocal_program(config, steps=steps), initial_state)
+        if (
+            values.dtype != np.int64
+            or values.ndim != 1
+            or np.any(values < 0)
+            or np.any(values >= bound)
+            or len(np.unique(values)) != len(values)
+        ):
+            raise EffectIRError(
+                "Reference admission requires distinct valid neuron IDs"
+            )
+    return execute_effect_program(
+        reciprocal_program(config, steps=steps), initial_state
+    )
