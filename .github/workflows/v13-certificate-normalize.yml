@@ -38,13 +38,14 @@ jobs:
         run: |
           python visuaml-client/backend/scripts/generate_decoder_certificate_v13.py
           python visuaml-client/backend/scripts/generate_architecture_atlas.py
-          pnpm --dir visuaml-client exec prettier --write public/decoder_compiler_certificate.v13.json
+          pnpm --dir visuaml-client exec prettier --write public/decoder_compiler_certificate.v13.json public/architecture_atlas.v1.json
       - name: Verify all functional and quality gates
         env:
           PYTHONPATH: visuaml-client/backend
         run: |
           python -m pytest -q visuaml-client/backend/tests
           ruff check visuaml-client/backend
+          rm -rf visuaml-client/.pytest_cache .pytest_cache
           pnpm --dir visuaml-client exec prettier --check .
           pnpm --filter visuaml-client run lint
           pnpm --filter visuaml-client run test -- --run
