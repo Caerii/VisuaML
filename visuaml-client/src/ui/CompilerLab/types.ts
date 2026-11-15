@@ -75,7 +75,23 @@ export type PlacementRobustness = {
   warnings: string[];
 };
 
+export type V10Report = {
+  schema: string;
+  semantic: { tensor: { sha256: string; ops: number }; effect: { sha256: string; ops: number; rounds: number } };
+  hybrid: {
+    runtime: string; wall_ns: number; total_transfer_bytes: number;
+    events: { node: string; op: string; adapter: string; elapsed_ns: number }[];
+    transfers: { producer: string; consumer: string; direction: string; bytes: number }[];
+    witness: { passed: boolean };
+  };
+  scheduled: { makespan_us: number; transfers: number; moved_bytes: number; device_residency_upper_bound: number; warnings: string[] };
+  optical: { source_kind: string; max_abs_error: number; relative_l2_error: number; profile: { provenance: string } };
+  stateful: { iterations: { before_sha256: string; after_sha256: string; effect_count: number }[]; state_cells: string[] };
+  limitations: string[];
+};
+
 export type CompilerReport = {
+  v10?: V10Report;
   schema: string;
   scenario: Scenario;
   seed: number;

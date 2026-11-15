@@ -410,6 +410,43 @@ export function CompilerLabPage() {
                 </small>
               ))}
             </div>
+            {report.v10 && (
+              <div className="compiler-detail">
+                <h3>v10 · Executable hybrid & stateful research</h3>
+                <p>{report.v10.hybrid.witness.passed ? '✓' : '✕'} PyTorch/NumPy software parity</p>
+                <p>
+                  {report.v10.semantic.tensor.ops} tensor operations · {report.v10.semantic.effect.ops} stateful instructions
+                </p>
+                <p>
+                  {report.v10.hybrid.events.length} measured CPU dispatch events ·{' '}
+                  {formatBytes(report.v10.hybrid.total_transfer_bytes)} copied
+                </p>
+                <p>
+                  Estimated schedule: {formatNumber(report.v10.scheduled.makespan_us)} modeled µs
+                  across {report.v10.scheduled.transfers} transfers
+                </p>
+                <p>
+                  Stateful execution: {report.v10.stateful.iterations.length} iterations;{' '}
+                  {report.v10.stateful.state_cells.length} state cells
+                </p>
+                <p>
+                  Illustrative optical maximum error: {report.v10.optical.max_abs_error.toExponential(3)}
+                </p>
+                <details>
+                  <summary>Execution and estimated schedule details</summary>
+                  <p>Software device: NumPy on CPU. These are not Ayo measurements.</p>
+                  {report.v10.hybrid.transfers.slice(0, 12).map((transfer, i) => (
+                    <p key={i} className="compiler-muted">
+                      {transfer.producer} → {transfer.consumer}: {formatBytes(transfer.bytes)} ({transfer.direction})
+                    </p>
+                  ))}
+                  <p>Optical profile: {report.v10.optical.profile.provenance}</p>
+                  {report.v10.limitations.map((limitation, i) => (
+                    <p className="compiler-muted" key={i}>{limitation}</p>
+                  ))}
+                </details>
+              </div>
+            )}
             <details>
               <summary>Limitations and caveats</summary>
               {report.limitations.map((item, index) => (

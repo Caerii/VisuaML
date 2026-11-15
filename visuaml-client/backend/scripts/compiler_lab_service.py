@@ -16,6 +16,7 @@ from tempfile import TemporaryDirectory
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 from examples.compiler_lab_demo import run
+from visuaml.compiler_lab.v10_lab import run_v10_lab  # noqa: E402
 
 SCENARIOS = ("mlp", "attention", "assembly", "convolution")
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
@@ -29,6 +30,8 @@ def analyze(scenario: str, seed: int = 19) -> dict:
     # run() has checks for actual execution of both targets and per-pass witnesses.
     with TemporaryDirectory(prefix="visuaml-lab-") as directory:
         report = run(scenario, Path(directory), seed)
+    # Trusted, fixed demo slice; arbitrary uploaded code is not admitted.
+    report["v10"] = run_v10_lab(seed=seed)
     # Only report serializable measurements; generated bundles don't leave the temp dir.
     report["api_contract"] = {
         "schema": "visuaml.compiler-lab.api.v1",
