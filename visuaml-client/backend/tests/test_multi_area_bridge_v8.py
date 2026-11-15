@@ -118,6 +118,10 @@ def test_pinned_explicit_engine_multi_area_parity():
     engine = NumpyExplicitEngine(p=0.2, seed=31, w_max=cfg.ceiling)
     engine.add_area("A", cfg.n_a, cfg.k_a, cfg.beta_a)
     engine.add_area("B", cfg.n_b, cfg.k_b, cfg.beta_b)
+    # Reference engine registration initializes per-FIBER learning rates;
+    # declare the two intended target-side rates explicitly for parity.
+    engine.set_beta("A", "B", cfg.beta_a)
+    engine.set_beta("B", "A", cfg.beta_b)
     engine._area_conns["A"]["B"].weights[:] = state["ab.weights"]
     engine._area_conns["B"]["A"].weights[:] = state["ba.weights"]
     engine.set_winners("A", state["a.winners"])
