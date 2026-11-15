@@ -10,7 +10,6 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from typing import Any
 
-import numpy as np
 import torch
 from torch import nn
 from torch.nn import functional as F
@@ -44,15 +43,17 @@ class TinyResNet(nn.Module):
 class TinyAttention(nn.Module):
     """Attention operator motif, no masks, projections, rotary or KV caching."""
 
-    def forward(self, q: torch.Tensor, k: torch.Tensor,
-                v: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self, q: torch.Tensor, k: torch.Tensor, v: torch.Tensor
+    ) -> torch.Tensor:
         scores = (q @ k.transpose(-1, -2)) * 0.5
         return torch.softmax(scores, dim=-1) @ v
 
 
 class TinyGNN(nn.Module):
-    def forward(self, nodes: torch.Tensor, src: torch.Tensor,
-                dst: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self, nodes: torch.Tensor, src: torch.Tensor, dst: torch.Tensor
+    ) -> torch.Tensor:
         messages = nodes[src]
         return nodes.index_add(0, dst, messages)
 
@@ -129,8 +130,11 @@ def _inputs(fixture: str, generator: torch.Generator) -> tuple[torch.Tensor, ...
     _class, shapes = _FIXTURES[fixture]
     if fixture == "graph-scatter":
         nodes = torch.randn((6, 4), generator=generator)
-        return (nodes, torch.tensor([0, 1, 2, 0, 5], dtype=torch.int64),
-                torch.tensor([1, 2, 3, 3, 0], dtype=torch.int64))
+        return (
+            nodes,
+            torch.tensor([0, 1, 2, 0, 5], dtype=torch.int64),
+            torch.tensor([1, 2, 3, 3, 0], dtype=torch.int64),
+        )
     return tuple(torch.randn(shape, generator=generator) for shape in shapes)
 
 
@@ -151,8 +155,9 @@ class ProbeResult:
         return asdict(self)
 
 
-def probe_fixture(fixture: str, *, seed: int = 41, atol: float = 1e-4,
-                  rtol: float = 1e-4) -> ProbeResult:
+def probe_fixture(
+    fixture: str, *, seed: int = 41, atol: float = 1e-4, rtol: float = 1e-4
+) -> ProbeResult:
     if fixture not in _FIXTURES:
         raise ValueError("Unknown fixture; only allowlisted tiny models are accepted")
     if type(seed) is not int or not 0 <= seed <= 100_000:
@@ -175,8 +180,13 @@ def probe_fixture(fixture: str, *, seed: int = 41, atol: float = 1e-4,
             expected = model(*inputs)
         capture_passed = True
         reference_executed = True
-        primitive_ops = tuple(dict.fromkeys(n.op for n in captured.ir.nodes
-                                            if n.op not in {"input", "output", "constant"}))
+        primitive_ops = tuple(
+            dict.fromkeys(
+                n.op
+                for n in captured.ir.nodes
+                if n.op not in {"input", "output", "constant"}
+            )
+        )
         missing = tuple(op for op in primitive_ops if op not in OPS)
         try:
             artifact = compile_numpy_aot(captured)
@@ -185,21 +195,56 @@ def probe_fixture(fixture: str, *, seed: int = 41, atol: float = 1e-4,
             report = verify_outputs(expected, actual, atol=atol, rtol=rtol)
             max_error = max((item.max_abs_error for item in report.leaves), default=0.0)
             if not report.passed:
-                return ProbeResult(fixture, "numeric-mismatch", True, False, True,
-                                   primitive_ops, missing, max_error,
-                                   "NumericalMismatch", "Tiny CPU witness failed; no model-family coverage inferred")
-            return ProbeResult(fixture, "tiny-aot-witness-passed", True, True, True,
-                               primitive_ops, missing, max_error, None,
-                               "Only this synthetic fixture, captured input shape/dtype and seed were tested")
+                return ProbeResult(
+                    fixture,
+                    "numeric-mismatch",
+                    True,
+                    False,
+                    True,
+                    primitive_ops,
+                    missing,
+                    max_error,
+                    "NumericalMismatch",
+                    "Tiny CPU witness failed; no model-family coverage inferred",
+                )
+            return ProbeResult(
+                fixture,
+                "tiny-aot-witness-passed",
+                True,
+                True,
+                True,
+                primitive_ops,
+                missing,
+                max_error,
+                None,
+                "Only this synthetic fixture, captured input shape/dtype and seed were tested",
+            )
         except Exception as exc:  # noqa: BLE001 - clearly bounded local probe diagnostics
-            return ProbeResult(fixture, "aot-rejected", True, False, True,
-                               primitive_ops, missing, None, type(exc).__name__,
-                               "FX capture succeeded; independent NumPy execution is not validated")
+            return ProbeResult(
+                fixture,
+                "aot-rejected",
+                True,
+                False,
+                True,
+                primitive_ops,
+                missing,
+                None,
+                type(exc).__name__,
+                "FX capture succeeded; independent NumPy execution is not validated",
+            )
     except Exception as exc:  # noqa: BLE001 - trusted fixtures only
-        return ProbeResult(fixture, "capture-rejected", capture_passed, False,
-                           reference_executed, primitive_ops, missing, None,
-                           type(exc).__name__,
-                           "FX capture or reference failed; this fixture is not supported")
+        return ProbeResult(
+            fixture,
+            "capture-rejected",
+            capture_passed,
+            False,
+            reference_executed,
+            primitive_ops,
+            missing,
+            None,
+            type(exc).__name__,
+            "FX capture or reference failed; this fixture is not supported",
+        )
 
 
 def probe_all(*, seed: int = 41) -> list[dict[str, Any]]:

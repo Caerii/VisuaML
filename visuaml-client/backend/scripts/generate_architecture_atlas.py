@@ -3,6 +3,7 @@
 Usage: python backend/scripts/generate_architecture_atlas.py
 No external models, weights, network requests, or arbitrary source execution.
 """
+
 from __future__ import annotations
 
 import json
@@ -25,8 +26,13 @@ def main() -> None:
     target = root / "public" / "architecture_atlas.v1.json"
     report = generate()
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(json.dumps(report, sort_keys=True, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    print(f"Updated {target} ({len(report['families'])} families) SHA={report['sha256']}")
+    target.write_text(
+        json.dumps(report, sort_keys=True, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    print(
+        f"Updated {target} ({len(report['families'])} families) SHA={report['sha256']}"
+    )
 
 
 if __name__ == "__main__":

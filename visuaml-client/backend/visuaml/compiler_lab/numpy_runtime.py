@@ -295,8 +295,12 @@ def _execute(op: str, args: Any, kwargs: dict[str, Any]) -> Any:
             z = z + bias
         return z
     if op == "topk_attr":
-        if (len(args) != 2 or not isinstance(args[0], (tuple, list))
-                or len(args[0]) != 2 or args[1] not in ("indices", "values")):
+        if (
+            len(args) != 2
+            or not isinstance(args[0], (tuple, list))
+            or len(args[0]) != 2
+            or args[1] not in ("indices", "values")
+        ):
             raise BundleError("Only .indices/.values on a topk result is portable")
         return args[0][1 if args[1] == "indices" else 0]
     if op == "sin":
@@ -312,18 +316,28 @@ def _execute(op: str, args: Any, kwargs: dict[str, Any]) -> Any:
         axis = kwargs.get("dim", args[1] if len(args) > 1 else 0)
         if not isinstance(values, (tuple, list)) or not 1 <= len(values) <= 2048:
             raise BundleError("stack requires a bounded list of tensors")
-        if sum(v.nbytes for v in values if isinstance(v, np.ndarray)) > 256 * 1024 * 1024:
+        if (
+            sum(v.nbytes for v in values if isinstance(v, np.ndarray))
+            > 256 * 1024 * 1024
+        ):
             raise BundleError("stack exceeds activation allocation budget")
         return np.stack(values, axis=int(axis))
     if op == "index_add":
         # Tensor.index_add is FUNCTIONAL; never mutate the source tensor.
         if len(args) not in (4, 5):
-            raise BundleError("index_add expects tensor, dim, indices, source, optional alpha")
+            raise BundleError(
+                "index_add expects tensor, dim, indices, source, optional alpha"
+            )
         x, axis, indices, source = args[:4]
         alpha = args[4] if len(args) == 5 else kwargs.get("alpha", 1)
         if int(axis) != 0 or not isinstance(indices, np.ndarray) or indices.ndim != 1:
             raise BundleError("index_add currently admits axis=0 and 1D index tensors")
-        if indices.dtype.kind not in "iu" or source.ndim != x.ndim or source.shape[0] != indices.size or source.shape[1:] != x.shape[1:]:
+        if (
+            indices.dtype.kind not in "iu"
+            or source.ndim != x.ndim
+            or source.shape[0] != indices.size
+            or source.shape[1:] != x.shape[1:]
+        ):
             raise BundleError("Invalid index_add index/source shape or dtype")
         if np.any(indices < 0) or np.any(indices >= x.shape[0]):
             raise BundleError("index_add indices out of bounds")
@@ -340,10 +354,23 @@ def _execute(op: str, args: Any, kwargs: dict[str, Any]) -> Any:
         padding = kwargs.get("padding", args[3] if len(args) > 3 else 0)
         ceil = kwargs.get("ceil_mode", args[4] if len(args) > 4 else False)
         include = kwargs.get("count_include_pad", args[5] if len(args) > 5 else True)
-        if kernel not in (2, (2, 2)) or stride not in (None, 2, (2, 2)) or padding not in (0, (0, 0)) or ceil is not False or include is not True:
+        if (
+            kernel not in (2, (2, 2))
+            or stride not in (None, 2, (2, 2))
+            or padding not in (0, (0, 0))
+            or ceil is not False
+            or include is not True
+        ):
             raise BundleError("avg_pool2d supports only 2x2, stride 2, no padding")
-        if not isinstance(x, np.ndarray) or x.ndim != 4 or x.shape[-2] % 2 or x.shape[-1] % 2:
-            raise BundleError("avg_pool2d requires even spatial dimensions in NCHW layout")
+        if (
+            not isinstance(x, np.ndarray)
+            or x.ndim != 4
+            or x.shape[-2] % 2
+            or x.shape[-1] % 2
+        ):
+            raise BundleError(
+                "avg_pool2d requires even spatial dimensions in NCHW layout"
+            )
         n, c, h, w = x.shape
         return x.reshape(n, c, h // 2, 2, w // 2, 2).mean(axis=(3, 5))
     if op == "interpolate_nearest":
@@ -353,11 +380,22 @@ def _execute(op: str, args: Any, kwargs: dict[str, Any]) -> Any:
         mode = kwargs.get("mode", args[3] if len(args) > 3 else "nearest")
         align = kwargs.get("align_corners", args[4] if len(args) > 4 else None)
         antialias = kwargs.get("antialias", args[6] if len(args) > 6 else False)
-        recompute = kwargs.get("recompute_scale_factor", args[5] if len(args) > 5 else None)
-        if (not isinstance(x, np.ndarray) or x.ndim != 4 or size is not None
-                or scale not in (2, 2.0, (2, 2), (2.0, 2.0)) or mode != "nearest"
-                or align is not None or antialias is not False or recompute is not None):
-            raise BundleError("interpolate supports NCHW nearest upsampling with scale factor 2 only")
+        recompute = kwargs.get(
+            "recompute_scale_factor", args[5] if len(args) > 5 else None
+        )
+        if (
+            not isinstance(x, np.ndarray)
+            or x.ndim != 4
+            or size is not None
+            or scale not in (2, 2.0, (2, 2), (2.0, 2.0))
+            or mode != "nearest"
+            or align is not None
+            or antialias is not False
+            or recompute is not None
+        ):
+            raise BundleError(
+                "interpolate supports NCHW nearest upsampling with scale factor 2 only"
+            )
         if x.nbytes > 64 * 1024 * 1024:
             raise BundleError("interpolate exceeds bounded output allocation")
         return np.repeat(np.repeat(x, 2, axis=-2), 2, axis=-1)

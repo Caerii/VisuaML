@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
-import numpy as np
-import pytest
 import sys
 from pathlib import Path
+
+import numpy as np
+import pytest
 
 # Tests also run under GitHub Actions from the workspace root.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import torch
-
 from visuaml.compiler_lab.exotic_references import (
     REFERENCE_KERNELS,
     ReferenceKernelError,
@@ -26,8 +26,12 @@ from visuaml.compiler_lab.exotic_references import (
 
 
 def test_four_reference_kernels_are_explicitly_not_aot_backends():
-    assert REFERENCE_KERNELS == {"diagonal_selective_scan", "stable_topk_moe",
-                                  "graph_additive_scatter", "lif_discrete"}
+    assert REFERENCE_KERNELS == {
+        "diagonal_selective_scan",
+        "stable_topk_moe",
+        "graph_additive_scatter",
+        "lif_discrete",
+    }
 
 
 @pytest.mark.parametrize("seed", [0, 19, 77])
@@ -40,7 +44,9 @@ def test_diagonal_ssm_scan_final_state_and_outputs(seed):
     state = rng.normal(size=(2, 7)).astype(np.float32)
     snapshot = state.copy()
     ref = diagonal_scan_numpy(u, a, b, c, state)
-    expected, after = diagonal_scan_torch(*(torch.from_numpy(z) for z in (u, a, b, c, state)))
+    expected, after = diagonal_scan_torch(
+        *(torch.from_numpy(z) for z in (u, a, b, c, state))
+    )
     np.testing.assert_allclose(ref.outputs, expected.numpy(), atol=2e-6, rtol=2e-6)
     np.testing.assert_allclose(ref.final_state, after.numpy(), atol=2e-6, rtol=2e-6)
     np.testing.assert_array_equal(state, snapshot)
@@ -63,9 +69,13 @@ def test_sparse_expert_routing_matches_torch(top_k):
     logits = rng.normal(size=(8, 4)).astype(np.float32)
     weight = rng.normal(size=(4, 6, 5)).astype(np.float32)
     result = routed_moe_numpy(x, logits, weight, top_k=top_k)
-    value, ids, gates = routed_moe_torch(*(torch.from_numpy(x0) for x0 in (x, logits, weight)), top_k=top_k)
+    value, ids, gates = routed_moe_torch(
+        *(torch.from_numpy(x0) for x0 in (x, logits, weight)), top_k=top_k
+    )
     np.testing.assert_array_equal(result.selected_experts, ids.numpy())
-    np.testing.assert_allclose(result.selected_gates, gates.numpy(), rtol=1e-6, atol=1e-6)
+    np.testing.assert_allclose(
+        result.selected_gates, gates.numpy(), rtol=1e-6, atol=1e-6
+    )
     np.testing.assert_allclose(result.output, value.numpy(), rtol=1e-5, atol=1e-5)
 
 
@@ -80,9 +90,19 @@ def test_router_tie_policy_lowest_expert_id():
 def test_router_rejects_wrong_topk_and_expert_shape():
     x = np.ones((2, 3), dtype=np.float32)
     with pytest.raises(ReferenceKernelError):
-        routed_moe_numpy(x, np.ones((2, 4), dtype=np.float32), np.ones((4, 4, 2), dtype=np.float32), top_k=2)
+        routed_moe_numpy(
+            x,
+            np.ones((2, 4), dtype=np.float32),
+            np.ones((4, 4, 2), dtype=np.float32),
+            top_k=2,
+        )
     with pytest.raises(ReferenceKernelError):
-        routed_moe_numpy(x, np.ones((2, 4), dtype=np.float32), np.ones((4, 3, 2), dtype=np.float32), top_k=0)
+        routed_moe_numpy(
+            x,
+            np.ones((2, 4), dtype=np.float32),
+            np.ones((4, 3, 2), dtype=np.float32),
+            top_k=0,
+        )
 
 
 def test_graph_scatter_duplicate_edges_counted_and_parity():
@@ -91,7 +111,9 @@ def test_graph_scatter_duplicate_edges_counted_and_parity():
     matrix = rng.normal(size=(5, 3)).astype(np.float32)
     edges = np.array([[0, 0, 1, 5, 5], [2, 2, 2, 6, 0]], dtype=np.int64)
     ref = graph_messages_numpy(nodes, edges, matrix)
-    got, degree = graph_messages_torch(*(torch.from_numpy(t) for t in (nodes, edges, matrix)))
+    got, degree = graph_messages_torch(
+        *(torch.from_numpy(t) for t in (nodes, edges, matrix))
+    )
     np.testing.assert_allclose(ref.aggregated, got.numpy(), rtol=1e-5, atol=1e-5)
     np.testing.assert_array_equal(ref.degree, degree.numpy())
     assert ref.degree[2] == 3
@@ -111,10 +133,16 @@ def test_lif_discrete_reset_and_refractory_parity(refractory_steps):
     rng = np.random.default_rng(11 + refractory_steps)
     currents = rng.uniform(-0.1, 1.5, size=(12, 2, 5)).astype(np.float32)
     initial = rng.uniform(0, 0.8, size=(2, 5)).astype(np.float32)
-    reference = lif_numpy(currents, initial, leak=0.9, threshold=1.0,
-                          refractory_steps=refractory_steps)
-    spikes, final, refr = lif_torch(torch.from_numpy(currents), torch.from_numpy(initial),
-                                   leak=0.9, threshold=1.0, refractory_steps=refractory_steps)
+    reference = lif_numpy(
+        currents, initial, leak=0.9, threshold=1.0, refractory_steps=refractory_steps
+    )
+    spikes, final, refr = lif_torch(
+        torch.from_numpy(currents),
+        torch.from_numpy(initial),
+        leak=0.9,
+        threshold=1.0,
+        refractory_steps=refractory_steps,
+    )
     np.testing.assert_array_equal(reference.spikes, spikes.numpy())
     np.testing.assert_allclose(reference.membrane, final.numpy(), rtol=1e-6, atol=1e-6)
     np.testing.assert_array_equal(reference.refractory, refr.numpy())

@@ -5,11 +5,11 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import sys
 from dataclasses import asdict
+from pathlib import Path
 
 import pytest
-import sys
-from pathlib import Path
 
 # Tests also run under GitHub Actions from the workspace root.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -32,9 +32,23 @@ def test_catalog_contains_major_and_exotic_families_and_no_duplicate_ids():
     ids = [x.id for x in ARCHITECTURES]
     assert len(ids) >= 50 and len(set(ids)) == len(ids)
     assert {entry.domain for entry in ARCHITECTURES} == DOMAINS
-    for name in ("decoder_transformer", "moe", "mamba", "rwkv", "xlstm", "dit",
-                 "graph_conv", "snn_lif", "kan", "fno", "gaussian_splatting",
-                 "assembly_calculus", "diffusion_language", "audio_codec", "vlm"):
+    for name in (
+        "decoder_transformer",
+        "moe",
+        "mamba",
+        "rwkv",
+        "xlstm",
+        "dit",
+        "graph_conv",
+        "snn_lif",
+        "kan",
+        "fno",
+        "gaussian_splatting",
+        "assembly_calculus",
+        "diffusion_language",
+        "audio_codec",
+        "vlm",
+    ):
         assert get_architecture(name).id == name
     assert all(set(x.features) <= FEATURES for x in ARCHITECTURES)
 
@@ -44,7 +58,11 @@ def test_catalog_digest_deterministic_independent_of_input_order():
     second = catalog_report(available_ops=list(reversed(sorted(OPS))))
     assert first == second
     content = {key: value for key, value in first.items() if key != "sha256"}
-    digest = hashlib.sha256(json.dumps(content, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+    digest = hashlib.sha256(
+        json.dumps(
+            content, sort_keys=True, separators=(",", ":"), allow_nan=False
+        ).encode()
+    ).hexdigest()
     assert first["sha256"] == digest
     assert len(first["families"]) == len(ARCHITECTURES)
     assert "not" in first["claim"]
@@ -64,7 +82,9 @@ def test_catalog_infers_only_primitive_candidates_not_model_support():
 
 def test_coverage_does_not_upgrade_when_only_features_are_supplied():
     sparse = get_architecture("moe")
-    result = capability_gap(sparse, available_ops=(), available_features=sparse.features)
+    result = capability_gap(
+        sparse, available_ops=(), available_features=sparse.features
+    )
     assert len(result.missing_features) == 0
     assert result.coverage_fraction == 0
     assert result.status == "blocked-by-contract"
@@ -81,17 +101,36 @@ def test_ranked_gaps_are_reproducible_and_do_not_claim_performance():
 def test_bad_catalog_entries_and_feature_names_fail_closed():
     entry = get_architecture("mlp")
     with pytest.raises(ValueError, match="Unknown/duplicate feature"):
-        Architecture(entry.id, entry.name, entry.domain, 1, entry.operators,
-                     ("invented_semantic_magic",), entry.exemplars, entry.note)
+        Architecture(
+            entry.id,
+            entry.name,
+            entry.domain,
+            1,
+            entry.operators,
+            ("invented_semantic_magic",),
+            entry.exemplars,
+            entry.note,
+        )
     with pytest.raises(ValueError, match="Unknown declared"):
         catalog_report(available_ops=OPS, available_features={"arbitrary"})
     with pytest.raises(ValueError, match="Invalid planning limit"):
         rank_missing_capabilities(available_ops=(), limit=101)
 
 
-@pytest.mark.parametrize("name", ["mlp", "residual-conv", "attention-core", "graph-scatter",
-                                   "recurrent-scan", "lif-gate", "unet-upsampling",
-                                   "spline-sine", "moe-topk"])
+@pytest.mark.parametrize(
+    "name",
+    [
+        "mlp",
+        "residual-conv",
+        "attention-core",
+        "graph-scatter",
+        "recurrent-scan",
+        "lif-gate",
+        "unet-upsampling",
+        "spline-sine",
+        "moe-topk",
+    ],
+)
 def test_aot_microprobe_executes_and_matches_reference(name):
     result = probe_fixture(name)
     assert result.status == "tiny-aot-witness-passed", asdict(result)
@@ -119,6 +158,7 @@ def test_allowlist_rejects_untrusted_fixture_selection_and_bad_seed():
 
 def test_probing_does_not_modify_global_random_stream():
     import torch
+
     torch.manual_seed(987)
     before = torch.random.get_rng_state().clone()
     probe_fixture("mlp")
@@ -129,18 +169,20 @@ def test_probing_does_not_modify_global_random_stream():
 def test_topk_tie_is_not_silently_claimed_portable():
     import torch
     from torch import nn
-    from visuaml.compiler_spike import capture
     from visuaml.compiler_lab.aot_compile import compile_numpy_aot
     from visuaml.compiler_lab.numpy_runtime import BundleError
+    from visuaml.compiler_spike import capture
 
     class Router(nn.Module):
         def forward(self, x):
             return torch.topk(x, 2, dim=-1).indices
 
-    captured = capture(Router().eval(), torch.tensor([[2.0, 2.0, 1.0]], dtype=torch.float32))
+    captured = capture(
+        Router().eval(), torch.tensor([[2.0, 2.0, 1.0]], dtype=torch.float32)
+    )
     artifact = compile_numpy_aot(captured)
     with pytest.raises(BundleError, match="ties"):
-        artifact.run(__import__('numpy').array([[2, 2, 1]], dtype='float32'))
+        artifact.run(__import__("numpy").array([[2, 2, 1]], dtype="float32"))
 
 
 def test_model_family_registry_does_not_contain_mutable_cross_run_state():
@@ -153,7 +195,9 @@ def test_model_family_registry_does_not_contain_mutable_cross_run_state():
 def test_checked_in_snapshot_matches_runtime_operator_contract():
     from pathlib import Path
 
-    public = Path(__file__).resolve().parents[2] / 'public' / 'architecture_atlas.v1.json'
+    public = (
+        Path(__file__).resolve().parents[2] / "public" / "architecture_atlas.v1.json"
+    )
     assert public.is_file()
-    snapshot = json.loads(public.read_text(encoding='utf-8'))
+    snapshot = json.loads(public.read_text(encoding="utf-8"))
     assert snapshot == json.loads(json.dumps(catalog_report(available_ops=OPS)))

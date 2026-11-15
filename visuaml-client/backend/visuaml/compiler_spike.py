@@ -133,8 +133,13 @@ def _op(node: Node, gm: GraphModule) -> str:
     if node.op == "call_function":
         t = node.target
         # Only topk's bounded .indices/.values may be extracted portably.
-        if (t is getattr and len(node.args) == 2 and node.args[1] in ("indices", "values")
-                and isinstance(node.args[0], Node) and _op(node.args[0], gm) == "topk"):
+        if (
+            t is getattr
+            and len(node.args) == 2
+            and node.args[1] in ("indices", "values")
+            and isinstance(node.args[0], Node)
+            and _op(node.args[0], gm) == "topk"
+        ):
             return "topk_attr"
         mapping = {
             torch.matmul: "matmul",
