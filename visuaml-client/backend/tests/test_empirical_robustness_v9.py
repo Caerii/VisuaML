@@ -5,7 +5,6 @@ from __future__ import annotations
 from dataclasses import replace
 
 import pytest
-
 from visuaml.compiler_lab.backends import BackendCapabilities
 from visuaml.compiler_lab.calibration_evidence import validate_latency_holdout
 from visuaml.compiler_lab.empirical_robustness import optimize_with_empirical_envelopes
