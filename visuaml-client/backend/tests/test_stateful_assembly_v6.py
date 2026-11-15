@@ -5,7 +5,6 @@ from itertools import pairwise
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.assembly_state import (
     AssemblyState,
     AssemblyStateError,
