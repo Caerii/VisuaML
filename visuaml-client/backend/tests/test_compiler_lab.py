@@ -102,12 +102,14 @@ def test_aot_rejects_shape_and_dtype(small, tmp_path):
 
 
 def test_aot_fails_closed_unknown_operator():
-    class Sine(nn.Module):
+    # Sine now has portable NumPy semantics; retain the negative contract
+    # using cosine, which is not registered in this restricted runtime.
+    class Cosine(nn.Module):
         def forward(self, x):
-            return torch.sin(x)
+            return torch.cos(x)
 
     with pytest.raises(UnsupportedOperation, match="No portable NumPy semantics"):
-        compile_numpy_aot(capture(Sine(), torch.randn(2, 3)))
+        compile_numpy_aot(capture(Cosine(), torch.randn(2, 3)))
 
 
 def test_aot_hash_checks_detect_constant_corruption(small, tmp_path):
