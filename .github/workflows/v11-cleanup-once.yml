@@ -1,0 +1,49 @@
+name: V11 one-shot format and safe lint cleanup
+on:
+  push:
+    branches: [feat/compiler-ir-backends-assembly-spike]
+    paths: ['.github/workflows/v11-cleanup-once.yml']
+permissions:
+  contents: write
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/compiler-ir-backends-assembly-spike
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: python -m pip install ruff==0.17.4
+      - run: pnpm install --frozen-lockfile
+      - name: Safe Ruff cleanup and formatting, changed Python files only
+        run: |
+          ruff check --fix visuaml-client/backend/visuaml/compiler_lab/architecture_catalog.py visuaml-client/backend/visuaml/compiler_lab/architecture_probes.py visuaml-client/backend/visuaml/compiler_lab/exotic_references.py visuaml-client/backend/visuaml/compiler_lab/numpy_runtime.py visuaml-client/backend/visuaml/compiler_spike.py visuaml-client/backend/scripts/generate_architecture_atlas.py visuaml-client/backend/tests/test_architecture_atlas_v11.py visuaml-client/backend/tests/test_exotic_references_v11.py || test "$?" = 1
+          ruff format visuaml-client/backend/visuaml/compiler_lab/architecture_catalog.py visuaml-client/backend/visuaml/compiler_lab/architecture_probes.py visuaml-client/backend/visuaml/compiler_lab/exotic_references.py visuaml-client/backend/visuaml/compiler_lab/numpy_runtime.py visuaml-client/backend/visuaml/compiler_spike.py visuaml-client/backend/scripts/generate_architecture_atlas.py visuaml-client/backend/tests/test_architecture_atlas_v11.py visuaml-client/backend/tests/test_exotic_references_v11.py
+      - name: Format changed TS CSS and JSON files
+        run: |
+          pnpm --dir visuaml-client exec prettier --write src/ui/ArchitectureAtlas/ArchitectureAtlasPage.tsx src/ui/ArchitectureAtlas/ArchitectureAtlas.css src/App.tsx public/architecture_atlas.v1.json
+      - name: Check new sources before publishing
+        run: |
+          python -m compileall -q visuaml-client/backend/visuaml/compiler_lab
+          pnpm --filter visuaml-client run lint
+          pnpm --filter visuaml-client run test -- --run
+          pnpm --filter visuaml-client run build
+      - name: Commit the mechanical cleanup to feature branch only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add visuaml-client
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(v11): format architecture atlas and safely normalize Python"
+            git push origin HEAD:feat/compiler-ir-backends-assembly-spike
+          fi
