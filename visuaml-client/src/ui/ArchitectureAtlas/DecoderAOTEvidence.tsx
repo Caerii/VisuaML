@@ -38,11 +38,12 @@ function isCertificate(value: unknown): value is DecoderCertificate {
     typeof item.sha256 === 'string' &&
     Array.isArray(item.cases) &&
     item.cases.length > 0 &&
-    item.cases.every((c) =>
-      c.generation_matches_reference === true &&
-      c.cache_matches_reference === true &&
-      c.witness?.passed === true &&
-      Number.isFinite(c.witness.max_abs_error),
+    item.cases.every(
+      (c) =>
+        c.generation_matches_reference === true &&
+        c.cache_matches_reference === true &&
+        c.witness?.passed === true &&
+        Number.isFinite(c.witness.max_abs_error),
     ) &&
     item.family_checkpoint_certified === false &&
     item.arbitrary_decoder_supported === false &&
@@ -76,7 +77,9 @@ export function DecoderAOTEvidence({ architectureId }: { architectureId: string 
   }, [architectureId]);
 
   if (architectureId !== 'decoder_transformer') return null;
-  const worst = certificate ? Math.max(...certificate.cases.map((c) => c.witness.max_abs_error)) : null;
+  const worst = certificate
+    ? Math.max(...certificate.cases.map((c) => c.witness.max_abs_error))
+    : null;
   const arrays = certificate?.cases.reduce((sum, c) => sum + c.witness.arrays_checked, 0);
   return (
     <div className="atlas-primitives" aria-label="Portable decoder compiler evidence">
@@ -100,13 +103,14 @@ export function DecoderAOTEvidence({ architectureId }: { architectureId: string 
             <p className="atlas-muted">Evidence SHA-256: {certificate.sha256}</p>
             {certificate.cases.map((item) => (
               <p key={item.seed} className="atlas-muted">
-                Seed {item.seed}: {item.witness.chunks} chunks,{' '}
-                {item.witness.arrays_checked} arrays, AOT manifest{' '}
-                {item.prefill_manifest_sha256.slice(0, 16)}…
+                Seed {item.seed}: {item.witness.chunks} chunks, {item.witness.arrays_checked}{' '}
+                arrays, AOT manifest {item.prefill_manifest_sha256.slice(0, 16)}…
               </p>
             ))}
             {certificate.limitations.map((limit) => (
-              <p key={limit} className="atlas-muted">{limit}</p>
+              <p key={limit} className="atlas-muted">
+                {limit}
+              </p>
             ))}
           </details>
         </>

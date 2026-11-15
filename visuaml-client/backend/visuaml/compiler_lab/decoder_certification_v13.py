@@ -16,7 +16,11 @@ from typing import Any
 import numpy as np
 import torch
 
-from .decoder_aot_v13 import CompiledTinyDecoder, compile_decoder_chunk, verify_decoder_artifact
+from .decoder_aot_v13 import (
+    CompiledTinyDecoder,
+    compile_decoder_chunk,
+    verify_decoder_artifact,
+)
 from .tiny_decoder_v12 import TinyDecoderWeights, greedy_generate
 
 SCHEMA = "visuaml.decoder-aot-certification.v13"
@@ -47,7 +51,9 @@ def certify_decoder_compiler() -> dict[str, Any]:
                 "input_shape": [2, 5],
                 "witness": witness,
                 "generation_steps": 3,
-                "generation_token_sha256": hashlib.sha256(generated.tobytes()).hexdigest(),
+                "generation_token_sha256": hashlib.sha256(
+                    generated.tobytes()
+                ).hexdigest(),
                 "generation_matches_reference": True,
                 "cache_matches_reference": True,
             }
@@ -55,8 +61,13 @@ def certify_decoder_compiler() -> dict[str, Any]:
     root = Path(__file__).resolve().parent
     hashes = hashlib.sha256(b"visuaml-decoder-aot-sources-v13\x00")
     for relative in (
-        "decoder_aot_v13.py", "decoder_certification_v13.py", "tiny_decoder_v12.py",
-        "family_blocks_v12.py", "aot_compile.py", "numpy_runtime.py", "ir_contract.py",
+        "decoder_aot_v13.py",
+        "decoder_certification_v13.py",
+        "tiny_decoder_v12.py",
+        "family_blocks_v12.py",
+        "aot_compile.py",
+        "numpy_runtime.py",
+        "ir_contract.py",
         "../compiler_spike.py",
     ):
         path = (root / relative).resolve()
@@ -64,7 +75,9 @@ def certify_decoder_compiler() -> dict[str, Any]:
         # The AST binds executed semantics without falsely invalidating the
         # certificate because Ruff/Black changed whitespace or quote style.
         tree = ast.parse(path.read_text(encoding="utf-8"))
-        hashes.update(ast.dump(tree, annotate_fields=True, include_attributes=False).encode())
+        hashes.update(
+            ast.dump(tree, annotate_fields=True, include_attributes=False).encode()
+        )
     report: dict[str, Any] = {
         "schema": SCHEMA,
         "architecture_id": "decoder_transformer",
@@ -87,6 +100,8 @@ def certify_decoder_compiler() -> dict[str, Any]:
         ],
     }
     report["sha256"] = hashlib.sha256(
-        json.dumps(report, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+        json.dumps(
+            report, sort_keys=True, separators=(",", ":"), allow_nan=False
+        ).encode()
     ).hexdigest()
     return report

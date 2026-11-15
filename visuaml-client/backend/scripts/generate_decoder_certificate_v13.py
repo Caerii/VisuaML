@@ -16,7 +16,10 @@ def main() -> None:
     target = BACKEND.parent / "public" / "decoder_compiler_certificate.v13.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     result = certify_decoder_compiler()
-    target.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
+    target.write_text(
+        json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
     print(f"Decoder AOT certificate: {result['sha256']} ({len(result['cases'])} seeds)")
 
 

@@ -184,12 +184,17 @@ def validate_portable_ir(
         if spec["name"] not in constraints:
             continue
         limits = constraints[spec["name"]]
-        if not isinstance(limits, dict) or set(limits) != {"min_inclusive", "max_exclusive"}:
+        if not isinstance(limits, dict) or set(limits) != {
+            "min_inclusive",
+            "max_exclusive",
+        }:
             raise IRContractError("Malformed bounded integer input constraint")
         lo, hi = limits["min_inclusive"], limits["max_exclusive"]
         dtype = np.dtype(spec["dtype"])
         if dtype.kind not in "iu" or type(lo) is not int or type(hi) is not int:
-            raise IRContractError("Bounded input constraints require integer dtype/bounds")
+            raise IRContractError(
+                "Bounded input constraints require integer dtype/bounds"
+            )
         info = np.iinfo(dtype)
         if not info.min <= lo < hi <= int(info.max) + 1:
             raise IRContractError("Input bounds exceed declared integer dtype range")
