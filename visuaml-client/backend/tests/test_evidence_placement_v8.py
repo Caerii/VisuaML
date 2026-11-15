@@ -8,8 +8,14 @@ import pytest
 from visuaml.compiler_lab.backends import BackendCapabilities
 from visuaml.compiler_lab.calibration_evidence import validate_latency_holdout
 from visuaml.compiler_lab.evidence_placement import optimize_with_evidence
-from visuaml.compiler_lab.hardware_calibration import CalibrationError, LatencyObservation
-from visuaml.compiler_lab.placement_optimizer import HypotheticalCostModel, optimize_binary_placement
+from visuaml.compiler_lab.hardware_calibration import (
+    CalibrationError,
+    LatencyObservation,
+)
+from visuaml.compiler_lab.placement_optimizer import (
+    HypotheticalCostModel,
+    optimize_binary_placement,
+)
 from visuaml.compiler_spike import OpRecord, ProgramIR, TensorSpec
 
 
@@ -60,7 +66,7 @@ def test_per_node_estimates_differ_for_same_operator():
 
 
 def test_evidence_matches_direct_per_node_graph_cut_objective():
-    ir,caps,host,device,transfer=sample()
+    ir,caps,_,_,_=sample()
     result=run()
     host_costs=dict(result.predicted_host_us)
     device_costs=dict(result.predicted_device_us)
@@ -97,7 +103,7 @@ def test_reject_failed_holdout_and_extrapolation():
 
 
 def test_dataset_change_changes_report_fingerprint():
-    ir,caps,host,device,transfer=sample()
+    ir,caps,host,device,_=sample()
     report=run()
     other=evidence("host-link","transfer",(0.02,0.1,0.008))
     changed=optimize_with_evidence(ir,caps,host_hardware_id="cpu",device_hardware_id="optical-surrogate",transfer_hardware_id="host-link",host=host,device=device,transfer=other,allow_synthetic=True)
@@ -106,7 +112,7 @@ def test_dataset_change_changes_report_fingerprint():
 
 def test_independent_proof_of_binary_optimum_on_small_graph():
     import itertools
-    ir,caps,host,device,transfer=sample()
+    ir,_,_,_,_=sample()
     r=run()
     cpu=dict(r.predicted_host_us)
     acc=dict(r.predicted_device_us)
