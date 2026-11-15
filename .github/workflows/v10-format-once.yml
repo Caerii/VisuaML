@@ -32,7 +32,7 @@ jobs:
           ruff check visuaml-client/backend
       - name: Apply Prettier to touched frontend and API files
         run: |
-          pnpm --dir visuaml-client exec prettier --write src/ui/CompilerLab/CompilerLabPage.tsx src/ui/CompilerLab/types.ts server/index.ts server/compilerLab.ts
+          pnpm --dir visuaml-client exec prettier --write .
           pnpm --dir visuaml-client exec prettier --check .
       - name: Verify frontend after cleanup
         run: |
