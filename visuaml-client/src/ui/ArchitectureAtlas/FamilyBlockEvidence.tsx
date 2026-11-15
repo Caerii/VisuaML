@@ -25,12 +25,19 @@ type Evidence = {
 function hasEvidenceShape(value: unknown): value is Evidence {
   if (!value || typeof value !== 'object') return false;
   const data = value as Partial<Evidence>;
-  return data.schema === 'visuaml.representative-block-certification.v12'
-    && data.source_kind === 'synthetic-cpu-fixtures'
-    && typeof data.sha256 === 'string'
-    && Array.isArray(data.certifications)
-    && data.certifications.every((c) => c.seed_count > 0 && c.family_checkpoint_certified === false
-      && c.full_model_compiler_executable === false && c.physical_hardware_validated === false);
+  return (
+    data.schema === 'visuaml.representative-block-certification.v12' &&
+    data.source_kind === 'synthetic-cpu-fixtures' &&
+    typeof data.sha256 === 'string' &&
+    Array.isArray(data.certifications) &&
+    data.certifications.every(
+      (c) =>
+        c.seed_count > 0 &&
+        c.family_checkpoint_certified === false &&
+        c.full_model_compiler_executable === false &&
+        c.physical_hardware_validated === false,
+    )
+  );
 }
 
 export function FamilyBlockEvidence({ architectureId }: { architectureId: string }) {
@@ -59,22 +66,28 @@ export function FamilyBlockEvidence({ architectureId }: { architectureId: string
       <h3>v12 independent reference-block witnesses</h3>
       {matching ? (
         <>
-          <p><strong>{matching.representative_block}</strong></p>
-          <p className="atlas-muted">
-            {matching.seed_count} deterministic synthetic CPU seeds; NumPy versus PyTorch;
-            maximum absolute error {matching.max_abs_error.toExponential(2)}.
+          <p>
+            <strong>{matching.representative_block}</strong>
           </p>
           <p className="atlas-muted">
-            Status: <strong>{matching.level}</strong>. This verifies only the named mathematical block,
-            not a complete checkpoint, general compiler lowering, or any real accelerator hardware.
+            {matching.seed_count} deterministic synthetic CPU seeds; NumPy versus PyTorch; maximum
+            absolute error {matching.max_abs_error.toExponential(2)}.
           </p>
-          <small>Evidence: {evidence?.sha256.slice(0, 18)} · PyTorch {evidence?.torch_version}</small>
+          <p className="atlas-muted">
+            Status: <strong>{matching.level}</strong>. This verifies only the named mathematical
+            block, not a complete checkpoint, general compiler lowering, or any real accelerator
+            hardware.
+          </p>
+          <small>
+            Evidence: {evidence?.sha256.slice(0, 18)} · PyTorch {evidence?.torch_version}
+          </small>
         </>
       ) : (
         <p className="atlas-muted">
-          {error ?? (evidence
-            ? 'No independent reference-block witness registered for this architecture yet.'
-            : 'Loading v12 reference evidence…')}
+          {error ??
+            (evidence
+              ? 'No independent reference-block witness registered for this architecture yet.'
+              : 'Loading v12 reference evidence…')}
         </p>
       )}
     </div>
