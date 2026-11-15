@@ -44,7 +44,11 @@ def semantic_source_sha256() -> str:
     ):
         h.update(name.encode())
         source = (root / name).resolve().read_text(encoding="utf-8")
-        h.update(ast.dump(ast.parse(source), annotate_fields=True, include_attributes=False).encode())
+        h.update(
+            ast.dump(
+                ast.parse(source), annotate_fields=True, include_attributes=False
+            ).encode()
+        )
     return h.hexdigest()
 
 
@@ -53,7 +57,9 @@ def certify_stacked_decoder() -> dict[str, Any]:
     for layers, seed in CASES:
         weights = StackedWeights.seeded(seed, layers=layers)
         rng = np.random.default_rng(seed + 10)
-        tokens = rng.integers(0, weights.embedding.shape[0], size=(2, 5), dtype=np.int64)
+        tokens = rng.integers(
+            0, weights.embedding.shape[0], size=(2, 5), dtype=np.int64
+        )
         witness = verify_stacked_witness(weights, tokens, (2, 2, 1))
         decoder = CompiledStackedDecoder(weights)
         generated, observed_state = decoder.generate(tokens[:, :3], steps=3)
@@ -75,7 +81,9 @@ def certify_stacked_decoder() -> dict[str, Any]:
                 "tokens_sha256": hashlib.sha256(tokens.tobytes()).hexdigest(),
                 "checkpoint_sha256": checkpoint_digest(weights),
                 "witness": witness,
-                "generated_token_sha256": hashlib.sha256(generated.tobytes()).hexdigest(),
+                "generated_token_sha256": hashlib.sha256(
+                    generated.tobytes()
+                ).hexdigest(),
                 "generation_matches_reference": True,
                 "all_layer_cache_matches_reference": True,
             }
@@ -102,6 +110,8 @@ def certify_stacked_decoder() -> dict[str, Any]:
         ],
     }
     report["sha256"] = hashlib.sha256(
-        json.dumps(report, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+        json.dumps(
+            report, sort_keys=True, separators=(",", ":"), allow_nan=False
+        ).encode()
     ).hexdigest()
     return report

@@ -12,13 +12,12 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.numpy_runtime import BundleError, run_bundle
 from visuaml.compiler_lab.stacked_decoder_v14 import (
     CompiledStackedDecoder,
     StackContractError,
-    StackState,
     StackedWeights,
+    StackState,
     checkpoint_digest,
     compile_stacked_chunk,
     empty_stack,
@@ -32,7 +31,9 @@ from visuaml.compiler_lab.stacked_decoder_v14 import (
 @pytest.mark.parametrize("seed,chunks", [(0, (3,)), (19, (2, 1, 2)), (47, (1, 3, 1))])
 def test_compiled_two_layer_prefill_and_cache(seed, chunks):
     weights = StackedWeights.seeded(seed)
-    tokens = np.random.default_rng(seed + 1).integers(0, 19, size=(2, sum(chunks)), dtype=np.int64)
+    tokens = np.random.default_rng(seed + 1).integers(
+        0, 19, size=(2, sum(chunks)), dtype=np.int64
+    )
     report = verify_stacked_witness(weights, tokens, chunks)
     assert report["passed"] is True
     assert report["arrays_checked"] == len(chunks) * 5
@@ -54,13 +55,19 @@ def test_compiled_generation_matches_reference_even_with_cache_per_layer():
         logits, state = reference_stack_step(weights, next_token, state)
     np.testing.assert_array_equal(predicted, np.concatenate(expected, axis=1))
     for observed_layer, expected_layer in zip(after.layers, state.layers):
-        np.testing.assert_allclose(observed_layer.keys, expected_layer.keys, atol=5e-5, rtol=5e-5)
-        np.testing.assert_allclose(observed_layer.values, expected_layer.values, atol=5e-5, rtol=5e-5)
+        np.testing.assert_allclose(
+            observed_layer.keys, expected_layer.keys, atol=5e-5, rtol=5e-5
+        )
+        np.testing.assert_allclose(
+            observed_layer.values, expected_layer.values, atol=5e-5, rtol=5e-5
+        )
 
 
 def test_canonical_checkpoint_roundtrip_and_content_integrity(tmp_path):
     w = StackedWeights.seeded(9)
-    loc = write_canonical_checkpoint(w, tmp_path / "weights", provenance="synthetic-test-only")
+    loc = write_canonical_checkpoint(
+        w, tmp_path / "weights", provenance="synthetic-test-only"
+    )
     loaded = load_canonical_checkpoint(loc)
     assert checkpoint_digest(w) == checkpoint_digest(loaded)
     assert loaded.heads == 4 and loaded.max_context == 64
@@ -74,7 +81,9 @@ def test_canonical_checkpoint_roundtrip_and_content_integrity(tmp_path):
 
 def test_checkpoint_source_claim_is_declared_not_attested(tmp_path):
     w = StackedWeights.seeded(1)
-    loc = write_canonical_checkpoint(w, tmp_path / "w", provenance="user-generated-test")
+    loc = write_canonical_checkpoint(
+        w, tmp_path / "w", provenance="user-generated-test"
+    )
     doc = json.loads((loc / "checkpoint.json").read_text())
     assert doc["source_kind"] == "user-declared-canonical-weights"
     assert doc["provenance"] == "user-generated-test"
@@ -113,10 +122,19 @@ def test_state_validation_fail_closed_and_preserves_inputs():
     _, next_state = driver.step(np.array([[1, 4]], np.int64), state)
     np.testing.assert_array_equal(state.layers[0].keys, old)
     assert not np.shares_memory(state.layers[0].keys, next_state.layers[0].keys)
-    invalid = StackState((replace(next_state.layers[0], keys=np.ones((1, 1, 2, 2), np.float32)), next_state.layers[1]))
+    invalid = StackState(
+        (
+            replace(next_state.layers[0], keys=np.ones((1, 1, 2, 2), np.float32)),
+            next_state.layers[1],
+        )
+    )
     with pytest.raises(StackContractError, match="state"):
         driver.step(np.array([[2]], np.int64), invalid)
-    for tokens in (np.array([[-1]], np.int64), np.array([[19]], np.int64), np.array([[1.0]], np.float32)):
+    for tokens in (
+        np.array([[-1]], np.int64),
+        np.array([[19]], np.int64),
+        np.array([[1.0]], np.float32),
+    ):
         with pytest.raises(StackContractError):
             driver.step(tokens, state)
 
@@ -150,9 +168,12 @@ def test_bundle_roundtrip_and_pytorch_free_subprocess(tmp_path):
     runtime = tmp_path / "runtime"
     runtime.mkdir()
     import visuaml.compiler_lab.numpy_runtime as library
+
     for name in ("numpy_runtime.py", "ir_contract.py"):
-        (runtime / name).write_bytes((Path(library.__file__).parent / name).read_bytes())
-    script = '''import builtins,sys,numpy as np
+        (runtime / name).write_bytes(
+            (Path(library.__file__).parent / name).read_bytes()
+        )
+    script = """import builtins,sys,numpy as np
 original=builtins.__import__
 def guarded(name,*args,**kwargs):
     if name == "torch" or name.startswith("torch."): raise RuntimeError("PyTorch forbidden")
@@ -163,9 +184,14 @@ z=np.zeros((1,0,2,2),np.float32)
 out=run_bundle(sys.argv[1],np.array([[1,3]],np.int64),z,z,z,z)
 assert len(out)==5 and out[0].shape==(1,2,19)
 assert all(x.shape==(1,2,2,2) for x in out[1:])
-'''
-    subprocess.run([sys.executable, "-c", script, str(path)], check=True,
-                   cwd=runtime, env={**os.environ, "PYTHONPATH": str(runtime)}, timeout=30)
+"""
+    subprocess.run(
+        [sys.executable, "-c", script, str(path)],
+        check=True,
+        cwd=runtime,
+        env={**os.environ, "PYTHONPATH": str(runtime)},
+        timeout=30,
+    )
 
 
 def test_digest_changes_for_modified_weights():
@@ -173,7 +199,12 @@ def test_digest_changes_for_modified_weights():
     modified = replace(w, embedding=w.embedding.copy())
     modified.embedding[0, 0] += 0.01
     assert checkpoint_digest(w) != checkpoint_digest(modified)
-    assert compile_stacked_chunk(w, batch=1, query=2, past=0).manifest["manifest_sha256"] != compile_stacked_chunk(modified, batch=1, query=2, past=0).manifest["manifest_sha256"]
+    assert (
+        compile_stacked_chunk(w, batch=1, query=2, past=0).manifest["manifest_sha256"]
+        != compile_stacked_chunk(modified, batch=1, query=2, past=0).manifest[
+            "manifest_sha256"
+        ]
+    )
 
 
 def test_cannot_claim_arbitrary_layer_count_or_precision():
@@ -211,7 +242,9 @@ def test_multiple_depths_share_one_compilation_pipeline(layers):
 @pytest.mark.parametrize("layers", [1, 4])
 def test_checkpoint_roundtrip_for_minimum_and_maximum_depth(tmp_path, layers):
     w = StackedWeights.seeded(seed=42, layers=layers)
-    root = write_canonical_checkpoint(w, tmp_path / f"layer_{layers}", provenance="synthetic")
+    root = write_canonical_checkpoint(
+        w, tmp_path / f"layer_{layers}", provenance="synthetic"
+    )
     result = load_canonical_checkpoint(root)
     assert len(result.blocks) == layers
     assert checkpoint_digest(w) == checkpoint_digest(result)
@@ -227,7 +260,9 @@ def test_flattened_fx_tuple_has_fixed_tensor_placeholders():
     assert all(x["shape"] == [2, 2, 2, 2] for x in specs[1:])
     # All six cache tensors remain separate formal inputs, not opaque tuples.
     assert len({x["name"] for x in specs}) == len(specs)
-    assert all(item["kind"] in {"constant", "call"} for item in artifact.manifest["nodes"])
+    assert all(
+        item["kind"] in {"constant", "call"} for item in artifact.manifest["nodes"]
+    )
 
 
 def test_mutating_weights_after_compilation_fails_closed():

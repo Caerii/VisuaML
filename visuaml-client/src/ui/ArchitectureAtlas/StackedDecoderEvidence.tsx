@@ -101,13 +101,15 @@ export function StackedDecoderEvidence({ architectureId }: { architectureId: str
           <div className="atlas-tags">
             {certificate.cases.map((item) => (
               <span className="available" key={`${item.layers}-${item.seed}`}>
-                {item.layers} layer{item.layers === 1 ? '' : 's'} · {item.witness.arrays_checked} arrays
+                {item.layers} layer{item.layers === 1 ? '' : 's'} · {item.witness.arrays_checked}{' '}
+                arrays
               </span>
             ))}
           </div>
           <p className="atlas-muted">
-            Canonical checkpoint IO is content-checked, but <strong>no actual pretrained checkpoint,</strong>{' '}
-            unrestricted dynamic sequence or physical accelerator is certified.
+            Canonical checkpoint IO is content-checked, but{' '}
+            <strong>no actual pretrained checkpoint,</strong> unrestricted dynamic sequence or
+            physical accelerator is certified.
           </p>
           <details>
             <summary>Source fingerprints and scope boundaries</summary>
