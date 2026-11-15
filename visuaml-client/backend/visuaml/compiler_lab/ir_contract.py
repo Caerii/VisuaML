@@ -143,6 +143,7 @@ def validate_portable_ir(
         "output_tree",
         "constant_hashes",
         "manifest_sha256",
+        "input_constraints",
     }
     if set(manifest) - allowed:
         raise IRContractError("Unknown top-level manifest fields")
@@ -172,6 +173,26 @@ def validate_portable_ir(
             raise IRContractError("Declared input byte budget exceeded")
         input_names.append(name)
         defined.add(name)
+
+    # Optional integer input bounds are part of the signed manifest content.
+    # They guard tokenizer IDs even when the portable interpreter runs without
+    # the trusted Python driver. Bounds are half-open to match array indexing.
+    constraints = manifest.get("input_constraints", {})
+    if not isinstance(constraints, dict) or not set(constraints) <= set(input_names):
+        raise IRContractError("Input constraints reference unknown declared input")
+    for spec in ins:
+        if spec["name"] not in constraints:
+            continue
+        limits = constraints[spec["name"]]
+        if not isinstance(limits, dict) or set(limits) != {"min_inclusive", "max_exclusive"}:
+            raise IRContractError("Malformed bounded integer input constraint")
+        lo, hi = limits["min_inclusive"], limits["max_exclusive"]
+        dtype = np.dtype(spec["dtype"])
+        if dtype.kind not in "iu" or type(lo) is not int or type(hi) is not int:
+            raise IRContractError("Bounded input constraints require integer dtype/bounds")
+        info = np.iinfo(dtype)
+        if not info.min <= lo < hi <= int(info.max) + 1:
+            raise IRContractError("Input bounds exceed declared integer dtype range")
 
     const_names: list[str] = []
     call_names: list[str] = []

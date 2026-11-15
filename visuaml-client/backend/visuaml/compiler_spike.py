@@ -107,7 +107,7 @@ def _op(node: Node, gm: GraphModule) -> str:
     if node.op == "call_method":
         name = str(node.target)
         return (
-            name
+            ("getitem" if name == "__getitem__" else name)
             if name
             in {
                 "relu",
@@ -127,6 +127,7 @@ def _op(node: Node, gm: GraphModule) -> str:
                 "rsqrt",
                 "gelu",
                 "index_add",
+                "__getitem__",
             }
             else f"method:{name}"
         )
@@ -174,6 +175,8 @@ def _op(node: Node, gm: GraphModule) -> str:
             operator.truediv: "div",
             torch.transpose: "transpose",
             torch.permute: "permute",
+            torch.cat: "cat",
+            torch.repeat_interleave: "repeat_interleave",
             torch.sin: "sin",
             torch.stack: "stack",
             torch.where: "where",

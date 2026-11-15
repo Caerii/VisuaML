@@ -1,6 +1,7 @@
 /** Versioned, operator-level planning atlas. Never labels model families executable. */
 import { useEffect, useMemo, useState } from 'react';
 import { FamilyBlockEvidence } from './FamilyBlockEvidence';
+import { DecoderAOTEvidence } from './DecoderAOTEvidence';
 import './ArchitectureAtlas.css';
 
 type Coverage = {
@@ -300,6 +301,7 @@ export function ArchitectureAtlasPage() {
                     <p>{selected.exemplars.join(' · ')}</p>
                   </div>
                   <FamilyBlockEvidence architectureId={selected.id} />
+                  <DecoderAOTEvidence architectureId={selected.id} />
                   <div className="atlas-acceptance">
                     <h3>What would establish genuine support?</h3>
                     <p>

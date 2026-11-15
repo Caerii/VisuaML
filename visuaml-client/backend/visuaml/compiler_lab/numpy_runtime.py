@@ -65,6 +65,8 @@ OPS = frozenset(
         "avg_pool2d",
         "interpolate_nearest",
         "topk_attr",
+        "cat",
+        "repeat_interleave",
     }
 )
 
@@ -159,6 +161,32 @@ def _decode(value: Any, env: dict[str, Any]) -> Any:
 
 
 def _execute(op: str, args: Any, kwargs: dict[str, Any]) -> Any:
+    if op == "cat":
+        if len(args) != 1 or not isinstance(args[0], (tuple, list)) or not 1 <= len(args[0]) <= 32:
+            raise BundleError("cat requires a bounded sequence of tensors")
+        tensors = args[0]
+        if any(not isinstance(x, np.ndarray) for x in tensors):
+            raise BundleError("cat accepts NumPy tensors only")
+        dim = kwargs.get("dim", 0)
+        if type(dim) is not int or not -tensors[0].ndim <= dim < tensors[0].ndim:
+            raise BundleError("cat axis out of range")
+        if sum(t.nbytes for t in tensors) > 256 * 1024 * 1024:
+            raise BundleError("cat exceeds output byte admission")
+        try:
+            return np.concatenate(tensors, axis=dim)
+        except ValueError as exc:
+            raise BundleError("cat tensor shapes disagree") from exc
+    if op == "repeat_interleave":
+        if len(args) not in (2, 3):
+            raise BundleError("repeat_interleave requires tensor, integer repeats, axis")
+        x, repeats = args[:2]
+        dim = kwargs.get("dim", args[2] if len(args) == 3 else None)
+        if (not isinstance(x, np.ndarray) or type(repeats) is not int
+            or not 1 <= repeats <= 32 or type(dim) is not int
+            or not -x.ndim <= dim < x.ndim
+            or x.nbytes * repeats > 256 * 1024 * 1024):
+            raise BundleError("repeat_interleave requires bounded scalar repeat factor and explicit axis")
+        return np.repeat(x, repeats, axis=dim)
     if op == "linear":
         x, w, *other = args
         bias = other[0] if other else kwargs.get("bias")
@@ -537,6 +565,9 @@ def execute(
             raise BundleError(
                 f"Input {spec['name']} requires {spec['shape']}/{spec['dtype']}, got {list(x.shape)}/{x.dtype}"
             )
+        limits = manifest.get("input_constraints", {}).get(spec["name"])
+        if limits is not None and (np.any(x < limits["min_inclusive"]) or np.any(x >= limits["max_exclusive"])):
+            raise BundleError(f"Input {spec['name']} outside declared bounded integer domain")
         env[spec["name"]] = x
     seen = set(env)
     for item in manifest.get("nodes", []):
