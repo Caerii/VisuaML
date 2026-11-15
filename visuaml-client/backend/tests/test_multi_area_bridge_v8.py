@@ -6,7 +6,6 @@ from dataclasses import replace
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.effect_ir import (
     EffectIRError,
     assert_effect_trace_preserved,
