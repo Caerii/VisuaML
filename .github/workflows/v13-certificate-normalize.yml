@@ -1,0 +1,60 @@
+name: v13 one-shot certificate regeneration and source formatting
+on:
+  push:
+    branches: [feat/compiler-ir-backends-assembly-spike]
+    paths: ['.github/workflows/v13-certificate-normalize.yml']
+permissions:
+  contents: write
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    if: github.repository == 'Caerii/VisuaML'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/compiler-ir-backends-assembly-spike
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Install reproducible CPU dependencies
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy==2.1.3' 'pytest==8.3.4' 'ruff==0.17.4'
+          pnpm install --frozen-lockfile
+      - name: Format and safely lint v13 changes
+        run: |
+          ruff check --fix visuaml-client/backend/visuaml/compiler_spike.py visuaml-client/backend/visuaml/compiler_lab/numpy_runtime.py visuaml-client/backend/visuaml/compiler_lab/ir_contract.py visuaml-client/backend/visuaml/compiler_lab/decoder_aot_v13.py visuaml-client/backend/visuaml/compiler_lab/decoder_certification_v13.py visuaml-client/backend/tests/test_decoder_aot_v13.py visuaml-client/backend/tests/test_decoder_certification_v13.py visuaml-client/backend/scripts/generate_decoder_certificate_v13.py
+          ruff format visuaml-client/backend/visuaml/compiler_spike.py visuaml-client/backend/visuaml/compiler_lab/numpy_runtime.py visuaml-client/backend/visuaml/compiler_lab/ir_contract.py visuaml-client/backend/visuaml/compiler_lab/decoder_aot_v13.py visuaml-client/backend/visuaml/compiler_lab/decoder_certification_v13.py visuaml-client/backend/tests/test_decoder_aot_v13.py visuaml-client/backend/tests/test_decoder_certification_v13.py visuaml-client/backend/scripts/generate_decoder_certificate_v13.py
+          pnpm --dir visuaml-client exec prettier --write src/ui/ArchitectureAtlas/DecoderAOTEvidence.tsx src/ui/ArchitectureAtlas/ArchitectureAtlasPage.tsx
+      - name: Regenerate branch-matched compiler receipts
+        env:
+          PYTHONPATH: visuaml-client/backend
+        run: |
+          python visuaml-client/backend/scripts/generate_decoder_certificate_v13.py
+          python visuaml-client/backend/scripts/generate_architecture_atlas.py
+          pnpm --dir visuaml-client exec prettier --write public/decoder_compiler_certificate.v13.json
+      - name: Verify all functional and quality gates
+        env:
+          PYTHONPATH: visuaml-client/backend
+        run: |
+          python -m pytest -q visuaml-client/backend/tests
+          ruff check visuaml-client/backend
+          pnpm --dir visuaml-client exec prettier --check .
+          pnpm --filter visuaml-client run lint
+          pnpm --filter visuaml-client run test -- --run
+          pnpm --filter visuaml-client run build
+      - name: Commit normalized v13 artifacts only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add visuaml-client/backend/visuaml/compiler_spike.py visuaml-client/backend/visuaml/compiler_lab/numpy_runtime.py visuaml-client/backend/visuaml/compiler_lab/ir_contract.py visuaml-client/backend/visuaml/compiler_lab/decoder_aot_v13.py visuaml-client/backend/visuaml/compiler_lab/decoder_certification_v13.py visuaml-client/backend/tests/test_decoder_aot_v13.py visuaml-client/backend/tests/test_decoder_certification_v13.py visuaml-client/backend/scripts/generate_decoder_certificate_v13.py visuaml-client/public/decoder_compiler_certificate.v13.json visuaml-client/public/architecture_atlas.v1.json visuaml-client/src/ui/ArchitectureAtlas/DecoderAOTEvidence.tsx visuaml-client/src/ui/ArchitectureAtlas/ArchitectureAtlasPage.tsx
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: normalize v13 source and regenerate branch-matched evidence"
+            git push origin HEAD:feat/compiler-ir-backends-assembly-spike
+          fi
