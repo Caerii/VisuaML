@@ -55,7 +55,7 @@ def test_catalog_contains_major_and_exotic_families_and_no_duplicate_ids():
 
 def test_catalog_digest_deterministic_independent_of_input_order():
     first = catalog_report(available_ops=OPS)
-    second = catalog_report(available_ops=list(reversed(sorted(OPS))))
+    second = catalog_report(available_ops=list(sorted(OPS, reverse=True)))
     assert first == second
     content = {key: value for key, value in first.items() if key != "sha256"}
     digest = hashlib.sha256(
