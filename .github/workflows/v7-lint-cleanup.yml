@@ -1,0 +1,47 @@
+name: V7 one-shot safe lint cleanup
+on:
+  push:
+    branches: [feat/compiler-ir-backends-assembly-spike]
+    paths: ['.github/workflows/v7-lint-cleanup.yml']
+permissions:
+  contents: write
+jobs:
+  repair:
+    if: github.repository == 'Caerii/VisuaML'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/compiler-ir-backends-assembly-spike
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install ruff==0.17.4
+      - name: Correct dictionary iteration in v7 witness test
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path=Path('visuaml-client/backend/tests/test_effect_program_v7.py')
+          source=path.read_text()
+          old='for name in snapshots:\n        np.testing.assert_array_equal(initial[name],snapshots[name])'
+          new='for name, snapshot in snapshots.items():\n        np.testing.assert_array_equal(initial[name],snapshot)'
+          if source.count(old)!=1:
+              raise SystemExit('Expected loop not found exactly once')
+          path.write_text(source.replace(old,new))
+          PY
+      - name: Apply Ruff safe fixes and enforce quality
+        run: |
+          ruff check --fix visuaml-client/backend/examples/effect_program_v7_demo.py visuaml-client/backend/tests/test_calibration_evidence_v7.py visuaml-client/backend/tests/test_effect_program_v7.py visuaml-client/backend/visuaml/compiler_lab/calibration_evidence.py visuaml-client/backend/visuaml/compiler_lab/effect_ir.py visuaml-client/backend/visuaml/compiler_lab/effect_runtime.py visuaml-client/backend/visuaml/compiler_lab/effect_verification.py
+          ruff format visuaml-client/backend/examples/effect_program_v7_demo.py visuaml-client/backend/tests/test_calibration_evidence_v7.py visuaml-client/backend/tests/test_effect_program_v7.py visuaml-client/backend/visuaml/compiler_lab/calibration_evidence.py visuaml-client/backend/visuaml/compiler_lab/effect_ir.py visuaml-client/backend/visuaml/compiler_lab/effect_runtime.py visuaml-client/backend/visuaml/compiler_lab/effect_verification.py
+          ruff check visuaml-client/backend
+          python -m compileall -q visuaml-client/backend
+      - name: Commit lint-only adjustments
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add visuaml-client/backend
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(compiler): fix v7 lint and format new modules"
+            git push origin HEAD:feat/compiler-ir-backends-assembly-spike
+          fi
