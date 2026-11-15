@@ -55,7 +55,7 @@ def example_schedule(seed=5):
 
 @pytest.mark.parametrize("seed", [1, 5, 11, 42])
 def test_same_canonical_envelope_for_two_frontends(seed):
-    c, x, y = example_capture(seed)
+    c, _, _ = example_capture(seed)
     t = canonicalize_tensor_ir(c.ir)
     e = canonicalize_effect_ir(recurrent_assembly_effect_program(8, 2, steps=3, beta=.1, refraction_strength=.03))
     assert t.schema == e.schema == "visuaml.semantic-envelope.v1"
@@ -177,8 +177,8 @@ def schedule_graph():
 
 def test_schedule_explicit_lanes_allow_independent_overlap():
     ir = schedule_graph()
-    loc = dict(x="host",a="device",b="host",c="device",out="host")
-    result = estimate_schedule(ir, loc, dict(a=10,b=12,c=9), transfer_us=2, us_per_byte=.1)
+    loc = {"x": "host", "a": "device", "b": "host", "c": "device", "out": "host"}
+    result = estimate_schedule(ir, loc, {"a": 10, "b": 12, "c": 9}, transfer_us=2, us_per_byte=.1)
     assert result.transfers == 3
     assert result.makespan_us < result.total_work_us
     assert result.device_residency_upper_bound == 96
@@ -187,15 +187,15 @@ def test_schedule_explicit_lanes_allow_independent_overlap():
 
 def test_schedule_rejects_missing_costs_memory_budget_unknown_tensor():
     ir = schedule_graph()
-    loc = dict(x="host",a="device",b="host",c="device",out="host")
+    loc = {"x": "host", "a": "device", "b": "host", "c": "device", "out": "host"}
     with pytest.raises(ScheduleError, match="cover"):
         estimate_schedule(ir, loc, {"a":1}, transfer_us=1, us_per_byte=.1)
     with pytest.raises(ScheduleError, match="memory"):
-        estimate_schedule(ir, loc, dict(a=1,b=1,c=1), transfer_us=1, us_per_byte=.1,device_memory_budget=20)
+        estimate_schedule(ir, loc, {"a": 1, "b": 1, "c": 1}, transfer_us=1, us_per_byte=.1,device_memory_budget=20)
     damaged = list(ir.nodes)
     damaged[1] = replace(damaged[1],tensors=(TensorSpec(("?",),"torch.float32",None),))
     with pytest.raises(ScheduleError, match="Unknown"):
-        estimate_schedule(replace(ir,nodes=tuple(damaged)), loc, dict(a=1,b=1,c=1), transfer_us=1, us_per_byte=.1)
+        estimate_schedule(replace(ir,nodes=tuple(damaged)), loc, {"a": 1, "b": 1, "c": 1}, transfer_us=1, us_per_byte=.1)
 
 
 def test_optical_ideal_linear_equivalence_and_nonideal_drift():
