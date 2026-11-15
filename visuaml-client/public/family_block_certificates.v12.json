@@ -7,35 +7,35 @@
       "level": "cross-framework-reference-parity",
       "max_abs_error": 1.1920928955078125e-07,
       "physical_hardware_validated": false,
-      "representative_block": "GQA/RoPE decoder with append-only KV-cache",
+      "representative_block": "One-layer autoregressive decoder: GQA/RoPE/KV/SwiGLU/logits/greedy generation",
       "seed_count": 3,
       "source_kind": "synthetic-cpu-fixtures",
       "witnesses": [
         {
-          "checked_arrays": 3,
+          "checked_arrays": 5,
           "family": "decoder_transformer",
-          "input_sha256": "78c9b00a29a2dbac90d24291f3d31a9ca7aaee75360ed0c58f9e69225f787738",
+          "input_sha256": "c148df80f005cf92e9b282e606d094fa301c42029e2818c1b6b77a5f260226e4",
           "max_abs_error": 5.960464477539063e-08,
           "passed": true,
-          "reference_sha256": "31ef983451b15f9ee32776b1ebbc6231da5bdef692fcea28501bce8e7dfa117f",
+          "reference_sha256": "a5c7f74b5621f7331c871699b89343931d23a5833c889b4e6753f27fbe2747c3",
           "seed": 7
         },
         {
-          "checked_arrays": 3,
+          "checked_arrays": 5,
           "family": "decoder_transformer",
-          "input_sha256": "6e77f2da1c9dc3cde4b868d29801d02e16275bc0f7ecb1b8fa3db76d1633a5f0",
+          "input_sha256": "964d8e259fd89d453042009665779cbf7980ea76de1f41bea4e8a29cc702f8fe",
           "max_abs_error": 1.1920928955078125e-07,
           "passed": true,
-          "reference_sha256": "4661fe4cf11eff2a5a4af6ed68fca127d65617c1864f0d7fb23a9103d39bfb35",
+          "reference_sha256": "696552816d166a290a6bc606bee76c4505d1f31fe0229f98271235836770a80e",
           "seed": 19
         },
         {
-          "checked_arrays": 3,
+          "checked_arrays": 5,
           "family": "decoder_transformer",
-          "input_sha256": "472c7be836bd170621ed86a73cbcc158525af651aed3f66cb6664d45e24e61ef",
-          "max_abs_error": 8.940696716308594e-08,
+          "input_sha256": "e13ecf6d957c90cf07379d0fe56b698186f7638a59daaa77ed0c7e3651bf6d5e",
+          "max_abs_error": 5.960464477539063e-08,
           "passed": true,
-          "reference_sha256": "56f3d44e2c0c5b91a636f43f265cd9ef22a6589d3a8833e916b0526e26d12897",
+          "reference_sha256": "8168925ba99a0bad224259c4786a5acff4869b6e3fb8d048bea60f77dce16ead",
           "seed": 41
         }
       ]
@@ -245,8 +245,8 @@
   "numpy_version": "2.3.5",
   "python_backend": "PyTorch CPU vs NumPy independent reference",
   "schema": "visuaml.representative-block-certification.v12",
-  "sha256": "ac24d344357ce2680c0961d8775786fc5dfe74a5349dd3661b1d248d77b423ef",
+  "sha256": "4a5b78afcecdf13047900a78d8c242924765053c840025f7a0d7ff2fe83c0b3f",
   "source_kind": "synthetic-cpu-fixtures",
-  "source_sha256": "e34b024cc52ca637d0293cb9d79c8253920b81c92a19802877f54e287734e60b",
+  "source_sha256": "923dc5cb0737783997093efa2f403fb80f71c0bb59fabb5305316d6e6ac6bf60",
   "torch_version": "2.10.0+cpu"
 }

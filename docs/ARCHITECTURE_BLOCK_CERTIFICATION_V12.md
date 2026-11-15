@@ -4,7 +4,7 @@ This stage implements **six small, trusted CPU reference workloads**, each in tw
 
 ## What is now executable
 
-1. **GQA/RoPE decoder attention** — RMSNorm, separate query and key/value head counts, interleaved rotary positions, causal attention, prefill, append-only KV-cache updates and multi-chunk verification. Not a full decoder with tokenizer, complete MLP residual stack, logits, sampling or quantized KV cache.
+1. **Tiny autoregressive decoder** — token embeddings, RMSNorm, grouped-query attention, interleaved RoPE, causal masks, append-only KV cache, SwiGLU-style MLP, residual connections, vocabulary logits, chunked prefill and incremental greedy token generation. This is a **small, random-weight one-layer fixture**, not a trained Llama checkpoint, tokenizer-integrated application, production decode engine or quantized KV cache.
 2. **Convolutional diagonal state-space block** — causal depthwise Conv1D, diagonal recurrent state updates, gated outputs, chunking, and explicit persistent state. Not the fused selective-scan CUDA kernel or any released Mamba checkpoint.
 3. **Sparse MoE** — stable top-k routing, renormalized expert gating, deterministic per-expert capacity, dropped overflow contributions, expert MLPs, and weighted recombination. Not load-balancing training loss or distributed all-to-all expert parallelism.
 4. **Diffusion / flow matching** — deterministic time-conditioned vector field with Euler and Heun ODE updates. Not a trained U-Net/DiT checkpoint or full image/video/noise schedule.

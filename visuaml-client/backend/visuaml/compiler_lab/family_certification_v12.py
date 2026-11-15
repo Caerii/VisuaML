@@ -15,9 +15,9 @@ from typing import Any
 import numpy as np
 import torch
 
+from .tiny_decoder_v12 import TinyDecoderWeights, decoder_tokens_numpy, decoder_tokens_torch, greedy_generate
 from .family_blocks_v12 import (
-    DecoderWeights, ScanState, ScanWeights, decoder_step_numpy,
-    decoder_step_torch, empty_cache, selective_conv_scan_numpy,
+    ScanState, ScanWeights, empty_cache, selective_conv_scan_numpy,
     selective_conv_scan_torch, moe_numpy, moe_torch, flow_numpy, flow_torch,
     gnn_numpy, gnn_torch, quantize_per_channel_numpy,
     quantize_per_channel_torch, sgd_numpy, sgd_torch,
@@ -25,7 +25,7 @@ from .family_blocks_v12 import (
 
 SCHEMA="visuaml.representative-block-certification.v12"
 FAMILIES=(
-    ("decoder_transformer", "GQA/RoPE decoder with append-only KV-cache"),
+    ("decoder_transformer", "One-layer autoregressive decoder: GQA/RoPE/KV/SwiGLU/logits/greedy generation"),
     ("mamba", "Causal depthwise Conv1D and diagonal recurrent scan"),
     ("moe", "Top-k sparse expert routing with finite capacity"),
     ("flow_matching", "Time-conditioned deterministic Euler/Heun flow sampler"),
@@ -72,20 +72,25 @@ def run_witness(family:str,seed:int)->BlockWitness:
         raise ValueError("Unknown family or invalid seed")
     r=np.random.default_rng(seed)
     if family=="decoder_transformer":
-        w=DecoderWeights.seeded(8,4,2,seed=seed)
-        x=r.normal(size=(2,5,8)).astype(np.float32)
+        w=TinyDecoderWeights.seeded(seed=seed)
+        tokens=r.integers(0,19,size=(2,5),dtype=np.int64)
         s=empty_cache(2,2,2,16)
-        left,right=[],[]
-        for chunk in (x[:,:3],x[:,3:4],x[:,4:]):
-            na,s=decoder_step_numpy(chunk,w,s,heads=4)
-            left.append(na)
         ts=empty_cache(2,2,2,16)
-        for chunk in (x[:,:3],x[:,3:4],x[:,4:]):
-            ta,ts=decoder_step_torch(chunk,w,ts,heads=4)
-            right.append(ta)
-        actual=(np.concatenate(left,axis=1),s.keys,s.values)
-        reference=(np.concatenate(right,axis=1),ts.keys,ts.values)
-        evidence=(x,w.q,w.k,w.v,w.out,w.norm)
+        actual_outputs=[]
+        reference_outputs=[]
+        for chunk in (tokens[:,:3],tokens[:,3:]):
+            a,s=decoder_tokens_numpy(chunk,w,s)
+            b,ts=decoder_tokens_torch(chunk,w,ts)
+            actual_outputs.append(a)
+            reference_outputs.append(b)
+        generated_a,gen_state_a=greedy_generate(tokens,w,steps=3,backend="numpy")
+        generated_b,gen_state_b=greedy_generate(tokens,w,steps=3,backend="torch")
+        actual=(np.concatenate(actual_outputs,axis=1),s.keys,s.values,
+                generated_a,gen_state_a.keys)
+        reference=(np.concatenate(reference_outputs,axis=1),ts.keys,ts.values,
+                   generated_b,gen_state_b.keys)
+        evidence=(tokens,w.embedding,w.attention.q,w.attention.k,w.attention.v,
+                  w.attention.out,w.gate,w.up,w.down,w.lm_head)
     elif family=="mamba":
         x=r.normal(size=(2,6,4)).astype(np.float32)
         w=ScanWeights(r.normal(scale=.1,size=(4,3)).astype(np.float32),r.uniform(.1,.9,4).astype(np.float32),
@@ -155,7 +160,12 @@ def certification_report(*,seeds:tuple[int,...]=(7,19,41))->dict[str,Any]:
             "witnesses":[asdict(c) for c in cases],
         })
     pkg=Path(__file__).resolve()
-    source_sha256=hashlib.sha256(pkg.read_bytes()).hexdigest()
+    source_hasher=hashlib.sha256(b"visuaml-v12-reference-source")
+    for source in (pkg, pkg.with_name("family_blocks_v12.py"),
+                   pkg.with_name("tiny_decoder_v12.py")):
+        source_hasher.update(source.name.encode())
+        source_hasher.update(source.read_bytes())
+    source_sha256=source_hasher.hexdigest()
     payload={
         "schema":SCHEMA,"source_kind":"synthetic-cpu-fixtures",
         "claim":"Representative BLOCK parity only; no checkpoint-family compatibility, general AOT lowering, or device performance claim",
