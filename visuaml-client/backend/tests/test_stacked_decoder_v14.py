@@ -170,7 +170,6 @@ assert all(x.shape==(1,2,2,2) for x in out[1:])
 
 def test_digest_changes_for_modified_weights():
     w = StackedWeights.seeded(12)
-    arrays = w.arrays()
     modified = replace(w, embedding=w.embedding.copy())
     modified.embedding[0, 0] += 0.01
     assert checkpoint_digest(w) != checkpoint_digest(modified)
