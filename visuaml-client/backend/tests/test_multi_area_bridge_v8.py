@@ -7,7 +7,11 @@ from dataclasses import replace
 import numpy as np
 import pytest
 
-from visuaml.compiler_lab.effect_ir import EffectIRError, assert_effect_trace_preserved, validate_effect_program
+from visuaml.compiler_lab.effect_ir import (
+    EffectIRError,
+    assert_effect_trace_preserved,
+    validate_effect_program,
+)
 from visuaml.compiler_lab.multi_area_bridge import (
     ReciprocalConfig,
     execute_reciprocal,
@@ -56,9 +60,9 @@ def test_reciprocal_five_step_scalar_parity(seed):
         for key in state:
             np.testing.assert_allclose(got.final_state[key], expected[key], atol=1e-6, rtol=0)
         state = {k: v.copy() for k,v in got.final_state.items()}
-    for k in original:
-        np.testing.assert_array_equal(original[k], example(seed)[1][k])
-        assert not np.shares_memory(state[k], original[k])
+    for k, previous in original.items():
+        np.testing.assert_array_equal(previous, example(seed)[1][k])
+        assert not np.shares_memory(state[k], previous)
     assert len(execute_reciprocal(cfg, original, steps=5).receipts) == 5
 
 
