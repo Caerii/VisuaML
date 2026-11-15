@@ -1,4 +1,5 @@
 name: v10 one-shot safe formatting
+# rerun after explicit review of unused bindings and dict literal conversions
 on:
   push:
     branches: [feat/compiler-ir-backends-assembly-spike]
