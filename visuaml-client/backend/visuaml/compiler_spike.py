@@ -126,11 +126,16 @@ def _op(node: Node, gm: GraphModule) -> str:
                 "amax",
                 "rsqrt",
                 "gelu",
+                "index_add",
             }
             else f"method:{name}"
         )
     if node.op == "call_function":
         t = node.target
+        # Only topk's bounded .indices/.values may be extracted portably.
+        if (t is getattr and len(node.args) == 2 and node.args[1] in ("indices", "values")
+                and isinstance(node.args[0], Node) and _op(node.args[0], gm) == "topk"):
+            return "topk_attr"
         mapping = {
             torch.matmul: "matmul",
             operator.matmul: "matmul",
@@ -164,6 +169,13 @@ def _op(node: Node, gm: GraphModule) -> str:
             operator.truediv: "div",
             torch.transpose: "transpose",
             torch.permute: "permute",
+            torch.sin: "sin",
+            torch.stack: "stack",
+            torch.where: "where",
+            torch.ge: "ge",
+            operator.ge: "ge",
+            torch.nn.functional.avg_pool2d: "avg_pool2d",
+            torch.nn.functional.interpolate: "interpolate_nearest",
             torch.nn.functional.scaled_dot_product_attention: "sdpa",
         }
         return mapping.get(t, f"function:{getattr(t, '__name__', str(t))}")
