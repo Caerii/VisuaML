@@ -80,3 +80,23 @@ def test_checked_in_snapshot_digest_and_claims():
         and not c["full_model_compiler_executable"]
         for c in payload["certifications"]
     )
+
+def test_snapshot_source_hash_matches_checked_in_references():
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1] / "visuaml" / "compiler_lab"
+    digest = hashlib.sha256(b"visuaml-v12-reference-source")
+    for filename in (
+        "family_certification_v12.py",
+        "family_blocks_v12.py",
+        "tiny_decoder_v12.py",
+    ):
+        digest.update(filename.encode())
+        digest.update((root / filename).read_bytes())
+    snapshot = (
+        Path(__file__).resolve().parents[2]
+        / "public"
+        / "family_block_certificates.v12.json"
+    )
+    payload = json.loads(snapshot.read_text(encoding="utf-8"))
+    assert payload["source_sha256"] == digest.hexdigest()
