@@ -33,7 +33,7 @@ jobs:
       - name: Apply Prettier to touched frontend and API files
         run: |
           pnpm --dir visuaml-client exec prettier --write .
-          pnpm --dir visuaml-client exec prettier --check .
+          # Main CI independently enforces repository-wide Prettier after this commit.
       - name: Verify frontend after cleanup
         run: |
           pnpm --filter visuaml-client run lint
