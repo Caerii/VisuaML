@@ -7,6 +7,8 @@ on:
       - 'visuaml-client/backend/visuaml/compiler_lab/stateful_ir.py'
       - 'visuaml-client/backend/visuaml/compiler_lab/assembly_state.py'
       - 'visuaml-client/backend/tests/test_stateful_assembly_v6.py'
+      - 'visuaml-client/backend/visuaml/compiler_lab/assembly_schedule.py'
+      - 'visuaml-client/backend/tests/test_v10_integration.py'
       - 'visuaml-client/backend/visuaml/compiler_lab/multi_area_bridge.py'
       - 'visuaml-client/backend/tests/test_multi_area_bridge_v8.py'
       - 'visuaml-client/backend/visuaml/compiler_lab/multifiber_bridge.py'
@@ -34,4 +36,5 @@ jobs:
           PYTHONPATH: visuaml-client/backend
         run: |
           python -c 'import neural_assemblies; print(neural_assemblies.__file__)'
-          python -m pytest -q visuaml-client/backend/tests/test_stateful_assembly_v6.py visuaml-client/backend/tests/test_multi_area_bridge_v8.py visuaml-client/backend/tests/test_multifiber_bridge_v9.py
+          python -m pytest -q visuaml-client/backend/tests/test_stateful_assembly_v6.py
+          python -m pytest -q visuaml-client/backend/tests/test_v10_integration.py::test_generic_schedule_vs_pinned_explicit_reference visuaml-client/backend/tests/test_multi_area_bridge_v8.py visuaml-client/backend/tests/test_multifiber_bridge_v9.py
