@@ -107,11 +107,9 @@ const permittedModel = (modelPath: string, ip: string): boolean =>
 // POST /api/upload - Handles model file upload
 app.post('/api/upload', async (req, reply) => {
   if (!unsafeImportOptIn || !loopbackRequest(req.ip)) {
-    return reply
-      .status(403)
-      .send({
-        message: 'Untrusted Python upload is disabled; use a hardened isolated execution worker.',
-      });
+    return reply.status(403).send({
+      message: 'Untrusted Python upload is disabled; use a hardened isolated execution worker.',
+    });
   }
   const data = await req.file();
   if (!data) {
