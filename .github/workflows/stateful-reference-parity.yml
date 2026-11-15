@@ -9,6 +9,8 @@ on:
       - 'visuaml-client/backend/tests/test_stateful_assembly_v6.py'
       - 'visuaml-client/backend/visuaml/compiler_lab/multi_area_bridge.py'
       - 'visuaml-client/backend/tests/test_multi_area_bridge_v8.py'
+      - 'visuaml-client/backend/visuaml/compiler_lab/multifiber_bridge.py'
+      - 'visuaml-client/backend/tests/test_multifiber_bridge_v9.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -32,4 +34,4 @@ jobs:
           PYTHONPATH: visuaml-client/backend
         run: |
           python -c 'import neural_assemblies; print(neural_assemblies.__file__)'
-          python -m pytest -q visuaml-client/backend/tests/test_stateful_assembly_v6.py visuaml-client/backend/tests/test_multi_area_bridge_v8.py
+          python -m pytest -q visuaml-client/backend/tests/test_stateful_assembly_v6.py visuaml-client/backend/tests/test_multi_area_bridge_v8.py visuaml-client/backend/tests/test_multifiber_bridge_v9.py
