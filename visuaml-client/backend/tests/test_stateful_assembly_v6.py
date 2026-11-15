@@ -1,17 +1,23 @@
 """Deterministic stateful semantics; does not assert full upstream engine parity."""
 
 from dataclasses import replace
+from itertools import pairwise
 
 import numpy as np
 import pytest
 
 from visuaml.compiler_lab.assembly_state import (
-    AssemblyState, AssemblyStateError, StepConfig,
-    run_assembly_schedule, step_assembly,
+    AssemblyState,
+    AssemblyStateError,
+    StepConfig,
+    run_assembly_schedule,
+    step_assembly,
 )
 from visuaml.compiler_lab.stateful_ir import (
     StatefulIRError,
-    assert_effects_preserved, make_assembly_step_ir, validate_stateful_ir,
+    assert_effects_preserved,
+    make_assembly_step_ir,
+    validate_stateful_ir,
 )
 
 
@@ -48,7 +54,7 @@ def test_state_changes_across_multiple_recurrent_steps():
     assert len(receipts) == 5
     assert end.step_index == 5
     assert len({r.result_sha256 for r in receipts}) == 5
-    for a, b in zip(receipts, receipts[1:]):
+    for a, b in pairwise(receipts):
         assert a.result_sha256 == b.original_sha256
     assert np.all(end.weights >= 0)
 
