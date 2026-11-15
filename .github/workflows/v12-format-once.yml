@@ -1,0 +1,49 @@
+name: V12 one-shot source quality repair
+on:
+  push:
+    branches: [feat/compiler-ir-backends-assembly-spike]
+    paths: ['.github/workflows/v12-format-once.yml']
+permissions:
+  contents: write
+jobs:
+  mechanical:
+    if: github.repository == 'Caerii/VisuaML'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/compiler-ir-backends-assembly-spike
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Install code quality tools
+        run: |
+          pip install ruff==0.17.4 numpy==2.1.3 pytest==8.3.4
+          python -m pip install 'torch==2.9.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          pnpm install --frozen-lockfile
+      - name: Format v12 Python and apply safe lint repairs
+        run: |
+          ruff check --fix visuaml-client/backend/visuaml/compiler_lab/family_blocks_v12.py visuaml-client/backend/visuaml/compiler_lab/family_certification_v12.py visuaml-client/backend/visuaml/compiler_lab/tiny_decoder_v12.py visuaml-client/backend/tests/test_family_blocks_v12.py visuaml-client/backend/tests/test_family_certification_v12.py visuaml-client/backend/tests/test_tiny_decoder_v12.py || test "$?" = 1
+          ruff format visuaml-client/backend/visuaml/compiler_lab/family_blocks_v12.py visuaml-client/backend/visuaml/compiler_lab/family_certification_v12.py visuaml-client/backend/visuaml/compiler_lab/tiny_decoder_v12.py visuaml-client/backend/tests/test_family_blocks_v12.py visuaml-client/backend/tests/test_family_certification_v12.py visuaml-client/backend/tests/test_tiny_decoder_v12.py
+      - name: Regenerate evidence from reformatted sources
+        run: |
+          cd visuaml-client
+          PYTHONPATH=backend python backend/scripts/generate_family_certificates.py
+      - name: Format frontend and evidence snapshot
+        run: |
+          pnpm --dir visuaml-client exec prettier --write src/ui/ArchitectureAtlas/FamilyBlockEvidence.tsx public/family_block_certificates.v12.json
+      - name: Commit reproducible mechanical changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add visuaml-client/backend/visuaml/compiler_lab/family_blocks_v12.py visuaml-client/backend/visuaml/compiler_lab/family_certification_v12.py visuaml-client/backend/visuaml/compiler_lab/tiny_decoder_v12.py visuaml-client/backend/tests/test_family_blocks_v12.py visuaml-client/backend/tests/test_family_certification_v12.py visuaml-client/backend/tests/test_tiny_decoder_v12.py visuaml-client/public/family_block_certificates.v12.json visuaml-client/src/ui/ArchitectureAtlas/FamilyBlockEvidence.tsx
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(v12): format family reference blocks and regenerate parity evidence'
+            git push origin HEAD:feat/compiler-ir-backends-assembly-spike
+          fi
