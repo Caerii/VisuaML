@@ -13,7 +13,6 @@ import json
 from dataclasses import asdict, dataclass
 from typing import Literal
 
-
 SCHEMA = "visuaml.stateful-assembly-ir.v1"
 STATE_KEYS = frozenset({"weights", "bias", "winners"})
 EFFECT_OPS = ("hebbian_write", "refraction_write", "publish_winners")
