@@ -8,6 +8,11 @@ import json
 from dataclasses import asdict
 
 import pytest
+import sys
+from pathlib import Path
+
+# Tests also run under GitHub Actions from the workspace root.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from visuaml.compiler_lab.architecture_catalog import (
     ARCHITECTURES,

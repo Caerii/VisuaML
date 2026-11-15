@@ -153,7 +153,7 @@ export function ArchitectureAtlasPage() {
             <div className="atlas-details">
               {selected ? (
                 <>
-                  <div className="atlas-detail-meta"><span>{selected.domain}</span><span>Priority {selected.priority}</span><span>{selected.coverage.status.replaceAll('-', ' ')}</span></div>
+                  <div className="atlas-detail-meta"><span>{selected.domain}</span><span>Priority {selected.priority}</span><span>{selected.coverage.status.replace(/-/g, ' ')}</span></div>
                   <h2>{selected.name}</h2>
                   <p className="atlas-note">{selected.note}</p>
                   <div className="atlas-primitives">
@@ -163,7 +163,7 @@ export function ArchitectureAtlasPage() {
                   </div>
                   <div className="atlas-primitives">
                     <h3>Additional semantic contracts</h3>
-                    {selected.features.length ? <div className="atlas-tags">{selected.features.map((feat) => <span key={feat} className={selected.coverage.missing_features.includes(feat) ? 'missing' : 'available'}>{feat.replaceAll('_', ' ')}</span>)}</div> : <p className="atlas-muted">No additional feature requirement is declared for this representative motif.</p>}
+                    {selected.features.length ? <div className="atlas-tags">{selected.features.map((feat) => <span key={feat} className={selected.coverage.missing_features.includes(feat) ? 'missing' : 'available'}>{feat.replace(/_/g, ' ')}</span>)}</div> : <p className="atlas-muted">No additional feature requirement is declared for this representative motif.</p>}
                   </div>
                   <div className="atlas-primitives"><h3>Representative examples</h3><p>{selected.exemplars.join(' · ')}</p></div>
                   <div className="atlas-acceptance"><h3>What would establish genuine support?</h3><p>A real model checkpoint, safe input fixture, successful capture, operator legalization, portable or hardware-backed execution, shape and dtype guards, and numerical/functional comparison against the reference implementation.</p></div>
@@ -174,7 +174,7 @@ export function ArchitectureAtlasPage() {
               <h2>Next capability investments</h2>
               <p className="atlas-muted">Weighted incidence across catalogued workloads—not performance gain, popularity measurement, or implementation estimate.</p>
               {atlas.priority_gaps.slice(0, 12).map((gap, index) => (
-                <div key={gap.capability} className="atlas-gap"><span className="atlas-gap-rank">{index + 1}</span><div><strong>{gap.capability.replace(':', ' · ').replaceAll('_', ' ')}</strong><small>{gap.families.length} listed families · incidence {gap.weighted_incidence}</small></div></div>
+                <div key={gap.capability} className="atlas-gap"><span className="atlas-gap-rank">{index + 1}</span><div><strong>{gap.capability.replace(':', ' · ').replace(/_/g, ' ')}</strong><small>{gap.families.length} listed families · incidence {gap.weighted_incidence}</small></div></div>
               ))}
               <div className="atlas-evidence"><h3>Evidence ladder</h3><p>Catalogued → Operator audit → Captured microfixture → Compiled artifact → Checkpoint parity → Device measurement.</p></div>
             </aside>

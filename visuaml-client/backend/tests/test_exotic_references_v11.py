@@ -4,6 +4,11 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
+import sys
+from pathlib import Path
+
+# Tests also run under GitHub Actions from the workspace root.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import torch
 
 from visuaml.compiler_lab.exotic_references import (
