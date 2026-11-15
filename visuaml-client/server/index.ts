@@ -32,11 +32,11 @@ const app = Fastify({
 
 // Register CORS plugin
 app.register(cors, {
-  origin: '*', // Allow all origins for now, configure appropriately for production
+  origin: process.env.VISUAML_CORS_ORIGIN || false, // same-origin by default
 });
 
 // Register the multipart plugin
-app.register(multipart);
+app.register(multipart, { limits: { fileSize: 1024 * 1024, files: 1 } });
 registerCompilerLabRoutes(app);
 
 // At the top of the file, add Python detection
@@ -80,8 +80,29 @@ const ExportAllRequestSchema = z.object({
   sampleInputDtypes: z.array(z.string()).optional(),
 });
 
+
+// Python imports execute code: requests may only select shipped, trusted models.
+// Arbitrary uploads are never exposed by default. Explicit developer opt-in
+// remains local-only and is not a substitute for a restricted execution worker.
+const TRUSTED_MODEL_PATHS = new Set([
+  'models.SimpleNN', 'models.Autoencoder', 'models.MyTinyGPT',
+  'models.TestModel', 'models.TransformerBlock', 'models.FixedSimpleCNN',
+  'models.FixedBasicRNN', 'models.FixedDemoNet', 'models.SimpleCNN',
+  'models.BasicRNN', 'models.DemoNet',
+]);
+const unsafeImportOptIn =
+  process.env.VISUAML_ENABLE_UNSANDBOXED_PYTHON_IMPORTS === '1' &&
+  process.env.NODE_ENV !== 'production';
+const loopbackRequest = (ip: string): boolean =>
+  ip === '127.0.0.1' || ip === '::1' || ip === '::ffff:127.0.0.1';
+const permittedModel = (modelPath: string, ip: string): boolean =>
+  TRUSTED_MODEL_PATHS.has(modelPath) || (unsafeImportOptIn && loopbackRequest(ip));
+
 // POST /api/upload - Handles model file upload
 app.post('/api/upload', async (req, reply) => {
+  if (!unsafeImportOptIn || !loopbackRequest(req.ip)) {
+    return reply.status(403).send({ message: 'Untrusted Python upload is disabled; use a hardened isolated execution worker.' });
+  }
   const data = await req.file();
   if (!data) {
     return reply.status(400).send({ message: 'No file uploaded.' });
@@ -168,6 +189,9 @@ app.post('/api/import', async (req, reply) => {
     }
 
     const { modelPath, exportFormat, sampleInputArgs, sampleInputDtypes } = validationResult.data;
+    if (!permittedModel(modelPath, req.ip)) {
+      return reply.status(403).send({ message: 'Model import restricted to trusted bundled models.' });
+    }
     app.log.info(
       `Received import request for modelPath: ${modelPath}, exportFormat: ${exportFormat}`,
     );
@@ -290,6 +314,9 @@ app.post('/api/export-hypergraph', async (req, reply) => {
     }
 
     const { modelPath, format, sampleInputArgs, sampleInputDtypes } = validationResult.data;
+    if (!permittedModel(modelPath, req.ip)) {
+      return reply.status(403).send({ message: 'Model export restricted to trusted bundled models.' });
+    }
     app.log.info(
       `Received export-hypergraph request for modelPath: ${modelPath}, format: ${format}`,
     );
@@ -370,6 +397,9 @@ app.post('/api/export-all', async (req, reply) => {
     }
 
     const { modelPath, sampleInputArgs, sampleInputDtypes } = validationResult.data;
+    if (!permittedModel(modelPath, req.ip)) {
+      return reply.status(403).send({ message: 'Model export restricted to trusted bundled models.' });
+    }
     app.log.info(`Received export-all request for modelPath: ${modelPath}`);
 
     // Get paths

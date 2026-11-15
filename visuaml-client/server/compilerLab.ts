@@ -19,6 +19,8 @@ const script = path.resolve(
 );
 const workingDirectory = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
+let activeCompilerAnalyses = 0;
+
 export function registerCompilerLabRoutes(app: FastifyInstance): void {
   app.post('/api/compiler-lab/analyze', async (request, reply) => {
     if (process.env.VISUAML_COMPILER_LAB_ENABLED !== '1') {
@@ -32,6 +34,10 @@ export function registerCompilerLabRoutes(app: FastifyInstance): void {
         .code(400)
         .send({ message: 'Unsupported compiler analysis request', issues: parsed.error.issues });
     }
+    if (activeCompilerAnalyses >= 2) {
+      return reply.code(429).send({ message: 'Compiler analysis capacity reached; retry later.' });
+    }
+    activeCompilerAnalyses++;
     try {
       const { stdout } = await execa(
         cli,
@@ -54,6 +60,8 @@ export function registerCompilerLabRoutes(app: FastifyInstance): void {
       return reply
         .code(500)
         .send({ message: 'Compiler Lab analysis failed; inspect server logs.' });
+    } finally {
+      activeCompilerAnalyses--;
     }
   });
 }
