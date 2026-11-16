@@ -159,3 +159,40 @@ def test_no_kv_head_replication_in_resident_storage():
     _, _, depth, kv_heads = weights.validate()
     assert report.reserved_bytes == 2 * 4 * 2 * 64 * kv_heads * depth * 4
     assert all(not arr.flags.writeable for arr in runtime._weights.arrays().values())
+
+
+def test_full_context_multi_layer_cache_parity():
+    """Exercise the entire 64-token context with irregular chunk boundaries."""
+    weights = StackedWeights.seeded(83, layers=4)
+    streaming = StreamingStackedDecoder(weights, batch=2)
+    expected = empty_stack(weights, 2)
+    rng = np.random.default_rng(112)
+    for chunk_size in (7, 11, 19, 9, 18):
+        tokens = rng.integers(0, 19, (2, chunk_size), dtype=np.int64)
+        logits = streaming.step(tokens)
+        reference, expected = reference_stack_step(weights, tokens, expected)
+        np.testing.assert_allclose(logits, reference, atol=3e-5, rtol=3e-5)
+        for actual, target in zip(streaming.snapshot().layers, expected.layers):
+            np.testing.assert_allclose(actual.keys, target.keys, atol=3e-5, rtol=3e-5)
+            np.testing.assert_allclose(actual.values, target.values, atol=3e-5, rtol=3e-5)
+    assert streaming.cursor == weights.max_context == 64
+
+
+def test_streaming_matches_compiled_aot_logits_and_caches():
+    """Compare the resident path to the actual v15 shape-specialized artifact."""
+    from visuaml.compiler_lab.stacked_decoder_v14 import CompiledStackedDecoder
+
+    weights = StackedWeights.seeded(23, layers=2)
+    streaming = StreamingStackedDecoder(weights)
+    compiled = CompiledStackedDecoder(weights)
+    state = empty_stack(weights, 1)
+    for tokens in (
+        np.array([[1, 2, 3]], np.int64),
+        np.array([[4]], np.int64),
+    ):
+        observed = streaming.step(tokens)
+        expected, state = compiled.step(tokens, state)
+        np.testing.assert_allclose(observed, expected, atol=3e-5, rtol=3e-5)
+        for a, b in zip(streaming.snapshot().layers, state.layers):
+            np.testing.assert_allclose(a.keys, b.keys, atol=3e-5, rtol=3e-5)
+            np.testing.assert_allclose(a.values, b.values, atol=3e-5, rtol=3e-5)
