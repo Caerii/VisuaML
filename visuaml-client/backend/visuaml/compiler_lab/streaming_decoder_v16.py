@@ -87,7 +87,9 @@ class StreamingStackedDecoder:
     detached read-only state copy for parity and checkpoint handoff.
     """
 
-    def __init__(self, weights: StackedWeights, *, batch: int = 1) -> None:
+    def __init__(self, weights: StackedWeights, *, batch: int = 1, semantic_kv: bool = False) -> None:
+        if type(semantic_kv) is not bool:
+            raise StackContractError("Invalid semantic KV backend selector")
         if type(batch) is not int or not 1 <= batch <= 8:
             raise StackContractError("Streaming batch must be in [1,8]")
         self._weights = _snapshot_weights(weights)
@@ -106,6 +108,24 @@ class StreamingStackedDecoder:
             for _ in self._weights.blocks
         )
         self._values = tuple(np.empty_like(key) for key in self._keys)
+        self._kv_session = None
+        if semantic_kv:
+            from .kv_lowering_v17 import (
+                lower_kv_semantic_program,
+                make_kv_semantic_program,
+            )
+
+            semantic = make_kv_semantic_program(
+                batch=batch, layers=len(self._weights.blocks),
+                kv_heads=kv_heads, head_dim=depth, capacity=self.capacity,
+            )
+            self._kv_session = lower_kv_semantic_program(semantic).new_session()
+            self._keys = tuple(
+                self._kv_session._arrays[f"k{i}"] for i in range(len(self._weights.blocks))
+            )
+            self._values = tuple(
+                self._kv_session._arrays[f"v{i}"] for i in range(len(self._weights.blocks))
+            )
         # float64 angle formation then float32 trigonometry, as in the v12
         # independent NumPy reference. This table is shared by all blocks.
         inv = 1.0 / (
@@ -127,6 +147,10 @@ class StreamingStackedDecoder:
 
     def reset(self) -> None:
         """Start a new sequence; clear old values so stale data is inaccessible."""
+        if self._kv_session is not None:
+            self._kv_session.reset()
+            self.cursor = 0
+            return
         for key, value in zip(self._keys, self._values):
             key.fill(0)
             value.fill(0)
@@ -170,6 +194,8 @@ class StreamingStackedDecoder:
             old_keys[:, :length] = new_keys
             old_values[:, :length] = new_values
         self.cursor = length
+        if self._kv_session is not None:
+            self._kv_session.cursor = length
 
     def _rope(self, tensor: np.ndarray, start: int) -> np.ndarray:
         n = tensor.shape[1]
@@ -191,8 +217,14 @@ class StreamingStackedDecoder:
             or np.any(tokens < 0) or np.any(tokens >= self.vocab)
         ):
             raise StackContractError("Streaming token IDs or context outside admitted domain")
+        if self._kv_session is not None and self.cursor != self._kv_session.cursor:
+            raise StackContractError("Unpublished or divergent KV cursor")
         start, query = self.cursor, tokens.shape[1]
         total = start + query
+        transaction = (
+            self._kv_session.begin_append(query)
+            if self._kv_session is not None else None
+        )
         h = self._weights.embedding[tokens]
         positions = np.arange(start, total, dtype=np.int64)
         causal = np.arange(total)[None, :] <= positions[:, None]
@@ -205,8 +237,11 @@ class StreamingStackedDecoder:
                 q = self._rope((normed @ a.q).reshape(self.batch, query, self.heads, self.depth), start)
                 k = self._rope((normed @ a.k).reshape(self.batch, query, self.kv_heads, self.depth), start)
                 v = (normed @ a.v).reshape(self.batch, query, self.kv_heads, self.depth)
-                self._keys[layer][:, start:total] = k
-                self._values[layer][:, start:total] = v
+                if transaction is None:
+                    self._keys[layer][:, start:total] = k
+                    self._values[layer][:, start:total] = v
+                else:
+                    transaction.stage(layer, k, v)
                 # Grouped-query attention via broadcasting: never materialize
                 # repeated KV heads. Q: [B,KV,R,Q,D], K/V: [B,KV,1,T,D].
                 grouped_q = q.reshape(
@@ -233,12 +268,16 @@ class StreamingStackedDecoder:
             if not np.isfinite(logits).all():
                 raise StackContractError("Nonfinite streaming logits")
         except Exception:
-            # Old cache prefix remains untouched; new entries have not been
-            # published via the cursor. Clear scratch suffix for hygiene.
-            for key, value in zip(self._keys, self._values):
-                key[:, start:total] = 0
-                value[:, start:total] = 0
+            # Previously committed prefixes remain intact on any failure.
+            if transaction is not None:
+                transaction.abort()
+            else:
+                for key, value in zip(self._keys, self._values):
+                    key[:, start:total] = 0
+                    value[:, start:total] = 0
             raise
+        if transaction is not None:
+            transaction.commit()
         self.cursor = total
         return logits.copy()
 
