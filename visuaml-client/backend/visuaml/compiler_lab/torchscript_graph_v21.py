@@ -293,7 +293,7 @@ class TorchScriptWholeGraphSession:
             elapsed = (time.perf_counter_ns() - begun) / 1e6
             self._compiled[signature] = compiled
             self._trace_records.append(GraphTraceRecord(
-                self.batch, query, start, elapsed,
+                self.batch, signature[1], signature[2], elapsed,
                 len(tuple(compiled.graph.nodes())),
             ))
         with torch.no_grad():
