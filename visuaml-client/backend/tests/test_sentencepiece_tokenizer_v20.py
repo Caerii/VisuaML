@@ -29,6 +29,7 @@ def tokenizer_fixture(tmp_path):
     )
     (tmp_path / "tokenizer_config.json").write_text(json.dumps({
         "tokenizer_class": "LlamaTokenizer", "add_bos_token": True,
+        "legacy": True,
     }))
     processor = spm.SentencePieceProcessor(model_file=str(tmp_path / "tokenizer.model"))
     return tmp_path, processor
@@ -97,3 +98,28 @@ def test_reject_symlink_and_invalid_metadata(tokenizer_fixture, tmp_path):
         load_sentencepiece_tokenizer(
             directory, declared_revision="a" * 40, vocabulary=reference.vocab_size()
         )
+
+
+
+def test_nonlegacy_prefix_rules_match_pinned_hf_llama_tokenizer(tokenizer_fixture):
+    from transformers import LlamaTokenizer
+
+    directory, reference = tokenizer_fixture
+    config = directory / "tokenizer_config.json"
+    config.write_text(json.dumps({
+        "tokenizer_class": "LlamaTokenizer",
+        "add_bos_token": True, "legacy": False,
+        "add_prefix_space": True,
+    }))
+    hf = LlamaTokenizer(
+        vocab_file=str(directory / "tokenizer.model"),
+        legacy=False, add_prefix_space=True,
+    )
+    bridge = load_sentencepiece_tokenizer(
+        directory, declared_revision="a" * 40, vocabulary=reference.vocab_size(),
+    )
+    assert bridge.identity.legacy is False
+    for text in ("Once upon a time", "a friendly dragon", "the garden"):
+        expected = hf.encode(text, add_special_tokens=True)
+        actual = bridge.encode(text).tolist()[0]
+        assert actual == expected
