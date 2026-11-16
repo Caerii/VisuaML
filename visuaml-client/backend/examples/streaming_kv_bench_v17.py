@@ -27,15 +27,6 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def timed(fn, trials: int) -> list[float]:
-    samples = []
-    for _ in range(trials):
-        before = time.perf_counter_ns()
-        fn()
-        samples.append((time.perf_counter_ns() - before) / 1e6)
-    return samples
-
-
 def summary(data: list[float]) -> dict:
     return {
         "median_ms": round(statistics.median(data), 6),
