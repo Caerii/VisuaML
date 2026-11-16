@@ -69,3 +69,11 @@ fingerprints and memory admission.
 5. Only after a real model is certified should CUDA/Triton, CPU fusion,
    quantized cache formats and external photonic backends be promoted above
    experimental capability claims.
+
+## Stage 2: decoder execution using compiled KV state effects
+
+The existing v16 decoder now has an opt-in `semantic_kv=True` execution mode. Its actual layer loop stages new K/V data in a session whose buffer allocation, per-layer write ordering and atomic cursor publication come from the validated v17 SemanticProgram. The default v16 path remains unchanged and is the independent comparison.
+
+New tests compare logits and every K/V tensor against v16 across irregular chunk lengths through the complete 64-token context. They also inject an exception in a late decoder layer and verify the prefix remains unchanged, then test snapshot/restore and generation.
+
+This is **the first integrated compiler-driven state schedule**, not a full decoder graph lowering: RMSNorm, RoPE, attention, MLP and logits are still computed by the original NumPy math. Exact throughput parity with v16 is not yet measured and must not be assumed.
