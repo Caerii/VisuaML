@@ -15,7 +15,7 @@ import hashlib
 import json
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Self
 
 import numpy as np
 
@@ -270,7 +270,7 @@ class KVAppendTransaction:
         self.session._active = None
         self.closed = True
 
-    def __enter__(self) -> KVAppendTransaction:
+    def __enter__(self) -> Self:
         self._admit()
         return self
 
