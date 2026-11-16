@@ -70,15 +70,22 @@ def _parse(raw: bytes) -> dict:
     return result
 
 
+def _source_valid(label: str) -> bool:
+    return (
+        isinstance(label, str)
+        and bool(re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9_.-]{0,99}/[A-Za-z0-9][A-Za-z0-9_.-]{0,99}",
+            label,
+        ))
+    )
+
+
 def write_llama_bundle(
     plan: LlamaSemanticPlan, source: str | Path, destination: str | Path,
     *, declared_source: str,
 ) -> Path:
     """Publish a validated, immutable-input checkpoint and its canonical IR."""
-    if (
-        not isinstance(declared_source, str)
-        or not re.fullmatch(r"[A-Za-z0-9_.-]{1,100}/[A-Za-z0-9_.-]{1,100}", declared_source)
-    ):
+    if not _source_valid(declared_source):
         raise LlamaBundleError("Specify a bounded user-declared source repo")
     canonical = lower_llama_semantic_program(
         plan.program, plan.weights, batch=plan.batch
@@ -129,7 +136,10 @@ def load_llama_bundle(directory: str | Path) -> LlamaSemanticPlan:
     """Verify stored bytes, regenerate the program, then lower it to an executor."""
     root = Path(directory)
     try:
-        metadata = _parse(_read(root / "bundle.json", _MAX_JSON))
+        manifest_raw = _read(root / "bundle.json", _MAX_JSON)
+        metadata = _parse(manifest_raw)
+        if _bytes(metadata) != manifest_raw:
+            raise LlamaBundleError("Bundle manifest must use canonical JSON bytes")
         required = {
             "schema", "declared_source", "declared_revision", "batch",
             "checkpoint_sha256", "config_sha256", "semantic_sha256",
@@ -137,11 +147,7 @@ def load_llama_bundle(directory: str | Path) -> LlamaSemanticPlan:
         }
         if set(metadata) != required or metadata["schema"] != SCHEMA:
             raise LlamaBundleError("Unknown bundle schema or fields")
-        if (
-            not isinstance(metadata["declared_source"], str)
-            or not re.fullmatch(r"[A-Za-z0-9_.-]{1,100}/[A-Za-z0-9_.-]{1,100}",
-                                metadata["declared_source"])
-        ):
+        if not _source_valid(metadata["declared_source"]):
             raise LlamaBundleError("Invalid declared model source")
         unsigned = {key: val for key, val in metadata.items() if key != "manifest_sha256"}
         if metadata["manifest_sha256"] != _sha(_bytes(unsigned)):
