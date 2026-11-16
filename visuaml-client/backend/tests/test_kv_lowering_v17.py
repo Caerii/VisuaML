@@ -169,3 +169,91 @@ def test_capacity_and_resource_admission():
     with pytest.raises(KVLoweringError):
         session.append(chunks(compiled, 1))
     assert session.cursor == 8
+
+
+@pytest.mark.parametrize("layers", (1, 2, 4))
+def test_v17_semantic_decoder_matches_v16_logits_and_full_cache(layers):
+    weights = StackedWeights.seeded(107, layers=layers)
+    baseline = StreamingStackedDecoder(weights, batch=2)
+    compiled = StreamingStackedDecoder(weights, batch=2, semantic_kv=True)
+    rng = np.random.default_rng(101)
+    for n in (7, 1, 3, 19, 8, 2, 5, 19):
+        tokens = rng.integers(0, weights.embedding.shape[0], (2, n), dtype=np.int64)
+        a = baseline.step(tokens)
+        b = compiled.step(tokens)
+        np.testing.assert_allclose(b, a, atol=3e-5, rtol=3e-5)
+        for old, new in zip(baseline.snapshot().layers, compiled.snapshot().layers):
+            np.testing.assert_array_equal(new.keys, old.keys)
+            np.testing.assert_array_equal(new.values, old.values)
+        assert compiled._kv_session.cursor == compiled.cursor
+    assert compiled.cursor == 64
+
+
+def test_v17_decoder_failure_restore_and_generation():
+    weights = StackedWeights.seeded(39, layers=3)
+    baseline = StreamingStackedDecoder(weights)
+    compiled = StreamingStackedDecoder(weights, semantic_kv=True)
+    prompt = np.array([[1, 2, 3]], np.int64)
+    np.testing.assert_allclose(
+        compiled.step(prompt), baseline.step(prompt), atol=3e-5, rtol=3e-5
+    )
+    snapshot = compiled.snapshot()
+    rope = compiled._rope
+    calls = 0
+
+    def fail_on_late_layer(value, start):
+        nonlocal calls
+        calls += 1
+        if calls == 5:
+            raise RuntimeError("injected layer-three failure")
+        return rope(value, start)
+
+    compiled._rope = fail_on_late_layer
+    with pytest.raises(RuntimeError, match="layer-three"):
+        compiled.step(np.array([[4]], np.int64))
+    assert compiled.cursor == compiled._kv_session.cursor == 3
+    for before, after in zip(snapshot.layers, compiled.snapshot().layers):
+        np.testing.assert_array_equal(before.keys, after.keys)
+        np.testing.assert_array_equal(before.values, after.values)
+    compiled._rope = rope
+    compiled.step(np.array([[4]], np.int64))
+    compiled.restore(snapshot)
+    assert compiled.cursor == compiled._kv_session.cursor == 3
+    compiled.reset()
+    assert compiled.cursor == compiled._kv_session.cursor == 0
+    a, _ = baseline.generate(prompt, steps=5)
+    b, _ = compiled.generate(prompt, steps=5)
+    np.testing.assert_array_equal(a, b)
+
+
+def test_v17_effect_schedule_staging_commits_only_complete_layers():
+    compiled = plan(layers=2)
+    session = compiled.new_session()
+    arrays = chunks(compiled, 3)
+    with session.begin_append(3) as tx:
+        tx.stage(0, arrays["k0"], arrays["v0"])
+        with pytest.raises(KVLoweringError, match="incomplete"):
+            tx.commit()
+        with pytest.raises(KVLoweringError, match="order"):
+            tx.stage(0, arrays["k0"], arrays["v0"])
+        with pytest.raises(KVLoweringError, match="uncommitted"):
+            session.snapshot()
+    assert session.cursor == 0
+    assert session._active is None
+    with session.begin_append(3) as tx:
+        tx.stage(0, arrays["k0"], arrays["v0"])
+        tx.stage(1, arrays["k1"], arrays["v1"])
+        assert tx.commit() == 3
+    assert session.cursor == 3
+    with pytest.raises(KVLoweringError, match="no longer active"):
+        tx.stage(0, arrays["k0"], arrays["v0"])
+
+
+def test_v17_session_canonicalizes_forged_plan_fields():
+    from visuaml.compiler_lab.kv_lowering_v17 import KVSession
+
+    compiled = plan()
+    forged = replace(compiled, batch=7, slots=("evil",))
+    session = KVSession(forged)
+    assert session.plan == compiled
+    assert set(session._arrays) == set(compiled.slots)
