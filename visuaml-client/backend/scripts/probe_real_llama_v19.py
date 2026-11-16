@@ -41,8 +41,26 @@ def run() -> dict:
             local_dir=directory,
         )
         importer = load_hf_llama_local(local, declared_revision=revision)
+        # This model omits safetensors metadata.format; Transformers 4.46.3
+        # rejects that otherwise valid file before reading any tensors.
+        # Produce a temporary, tensor-identical reference copy with the
+        # standard metadata field. The original source hash remains recorded.
+        import shutil
+        from safetensors.torch import save_file
+
+        reference_dir = Path(directory) / "hf_reference"
+        reference_dir.mkdir()
+        shutil.copy2(Path(local) / "config.json", reference_dir / "config.json")
+        normalized_weights = {
+            name: torch.from_numpy(np.array(array, copy=True))
+            for name, array in importer.arrays.items()
+        }
+        save_file(
+            normalized_weights, str(reference_dir / "model.safetensors"),
+            metadata={"format": "pt"},
+        )
         hf = AutoModelForCausalLM.from_pretrained(
-            local, local_files_only=True,
+            reference_dir, local_files_only=True,
             use_safetensors=True, trust_remote_code=False,
             torch_dtype=torch.float32,
         ).eval()
@@ -76,6 +94,7 @@ def run() -> dict:
                 "kv_heads": importer.profile.kv_heads,
             },
             "framework": "transformers AutoModelForCausalLM CPU",
+            "reference_weight_copy": "Tensor-identical safetensors with format=pt metadata",
             "comparison": witnessed,
             "tolerance": {"atol": 5e-4, "rtol": 5e-4},
             "limitations": [
