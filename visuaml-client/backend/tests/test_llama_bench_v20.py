@@ -25,6 +25,8 @@ def test_small_real_shaped_checkpoint_benchmark(hybrid, tmp_path):
         if hybrid:
             assert row["latency"]["torchscript_hybrid"]["median_ms"] > 0
             assert row["torchscript_specializations"] > 0
+            assert row["latency"]["torchscript_fused"]["median_ms"] > 0
+            assert row["fused_ffn_specializations"] > 0
 
 
 def test_benchmark_rejects_unadmitted_lengths(tmp_path):

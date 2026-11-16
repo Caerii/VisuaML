@@ -114,10 +114,15 @@ def run() -> dict:
         )
         hybrid = compiled.new_session(backend="torchscript_hybrid")
         hybrid_logits = hybrid.step(cases[0])
+        fused = compiled.new_session(backend="torchscript_fused")
+        fused_logits = fused.step(cases[0])
         with torch.no_grad():
             hybrid_reference = hf(torch.from_numpy(cases[0])).logits.cpu().numpy()
         np.testing.assert_allclose(
             hybrid_logits, hybrid_reference, rtol=5e-4, atol=5e-4
+        )
+        np.testing.assert_allclose(
+            fused_logits, hybrid_reference, rtol=5e-4, atol=5e-4
         )
         if hybrid.report()["compiled_primitive_calls"] <= 0:
             raise ValueError("Hybrid backend failed to execute a compiled primitive")
@@ -158,6 +163,8 @@ def run() -> dict:
             "hybrid_compiled_primitive_calls": hybrid.report()["compiled_primitive_calls"],
             "hybrid_compiled_primitive_specializations": hybrid.report()["compiled_primitive_specializations"],
             "hybrid_max_abs_error": float(np.max(np.abs(hybrid_logits - hybrid_reference))),
+            "fused_ffn_region_calls": fused.report()["fused_ffn_region_calls"],
+            "fused_ffn_max_abs_error": float(np.max(np.abs(fused_logits - hybrid_reference))),
             "greedy_tokens_match_hf_recompute": True,
             "greedy_generated_ids": generated.tolist(),
             "reference_weight_copy": "Tensor-identical safetensors with format=pt metadata",

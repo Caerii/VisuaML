@@ -7,6 +7,8 @@ on:
       - visuaml-client/backend/scripts/probe_real_llama_v19.py
       - visuaml-client/backend/visuaml/compiler_lab/llama_semantic_v20.py
       - visuaml-client/backend/visuaml/compiler_lab/torchscript_primitives_v19.py
+      - visuaml-client/backend/visuaml/compiler_lab/fused_ffn_v20.py
+      - visuaml-client/backend/examples/llama_semantic_bench_v20.py
       - .github/workflows/v19-pretrained-probe.yml
 jobs:
   pretrained-parity:

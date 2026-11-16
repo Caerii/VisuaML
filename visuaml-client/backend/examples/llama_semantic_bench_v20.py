@@ -54,7 +54,7 @@ def benchmark(
     program = make_llama_semantic_program(model)
     plan = lower_llama_semantic_program(program, model)
     compilation_ms = (time.perf_counter_ns() - started) / 1e6
-    backends = ("numpy", "torchscript_hybrid") if include_hybrid else ("numpy",)
+    backends = ("numpy", "torchscript_hybrid", "torchscript_fused") if include_hybrid else ("numpy",)
     results = []
     for n in lengths:
         tokens = (np.arange(1, n + 1, dtype=np.int64) % model.profile.vocabulary)[None, :]
@@ -81,6 +81,10 @@ def benchmark(
             "latency": {key: _summary(samples) for key, samples in measured.items()},
             "torchscript_specializations": (
                 engines["torchscript_hybrid"].report()["compiled_primitive_specializations"]
+                if include_hybrid else 0
+            ),
+            "fused_ffn_specializations": (
+                engines["torchscript_fused"].report()["fused_ffn_specializations"]
                 if include_hybrid else 0
             ),
             "parity": "full logits verified against independent local reference",
