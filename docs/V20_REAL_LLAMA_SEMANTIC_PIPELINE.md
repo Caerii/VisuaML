@@ -115,3 +115,48 @@ trusting remote source files.
    then measure physical peak memory and long-context/per-request performance.
 6. Add constrained rewrite admission (effect preservation, numerical budget
    and independent witnesses), enabling reliable cross-hardware optimization.
+
+
+## Evidence-driven fused feed-forward optimization
+
+After the initial real-model benchmark showed excessive per-operator
+TorchScript dispatch overhead, v20 introduced an optional
+torchscript_fused backend. A strictly admitted pure SwiGLU feed-forward
+region is traced as a single CPU TorchScript function. The canonical
+SemanticProgram remains unchanged; the runtime's scheduler recognizes
+only the known RMSNorm/gate/SiLU/up/multiply/down pattern and cannot
+cross the KV state-effect barriers.
+
+On the pinned TinyStories model (same revision and weight hash), the
+new backend was numerically checked against independent Hugging Face
+CPU execution; worst absolute logit error was 9.5367431640625e-7.
+Five-trial warm CPU medians in milliseconds:
+
+| Input | v19 NumPy reference | v20 NumPy IR | v20 per-op TorchScript | v20 fused FFN |
+| --- | ---: | ---: | ---: | ---: |
+| 4 tokens | 6.242 | 7.709 | 17.786 | 8.453 |
+| 8 tokens | 6.954 | 8.382 | 19.239 | 9.483 |
+| 16 tokens | 8.052 | 9.713 | 20.020 | 10.215 |
+
+This is ~2x faster than *per-operator TorchScript*, not faster than the
+reference NumPy runtime. It supports the research thesis that reducing
+backend transfer boundaries and fusing regions is a higher priority than
+compiling more tiny operators independently.
+
+Full source-bound measurements and environment metadata:
+benchmarks/pretrained_llama_fused_ffn_v20.json; GitHub Actions run
+https://github.com/Caerii/VisuaML/actions/runs/43807443577
+
+## Tokenizer compatibility gate
+
+The pinned model repository publishes tokenizer.model and
+tokenizer_config.json. sentencepiece_tokenizer_v20.py now admits
+bounded local files and exposes a deterministic text/ID API. Unit tests
+compare the bridge against a separately loaded SentencePieceProcessor
+and reject invalid vocabulary, revisions, corrupt metadata, symlinks
+and unsupported input lengths.
+
+A separate pinned external workflow tests the same tokenizer files
+against Hugging Face AutoTokenizer. Only promote text-to-tokenizer parity
+after that external comparison completes successfully. No arbitrary
+language-model tokenizer family is implied.
