@@ -257,3 +257,14 @@ def test_v17_session_canonicalizes_forged_plan_fields():
     session = KVSession(forged)
     assert session.plan == compiled
     assert set(session._arrays) == set(compiled.slots)
+
+
+def test_v17_matched_latency_harness_smoke():
+    from examples.streaming_kv_bench_v17 import bench
+
+    result = bench(layers=1, prompt_len=4, steps=2, trials=5, seed=19)
+    assert result["parity"] == "generated IDs and every layer's complete KV values"
+    assert result["v16_reserved_bytes"] == result["v17_reserved_bytes"]
+    assert result["v16_direct"]["median_ms"] > 0
+    assert result["v17_semantic"]["median_ms"] > 0
+    assert len(result["v17_semantic_sha256"]) == 64
