@@ -23,6 +23,7 @@ sys.path.insert(0, str(BACKEND))
 
 from examples.llama_polymorphic_bench_v22 import benchmark as benchmark_polymorphic
 from examples.llama_semantic_bench_v20 import benchmark
+from examples.llama_template_bench_v23 import benchmark as benchmark_template
 from visuaml.compiler_lab.compiled_template_v23 import CompiledLlamaTemplate
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
@@ -234,6 +235,14 @@ def run() -> dict:
         first_client.step(np.array([[5]], dtype=np.int64))
         if second_client.cursor != 4 or first_client.cursor != 5:
             raise AssertionError("Shared model leaked KV state across clients")
+        cold_multi_session = benchmark_template(
+            importer, clients=4, trials=3, prompt_len=4
+        )
+        if (
+            cold_multi_session["results"]["per_session_retrace"]["graph_counts"] != [4] * 3
+            or cold_multi_session["results"]["shared_template"]["graph_counts"] != [1] * 3
+        ):
+            raise AssertionError("Cold-start model template reuse was not verified")
 
         return {
             "schema": "visuaml.pretrained-llama-parity.v20",
@@ -242,6 +251,7 @@ def run() -> dict:
             "v22_cursor_polymorphic_graphs": poly.report()["specializations"],
             "v22_streaming_tokens": poly.cursor,
             "v23_shared_template": shared_template.report(),
+            "v23_cold_multi_session_benchmark": cold_multi_session,
             "v23_isolated_session_cursors": [
                 first_client.cursor, second_client.cursor,
             ],
