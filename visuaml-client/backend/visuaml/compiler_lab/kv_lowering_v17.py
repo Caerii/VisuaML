@@ -212,6 +212,73 @@ class KVSnapshot:
     buffers: tuple[tuple[str, np.ndarray], ...]
 
 
+class KVAppendTransaction:
+    """Stage K/V pairs in IR order; commit one cursor after every layer succeeds.
+
+    Writes are restricted to uncommitted suffixes; abort clears the suffix.
+    Sessions must not be used concurrently.
+    """
+
+    def __init__(self, session: KVSession, step: int):
+        self.session = session
+        self.start = session.cursor
+        self.end = session.cursor + step
+        self.next_layer = 0
+        self.closed = False
+
+    def _admit(self) -> None:
+        if self.closed or self.session._active is not self:
+            raise KVLoweringError("KV transaction is no longer active")
+
+    def stage(self, layer: int, keys: np.ndarray, values: np.ndarray) -> None:
+        self._admit()
+        p = self.session.plan
+        expected = (p.batch, self.end - self.start, p.kv_heads, p.head_dim)
+        if type(layer) is not int or layer != self.next_layer or layer >= p.layers:
+            raise KVLoweringError("KV layers must execute exactly once in IR order")
+        if any(
+            not isinstance(a, np.ndarray) or a.shape != expected
+            or a.dtype != np.float32 or not np.isfinite(a).all()
+            for a in (keys, values)
+        ):
+            raise KVLoweringError("Invalid staged KV tensor shape/dtype/finiteness")
+        if any(
+            np.shares_memory(candidate, resident)
+            for candidate in (keys, values)
+            for resident in self.session._arrays.values()
+        ):
+            raise KVLoweringError("Staged KV must not alias resident buffers")
+        self.session._arrays[f"k{layer}"][:, self.start:self.end] = keys
+        self.session._arrays[f"v{layer}"][:, self.start:self.end] = values
+        self.next_layer += 1
+
+    def commit(self) -> int:
+        self._admit()
+        if self.next_layer != self.session.plan.layers:
+            raise KVLoweringError("Cannot publish incomplete KV state transition")
+        self.session.cursor = self.end
+        self.session._active = None
+        self.closed = True
+        return self.end
+
+    def abort(self) -> None:
+        if self.closed:
+            return
+        self._admit()
+        for resident in self.session._arrays.values():
+            resident[:, self.start:self.end] = 0
+        self.session._active = None
+        self.closed = True
+
+    def __enter__(self) -> KVAppendTransaction:
+        self._admit()
+        return self
+
+    def __exit__(self, _kind: object, _error: object, _traceback: object) -> None:
+        if not self.closed:
+            self.abort()
+
+
 class KVSession:
     """Single-owner NumPy executor with one logical commit across all KV layers.
 
@@ -221,50 +288,55 @@ class KVSession:
 
     def __init__(self, plan: CompiledKVPlan):
         self.plan = lower_kv_semantic_program(plan.semantic)
+        p = self.plan
         self._arrays = {
             name: np.zeros(
-                (plan.batch, plan.capacity, plan.kv_heads, plan.head_dim),
+                (p.batch, p.capacity, p.kv_heads, p.head_dim),
                 dtype=np.float32,
             )
-            for name in plan.slots
+            for name in p.slots
         }
         self.cursor = 0
+        self._active: KVAppendTransaction | None = None
+
+    def begin_append(self, step: int) -> KVAppendTransaction:
+        if self._active is not None:
+            raise KVLoweringError("Nested or concurrent KV transactions are forbidden")
+        if (
+            type(step) is not int or not 1 <= step <= 256
+            or self.cursor + step > self.plan.capacity
+        ):
+            raise KVLoweringError("KV append length or capacity exceeded")
+        tx = KVAppendTransaction(self, step)
+        self._active = tx
+        return tx
 
     def append(self, chunks: Mapping[str, np.ndarray]) -> int:
         if not isinstance(chunks, Mapping) or set(chunks) != set(self.plan.slots):
             raise KVLoweringError("Must provide exactly one key and value chunk per layer")
-        prepared: dict[str, np.ndarray] = {}
         step: int | None = None
+        prepared: dict[str, np.ndarray] = {}
         for name in self.plan.slots:
-            value = chunks[name]
+            a = chunks[name]
             if (
-                not isinstance(value, np.ndarray)
-                or value.dtype != np.float32
-                or value.ndim != 4
-                or value.shape[0] != self.plan.batch
-                or value.shape[2:] != (self.plan.kv_heads, self.plan.head_dim)
+                not isinstance(a, np.ndarray) or a.dtype != np.float32
+                or a.ndim != 4 or a.shape[0] != self.plan.batch
+                or a.shape[2:] != (self.plan.kv_heads, self.plan.head_dim)
             ):
-                raise KVLoweringError(f"Invalid float32 KV chunk shape/dtype: {name}")
+                raise KVLoweringError("Invalid float32 KV chunk shape/dtype")
             if step is None:
-                step = value.shape[1]
-            if value.shape[1] != step or not np.isfinite(value).all():
+                step = a.shape[1]
+            if a.shape[1] != step or not np.isfinite(a).all():
                 raise KVLoweringError("KV chunks differ in length or contain nonfinite values")
-            prepared[name] = value.copy(order="C")
-        if step is None or not 1 <= step <= 256 or self.cursor + step > self.plan.capacity:
-            raise KVLoweringError("KV append length or capacity exceeded")
-        start, end = self.cursor, self.cursor + step
-        try:
-            # Order comes from the checked semantic-IR lowering, not map iteration.
-            for name in self.plan.slots:
-                np.copyto(self._arrays[name][:, start:end], prepared[name])
-        except Exception:
-            for name in self.plan.slots:
-                self._arrays[name][:, start:end].fill(0)
-            raise
-        self.cursor = end
-        return end
+            prepared[name] = a.copy(order="C")
+        with self.begin_append(step or 0) as tx:
+            for layer in range(self.plan.layers):
+                tx.stage(layer, prepared[f"k{layer}"], prepared[f"v{layer}"])
+            return tx.commit()
 
     def snapshot(self) -> KVSnapshot:
+        if self._active is not None:
+            raise KVLoweringError("Cannot snapshot an uncommitted KV transaction")
         copies = []
         for name in self.plan.slots:
             result = self._arrays[name][:, :self.cursor].copy()
@@ -273,6 +345,8 @@ class KVSession:
         return KVSnapshot(self.plan.semantic_sha256, self.cursor, tuple(copies))
 
     def restore(self, snapshot: KVSnapshot) -> None:
+        if self._active is not None:
+            raise KVLoweringError("Cannot restore during an active KV transaction")
         if (
             not isinstance(snapshot, KVSnapshot)
             or snapshot.semantic_sha256 != self.plan.semantic_sha256
@@ -301,11 +375,15 @@ class KVSession:
         self.cursor = snapshot.cursor
 
     def reset(self) -> None:
+        if self._active is not None:
+            raise KVLoweringError("Cannot reset during an active KV transaction")
         for arr in self._arrays.values():
             arr.fill(0)
         self.cursor = 0
 
     def report(self) -> dict[str, Any]:
+        if self._active is not None:
+            raise KVLoweringError("Cannot report unpublished KV state")
         return {
             "schema": SCHEMA,
             "semantic_sha256": self.plan.semantic_sha256,
