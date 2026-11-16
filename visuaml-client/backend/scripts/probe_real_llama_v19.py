@@ -35,6 +35,10 @@ from visuaml.compiler_lab.sentencepiece_tokenizer_v20 import (
     load_sentencepiece_tokenizer,
 )
 from visuaml.compiler_lab.shared_weights_v24 import SharedWeightsLlamaTemplate
+from visuaml.compiler_lab.template_registry_v25 import (
+    TemplateNotCached,
+    VerifiedLlamaRegistry,
+)
 
 MODEL_ID = "manojredhat/tiny-llama"
 REVISION = "756e9746eb801752d69771ef3e9bc433b21d853d"
@@ -276,6 +280,37 @@ def run() -> dict:
             raise AssertionError("v24 must share one verified module")
         if old["compiled_graph_counts"] != new["compiled_graph_counts"]:
             raise AssertionError("Both workloads must share exactly one graph")
+        registry = VerifiedLlamaRegistry(
+            max_cached_weight_bytes=(
+                shared_weights.report()["weight_module_logical_bytes"] + 4096
+            ),
+            max_models=2,
+        )
+        verified_id = registry.register(compiled)
+        owned = registry.new_session(verified_id)
+        np.testing.assert_allclose(
+            owned.step(cases[0]), hybrid_reference, rtol=5e-4, atol=5e-4
+        )
+        if registry.report()["models"] != 1:
+            raise AssertionError("Verified registry did not admit one model")
+        if not registry.evict(verified_id):
+            raise AssertionError("Expected explicit registry eviction")
+        try:
+            registry.new_session(verified_id)
+        except TemplateNotCached:
+            pass
+        else:
+            raise AssertionError("Evicted model was still accessible through cache")
+        # Registry eviction only relinquishes ownership, never invalidates
+        # a client's previously acquired stateful session.
+        incremental_owned = owned.step(np.array([[7]], dtype=np.int64))
+        with torch.no_grad():
+            oracle_owned = hf(
+                torch.from_numpy(np.concatenate((cases[0], [[7]]), axis=1))
+            ).logits.cpu().numpy()[:, -1:]
+        np.testing.assert_allclose(
+            incremental_owned, oracle_owned, rtol=5e-4, atol=5e-4
+        )
 
         return {
             "schema": "visuaml.pretrained-llama-parity.v20",
@@ -287,6 +322,9 @@ def run() -> dict:
             "v23_cold_multi_session_benchmark": cold_multi_session,
             "v24_shared_weight_template": shared_weights.report(),
             "v24_shared_weight_benchmark": cold_shared_weights,
+            "v25_template_registry": registry.report(),
+            "v25_pre_eviction_semantic_sha256": verified_id,
+            "v25_evicted_session_remains_correct": True,
             "v24_isolated_cursors": [client_a.cursor, client_b.cursor],
             "v23_isolated_session_cursors": [
                 first_client.cursor, second_client.cursor,

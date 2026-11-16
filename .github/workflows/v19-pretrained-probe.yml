@@ -1,4 +1,4 @@
-name: v24 pinned pretrained Llama shared-weight runtime and multi-session parity
+name: v25 pinned pretrained Llama registry ownership and shared-weight parity
 on:
   push:
     branches:
@@ -9,6 +9,7 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/torchscript_graph_v21.py
       - visuaml-client/backend/visuaml/compiler_lab/compiled_template_v23.py
       - visuaml-client/backend/visuaml/compiler_lab/shared_weights_v24.py
+      - visuaml-client/backend/visuaml/compiler_lab/template_registry_v25.py
       - visuaml-client/backend/examples/shared_weights_bench_v24.py
       - visuaml-client/backend/examples/llama_template_bench_v23.py
       - visuaml-client/backend/examples/llama_polymorphic_bench_v22.py
