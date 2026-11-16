@@ -1,157 +1,100 @@
-# VisuaML Architecture
+# VisuaML architecture
 
-This document provides a comprehensive and accurate overview of VisuaML's architecture, design patterns, and system organization, updated to reflect the current state of the codebase.
+This is the architectural source of truth for the collaborative graph application and the research compiler as of the **v27 development milestone (November 2026)**. Milestone labels are not published package versions.
 
-## 🏗️ System Overview
+## Two cooperating systems
 
-VisuaML is a full-stack application for visualizing and exporting PyTorch neural networks. The system consists of three main components that communicate via a well-defined API.
+~~~text
+                Browser — React / TypeScript
+            ┌────────────────────────────────┐
+            │ React Flow · tensor inspection │
+            │ architecture atlas · Yjs       │
+            └──────────┬─────────────────────┘
+                       │ HTTP / WebSocket
+              ┌────────┴────────┐
+              │                 │
+           Fastify          Yjs server
+         guarded API       collaboration
+              │
+      trusted Python tools
+              │
+   ┌──────────┴────────────────────────────────┐
+   │         Python visuaml backend            │
+   │  PyTorch FX export / graph analysis       │
+   │  Typed Semantic IR / shape and effect     │
+   │  Restricted Llama checkpoint admission    │
+   └──────────┬────────────────────────────────┘
+              │
+    ┌─────────┴───────────────────────────┐
+    │                                     │
+ independent NumPy                 TorchScript CPU
+ reference                          whole decoder
+    │                                     │
+    └────────────────┬────────────────────┘
+                     │
+           verified shared graph
+              + model weights
+                     │
+         bounded model-template cache
+                     │
+           leased private KV per client
+                     │
+       active weight/lease accounting
+~~~
 
-```
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-│   Frontend      │      │   API Server    │      │   Backend       │
-│   (React/TS)    │◄─────►│   (Node.js)     │◄─────►│   (Python)      │
-│                 │      │                 │      │                 │
-│ • React Flow    │      │ • Fastify       │      │ • PyTorch FX    │
-│ • Material-UI   │      │ • Zod           │      │ • Model Export  │
-│ • Yjs Collab    │      │ • CORS          │      │ • Hypergraphs   │
-│ • Zustand       │      │ • Error Handling│      │ • Shape Prop    │
-└─────────────────┘      └─────────────────┘      └─────────────────┘
-```
--   **Frontend**: A modern React application built with Vite, TypeScript, and Material-UI for a rich, interactive user experience.
--   **API Server**: A lightweight Node.js server using Fastify to handle requests, validate inputs with Zod, and orchestrate the Python backend.
--   **Backend**: A powerful Python environment that uses PyTorch's FX library to symbolically trace models and export their architecture without requiring modifications to the source code.
+The optical/assembly research components model or simulate hypothetical hardware behavior. They **do not** execute on a verified physical photonic accelerator.
 
-## 📁 Directory Structure
+## Web application
 
-The `visuaml-client` package contains the entire application stack, organized as follows:
+The React application lives under [client source](../visuaml-client/src/), with its API server under [server](../visuaml-client/server/) and Python under [backend](../visuaml-client/backend/). The web UI is built with Vite, TypeScript, React Flow and Three.js. Yjs and WebSockets support shared editing and presence; Clerk integration is optional for developer login flows.
 
-```
-visuaml-client/
-├── backend/                  # Python model processing
-│   ├── scripts/              # CLI scripts (e.g., fx_export.py)
-│   ├── visuaml/              # Core export library
-│   ├── models/               # Example PyTorch models
-│   ├── examples/             # Standalone example scripts
-│   └── tests/                # Pytest tests for the backend
-├── server/                   # Node.js API server
-│   └── index.ts              # Fastify server with all API endpoints
-├── src/                      # Frontend React application (Vite)
-│   ├── ui/                   # React components (TopBar, Canvas, Nodes)
-│   ├── lib/                  # Core utility functions (api.ts, etc.)
-│   ├── store/                # Zustand global state management
-│   ├── y/                    # Yjs real-time collaboration logic
-│   ├── assets/               # Static assets like images or fonts
-│   └── __tests__/            # Frontend tests
-├── public/                   # Static assets served by Vite
-├── .env.example              # Template for environment variables
-├── ARCHITECTURE.md           # This file
-├── MULTIPLAYER.md            # In-depth guide to the collaboration features
-├── package.json              # Project dependencies and scripts
-└── vite.config.ts            # Vite build configuration
-```
+Trusted shipped PyTorch models may be traced and exported by FX. Dynamic Python control flow is not generally capturable. The API limits model imports to allowlisted modules by default. Untrusted Python file upload execution is disabled unless unsafe developer options are explicitly enabled; **those options are not a sandbox**.
 
-## 🔄 Data Flow Diagrams
+The separate Compiler Lab endpoints are local opt-in, restricted to fixed known scenarios and bounded numeric fixtures. Set the API environment variable **VISUAML_COMPILER_LAB_ENABLED=1** for POST /api/compiler-lab/analyze or GET /api/compiler-lab/semantic-inspect. These routes do not authorize arbitrary user Python.
 
-### 1. Model Import Flow
+See [Security and Boundaries](SECURITY_AND_BOUNDARIES.md) before running any supplied code.
 
-The user selects a model, triggering a request that flows through the stack to trace the model and return a visual graph.
+## Compiler architecture
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant F as Frontend (TopBar.tsx)
-    participant A as API Server (index.ts)
-    participant P as Python Backend (fx_export.py)
+The modules are under [compiler_lab](../visuaml-client/backend/visuaml/compiler_lab/). Their separation is intentional: syntax, executable semantics, physical scheduling and numerical evidence should not be conflated.
 
-    U->>F: Selects "TestModel"
-    F->>A: POST /api/import<br>payload: { modelPath: "models.TestModel" }
-    A->>P: execa('python fx_export.py', ['models.TestModel'])
-    P->>P: Symbolic trace model with PyTorch FX
-    P->>A: stdout: JSON { nodes: [...], edges: [...] }
-    A->>F: reply.send(stdout)
-    F->>F: Update Yjs document with new graph data
-    F->>U: Render interactive graph on canvas
-```
+| Layer | Main implementation | Contract |
+| --- | --- | --- |
+| FX analysis and tiny AOT | numpy_runtime.py, aot_compile.py | Restricted operators and shapes, independently compared |
+| Baseline decoder | stacked_decoder_v14.py, streaming_decoder_v16.py | Trusted small reference and resident KV state |
+| State and effects | semantic_ir.py, kv_lowering_v17.py | Typed SSA, ordered KV writes, atomic publication and rollback |
+| Mathematical IR execution | semantic_decoder_v18.py | Interpreter driven by actual typed operations |
+| Local pretrained intake | hf_llama_checkpoint_v19.py, sentencepiece_tokenizer_v20.py | Allowed Llama config/tensor schema and explicit hashes |
+| Real-model semantics | llama_semantic_v20.py | Rotate-half RoPE, norm epsilon, GQA, SwiGLU, final norm |
+| Compiled CPU | torchscript_graph_v21.py | Whole forward graph with valid changing query/cursor inputs |
+| Execution reuse | compiled_template_v23.py, shared_weights_v24.py | One graph and weight module, many private KV sessions |
+| Model ownership | template_registry_v25.py | Canonical semantic identity, bounded LRU and explicit eviction |
+| Active KV | session_leases_v26.py | Logical KV byte quotas, release, best-effort abandoned-lease cleanup |
+| Live model weights | active_models_v27.py | Exact template-instance accounting until the final lease ends |
+| Artifacts and evidence | semantic_bundle_v19.py, llama_bundle_v20.py, memory_planner_v19.py | Canonical reload, hashes, symbolic lifetimes |
 
-### 2. "Export All" Flow
+### From a verified checkpoint to decoding
 
-The user requests an archive of all possible formats for a model.
+The model loader checks local config.json and model.safetensors against a restricted Llama-style model schema. It rejects unknown architectures, unsupported shapes and unexpected weights. The lowerer regenerates a canonical typed SemanticProgram, binding operator order and model content to an identity.
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant F as Frontend (useTopBar.ts)
-    participant A as API Server (index.ts)
-    participant P as Python Backend (fx_export.py)
+The NumPy reference and independent Hugging Face/PyTorch CPU path supply finite numerical witnesses. CPU TorchScript traces the whole mathematical program; v22 accepts runtime token length and cache cursor rather than recompiling for every position. The graph consumes live KV prefixes and returns only the newly produced suffix tensors. The resident state validates these outputs, then atomically publishes a new cursor.
 
-    U->>F: Clicks "Export All"
-    F->>A: POST /api/export-all<br>payload: { modelPath: "models.TestModel" }
-    A->>P: Loop 3 times for each format (json, macro, categorical)
-    P->>A: Return each result as parsed JSON
-    A->>F: reply.send({ modelName, results: [...] })
-    F->>F: processExportResults() to create archive files
-    F->>F: createArchiveFile() to generate Blob
-    F->>U: downloadBlob() triggers file download
-```
+A verified template can be shared across client sessions. Session K/V storage remains private. Model eviction removes **registry ownership**, not a model already leased by an active session. Separate quotas account for cached model buffers, active private KV buffers and active weight modules. These quotas are **logical accounting**, not physical RSS limits.
 
-## 🔐 Authentication & User Presence
+### Core state invariants
 
-The application uses an (optional) hybrid approach to identify users for collaboration, seamlessly integrating **Clerk** for authentication with **Yjs** for presence.
+1. Only compiler-admitted, checkpoint-bound graphs reach the trusted compiled runtime.
+2. Stateful KV updates commit after complete validated execution; a failure does not publish a partial cursor.
+3. Shared executable and immutable weight modules are distinct from every client's private mutable KV.
+4. An active client may survive model-cache eviction; new acquisition of an evicted model fails until readmission.
+5. Distinct module instances can coexist after eviction/readmission even with an identical semantic digest. V27 counts both while leased.
+6. Session access is single-owner; closing and stepping simultaneously is not supported.
+7. Numeric comparison is established for explicit witnesses and tolerances, **not** for all possible network inputs.
 
-1.  **Connection**: A user connects to the `YDocProvider`.
-2.  **Authentication Check**:
-    *   **If signed in via Clerk**: The user's real name and a unique color derived from their user ID are broadcast to the Yjs awareness state.
-    *   **If not signed in (Guest)**: A guest name (e.g., "Guest 123") and a unique color are generated based on their random Yjs `clientID`.
-3.  **Presence Display**: The `useRemoteCursors` hook reads the awareness state and renders the cursors and names of all other connected users, ensuring every collaborator is clearly identified.
+## Verification and deployment
 
-This creates a smooth experience where users can collaborate whether they are logged in or not.
+The [main CI workflow](../.github/workflows/ci.yml) runs Python pytest and Ruff plus frontend lint, tests, typecheck, build and Prettier. The [pinned-model workflow](../.github/workflows/v19-pretrained-probe.yml) independently verifies trained Tiny Llama weights and tokenizer against Hugging Face. Evidence lives in [benchmarks](../benchmarks/).
 
-## 🎨 Frontend Architecture
+This is an experimental CPU inference runtime, not a public multi-tenant model-hosting service, a standalone native AOT compiler, or a physical optical processor. Deploying arbitrary models requires hardened OS-level isolation, resource limits, and separate threat modeling.
 
-The frontend is a modern React SPA using Vite for a fast development experience.
-
-### Key Libraries & Patterns
-
--   **Component Framework**: **Material-UI** provides the core set of polished UI components.
--   **Component-Scoped Styling**: **CSS Modules** are used for styling individual components (e.g., `Canvas.module.css`), preventing style conflicts.
--   **Graph Visualization**: **React Flow** is used to render and manage the interactive node-based graph.
--   **3D Visualization**: **React Three Fiber** and `drei` are used for rendering 3D tensor visualizations within nodes.
--   **State Management**:
-    *   **Zustand (`store/`)**: For simple, global client state (like network statistics).
-    *   **Yjs (`y/`)**: For complex, shared/collaborative state (graph nodes, edges, cursor positions).
-
-### Design Patterns
-
--   **Custom Hooks (`use...`)**: Component logic is encapsulated in custom hooks (`useTopBar`, `useCanvas`) to keep JSX clean and promote reusability.
--   **Utility Modules (`lib/`)**: Pure, testable functions for concerns like API calls, data processing, and layout calculations are kept in the `lib` directory.
--   **Type-First Development (`*.model.ts`)**: TypeScript interfaces and types are defined in `*.model.ts` files, providing a clear data contract before implementation.
-
-## 🔧 Backend Architecture
-
-The backend consists of two main parts: a Node.js server that acts as an orchestrator and a Python environment that performs the heavy lifting of model analysis.
-
-### Node.js API Server (`server/index.ts`)
-
--   **Framework**: **Fastify** is used for its high performance and low overhead.
--   **Responsibilities**:
-    1.  **Receive Requests**: Listens for HTTP requests from the frontend.
-    2.  **Validate Inputs**: Uses **Zod** to parse and validate request bodies, ensuring type safety at the edge.
-    3.  **Orchestrate Backend**: Spawns the Python script (`fx_export.py`) as a child process using `execa`.
-    4.  **Format & Relay Responses**: Captures `stdout` from the Python script and relays it back to the frontend.
--   **Error Handling**: Provides detailed JSON error messages for both validation failures and script execution errors.
-
-### Python Backend (`backend/`)
-
--   **Core Technology**: **PyTorch FX** is used for its powerful symbolic tracing capabilities. This allows VisuaML to analyze a model's `forward` pass and construct a graph representation (a `GraphModule`) without the user needing to modify their model code.
--   **Processing Pipeline**:
-    1.  **Load Model**: Dynamically loads the user-specified model class from the `models` directory.
-    2.  **Symbolic Trace**: `symbolic_trace(model)` is called to produce the FX graph.
-    3.  **Shape Propagation**: A sample input tensor is passed through the graph to infer the output shape of each layer.
-    4.  **Export Generation**: The FX graph is traversed, and its nodes and edges are converted into one of the supported output formats (JSON, Rust macro, etc.).
-    5.  **Output**: The final result is printed to `stdout` as a JSON string, which is then captured by the Node.js server.
-
-## 🧪 Testing Strategy
-
--   **Frontend (`src/__tests__`)**: Unit and component tests are structured with Vitest and React Testing Library.
--   **Backend (`backend/tests/`)**: The Python backend is tested using `pytest`. Tests cover model loading, export formats, and the correctness of the generated graph structures.
--   **E2E/Integration**: A small set of Python scripts (e.g., `test_export_frontend.py`) can be run to perform end-to-end tests against the live API server.
+See the [Compiler Guide](COMPILER_GUIDE.md), [Verification](VERIFICATION.md), and [historical milestones](README.md).
