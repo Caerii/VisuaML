@@ -24,7 +24,7 @@ def test_polymorphic_benchmark_has_one_graph_for_irregular_chunks(tmp_path, laye
     assert traffic["torchscript_polymorphic_v22"]["returned_kv_tensor_bytes"] < (
         traffic["torchscript_specialized_v21"]["returned_kv_tensor_bytes"]
     )
-    assert traffic["torchscript_polymorphic_v22"]["input_kv_tensor_bytes"] >= (
+    assert traffic["torchscript_polymorphic_v22"]["input_kv_tensor_bytes"] == (
         traffic["torchscript_specialized_v21"]["input_kv_tensor_bytes"]
     )
     assert len(result["source_files_sha256"]) == 4

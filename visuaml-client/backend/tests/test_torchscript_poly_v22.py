@@ -60,7 +60,7 @@ def test_single_torchscript_graph_reuses_arbitrary_token_and_cursor_shapes(
     assert report["cumulative_kv_output_tensor_bytes"] < (
         v21.report()["cumulative_kv_output_tensor_bytes"]
     )
-    assert report["cumulative_kv_input_tensor_bytes"] >= (
+    assert report["cumulative_kv_input_tensor_bytes"] == (
         v21.report()["cumulative_kv_input_tensor_bytes"]
     )
     assert len(report["semantic_sha256"]) == 64

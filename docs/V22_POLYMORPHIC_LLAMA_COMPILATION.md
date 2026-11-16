@@ -18,11 +18,12 @@ A failed graph execution cannot commit a partly written cache cursor.
 
 ## Logical prefix optimization
 
-The fixed physical KV input shape supports tracing without per-position
-specialization. Inside the compiled graph, only the **logical committed
-prefix** is gathered with a dynamic tensor-valued narrow operation, then
-concatenated with the current tokens' K/V. Attention sees only the valid
-prefix, not the unused reserved capacity.
+The resident cache retains fixed physical capacity, but the TorchScript
+graph receives only a **detached copy of the live logical prefix**. A scalar
+tensor cursor and shape-polymorphic tensor operations let one graph handle
+varying prefix and request lengths. The compiled graph constructs the active
+prefix plus the current tokens' K/V; attention never processes unused reserved
+capacity. This avoids copying full-capacity input buffers.
 
 The graph returns **only the newly generated K/V suffix**, not a copy of
 the full physical cache for every decoder layer. Each suffix is checked
@@ -60,14 +61,16 @@ true IREE/Triton lowering, or GPU/optical execution.
       --chunks 4 1 1 1 3 2 --trials 25
 
 Report total graph construction/tracing time and warm decoding separately.
-One reusable graph reduces compilation work but does not necessarily reduce
-steady-state latency, because fixed-capacity input copies can be expensive.
+One reusable graph reduces compilation work but does not automatically
+reduce steady-state latency. The optimized backend now copies only live KV
+prefixes into Torch, but per-step tensor allocation and graph-boundary
+overhead remain; all performance claims require matched measured evidence.
 
 ## Next acceptance gates
 
-1. Design an alias-safe, owned storage interface that avoids copying full
-   reserved KV capacity into Torch at every decoding step. Verify rollback
-   and adversarial failure preservation before pursuing zero-copy writes.
+1. Extend the current live-prefix copying interface to an explicit alias-safe,
+   owned storage model if pursuing zero-copy or reusable allocations. Verify
+   rollback and adversarial failure preservation before any in-place writes.
 2. Measure prefill/decode separately across longer realistic contexts,
    compilation costs, physical memory usage, throughput and p50/p95 tails.
 3. Lower the same typed graph into a second independently deployable
