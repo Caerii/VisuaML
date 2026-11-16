@@ -158,13 +158,13 @@ export function CompilerLabPage() {
     <div className="compiler-lab">
       <header className="compiler-header">
         <div>
-          <a href="/app" className="compiler-back">
-            ← Back to VisuaML
-          </a>
+          <a href="/app" className="compiler-back">← Back to the workspace</a>
+          <span aria-hidden="true"> · </span>
+          <a href="/roadmap" className="compiler-back">Public research roadmap ↗</a>
           <h1>
-            Compiler Lab <span>v4 integration</span>
+            Compiler Lab <span>executable semantic research</span>
           </h1>
-          <p>Decompose, validate, lower, and inspect captured neural programs.</p>
+          <p>Inspect bounded computational programs, compare transformations, and follow independent numerical evidence.</p>
         </div>
         <div className="compiler-form">
           <label>

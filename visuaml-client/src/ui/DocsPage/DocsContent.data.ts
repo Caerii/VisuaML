@@ -1,170 +1,101 @@
-/**
- * Data constants for DocsContent
- * Refactored for clarity and conciseness
- */
+/** Public documentation: separate verified research from future proposals. */
 export const DOCS_DATA = {
   getStarted: [
-    'Install Node.js 18+ and Python 3.11+ with PyTorch',
-    'Clone: `git clone https://github.com/caerii/VisuaML.git`',
-    'Install: `pnpm install`',
-    'Start: API server, WebSocket server, and frontend',
-    'Upload a model file and explore',
+    'Node.js 20 and pnpm 10; Python 3.12 for backend-backed workflows.',
+    'Clone the repository and run pnpm install from the project root.',
+    'Start the web workspace with pnpm --filter visuaml-client run dev.',
+    'Optional backend: pnpm run install-python-deps; start api and ws separately.',
+    'Review the public /roadmap, /compiler and architecture atlas before exploring.',
   ],
   features: [
-    {
-      title: 'Interactive Visualization',
-      desc: 'Pan, zoom, explore architectures. Hover edges for 3D tensor shapes.',
-    },
-    { title: 'Real-time Collaboration', desc: 'Multiple users explore models with live cursors.' },
-    { title: 'Categorical Export', desc: 'Export to open-hypergraphs for formal reasoning.' },
-    { title: 'Type-Safe Composition', desc: 'Automatic validation of morphism compositions.' },
+    { title: 'Interactive graph research', desc: 'Pan, zoom, inspect operators and tensor shapes; explore admitted models in a shared workspace.' },
+    { title: 'Live collaboration', desc: 'Yjs-based shared editing and presence; authentication and authorization depend on the hosting environment.' },
+    { title: 'Typed Semantic IR', desc: 'Bounded compiler dialects represent mathematical operators, shapes and state effects explicitly.' },
+    { title: 'Evidence-aware execution', desc: 'Independent numerical references, pinned model fingerprints and source-bound benchmark reports.' },
   ],
   architecture: [
-    { name: 'Frontend', desc: 'React, TypeScript, React Flow, Yjs' },
-    { name: 'API Server', desc: 'Node.js, Fastify, Zod validation' },
-    { name: 'Backend', desc: 'Python, PyTorch FX, Categorical system' },
+    { name: 'Frontend', desc: 'React, TypeScript, React Flow, Three.js, Yjs' },
+    { name: 'API', desc: 'Fastify, Zod, guarded Python subprocesses and fixed research fixtures' },
+    { name: 'Compiler', desc: 'PyTorch FX, canonical Semantic IR, NumPy, TorchScript and a bounded native C++ CPU research backend' },
   ],
   categoricalFoundation: [
-    { name: 'Type System', desc: 'ArrayType, TensorType with compatibility checking' },
-    { name: 'Morphisms', desc: 'Linear, Activation, Composed, Parallel, Identity' },
-    { name: 'Composition', desc: 'Sequential, parallel, tensor products' },
-    { name: 'Hypergraphs', desc: 'Open hypergraph representation with boundaries' },
+    { name: 'Typed tensors', desc: 'Explicit dimensions, dtypes and ownership-related assumptions' },
+    { name: 'Operations', desc: 'Known mathematical primitives with admitted parameter contracts' },
+    { name: 'State effects', desc: 'Ordered K/V cache reads and writes, transactional publication' },
+    { name: 'Hypergraphs', desc: 'Research exports for compositional inspection, not an automatic proof of neural behavior' },
   ],
   bridgeBenefits: [
-    'No model rewriting—works with any PyTorch model',
-    'Type safety—invalid compositions caught automatically',
-    'Mathematical rigor—proper categorical foundations',
-    'Seamless integration—builds on existing FX infrastructure',
+    'FX can represent a bounded subset of PyTorch programs; arbitrary dynamic Python cannot be captured safely.',
+    'The model importer rejects unsupported checkpoint variants rather than guessing their mathematical meaning.',
+    'Semantic IR preserves explicit state and tensor contracts across independently checked execution paths.',
+    'The Architecture Atlas is a research catalogue, not a list of guaranteed runnable pretrained models.',
   ],
   collaboration: [
-    { title: 'Live Cursors', desc: 'See where other users are looking' },
-    { title: 'Synchronized State', desc: 'Graph state, selections, viewport sync across users' },
-    { title: 'Conflict-Free', desc: 'Yjs CRDTs ensure consistency' },
+    { title: 'Shared examination', desc: 'Explore the same graph with other researchers.' },
+    { title: 'Presence and synchronization', desc: 'Yjs shared state and cursor activity over WebSockets.' },
+    { title: 'Explicit trust model', desc: 'A collaborative UI is not a sandbox for uploaded Python or a security guarantee.' },
   ],
   exportFormats: [
-    {
-      format: 'JSON Hypergraph',
-      desc: 'Standard JSON with hyperedges, wires, boundaries, and types',
-      use: 'Integration with other tools and analysis pipelines',
-    },
-    {
-      format: 'Rust Macros',
-      desc: 'Rust macro code for hellas-ai/open-hypergraphs',
-      use: 'Rust projects and formal verification tools',
-    },
-    {
-      format: 'Categorical Analysis',
-      desc: 'Morphism chains, type signatures, hypergraph structure',
-      use: 'Detailed analysis and formal reasoning',
-    },
+    { format: 'Graph JSON', desc: 'Graph nodes, edges and model inspection metadata.', use: 'Reproducible visualization and downstream analysis.' },
+    { format: 'Categorical research export', desc: 'Open-hypergraph-oriented representations for admitted FX traces.', use: 'Exploring compositional mathematical descriptions.' },
+    { format: 'Semantic compiler records', desc: 'Typed operations, explicit effects, content hashes and numerical reports.', use: 'Comparing implementations with traceable evidence.' },
   ],
   categoryTheory: [
-    { title: 'Boundary Structure', desc: 'Input/output boundaries enable composition' },
-    {
-      title: 'Type Safety',
-      desc: 'Connections carry type information—composition valid when types match',
-    },
-    {
-      title: 'Formal Verification',
-      desc: 'Integration with proof assistants for mathematical proofs',
-    },
+    { title: 'Boundaries', desc: 'Input/output types articulate where computations can be composed.' },
+    { title: 'Composition', desc: 'Connected operations expose assumptions about shape and meaning.' },
+    { title: 'Proof obligations', desc: 'Formal verification is a research direction; finite numerical tests do not establish universal equivalence.' },
   ],
   researchVision: [
-    {
-      title: 'Neural Architecture Search',
-      desc: 'Search across ML ecosystem with type-safe composition. All frameworks, all primitives, automatically discoverable.',
-    },
-    {
-      title: 'Catgrad Integration',
-      desc: 'Framework-free static compilation for 10-20x faster evaluation. No autograd overhead.',
-    },
-    {
-      title: 'Collaborative Interpretability',
-      desc: 'Distributed interpretability research enabled by categorical structure. Multiple researchers investigate different morphisms.',
-    },
+    { title: 'Model-family generality', desc: 'Add genuinely independent pretrained architectures after operator and tokenizer parity.' },
+    { title: 'Independent native execution', desc: 'Evaluate the standalone C++17 CPU research backend and develop optimized GPU targets against proper baselines.' },
+    { title: 'Collaborative interpretability', desc: 'Build a shared environment for causal model investigation, linked to experimental evidence.' },
   ],
   nasStatus: [
-    { status: 'Done', item: 'Categorical morphism system' },
-    { status: 'Done', item: 'Type-safe composition' },
-    { status: 'Done', item: 'PyTorch bridge' },
-    { status: 'In Progress', item: 'NAS search algorithms' },
-    { status: 'In Progress', item: 'Universal primitive library' },
-    { status: 'In Progress', item: 'Cross-framework bridges' },
+    { status: 'Done', item: 'Bounded typed Semantic IR and real Llama numerical witnesses' },
+    { status: 'Done', item: 'Transactional KV state and model/weight reuse' },
+    { status: 'Done', item: 'Explicit evidence ledger with acceptance criteria' },
+    { status: 'In Progress', item: 'Native compiler validation and performance research' },
+    { status: 'Research', item: 'Generalized neural architecture search' },
+    { status: 'Research', item: 'Cross-framework universal model importer' },
   ],
   catgradFeatures: [
-    {
-      title: 'Framework-Free Compilation',
-      desc: 'Compile to static Python/C++/CUDA code. 10-20x faster evaluation.',
-    },
-    {
-      title: 'Categorical Reverse Derivatives',
-      desc: 'Pre-compiled gradients. Memory efficient, no autograd overhead.',
-    },
-    {
-      title: 'Multiple Backends',
-      desc: 'Compile to different targets for hardware-specific evaluation.',
-    },
+    { title: 'Alternative graph representations', desc: 'Categorical operations are a potential bridge for compositional research.' },
+    { title: 'Independent compilation', desc: 'Measured CPU execution and verification matter before asserting an optimization advantage.' },
+    { title: 'Hardware-aware lowering', desc: 'A future goal: calibrated cost models and multiple real target backends.' },
   ],
   catgradStatus: [
-    { status: 'Done', item: 'Categorical morphisms (compatible with catgrad)' },
-    { status: 'Done', item: 'Open hypergraph representation' },
-    { status: 'In Progress', item: 'Catgrad bridge implementation' },
-    { status: 'In Progress', item: 'Static compilation pipeline' },
+    { status: 'Done', item: 'Research export of bounded categorical graph structures' },
+    { status: 'Done', item: 'Typed mathematical/stateful compiler path for admitted models' },
+    { status: 'Research', item: 'General Catgrad code generation and gradient proofs' },
+    { status: 'Research', item: 'Native CUDA compilation and audited speedups' },
   ],
   interpretability: [
-    {
-      title: 'Morphism-Based Knowledge',
-      desc: 'Organize findings by morphism types. Understanding of basic morphisms transfers across models.',
-    },
-    {
-      title: 'Compositional Transfer',
-      desc: 'If we understand f: A → B and g: B → C, we understand g ∘ f: A → C systematically.',
-    },
-    {
-      title: 'Distributed Investigation',
-      desc: 'Multiple researchers investigate different morphisms simultaneously in shared structures.',
-    },
+    { title: 'Inspectable computational structure', desc: 'Typed operation graphs support explanation of what executes and why.' },
+    { title: 'Numerical and causal evidence', desc: 'Numerical parity is established for limited inputs; causal mechanisms need separate experiments.' },
+    { title: 'Shared scientific memory', desc: 'An open research ledger can preserve transformations, counterexamples and limitations.' },
   ],
   interpretabilityStatus: [
-    { status: 'Done', item: 'Categorical morphism system' },
-    { status: 'Done', item: 'Real-time collaboration infrastructure' },
-    { status: 'In Progress', item: 'Interpretability tool integration' },
-    { status: 'In Progress', item: 'Morphism-based knowledge base' },
+    { status: 'Done', item: 'Interactive graph and collaborative state infrastructure' },
+    { status: 'Done', item: 'Source-bound numerical evidence from admitted models' },
+    { status: 'Research', item: 'Causal intervention interface' },
+    { status: 'Research', item: 'Compositional interpretability knowledge base' },
   ],
   limitations: {
     framework: [
-      { status: 'Supported', item: 'PyTorch models' },
-      { status: 'Not Supported', item: 'TensorFlow, JAX, HuggingFace' },
+      { status: 'Supported', item: 'Trusted FX-capturable PyTorch examples and bounded Llama checkpoints' },
+      { status: 'Not Supported', item: 'Arbitrary TensorFlow/JAX/PyTorch programs or pretrained model families' },
     ],
     compatibility: [
-      {
-        issue: 'FX Tracing',
-        solution: 'Requires symbolically traceable models. Dynamic control flow breaks tracer.',
-      },
-      {
-        issue: 'Shape Propagation',
-        solution: 'Requires SAMPLE_INPUT constant in model file for shape inference.',
-      },
-      {
-        issue: 'Large Models',
-        solution: 'Large models may be slow to render. Consider sub-network visualization.',
-      },
+      { issue: 'Untrusted code', solution: 'Arbitrary uploaded Python is disabled by default and is never sandboxed merely by using the web application.' },
+      { issue: 'Model coverage', solution: 'Exact checkpoint admission and limited model-specific numerical tests; catalogued architecture names are not execution guarantees.' },
+      { issue: 'Physical devices', solution: 'Optical hardware behavior is simulated; measured physical accelerator execution remains unverified.' },
     ],
   },
   troubleshooting: [
-    {
-      problem: 'Model tracing fails',
-      solution: 'Ensure model uses static control flow. Dynamic loops/conditionals break tracer.',
-    },
-    {
-      problem: 'Shape propagation not working',
-      solution: 'Add SAMPLE_INPUT constant to model file.',
-    },
-    { problem: 'Large models are slow', solution: 'Use model pruning or visualize sub-networks.' },
-    {
-      problem: 'Collaboration not working',
-      solution: 'Ensure API server and WebSocket server are running.',
-    },
+    { problem: 'Model tracing fails', solution: 'FX cannot capture arbitrary dynamic Python control flow; use supported trusted examples.' },
+    { problem: 'Compiler inspector returns 404', solution: 'Enable VISUAML_COMPILER_LAB_ENABLED=1 on the local API service.' },
+    { problem: 'Python runtime unavailable', solution: 'Install pinned backend dependencies and select the configured VISUAML_PYTHON interpreter.' },
+    { problem: 'Collaboration is offline', solution: 'Check the Yjs WebSocket server, origin and environment settings.' },
   ],
 } as const;
 
@@ -178,10 +109,10 @@ class MyModel(nn.Module):
     def forward(self, x):
         return self.linear(x)
 
-# VisuaML automatically:
+# In a trusted FX-compatible import, VisuaML can:
 # 1. FX traces the model
-# 2. Converts to categorical morphisms
-# 3. Generates open hypergraph
+# 2. Examines typed graph relationships
+# 3. Exports a bounded graph representation
 # 4. Visualizes interactively`,
   architecture: `User → Frontend → API Server → Python Backend
                               ↓
@@ -195,5 +126,5 @@ ActivationMorphism: Array[64:float32] → Array[64:float32]
 # Type-safe composition
 model = layer2 @ activation @ layer1
 # Invalid: layer2 @ layer1  # TypeError`,
-  bridge: `PyTorch Model → FX Tracing → Categorical → Hypergraphs → Export`,
+  bridge: `PyTorch Model → Trusted PyTorch → FX tracing → typed inspection → checked export`,
 } as const;
