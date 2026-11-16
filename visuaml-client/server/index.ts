@@ -11,6 +11,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { finished } from 'stream/promises';
 import { registerCompilerLabRoutes } from './compilerLab.ts';
+import { registerSemanticInspectionRoutes } from './semanticInspection.ts';
 
 // Type imports will be added as needed
 
@@ -38,6 +39,7 @@ app.register(cors, {
 // Register the multipart plugin
 app.register(multipart, { limits: { fileSize: 1024 * 1024, files: 1 } });
 registerCompilerLabRoutes(app);
+registerSemanticInspectionRoutes(app);
 
 // At the top of the file, add Python detection
 const PYTHON_COMMAND = process.env.VISUAML_PYTHON || 'python';
