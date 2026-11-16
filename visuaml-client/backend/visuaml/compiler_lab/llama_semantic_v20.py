@@ -20,6 +20,7 @@ from typing import Literal
 import numpy as np
 
 from .family_blocks_v12 import KVState
+from .fused_ffn_v20 import TorchScriptFusedFFN
 from .hf_llama_checkpoint_v19 import (
     LlamaLocalCheckpoint,
     LlamaProfile,
@@ -41,7 +42,7 @@ from .stacked_decoder_v14 import StackState
 from .torchscript_primitives_v19 import TorchScriptPrimitives
 
 SCHEMA = "visuaml.real-llama-semantic.v20"
-Backend = Literal["numpy", "torchscript_hybrid"]
+Backend = Literal["numpy", "torchscript_hybrid", "torchscript_fused"]
 
 
 class LlamaSemanticError(ValueError):
@@ -306,7 +307,7 @@ class LlamaSemanticPlan:
             "schema": SCHEMA, "semantic_sha256": self.semantic_sha256,
             "checkpoint_sha256": self.weights.checkpoint_sha256,
             "source_revision": self.weights.declared_revision,
-            "backend_options": ("numpy", "torchscript_hybrid"),
+            "backend_options": ("numpy", "torchscript_hybrid", "torchscript_fused"),
             "operation_count": len(ops),
             "operator_histogram": dict(sorted(Counter(op.op for op in ops).items())),
             "cache_capacity": self.capacity,
@@ -339,7 +340,7 @@ class LlamaSemanticSession:
     """Dynamic chunk execution with transactional KV state and explicit SSA liveness."""
 
     def __init__(self, plan: LlamaSemanticPlan, *, backend: Backend = "numpy") -> None:
-        if backend not in ("numpy", "torchscript_hybrid"):
+        if backend not in ("numpy", "torchscript_hybrid", "torchscript_fused"):
             raise LlamaSemanticError("Unknown Llama execution backend")
         if plan.program != make_llama_semantic_program(plan.weights, batch=plan.batch):
             raise LlamaSemanticError("Forged Llama semantic execution plan")
@@ -369,7 +370,9 @@ class LlamaSemanticSession:
             operand for op in self._operations for operand in op.operands
         )
         self._compiled = TorchScriptPrimitives() if backend == "torchscript_hybrid" else None
+        self._fused_ffn = TorchScriptFusedFFN() if backend == "torchscript_fused" else None
         self.compiled_calls = 0
+        self.fused_calls = 0
 
     @property
     def cursor(self) -> int:
@@ -469,7 +472,45 @@ class LlamaSemanticSession:
         uses = self._uses.copy()
         pending: dict[int, np.ndarray] = {}
         with self.cache.begin_append(query) as tx:
-            for op in self._operations:
+            index = 0
+            while index < len(self._operations):
+                op = self._operations[index]
+                if self._fused_ffn is not None and op.name.endswith("_ff_norm"):
+                    region = self._operations[index:index + 6]
+                    if (
+                        len(region) != 6
+                        or tuple(item.op for item in region) != (
+                            "rmsnorm_eps", "linear", "silu",
+                            "linear", "multiply", "linear",
+                        )
+                        or any(item.effect != "pure" for item in region)
+                    ):
+                        raise LlamaSemanticError("FFN fusion would cross an effect boundary")
+                    residual = env[region[0].operands[0]]
+                    weights = tuple(
+                        env[region[j].operands[1]] for j in (0, 1, 3, 5)
+                    )
+                    fused, _ = self._fused_ffn.run(
+                        residual, *weights, eps=self.profile.eps
+                    )
+                    output = region[-1]
+                    shape = (self.batch, query, self.profile.hidden)
+                    if (
+                        output.result_type is None
+                        or output.result_type.shape != (self.batch, "Q", self.profile.hidden)
+                        or fused.shape != shape or fused.dtype != np.float32
+                        or not np.isfinite(fused).all()
+                    ):
+                        raise LlamaSemanticError("FFN fusion result violates the typed IR")
+                    for item in region:
+                        for operand in item.operands:
+                            uses[operand] -= 1
+                            if uses[operand] == 0:
+                                env.pop(operand, None)
+                    env[output.result] = fused
+                    self.fused_calls += 1
+                    index += len(region)
+                    continue
                 result = self._execute(op, env, pending, tx, start, total)
                 if op.result is not None:
                     if result is None or op.result_type is None:
@@ -492,6 +533,7 @@ class LlamaSemanticSession:
                     uses[operand] -= 1
                     if uses[operand] == 0 and operand != "logits":
                         env.pop(operand, None)
+                index += 1
             if pending or "logits" not in env:
                 raise LlamaSemanticError("Incomplete Llama semantic program")
             logits = env["logits"].copy()
@@ -551,11 +593,15 @@ class LlamaSemanticSession:
             "semantic_sha256": self.plan.semantic_sha256,
             "checkpoint_sha256": self.plan.weights.checkpoint_sha256,
             "compiled_primitive_calls": self.compiled_calls,
+            "fused_ffn_region_calls": self.fused_calls,
             "compiled_primitive_specializations": (
                 self._compiled.specializations if self._compiled else 0
             ),
+            "fused_ffn_specializations": (
+                self._fused_ffn.specializations if self._fused_ffn else 0
+            ),
             "limitations": (
-                "TorchScript hybrid compiles selected arithmetic only, not KV/attention.",
+                "TorchScript backends compile arithmetic or pure FFN regions, not KV/attention.",
                 "No GPU, arbitrary model, or physical-device measurement.",
             ),
         }
