@@ -35,6 +35,8 @@ MODEL_ID = "manojredhat/tiny-llama"
 REVISION = "756e9746eb801752d69771ef3e9bc433b21d853d"
 WEIGHTS_SHA256 = "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03"
 CONFIG_SHA256 = "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02"
+TOKENIZER_SHA256 = "219d5967cd1bc4dbdd0d880fddcf4d61a703391f79c889dc63a0c4b0eb367823"
+TOKENIZER_CONFIG_SHA256 = "3bb9c9aa2c3b5f44436dc1bbe2092a15dfcf6f1d37299bd199a496b1db0aa1e3"
 
 
 def run() -> dict:
@@ -145,7 +147,10 @@ def run() -> dict:
         tokenizer = load_sentencepiece_tokenizer(
             local, declared_revision=revision,
             vocabulary=importer.profile.vocabulary,
+            expected_model_sha256=TOKENIZER_SHA256,
         )
+        if tokenizer.identity.config_sha256 != TOKENIZER_CONFIG_SHA256:
+            raise ValueError("Pinned tokenizer configuration fingerprint mismatch")
         hf_tokenizer = AutoTokenizer.from_pretrained(
             local, use_fast=False, local_files_only=True,
             trust_remote_code=False,
