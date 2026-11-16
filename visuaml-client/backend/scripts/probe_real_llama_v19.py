@@ -34,6 +34,10 @@ from visuaml.compiler_lab.llama_semantic_v20 import (
 from visuaml.compiler_lab.sentencepiece_tokenizer_v20 import (
     load_sentencepiece_tokenizer,
 )
+from visuaml.compiler_lab.session_leases_v26 import (
+    LeaseBudgetExceeded,
+    LeaseManagedLlamaRegistry,
+)
 from visuaml.compiler_lab.shared_weights_v24 import SharedWeightsLlamaTemplate
 from visuaml.compiler_lab.template_registry_v25 import (
     TemplateNotCached,
@@ -311,6 +315,42 @@ def run() -> dict:
         np.testing.assert_allclose(
             incremental_owned, oracle_owned, rtol=5e-4, atol=5e-4
         )
+        profile = importer.profile
+        reserved_kv = (
+            profile.layers * min(profile.context, 128)
+            * profile.kv_heads * profile.head_dim * 2 * 4
+        )
+        managed_registry = LeaseManagedLlamaRegistry(
+            max_cached_weight_bytes=(
+                shared_weights.report()["weight_module_logical_bytes"] + 4096
+            ),
+            max_active_kv_bytes=max(4096, reserved_kv),
+            max_active_sessions=1,
+        )
+        managed_key = managed_registry.register(compiled)
+        with managed_registry.new_session(managed_key) as leased:
+            leased_out = leased.step(cases[0])
+            np.testing.assert_allclose(
+                leased_out, hybrid_reference, atol=5e-4, rtol=5e-4
+            )
+            try:
+                managed_registry.new_session(managed_key)
+            except LeaseBudgetExceeded:
+                pass
+            else:
+                raise AssertionError("Active KV budget was not enforced")
+            if not managed_registry.evict(managed_key):
+                raise AssertionError("Leased model eviction was not admitted")
+            continued = leased.step(np.array([[7]], dtype=np.int64))
+            np.testing.assert_allclose(
+                continued, oracle_owned, rtol=5e-4, atol=5e-4
+            )
+            if managed_registry.report()["active_sessions"] != 1:
+                raise AssertionError("Live lease was not retained after eviction")
+        if managed_registry.report()["active_sessions"] != 0:
+            raise AssertionError("Session lease was not released on context exit")
+        if managed_registry.report()["active_kv_logical_bytes"] != 0:
+            raise AssertionError("KV byte quota leaked after lease release")
 
         return {
             "schema": "visuaml.pretrained-llama-parity.v20",
@@ -325,6 +365,8 @@ def run() -> dict:
             "v25_template_registry": registry.report(),
             "v25_pre_eviction_semantic_sha256": verified_id,
             "v25_evicted_session_remains_correct": True,
+            "v26_leased_registry": managed_registry.report(),
+            "v26_eviction_preserves_active_execution": True,
             "v24_isolated_cursors": [client_a.cursor, client_b.cursor],
             "v23_isolated_session_cursors": [
                 first_client.cursor, second_client.cursor,
