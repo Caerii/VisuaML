@@ -58,7 +58,7 @@ claims for other local bundles are user-declared and not signed.
   128 resident positions (or checkpoint maximum, whichever is smaller),
   and at most 64 MiB resident KV memory. The importer also enforces a
   separate 128 MiB model file limit and strict numerical finiteness.
-- Tokenizer parity is not established. Tests supply integer tokens directly.
+- Tokenizer parity is verified for the pinned SentencePiece model on two short text witnesses, not for arbitrary text, tokenizers, or extended prompt templates.
   Sampling strategies beyond greedy and production serving are unimplemented.
 
 ## Real Llama bundle (strict software artifact)
@@ -156,7 +156,23 @@ compare the bridge against a separately loaded SentencePieceProcessor
 and reject invalid vocabulary, revisions, corrupt metadata, symlinks
 and unsupported input lengths.
 
-A separate pinned external workflow tests the same tokenizer files
-against Hugging Face AutoTokenizer. Only promote text-to-tokenizer parity
-after that external comparison completes successfully. No arbitrary
-language-model tokenizer family is implied.
+The pinned external workflow has now passed on the actual Tiny Llama
+tokenizer.model and tokenizer_config.json at the same model revision.
+The byte fingerprints are:
+
+- SentencePiece model SHA-256:
+  219d5967cd1bc4dbdd0d880fddcf4d61a703391f79c889dc63a0c4b0eb367823
+- Tokenizer config SHA-256:
+  3bb9c9aa2c3b5f44436dc1bbe2092a15dfcf6f1d37299bd199a496b1db0aa1e3
+
+Two short text prompts were encoded with exactly the same IDs as Hugging
+Face's pinned non-legacy LlamaTokenizer, and the model's v20 IR logits
+agreed with the Hugging Face PyTorch model (worst witness error
+1.430511474609375e-6). See
+benchmarks/pretrained_llama_text_pipeline_v20.json and successful
+workflow https://github.com/Caerii/VisuaML/actions/runs/43808235605.
+
+Modern Llama tokenizers alter the SentencePiece dummy-prefix behavior.
+The bridge makes the legacy and non-legacy modes explicit and rejects
+literal special-token strings pending separate handling. Tokenizer
+parity is not claimed beyond the two witnessed text inputs.
