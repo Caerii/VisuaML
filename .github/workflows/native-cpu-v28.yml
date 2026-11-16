@@ -8,12 +8,14 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.cpp
       - visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.py
       - visuaml-client/backend/scripts/probe_native_llama_v28.py
+      - visuaml-client/backend/examples/native_cpu_bench_v28.py
       - .github/workflows/native-cpu-v28.yml
   pull_request:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.cpp
       - visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.py
       - visuaml-client/backend/scripts/probe_native_llama_v28.py
+      - visuaml-client/backend/examples/native_cpu_bench_v28.py
 jobs:
   native-parity:
     runs-on: ubuntu-latest

@@ -25,6 +25,7 @@ from safetensors.torch import save_file
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
+from examples.native_cpu_bench_v28 import benchmark
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
     lower_llama_semantic_program,
@@ -126,8 +127,12 @@ def run() -> dict:
         for a, b in zip(state.layers, baseline_state.layers):
             np.testing.assert_allclose(a.keys, b.keys, atol=3e-4, rtol=3e-4)
             np.testing.assert_allclose(a.values, b.values, atol=3e-4, rtol=3e-4)
+        matched_performance = benchmark(
+            imported, prompt=4, chunk_sizes=(1, 1, 2), trials=5
+        )
         return {
             "schema": "visuaml.pinned-native-llama-v28",
+            "matched_cpu_benchmark": matched_performance,
             "source": MODEL_ID,
             "revision": REVISION,
             "checkpoint_sha256": imported.checkpoint_sha256,
