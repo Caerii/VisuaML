@@ -42,7 +42,7 @@ from .stacked_decoder_v14 import StackState
 from .torchscript_primitives_v19 import TorchScriptPrimitives
 
 SCHEMA = "visuaml.real-llama-semantic.v20"
-Backend = Literal["numpy", "torchscript_hybrid", "torchscript_fused"]
+Backend = Literal["numpy", "torchscript_hybrid", "torchscript_fused", "torchscript_graph"]
 
 
 class LlamaSemanticError(ValueError):
@@ -299,6 +299,10 @@ class LlamaSemanticPlan:
         admitted = lower_llama_semantic_program(
             self.program, self.weights, batch=self.batch
         )
+        if backend == "torchscript_graph":
+            from .torchscript_graph_v21 import TorchScriptWholeGraphSession
+
+            return TorchScriptWholeGraphSession(admitted)
         return LlamaSemanticSession(admitted, backend=backend)
 
     def explain(self) -> dict:
@@ -307,7 +311,7 @@ class LlamaSemanticPlan:
             "schema": SCHEMA, "semantic_sha256": self.semantic_sha256,
             "checkpoint_sha256": self.weights.checkpoint_sha256,
             "source_revision": self.weights.declared_revision,
-            "backend_options": ("numpy", "torchscript_hybrid", "torchscript_fused"),
+            "backend_options": ("numpy", "torchscript_hybrid", "torchscript_fused", "torchscript_graph"),
             "operation_count": len(ops),
             "operator_histogram": dict(sorted(Counter(op.op for op in ops).items())),
             "cache_capacity": self.capacity,
