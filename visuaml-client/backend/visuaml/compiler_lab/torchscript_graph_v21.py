@@ -117,10 +117,10 @@ class _LlamaTraceModule(nn.Module):
                     layer = dict(op.parameters)["layer"]
                     key_update = pending.pop(layer)
                     if self.cursor_polymorphic:
-                        # The input cache has fixed physical capacity, but
-                        # attention needs only the committed logical prefix.
-                        # Keep the *new* suffix as an effect output; no full
-                        # padded cache copy needs to leave the graph.
+                        # Only the committed logical prefix is transferred.
+                        # TorchScript receives an independently copied input
+                        # with a dynamic past length and a scalar tensor cursor.
+                        # Return just the new suffix, never the full cache.
                         history[f"k{layer}"] = torch.cat((
                             torch.narrow(history[f"k{layer}"], 1, 0, start), key_update
                         ), dim=1)
@@ -255,11 +255,7 @@ class TorchScriptWholeGraphSession:
     def _state_inputs(self) -> tuple[torch.Tensor, ...]:
         values = tuple(
             torch.from_numpy(
-                (
-                    self.cache._arrays[f"{kind}{layer}"]
-                    if self.cursor_polymorphic
-                    else self.cache._arrays[f"{kind}{layer}"][:, :self.cursor]
-                ).copy(order="C")
+                self.cache._arrays[f"{kind}{layer}"][:, :self.cursor].copy(order="C")
             )
             for layer in range(self.layers) for kind in ("k", "v")
         )
@@ -425,7 +421,7 @@ class TorchScriptWholeGraphSession:
             "limitations": [
                 "Compiled TorchScript CPU graph, not standalone AOT machine code.",
                 (
-                    "v22 traces once per batch/model, using fixed-capacity KV inputs; "
+                    "v22 traces once per batch/model using dynamically sized KV prefixes; "
                     "v21 traces per query and past length."
                 ),
                 "Tensor inputs, KV copies and graph tracing add overhead.",
