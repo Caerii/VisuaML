@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import pytest
+from examples.llama_semantic_bench_v20 import benchmark
 from test_hf_llama_checkpoint_v19 import fixture
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
-from examples.llama_semantic_bench_v20 import benchmark
 
 
 @pytest.mark.parametrize("hybrid", (False, True))
