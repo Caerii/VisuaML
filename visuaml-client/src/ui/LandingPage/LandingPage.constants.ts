@@ -1,113 +1,120 @@
-/**
- * Constants for LandingPage components
- * Compressed and concise
- */
+/** Evidence-conscious editorial narrative for the public VisuaML home page. */
 import type { LandingSectionData } from './LandingPage.types';
 
 export const LANDING_SECTIONS: LandingSectionData[] = [
   {
     id: 'the-problem',
-    title: 'The problem',
+    title: 'Computation is difficult to see.',
     content: [
-      "Understanding neural network architectures is hard. PyTorch models have layers, connections, and data flow that are difficult to visualize and reason about. Static diagrams and manual configs don't scale.",
-      "Current visualization tools show static graphs or require manual configuration. They don't capture dynamic tensor flow, shape propagation, or enable collaborative exploration. Bridging imperative PyTorch code and formal mathematical structures (category theory, open-hypergraphs) enables reasoning about model properties, composition, and correctness.",
-      'VisuaML is open source (MIT). The full codebase is on GitHub—frontend, API, and Python backend—so you can run it locally, contribute, or integrate the export pipeline into your own tools.',
+      'A neural network is too often known by the framework in which it was first written. Its mathematics, execution schedule, memory effects, and physical realization are folded together into an implementation that can be difficult to question.',
+      'Diagrams are useful, but they are not enough. To investigate an architecture scientifically, we should be able to examine its tensor relationships, follow its state across time, compare different executions, and state precisely what the evidence warrants.',
+      'VisuaML begins with a simple proposition: understanding a computational system should be collaborative, and changing its implementation should not require surrendering its meaning.',
     ],
   },
   {
     id: 'what-is-this',
-    title: 'What is VisuaML?',
+    title: 'A research environment, not a static diagram.',
     content: [
-      'Think TypeScript for ML: a typed, compositional layer on top of PyTorch (and eventually other frameworks), with ergonomics and a web runtime for visualization and collaboration. VisuaML is a real-time collaborative platform for visualizing PyTorch neural network architectures. Upload a `.py` file containing your model; the backend uses PyTorch FX symbolic tracing to extract the computational graph, then the frontend renders it as an interactive graph (React Flow) with tensor shapes on edges and 3D shape previews on hover.',
-      'We bridge category theory and practical deep learning. Models are translated into categorical structures (open-hypergraphs), enabling formal reasoning about composition and properties. Export targets include JSON hypergraphs, Rust macros for the open-hypergraphs crate, and categorical analysis output.',
-      'Tech stack: React + TypeScript (Vite), Node.js/Fastify API server, Python backend (PyTorch FX, optional transformers/timm). Real-time sync is Yjs over WebSockets. Demo networks work without the API; custom model upload and export require the Python backend.',
-      'Future: Neural Architecture Search over the open-source ML ecosystem with type-safe composition; catgrad integration for faster evaluation; collaborative interpretability tooling.',
+      'The collaborative web workspace makes neural-network structures navigable: nodes, connections, tensor shapes, three-dimensional previews, and shared editing are part of one working surface. Trusted PyTorch FX analysis can produce further graph views from admitted local models.',
+      'Alongside it, the Compiler Lab represents bounded computation using a typed semantic intermediate representation. State reads and writes are explicit; mathematical operations can be executed through independently checked paths; source-bound numerical witnesses make failures inspectable.',
+      'Our deepest currently verified model path is an explicitly restricted Llama-style decoder. We have executed a pinned real checkpoint through NumPy and full-graph CPU TorchScript, with verified streaming state and shared model execution. That does not make this a universal compiler, and it does not mean that every architecture listed in the Atlas is executable.',
+    ],
+    technicalDetails: [
+      {
+        label: 'Explore together',
+        description:
+          'React Flow, Three.js, Yjs and WebSockets make model diagrams and collaborative state navigable from the browser.',
+      },
+      {
+        label: 'Represent semantics',
+        description:
+          'The Python compiler uses typed operations, explicit state effects and checkpoint-bound contracts rather than treating arbitrary source code as a safe intermediate program.',
+      },
+      {
+        label: 'Check execution',
+        description:
+          'Independent NumPy and PyTorch/Hugging Face references provide finite numerical witnesses for admitted models and explicit test inputs.',
+      },
+      {
+        label: 'Operate responsibly',
+        description:
+          'Verified compiled model templates, private transactional KV sessions, and logical resource accounting give the runtime observable ownership boundaries.',
+      },
     ],
   },
   {
     id: 'how-it-works',
-    title: 'How it works',
+    title: 'From model to evidence.',
     content: [
-      "Upload a `.py` file with your PyTorch model (and optional SAMPLE_INPUT for shape propagation). The API runs PyTorch's torch.fx.symbolic_trace() to obtain a GraphModule; the graph is serialized and sent to the client.",
-      'The frontend renders nodes (ops/layers) and edges (tensor flow). You can pan, zoom, select nodes, and hover edges to see 3D tensor dimensions. Layout uses dagre; state is managed with Zustand.',
-      'Multi-user editing: Yjs maintains a CRDT of the graph document; a WebSocket server (y-websocket) syncs updates. Cursors and presence are shared so multiple people can explore the same model at once.',
-      'Export: JSON (hypergraph), Rust macros for hellas-ai/open-hypergraphs, and a detailed analysis format. The Python backend performs the categorical translation; the frontend triggers export and downloads the result.',
-      'Future: Categorical NAS over PyTorch/TensorFlow/JAX/HuggingFace primitives; catgrad for 10–20x faster evaluation via framework-free compilation.',
+      'VisuaML separates three questions that software development often confuses. What does the computation mean? Which transformations preserve its intended behavior? And what does a particular execution strategy actually cost?',
+      'For admitted models, the compiler validates tensor and state contracts, constructs an executable semantic representation, and compares implementations against separate numerical references. The research runtime can reuse a compiled graph and immutable model weights across private sessions.',
+      'The public roadmap and benchmark ledger make the work inspectable. The weighted percentages measure accepted verification criteria, not vague confidence or how many calendar days remain. A result is valuable when you can inspect the assumptions and reproduce the evidence.',
     ],
     technicalDetails: [
       {
-        label: 'PyTorch FX tracing',
+        label: 'Capture',
         description:
-          'Backend uses torch.fx.symbolic_trace() to extract a GraphModule from your model. Works with symbolically traceable models; dynamic control flow can limit tracing. Graph is sent to the client as JSON for visualization.',
+          'Trusted PyTorch FX capture or strict local safetensors intake, with bounded model shapes, allowed operators and reproducible source identities.',
       },
       {
-        label: 'Frontend pipeline',
+        label: 'Lower',
         description:
-          'React + TypeScript (Vite), React Flow for the graph, Three.js (via R3F) for 3D tensor shapes. Zustand for app state; Yjs for collaborative state. API and WebSocket servers run separately (Fastify + y-websocket).',
+          'Canonical typed graph, explicit KV state effects and a declared CPU execution backend.',
       },
       {
-        label: 'Real-time collaboration',
+        label: 'Verify',
         description:
-          'Yjs CRDTs with y-websocket. Graph document and cursor/presence sync over WebSockets. Conflict-free; multiple users can pan, zoom, and select without overwriting each other.',
+          'Per-layer state and logits comparison, numerical error budgets, negative inputs, and failure/rollback tests.',
       },
       {
-        label: 'Categorical export',
+        label: 'Measure',
         description:
-          'Python backend translates the FX graph into open-hypergraph form. Export formats: JSON hypergraph, Rust macro (open-hypergraphs crate), and human-readable categorical analysis. Enables downstream use in proof assistants or verification tools.',
-      },
-      {
-        label: 'Run locally',
-        description:
-          'pnpm workspace: pnpm install (Node only), optional pnpm run install-python-deps for the backend. Start api, ws, and dev from repo root. Demo networks work without Python; custom upload/export need the API and Python.',
+          'Source-bound benchmarks record compilation and execution separately; simulated hardware costs are not presented as device measurements.',
       },
     ],
   },
   {
     id: 'what-we-are-building',
-    title: "What we're building",
+    title: 'A more general science of implementation.',
     content: [
-      'Neural Architecture Search over the open-source ML ecosystem: ML primitives as composable morphisms with type-safe composition; automatic architecture discovery across PyTorch, TensorFlow, JAX, and HuggingFace.',
-      'Catgrad-accelerated evaluation: 10–20x faster evaluation via framework-free static compilation (Python/C++/CUDA), no autograd overhead. Catgrad-LLM for transformer/LLM search (attention, blocks, full LLMs) with pre-trained components from any framework.',
-      'Universal primitive library: Ingest and type-check millions of ML components as categorical morphisms; discover and compose from the ecosystem. Collaborative interpretability: integrate mechanistic interpretability tools (attention circuits, sparse features, causal interventions) into the same real-time collaboration layer.',
+      'The ambition is not simply to draw networks or accelerate one transformer. It is to make computation a system of inspectable alternatives: a program with a recognizable meaning, many candidate realizations, and an explicit method for determining when a transformation is valid and useful.',
+      'That opens questions about model families beyond Llama, independently compiled CPU and GPU execution, memory-aware scheduling, mechanistic interpretation, and eventually calibrated hardware–algorithm co-design. These are research frontiers, not shipped features.',
+      'The route from a promising experiment to a credible instrument is evidence. Our public roadmap states each acceptance gate, its weight, the source that supports it, and the capabilities still awaiting verification. The ledger is deliberately conservative: unverified work earns no completion points.',
     ],
     differentiators: [
       {
-        label: 'Categorical Neural Architecture Search',
+        label: 'An executable semantic boundary',
         description:
-          'Search across the open-source ML ecosystem with type-safe composition. All frameworks, all primitives, automatically discoverable and composable.',
+          'The model can be represented as typed mathematical operations and ordered state effects, not just a screenshot of its graph.',
       },
       {
-        label: 'Catgrad integration',
+        label: 'Numerical evidence as a first-class artifact',
         description:
-          '10-20x faster architecture evaluation through framework-free static compilation. No autograd overhead, optimized code generation.',
+          'Reproducible comparisons and model fingerprints travel with compiler claims instead of being buried in optimistic prose.',
       },
       {
-        label: 'Transformer/LLM search',
+        label: 'Collaboration at the level of computation',
         description:
-          'Search over attention mechanisms, transformer blocks, and full LLM architectures. Use pre-trained components from any framework.',
+          'People can examine structures together, with the eventual aim of sharing experiments, explanations, and certified transformations.',
       },
       {
-        label: 'Universal primitive library',
+        label: 'Honest hardware research',
         description:
-          'Millions of ML components become searchable morphisms. PyTorch, TensorFlow, JAX, HuggingFace—all composable through categorical type system.',
+          'Optical placement is currently simulated. Actual accelerator execution requires calibration and independent physical measurements.',
       },
       {
-        label: 'Real-time collaboration',
-        description: 'Multiple users exploring the same model with live synchronization',
-      },
-      {
-        label: 'Formal export',
+        label: 'A roadmap anyone can audit',
         description:
-          'Export to open-hypergraphs and categorical structures for proof assistants and verification tools',
+          'Workstream percentages are calculated from weighted, explicit acceptance criteria with links to the available evidence.',
       },
     ],
   },
   {
     id: 'get-started',
-    title: 'Ready to explore your models?',
+    title: 'Come examine the work.',
     content: [
-      'Start visualizing your PyTorch models today. Upload a model file and see its architecture.',
-      'Building the future of formal neural network analysis.',
+      'Open the collaborative workspace, explore a bounded compiler scenario, read the evidence ledger, or contribute a reproducible numerical witness. Meaningful progress becomes more valuable when other researchers can inspect and question it.',
+      'VisuaML is open-source under the MIT License. The current research code and the honest boundaries of the system are documented publicly.',
     ],
     cta: true,
   },
