@@ -29,6 +29,8 @@ class TokenizerIdentity:
     bos_id: int
     eos_id: int
     unk_id: int
+    legacy: bool
+    add_prefix_space: bool
 
 
 class LlamaSentencePieceBridge:
@@ -46,7 +48,23 @@ class LlamaSentencePieceBridge:
             or type(add_bos) is not bool or type(add_eos) is not bool
         ):
             raise TokenizerContractError("Text or special-token mode is unsupported")
-        ids = list(self._processor.encode(text, out_type=int))
+        if any(special in text for special in ("<s>", "</s>", "<unk>")):
+            raise TokenizerContractError("Literal special-token strings need separate admission")
+        if self.identity.legacy:
+            ids = list(self._processor.encode(text, out_type=int))
+        else:
+            normalized = text.replace("▁", " ")
+            if self.identity.add_prefix_space:
+                normalized = "▁" + normalized
+            if normalized.startswith(("▁", " ")):
+                pieces = self._processor.encode(
+                    "<unk>" + normalized, out_type=str
+                )
+                skip = len(self._processor.encode("<unk>", out_type=str))
+                pieces = pieces[skip:]
+                ids = [self._processor.piece_to_id(piece) for piece in pieces]
+            else:
+                ids = list(self._processor.encode(normalized, out_type=int))
         if add_bos:
             ids.insert(0, self.identity.bos_id)
         if add_eos:
@@ -112,10 +130,23 @@ def load_sentencepiece_tokenizer(
         raise TokenizerContractError("Tokenizer metadata must be an object")
     if metadata.get("tokenizer_class") not in (None, "LlamaTokenizer", "LlamaTokenizerFast"):
         raise TokenizerContractError("Unsupported tokenizer class")
+    legacy = metadata.get("legacy", False)
+    add_prefix_space = metadata.get("add_prefix_space", True)
+    if type(legacy) is not bool or type(add_prefix_space) is not bool:
+        raise TokenizerContractError("Malformed legacy/space tokenizer settings")
     try:
         import sentencepiece as spm
 
-        processor = spm.SentencePieceProcessor(model_proto=raw_model)
+        if legacy:
+            processor = spm.SentencePieceProcessor(model_proto=raw_model)
+        else:
+            from sentencepiece import sentencepiece_model_pb2
+
+            model = sentencepiece_model_pb2.ModelProto.FromString(raw_model)
+            model.normalizer_spec.add_dummy_prefix = False
+            processor = spm.SentencePieceProcessor(
+                model_proto=model.SerializeToString()
+            )
     except (ImportError, RuntimeError, ValueError) as exc:
         raise TokenizerContractError("Cannot initialize bounded SentencePiece tokenizer") from exc
     if processor.vocab_size() != vocabulary:
@@ -126,6 +157,6 @@ def load_sentencepiece_tokenizer(
     return LlamaSentencePieceBridge(
         processor, TokenizerIdentity(
             declared_revision, digest, hashlib.sha256(raw_config).hexdigest(),
-            vocabulary, bos, eos, unk,
+            vocabulary, bos, eos, unk, legacy, add_prefix_space,
         ),
     )
