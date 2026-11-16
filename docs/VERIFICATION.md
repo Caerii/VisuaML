@@ -61,8 +61,9 @@ The reference workflow normalizes a missing safetensors format metadata field in
 | [v24 shared weights](../benchmarks/pretrained_llama_shared_weights_v24.json) | Four-session module sharing, logical weight bytes and cold startup |
 | [v25 cache ownership](../benchmarks/pretrained_llama_verified_registry_v25.json) | Eviction and live session survival |
 | [v26 KV leases](../benchmarks/pretrained_llama_leased_registry_v26.json) | Active KV quota, release and eviction survival |
+| [v27 active model lifetime](../benchmarks/pretrained_llama_active_models_v27.json) | Real-checkpoint module identity across eviction/readmission and last-lease cleanup |
 
-The v27 active-weight module lifetime is covered by synthetic/adversarial fixture tests; a *new* pinned real-checkpoint v27 evidence record should be added before describing that path as pretrained-certified.
+The v27 active-model lifetime also passed the pinned trained-checkpoint workflow on main. The evidence records distinct active modules across eviction/readmission, correct independent logits, and release of the active model-weight budget after closing both leases.
 
 ## Results with the important caveats
 
