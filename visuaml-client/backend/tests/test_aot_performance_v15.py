@@ -6,7 +6,6 @@ import numpy as np
 import pytest
 import torch
 from torch.nn import functional as F
-
 from visuaml.compiler_lab.aot_compile import compile_numpy_aot
 from visuaml.compiler_lab.ir_contract import ResourcePolicy
 from visuaml.compiler_lab.numpy_runtime import (
@@ -78,7 +77,10 @@ def test_prepared_enforces_input_shape_dtype_and_retained_budget():
 
 
 def test_prepared_bounded_integer_constraints():
-    from visuaml.compiler_lab.stacked_decoder_v14 import StackedWeights, compile_stacked_chunk
+    from visuaml.compiler_lab.stacked_decoder_v14 import (
+        StackedWeights,
+        compile_stacked_chunk,
+    )
 
     w = StackedWeights.seeded(8, layers=1)
     a = compile_stacked_chunk(w, batch=1, query=1, past=0)

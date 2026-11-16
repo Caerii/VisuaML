@@ -10,16 +10,15 @@ from __future__ import annotations
 
 import hashlib
 import json
+import operator
 from dataclasses import dataclass, field
 from pathlib import Path
-import operator
 from typing import Any
 from zipfile import BadZipFile, ZipFile
 
 import numpy as np
 import torch
 from torch import nn
-
 from torch.fx import Graph, GraphModule, symbolic_trace
 from torch.fx.passes.shape_prop import ShapeProp
 

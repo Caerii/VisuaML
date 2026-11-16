@@ -17,10 +17,12 @@ from time import perf_counter_ns
 import numpy as np
 import torch
 from torch.nn import functional as F
-
 from visuaml.compiler_lab.numpy_runtime import _execute
 from visuaml.compiler_lab.stacked_decoder_v14 import (
-    CompiledStackedDecoder, StackedWeights, empty_stack, reference_stack_step,
+    CompiledStackedDecoder,
+    StackedWeights,
+    empty_stack,
+    reference_stack_step,
 )
 
 
