@@ -1,156 +1,153 @@
 # VisuaML
 
-![VisuaML Logo](visuaml-client/public/visuaml_logo.png)
+![VisuaML logo](visuaml-client/public/visuaml_logo.png)
 
-Web Hosted version (WIP Dev test) here: [**VisuaML.com**](https://VisuaML.com).
+**Explore neural networks together. Understand their semantics. Compile and verify their execution.**
 
-**Real-Time Collaborative PyTorch Model Visualization**
+VisuaML is an open-source research platform combining interactive, collaborative PyTorch graph visualization with an experimental typed-intermediate-representation compiler and inference runtime. The web application helps researchers inspect model structures and tensor relationships. The Python Compiler Lab investigates how to represent, transform, execute, compare, and safely reuse neural computation across different execution strategies.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
+**Latest research milestone: v27 (November 2026).** The client package still reports version 0.0.0; these milestones are *not* published semantic-version releases.
 
-VisuaML is a web application that enables multiple users to simultaneously explore PyTorch neural network architectures as interactive graphs. Think **TypeScript for ML**: a typed, compositional layer on top of PyTorch with ergonomics and a web runtime for visualization and real-time collaboration. Upload any model file and see its structure visualized with tensor shapes flowing between layers. It bridges the advantages afforded by category theory ("precisely, the universal algebra of monads valued in a 2-category of parametric maps" (Gavranović)) and current workflows.
+[Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
 
-"Categorical Deep Learning: An Algebraic Theory of Architectures" (https://arxiv.org/abs/2402.15332).
-"Position: Categorical Deep Learning is an Algebraic Theory of All Architectures" (https://arxiv.org/abs/2402.15332).
-"Fundamental Components of Deep Learning: A category-theoretic approach" (https://arxiv.org/abs/2403.13001).
+[![CI](https://github.com/Caerii/VisuaML/actions/workflows/ci.yml/badge.svg)](https://github.com/Caerii/VisuaML/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](docs/LICENSE)
 
----
+## What works today
 
-## 🌟 What You Can Do Today
+### Explore neural networks as a team
 
--   **Interactive Graph Visualization**: Explore complex model architectures with a smooth, interactive UI powered by React Flow.
-    ![VisuaML Interactive Visualization](docs/media/01-interactive-graph.gif)
--   **Real-time Collaboration**: Use live cursors and synchronized state powered by WebSockets and Yjs to collaborate with your team.
-    ![Real-time collaboration in VisuaML](docs/media/02-real-time-collaboration.gif)
--   **3D Tensor Visualization**: Hover over graph edges to inspect the volumetric shape of the data tensors flowing between layers.
-    ![3D Tensor Visualization](docs/media/03-3d-tensor-visualization.gif)
--   **Upload Custom Models**: Drop any `.py` file containing a PyTorch model and automatically visualize its architecture.
--   **Shape-Aware Analysis**: When models include `SAMPLE_INPUT`, see tensor shapes propagated through the entire network.
--   **Multiple Export Formats**: Export models to JSON, Rust macros (`open-hypergraphs`), and detailed analysis formats.
-    ![Exporting a model to all formats in VisuaML](docs/media/04-export-formal-analysis.gif)
+- **Interactive graph inspection:** inspect layers, edges, inferred tensor shapes and spatial representations using React, TypeScript, React Flow and Three.js.
+- **Real-time collaboration:** Yjs/WebSockets synchronize shared graph state, cursor presence and editing.
+- **Model export:** use the trusted PyTorch FX processing backend and supported JSON, analysis and experimental hypergraph formats.
+- **Architecture Atlas:** inspect catalogued architecture families and their required operators, including a live, bounded semantic-decoder evidence panel.
 
-## 🔬 Research Vision: Building Toward Formal Neural Network Analysis
+![Interactive graph](docs/media/01-interactive-graph.gif)
 
-VisuaML's collaborative visualization platform serves as the foundation for a more ambitious research program in formal methods for neural networks. Our long-term vision includes:
+The browser can show bundled demo networks without Python; custom Python-backed model analysis requires the API. **Arbitrary uploaded Python is not sandboxed**: untrusted upload execution is disabled by default and the API restricts imported models to trusted allowlists. See [security](docs/SECURITY_AND_BOUNDARIES.md) before enabling developer import flags.
 
-### **Semantic Translation Between Paradigms**
-Moving beyond current PyTorch FX tracing to develop true semantic translation—converting imperative neural computations into compositional categorical structures that enable mathematical reasoning about model properties, architectural soundness, and compositional behavior.
+### Compile, inspect and verify bounded neural computation
 
-### **Automated Model Verification**
-Building on current error reporting to create metaprogramming tools that analyze model source code, identify formal incompatibilities, and generate corrected versions while preserving computational semantics. This reflexive capability would treat code as manipulable data.
+The Compiler Lab represents a supported computation in a typed Semantic IR, explicitly recording tensor types, operations, state effects, and checkpoint identity. The most advanced validated real-checkpoint workload is a restricted small Llama decoder: local safetensors, SentencePiece, independent numerical oracles, and a CPU TorchScript whole-decoder execution path.
 
-### **Formal Verification Infrastructure**
-Extending the categorical export format to enable integration with proof assistants and type systems, supporting mathematical proofs about model composition, type safety, and architectural correctness—bringing software engineering rigor to deep learning systems.
+| Subsystem | Implemented scope |
+| --- | --- |
+| Architecture Atlas | 59 **catalogued** families; not 59 fully runnable model families |
+| Semantic representation | Tensor/value types, closed-world operators, ordered state effects and admission guards |
+| Checkpoints | Strict local unsharded Llama safetensors and compatible tokenizer settings |
+| CPU execution | NumPy reference, selected TorchScript primitives, fused regions and whole-decoder tracing |
+| Dynamic decoding | One traced Llama graph reused across different valid chunk lengths and KV cursor values |
+| Model reuse | Verified graph/weight sharing between sessions; disjoint transactional K/V buffers |
+| Model and session lifecycle | LRU template ownership, explicit KV leases and logical active-model weight accounting |
+| Evidence | Negative tests, independent numerical witnesses, pinned model revisions, source-bound CPU benchmarks |
+| Optical research | **Simulated** placement, calibration assumptions and noise models—not measured physical hardware |
 
-### **Compositional Design Tools**
-Developing interactive tools for principled model construction where components combine with mathematical guarantees, moving beyond ad-hoc architectures toward compositional design with formal foundations.
+~~~text
+Local safetensors + configuration + tokenizer
+                     |
+           Strict model admission
+                     |
+       Checkpoint-bound typed Semantic IR
+                     |
+       Shape, math and effect validation
+             /                  \
+        NumPy oracle       TorchScript CPU graph
+             \                  /
+            Numerical comparisons
+                     |
+        Verified shared model template
+                     |
+       Private transactional KV sessions
+                     |
+         LRU ownership and lease quotas
+~~~
 
-### **Collaborative Interpretability Research**
-Integrating mechanistic interpretability tools (TransformerLens, SAELens, Captum) into the collaborative platform, enabling teams to simultaneously analyze attention circuits, sparse features, and causal interventions on the same model—transforming interpretability from isolated analysis into collaborative discovery.
+The compiler's actual limitations matter as much as its capability: no arbitrary Hugging Face family support, no native standalone AOT binary, no production GPU or optical backend, and no formal proof of all-input model equivalence. Read the [Compiler Guide](docs/COMPILER_GUIDE.md).
 
-**Research Impact**: Making category-theoretic analysis accessible to practitioners without requiring expertise in both PyTorch internals and abstract mathematics, while enabling new forms of collaborative formal modeling and mechanistic understanding.
+## Run the web application
 
-> 📖 **Learn More**: See our detailed [Research Roadmap](docs/FUTURE_DIRECTIONS.md) for comprehensive discussion of theoretical foundations and implementation strategies.
+**Requirements:** Node.js 20, pnpm 10, and Python 3.12 for the optional API/backend (matching the CI baseline).
 
-## 🔧 How It Works
-
-VisuaML uses PyTorch's built-in `torch.fx.symbolic_trace()` to extract computational graphs from neural networks. The frontend renders these graphs using React Flow, with Y.js handling real-time synchronization between multiple users.
-
-**Current Limitations:**
-- Only works with models that PyTorch can symbolically trace
-- Dynamic control flow (loops, conditionals) may break the tracer  
-- Very large models may be slow to render
-- Shape propagation requires manually defining `SAMPLE_INPUT` in your model file
-
----
-
-## 🏗️ Architecture Overview
-
-This repository is a **pnpm workspace** with one main package:
-
-| Location | Role |
-|----------|------|
-| **Repo root** | Run `pnpm run <script>` (e.g. `build`, `install-python-deps`) or `pnpm --filter visuaml-client run <script>` for other client scripts |
-| **visuaml-client/** | Main app: React frontend, Node.js API server, Python backend (PyTorch FX) |
-| **docs/** | Documentation and research roadmap |
-
-```
-VisuaML/
-├── docs/                    # 📚 Documentation and research roadmap
-├── visuaml-client/          # Main application package
-│   ├── src/                 # React/TypeScript frontend
-│   ├── server/              # Node.js API server
-│   ├── backend/             # Python PyTorch processing
-│   └── models/              # Example PyTorch models
-└── package.json             # Workspace root (overrides, scripts)
-```
-
-**Install behavior:** `pnpm install` only installs Node dependencies (fast). It does **not** run `pip install` by default; you should see *"Skipping Python deps"* in the log. If you see pip downloading lots of packages (PyTorch, transformers, matplotlib, etc.) on every install, you likely have `INSTALL_PYTHON_DEPS=1` set—unset it so installs stay fast. When you need the Python backend, run `pnpm run install-python-deps` once from the repo root (see below).
-
-**Root scripts (from repo root):** `pnpm run build` — build the client; `pnpm run install-python-deps` — one-time install of backend Python deps. All other scripts (dev, api, ws, etc.) use `pnpm --filter visuaml-client run <script>`.
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- [**Node.js**](https://nodejs.org/en/) (v18+)
-- [**pnpm**](https://pnpm.io/installation) (`npm install -g pnpm`)
-- **Python 3.11+** (only if you need backend: model import, export, or demo generation). See [visuaml-client/PYTHON_SETUP.md](visuaml-client/PYTHON_SETUP.md).
-
-### Quick Start
-
-```bash
-# 1. Clone and install (Node only — fast)
-git clone https://github.com/caerii/VisuaML.git
+~~~bash
+git clone https://github.com/Caerii/VisuaML.git
 cd VisuaML
 pnpm install
-```
+pnpm --filter visuaml-client run dev
+~~~
 
-You can run the **frontend and demos** immediately (no Python required). For **model import/export and API processing**, install Python dependencies once:
+Open **http://localhost:5173**. The pnpm installation does not install Python dependencies by default.
 
-```bash
-# 2. (Optional) Install backend Python dependencies (from repo root)
+For backend-backed model analysis and the Compiler Lab:
+
+~~~bash
 pnpm run install-python-deps
-```
-
-Then configure the Python path if needed:
-
-```bash
 cd visuaml-client
 cp env.example .env.local
-# Edit .env.local: set VISUAML_PYTHON to your python.exe path
-
-# Verify Python setup
 pnpm run check-python
-```
+cd ..
+~~~
 
-### Running the Application
+Start three separate terminals from the repository root:
 
-From the **repo root**, start three services in separate terminals:
+~~~bash
+pnpm --filter visuaml-client run api
+pnpm --filter visuaml-client run ws
+pnpm --filter visuaml-client run dev
+~~~
 
-```bash
-# From repo root — start each in a separate terminal:
-pnpm --filter visuaml-client run api    # Terminal 1: API (requires Python deps)
-pnpm --filter visuaml-client run ws     # Terminal 2: WebSocket (multiplayer)
-pnpm --filter visuaml-client run dev    # Terminal 3: Frontend
-```
+For local fixed-fixture compiler inspection only, start the API process with the environment variable **VISUAML_COMPILER_LAB_ENABLED=1**. The guarded endpoints are POST /api/compiler-lab/analyze and GET /api/compiler-lab/semantic-inspect. That opt-in does *not* allow arbitrary Python uploads.
 
-Open **http://localhost:5173**. You can use **Demo Networks** from the dropdown without the API server; for custom model upload and export, the API (and Python deps) must be running.
+See [client setup](docs/CLIENT_README.md) for details.
 
-## 📚 Documentation
+## Run compiler tests
 
-- **[Research Roadmap](docs/FUTURE_DIRECTIONS.md)** - Theoretical foundations and long-term vision
-- **[Architecture Guide](docs/ARCHITECTURE.md)** - Detailed system design and technical implementation  
-- **[Multiplayer Features](docs/MULTIPLAYER.md)** - Real-time collaboration capabilities
-- **[Contributing Guidelines](docs/CONTRIBUTING.md)** - How to contribute to the project
+After installing the pinned Python dependencies:
 
-## 🤝 Contributing
+~~~bash
+cd visuaml-client
+python -m pytest -q backend/tests
+~~~
 
-We welcome contributions to both current functionality and future research directions! Whether you're interested in improving the visualization engine, expanding PyTorch model support, or advancing formal methods integration, there are opportunities to contribute.
+Or exercise the end-to-end Llama IR and ownership path:
 
-Please read our [**Contributing Guidelines**](docs/CONTRIBUTING.md) to get started.
+~~~bash
+python -m pytest -q \
+  backend/tests/test_llama_semantic_v20.py \
+  backend/tests/test_torchscript_poly_v22.py \
+  backend/tests/test_shared_weights_v24.py \
+  backend/tests/test_template_registry_v25.py \
+  backend/tests/test_session_leases_v26.py \
+  backend/tests/test_active_models_v27.py
+~~~
 
-## 📄 License
+The separate [pinned pretrained-model workflow](.github/workflows/v19-pretrained-probe.yml) checks a named Tiny Llama source revision, hashes, tokenizer equivalence for specified prompts, PyTorch logits, streaming state and session ownership. Passing finite model witnesses does not imply correctness on arbitrary inputs.
 
-This project is licensed under the MIT License. See the [LICENSE](docs/LICENSE) file for details.
+## Why the compiler research matters
+
+The goal is a computational research environment that can separate **what an algorithm means** from **how it runs**. Once that boundary is explicit and testable, researchers can search execution strategies, use independent numerical verification, and investigate hardware-specific transformations without casually weakening semantics.
+
+A few measured milestones illustrate the approach, each on a narrowly defined, short CPU workload:
+
+- **v21–v22:** whole-decoder TorchScript graphs and dynamic KV cursors reduced retracing; compilation costs were measured separately from warm execution.
+- **v23–v24:** sharing a verified graph and its weight-bearing module reduced measured four-session cold startup from approximately 532 ms to 256 ms in one three-trial CI benchmark.
+- **v25–v27:** model-template LRU eviction, private KV leases, and active model lifetime accounting make resource ownership more explicit; these are **logical**, not OS-enforced physical memory budgets.
+
+Benchmark sources and complete caveats are indexed in [Verification](docs/VERIFICATION.md) and committed as JSON in [benchmarks](benchmarks/). The project is **not** claiming to outperform mature production inference engines, support all catalogued architectures, or deliver real photonic acceleration.
+
+## Project layout
+
+| Path | Purpose |
+| --- | --- |
+| [visuaml-client/src](visuaml-client/src/) | React frontend, architecture atlas, graph UI |
+| [visuaml-client/server](visuaml-client/server/) | Fastify API and guarded Python orchestration |
+| [visuaml-client/backend/visuaml](visuaml-client/backend/visuaml/) | PyTorch analysis/export package |
+| [compiler_lab](visuaml-client/backend/visuaml/compiler_lab/) | Typed IR, verified model paths, backends and runtime |
+| [benchmarks](benchmarks/) | Source-bound CPU/model numerical evidence |
+| [docs](docs/README.md) | Architecture, security, user guides and research history |
+
+## Research directions, contributions and license
+
+Planned research includes independent native CPU/GPU AOT targets, physical memory and long-context profiling, model-family generalization under explicit semantics, safe hardware co-design and collaborative interpretability. These are plans, **not shipped features**. See [research directions](docs/FUTURE_DIRECTIONS.md).
+
+Contributions involving model support, optimizations or new backends should include independent oracles, failed-input tests, provenance, and honest performance boundaries. See [Contributing](docs/CONTRIBUTING.md).
+
+Licensed under the [MIT License](docs/LICENSE).
