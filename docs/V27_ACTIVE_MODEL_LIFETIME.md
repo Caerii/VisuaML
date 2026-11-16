@@ -28,3 +28,10 @@ assert registry.report()["active_sessions"] == 0
 See [active_models_v27.py](../visuaml-client/backend/visuaml/compiler_lab/active_models_v27.py) and [its tests](../visuaml-client/backend/tests/test_active_models_v27.py). The tests cover shared-model reuse, eviction-survival, re-admission of identical weights as a distinct module, quota failure, and last-lease release.
 
 This is **logical model-module buffer accounting**, not process RSS, a native allocator quota, a cross-process cache or protection from hostile in-process Python. See [Security](SECURITY_AND_BOUNDARIES.md) and [Architecture](ARCHITECTURE.md).
+
+
+## Pinned real-model evidence
+
+The [main-branch pretrained verification workflow](https://github.com/Caerii/VisuaML/actions/runs/43944409072) passed with the fixed Tiny Llama checkpoint at revision 756e9746eb801752d69771ef3e9bc433b21d853d. It exercised one live module, eviction of its cached entry, re-admission of identical checkpoint content into a distinct compiled model module, and final release of both clients. The test recorded zero remaining active model-weight logical bytes and zero active KV leases after cleanup.
+
+The complete model/config/hash, numerical and registry-lifetime record is preserved in [v27 source-bound evidence](../benchmarks/pretrained_llama_active_models_v27.json). This establishes those tested lifecycle transitions, not an operating-system-enforced memory limit or production serving performance.
