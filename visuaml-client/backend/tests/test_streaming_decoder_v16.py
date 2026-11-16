@@ -6,7 +6,6 @@ from dataclasses import replace
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.stacked_decoder_v14 import (
     StackContractError,
     StackedWeights,

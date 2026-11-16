@@ -20,8 +20,8 @@ import numpy as np
 from .family_blocks_v12 import DecoderWeights, KVState
 from .stacked_decoder_v14 import (
     StackContractError,
-    StackState,
     StackedWeights,
+    StackState,
     TinyDecoderWeights,
     checkpoint_digest,
 )
@@ -232,7 +232,7 @@ class StreamingStackedDecoder:
             logits = (h @ self._weights.lm_head).astype(np.float32)
             if not np.isfinite(logits).all():
                 raise StackContractError("Nonfinite streaming logits")
-        except Exception:  # noqa: BLE001 - rollback must cover any compute failure
+        except Exception:
             # Old cache prefix remains untouched; new entries have not been
             # published via the cursor. Clear scratch suffix for hygiene.
             for key, value in zip(self._keys, self._values):
