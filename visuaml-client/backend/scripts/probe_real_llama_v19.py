@@ -22,11 +22,13 @@ BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
 from examples.llama_semantic_bench_v20 import benchmark
-from visuaml.compiler_lab.sentencepiece_tokenizer_v20 import load_sentencepiece_tokenizer
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
     lower_llama_semantic_program,
     make_llama_semantic_program,
+)
+from visuaml.compiler_lab.sentencepiece_tokenizer_v20 import (
+    load_sentencepiece_tokenizer,
 )
 
 MODEL_ID = "manojredhat/tiny-llama"
