@@ -17,7 +17,6 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from threading import RLock
 
-from .compiled_template_v23 import CompiledTemplateError
 from .llama_semantic_v20 import (
     LlamaSemanticPlan,
     lower_llama_semantic_program,
