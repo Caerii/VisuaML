@@ -13,6 +13,7 @@ threads and close must not race an ongoing step.
 
 from __future__ import annotations
 
+from typing import Self
 from weakref import finalize
 
 import numpy as np
@@ -104,7 +105,7 @@ class LeasedLlamaSession:
         finally:
             self._session = None
 
-    def __enter__(self) -> LeasedLlamaSession:
+    def __enter__(self) -> Self:
         self._owned()
         return self
 

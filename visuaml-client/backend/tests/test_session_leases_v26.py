@@ -17,7 +17,10 @@ from visuaml.compiler_lab.session_leases_v26 import (
     LeaseClosed,
     LeaseManagedLlamaRegistry,
 )
-from visuaml.compiler_lab.template_registry_v25 import TemplateNotCached, TemplateRegistryError
+from visuaml.compiler_lab.template_registry_v25 import (
+    TemplateNotCached,
+    TemplateRegistryError,
+)
 
 
 def setup(tmp_path, *, layers=2, batch=1, slots=2):
@@ -98,11 +101,13 @@ def test_evicted_model_session_remains_valid_until_lease_close(tmp_path):
 
 def test_exceptional_exit_resets_private_kv_and_releases_quota(tmp_path):
     _, registry, key, _ = setup(tmp_path, layers=1, slots=1)
-    with pytest.raises(RuntimeError, match="injected failure"):
-        with registry.new_session(key) as lease:
-            lease.step(np.array([[1, 2]], np.int64))
-            assert lease.cursor == 2
-            raise RuntimeError("injected failure")
+    with (
+        pytest.raises(RuntimeError, match="injected failure"),
+        registry.new_session(key) as lease,
+    ):
+        lease.step(np.array([[1, 2]], np.int64))
+        assert lease.cursor == 2
+        raise RuntimeError("injected failure")
     assert registry.report()["active_sessions"] == 0
     assert registry.report()["active_kv_logical_bytes"] == 0
     with registry.new_session(key) as another:
