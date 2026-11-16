@@ -28,7 +28,7 @@ def prepare(tmp_path, *, layers=2, batch=1):
 def test_single_torchscript_graph_reuses_arbitrary_token_and_cursor_shapes(
     tmp_path, layers, batch
 ):
-    weights, config, model, plan = prepare(tmp_path, layers=layers, batch=batch)
+    _, _, model, plan = prepare(tmp_path, layers=layers, batch=batch)
     poly = plan.new_session(backend="torchscript_poly")
     v21 = plan.new_session(backend="torchscript_graph")
     numpy_ir = plan.new_session(backend="numpy")
