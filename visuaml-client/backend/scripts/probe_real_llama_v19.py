@@ -8,14 +8,15 @@ general production Llama compiler or tokenizer validation.
 
 from __future__ import annotations
 
-import hashlib
 import json
+import shutil
 import sys
 import tempfile
 from pathlib import Path
 
 import numpy as np
 import torch
+from safetensors.torch import save_file
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
@@ -45,9 +46,6 @@ def run() -> dict:
         # rejects that otherwise valid file before reading any tensors.
         # Produce a temporary, tensor-identical reference copy with the
         # standard metadata field. The original source hash remains recorded.
-        import shutil
-        from safetensors.torch import save_file
-
         reference_dir = Path(directory) / "hf_reference"
         reference_dir.mkdir()
         shutil.copy2(Path(local) / "config.json", reference_dir / "config.json")
