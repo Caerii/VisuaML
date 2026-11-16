@@ -25,6 +25,7 @@ from examples.llama_polymorphic_bench_v22 import benchmark as benchmark_polymorp
 from examples.llama_semantic_bench_v20 import benchmark
 from examples.llama_template_bench_v23 import benchmark as benchmark_template
 from examples.shared_weights_bench_v24 import benchmark as benchmark_shared_weights
+from visuaml.compiler_lab.active_models_v27 import ActiveModelLlamaRegistry
 from visuaml.compiler_lab.compiled_template_v23 import CompiledLlamaTemplate
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
@@ -351,6 +352,39 @@ def run() -> dict:
             raise AssertionError("Session lease was not released on context exit")
         if managed_registry.report()["active_kv_logical_bytes"] != 0:
             raise AssertionError("KV byte quota leaked after lease release")
+        model_module_bytes = shared_weights.report()["weight_module_logical_bytes"]
+        lifetime_registry = ActiveModelLlamaRegistry(
+            max_cached_weight_bytes=model_module_bytes + 4096,
+            max_active_model_weight_bytes=2 * model_module_bytes + 4096,
+            max_active_kv_bytes=2 * max(4096, reserved_kv),
+            max_active_sessions=2,
+        )
+        lifetime_key = lifetime_registry.register(compiled)
+        old_lifetime = lifetime_registry.new_session(lifetime_key)
+        np.testing.assert_allclose(
+            old_lifetime.step(cases[0]), hybrid_reference,
+            atol=5e-4, rtol=5e-4
+        )
+        if not lifetime_registry.evict(lifetime_key):
+            raise AssertionError("Model should be evicted while an old lease exists")
+        lifetime_registry.register(compiled)
+        new_lifetime = lifetime_registry.new_session(lifetime_key)
+        np.testing.assert_allclose(
+            new_lifetime.step(cases[0]), hybrid_reference,
+            atol=5e-4, rtol=5e-4
+        )
+        if (
+            lifetime_registry.report()["distinct_active_model_modules"] != 2
+            or lifetime_registry.report()["active_model_weight_logical_bytes"]
+            != 2 * model_module_bytes
+        ):
+            raise AssertionError("Distinct evicted and readmitted model modules not counted")
+        old_lifetime.close()
+        if lifetime_registry.report()["distinct_active_model_modules"] != 1:
+            raise AssertionError("The old module was not released")
+        new_lifetime.close()
+        if lifetime_registry.report()["active_model_weight_logical_bytes"] != 0:
+            raise AssertionError("Active model-module bytes leaked after all leases closed")
 
         return {
             "schema": "visuaml.pretrained-llama-parity.v20",
@@ -367,6 +401,8 @@ def run() -> dict:
             "v25_evicted_session_remains_correct": True,
             "v26_leased_registry": managed_registry.report(),
             "v26_eviction_preserves_active_execution": True,
+            "v27_active_model_lifetime": lifetime_registry.report(),
+            "v27_evicted_model_readmission_verified": True,
             "v24_isolated_cursors": [client_a.cursor, client_b.cursor],
             "v23_isolated_session_cursors": [
                 first_client.cursor, second_client.cursor,
