@@ -8,7 +8,6 @@ Numerical parity is checked before reporting timings.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import platform
