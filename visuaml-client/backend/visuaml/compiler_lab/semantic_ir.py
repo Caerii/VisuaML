@@ -252,10 +252,13 @@ def validate_semantic_program(program: SemanticProgram) -> None:
             operations += region.repetitions
             if operations > 16384:
                 raise SemanticIRError("Expanded operator admission budget exceeded")
+    # Effect programs may expose computed SSA results (e.g. decoder logits)
+    # in addition to mutable state cells. Admission still requires every
+    # returned result to have a producer in the declared regions.
     allowed_outputs = {x for x, _ in (*program.input_types, *program.state_types)}
-    if program.origin == "torch-fx":
-        allowed_outputs |= {
-            op.result for region in program.regions for op in region.operations
-        }
+    allowed_outputs |= {
+        op.result for region in program.regions for op in region.operations
+        if op.result is not None
+    }
     if not program.outputs or not set(program.outputs).issubset(allowed_outputs):
         raise SemanticIRError("Unknown or missing output")
