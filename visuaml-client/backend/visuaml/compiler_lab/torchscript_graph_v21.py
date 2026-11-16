@@ -96,6 +96,7 @@ class _LlamaTraceModule(nn.Module):
         weights = {name: getattr(self, attr) for name, attr in self._attributes.items()}
         env: dict[str, torch.Tensor] = {"tokens": tokens, **weights}
         pending: dict[int, torch.Tensor] = {}
+        produced: dict[str, torch.Tensor] = {}
         start = past[-1] if self.cursor_polymorphic else past[0].shape[1]
         qlength = tokens.shape[1]
         total = start + qlength
@@ -106,10 +107,7 @@ class _LlamaTraceModule(nn.Module):
         for op in self.operations:
             kind = op.op
             if kind == "read_cache":
-                result = (
-                    torch.narrow(history[op.state_cell], 1, 0, total)
-                    if self.cursor_polymorphic else history[op.state_cell]
-                )
+                result = history[op.state_cell]
             else:
                 args = tuple(env[name] for name in op.operands)
                 if kind == "stage_key":
@@ -119,12 +117,18 @@ class _LlamaTraceModule(nn.Module):
                     layer = dict(op.parameters)["layer"]
                     key_update = pending.pop(layer)
                     if self.cursor_polymorphic:
-                        history[f"k{layer}"] = history[f"k{layer}"].index_copy(
-                            1, positions, key_update
-                        )
-                        history[f"v{layer}"] = history[f"v{layer}"].index_copy(
-                            1, positions, args[0]
-                        )
+                        # The input cache has fixed physical capacity, but
+                        # attention needs only the committed logical prefix.
+                        # Keep the *new* suffix as an effect output; no full
+                        # padded cache copy needs to leave the graph.
+                        history[f"k{layer}"] = torch.cat((
+                            torch.narrow(history[f"k{layer}"], 1, 0, start), key_update
+                        ), dim=1)
+                        history[f"v{layer}"] = torch.cat((
+                            torch.narrow(history[f"v{layer}"], 1, 0, start), args[0]
+                        ), dim=1)
+                        produced[f"k{layer}"] = key_update
+                        produced[f"v{layer}"] = args[0]
                     else:
                         history[f"k{layer}"] = torch.cat(
                             (history[f"k{layer}"], key_update), dim=1
@@ -195,10 +199,11 @@ class _LlamaTraceModule(nn.Module):
             env[op.result] = result
         if pending or "logits" not in env:
             raise WholeGraphError("Compiled graph left an uncommitted state effect")
+        state_outputs = produced if self.cursor_polymorphic else history
         return (
             env["logits"],
             *(
-                history[f"{kind}{layer}"]
+                state_outputs[f"{kind}{layer}"]
                 for layer in range(self.layers) for kind in ("k", "v")
             ),
         )
@@ -240,6 +245,8 @@ class TorchScriptWholeGraphSession:
         ).new_session()
         self._compiled: dict[tuple[int, int, int], torch.jit.ScriptModule] = {}
         self._trace_records: list[GraphTraceRecord] = []
+        self._host_kv_input_bytes = 0
+        self._graph_kv_output_bytes = 0
 
     @property
     def cursor(self) -> int:
@@ -279,6 +286,10 @@ class TorchScriptWholeGraphSession:
         )
         input_tokens = torch.from_numpy(tokens.copy(order="C"))
         prior = self._state_inputs()
+        self._host_kv_input_bytes += sum(
+            value.numel() * value.element_size()
+            for value in prior[:2 * self.layers]
+        )
         if signature not in self._compiled:
             if len(self._compiled) >= MAX_TRACED_SPECIALIZATIONS:
                 raise WholeGraphError("TorchScript shape-specialization budget exceeded")
@@ -309,13 +320,16 @@ class TorchScriptWholeGraphSession:
             or logits.dtype != np.float32 or not np.isfinite(logits).all()
         ):
             raise WholeGraphError("Compiled graph returned invalid logits")
+        self._graph_kv_output_bytes += sum(
+            value.numel() * value.element_size() for value in result[1:]
+        )
         staged: list[tuple[np.ndarray, np.ndarray]] = []
         for layer in range(self.layers):
             k = result[1 + 2 * layer].detach().cpu().numpy()
             v = result[2 + 2 * layer].detach().cpu().numpy()
             expected = (
                 self.batch,
-                self.capacity if self.cursor_polymorphic else start + query,
+                query if self.cursor_polymorphic else start + query,
                 self.kv_heads, self.depth,
             )
             if (
@@ -326,24 +340,16 @@ class TorchScriptWholeGraphSession:
                 raise WholeGraphError("Compiled graph returned invalid layer KV state")
             prior_keys = self.cache._arrays[f"k{layer}"][:, :start]
             prior_values = self.cache._arrays[f"v{layer}"][:, :start]
-            if start and (
+            if not self.cursor_polymorphic and start and (
                 not np.array_equal(k[:, :start], prior_keys)
                 or not np.array_equal(v[:, :start], prior_values)
             ):
                 raise WholeGraphError("Compiled graph altered previously committed KV state")
-            if self.cursor_polymorphic and (
-                not np.array_equal(
-                    k[:, start + query:], self.cache._arrays[f"k{layer}"][:, start + query:]
-                )
-                or not np.array_equal(
-                    v[:, start + query:], self.cache._arrays[f"v{layer}"][:, start + query:]
-                )
-            ):
-                raise WholeGraphError("Compiled graph modified unrelated KV storage")
-            staged.append((
-                k[:, start:start + query].copy(),
-                v[:, start:start + query].copy(),
-            ))
+            # No mutable state can be reached by the trusted traced graph:
+            # all CPU inputs are detached copies, and KV updates are pure
+            # concatenations. Only the validated suffix is committed.
+            suffix = slice(None) if self.cursor_polymorphic else slice(start, start + query)
+            staged.append((k[:, suffix].copy(), v[:, suffix].copy()))
         with self.cache.begin_append(query) as tx:
             for layer, (keys, values) in enumerate(staged):
                 tx.stage(layer, keys, values)
@@ -404,6 +410,8 @@ class TorchScriptWholeGraphSession:
                 "torchscript_poly" if self.cursor_polymorphic else "torchscript_graph"
             ),
             "dynamic_query_and_cursor": self.cursor_polymorphic,
+            "cumulative_kv_input_tensor_bytes": self._host_kv_input_bytes,
+            "cumulative_kv_output_tensor_bytes": self._graph_kv_output_bytes,
             "checkpoint_sha256": self.plan.weights.checkpoint_sha256,
             "semantic_sha256": self.plan.semantic_sha256,
             "specializations": len(self._compiled),
