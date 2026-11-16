@@ -41,12 +41,12 @@ def test_published_acceptance_weights_and_progress_are_reproducible(manifest):
             gate["weight"] for gate in stream["criteria"]
             if gate["status"] == "verified"
         )
-    assert progress["backends"] < 50  # Do not mistake TorchScript for independent AOT.
+    assert progress["backends"] == 60  # Real C++ CPU accepted; GPU and portable AOT remain.
     assert progress["hardware"] < 50  # Simulated placement is not physical execution.
     score = sum(
         stream["weight"] * progress[stream["id"]] for stream in streams
     ) / 100
-    assert score == 66.5
+    assert score == 72.5
 
 
 def test_evidence_urls_are_local_to_the_public_repository(manifest):

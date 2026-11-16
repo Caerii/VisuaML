@@ -1,7 +1,7 @@
 {
   "schema": "visuaml.public-research-roadmap.v1",
   "asOf": "2026-11-16",
-  "referenceCommit": "3ed102286817a0bff76121fc13fa907dd86e762a",
+  "referenceCommit": "ae81a54a1d3e4d7dba8d926cc045ba58cd8f7213",
   "project": "VisuaML",
   "title": "An open ledger of computational progress",
   "subtitle": "What we have made executable, what the evidence actually establishes, and the work that remains between a promising compiler and a serious scientific instrument.",
@@ -243,8 +243,8 @@
       "weight": 20,
       "summary": "A compiler becomes useful across machines when its semantics can survive translation into different physical execution systems.",
       "impact": "Native compilation and hardware calibration determine whether this work can become a genuine hardware-algorithm co-design platform.",
-      "now": "Reference NumPy and complete CPU TorchScript execution are verified. Independent C++ lowering is underway, not yet certified.",
-      "next": "Certify a truly independent native CPU implementation, then build a competitive GPU backend and portable compiled artifacts.",
+      "now": "The admitted NumPy reference, TorchScript whole graph, and independently compiled C++17 CPU decoder now pass bounded model and state witnesses, including a pinned real checkpoint. Native performance competitiveness remains unproven.",
+      "next": "Benchmark the independent scalar C++ kernel honestly, then implement an optimized vectorized CPU backend and a genuinely measured GPU target; provide a portable, independently loadable artifact.",
       "criteria": [
         {
           "id": "baseline",
@@ -276,9 +276,22 @@
           "id": "native",
           "title": "Independently generated native C++ CPU kernel",
           "weight": 30,
-          "status": "in-progress",
-          "why": "A native backend must execute the admitted mathematics without delegating computation to PyTorch or NumPy, then pass numerical/KV tests.",
-          "evidence": []
+          "status": "verified",
+          "why": "A static, independently compiled C++17 whole-decoder kernel executed the pinned trained Tiny Llama checkpoint, matched Hugging Face logits and the NumPy semantic oracle, and preserved chunked KV state under verified numeric tolerances. Scalar CPU mathematics; no GPU or speedup claim.",
+          "evidence": [
+            {
+              "label": "Pinned native C++ model parity",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_native_cpu_v28.json"
+            },
+            {
+              "label": "Native C++17 source",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.cpp"
+            },
+            {
+              "label": "CI numerical verification",
+              "url": "https://github.com/Caerii/VisuaML/actions/runs/43952463605"
+            }
+          ]
         },
         {
           "id": "gpu",
