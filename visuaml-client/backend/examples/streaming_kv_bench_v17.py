@@ -18,7 +18,6 @@ from pathlib import Path
 
 import numpy as np
 import torch
-
 from visuaml.compiler_lab.stacked_decoder_v14 import StackedWeights
 from visuaml.compiler_lab.streaming_decoder_v16 import StreamingStackedDecoder
 
