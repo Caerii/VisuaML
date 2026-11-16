@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
-
 from test_hf_llama_checkpoint_v19 import fixture
 from visuaml.compiler_lab.active_models_v27 import (
     ActiveModelBudgetExceeded,
@@ -55,7 +54,7 @@ def test_duplicate_leases_one_weight_module_until_final_release(tmp_path):
     assert entries[0]["leases"] == 2 and entries[0]["still_cached"]
     assert registry.evict(key)
     assert registry.report()["active_model_weight_logical_bytes"] == cost
-    assert not list(registry.report()["active_model_lease_counts"].values())[0]["still_cached"]
+    assert not next(iter(registry.report()["active_model_lease_counts"].values()))["still_cached"]
     with pytest.raises(TemplateNotCached):
         registry.new_session(key)
     ids = np.array([[1, 2]], np.int64)
@@ -97,7 +96,7 @@ def test_evicted_and_readmitted_identical_digest_count_as_two_modules(tmp_path):
 
 
 def test_active_weight_budget_blocks_new_module_but_not_same_model_leases(tmp_path):
-    model_a, plan_a, cost_a, kv_a = build(tmp_path, 1)
+    _, plan_a, cost_a, kv_a = build(tmp_path, 1)
     _, plan_b, cost_b, kv_b = build(tmp_path, 2)
     registry = ActiveModelLlamaRegistry(
         max_cached_weight_bytes=max(cost_a, cost_b) + 4096,
