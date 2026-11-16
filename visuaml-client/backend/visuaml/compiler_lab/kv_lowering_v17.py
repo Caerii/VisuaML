@@ -74,8 +74,7 @@ def make_kv_semantic_program(
     )
     inputs = tuple((f"chunk_{name}", ValueType(chunk_shape, "float32", None)) for name in slots)
     operations: list[SemanticOperation] = []
-    effect_index = 0
-    for name in slots:
+    for effect_index, name in enumerate(slots):
         result = f"next_{name}"
         operations.append(
             SemanticOperation(
@@ -102,7 +101,6 @@ def make_kv_semantic_program(
                 token_out=f"e{effect_index + 1}",
             )
         )
-        effect_index += 1
     origin_spec = (SCHEMA, batch, layers, kv_heads, head_dim, capacity)
     program = SemanticProgram(
         origin="effect-program",

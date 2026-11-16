@@ -4,7 +4,6 @@ from dataclasses import replace
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.kv_lowering_v17 import (
     KVLoweringError,
     KVSnapshot,
