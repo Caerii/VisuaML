@@ -55,7 +55,8 @@ export function parseRoadmap(value: unknown): RoadmapManifest {
     !text(value.asOf) || !/^\d{4}-\d{2}-\d{2}$/.test(value.asOf) ||
     !text(value.referenceCommit) || !/^[a-f0-9]{40}$/.test(value.referenceCommit) ||
     !object(value.methodology) ||
-    !['name', 'text', 'caveat', 'refresh'].every((field) => text(value.methodology[field])) ||
+    !text(value.methodology.name) || !text(value.methodology.text) ||
+    !text(value.methodology.caveat) || !text(value.methodology.refresh) ||
     !Array.isArray(value.workstreams) || value.workstreams.length === 0 ||
     value.workstreams.length > 20
   ) {
