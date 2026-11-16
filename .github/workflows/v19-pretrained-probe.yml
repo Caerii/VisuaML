@@ -1,4 +1,4 @@
-name: v19 pretrained TinyStories Llama parity probe
+name: v21 pinned pretrained Llama whole-graph parity and benchmark
 on:
   push:
     branches:
@@ -6,6 +6,7 @@ on:
     paths:
       - visuaml-client/backend/scripts/probe_real_llama_v19.py
       - visuaml-client/backend/visuaml/compiler_lab/llama_semantic_v20.py
+      - visuaml-client/backend/visuaml/compiler_lab/torchscript_graph_v21.py
       - visuaml-client/backend/visuaml/compiler_lab/torchscript_primitives_v19.py
       - visuaml-client/backend/visuaml/compiler_lab/fused_ffn_v20.py
       - visuaml-client/backend/visuaml/compiler_lab/sentencepiece_tokenizer_v20.py

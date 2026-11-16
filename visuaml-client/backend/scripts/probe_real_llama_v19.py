@@ -117,6 +117,8 @@ def run() -> dict:
         np.testing.assert_allclose(
             streaming_rest, full_logits[:, 4:], rtol=5e-4, atol=5e-4
         )
+        whole_graph = compiled.new_session(backend="torchscript_graph")
+        whole_graph_logits = whole_graph.step(cases[0])
         hybrid = compiled.new_session(backend="torchscript_hybrid")
         hybrid_logits = hybrid.step(cases[0])
         fused = compiled.new_session(backend="torchscript_fused")
@@ -127,10 +129,23 @@ def run() -> dict:
             hybrid_logits, hybrid_reference, rtol=5e-4, atol=5e-4
         )
         np.testing.assert_allclose(
+            whole_graph_logits, hybrid_reference, rtol=5e-4, atol=5e-4
+        )
+        np.testing.assert_allclose(
             fused_logits, hybrid_reference, rtol=5e-4, atol=5e-4
         )
         if hybrid.report()["compiled_primitive_calls"] <= 0:
             raise ValueError("Hybrid backend failed to execute a compiled primitive")
+        functional_graph = compiled.new_session(backend="torchscript_graph")
+        functional_graph.step(full_tokens[:, :3])
+        graph_second = functional_graph.step(full_tokens[:, 3:4])
+        graph_tail = functional_graph.step(full_tokens[:, 4:])
+        np.testing.assert_allclose(
+            graph_second, full_logits[:, 3:4], rtol=5e-4, atol=5e-4
+        )
+        np.testing.assert_allclose(
+            graph_tail, full_logits[:, 4:], rtol=5e-4, atol=5e-4
+        )
         greedy = compiled.new_session()
         generated, _ = greedy.generate(cases[0], steps=3)
         current = cases[0].copy()
@@ -174,7 +189,8 @@ def run() -> dict:
                 "logit_max_abs_error": float(np.max(np.abs(compiler_logits - oracle_logits))),
             })
         timing_evidence = benchmark(
-            importer, lengths=(4, 8, 16), trials=5, include_hybrid=True
+            importer, lengths=(4, 8, 16), trials=5,
+            include_hybrid=True, include_whole_graph=True,
         )
         return {
             "schema": "visuaml.pretrained-llama-parity.v20",
@@ -197,6 +213,9 @@ def run() -> dict:
             "hybrid_compiled_primitive_calls": hybrid.report()["compiled_primitive_calls"],
             "hybrid_compiled_primitive_specializations": hybrid.report()["compiled_primitive_specializations"],
             "hybrid_max_abs_error": float(np.max(np.abs(hybrid_logits - hybrid_reference))),
+            "whole_graph_max_abs_error": float(np.max(np.abs(whole_graph_logits - hybrid_reference))),
+            "whole_graph_streaming_past_tokens": functional_graph.cursor,
+            "whole_graph_trace_count": len(functional_graph.report()["traces"]),
             "fused_ffn_region_calls": fused.report()["fused_ffn_region_calls"],
             "fused_ffn_max_abs_error": float(np.max(np.abs(fused_logits - hybrid_reference))),
             "greedy_tokens_match_hf_recompute": True,
@@ -210,7 +229,7 @@ def run() -> dict:
             "limitations": [
                 "Tokenizer parity is verified on only two short text witnesses.",
                 "v20 uses a Llama-specific typed dialect rather than unrestricted model IR.",
-                "TorchScript hybrid compiles only selected arithmetic, not the whole decoder.",
+                "v21 TorchScript graph compiles all decoder math for concrete shapes, not standalone AOT or polymorphic decode.",
                 "No physical GPU/photonic device or throughput claim.",
             ],
         }

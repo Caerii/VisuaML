@@ -41,6 +41,7 @@ def benchmark(
     model: LlamaLocalCheckpoint, *, lengths: tuple[int, ...] = (4, 8, 16),
     trials: int = 9,
     include_hybrid: bool = True,
+    include_whole_graph: bool = False,
 ) -> dict:
     if (
         type(trials) is not int or not 2 <= trials <= 100
@@ -55,6 +56,8 @@ def benchmark(
     plan = lower_llama_semantic_program(program, model)
     compilation_ms = (time.perf_counter_ns() - started) / 1e6
     backends = ("numpy", "torchscript_hybrid", "torchscript_fused") if include_hybrid else ("numpy",)
+    if include_whole_graph:
+        backends = (*backends, "torchscript_graph")
     results = []
     for n in lengths:
         tokens = (np.arange(1, n + 1, dtype=np.int64) % model.profile.vocabulary)[None, :]
@@ -87,6 +90,14 @@ def benchmark(
                 engines["torchscript_fused"].report()["fused_ffn_specializations"]
                 if include_hybrid else 0
             ),
+            "whole_graph_trace": (
+                engines["torchscript_graph"].report()["traces"]
+                if include_whole_graph else []
+            ),
+            "whole_graph_kv_reserved_bytes": (
+                engines["torchscript_graph"].report()["reserved_bytes"]
+                if include_whole_graph else None
+            ),
             "parity": "full logits verified against independent local reference",
         })
     return {
@@ -107,7 +118,7 @@ def benchmark(
         "results": results,
         "limitations": [
             "CPU only, small bounded prompts, no serving concurrency.",
-            "TorchScript is a hybrid primitive compiler, not a full compiled model.",
+            "v21 TorchScript graph compiles the whole decoder for concrete shapes, but not standalone AOT or dynamic-shape compile-once.",
             "Physical RSS, GPU time, compile cost of individual TorchScript kernels and energy not measured.",
         ],
     }
@@ -120,12 +131,14 @@ def main() -> None:
     parser.add_argument("--lengths", type=int, nargs="+", default=[4, 8, 16])
     parser.add_argument("--trials", type=int, default=9)
     parser.add_argument("--no-hybrid", action="store_true")
+    parser.add_argument("--include-whole-graph", action="store_true")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     model = load_hf_llama_local(args.checkpoint, declared_revision=args.revision)
     result = benchmark(
         model, lengths=tuple(args.lengths), trials=args.trials,
         include_hybrid=not args.no_hybrid,
+        include_whole_graph=args.include_whole_graph,
     )
     wire = json.dumps(result, indent=2, sort_keys=True) + "\n"
     if args.output:
