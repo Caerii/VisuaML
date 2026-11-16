@@ -101,7 +101,7 @@ def test_active_weight_budget_blocks_new_module_but_not_same_model_leases(tmp_pa
     _, plan_b, cost_b, kv_b = build(tmp_path, 2)
     registry = ActiveModelLlamaRegistry(
         max_cached_weight_bytes=max(cost_a, cost_b) + 4096,
-        max_active_model_weight_bytes=cost_a + 4096,
+        max_active_model_weight_bytes=max(cost_a, cost_b) + 4096,
         max_active_kv_bytes=max(4096, kv_a * 3 + kv_b),
         max_active_sessions=4,
     )
