@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FamilyBlockEvidence } from './FamilyBlockEvidence';
 import { DecoderAOTEvidence } from './DecoderAOTEvidence';
 import { StackedDecoderEvidence } from './StackedDecoderEvidence';
+import { SemanticDecoderEvidence } from './SemanticDecoderEvidence';
 import './ArchitectureAtlas.css';
 
 type Coverage = {
@@ -304,6 +305,7 @@ export function ArchitectureAtlasPage() {
                   <FamilyBlockEvidence architectureId={selected.id} />
                   <DecoderAOTEvidence architectureId={selected.id} />
                   <StackedDecoderEvidence architectureId={selected.id} />
+                  <SemanticDecoderEvidence architectureId={selected.id} />
                   <div className="atlas-acceptance">
                     <h3>What would establish genuine support?</h3>
                     <p>
