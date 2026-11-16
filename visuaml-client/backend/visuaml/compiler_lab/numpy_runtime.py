@@ -14,9 +14,9 @@ from pathlib import Path
 from zipfile import ZipFile, BadZipFile
 
 try:
-    from .ir_contract import DEFAULT_POLICY, ResourcePolicy, validate_portable_ir, IRContractError
+    from .ir_contract import DEFAULT_POLICY, ResourcePolicy, validate_portable_ir
 except ImportError:  # standalone PyTorch-free deployment directory
-    from ir_contract import DEFAULT_POLICY, ResourcePolicy, validate_portable_ir, IRContractError
+    from ir_contract import DEFAULT_POLICY, ResourcePolicy, validate_portable_ir
 from typing import Any
 
 import numpy as np
