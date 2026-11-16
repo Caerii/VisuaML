@@ -43,8 +43,14 @@ dedicated NumPy full-prefill executor reproduces conventional half-RoPE,
 GQA, RMSNorm, SwiGLU and final model normalization. Independent PyTorch eager
 tests run against locally generated HF-shaped safetensors fixtures.
 
-This is a functional local Llama checkpoint loader, **not yet certification of
-any downloaded pretrained model**. Its revision is user-declared provenance,
+The pinned TinyStories-trained model manojredhat/tiny-llama at revision
+756e9746eb801752d69771ef3e9bc433b21d853d passed **real pretrained
+full-prefill logits parity** against the Hugging Face PyTorch CPU reference
+on 4-token and 6-token sequences. Recorded worst absolute logit errors were
+1.13249e-6 and 1.37091e-6. See benchmarks/pretrained_llama_parity_v19.json
+and the completed pretrained parity GitHub Actions run 43804918553.
+This certifies those exact witnesses, not tokenizer behavior, all prompts,
+incremental KV decoding, or compiler IR lowering for pretrained weights. Its revision is user-declared provenance,
 not cryptographic evidence of a remote repository identity. Scaling RoPE,
 arbitrary head sizes, attention biases, sharded models and unsupported configs
 are deliberately rejected. It does not yet perform incremental token streaming,
@@ -88,9 +94,9 @@ It compares two software CPU paths, not full model serving or GPU execution.
 
 ## Remaining acceptance gates for v20
 
-1. Pin a real pretrained Llama checkpoint and tokenizer with independent
-   source/config/weight digests and license; run framework-versus-importer
-   logits, gradients where relevant, and generation across real prompts.
+1. Expand the pinned real Llama witness beyond two integer-token prompts:
+   validate its tokenizer, generation, incremental K/V state, checkpoint
+   licensing and a broader numerical/precision error suite.
 2. Lower actual Llama rotary, final normalization and checkpoint contracts
    through a common, more general semantic IR.
 3. Turn symbolic lifetimes into alias-safe allocation reuse, and measure actual
