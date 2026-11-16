@@ -21,6 +21,7 @@ from safetensors.torch import save_file
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
+from examples.llama_polymorphic_bench_v22 import benchmark as benchmark_polymorphic
 from examples.llama_semantic_bench_v20 import benchmark
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
@@ -192,9 +193,34 @@ def run() -> dict:
             importer, lengths=(4, 8, 16), trials=5,
             include_hybrid=True, include_whole_graph=True,
         )
+        polymorphic_evidence = benchmark_polymorphic(
+            importer, chunks=(4, 1, 1, 1, 3, 2), trials=5,
+        )
+        poly_compilation = polymorphic_evidence["compilation"]
+        if (
+            poly_compilation["torchscript_polymorphic_v22"]["specializations"] != 1
+            or poly_compilation["torchscript_specialized_v21"]["specializations"] != 6
+        ):
+            raise AssertionError("Runtime-shape graph reuse did not satisfy the certificate")
+        poly = compiled.new_session(backend="torchscript_poly")
+        poly.step(full_tokens[:, :3])
+        poly_second = poly.step(full_tokens[:, 3:4])
+        poly_tail = poly.step(full_tokens[:, 4:])
+        np.testing.assert_allclose(
+            poly_second, full_logits[:, 3:4], rtol=5e-4, atol=5e-4,
+        )
+        np.testing.assert_allclose(
+            poly_tail, full_logits[:, 4:], rtol=5e-4, atol=5e-4,
+        )
+        if poly.report()["specializations"] != 1:
+            raise AssertionError("One compiled graph must support irregular KV positions")
+
         return {
             "schema": "visuaml.pretrained-llama-parity.v20",
             "matched_cpu_benchmark": timing_evidence,
+            "polymorphic_cpu_benchmark": polymorphic_evidence,
+            "v22_cursor_polymorphic_graphs": poly.report()["specializations"],
+            "v22_streaming_tokens": poly.cursor,
             "source": MODEL_ID,
             "declared_source_revision": revision,
             "checkpoint_sha256": importer.checkpoint_sha256,
