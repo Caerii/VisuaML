@@ -19,7 +19,6 @@ import time
 from pathlib import Path
 
 import numpy as np
-
 from visuaml.compiler_lab.compiled_template_v23 import CompiledLlamaTemplate
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import (
     LlamaLocalCheckpoint,
