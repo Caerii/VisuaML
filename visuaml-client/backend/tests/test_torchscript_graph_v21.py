@@ -135,7 +135,7 @@ def test_ir_wiring_is_validated_before_compilation(tmp_path):
 
 
 def test_compiled_generation_matches_numpy_recompute(tmp_path):
-    _, _, model, plan = prepare(tmp_path, layers=1)
+    _, _, _, plan = prepare(tmp_path, layers=1)
     original = plan.new_session()
     compiled = plan.new_session(backend="torchscript_graph")
     prompt = np.array([[1, 3, 4]], np.int64)
