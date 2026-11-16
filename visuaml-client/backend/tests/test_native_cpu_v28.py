@@ -80,7 +80,7 @@ def test_native_whole_decoder_matches_independent_numpy_and_torch(
 
 
 def test_native_generation_and_checkpoint_restore(tmp_path):
-    _, _, model, plan = prepare(tmp_path, layers=2, batch=1)
+    _, _, _, plan = prepare(tmp_path, layers=2, batch=1)
     native = NativeCpuLlamaCompiler(plan).new_session()
     semantic = plan.new_session()
     prompt = np.array([[1, 2, 3]], dtype=np.int64)
