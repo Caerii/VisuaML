@@ -1,0 +1,567 @@
+{
+  "schema": "visuaml.public-research-roadmap.v1",
+  "asOf": "2026-11-16",
+  "referenceCommit": "3ed102286817a0bff76121fc13fa907dd86e762a",
+  "project": "VisuaML",
+  "title": "An open ledger of computational progress",
+  "subtitle": "What we have made executable, what the evidence actually establishes, and the work that remains between a promising compiler and a serious scientific instrument.",
+  "methodology": {
+    "name": "Verified acceptance gates",
+    "text": "Each workstream is a set of explicitly weighted acceptance gates totalling 100 points. A gate contributes its full weight only when marked verified and linked to source or reproducible evidence. In-progress and planned work contribute zero. Workstream percentages are the sum of verified gate weights; the portfolio percentage is a weighted average across workstreams.",
+    "caveat": "These percentages describe completion of the published acceptance plan—not research certainty, elapsed time, engineering difficulty, production readiness, or an industry-wide benchmark. Criteria and weights are editorial choices, versioned in Git; new requirements may change percentages.",
+    "refresh": "This is a versioned public snapshot, not a live monitor. It updates when the roadmap data is reviewed, merged, and the site deploys. For the latest underlying code, inspect the linked repository and CI."
+  },
+  "workstreams": [
+    {
+      "id": "workbench",
+      "title": "Collaborative research workbench",
+      "kicker": "EXPLORATION & INTERACTION",
+      "weight": 15,
+      "summary": "The browser should become a place where several minds can examine one computation without losing its mathematical structure.",
+      "impact": "Shared exploration turns an algorithm from an isolated developer artifact into an object researchers can jointly investigate.",
+      "now": "Graph interaction, Yjs collaboration, bounded FX analysis and compiler evidence inspection exist.",
+      "next": "Connect the evidence ledger to richer graph inspection; independently audit accessibility and real-world collaborative usability.",
+      "criteria": [
+        {
+          "id": "interactive",
+          "title": "Interactive graph and tensor inspection",
+          "weight": 20,
+          "status": "verified",
+          "why": "React Flow diagrams, tensor metadata and three-dimensional previews are implemented.",
+          "evidence": [
+            {
+              "label": "Graph client",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/visuaml-client/src/MainApp.tsx"
+            }
+          ]
+        },
+        {
+          "id": "collaboration",
+          "title": "Collaborative state and presence",
+          "weight": 20,
+          "status": "verified",
+          "why": "Yjs synchronizes document state and collaborative presence.",
+          "evidence": [
+            {
+              "label": "WebSocket service",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/visuaml-client/server/websocket.ts"
+            }
+          ]
+        },
+        {
+          "id": "fx",
+          "title": "Trusted FX analysis",
+          "weight": 15,
+          "status": "verified",
+          "why": "Admitted model examples can be represented and examined through the local Python backend.",
+          "evidence": [
+            {
+              "label": "Compiler architecture",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/ARCHITECTURE.md"
+            }
+          ]
+        },
+        {
+          "id": "inspector",
+          "title": "Live typed IR inspection",
+          "weight": 15,
+          "status": "verified",
+          "why": "The Atlas can display a bounded, independently checked semantic decoder witness.",
+          "evidence": [
+            {
+              "label": "Inspection endpoint",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/visuaml-client/server/semanticInspection.ts"
+            }
+          ]
+        },
+        {
+          "id": "studio",
+          "title": "Unified research and evidence studio",
+          "weight": 15,
+          "status": "in-progress",
+          "why": "Bring typed operations, model identity, measurements and provenance into one navigable research surface.",
+          "evidence": []
+        },
+        {
+          "id": "usability",
+          "title": "Independent accessibility and usability audit",
+          "weight": 15,
+          "status": "planned",
+          "why": "Verify keyboard navigation, screen-reader semantics and collaboration with real users.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "semantics",
+      "title": "Executable semantic representation",
+      "kicker": "COMPILER FOUNDATIONS",
+      "weight": 20,
+      "summary": "Optimization only deserves to be trusted when the system can distinguish what a program means from how it happens to run.",
+      "impact": "An explicit semantic boundary allows transformations to be inspected, rejected or reused across implementations.",
+      "now": "Typed operations, state ordering, graph-driven decoder math and checkpoint binding have independent tests.",
+      "next": "Generalize the operator and effect contract to genuinely different pretrained architectures.",
+      "criteria": [
+        {
+          "id": "typed",
+          "title": "Typed tensors and SSA operations",
+          "weight": 20,
+          "status": "verified",
+          "why": "The SemanticProgram represents typed values, regions and operations.",
+          "evidence": [
+            {
+              "label": "Semantic IR",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/visuaml-client/backend/visuaml/compiler_lab/semantic_ir.py"
+            }
+          ]
+        },
+        {
+          "id": "effects",
+          "title": "Transactional state effects",
+          "weight": 20,
+          "status": "verified",
+          "why": "KV writes, snapshots, failures and atomic cursor publication are exercised.",
+          "evidence": [
+            {
+              "label": "KV lowering",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/KV_SEMANTIC_LOWERING_V17.md"
+            }
+          ]
+        },
+        {
+          "id": "math",
+          "title": "Graph-driven mathematical execution",
+          "weight": 20,
+          "status": "verified",
+          "why": "The bounded decoder executes arithmetic from declared operations.",
+          "evidence": [
+            {
+              "label": "v18 proof",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/SEMANTIC_DECODER_V18.md"
+            }
+          ]
+        },
+        {
+          "id": "binding",
+          "title": "Checkpoint-bound canonical admission",
+          "weight": 20,
+          "status": "verified",
+          "why": "Model tensors and graph identity are checked before execution.",
+          "evidence": [
+            {
+              "label": "Real-model contract",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/V20_REAL_LLAMA_SEMANTIC_PIPELINE.md"
+            }
+          ]
+        },
+        {
+          "id": "general",
+          "title": "At least two independent pretrained families",
+          "weight": 20,
+          "status": "planned",
+          "why": "One Llama-specific success does not establish a universal compiler.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "models",
+      "title": "Real-model and tokenizer fidelity",
+      "kicker": "MODEL COMPATIBILITY",
+      "weight": 15,
+      "summary": "A compiler matters only when it can preserve the behavior of real learned systems, including their inconvenient details.",
+      "impact": "Real checkpoint fidelity bridges elegant intermediate representations with scientific reproducibility.",
+      "now": "The pinned Tiny Llama checkpoint, tokenizer witnesses, KV decode and canonical bundle have been exercised.",
+      "next": "Add another independently certified family and expand adversarial real-model coverage.",
+      "criteria": [
+        {
+          "id": "checkpoint",
+          "title": "Real pinned safetensors checkpoint",
+          "weight": 25,
+          "status": "verified",
+          "why": "A named model revision and file hashes have independent numerical witnesses.",
+          "evidence": [
+            {
+              "label": "Model evidence",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_semantic_v20.json"
+            }
+          ]
+        },
+        {
+          "id": "tokenizer",
+          "title": "Tokenizer-to-model agreement",
+          "weight": 15,
+          "status": "verified",
+          "why": "Two explicit text witnesses match the reference tokenizer and logits.",
+          "evidence": [
+            {
+              "label": "Tokenization evidence",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_text_pipeline_v20.json"
+            }
+          ]
+        },
+        {
+          "id": "stream",
+          "title": "Incremental stateful decoding",
+          "weight": 25,
+          "status": "verified",
+          "why": "Chunked logits and KV states match independent references for admitted contexts.",
+          "evidence": [
+            {
+              "label": "Streaming evidence",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_polymorphic_kv_v22.json"
+            }
+          ]
+        },
+        {
+          "id": "bundle",
+          "title": "Checkpoint-bound executable bundle",
+          "weight": 15,
+          "status": "verified",
+          "why": "Strict reload refuses modified or unauthorized graphs.",
+          "evidence": [
+            {
+              "label": "Bundle implementation",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/visuaml-client/backend/visuaml/compiler_lab/llama_bundle_v20.py"
+            }
+          ]
+        },
+        {
+          "id": "family",
+          "title": "Additional pretrained architecture family",
+          "weight": 20,
+          "status": "planned",
+          "why": "Support must include the actual operator dialect, tokenizer, weights and state semantics.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "backends",
+      "title": "Independent compilation and hardware",
+      "kicker": "EXECUTION TARGETS",
+      "weight": 20,
+      "summary": "A compiler becomes useful across machines when its semantics can survive translation into different physical execution systems.",
+      "impact": "Native compilation and hardware calibration determine whether this work can become a genuine hardware-algorithm co-design platform.",
+      "now": "Reference NumPy and complete CPU TorchScript execution are verified. Independent C++ lowering is underway, not yet certified.",
+      "next": "Certify a truly independent native CPU implementation, then build a competitive GPU backend and portable compiled artifacts.",
+      "criteria": [
+        {
+          "id": "baseline",
+          "title": "Independent NumPy and PyTorch references",
+          "weight": 15,
+          "status": "verified",
+          "why": "A different implementation supplies finite numerical witnesses.",
+          "evidence": [
+            {
+              "label": "Verification ledger",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/VERIFICATION.md"
+            }
+          ]
+        },
+        {
+          "id": "torchscript",
+          "title": "Whole-decoder TorchScript execution",
+          "weight": 15,
+          "status": "verified",
+          "why": "A complete decoder was traced and compared against a pinned model.",
+          "evidence": [
+            {
+              "label": "Whole graph evidence",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_whole_graph_v21.json"
+            }
+          ]
+        },
+        {
+          "id": "native",
+          "title": "Independently generated native C++ CPU kernel",
+          "weight": 30,
+          "status": "in-progress",
+          "why": "A native backend must execute the admitted mathematics without delegating computation to PyTorch or NumPy, then pass numerical/KV tests.",
+          "evidence": []
+        },
+        {
+          "id": "gpu",
+          "title": "Independent GPU execution",
+          "weight": 20,
+          "status": "planned",
+          "why": "CUDA/Triton/IREE or another real device path must be measured, not merely simulated.",
+          "evidence": []
+        },
+        {
+          "id": "aot",
+          "title": "Portable offline native compiled artifact",
+          "weight": 20,
+          "status": "planned",
+          "why": "Loadable binaries require provenance, compatibility and cross-process validation.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "optimization",
+      "title": "Search, fusion and execution economics",
+      "kicker": "PERFORMANCE RESEARCH",
+      "weight": 10,
+      "summary": "The objective is not one fast kernel. It is the ability to explain why one implementation is better, and under which constraints.",
+      "impact": "Source-bound measurements let us promote beneficial transformations while retaining the failures that teach us.",
+      "now": "Fused FFN, live-prefix KV, compile-once templates and matched small CPU benchmarks have been measured.",
+      "next": "Extend from tiny CPU experiments to long-context prefill/decode, throughput, latency tails and actual memory costs.",
+      "criteria": [
+        {
+          "id": "fusion",
+          "title": "Verified operator fusion",
+          "weight": 20,
+          "status": "verified",
+          "why": "A pure SwiGLU region matched an independent reference and reduced dispatch overhead.",
+          "evidence": [
+            {
+              "label": "Fusion evidence",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_fused_ffn_v20.json"
+            }
+          ]
+        },
+        {
+          "id": "kv",
+          "title": "Dynamic live-prefix KV execution",
+          "weight": 25,
+          "status": "verified",
+          "why": "One graph handles varying positions and emits only new K/V suffixes.",
+          "evidence": [
+            {
+              "label": "KV evidence",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_polymorphic_kv_v22.json"
+            }
+          ]
+        },
+        {
+          "id": "reuse",
+          "title": "Compile-once and weight reuse",
+          "weight": 25,
+          "status": "verified",
+          "why": "Graph and weight modules are reused across private sessions with cold-start measurements.",
+          "evidence": [
+            {
+              "label": "Shared weights evidence",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_shared_weights_v24.json"
+            }
+          ]
+        },
+        {
+          "id": "benchmarks",
+          "title": "Source-bound comparative CPU benchmark",
+          "weight": 15,
+          "status": "verified",
+          "why": "Source hashes, versions and distinct warm/cold measurements are retained.",
+          "evidence": [
+            {
+              "label": "Benchmark method",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/VERIFICATION.md"
+            }
+          ]
+        },
+        {
+          "id": "scale",
+          "title": "Representative serving and long-context benchmarks",
+          "weight": 15,
+          "status": "planned",
+          "why": "Current tiny CPU tests cannot establish competitive serving economics.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "verification",
+      "title": "Evidence, provenance and safety",
+      "kicker": "RESEARCH INTEGRITY",
+      "weight": 10,
+      "summary": "An optimization should be an argument supported by evidence, not merely a claim made by its author.",
+      "impact": "Transparent methods turn compiler results into accumulated research knowledge rather than disconnected demonstrations.",
+      "now": "Hash-bound experiments, negative tests, independent logits, benchmark JSON and CI exist.",
+      "next": "Expand across machines, input distributions and truly independent deployment targets.",
+      "criteria": [
+        {
+          "id": "oracle",
+          "title": "Independent numerical oracles",
+          "weight": 25,
+          "status": "verified",
+          "why": "NumPy, eager PyTorch and HF witnesses compare admitted outputs.",
+          "evidence": [
+            {
+              "label": "Tests and methodology",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/VERIFICATION.md"
+            }
+          ]
+        },
+        {
+          "id": "hash",
+          "title": "Content-bound checkpoint provenance",
+          "weight": 20,
+          "status": "verified",
+          "why": "Exact model revision and file hashes are recorded, with authentication limits stated.",
+          "evidence": [
+            {
+              "label": "Pinned evidence",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_parity_v19.json"
+            }
+          ]
+        },
+        {
+          "id": "bench",
+          "title": "Inspectable reproducible benchmark records",
+          "weight": 20,
+          "status": "verified",
+          "why": "Source-bound JSON records include scope, metrics and limitations.",
+          "evidence": [
+            {
+              "label": "Evidence records",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_shared_weights_v24.json"
+            }
+          ]
+        },
+        {
+          "id": "negative",
+          "title": "Failure and tampering tests",
+          "weight": 20,
+          "status": "verified",
+          "why": "Malformed graphs, cache writes, quota failures and eviction have negative coverage.",
+          "evidence": [
+            {
+              "label": "Security boundaries",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/SECURITY_AND_BOUNDARIES.md"
+            }
+          ]
+        },
+        {
+          "id": "independent",
+          "title": "Reproduced physical results across independent machines",
+          "weight": 15,
+          "status": "planned",
+          "why": "One CI runner and finite witnesses are not a cross-machine certification.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "governance",
+      "title": "Shared execution and resource ownership",
+      "kicker": "RUNTIME OPERATIONS",
+      "weight": 5,
+      "summary": "A useful execution platform must know who owns computation and state, and what survives a failure or eviction.",
+      "impact": "Explicit model and session lifetimes are prerequisites for reliable multi-user research infrastructure.",
+      "now": "LRU model ownership, KV leases and active model-module counting are implemented.",
+      "next": "Measure and constrain physical resource usage in isolated workers before hosting untrusted requests.",
+      "criteria": [
+        {
+          "id": "lru",
+          "title": "Bounded model-template LRU",
+          "weight": 20,
+          "status": "verified",
+          "why": "Verified semantic fingerprints govern cache admission, hits and eviction.",
+          "evidence": [
+            {
+              "label": "v25 guide",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/V25_VERIFIED_TEMPLATE_REGISTRY.md"
+            }
+          ]
+        },
+        {
+          "id": "leases",
+          "title": "Private KV leases and release",
+          "weight": 20,
+          "status": "verified",
+          "why": "Logical quota rejection and deterministic close have tested contracts.",
+          "evidence": [
+            {
+              "label": "v26 guide",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/V26_LEASED_KV_SESSION_ACCOUNTING.md"
+            }
+          ]
+        },
+        {
+          "id": "lifetime",
+          "title": "Evicted-but-live model lifetime",
+          "weight": 20,
+          "status": "verified",
+          "why": "Active modules remain accounted for until final lease release.",
+          "evidence": [
+            {
+              "label": "v27 evidence",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_active_models_v27.json"
+            }
+          ]
+        },
+        {
+          "id": "rss",
+          "title": "Measured physical RSS/resource enforcement",
+          "weight": 20,
+          "status": "planned",
+          "why": "Logical byte budgets do not bound native heap or process RSS.",
+          "evidence": []
+        },
+        {
+          "id": "isolation",
+          "title": "Hardened multi-tenant isolation and cancellation",
+          "weight": 20,
+          "status": "planned",
+          "why": "Untrusted Python must run under a separate enforceable security boundary.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "hardware",
+      "title": "Hardware–algorithm co-design",
+      "kicker": "EXPERIMENTAL SYSTEMS",
+      "weight": 5,
+      "summary": "Physical machines impose their own logic: precision, calibration, conversion, memory and energy.",
+      "impact": "Hardware-aware algorithm design becomes credible only when simulated advantages survive measurement.",
+      "now": "Optical and heterogeneous placement hypotheses can be explored in software.",
+      "next": "Connect the cost models to calibrated device measurements and an actual independently executing accelerator.",
+      "criteria": [
+        {
+          "id": "models",
+          "title": "Modeled optical operations and noise",
+          "weight": 25,
+          "status": "verified",
+          "why": "The simulator exercises bounded hypothetical optical transfer/noise semantics.",
+          "evidence": [
+            {
+              "label": "v10 research",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/docs/COMPILER_LAB_V10.md"
+            }
+          ]
+        },
+        {
+          "id": "placement",
+          "title": "Hypothetical heterogeneous placement",
+          "weight": 15,
+          "status": "verified",
+          "why": "Placement explores declared abstract cost units, not measured latency.",
+          "evidence": [
+            {
+              "label": "Compiler Lab",
+              "url": "https://github.com/Caerii/VisuaML/blob/main/visuaml-client/src/ui/CompilerLab/CompilerLabPage.tsx"
+            }
+          ]
+        },
+        {
+          "id": "calibration",
+          "title": "Calibrated hardware cost models",
+          "weight": 30,
+          "status": "planned",
+          "why": "Measurements from physical hardware must replace unvalidated assumptions.",
+          "evidence": []
+        },
+        {
+          "id": "execution",
+          "title": "Validated accelerator end-to-end execution",
+          "weight": 30,
+          "status": "planned",
+          "why": "No physical photonic inference has been demonstrated.",
+          "evidence": []
+        }
+      ]
+    }
+  ]
+}
