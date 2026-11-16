@@ -21,6 +21,7 @@ from safetensors.torch import save_file
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
+from examples.llama_semantic_bench_v20 import benchmark
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
     lower_llama_semantic_program,
@@ -133,8 +134,12 @@ def run() -> dict:
         np.testing.assert_array_equal(
             generated, np.concatenate(reference_ids, axis=1)
         )
+        timing_evidence = benchmark(
+            importer, lengths=(4, 8, 16), trials=5, include_hybrid=True
+        )
         return {
             "schema": "visuaml.pretrained-llama-parity.v20",
+            "matched_cpu_benchmark": timing_evidence,
             "source": MODEL_ID,
             "declared_source_revision": revision,
             "checkpoint_sha256": importer.checkpoint_sha256,
