@@ -54,7 +54,7 @@ def test_real_weight_semantic_ir_matches_numpy_and_torch_oracles(tmp_path, layer
 
 
 def test_same_ir_executes_torchscript_compiled_hybrid_primitives(tmp_path):
-    originals, config, imported, graph, plan = prepare(tmp_path, layers=1)
+    _, _, _, _, plan = prepare(tmp_path, layers=1)
     baseline = plan.new_session(backend="numpy")
     hybrid = plan.new_session(backend="torchscript_hybrid")
     tokens = np.array([[1, 2, 3], [3, 4, 5]], dtype=np.int64)
@@ -90,7 +90,7 @@ def test_greedy_generation_uses_state_and_matches_full_recompute(tmp_path):
 
 
 def test_rejects_forged_operations_effects_and_model_weights(tmp_path):
-    originals, config, imported, graph, plan = prepare(tmp_path)
+    _, _, imported, graph, plan = prepare(tmp_path)
     operations = graph.regions[0].operations
     altered = replace(
         operations[0], op="untrusted_dynamic_python",
@@ -117,7 +117,7 @@ def test_rejects_forged_operations_effects_and_model_weights(tmp_path):
 
 
 def test_forged_initial_plan_cannot_override_compiler_contract(tmp_path):
-    _, _, imported, graph, plan = prepare(tmp_path)
+    _, _, imported, _, plan = prepare(tmp_path)
     with pytest.raises(LlamaSemanticError):
         replace(plan, batch=1).new_session()
     original_id = plan.semantic_sha256

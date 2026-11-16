@@ -21,7 +21,6 @@ import numpy as np
 
 from .family_blocks_v12 import KVState
 from .hf_llama_checkpoint_v19 import (
-    HFLlamaContractError,
     LlamaLocalCheckpoint,
     LlamaProfile,
     _expected_shapes,
