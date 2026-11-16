@@ -1,302 +1,128 @@
-import { Box, Container, Typography, Button, Stack } from '@mui/material';
+import { Box, Button, Container, Stack, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface LandingHeroProps {
   onGetStartedClick: () => void;
 }
 
-const HERO_TYPOGRAPHY_STYLES = {
+const smallLabel = {
   fontFamily: "'Inter', sans-serif",
-} as const;
+  fontSize: 10,
+  fontWeight: 700,
+  letterSpacing: '.18em',
+  color: '#9abce6',
+  textTransform: 'uppercase' as const,
+};
+
+const pipeline = [
+  ['01', 'An admitted model', 'Checkpoint identity, types and source provenance'],
+  ['02', 'A semantic representation', 'Mathematics, shape contracts and explicit effects'],
+  ['03', 'Independent numerical witnesses', 'What changes—and what must not'],
+  ['04', 'Compiled execution', 'Verified CPU backends and owned KV state'],
+  ['05', 'Reusable research infrastructure', 'Shared models, private sessions and evidence'],
+];
 
 export function LandingHero({ onGetStartedClick }: LandingHeroProps) {
+  const navigate = useNavigate();
+
   return (
-    <Box
-      sx={{
-        width: '100%',
-        minHeight: '100vh',
-        position: 'relative',
-        overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#03040A',
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: `
-            radial-gradient(ellipse 60% 40% at 50% 0%, rgba(66, 153, 225, 0.08) 0%, transparent 100%),
-            radial-gradient(ellipse 40% 30% at 0% 100%, rgba(0, 212, 255, 0.05) 0%, transparent 100%),
-            radial-gradient(ellipse 40% 30% at 100% 100%, rgba(159, 122, 234, 0.05) 0%, transparent 100%)
-          `,
-          pointerEvents: 'none',
-        },
-      }}
-    >
-      <Container
-        maxWidth="lg"
-        sx={{ position: 'relative', zIndex: 1, py: { xs: 8, md: 12 }, px: { xs: 4, md: 6, lg: 8 } }}
-      >
-        <Stack spacing={6} alignItems="flex-start" textAlign="left" maxWidth="900px">
-          {/* Main Heading - Clean, minimal */}
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: {
-                xs: 'clamp(2rem, 6vw, 4rem)',
-                md: 'clamp(2.5rem, 5vw, 5rem)',
-                lg: 'clamp(3rem, 4.5vw, 6rem)',
-              },
-              fontWeight: 200,
-              lineHeight: 0.9,
-              letterSpacing: '-0.05em',
-              ...HERO_TYPOGRAPHY_STYLES,
-              color: 'rgba(255, 255, 255, 0.9)',
-              textTransform: 'lowercase',
-              WebkitTextStroke: '1px rgba(255, 255, 255, 0.1)',
-              textShadow: '0 0 40px rgba(255, 255, 255, 0.1)',
-            }}
-          >
-            visualize
-            <br />
-            neural networks
-            <br />
-            with category theory
-          </Typography>
-
-          {/* Subheading - Minimal */}
-          <Typography
-            variant="body1"
-            sx={{
-              fontSize: {
-                xs: 'clamp(0.7rem, 1.8vw, 0.8rem)',
-                md: 'clamp(0.75rem, 1.3vw, 0.875rem)',
-                lg: 'clamp(0.8rem, 1vw, 0.9rem)',
-              },
-              fontWeight: 300,
-              letterSpacing: '0.08em',
-              color: 'rgba(255, 255, 255, 0.6)',
-              ...HERO_TYPOGRAPHY_STYLES,
-              lineHeight: 1.8,
-              maxWidth: '700px',
-            }}
-          >
-            real-time collaborative PyTorch model visualization
-            <br />
-            powered by categorical deep learning
-            <br />
-            <Box component="span" sx={{ fontSize: '0.9em', opacity: 0.8 }}>
-              explore architectures, understand tensor flow, collaborate with your team
-            </Box>
-            <br />
-            <Box component="span" sx={{ fontSize: '0.85em', opacity: 0.7, fontStyle: 'italic' }}>
-              Think TypeScript for ML — typed composition, ergonomics, and a web runtime
-            </Box>
-            <br />
-            <Box component="span" sx={{ fontSize: '0.85em', opacity: 0.65 }}>
-              Open source (MIT) — run locally or contribute on GitHub
-            </Box>
-          </Typography>
-
-          {/* CTA Buttons - Clean, minimal with underline */}
-          <Stack spacing={{ xs: 3, md: 4 }} sx={{ mt: 4 }}>
-            <Button
-              onClick={onGetStartedClick}
-              variant="text"
-              sx={{
-                color: 'rgba(255, 255, 255, 0.9)',
-                textTransform: 'uppercase',
-                fontWeight: 400,
-                letterSpacing: '0.2em',
-                fontSize: {
-                  xs: 'clamp(0.7rem, 1.3vw, 0.8rem)',
-                  md: 'clamp(0.75rem, 1.2vw, 0.85rem)',
-                  lg: 'clamp(0.75rem, 1vw, 0.8rem)',
-                },
-                px: 0,
-                pb: 1,
-                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: 0,
-                whiteSpace: 'nowrap',
-                alignSelf: 'flex-start',
-                ...HERO_TYPOGRAPHY_STYLES,
-                '&:hover': {
-                  borderColor: 'rgba(255, 255, 255, 0.8)',
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  bgcolor: 'transparent',
-                },
-                transition: 'all 0.3s',
-              }}
-            >
-              Get started →
-            </Button>
-            <Button
-              variant="text"
-              onClick={() => {
-                // Scroll to the first section after hero (The problem)
-                const firstSection = document.getElementById('the-problem');
-                if (firstSection) {
-                  firstSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                } else {
-                  window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-                }
-              }}
-              sx={{
-                color: 'rgba(66, 153, 225, 0.9)',
-                textTransform: 'uppercase',
-                fontWeight: 400,
-                letterSpacing: '0.2em',
-                fontSize: {
-                  xs: 'clamp(0.7rem, 1.3vw, 0.8rem)',
-                  md: 'clamp(0.75rem, 1.2vw, 0.85rem)',
-                  lg: 'clamp(0.75rem, 1vw, 0.8rem)',
-                },
-                px: 0,
-                pb: 1,
-                borderBottom: '1px solid rgba(66, 153, 225, 0.3)',
-                borderRadius: 0,
-                whiteSpace: 'nowrap',
-                alignSelf: 'flex-start',
-                ...HERO_TYPOGRAPHY_STYLES,
-                '&:hover': {
-                  borderColor: 'rgba(66, 153, 225, 1)',
-                  color: 'rgba(66, 153, 225, 1)',
-                  bgcolor: 'transparent',
-                },
-                transition: 'all 0.3s',
-              }}
-            >
-              Learn more →
-            </Button>
-            <Button
-              variant="text"
-              onClick={() => {
-                // Scroll to the "What we're building" section (the vision)
-                const visionSection = document.getElementById('what-we-are-building');
-                if (visionSection) {
-                  visionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                } else {
-                  // Fallback: scroll down a bit more to reach vision section
-                  window.scrollTo({ top: window.innerHeight * 2, behavior: 'smooth' });
-                }
-              }}
-              sx={{
-                color: 'rgba(255, 255, 255, 0.6)',
-                textTransform: 'uppercase',
-                fontWeight: 400,
-                letterSpacing: '0.2em',
-                fontSize: {
-                  xs: 'clamp(0.7rem, 1.3vw, 0.8rem)',
-                  md: 'clamp(0.75rem, 1.2vw, 0.85rem)',
-                  lg: 'clamp(0.75rem, 1vw, 0.8rem)',
-                },
-                px: 0,
-                pb: 1,
-                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: 0,
-                whiteSpace: 'nowrap',
-                alignSelf: 'flex-start',
-                ...HERO_TYPOGRAPHY_STYLES,
-                '&:hover': {
-                  borderColor: 'rgba(255, 255, 255, 0.4)',
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  bgcolor: 'transparent',
-                },
-                transition: 'all 0.3s',
-              }}
-            >
-              About the vision →
-            </Button>
-            <Button
-              component="a"
-              href="https://github.com/caerii/VisuaML"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="text"
-              sx={{
-                color: 'rgba(255, 255, 255, 0.5)',
-                textTransform: 'uppercase',
-                fontWeight: 400,
-                letterSpacing: '0.2em',
-                fontSize: {
-                  xs: 'clamp(0.7rem, 1.3vw, 0.8rem)',
-                  md: 'clamp(0.75rem, 1.2vw, 0.85rem)',
-                  lg: 'clamp(0.75rem, 1vw, 0.8rem)',
-                },
-                px: 0,
-                pb: 1,
-                borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: 0,
-                whiteSpace: 'nowrap',
-                alignSelf: 'flex-start',
-                ...HERO_TYPOGRAPHY_STYLES,
-                textDecoration: 'none',
-                '&:hover': {
-                  borderColor: 'rgba(255, 255, 255, 0.35)',
-                  color: 'rgba(255, 255, 255, 0.75)',
-                  bgcolor: 'transparent',
-                },
-                transition: 'all 0.3s',
-              }}
-            >
-              Open source on GitHub →
-            </Button>
+    <Box component="section" aria-labelledby="visuaml-hero-title" sx={{
+      minHeight: { xs: '82vh', lg: '88vh' },
+      background:
+        'radial-gradient(ellipse 55% 75% at 84% 22%, rgba(42,81,145,.24), transparent 70%), #080b10',
+      color: '#eff4fa', display: 'flex', alignItems: 'center',
+      borderBottom: '1px solid rgba(209,227,253,.13)',
+    }}>
+      <Container maxWidth="xl" sx={{ px: { xs: 4, md: 7, lg: 11 }, py: { xs: 12, md: 17 } }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '1.12fr .88fr' }, gap: { xs: 9, lg: 10 }, alignItems: 'center' }}>
+          <Stack spacing={4}>
+            <Stack direction="row" alignItems="center" spacing={1.5}>
+              <Box sx={{ width: 7, height: 7, bgcolor: '#addcbb', borderRadius: '50%' }} />
+              <Typography sx={smallLabel}>An open instrument for computational research</Typography>
+            </Stack>
+            <Typography id="visuaml-hero-title" variant="h1" sx={{
+              fontFamily: "Georgia, 'Instrument Serif', serif",
+              fontWeight: 400,
+              fontSize: { xs: 'clamp(3.5rem, 10vw, 6rem)', md: 'clamp(5rem, 6.7vw, 8.5rem)' },
+              lineHeight: .98, letterSpacing: '-.06em',
+            }}>
+              See the structure.
+              <Box component="span" sx={{ display: 'block', fontStyle: 'italic', color: '#a8caff' }}>
+                Understand the computation.
+              </Box>
+            </Typography>
+            <Typography sx={{
+              fontFamily: 'Georgia, serif', fontSize: { xs: 22, md: 28 },
+              lineHeight: 1.5, maxWidth: 720, color: '#b9c6d7',
+            }}>
+              Neural networks are not merely diagrams or code. They are computational
+              ideas: structures we ought to be able to examine together, transform
+              carefully, and independently verify.
+            </Typography>
+            <Typography sx={{
+              fontFamily: "'Inter', sans-serif", fontSize: 13, lineHeight: 1.85,
+              maxWidth: 610, color: '#98acc5',
+            }}>
+              VisuaML joins collaborative neural-network exploration with a typed semantic
+              compiler and an evidence-driven execution laboratory. Our most developed
+              verified workload is a bounded, pinned pretrained Llama decoder.
+            </Typography>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ pt: 2 }}>
+              <Button onClick={onGetStartedClick} sx={{
+                px: 3.5, py: 1.5, borderRadius: 0, bgcolor: '#bdd9ff', color: '#0b1422',
+                textTransform: 'none', fontWeight: 700, '&:hover': { bgcolor: '#fff' },
+              }}>
+                Open the workspace
+              </Button>
+              <Button onClick={() => navigate('/roadmap')} sx={{
+                px: 3.5, py: 1.5, borderRadius: 0,
+                border: '1px solid rgba(207,225,250,.35)',
+                color: '#e5f0fe', textTransform: 'none',
+                '&:hover': { bgcolor: 'rgba(181,209,250,.10)' },
+              }}>
+                See the public roadmap ↗
+              </Button>
+            </Stack>
+            <Typography sx={{ ...smallLabel, color: '#788fa9', pt: 2 }}>
+              OPEN SOURCE · TYPED SEMANTICS · NUMERICAL WITNESSES
+            </Typography>
           </Stack>
-        </Stack>
+          <Box component="figure" sx={{
+            m: 0, p: { xs: 3, md: 4 },
+            background: 'linear-gradient(155deg, rgba(23,39,60,.85), rgba(9,15,24,.9))',
+            border: '1px solid rgba(175,202,237,.22)',
+          }}>
+            <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
+              <Typography sx={smallLabel}>THE COMPUTATIONAL OBJECT</Typography>
+              <Typography sx={{ ...smallLabel, color: '#7b8ca2' }}>RESEARCH / V27</Typography>
+            </Stack>
+            {pipeline.map(([number, title, description]) => (
+              <Box key={number} sx={{
+                py: 2.2, borderTop: '1px solid rgba(183,204,233,.16)',
+                display: 'grid', gridTemplateColumns: '36px 1fr', gap: 1.5,
+              }}>
+                <Typography sx={smallLabel}>{number}</Typography>
+                <Stack spacing={.65}>
+                  <Typography sx={{
+                    fontFamily: 'Georgia, serif', fontSize: 23, lineHeight: 1.2,
+                  }}>
+                    {title}
+                  </Typography>
+                  <Typography sx={{ fontSize: 11, color: '#93a8bf', lineHeight: 1.6 }}>
+                    {description}
+                  </Typography>
+                </Stack>
+              </Box>
+            ))}
+            <Typography component="figcaption" sx={{
+              mt: 3, color: '#8295ad', fontSize: 11, lineHeight: 1.65,
+            }}>
+              A conceptual map of our verified research pathway—not a claim of
+              universal model compilation or measured optical hardware.
+            </Typography>
+          </Box>
+        </Box>
       </Container>
-
-      {/* Scroll Indicator - Minimal */}
-      <Box
-        onClick={() => {
-          window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-        }}
-        sx={{
-          position: 'absolute',
-          bottom: 40,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 1,
-          color: 'rgba(255, 255, 255, 0.4)',
-          cursor: 'pointer',
-          zIndex: 2,
-          transition: 'all 0.3s ease',
-          '&:hover': {
-            color: 'rgba(255, 255, 255, 0.6)',
-          },
-        }}
-      >
-        <Box
-          sx={{
-            width: 1,
-            height: 32,
-            bgcolor: 'rgba(255, 255, 255, 0.2)',
-            borderRadius: 1,
-            position: 'relative',
-            '&::after': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: 1,
-              height: 10,
-              bgcolor: 'rgba(255, 255, 255, 0.5)',
-              borderRadius: 1,
-              animation: 'scrollIndicator 2s ease-in-out infinite',
-              '@keyframes scrollIndicator': {
-                '0%': { top: 0, opacity: 1 },
-                '100%': { top: 22, opacity: 0 },
-              },
-            },
-          }}
-        />
-      </Box>
     </Box>
   );
 }
