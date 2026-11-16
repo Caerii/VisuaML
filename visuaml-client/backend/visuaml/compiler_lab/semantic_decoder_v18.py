@@ -35,8 +35,8 @@ from .semantic_ir import (
     validate_semantic_program,
 )
 from .stacked_decoder_v14 import (
-    StackState,
     StackedWeights,
+    StackState,
     checkpoint_digest,
 )
 from .streaming_decoder_v16 import _snapshot_weights
