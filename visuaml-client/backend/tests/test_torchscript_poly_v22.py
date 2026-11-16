@@ -57,6 +57,12 @@ def test_single_torchscript_graph_reuses_arbitrary_token_and_cursor_shapes(
     assert report["traces"][0]["query"] == -1
     assert report["traces"][0]["past"] == -1
     assert report["traces"][0]["graph_nodes"] > 20
+    assert report["cumulative_kv_output_tensor_bytes"] < (
+        v21.report()["cumulative_kv_output_tensor_bytes"]
+    )
+    assert report["cumulative_kv_input_tensor_bytes"] >= (
+        v21.report()["cumulative_kv_input_tensor_bytes"]
+    )
     assert len(report["semantic_sha256"]) == 64
     full = poly.snapshot()
     assert all(layer.keys.shape[1] == offset for layer in full.layers)
@@ -149,7 +155,7 @@ def test_polymorphic_inputs_are_validated_before_tracing(tmp_path):
     assert poly.report()["specializations"] == 0
 
 
-def test_polymorphic_compiled_graph_cannot_publish_modified_kv_prefix(
+def test_polymorphic_compiled_graph_cannot_publish_malformed_kv_suffix(
     tmp_path, monkeypatch
 ):
     _, _, _, plan = prepare(tmp_path, layers=1)
@@ -163,12 +169,12 @@ def test_polymorphic_compiled_graph_cannot_publish_modified_kv_prefix(
         result = original(*args)
         replaced = list(result)
         keys = replaced[1].clone()
-        keys[:, 0] += 1
+        keys[0, 0, 0, 0] = float("nan")
         replaced[1] = keys
         return tuple(replaced)
 
     monkeypatch.setitem(poly._compiled, signature, corrupt)
-    with pytest.raises(WholeGraphError, match="previously committed"):
+    with pytest.raises(WholeGraphError, match="invalid layer KV"):
         poly.step(np.array([[4]], np.int64))
     assert poly.cursor == 3
     for a, b in zip(before.layers, poly.snapshot().layers):
