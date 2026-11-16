@@ -20,6 +20,14 @@ def test_polymorphic_benchmark_has_one_graph_for_irregular_chunks(tmp_path, laye
     assert result["latency"]["torchscript_polymorphic_v22"]["median_ms"] > 0
     assert result["latency"]["torchscript_specialized_v21"]["median_ms"] > 0
     assert result["resident_cache_reserved_bytes"]["torchscript_polymorphic_v22"] > 0
+    traffic = result["cumulative_kv_tensor_accounting"]
+    assert traffic["torchscript_polymorphic_v22"]["returned_kv_tensor_bytes"] < (
+        traffic["torchscript_specialized_v21"]["returned_kv_tensor_bytes"]
+    )
+    assert traffic["torchscript_polymorphic_v22"]["input_kv_tensor_bytes"] >= (
+        traffic["torchscript_specialized_v21"]["input_kv_tensor_bytes"]
+    )
+    assert len(result["source_files_sha256"]) == 4
 
 
 @pytest.mark.parametrize("invalid", ((33,), (0,), (1, 1, 63)))

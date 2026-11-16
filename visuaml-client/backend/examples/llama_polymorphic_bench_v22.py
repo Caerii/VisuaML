@@ -10,6 +10,7 @@ separately. Not a GPU/production serving or energy benchmark.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import platform
@@ -107,6 +108,20 @@ def benchmark(
         name: engine.report()["traces"] for name, engine in engines.items()
         if name != "numpy_semantic"
     }
+    traffic = {
+        name: {
+            "input_kv_tensor_bytes": engine.report()["cumulative_kv_input_tensor_bytes"],
+            "returned_kv_tensor_bytes": engine.report()["cumulative_kv_output_tensor_bytes"],
+        }
+        for name, engine in engines.items() if name != "numpy_semantic"
+    }
+    source_dir = Path(__file__).resolve().parents[1]
+    files = (
+        "examples/llama_polymorphic_bench_v22.py",
+        "visuaml/compiler_lab/torchscript_graph_v21.py",
+        "visuaml/compiler_lab/llama_semantic_v20.py",
+        "visuaml/compiler_lab/kv_lowering_v17.py",
+    )
     return {
         "schema": "visuaml.llama-polymorphic-cache-benchmark.v22",
         "checkpoint_sha256": weights.checkpoint_sha256,
@@ -127,6 +142,11 @@ def benchmark(
         },
         "resident_cache_reserved_bytes": {
             name: engine.report()["reserved_bytes"] for name, engine in engines.items()
+        },
+        "cumulative_kv_tensor_accounting": traffic,
+        "source_files_sha256": {
+            name: hashlib.sha256((source_dir / name).read_bytes()).hexdigest()
+            for name in files
         },
         "numerical_witness": "every chunk's logits and every final KV pair",
         "platform": platform.platform(),
