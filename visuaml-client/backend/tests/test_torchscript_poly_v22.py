@@ -88,7 +88,7 @@ def test_full_context_and_reset_uses_same_compiled_graph(tmp_path):
 
 
 def test_polymorphic_graph_matches_independent_torch_oracle(tmp_path):
-    weights, config, model, plan = prepare(tmp_path, layers=2, batch=2)
+    weights, config, _, plan = prepare(tmp_path, layers=2, batch=2)
     poly = plan.new_session(backend="torchscript_poly")
     for tokens in (
         np.array([[1, 2, 3], [3, 1, 2]], np.int64),
