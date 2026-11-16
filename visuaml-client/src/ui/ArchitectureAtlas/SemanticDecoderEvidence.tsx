@@ -30,8 +30,10 @@ function valid(value: unknown): value is Inspection {
     Array.isArray(doc.operations) &&
     doc.operations.every(
       (op) =>
-        typeof op.name === 'string' && typeof op.opcode === 'string' &&
-        Array.isArray(op.operands) && typeof op.effect === 'string',
+        typeof op.name === 'string' &&
+        typeof op.opcode === 'string' &&
+        Array.isArray(op.operands) &&
+        typeof op.effect === 'string',
     ) &&
     doc.verification?.passed === true &&
     Number.isFinite(doc.verification.worst_abs_error) &&
@@ -55,11 +57,12 @@ export function SemanticDecoderEvidence({ architectureId }: { architectureId: st
       signal: controller.signal,
     })
       .then(async (response) => {
-        if (!response.ok) throw new Error(
-          response.status === 404
-            ? 'Start the local API with VISUAML_COMPILER_LAB_ENABLED=1 to inspect the IR.'
-            : 'Semantic inspection failed: HTTP ' + response.status,
-        );
+        if (!response.ok)
+          throw new Error(
+            response.status === 404
+              ? 'Start the local API with VISUAML_COMPILER_LAB_ENABLED=1 to inspect the IR.'
+              : 'Semantic inspection failed: HTTP ' + response.status,
+          );
         const value: unknown = await response.json();
         if (!valid(value)) throw new Error('Invalid semantic inspection report');
         return value;
@@ -80,8 +83,8 @@ export function SemanticDecoderEvidence({ architectureId }: { architectureId: st
     <section className="atlas-primitives" aria-label="Executable semantic decoder inspection">
       <h3>v19 · live semantic compiler inspection</h3>
       <p className="atlas-muted">
-        Only trusted, fixed synthetic NumPy CPU decoder fixtures. The logical-memory analysis is
-        not a measured device-memory result or pretrained-checkpoint certification.
+        Only trusted, fixed synthetic NumPy CPU decoder fixtures. The logical-memory analysis is not
+        a measured device-memory result or pretrained-checkpoint certification.
       </p>
       <label htmlFor="semantic-layers">Decoder layers </label>
       <select
@@ -90,7 +93,9 @@ export function SemanticDecoderEvidence({ architectureId }: { architectureId: st
         onChange={(event) => setLayers(Number(event.target.value))}
       >
         {[1, 2, 3, 4].map((count) => (
-          <option key={count} value={count}>{count}</option>
+          <option key={count} value={count}>
+            {count}
+          </option>
         ))}
       </select>
       {report ? (
@@ -115,15 +120,18 @@ export function SemanticDecoderEvidence({ architectureId }: { architectureId: st
                 <div
                   key={op.name}
                   style={{
-                    padding: '7px 0', borderBottom: '1px solid #293d50',
+                    padding: '7px 0',
+                    borderBottom: '1px solid #293d50',
                     overflowWrap: 'anywhere',
                   }}
                 >
-                  <strong>{index + 1}. {op.name}</strong> · {op.opcode}
+                  <strong>
+                    {index + 1}. {op.name}
+                  </strong>{' '}
+                  · {op.opcode}
                   {op.effect !== 'pure' && ' · ' + op.effect + '(' + op.cell + ')'}
                   <div className="atlas-muted">
-                    {op.operands.join(' · ')} → {op.result ?? 'state'}{' '}
-                    {op.shape?.join(' × ')}
+                    {op.operands.join(' · ')} → {op.result ?? 'state'} {op.shape?.join(' × ')}
                   </div>
                 </div>
               ))}
@@ -134,7 +142,9 @@ export function SemanticDecoderEvidence({ architectureId }: { architectureId: st
             <p className="atlas-muted">Semantic SHA-256: {report.semantic_sha256}</p>
             <p className="atlas-muted">Checkpoint SHA-256: {report.checkpoint_sha256}</p>
             {report.limitations.map((item) => (
-              <p className="atlas-muted" key={item}>{item}</p>
+              <p className="atlas-muted" key={item}>
+                {item}
+              </p>
             ))}
           </details>
         </>
