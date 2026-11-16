@@ -22,6 +22,7 @@ BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
 from examples.llama_semantic_bench_v20 import benchmark
+from visuaml.compiler_lab.sentencepiece_tokenizer_v20 import load_sentencepiece_tokenizer
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
     lower_llama_semantic_program,
@@ -36,7 +37,7 @@ CONFIG_SHA256 = "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e0
 
 def run() -> dict:
     from huggingface_hub import HfApi, snapshot_download
-    from transformers import AutoModelForCausalLM
+    from transformers import AutoModelForCausalLM, AutoTokenizer
 
     info = HfApi().model_info(MODEL_ID, revision=REVISION)
     revision = info.sha
@@ -46,7 +47,7 @@ def run() -> dict:
         local = snapshot_download(
             repo_id=MODEL_ID,
             revision=revision,
-            allow_patterns=("config.json", "model.safetensors"),
+            allow_patterns=("config.json", "model.safetensors", "tokenizer.model", "tokenizer_config.json"),
             local_dir=directory,
         )
         importer = load_hf_llama_local(
@@ -139,6 +140,32 @@ def run() -> dict:
         np.testing.assert_array_equal(
             generated, np.concatenate(reference_ids, axis=1)
         )
+        tokenizer = load_sentencepiece_tokenizer(
+            local, declared_revision=revision,
+            vocabulary=importer.profile.vocabulary,
+        )
+        hf_tokenizer = AutoTokenizer.from_pretrained(
+            local, use_fast=False, local_files_only=True,
+            trust_remote_code=False,
+        )
+        text_witnesses = []
+        for message in ("Once upon a time", "The little cat ran home."):
+            input_ids = tokenizer.encode(message, add_bos=True)
+            hf_ids = hf_tokenizer(message, add_special_tokens=True)["input_ids"]
+            np.testing.assert_array_equal(
+                input_ids[0], np.asarray(hf_ids, np.int64)
+            )
+            with torch.no_grad():
+                oracle_logits = hf(torch.from_numpy(input_ids)).logits.cpu().numpy()
+            compiler_logits = compiled.new_session().step(input_ids)
+            np.testing.assert_allclose(
+                compiler_logits, oracle_logits, rtol=5e-4, atol=5e-4
+            )
+            text_witnesses.append({
+                "text": message,
+                "token_ids": input_ids.tolist()[0],
+                "logit_max_abs_error": float(np.max(np.abs(compiler_logits - oracle_logits))),
+            })
         timing_evidence = benchmark(
             importer, lengths=(4, 8, 16), trials=5, include_hybrid=True
         )
@@ -166,12 +193,15 @@ def run() -> dict:
             "fused_ffn_region_calls": fused.report()["fused_ffn_region_calls"],
             "fused_ffn_max_abs_error": float(np.max(np.abs(fused_logits - hybrid_reference))),
             "greedy_tokens_match_hf_recompute": True,
+            "tokenizer_model_sha256": tokenizer.identity.model_sha256,
+            "tokenizer_config_sha256": tokenizer.identity.config_sha256,
+            "tokenizer_parity": text_witnesses,
             "greedy_generated_ids": generated.tolist(),
             "reference_weight_copy": "Tensor-identical safetensors with format=pt metadata",
             "comparison": witnessed,
             "tolerance": {"atol": 5e-4, "rtol": 5e-4},
             "limitations": [
-                "Token IDs are supplied directly; tokenizer parity is not established.",
+                "Tokenizer parity is verified on only two short text witnesses.",
                 "v20 uses a Llama-specific typed dialect rather than unrestricted model IR.",
                 "TorchScript hybrid compiles only selected arithmetic, not the whole decoder.",
                 "No physical GPU/photonic device or throughput claim.",
