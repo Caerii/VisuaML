@@ -24,6 +24,7 @@ sys.path.insert(0, str(BACKEND))
 from examples.llama_polymorphic_bench_v22 import benchmark as benchmark_polymorphic
 from examples.llama_semantic_bench_v20 import benchmark
 from examples.llama_template_bench_v23 import benchmark as benchmark_template
+from examples.shared_weights_bench_v24 import benchmark as benchmark_shared_weights
 from visuaml.compiler_lab.compiled_template_v23 import CompiledLlamaTemplate
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
@@ -33,6 +34,7 @@ from visuaml.compiler_lab.llama_semantic_v20 import (
 from visuaml.compiler_lab.sentencepiece_tokenizer_v20 import (
     load_sentencepiece_tokenizer,
 )
+from visuaml.compiler_lab.shared_weights_v24 import SharedWeightsLlamaTemplate
 
 MODEL_ID = "manojredhat/tiny-llama"
 REVISION = "756e9746eb801752d69771ef3e9bc433b21d853d"
@@ -243,6 +245,37 @@ def run() -> dict:
             or cold_multi_session["results"]["shared_template"]["graph_counts"] != [1] * 3
         ):
             raise AssertionError("Cold-start model template reuse was not verified")
+        shared_weights = SharedWeightsLlamaTemplate(compiled)
+        client_a = shared_weights.new_session()
+        client_b = shared_weights.new_session()
+        first_out = client_a.step(cases[0])
+        second_out = client_b.step(cases[0])
+        np.testing.assert_allclose(
+            first_out, hybrid_reference, rtol=5e-4, atol=5e-4
+        )
+        np.testing.assert_allclose(
+            second_out, hybrid_reference, rtol=5e-4, atol=5e-4
+        )
+        if (
+            shared_weights.report()["compiled_graphs"] != 1
+            or shared_weights.report()["verified_torch_module_instances"] != 1
+            or client_a._torch is not client_b._torch
+        ):
+            raise AssertionError("Compiled executable or weight module was duplicated")
+        client_b.step(np.array([[7]], dtype=np.int64))
+        if client_a.cursor != 4 or client_b.cursor != 5:
+            raise AssertionError("Shared-weight session mutated another client's cache")
+        cold_shared_weights = benchmark_shared_weights(
+            importer, clients=4, trials=3, prompt_len=4
+        )
+        old = cold_shared_weights["results"]["v23_graph_only"]
+        new = cold_shared_weights["results"]["v24_graph_and_weights"]
+        if old["unique_weight_module_counts"] != [4] * 3:
+            raise AssertionError("Control must create separate weight modules")
+        if new["unique_weight_module_counts"] != [1] * 3:
+            raise AssertionError("v24 must share one verified module")
+        if old["compiled_graph_counts"] != new["compiled_graph_counts"]:
+            raise AssertionError("Both workloads must share exactly one graph")
 
         return {
             "schema": "visuaml.pretrained-llama-parity.v20",
@@ -252,6 +285,9 @@ def run() -> dict:
             "v22_streaming_tokens": poly.cursor,
             "v23_shared_template": shared_template.report(),
             "v23_cold_multi_session_benchmark": cold_multi_session,
+            "v24_shared_weight_template": shared_weights.report(),
+            "v24_shared_weight_benchmark": cold_shared_weights,
+            "v24_isolated_cursors": [client_a.cursor, client_b.cursor],
             "v23_isolated_session_cursors": [
                 first_client.cursor, second_client.cursor,
             ],
