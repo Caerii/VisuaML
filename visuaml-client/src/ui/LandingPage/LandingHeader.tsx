@@ -48,8 +48,43 @@ export function LandingHeader() {
             />
           </Box>
 
-          {/* Navigation */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          {/* Public research paths and workspace navigation */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, md: 2 }, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+            <Button
+              onClick={() => navigate('/roadmap')}
+              variant="text"
+              aria-label="Open the public research roadmap"
+              sx={{
+                ...BUTTON_STYLES.TEXT_BUTTON,
+                color: '#bcd7fb',
+                borderBottom: '1px solid rgba(162, 195, 242, 0.36)',
+                '&:hover': { color: '#fff', borderColor: '#fff' },
+              }}
+            >
+              Roadmap
+            </Button>
+            <Button
+              onClick={() => navigate('/compiler')}
+              variant="text"
+              sx={{
+                ...BUTTON_STYLES.TEXT_BUTTON,
+                ...BUTTON_STYLES.SECONDARY,
+                display: { xs: 'none', sm: 'inline-flex' },
+              }}
+            >
+              Compiler
+            </Button>
+            <Button
+              onClick={() => navigate('/docs')}
+              variant="text"
+              sx={{
+                ...BUTTON_STYLES.TEXT_BUTTON,
+                ...BUTTON_STYLES.SECONDARY,
+                display: { xs: 'none', md: 'inline-flex' },
+              }}
+            >
+              Docs
+            </Button>
             <Button
               onClick={() => navigate('/app')}
               variant="text"
