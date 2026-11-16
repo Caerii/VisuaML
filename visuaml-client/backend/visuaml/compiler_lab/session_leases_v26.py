@@ -39,6 +39,7 @@ def _release(
     registry: LeaseManagedLlamaRegistry,
     session: TorchScriptWholeGraphSession,
     bytes_: int,
+    template_id: int | None,
 ) -> None:
     """Idempotence is owned by weakref.finalize; clear sensitive KV before release."""
     with registry._lock:
@@ -48,6 +49,7 @@ def _release(
             registry._active_kv_bytes -= bytes_
             registry._active_count -= 1
             registry._released += 1
+            registry._release_template_lease(template_id)
 
 
 class LeasedLlamaSession:
@@ -61,10 +63,13 @@ class LeasedLlamaSession:
         self, registry: LeaseManagedLlamaRegistry,
         session: TorchScriptWholeGraphSession,
         private_kv_bytes: int,
+        template_id: int | None = None,
     ):
         self._session: TorchScriptWholeGraphSession | None = session
         self._private_kv_bytes = private_kv_bytes
-        self._finalizer = finalize(self, _release, registry, session, private_kv_bytes)
+        self._finalizer = finalize(
+            self, _release, registry, session, private_kv_bytes, template_id
+        )
 
     def _owned(self) -> TorchScriptWholeGraphSession:
         if self._session is None:
@@ -145,6 +150,15 @@ class LeaseManagedLlamaRegistry(VerifiedLlamaRegistry):
         self._rejected_leases = 0
         self._released = 0
 
+    def _check_template_lease(self, template: object) -> None:
+        """Subclass hook: validate additional live-template resource admission."""
+
+    def _register_template_lease(self, template: object) -> None:
+        """Subclass hook: reserve additional live-template accounting."""
+
+    def _release_template_lease(self, template_id: int | None) -> None:
+        """Subclass hook: release owned template when its last lease closes."""
+
     def new_session(self, semantic_sha256: str) -> LeasedLlamaSession:
         key = self._key(semantic_sha256)
         with self._lock:
@@ -158,6 +172,7 @@ class LeaseManagedLlamaRegistry(VerifiedLlamaRegistry):
                 plan.batch * p.layers * plan.capacity
                 * p.kv_heads * p.head_dim * 2 * 4
             )
+            self._check_template_lease(owner.template)
             if (
                 self._active_count >= self._max_active_sessions
                 or self._active_kv_bytes + required > self._max_active_kv_bytes
@@ -171,7 +186,10 @@ class LeaseManagedLlamaRegistry(VerifiedLlamaRegistry):
             self._active_count += 1
             self._active_kv_bytes += required
             self._admitted_leases += 1
-            return LeasedLlamaSession(self, session, required)
+            self._register_template_lease(owner.template)
+            return LeasedLlamaSession(
+                self, session, required, id(owner.template)
+            )
 
     def report(self) -> dict:
         with self._lock:
