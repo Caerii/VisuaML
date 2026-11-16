@@ -1,0 +1,59 @@
+{
+  "backend_a": "v15 prepared NumPy-AOT fixed-shape driver",
+  "backend_b": "v16 resident KV NumPy CPU adapter (not AOT compiler)",
+  "baseline_branch_sha256_commit": "4a45119992589dae4ae43b9f083cfefaf6740779",
+  "caveats": [
+    "Warm runs exclude first-time compilation and optimizer startup.",
+    "Results depend strongly on Python/BLAS/CPU versions and thread counts.",
+    "Small synthetic models are not predictive of production LLM throughput.",
+    "v16 is a bounded stateful software runtime, not portable NumPy-AOT lowering."
+  ],
+  "cpu": "x86_64",
+  "numerical_parity": "Exact generated token IDs after warmup; full tensor parity in separate tests",
+  "numpy": "2.3.5",
+  "openblas_num_threads_env": "1",
+  "python": "3.13.5",
+  "results": [
+    {
+      "aot_shape_specializations": 5,
+      "aot_warm_median_ms": 5.95768,
+      "layers": 1,
+      "new_tokens": 4,
+      "prompt_tokens": 4,
+      "resident_cache_allocations": 2,
+      "resident_warm_median_ms": 0.45897,
+      "speedup_vs_shape_specialized_aot": 12.981,
+      "trials": 9
+    },
+    {
+      "aot_shape_specializations": 5,
+      "aot_warm_median_ms": 10.89002,
+      "layers": 2,
+      "new_tokens": 4,
+      "prompt_tokens": 4,
+      "resident_cache_allocations": 4,
+      "resident_warm_median_ms": 0.72534,
+      "speedup_vs_shape_specialized_aot": 15.014,
+      "trials": 9
+    },
+    {
+      "aot_shape_specializations": 5,
+      "aot_warm_median_ms": 22.54156,
+      "layers": 4,
+      "new_tokens": 4,
+      "prompt_tokens": 4,
+      "resident_cache_allocations": 8,
+      "resident_warm_median_ms": 2.11759,
+      "speedup_vs_shape_specialized_aot": 10.645,
+      "trials": 9
+    }
+  ],
+  "schema": "visuaml.streaming-kv-benchmark.v16",
+  "scope": "Warm synthetic CPU decoder generation; no physical device measurements",
+  "sources_sha256": {
+    "visuaml-client/backend/examples/streaming_kv_bench_v16.py": "8f994f2e99a6a55b875c7d7f98ac19a0a5717583f113c5f4d3ce5b043dbfa540",
+    "visuaml-client/backend/tests/test_streaming_decoder_v16.py": "ca027e2ef5349fbfd427ed76ee64bf0b559dd18c2e8ab5c2f375793acaaa753a",
+    "visuaml-client/backend/visuaml/compiler_lab/streaming_decoder_v16.py": "8ef1aee75bb156c0184c5369df2f0a5740057013420c8af99538728086624d77"
+  },
+  "torch": "2.10.0+cpu"
+}
