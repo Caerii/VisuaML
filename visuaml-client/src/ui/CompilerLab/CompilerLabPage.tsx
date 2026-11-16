@@ -3,6 +3,7 @@ import { ReactFlow, Background, Controls, type Edge, type Node } from '@xyflow/r
 import dagre from 'dagre';
 import '@xyflow/react/dist/style.css';
 import { analyzeScenario, type CompilerReport, type CompilerNode, type Scenario } from './types';
+import { SemanticExecutionPanel } from './SemanticExecutionPanel';
 import './CompilerLab.css';
 
 const SCENARIOS: { value: Scenario; label: string; summary: string }[] = [
@@ -209,6 +210,7 @@ export function CompilerLabPage() {
           <code>VISUAML_COMPILER_LAB_ENABLED=1</code>.
         </div>
       )}
+      <SemanticExecutionPanel />
       {!report ? (
         <main className="compiler-empty">
           {loading ? 'Analyzing a reproducible example…' : 'Select a workload to begin.'}
