@@ -52,7 +52,7 @@ def benchmark(*, runs: int = 50) -> dict:
         actual, _ = driver.step(tokens, state)
         expected, _ = reference_stack_step(w, tokens, state)
         np.testing.assert_allclose(actual, expected, rtol=5e-5, atol=5e-5)
-        cases.append({"name": f"decoder_{layers}_layer", **_bench(lambda: driver.step(tokens, state), runs)})
+        cases.append({"name": f"decoder_{layers}_layer", **_bench(lambda driver=driver, tokens=tokens, state=state: driver.step(tokens, state), runs)})
 
     generator = np.random.default_rng(21)
     conv = generator.normal(size=(1, 16, 48, 48)).astype(np.float32)
