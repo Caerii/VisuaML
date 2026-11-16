@@ -8,7 +8,6 @@ which graph outputs may be retained and their worst admitted shape.
 
 from __future__ import annotations
 
-from collections import Counter
 from dataclasses import dataclass
 from math import prod
 
