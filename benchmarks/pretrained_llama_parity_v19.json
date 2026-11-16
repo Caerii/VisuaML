@@ -1,0 +1,69 @@
+{
+  "architecture": {
+    "heads": 6,
+    "hidden": 288,
+    "kv_heads": 6,
+    "layers": 6,
+    "vocab": 512
+  },
+  "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+  "comparison": [
+    {
+      "mean_abs_error": 2.0322673321970797e-7,
+      "output_shape": [
+        1,
+        4,
+        512
+      ],
+      "tokens": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "worst_abs_error": 0.0000011324882507324219
+    },
+    {
+      "mean_abs_error": 2.627121205023286e-7,
+      "output_shape": [
+        1,
+        6,
+        512
+      ],
+      "tokens": [
+        [
+          2,
+          11,
+          9,
+          4,
+          31,
+          8
+        ]
+      ],
+      "worst_abs_error": 0.0000013709068298339844
+    }
+  ],
+  "config_sha256": "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02",
+  "declared_source_revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+  "framework": "transformers AutoModelForCausalLM CPU",
+  "limitations": [
+    "Full prompt logits only, no tokenizer parity or streamed KV decoding.",
+    "HF Llama frontend is separate from canonical v18 Semantic IR.",
+    "No physical GPU/photonic device or throughput claim."
+  ],
+  "reference_weight_copy": "Tensor-identical safetensors with format=pt metadata",
+  "schema": "visuaml.pretrained-llama-parity.v19",
+  "source": "manojredhat/tiny-llama",
+  "tolerance": {
+    "atol": 0.0005,
+    "rtol": 0.0005
+  },
+  "provenance": {
+    "github_workflow_run": "https://github.com/Caerii/VisuaML/actions/runs/43804918553",
+    "verification": "Completed successful GitHub Actions parity workflow",
+    "claim": "Full-prefill integer-token logits versus independently run Hugging Face PyTorch CPU reference",
+    "reference_note": "Temporarily normalized only safetensors format metadata; original source hash preserved"
+  }
+}
