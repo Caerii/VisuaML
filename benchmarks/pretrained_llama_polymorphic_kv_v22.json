@@ -9,7 +9,7 @@
   "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
   "comparison": [
     {
-      "mean_abs_error": 2.1660434867953882e-7,
+      "mean_abs_error": 2.3576123453494802e-7,
       "output_shape": [
         1,
         4,
@@ -27,13 +27,13 @@
       "worst_abs_error": 0.0000011324882507324219
     },
     {
-      "mean_abs_error": 2.591208669855405e-7,
+      "mean_abs_error": 2.3661770853777853e-7,
       "output_shape": [
         1,
         6,
         512
       ],
-      "semantic_ir_worst_abs_error": 0.000001341104507446289,
+      "semantic_ir_worst_abs_error": 0.0000011324882507324219,
       "tokens": [
         [
           2,
@@ -44,13 +44,13 @@
           8
         ]
       ],
-      "worst_abs_error": 0.000001341104507446289
+      "worst_abs_error": 0.0000011324882507324219
     }
   ],
   "config_sha256": "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02",
   "declared_source_revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
   "framework": "transformers AutoModelForCausalLM CPU",
-  "fused_ffn_max_abs_error": 9.5367431640625e-7,
+  "fused_ffn_max_abs_error": 0.0000010728836059570312,
   "fused_ffn_region_calls": 6,
   "greedy_generated_ids": [
     [
@@ -62,7 +62,7 @@
   "greedy_tokens_match_hf_recompute": true,
   "hybrid_compiled_primitive_calls": 67,
   "hybrid_compiled_primitive_specializations": 7,
-  "hybrid_max_abs_error": 9.238719940185547e-7,
+  "hybrid_max_abs_error": 0.0000011920928955078125,
   "limitations": [
     "Tokenizer parity is verified on only two short text witnesses.",
     "v20 uses a Llama-specific typed dialect rather than unrestricted model IR.",
@@ -73,7 +73,7 @@
     "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
     "config_sha256": "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02",
     "cpu": "x86_64",
-    "graph_setup_ms": 63.95849,
+    "graph_setup_ms": 67.822405,
     "limitations": [
       "CPU only, small bounded prompts, no serving concurrency.",
       "v21 TorchScript graph compiles the whole decoder for concrete shapes, but not standalone AOT or dynamic-shape compile-once.",
@@ -877,34 +877,34 @@
         "fused_ffn_specializations": 1,
         "latency": {
           "numpy": {
-            "mad_ms": 0.050835,
-            "median_ms": 8.212716,
-            "minimum_ms": 8.130424,
-            "p95_ms": 8.269747
+            "mad_ms": 0.06764,
+            "median_ms": 5.053047,
+            "minimum_ms": 4.903882,
+            "p95_ms": 5.117734
           },
           "reference_v19": {
-            "mad_ms": 0.192104,
-            "median_ms": 7.015095,
-            "minimum_ms": 6.394407,
-            "p95_ms": 7.170314
+            "mad_ms": 0.065708,
+            "median_ms": 4.043136,
+            "minimum_ms": 3.91146,
+            "p95_ms": 4.257341
           },
           "torchscript_fused": {
-            "mad_ms": 0.038257,
-            "median_ms": 8.422566,
-            "minimum_ms": 8.309599,
-            "p95_ms": 8.534644
+            "mad_ms": 0.031959,
+            "median_ms": 7.263701,
+            "minimum_ms": 7.134964,
+            "p95_ms": 7.49016
           },
           "torchscript_graph": {
-            "mad_ms": 0.579658,
-            "median_ms": 5.67296,
-            "minimum_ms": 4.981768,
-            "p95_ms": 29.472395
+            "mad_ms": 0.203046,
+            "median_ms": 2.906205,
+            "minimum_ms": 2.601455,
+            "p95_ms": 21.570633
           },
           "torchscript_hybrid": {
-            "mad_ms": 0.090974,
-            "median_ms": 16.658006,
-            "minimum_ms": 16.473283,
-            "p95_ms": 16.803357
+            "mad_ms": 0.098148,
+            "median_ms": 13.08571,
+            "minimum_ms": 12.98202,
+            "p95_ms": 13.301704
           }
         },
         "parity": "full logits verified against independent local reference",
@@ -917,7 +917,7 @@
             "graph_nodes": 2116,
             "past": 0,
             "query": 4,
-            "trace_ms": 55.342748
+            "trace_ms": 37.272019
           }
         ]
       },
@@ -925,34 +925,34 @@
         "fused_ffn_specializations": 1,
         "latency": {
           "numpy": {
-            "mad_ms": 0.039869,
-            "median_ms": 8.970166,
-            "minimum_ms": 8.877158,
-            "p95_ms": 9.08497
+            "mad_ms": 0.081947,
+            "median_ms": 6.472515,
+            "minimum_ms": 6.390568,
+            "p95_ms": 6.627425
           },
           "reference_v19": {
-            "mad_ms": 0.206845,
-            "median_ms": 7.743893,
-            "minimum_ms": 7.014524,
-            "p95_ms": 7.913994
+            "mad_ms": 0.074962,
+            "median_ms": 5.673515,
+            "minimum_ms": 5.558782,
+            "p95_ms": 5.878277
           },
           "torchscript_fused": {
-            "mad_ms": 0.056945,
-            "median_ms": 10.045277,
-            "minimum_ms": 9.988332,
-            "p95_ms": 10.271861
+            "mad_ms": 0.091194,
+            "median_ms": 8.419107,
+            "minimum_ms": 8.327913,
+            "p95_ms": 8.647244
           },
           "torchscript_graph": {
-            "mad_ms": 0.977766,
-            "median_ms": 5.28766,
-            "minimum_ms": 4.049429,
-            "p95_ms": 29.289337
+            "mad_ms": 0.209455,
+            "median_ms": 3.170262,
+            "minimum_ms": 2.960791,
+            "p95_ms": 22.132097
           },
           "torchscript_hybrid": {
-            "mad_ms": 0.298301,
-            "median_ms": 18.357239,
-            "minimum_ms": 18.041672,
-            "p95_ms": 18.69556
+            "mad_ms": 0.234152,
+            "median_ms": 13.590333,
+            "minimum_ms": 13.331298,
+            "p95_ms": 13.963998
           }
         },
         "parity": "full logits verified against independent local reference",
@@ -965,7 +965,7 @@
             "graph_nodes": 2116,
             "past": 0,
             "query": 8,
-            "trace_ms": 54.856269
+            "trace_ms": 37.214293
           }
         ]
       },
@@ -973,34 +973,34 @@
         "fused_ffn_specializations": 1,
         "latency": {
           "numpy": {
-            "mad_ms": 0.125987,
-            "median_ms": 10.35891,
-            "minimum_ms": 10.232923,
-            "p95_ms": 10.85653
+            "mad_ms": 0.022395,
+            "median_ms": 7.537375,
+            "minimum_ms": 7.51498,
+            "p95_ms": 7.731086
           },
           "reference_v19": {
-            "mad_ms": 0.096522,
-            "median_ms": 9.156232,
-            "minimum_ms": 8.491879,
-            "p95_ms": 9.237453
+            "mad_ms": 0.036084,
+            "median_ms": 6.65245,
+            "minimum_ms": 6.51116,
+            "p95_ms": 6.890467
           },
           "torchscript_fused": {
-            "mad_ms": 0.268186,
-            "median_ms": 11.261895,
-            "minimum_ms": 10.993709,
-            "p95_ms": 11.953941
+            "mad_ms": 0.114512,
+            "median_ms": 9.759731,
+            "minimum_ms": 9.509208,
+            "p95_ms": 10.383154
           },
           "torchscript_graph": {
-            "mad_ms": 0.652064,
-            "median_ms": 6.082185,
-            "minimum_ms": 4.970982,
-            "p95_ms": 30.314597
+            "mad_ms": 0.165103,
+            "median_ms": 4.029758,
+            "minimum_ms": 3.733013,
+            "p95_ms": 24.232535
           },
           "torchscript_hybrid": {
-            "mad_ms": 0.457868,
-            "median_ms": 20.062822,
-            "minimum_ms": 19.514982,
-            "p95_ms": 21.063203
+            "mad_ms": 0.226541,
+            "median_ms": 14.88983,
+            "minimum_ms": 14.487677,
+            "p95_ms": 15.09134
           }
         },
         "parity": "full logits verified against independent local reference",
@@ -1013,7 +1013,7 @@
             "graph_nodes": 2116,
             "past": 0,
             "query": 16,
-            "trace_ms": 55.662451
+            "trace_ms": 39.170168
           }
         ]
       }
@@ -1027,12 +1027,22 @@
       "torchscript_polymorphic_v22": {
         "first_graph_nodes": 2097,
         "specializations": 1,
-        "total_trace_ms": 57.801644
+        "total_trace_ms": 39.624947
       },
       "torchscript_specialized_v21": {
         "first_graph_nodes": 2116,
         "specializations": 6,
-        "total_trace_ms": 338.769456
+        "total_trace_ms": 238.17509
+      }
+    },
+    "cumulative_kv_tensor_accounting": {
+      "torchscript_polymorphic_v22": {
+        "input_kv_tensor_bytes": 2654208,
+        "returned_kv_tensor_bytes": 995328
+      },
+      "torchscript_specialized_v21": {
+        "input_kv_tensor_bytes": 2654208,
+        "returned_kv_tensor_bytes": 3649536
       }
     },
     "final_tokens": 12,
@@ -1046,22 +1056,22 @@
     ],
     "latency": {
       "numpy_semantic": {
-        "mad_ms": 0.772812,
-        "median_ms": 33.20664,
-        "min_ms": 32.433828,
-        "p95_ms": 36.546984
+        "mad_ms": 0.367356,
+        "median_ms": 18.509842,
+        "min_ms": 15.175633,
+        "p95_ms": 18.85976
       },
       "torchscript_polymorphic_v22": {
-        "mad_ms": 0.383138,
-        "median_ms": 27.144265,
-        "min_ms": 26.761127,
-        "p95_ms": 27.655448
+        "mad_ms": 0.12914,
+        "median_ms": 11.833298,
+        "min_ms": 9.949519,
+        "p95_ms": 11.946246
       },
       "torchscript_specialized_v21": {
-        "mad_ms": 1.450545,
-        "median_ms": 27.761347,
-        "min_ms": 25.577497,
-        "p95_ms": 176.921592
+        "mad_ms": 0.157988,
+        "median_ms": 11.776686,
+        "min_ms": 11.115042,
+        "p95_ms": 133.160626
       }
     },
     "limitations": [
@@ -1072,7 +1082,7 @@
     "numerical_witness": "every chunk's logits and every final KV pair",
     "numpy": "2.1.3",
     "openblas_threads": "1",
-    "platform": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+    "platform": "Linux-7.0.0-1016-aws-x86_64-with-glibc2.43",
     "resident_cache_reserved_bytes": {
       "numpy_semantic": 1769472,
       "torchscript_polymorphic_v22": 1769472,
@@ -1080,11 +1090,17 @@
     },
     "schema": "visuaml.llama-polymorphic-cache-benchmark.v22",
     "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+    "source_files_sha256": {
+      "examples/llama_polymorphic_bench_v22.py": "ea4ad54795b9641156c2e7d2e4428062212d2eb38b3eedfdbf8b9cac8f43c03e",
+      "visuaml/compiler_lab/kv_lowering_v17.py": "6be4caaedd221434a5416d435f166f0d8d3f19596aa97975a25b7bca9b5a8c97",
+      "visuaml/compiler_lab/llama_semantic_v20.py": "d802fc7415351588d38653784256614fa21fe9c5697596968234d78ada420076",
+      "visuaml/compiler_lab/torchscript_graph_v21.py": "5daa8bfe3491b346e38a046b940f9ec6e392e00889a59325f9eeb37eccf93a50"
+    },
     "trials": 5
   },
   "reference_weight_copy": "Tensor-identical safetensors with format=pt metadata",
   "schema": "visuaml.pretrained-llama-parity.v20",
-  "semantic_ir_max_abs_error": 0.000001341104507446289,
+  "semantic_ir_max_abs_error": 0.0000011324882507324219,
   "semantic_ir_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
   "source": "manojredhat/tiny-llama",
   "streaming_ir_cache_tokens": 6,
@@ -1092,7 +1108,7 @@
   "tokenizer_model_sha256": "219d5967cd1bc4dbdd0d880fddcf4d61a703391f79c889dc63a0c4b0eb367823",
   "tokenizer_parity": [
     {
-      "logit_max_abs_error": 0.000001430511474609375,
+      "logit_max_abs_error": 0.0000019073486328125,
       "text": "Once upon a time",
       "token_ids": [
         1,
@@ -1105,7 +1121,7 @@
       ]
     },
     {
-      "logit_max_abs_error": 0.0000016689300537109375,
+      "logit_max_abs_error": 0.0000015497207641601562,
       "text": "The little cat ran home.",
       "token_ids": [
         1,
@@ -1128,18 +1144,18 @@
   },
   "v22_cursor_polymorphic_graphs": 1,
   "v22_streaming_tokens": 6,
-  "whole_graph_max_abs_error": 8.344650268554688e-7,
+  "whole_graph_max_abs_error": 7.450580596923828e-7,
   "whole_graph_streaming_past_tokens": 6,
   "whole_graph_trace_count": 3,
   "v22_provenance": {
-    "workflow_run": "https://github.com/Caerii/VisuaML/actions/runs/43911628364",
+    "workflow_run": "https://github.com/Caerii/VisuaML/actions/runs/43912614045",
     "status": "success",
-    "scope": "real pretrained Tiny Llama on CI CPU; variable query/cursor, full decoded logits and cache; warm pipeline latency, explicit cumulative graph construction",
+    "scope": "Pinned pretrained Tiny Llama, tokenization, numerical parity and 6-chunk dynamic decode, source-bound warm CPU software performance",
     "caveats": [
-      "Fixed model/batch and reserved cache capacity, not unrestricted dynamic network shapes.",
-      "Time varies with host load; no production serving SLOs or physical memory measurements.",
-      "Warm latency excludes TorchScript tracing; compilation totals separately reported.",
-      "Report compares software backends, not GPU/optical hardware."
+      "One live-prefix graph per model/batch; not arbitrary model or shape family.",
+      "Warm latencies exclude tracing; compile totals reported separately.",
+      "Input/output tensor byte accounting is logical tensor storage, not host RSS or PCIe/CUDA transfer.",
+      "Software CI CPU microbenchmark; not production throughput or energy/optical measurements."
     ]
   }
 }
