@@ -124,7 +124,7 @@ def load_decoder_bundle(directory: str | Path) -> CompiledDecoderPlan:
         if (
             compiled.digest != document["semantic_sha256"]
             or compiled.checkpoint_sha256 != document["checkpoint_sha256"]
-            or compiled.semantic.as_dict() != serialized
+            or _encode(compiled.semantic.as_dict()) != _encode(serialized)
         ):
             raise BundleV19Error("Serialized semantic graph disagrees with checkpoint or compiler")
         return compiled
