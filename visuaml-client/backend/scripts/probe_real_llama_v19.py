@@ -23,6 +23,7 @@ sys.path.insert(0, str(BACKEND))
 
 from examples.llama_polymorphic_bench_v22 import benchmark as benchmark_polymorphic
 from examples.llama_semantic_bench_v20 import benchmark
+from visuaml.compiler_lab.compiled_template_v23 import CompiledLlamaTemplate
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
     lower_llama_semantic_program,
@@ -214,6 +215,25 @@ def run() -> dict:
         )
         if poly.report()["specializations"] != 1:
             raise AssertionError("One compiled graph must support irregular KV positions")
+        shared_template = CompiledLlamaTemplate(compiled)
+        first_client = shared_template.new_session()
+        second_client = shared_template.new_session()
+        first_logits = first_client.step(cases[0])
+        second_logits = second_client.step(cases[0])
+        np.testing.assert_allclose(
+            first_logits, hybrid_reference, atol=5e-4, rtol=5e-4
+        )
+        np.testing.assert_allclose(
+            second_logits, hybrid_reference, atol=5e-4, rtol=5e-4
+        )
+        if (
+            shared_template.report()["compiled_graphs"] != 1
+            or first_client._compiled[(1, -1, -1)] is not second_client._compiled[(1, -1, -1)]
+        ):
+            raise AssertionError("Compiled model is not shared between isolated sessions")
+        first_client.step(np.array([[5]], dtype=np.int64))
+        if second_client.cursor != 4 or first_client.cursor != 5:
+            raise AssertionError("Shared model leaked KV state across clients")
 
         return {
             "schema": "visuaml.pretrained-llama-parity.v20",
@@ -221,6 +241,10 @@ def run() -> dict:
             "polymorphic_cpu_benchmark": polymorphic_evidence,
             "v22_cursor_polymorphic_graphs": poly.report()["specializations"],
             "v22_streaming_tokens": poly.cursor,
+            "v23_shared_template": shared_template.report(),
+            "v23_isolated_session_cursors": [
+                first_client.cursor, second_client.cursor,
+            ],
             "source": MODEL_ID,
             "declared_source_revision": revision,
             "checkpoint_sha256": importer.checkpoint_sha256,
