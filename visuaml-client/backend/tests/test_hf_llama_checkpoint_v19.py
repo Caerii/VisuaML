@@ -138,7 +138,7 @@ def test_file_hash_and_unsupported_config_fail_closed(tmp_path):
 
 
 def test_corrupt_or_missing_checkpoint_tensor_fails(tmp_path):
-    arrays, config = fixture(tmp_path)
+    arrays, _ = fixture(tmp_path)
     arrays.pop("model.norm.weight")
     save_file(arrays, str(tmp_path / "model.safetensors"))
     with pytest.raises(HFLlamaContractError, match="keys"):
