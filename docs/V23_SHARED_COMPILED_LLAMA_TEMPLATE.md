@@ -68,3 +68,34 @@ measured under realistic server concurrency.
 Next work should introduce an explicit ownership/type-safe model-weight
 arena, measured cache/graph lifetime policies, and separation of cold
 compilation, warm inference and session setup costs.
+
+
+## Pinned real-checkpoint cold-session measurement
+
+Measured for manojredhat/tiny-llama at revision
+756e9746eb801752d69771ef3e9bc433b21d853d and weights
+SHA-256 d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03.
+
+An independently completed GitHub Actions run compared four distinct
+sessions executing the same pinned trained model. Across three trials
+(all with identical input and full-logit parity checks):
+
+| Cold-session measurement | Four separate traces | One shared compiled template |
+| --- | ---: | ---: |
+| Compiled graphs | 4 | 1 |
+| Median trace construction, ms | 277.326 | 67.448 |
+| Median wall time, ms | 793.483 | 662.101 |
+| Observed wall p95, ms | 871.408 | 665.495 |
+
+The approximately 16.6% reduction in observed total cold-session wall
+time is smaller than the approximately 75.7% reduction in tracing
+time because source admission, per-client plan/weight handling and private
+KV storage allocation continue to incur costs in each new session.
+Trace time is part of wall time and MUST NOT be added to it.
+
+Source-bound evidence:
+benchmarks/pretrained_llama_shared_template_v23.json
+and workflow https://github.com/Caerii/VisuaML/actions/runs/43914346114.
+
+These experiments do not establish throughput under concurrent serving,
+true physical memory savings, or an offline persistable AOT executable.
