@@ -79,3 +79,38 @@ overhead remain; all performance claims require matched measured evidence.
    shape-specialized decode and polymorphic decode backends.
 5. Generalize the typed operator and state contracts to new model families
    only after independent real-checkpoint numerical verification.
+
+
+## Source-bound pinned real-model measurements
+
+Pinned trained checkpoint: manojredhat/tiny-llama at revision
+756e9746eb801752d69771ef3e9bc433b21d853d, with safetensors
+SHA-256 d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03.
+
+The CI experiment verifies parity of every emitted logit chunk and all final
+KV state, then alternates backend order across five warm full sequences
+of six chunks (4, 1, 1, 1, 3, 2 tokens). The following values come from
+the *same* GitHub Actions CPU run 43912614045:
+
+| Observed measurement | v21 specialized | v22 dynamic live-prefix |
+| --- | ---: | ---: |
+| Separate traced graphs | 6 | 1 |
+| Cumulative tracing time, ms | 238.175 | 39.625 |
+| Warm six-chunk median, ms | 11.777 | 11.833 |
+| Cumulative input KV tensor bytes | 2,654,208 | 2,654,208 |
+| Cumulative output KV tensor bytes | 3,649,536 | 995,328 |
+
+The original NumPy semantic interpreter took a 18.510 ms warm median
+for the same workload. V22 is approximately 6x cheaper to trace than
+v21 but offers no established steady-state speedup over v21 in this
+individual run. V22 produces about 73% fewer KV-output tensor bytes.
+All numbers vary with the CI runner, BLAS settings, and timing noise.
+
+Evidence: benchmarks/pretrained_llama_polymorphic_kv_v22.json
+and the independently completed workflow:
+https://github.com/Caerii/VisuaML/actions/runs/43912614045
+
+These byte totals represent tensor sizes observed by the CPU runtime,
+not physical peak RSS, memory-allocator behavior, or PCIe transfers.
+Current sessions still require tracing once per newly constructed
+session unless the compiled graph is explicitly reused.
