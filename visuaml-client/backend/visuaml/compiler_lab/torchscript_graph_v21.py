@@ -59,8 +59,9 @@ class _LlamaTraceModule(nn.Module):
     no Python per-op dispatch during subsequent execution of this shape.
     """
 
-    def __init__(self, plan: LlamaSemanticPlan):
+    def __init__(self, plan: LlamaSemanticPlan, *, cursor_polymorphic: bool = False):
         super().__init__()
+        self.cursor_polymorphic = cursor_polymorphic
         p = plan.weights.profile
         self.operations = plan.program.regions[0].operations
         self.batch = plan.batch
@@ -95,13 +96,20 @@ class _LlamaTraceModule(nn.Module):
         weights = {name: getattr(self, attr) for name, attr in self._attributes.items()}
         env: dict[str, torch.Tensor] = {"tokens": tokens, **weights}
         pending: dict[int, torch.Tensor] = {}
-        start = past[0].shape[1]
+        start = past[-1] if self.cursor_polymorphic else past[0].shape[1]
         qlength = tokens.shape[1]
         total = start + qlength
+        positions = (
+            torch.arange(qlength, device=tokens.device, dtype=torch.int64) + start
+            if self.cursor_polymorphic else None
+        )
         for op in self.operations:
             kind = op.op
             if kind == "read_cache":
-                result = history[op.state_cell]
+                result = (
+                    torch.narrow(history[op.state_cell], 1, 0, total)
+                    if self.cursor_polymorphic else history[op.state_cell]
+                )
             else:
                 args = tuple(env[name] for name in op.operands)
                 if kind == "stage_key":
@@ -109,12 +117,21 @@ class _LlamaTraceModule(nn.Module):
                     continue
                 if kind == "stage_value":
                     layer = dict(op.parameters)["layer"]
-                    history[f"k{layer}"] = torch.cat(
-                        (history[f"k{layer}"], pending.pop(layer)), dim=1
-                    )
-                    history[f"v{layer}"] = torch.cat(
-                        (history[f"v{layer}"], args[0]), dim=1
-                    )
+                    key_update = pending.pop(layer)
+                    if self.cursor_polymorphic:
+                        history[f"k{layer}"] = history[f"k{layer}"].index_copy(
+                            1, positions, key_update
+                        )
+                        history[f"v{layer}"] = history[f"v{layer}"].index_copy(
+                            1, positions, args[0]
+                        )
+                    else:
+                        history[f"k{layer}"] = torch.cat(
+                            (history[f"k{layer}"], key_update), dim=1
+                        )
+                        history[f"v{layer}"] = torch.cat(
+                            (history[f"v{layer}"], args[0]), dim=1
+                        )
                     continue
                 if kind == "embedding":
                     result = torch.nn.functional.embedding(args[0], args[1])
@@ -132,8 +149,12 @@ class _LlamaTraceModule(nn.Module):
                     )
                 elif kind == "rope_half":
                     tensor = args[0]
-                    cosine = self.rotary_cos[start:total][None, :, None, :]
-                    sine = self.rotary_sin[start:total][None, :, None, :]
+                    if self.cursor_polymorphic:
+                        cosine = self.rotary_cos.index_select(0, positions)[None, :, None, :]
+                        sine = self.rotary_sin.index_select(0, positions)[None, :, None, :]
+                    else:
+                        cosine = self.rotary_cos[start:total][None, :, None, :]
+                        sine = self.rotary_sin[start:total][None, :, None, :]
                     half = self.depth // 2
                     rotated = torch.cat(
                         (-tensor[..., half:], tensor[..., :half]), dim=-1
@@ -190,7 +211,11 @@ class TorchScriptWholeGraphSession:
     specialization cache. It is deliberately not thread-safe.
     """
 
-    def __init__(self, plan: LlamaSemanticPlan) -> None:
+    def __init__(
+        self, plan: LlamaSemanticPlan, *, cursor_polymorphic: bool = False
+    ) -> None:
+        if type(cursor_polymorphic) is not bool:
+            raise WholeGraphError("Invalid cursor-polymorphism selector")
         admitted = lower_llama_semantic_program(
             plan.program, plan.weights, batch=plan.batch
         )
@@ -202,7 +227,10 @@ class TorchScriptWholeGraphSession:
         self.layers = p.layers
         self.kv_heads = p.kv_heads
         self.depth = p.head_dim
-        self._torch = _LlamaTraceModule(admitted).eval()
+        self.cursor_polymorphic = cursor_polymorphic
+        self._torch = _LlamaTraceModule(
+            admitted, cursor_polymorphic=cursor_polymorphic
+        ).eval()
         self.cache = lower_kv_semantic_program(
             make_kv_semantic_program(
                 batch=self.batch, layers=self.layers,
@@ -218,11 +246,19 @@ class TorchScriptWholeGraphSession:
         return self.cache.cursor
 
     def _state_inputs(self) -> tuple[torch.Tensor, ...]:
-        return tuple(
+        values = tuple(
             torch.from_numpy(
-                self.cache._arrays[f"{kind}{layer}"][:, :self.cursor].copy(order="C")
+                (
+                    self.cache._arrays[f"{kind}{layer}"]
+                    if self.cursor_polymorphic
+                    else self.cache._arrays[f"{kind}{layer}"][:, :self.cursor]
+                ).copy(order="C")
             )
             for layer in range(self.layers) for kind in ("k", "v")
+        )
+        return (
+            (*values, torch.tensor(self.cursor, dtype=torch.int64))
+            if self.cursor_polymorphic else values
         )
 
     def step(self, tokens: np.ndarray) -> np.ndarray:
@@ -237,7 +273,10 @@ class TorchScriptWholeGraphSession:
             raise WholeGraphError("Invalid token IDs, query, batch, or context budget")
         start = self.cursor
         query = tokens.shape[1]
-        signature = (self.batch, query, start)
+        signature = (
+            (self.batch, -1, -1) if self.cursor_polymorphic
+            else (self.batch, query, start)
+        )
         input_tokens = torch.from_numpy(tokens.copy(order="C"))
         prior = self._state_inputs()
         if signature not in self._compiled:
@@ -274,7 +313,11 @@ class TorchScriptWholeGraphSession:
         for layer in range(self.layers):
             k = result[1 + 2 * layer].detach().cpu().numpy()
             v = result[2 + 2 * layer].detach().cpu().numpy()
-            expected = (self.batch, start + query, self.kv_heads, self.depth)
+            expected = (
+                self.batch,
+                self.capacity if self.cursor_polymorphic else start + query,
+                self.kv_heads, self.depth,
+            )
             if (
                 k.shape != expected or v.shape != expected
                 or k.dtype != np.float32 or v.dtype != np.float32
@@ -288,7 +331,19 @@ class TorchScriptWholeGraphSession:
                 or not np.array_equal(v[:, :start], prior_values)
             ):
                 raise WholeGraphError("Compiled graph altered previously committed KV state")
-            staged.append((k[:, start:].copy(), v[:, start:].copy()))
+            if self.cursor_polymorphic and (
+                not np.array_equal(
+                    k[:, start + query:], self.cache._arrays[f"k{layer}"][:, start + query:]
+                )
+                or not np.array_equal(
+                    v[:, start + query:], self.cache._arrays[f"v{layer}"][:, start + query:]
+                )
+            ):
+                raise WholeGraphError("Compiled graph modified unrelated KV storage")
+            staged.append((
+                k[:, start:start + query].copy(),
+                v[:, start:start + query].copy(),
+            ))
         with self.cache.begin_append(query) as tx:
             for layer, (keys, values) in enumerate(staged):
                 tx.stage(layer, keys, values)
@@ -341,8 +396,14 @@ class TorchScriptWholeGraphSession:
     def report(self) -> dict:
         return {
             **self.cache.report(),
-            "schema": "visuaml.torchscript-whole-graph.v21",
-            "backend": "torchscript_graph",
+            "schema": (
+                "visuaml.torchscript-cursor-polymorphic.v22"
+                if self.cursor_polymorphic else "visuaml.torchscript-whole-graph.v21"
+            ),
+            "backend": (
+                "torchscript_poly" if self.cursor_polymorphic else "torchscript_graph"
+            ),
+            "dynamic_query_and_cursor": self.cursor_polymorphic,
             "checkpoint_sha256": self.plan.weights.checkpoint_sha256,
             "semantic_sha256": self.plan.semantic_sha256,
             "specializations": len(self._compiled),
@@ -355,7 +416,10 @@ class TorchScriptWholeGraphSession:
             ],
             "limitations": [
                 "Compiled TorchScript CPU graph, not standalone AOT machine code.",
-                "Shapes are specialized by batch, query and past token length.",
+                (
+                    "v22 traces once per batch/model, using fixed-capacity KV inputs; "
+                    "v21 traces per query and past length."
+                ),
                 "Tensor inputs, KV copies and graph tracing add overhead.",
                 "No GPU, dynamic-shape compile-once, or physical photonic device.",
             ],
