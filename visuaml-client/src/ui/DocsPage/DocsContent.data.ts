@@ -11,7 +11,10 @@ export const DOCS_DATA = {
     'Upload a model file and explore',
   ],
   features: [
-    { title: 'Interactive Visualization', desc: 'Pan, zoom, explore architectures. Hover edges for 3D tensor shapes.' },
+    {
+      title: 'Interactive Visualization',
+      desc: 'Pan, zoom, explore architectures. Hover edges for 3D tensor shapes.',
+    },
     { title: 'Real-time Collaboration', desc: 'Multiple users explore models with live cursors.' },
     { title: 'Categorical Export', desc: 'Export to open-hypergraphs for formal reasoning.' },
     { title: 'Type-Safe Composition', desc: 'Automatic validation of morphism compositions.' },
@@ -57,8 +60,14 @@ export const DOCS_DATA = {
   ],
   categoryTheory: [
     { title: 'Boundary Structure', desc: 'Input/output boundaries enable composition' },
-    { title: 'Type Safety', desc: 'Connections carry type information—composition valid when types match' },
-    { title: 'Formal Verification', desc: 'Integration with proof assistants for mathematical proofs' },
+    {
+      title: 'Type Safety',
+      desc: 'Connections carry type information—composition valid when types match',
+    },
+    {
+      title: 'Formal Verification',
+      desc: 'Integration with proof assistants for mathematical proofs',
+    },
   ],
   researchVision: [
     {
@@ -83,9 +92,18 @@ export const DOCS_DATA = {
     { status: 'In Progress', item: 'Cross-framework bridges' },
   ],
   catgradFeatures: [
-    { title: 'Framework-Free Compilation', desc: 'Compile to static Python/C++/CUDA code. 10-20x faster evaluation.' },
-    { title: 'Categorical Reverse Derivatives', desc: 'Pre-compiled gradients. Memory efficient, no autograd overhead.' },
-    { title: 'Multiple Backends', desc: 'Compile to different targets for hardware-specific evaluation.' },
+    {
+      title: 'Framework-Free Compilation',
+      desc: 'Compile to static Python/C++/CUDA code. 10-20x faster evaluation.',
+    },
+    {
+      title: 'Categorical Reverse Derivatives',
+      desc: 'Pre-compiled gradients. Memory efficient, no autograd overhead.',
+    },
+    {
+      title: 'Multiple Backends',
+      desc: 'Compile to different targets for hardware-specific evaluation.',
+    },
   ],
   catgradStatus: [
     { status: 'Done', item: 'Categorical morphisms (compatible with catgrad)' },
@@ -94,9 +112,18 @@ export const DOCS_DATA = {
     { status: 'In Progress', item: 'Static compilation pipeline' },
   ],
   interpretability: [
-    { title: 'Morphism-Based Knowledge', desc: 'Organize findings by morphism types. Understanding of basic morphisms transfers across models.' },
-    { title: 'Compositional Transfer', desc: 'If we understand f: A → B and g: B → C, we understand g ∘ f: A → C systematically.' },
-    { title: 'Distributed Investigation', desc: 'Multiple researchers investigate different morphisms simultaneously in shared structures.' },
+    {
+      title: 'Morphism-Based Knowledge',
+      desc: 'Organize findings by morphism types. Understanding of basic morphisms transfers across models.',
+    },
+    {
+      title: 'Compositional Transfer',
+      desc: 'If we understand f: A → B and g: B → C, we understand g ∘ f: A → C systematically.',
+    },
+    {
+      title: 'Distributed Investigation',
+      desc: 'Multiple researchers investigate different morphisms simultaneously in shared structures.',
+    },
   ],
   interpretabilityStatus: [
     { status: 'Done', item: 'Categorical morphism system' },
@@ -110,16 +137,34 @@ export const DOCS_DATA = {
       { status: 'Not Supported', item: 'TensorFlow, JAX, HuggingFace' },
     ],
     compatibility: [
-      { issue: 'FX Tracing', solution: 'Requires symbolically traceable models. Dynamic control flow breaks tracer.' },
-      { issue: 'Shape Propagation', solution: 'Requires SAMPLE_INPUT constant in model file for shape inference.' },
-      { issue: 'Large Models', solution: 'Large models may be slow to render. Consider sub-network visualization.' },
+      {
+        issue: 'FX Tracing',
+        solution: 'Requires symbolically traceable models. Dynamic control flow breaks tracer.',
+      },
+      {
+        issue: 'Shape Propagation',
+        solution: 'Requires SAMPLE_INPUT constant in model file for shape inference.',
+      },
+      {
+        issue: 'Large Models',
+        solution: 'Large models may be slow to render. Consider sub-network visualization.',
+      },
     ],
   },
   troubleshooting: [
-    { problem: 'Model tracing fails', solution: 'Ensure model uses static control flow. Dynamic loops/conditionals break tracer.' },
-    { problem: 'Shape propagation not working', solution: 'Add SAMPLE_INPUT constant to model file.' },
+    {
+      problem: 'Model tracing fails',
+      solution: 'Ensure model uses static control flow. Dynamic loops/conditionals break tracer.',
+    },
+    {
+      problem: 'Shape propagation not working',
+      solution: 'Add SAMPLE_INPUT constant to model file.',
+    },
     { problem: 'Large models are slow', solution: 'Use model pruning or visualize sub-networks.' },
-    { problem: 'Collaboration not working', solution: 'Ensure API server and WebSocket server are running.' },
+    {
+      problem: 'Collaboration not working',
+      solution: 'Ensure API server and WebSocket server are running.',
+    },
   ],
 } as const;
 

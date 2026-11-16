@@ -1,0 +1,1322 @@
+{
+  "available_features": [],
+  "available_ops": [
+    "add",
+    "amax",
+    "argsort",
+    "avg_pool2d",
+    "cat",
+    "contiguous",
+    "conv2d",
+    "div",
+    "exp",
+    "flatten",
+    "ge",
+    "gelu",
+    "getitem",
+    "index_add",
+    "interpolate_nearest",
+    "layer_norm",
+    "linear",
+    "matmul",
+    "mul",
+    "permute",
+    "relu",
+    "repeat_interleave",
+    "reshape",
+    "rsqrt",
+    "scatter",
+    "sigmoid",
+    "sin",
+    "softmax",
+    "stack",
+    "sub",
+    "sum",
+    "tanh",
+    "topk",
+    "topk_attr",
+    "transpose",
+    "view",
+    "where",
+    "zeros_like"
+  ],
+  "claim": "architecture planning only; candidate does not mean a pretrained model runs",
+  "families": [
+    {
+      "coverage": {
+        "architecture_id": "mlp",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["linear", "relu", "gelu", "add"],
+        "missing_features": [],
+        "missing_operators": [],
+        "status": "candidate-for-validation"
+      },
+      "domain": "classical",
+      "exemplars": ["MLP-Mixer MLP block", "Tabular networks"],
+      "features": [],
+      "id": "mlp",
+      "name": "Dense MLP / residual MLP",
+      "note": "AOT-friendly inference motif, not arbitrary MLP training",
+      "operators": ["linear", "relu", "gelu", "add"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "resnet",
+        "coverage_fraction": 0.6,
+        "covered_operators": ["conv2d", "relu", "add"],
+        "missing_features": [],
+        "missing_operators": ["pooling2d", "batch_norm"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "vision",
+      "exemplars": ["ResNet", "DenseNet"],
+      "features": [],
+      "id": "resnet",
+      "name": "Residual CNN",
+      "note": "Full network also needs pooling and batch-normalization semantics",
+      "operators": ["conv2d", "relu", "add", "pooling2d", "batch_norm"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "convnext",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["conv2d", "layer_norm", "gelu", "add"],
+        "missing_features": [],
+        "missing_operators": [],
+        "status": "candidate-for-validation"
+      },
+      "domain": "vision",
+      "exemplars": ["ConvNeXt V2", "MobileNet"],
+      "features": [],
+      "id": "convnext",
+      "name": "ConvNeXt / modern convolution",
+      "note": "Depthwise convolution and data-layout contracts are important",
+      "operators": ["conv2d", "layer_norm", "gelu", "add"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "vit",
+        "coverage_fraction": 1.0,
+        "covered_operators": [
+          "conv2d",
+          "linear",
+          "layer_norm",
+          "matmul",
+          "softmax",
+          "add",
+          "reshape",
+          "transpose"
+        ],
+        "missing_features": [],
+        "missing_operators": [],
+        "status": "candidate-for-validation"
+      },
+      "domain": "vision",
+      "exemplars": ["ViT", "DINOv3"],
+      "features": [],
+      "id": "vit",
+      "name": "Vision Transformer",
+      "note": "Patch embedding plus transformer motif; not a pretrained ViT support claim",
+      "operators": [
+        "conv2d",
+        "linear",
+        "layer_norm",
+        "matmul",
+        "softmax",
+        "add",
+        "reshape",
+        "transpose"
+      ],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "swin",
+        "coverage_fraction": 0.7142857142857143,
+        "covered_operators": ["conv2d", "linear", "matmul", "softmax", "reshape"],
+        "missing_features": ["dynamic_shapes"],
+        "missing_operators": ["roll", "gather"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "vision",
+      "exemplars": ["Swin Transformer", "Swin V2"],
+      "features": ["dynamic_shapes"],
+      "id": "swin",
+      "name": "Windowed / hierarchical ViT",
+      "note": "Shifted windows require layout and attention-mask legalization",
+      "operators": ["conv2d", "linear", "matmul", "softmax", "reshape", "roll", "gather"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "sam",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["conv2d", "linear", "matmul", "softmax"],
+        "missing_features": [],
+        "missing_operators": ["upsample", "interpolate"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "vision",
+      "exemplars": ["SAM", "SAM 3"],
+      "features": [],
+      "id": "sam",
+      "name": "Segmentation foundation models",
+      "note": "Prompt encoding, mask decoding and image/video state vary by version",
+      "operators": ["conv2d", "linear", "matmul", "softmax", "upsample", "interpolate"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "unet",
+        "coverage_fraction": 0.4,
+        "covered_operators": ["conv2d", "relu"],
+        "missing_features": [],
+        "missing_operators": ["pooling2d", "upsample", "concat"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "vision",
+      "exemplars": ["U-Net", "nnU-Net"],
+      "features": [],
+      "id": "unet",
+      "name": "U-Net encoder-decoder",
+      "note": "Skip connections and multiscale shape semantics",
+      "operators": ["conv2d", "relu", "pooling2d", "upsample", "concat"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "pointnet",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["linear", "relu"],
+        "missing_features": ["variable_graph"],
+        "missing_operators": ["max_reduce"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "graphs-3d",
+      "exemplars": ["PointNet", "PointNet++"],
+      "features": ["variable_graph"],
+      "id": "pointnet",
+      "name": "Point-cloud MLP",
+      "note": "Neighborhood queries may require geometric indexing",
+      "operators": ["linear", "relu", "max_reduce"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "voxel_3d",
+        "coverage_fraction": 0.0,
+        "covered_operators": [],
+        "missing_features": ["sparse_tensor", "spatial_3d"],
+        "missing_operators": ["conv3d", "sparse_conv3d", "scatter_add"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "graphs-3d",
+      "exemplars": ["SparseConvNet", "3D perception"],
+      "features": ["sparse_tensor", "spatial_3d"],
+      "id": "voxel_3d",
+      "name": "Sparse 3D convolution / voxels",
+      "note": "Sparse coordinate manager and kernels required",
+      "operators": ["conv3d", "sparse_conv3d", "scatter_add"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "decoder_transformer",
+        "coverage_fraction": 0.875,
+        "covered_operators": [
+          "linear",
+          "matmul",
+          "softmax",
+          "layer_norm",
+          "reshape",
+          "transpose",
+          "add"
+        ],
+        "missing_features": ["causal_mask", "kv_cache"],
+        "missing_operators": ["rotary"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["Llama", "Qwen", "Gemma"],
+      "features": ["causal_mask", "kv_cache"],
+      "id": "decoder_transformer",
+      "name": "Decoder-only Transformer",
+      "note": "Prefill and autoregressive decode are separate execution modes",
+      "operators": [
+        "linear",
+        "matmul",
+        "softmax",
+        "layer_norm",
+        "reshape",
+        "transpose",
+        "add",
+        "rotary"
+      ],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "encoder_transformer",
+        "coverage_fraction": 1.0,
+        "covered_operators": [
+          "linear",
+          "matmul",
+          "softmax",
+          "layer_norm",
+          "reshape",
+          "transpose",
+          "add",
+          "gelu"
+        ],
+        "missing_features": [],
+        "missing_operators": [],
+        "status": "candidate-for-validation"
+      },
+      "domain": "language",
+      "exemplars": ["BERT", "RoBERTa"],
+      "features": [],
+      "id": "encoder_transformer",
+      "name": "Encoder Transformer",
+      "note": "Bidirectional attention, padding masks and embedding semantics",
+      "operators": [
+        "linear",
+        "matmul",
+        "softmax",
+        "layer_norm",
+        "reshape",
+        "transpose",
+        "add",
+        "gelu"
+      ],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "encoder_decoder",
+        "coverage_fraction": 1.0,
+        "covered_operators": [
+          "linear",
+          "matmul",
+          "softmax",
+          "layer_norm",
+          "reshape",
+          "transpose",
+          "add"
+        ],
+        "missing_features": ["cross_attention", "kv_cache"],
+        "missing_operators": [],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["T5", "BART"],
+      "features": ["cross_attention", "kv_cache"],
+      "id": "encoder_decoder",
+      "name": "Encoder-decoder Transformer",
+      "note": "Cross-attention cache and decoding must be explicit",
+      "operators": ["linear", "matmul", "softmax", "layer_norm", "reshape", "transpose", "add"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "gqa_mqa",
+        "coverage_fraction": 0.8,
+        "covered_operators": ["linear", "matmul", "softmax", "repeat_interleave"],
+        "missing_features": ["causal_mask", "kv_cache"],
+        "missing_operators": ["rotary"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["Llama GQA", "MQA"],
+      "features": ["causal_mask", "kv_cache"],
+      "id": "gqa_mqa",
+      "name": "Grouped / multi-query attention",
+      "note": "KV head grouping cannot be hidden inside a generic matmul",
+      "operators": ["linear", "matmul", "softmax", "repeat_interleave", "rotary"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "mla",
+        "coverage_fraction": 0.8,
+        "covered_operators": ["linear", "matmul", "softmax", "reshape"],
+        "missing_features": ["causal_mask", "kv_cache"],
+        "missing_operators": ["rotary"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["DeepSeek MLA"],
+      "features": ["causal_mask", "kv_cache"],
+      "id": "mla",
+      "name": "Multi-head latent attention",
+      "note": "Latent KV compression and rotary split need dedicated contracts",
+      "operators": ["linear", "matmul", "softmax", "reshape", "rotary"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "flash_attention",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["matmul", "softmax"],
+        "missing_features": ["causal_mask"],
+        "missing_operators": ["block_attention"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["FlashAttention", "FlashAttention-3"],
+      "features": ["causal_mask"],
+      "id": "flash_attention",
+      "name": "Fused / blockwise attention",
+      "note": "A kernel schedule, not merely a different mathematical attention family",
+      "operators": ["matmul", "softmax", "block_attention"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "local_attention",
+        "coverage_fraction": 0.5,
+        "covered_operators": ["matmul", "softmax"],
+        "missing_features": ["causal_mask", "kv_cache"],
+        "missing_operators": ["gather", "block_sparse_matmul"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["Mistral sliding window", "Long-context models"],
+      "features": ["causal_mask", "kv_cache"],
+      "id": "local_attention",
+      "name": "Sliding-window / block-sparse attention",
+      "note": "Attention mask sparsity and locality matter",
+      "operators": ["matmul", "softmax", "gather", "block_sparse_matmul"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "linear_attention",
+        "coverage_fraction": 0.3333333333333333,
+        "covered_operators": ["matmul"],
+        "missing_features": ["sequence_state"],
+        "missing_operators": ["elu", "gated_scan"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["GLA", "Gated DeltaNet"],
+      "features": ["sequence_state"],
+      "id": "linear_attention",
+      "name": "Linear / gated attention",
+      "note": "Recurrent and parallel forms must agree on state updates",
+      "operators": ["matmul", "elu", "gated_scan"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "mamba",
+        "coverage_fraction": 0.25,
+        "covered_operators": ["linear"],
+        "missing_features": ["selective_scan", "sequence_state"],
+        "missing_operators": ["conv1d", "silu", "selective_scan"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["Mamba", "Mamba-2", "Mamba-3"],
+      "features": ["selective_scan", "sequence_state"],
+      "id": "mamba",
+      "name": "Selective state-space models",
+      "note": "Selective scan and checkpoint state, not just plain recurrence",
+      "operators": ["linear", "conv1d", "silu", "selective_scan"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "rwkv",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["linear", "sigmoid", "exp"],
+        "missing_features": ["sequence_state"],
+        "missing_operators": ["rwkv_scan"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["RWKV-6", "RWKV-7"],
+      "features": ["sequence_state"],
+      "id": "rwkv",
+      "name": "RWKV / weighted recurrent KV",
+      "note": "State layout and associative scan are architecture-specific",
+      "operators": ["linear", "sigmoid", "exp", "rwkv_scan"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "xlstm",
+        "coverage_fraction": 0.8,
+        "covered_operators": ["linear", "sigmoid", "tanh", "matmul"],
+        "missing_features": ["sequence_state"],
+        "missing_operators": ["xlstm_cell"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["xLSTM"],
+      "features": ["sequence_state"],
+      "id": "xlstm",
+      "name": "Extended LSTM / matrix memory",
+      "note": "mLSTM matrix-state updates and normalization have dedicated semantics",
+      "operators": ["linear", "sigmoid", "tanh", "matmul", "xlstm_cell"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "attention_ssm_hybrid",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["linear", "matmul", "softmax"],
+        "missing_features": ["sequence_state", "kv_cache"],
+        "missing_operators": ["selective_scan"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["Jamba", "Qwen3-Next", "Nemotron-H"],
+      "features": ["sequence_state", "kv_cache"],
+      "id": "attention_ssm_hybrid",
+      "name": "Attention\u2013SSM hybrid",
+      "note": "Must schedule mixed KV cache and recurrent state independently",
+      "operators": ["linear", "matmul", "softmax", "selective_scan"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "moe",
+        "coverage_fraction": 0.5,
+        "covered_operators": ["linear", "softmax", "topk"],
+        "missing_features": ["expert_dispatch", "distributed_collectives"],
+        "missing_operators": ["gather", "scatter_add", "grouped_matmul"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["Mixtral", "DeepSeekMoE"],
+      "features": ["expert_dispatch", "distributed_collectives"],
+      "id": "moe",
+      "name": "Sparse mixture of experts",
+      "note": "Dynamic expert routing, token permutation and capacity policies",
+      "operators": ["linear", "softmax", "topk", "gather", "scatter_add", "grouped_matmul"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "quantized_llm",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["linear", "matmul", "layer_norm"],
+        "missing_features": ["quantized_kernels"],
+        "missing_operators": ["quantized_matmul"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["BitNet b1.58", "Int4/FP8 LLMs"],
+      "features": ["quantized_kernels"],
+      "id": "quantized_llm",
+      "name": "Quantized / ternary transformers",
+      "note": "Packing, dequantization, scale granularity and overflow need contracts",
+      "operators": ["linear", "matmul", "quantized_matmul", "layer_norm"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "diffusion_language",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["linear", "matmul", "softmax"],
+        "missing_features": ["sampling_loop", "stochastic_sampling"],
+        "missing_operators": ["categorical_sample"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "language",
+      "exemplars": ["LLaDA", "Diffusion LMs"],
+      "features": ["sampling_loop", "stochastic_sampling"],
+      "id": "diffusion_language",
+      "name": "Discrete / diffusion language models",
+      "note": "Iterative denoising is not autoregressive KV-cache decoding",
+      "operators": ["linear", "matmul", "softmax", "categorical_sample"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "rnn",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["linear", "sigmoid", "tanh"],
+        "missing_features": ["sequence_state"],
+        "missing_operators": ["recurrent_scan"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "classical",
+      "exemplars": ["GRU", "LSTM"],
+      "features": ["sequence_state"],
+      "id": "rnn",
+      "name": "Vanilla RNN / GRU / LSTM",
+      "note": "Hidden/cell state transitions and variable-length sequence handling",
+      "operators": ["linear", "sigmoid", "tanh", "recurrent_scan"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "reservoir",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["matmul", "tanh"],
+        "missing_features": ["sequence_state"],
+        "missing_operators": ["recurrent_scan"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "biological",
+      "exemplars": ["Echo-state networks"],
+      "features": ["sequence_state"],
+      "id": "reservoir",
+      "name": "Reservoir / echo-state networks",
+      "note": "Reservoir spectral radius and frozen recurrent connectivity",
+      "operators": ["matmul", "tanh", "recurrent_scan"],
+      "priority": 3
+    },
+    {
+      "coverage": {
+        "architecture_id": "hopfield",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["matmul", "softmax", "topk"],
+        "missing_features": ["sequence_state"],
+        "missing_operators": [],
+        "status": "blocked-by-contract"
+      },
+      "domain": "biological",
+      "exemplars": ["Modern Hopfield nets", "Associative recall"],
+      "features": ["sequence_state"],
+      "id": "hopfield",
+      "name": "Modern Hopfield / associative memory",
+      "note": "Update dynamics and stopping criteria are algorithmic semantics",
+      "operators": ["matmul", "softmax", "topk"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "assembly_calculus",
+        "coverage_fraction": 0.0,
+        "covered_operators": [],
+        "missing_features": ["learned_plasticity", "sequence_state"],
+        "missing_operators": ["gather_sum", "topk_indices", "hebbian_update"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "biological",
+      "exemplars": ["Caerii/assemblies"],
+      "features": ["learned_plasticity", "sequence_state"],
+      "id": "assembly_calculus",
+      "name": "Neural assemblies / local plasticity",
+      "note": "V10 effect dialect supports restricted schedules, not all reference-engine policies",
+      "operators": ["gather_sum", "topk_indices", "hebbian_update"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "snn_lif",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["matmul", "where"],
+        "missing_features": ["event_driven_state"],
+        "missing_operators": ["lif_step"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "biological",
+      "exemplars": ["LIF", "SpikingJelly"],
+      "features": ["event_driven_state"],
+      "id": "snn_lif",
+      "name": "Spiking neural networks",
+      "note": "Discrete/event-based time, reset semantics and surrogate gradients",
+      "operators": ["matmul", "lif_step", "where"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "liquid",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["matmul", "tanh"],
+        "missing_features": ["adaptive_solver", "sequence_state"],
+        "missing_operators": ["ode_integrate"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "biological",
+      "exemplars": ["Liquid Time-Constant networks", "Neural ODE"],
+      "features": ["adaptive_solver", "sequence_state"],
+      "id": "liquid",
+      "name": "Liquid neural networks / neural ODE",
+      "note": "Solver tolerances and event handling affect semantics",
+      "operators": ["matmul", "tanh", "ode_integrate"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "nca",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["conv2d", "add", "where"],
+        "missing_features": ["sequence_state", "stochastic_sampling"],
+        "missing_operators": [],
+        "status": "blocked-by-contract"
+      },
+      "domain": "biological",
+      "exemplars": ["Growing NCA"],
+      "features": ["sequence_state", "stochastic_sampling"],
+      "id": "nca",
+      "name": "Neural cellular automata",
+      "note": "Local update schedule and randomized asynchronous updates",
+      "operators": ["conv2d", "add", "where"],
+      "priority": 3
+    },
+    {
+      "coverage": {
+        "architecture_id": "kan",
+        "coverage_fraction": 0.5,
+        "covered_operators": ["add"],
+        "missing_features": [],
+        "missing_operators": ["spline_eval"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "scientific",
+      "exemplars": ["KAN", "B-spline networks"],
+      "features": [],
+      "id": "kan",
+      "name": "Kolmogorov-Arnold / spline networks",
+      "note": "Spline bases and adaptive grids differ from ordinary MLP operators",
+      "operators": ["spline_eval", "add"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "siren",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["linear", "sin"],
+        "missing_features": [],
+        "missing_operators": [],
+        "status": "candidate-for-validation"
+      },
+      "domain": "scientific",
+      "exemplars": ["SIREN", "Implicit neural fields"],
+      "features": [],
+      "id": "siren",
+      "name": "Implicit sinusoidal neural fields",
+      "note": "Sine activations and coordinate gradients matter",
+      "operators": ["linear", "sin"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "fno",
+        "coverage_fraction": 0.25,
+        "covered_operators": ["linear"],
+        "missing_features": ["fft_semantics", "complex_arithmetic"],
+        "missing_operators": ["fft", "ifft", "complex_mul"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "scientific",
+      "exemplars": ["FNO", "PDE surrogates"],
+      "features": ["fft_semantics", "complex_arithmetic"],
+      "id": "fno",
+      "name": "Fourier neural operators",
+      "note": "Spectral truncation, complex dtype and FFT conventions",
+      "operators": ["fft", "ifft", "complex_mul", "linear"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "deeponet",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["linear", "matmul", "add"],
+        "missing_features": [],
+        "missing_operators": [],
+        "status": "candidate-for-validation"
+      },
+      "domain": "scientific",
+      "exemplars": ["DeepONet"],
+      "features": [],
+      "id": "deeponet",
+      "name": "Deep operator networks",
+      "note": "Branch/trunk representations and physical-domain shapes",
+      "operators": ["linear", "matmul", "add"],
+      "priority": 3
+    },
+    {
+      "coverage": {
+        "architecture_id": "equivariant_gnn",
+        "coverage_fraction": 0.0,
+        "covered_operators": [],
+        "missing_features": ["geometric_equivariance", "variable_graph"],
+        "missing_operators": ["scatter_add", "gather", "norm", "spherical_harmonics"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "scientific",
+      "exemplars": ["EGNN", "NequIP"],
+      "features": ["geometric_equivariance", "variable_graph"],
+      "id": "equivariant_gnn",
+      "name": "Equivariant graph / geometric networks",
+      "note": "Irreducible representations and physical symmetry constraints",
+      "operators": ["scatter_add", "gather", "norm", "spherical_harmonics"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "graph_conv",
+        "coverage_fraction": 0.3333333333333333,
+        "covered_operators": ["matmul"],
+        "missing_features": ["graph_scatter", "variable_graph"],
+        "missing_operators": ["gather", "scatter_add"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "graphs-3d",
+      "exemplars": ["GCN", "GraphSAGE"],
+      "features": ["graph_scatter", "variable_graph"],
+      "id": "graph_conv",
+      "name": "Graph convolutions / message passing",
+      "note": "Edge-index aggregation and duplicate-edge semantics",
+      "operators": ["matmul", "gather", "scatter_add"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "graph_attention",
+        "coverage_fraction": 0.25,
+        "covered_operators": ["linear"],
+        "missing_features": ["graph_scatter", "variable_graph"],
+        "missing_operators": ["scatter_add", "segment_softmax", "gather"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "graphs-3d",
+      "exemplars": ["GAT", "GraphGPS"],
+      "features": ["graph_scatter", "variable_graph"],
+      "id": "graph_attention",
+      "name": "Graph attention / Graph Transformer",
+      "note": "Segment-wise softmax differs from dense attention",
+      "operators": ["linear", "scatter_add", "segment_softmax", "gather"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "nerf",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["linear", "sin", "exp"],
+        "missing_features": ["ray_marching", "differentiable_rendering"],
+        "missing_operators": ["volume_integrate"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "graphs-3d",
+      "exemplars": ["NeRF", "Instant-NGP"],
+      "features": ["ray_marching", "differentiable_rendering"],
+      "id": "nerf",
+      "name": "Neural radiance fields",
+      "note": "Volumetric rendering sampling and gradients",
+      "operators": ["linear", "sin", "exp", "volume_integrate"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "gaussian_splatting",
+        "coverage_fraction": 0.0,
+        "covered_operators": [],
+        "missing_features": ["differentiable_rendering", "spatial_3d"],
+        "missing_operators": ["project_gaussians", "alpha_composite"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "graphs-3d",
+      "exemplars": ["3D Gaussian Splatting"],
+      "features": ["differentiable_rendering", "spatial_3d"],
+      "id": "gaussian_splatting",
+      "name": "3D Gaussian splatting",
+      "note": "Visibility, rasterization order and differentiable compositing",
+      "operators": ["project_gaussians", "alpha_composite"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "vae",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["linear", "conv2d", "exp", "add", "mul"],
+        "missing_features": ["stochastic_sampling"],
+        "missing_operators": [],
+        "status": "blocked-by-contract"
+      },
+      "domain": "generative",
+      "exemplars": ["VAE", "VQ-VAE"],
+      "features": ["stochastic_sampling"],
+      "id": "vae",
+      "name": "Variational autoencoders",
+      "note": "Reparameterization and probabilistic latent semantics",
+      "operators": ["linear", "conv2d", "exp", "add", "mul"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "gan",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["conv2d", "linear", "relu"],
+        "missing_features": ["autograd_training"],
+        "missing_operators": [],
+        "status": "blocked-by-contract"
+      },
+      "domain": "generative",
+      "exemplars": ["StyleGAN", "Low-light GAN"],
+      "features": ["autograd_training"],
+      "id": "gan",
+      "name": "Generative adversarial networks",
+      "note": "Training involves distinct generator/discriminator update cycles",
+      "operators": ["conv2d", "linear", "relu"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "diffusion_unet",
+        "coverage_fraction": 0.4,
+        "covered_operators": ["conv2d", "softmax"],
+        "missing_features": ["time_conditioning", "sampling_loop"],
+        "missing_operators": ["group_norm", "upsample", "timestep_embedding"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "generative",
+      "exemplars": ["Stable Diffusion", "SDXL"],
+      "features": ["time_conditioning", "sampling_loop"],
+      "id": "diffusion_unet",
+      "name": "Image diffusion U-Net",
+      "note": "Denoiser and scheduler are separate executable subsystems",
+      "operators": ["conv2d", "group_norm", "upsample", "softmax", "timestep_embedding"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "dit",
+        "coverage_fraction": 0.6,
+        "covered_operators": ["linear", "matmul", "softmax"],
+        "missing_features": ["time_conditioning", "sampling_loop"],
+        "missing_operators": ["ada_layer_norm", "timestep_embedding"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "generative",
+      "exemplars": ["DiT", "FLUX"],
+      "features": ["time_conditioning", "sampling_loop"],
+      "id": "dit",
+      "name": "Diffusion Transformers",
+      "note": "Adaptive conditioning, attention and numerical sampler",
+      "operators": ["linear", "matmul", "softmax", "ada_layer_norm", "timestep_embedding"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "flow_matching",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["linear", "matmul"],
+        "missing_features": ["time_conditioning", "sampling_loop"],
+        "missing_operators": ["ode_integrate"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "generative",
+      "exemplars": ["Flow matching", "Rectified flow"],
+      "features": ["time_conditioning", "sampling_loop"],
+      "id": "flow_matching",
+      "name": "Rectified flow / flow matching",
+      "note": "Numerical solver and learned vector field must remain distinct",
+      "operators": ["linear", "matmul", "ode_integrate"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "video_diffusion",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["matmul", "softmax", "reshape"],
+        "missing_features": ["time_conditioning", "spatial_3d", "sampling_loop"],
+        "missing_operators": ["conv3d"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "generative",
+      "exemplars": ["CogVideoX", "Video DiT"],
+      "features": ["time_conditioning", "spatial_3d", "sampling_loop"],
+      "id": "video_diffusion",
+      "name": "Spatiotemporal video generators",
+      "note": "Temporal attention, 5D layouts and memory budgets",
+      "operators": ["conv3d", "matmul", "softmax", "reshape"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "autoregressive_image",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["conv2d", "matmul", "softmax"],
+        "missing_features": ["sampling_loop", "stochastic_sampling"],
+        "missing_operators": ["categorical_sample"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "generative",
+      "exemplars": ["PixelCNN", "Image token transformers"],
+      "features": ["sampling_loop", "stochastic_sampling"],
+      "id": "autoregressive_image",
+      "name": "Autoregressive image generation",
+      "note": "Generation schedule and image tokenization are distinct",
+      "operators": ["conv2d", "matmul", "softmax", "categorical_sample"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "conformer",
+        "coverage_fraction": 0.8,
+        "covered_operators": ["linear", "matmul", "softmax", "layer_norm"],
+        "missing_features": ["streaming"],
+        "missing_operators": ["conv1d"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "audio",
+      "exemplars": ["Conformer", "ASR encoders"],
+      "features": ["streaming"],
+      "id": "conformer",
+      "name": "Conformer and acoustic encoders",
+      "note": "Depthwise time convolution, streaming chunks and length masks",
+      "operators": ["conv1d", "linear", "matmul", "softmax", "layer_norm"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "audio_codec",
+        "coverage_fraction": 0.0,
+        "covered_operators": [],
+        "missing_features": ["streaming", "quantized_kernels"],
+        "missing_operators": ["conv1d", "conv_transpose1d", "quantized_matmul"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "audio",
+      "exemplars": ["EnCodec", "SoundStream"],
+      "features": ["streaming", "quantized_kernels"],
+      "id": "audio_codec",
+      "name": "Neural audio codecs / vocoders",
+      "note": "Temporal upsampling, residual vector quantization",
+      "operators": ["conv1d", "conv_transpose1d", "quantized_matmul"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "speech_seq2seq",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["matmul", "softmax", "linear"],
+        "missing_features": ["cross_attention", "streaming"],
+        "missing_operators": ["conv1d"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "audio",
+      "exemplars": ["Whisper", "Speech LMs"],
+      "features": ["cross_attention", "streaming"],
+      "id": "speech_seq2seq",
+      "name": "Speech encoder\u2013decoder",
+      "note": "Acoustic frontend, alignment and streaming decoding",
+      "operators": ["conv1d", "matmul", "softmax", "linear"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "speech_diffusion",
+        "coverage_fraction": 0.3333333333333333,
+        "covered_operators": ["matmul"],
+        "missing_features": ["sampling_loop", "time_conditioning"],
+        "missing_operators": ["conv1d", "ode_integrate"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "audio",
+      "exemplars": ["AudioLDM", "Audio DiT"],
+      "features": ["sampling_loop", "time_conditioning"],
+      "id": "speech_diffusion",
+      "name": "Audio diffusion / flow",
+      "note": "Waveform/latent timebase and synthesis solver",
+      "operators": ["conv1d", "matmul", "ode_integrate"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "clip",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["conv2d", "linear", "matmul", "softmax", "layer_norm"],
+        "missing_features": ["multimodal_preprocessing"],
+        "missing_operators": [],
+        "status": "blocked-by-contract"
+      },
+      "domain": "multimodal",
+      "exemplars": ["CLIP", "SigLIP"],
+      "features": ["multimodal_preprocessing"],
+      "id": "clip",
+      "name": "Contrastive image-text towers",
+      "note": "Separate encoders and cross-modal contrastive training",
+      "operators": ["conv2d", "linear", "matmul", "softmax", "layer_norm"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "vlm",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["conv2d", "linear", "matmul", "softmax", "layer_norm"],
+        "missing_features": ["multimodal_preprocessing", "kv_cache"],
+        "missing_operators": [],
+        "status": "blocked-by-contract"
+      },
+      "domain": "multimodal",
+      "exemplars": ["LLaVA", "Qwen-VL"],
+      "features": ["multimodal_preprocessing", "kv_cache"],
+      "id": "vlm",
+      "name": "Vision-language models",
+      "note": "Projection bridge, image tokens, variable token counts",
+      "operators": ["conv2d", "linear", "matmul", "softmax", "layer_norm"],
+      "priority": 1
+    },
+    {
+      "coverage": {
+        "architecture_id": "omni_modal",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["conv2d", "matmul", "softmax"],
+        "missing_features": ["multimodal_preprocessing", "streaming"],
+        "missing_operators": ["conv1d"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "multimodal",
+      "exemplars": ["Audio/video-text models"],
+      "features": ["multimodal_preprocessing", "streaming"],
+      "id": "omni_modal",
+      "name": "Omni-modal audio/video language",
+      "note": "Synchronize modalities with heterogeneous clock rates",
+      "operators": ["conv1d", "conv2d", "matmul", "softmax"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "v_jepa",
+        "coverage_fraction": 1.0,
+        "covered_operators": ["conv2d", "linear", "matmul", "layer_norm"],
+        "missing_features": ["autograd_training"],
+        "missing_operators": [],
+        "status": "blocked-by-contract"
+      },
+      "domain": "vision",
+      "exemplars": ["I-JEPA", "V-JEPA 2"],
+      "features": ["autograd_training"],
+      "id": "v_jepa",
+      "name": "Joint embedding predictive models",
+      "note": "Predictor and teacher/momentum update are training state",
+      "operators": ["conv2d", "linear", "matmul", "layer_norm"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "world_model",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["conv2d", "matmul"],
+        "missing_features": ["sequence_state", "sampling_loop"],
+        "missing_operators": ["recurrent_scan"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "robotics",
+      "exemplars": ["Dreamer", "Video world models"],
+      "features": ["sequence_state", "sampling_loop"],
+      "id": "world_model",
+      "name": "Latent world models",
+      "note": "Rollout, imagination and policy loops differ from single-pass inference",
+      "operators": ["conv2d", "recurrent_scan", "matmul"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "diffusion_policy",
+        "coverage_fraction": 0.75,
+        "covered_operators": ["conv2d", "matmul", "softmax"],
+        "missing_features": ["sampling_loop", "time_conditioning"],
+        "missing_operators": ["ode_integrate"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "robotics",
+      "exemplars": ["Diffusion Policy", "Flow policies"],
+      "features": ["sampling_loop", "time_conditioning"],
+      "id": "diffusion_policy",
+      "name": "Diffusion / flow robot policies",
+      "note": "Action-horizon conditioning and realtime scheduling",
+      "operators": ["conv2d", "matmul", "softmax", "ode_integrate"],
+      "priority": 2
+    },
+    {
+      "coverage": {
+        "architecture_id": "energy_based",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["matmul", "exp"],
+        "missing_features": ["stochastic_sampling", "sampling_loop"],
+        "missing_operators": ["categorical_sample"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "classical",
+      "exemplars": ["RBM", "Energy-based models"],
+      "features": ["stochastic_sampling", "sampling_loop"],
+      "id": "energy_based",
+      "name": "Energy-based / Boltzmann networks",
+      "note": "Sampler chains and normalization/partition functions",
+      "operators": ["matmul", "exp", "categorical_sample"],
+      "priority": 3
+    },
+    {
+      "coverage": {
+        "architecture_id": "capsule",
+        "coverage_fraction": 0.6666666666666666,
+        "covered_operators": ["matmul", "softmax"],
+        "missing_features": ["dynamic_routing"],
+        "missing_operators": ["routing_update"],
+        "status": "blocked-by-contract"
+      },
+      "domain": "classical",
+      "exemplars": ["CapsNet"],
+      "features": ["dynamic_routing"],
+      "id": "capsule",
+      "name": "Capsule networks",
+      "note": "Iterative dynamic routing, not ordinary convolution",
+      "operators": ["matmul", "softmax", "routing_update"],
+      "priority": 3
+    }
+  ],
+  "priority_gaps": [
+    {
+      "capability": "feature:sequence_state",
+      "families": [
+        "linear_attention",
+        "mamba",
+        "rwkv",
+        "xlstm",
+        "attention_ssm_hybrid",
+        "rnn",
+        "reservoir",
+        "hopfield",
+        "assembly_calculus",
+        "liquid",
+        "nca",
+        "world_model"
+      ],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 44
+    },
+    {
+      "capability": "feature:sampling_loop",
+      "families": [
+        "diffusion_language",
+        "diffusion_unet",
+        "dit",
+        "flow_matching",
+        "video_diffusion",
+        "autoregressive_image",
+        "speech_diffusion",
+        "world_model",
+        "diffusion_policy",
+        "energy_based"
+      ],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 34
+    },
+    {
+      "capability": "feature:kv_cache",
+      "families": [
+        "decoder_transformer",
+        "encoder_decoder",
+        "gqa_mqa",
+        "mla",
+        "local_attention",
+        "attention_ssm_hybrid",
+        "vlm"
+      ],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 33
+    },
+    {
+      "capability": "feature:time_conditioning",
+      "families": [
+        "diffusion_unet",
+        "dit",
+        "flow_matching",
+        "video_diffusion",
+        "speech_diffusion",
+        "diffusion_policy"
+      ],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 24
+    },
+    {
+      "capability": "op:conv1d",
+      "families": [
+        "mamba",
+        "conformer",
+        "audio_codec",
+        "speech_seq2seq",
+        "speech_diffusion",
+        "omni_modal"
+      ],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 24
+    },
+    {
+      "capability": "feature:causal_mask",
+      "families": ["decoder_transformer", "gqa_mqa", "mla", "flash_attention", "local_attention"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 23
+    },
+    {
+      "capability": "op:gather",
+      "families": [
+        "swin",
+        "local_attention",
+        "moe",
+        "equivariant_gnn",
+        "graph_conv",
+        "graph_attention"
+      ],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 22
+    },
+    {
+      "capability": "op:scatter_add",
+      "families": ["voxel_3d", "moe", "equivariant_gnn", "graph_conv", "graph_attention"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 19
+    },
+    {
+      "capability": "feature:streaming",
+      "families": ["conformer", "audio_codec", "speech_seq2seq", "omni_modal"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 16
+    },
+    {
+      "capability": "op:rotary",
+      "families": ["decoder_transformer", "gqa_mqa", "mla"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 15
+    },
+    {
+      "capability": "feature:variable_graph",
+      "families": ["pointnet", "equivariant_gnn", "graph_conv", "graph_attention"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 14
+    },
+    {
+      "capability": "op:ode_integrate",
+      "families": ["liquid", "flow_matching", "speech_diffusion", "diffusion_policy"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 14
+    },
+    {
+      "capability": "feature:multimodal_preprocessing",
+      "families": ["clip", "vlm", "omni_modal"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 13
+    },
+    {
+      "capability": "feature:stochastic_sampling",
+      "families": ["diffusion_language", "nca", "vae", "autoregressive_image", "energy_based"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 13
+    },
+    {
+      "capability": "op:upsample",
+      "families": ["sam", "unet", "diffusion_unet"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 13
+    },
+    {
+      "capability": "feature:cross_attention",
+      "families": ["encoder_decoder", "speech_seq2seq"],
+      "metric": "declared incidence; not observed coverage gain",
+      "weighted_incidence": 10
+    }
+  ],
+  "schema": "visuaml.architecture-atlas.v1",
+  "sha256": "1d1d30bbfd3a92b1a8890ce01188444e9b2bd670ccfcdbd6cf238f0e87794d3f"
+}

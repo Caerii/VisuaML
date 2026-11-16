@@ -14,6 +14,4 @@ export const useTensorVisualizer3DPerf = () => {
   };
 };
 
-export type UseTensorVisualizer3DPerfReturn = ReturnType<
-  typeof useTensorVisualizer3DPerf
->; 
+export type UseTensorVisualizer3DPerfReturn = ReturnType<typeof useTensorVisualizer3DPerf>;

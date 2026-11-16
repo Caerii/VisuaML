@@ -15,15 +15,12 @@ export function DocsPage() {
     containerRef: pageRef as React.RefObject<HTMLElement>,
   });
 
-  const scrollTo = useCallback(
-    (id: string) => {
-      const el =
-        pageRef.current?.querySelector<HTMLElement>(`#${CSS.escape(id)}`) ??
-        document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    },
-    [],
-  );
+  const scrollTo = useCallback((id: string) => {
+    const el =
+      pageRef.current?.querySelector<HTMLElement>(`#${CSS.escape(id)}`) ??
+      document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   return (
     <Box
@@ -37,7 +34,10 @@ export function DocsPage() {
       }}
     >
       <LandingHeader />
-      <Container maxWidth="lg" sx={{ py: { xs: 10, md: 16 }, pt: { xs: 20, md: 16 }, px: { xs: 4, md: 6, lg: 8 } }}>
+      <Container
+        maxWidth="lg"
+        sx={{ py: { xs: 10, md: 16 }, pt: { xs: 20, md: 16 }, px: { xs: 4, md: 6, lg: 8 } }}
+      >
         <Grid container spacing={{ xs: 4, md: 6 }}>
           {/* Table of Contents - Desktop */}
           <Grid
@@ -72,14 +72,20 @@ export function DocsPage() {
                 </Typography>
                 <Typography
                   sx={{
-                    fontSize: { xs: 'clamp(0.875rem, 2vw, 1rem)', md: 'clamp(1rem, 1.5vw, 1.125rem)' },
+                    fontSize: {
+                      xs: 'clamp(0.875rem, 2vw, 1rem)',
+                      md: 'clamp(1rem, 1.5vw, 1.125rem)',
+                    },
                     color: 'rgba(255, 255, 255, 0.7)',
                     fontFamily: "'Inter', sans-serif",
                     lineHeight: 1.8,
                     maxWidth: '800px',
                   }}
                 >
-                  Comprehensive documentation covering current capabilities, categorical foundation, bridge architecture, and research vision. Learn how to visualize PyTorch models, collaborate in real-time, export to categorical structures, and explore our research directions.
+                  Comprehensive documentation covering current capabilities, categorical foundation,
+                  bridge architecture, and research vision. Learn how to visualize PyTorch models,
+                  collaborate in real-time, export to categorical structures, and explore our
+                  research directions.
                 </Typography>
               </Stack>
 

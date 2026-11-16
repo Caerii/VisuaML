@@ -25,6 +25,7 @@ uv venv .venv-demo && uv pip install --python .venv-demo\\Scripts\\python.exe to
 ```
 
 This script will:
+
 1. Process actual models from the `models/` directory:
    - `models.TestModel` → `demo-simple-cnn`
    - `models.SimpleNN` → `demo-simple-mlp`
@@ -39,7 +40,7 @@ Currently, the demo networks use hardcoded placeholder data that matches the str
 ## Files Generated
 
 - `src/lib/demo-networks/demo-simple-cnn.json` - TestModel graph data
-- `src/lib/demo-networks/demo-simple-mlp.json` - SimpleNN graph data  
+- `src/lib/demo-networks/demo-simple-mlp.json` - SimpleNN graph data
 - `src/lib/demo-networks/demo-fixed-cnn.json` - FixedSimpleCNN graph data
 - `src/lib/demo-networks/all-demos.json` - Combined file with all demos
 

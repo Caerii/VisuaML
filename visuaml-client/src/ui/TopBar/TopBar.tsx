@@ -35,13 +35,9 @@ const TopBar = () => {
     <header className="topbar">
       <div className="topbar__container">
         <a href="/" className="topbar__logo-link">
-          <img
-            src="/visuaml_logo.png"
-            alt="VisuaML Logo"
-            className="topbar__logo"
-          />
+          <img src="/visuaml_logo.png" alt="VisuaML Logo" className="topbar__logo" />
         </a>
-        
+
         <div className="topbar__controls">
           <div className="topbar__control-group">
             <label htmlFor="modelPathSelect" className="topbar__label">
@@ -144,16 +140,15 @@ const TopBar = () => {
                     : 'Export to open-hypergraph format'
               }
             >
-              {isExporting 
-                ? 'Exporting...' 
-                : exportFormat === 'json' 
+              {isExporting
+                ? 'Exporting...'
+                : exportFormat === 'json'
                   ? 'Export VisuaML Graph'
                   : exportFormat === 'macro'
                     ? 'Export Hypergraph as HyperSyn Macro'
                     : exportFormat === 'categorical'
                       ? 'Export as Open Hypergraph'
-                      : '📦 Export All Formats'
-              }
+                      : '📦 Export All Formats'}
             </button>
           </div>
         </div>

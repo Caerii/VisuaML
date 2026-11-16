@@ -103,11 +103,7 @@ from visuaml.categorical.morphisms import LinearMorphism, ActivationMorphism
 from visuaml.categorical.hypergraph import CategoricalHypergraph
 
 # 1. Regular PyTorch model (what users already have)
-model = nn.Sequential(
-    nn.Linear(4, 10),
-    nn.ReLU(),
-    nn.Linear(10, 3)
-)
+model = nn.Sequential(nn.Linear(4, 10), nn.ReLU(), nn.Linear(10, 3))
 
 # 2. Convert to categorical representation
 linear1 = LinearMorphism(4, 10, name="linear1")

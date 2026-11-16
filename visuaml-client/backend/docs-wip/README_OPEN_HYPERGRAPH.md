@@ -27,12 +27,11 @@ pip install open-hypergraphs
 from visuaml import export_model_open_hypergraph
 
 # Export to JSON format (default)
-result = export_model_open_hypergraph(
-    'models.SimpleNN',
-    sample_input_args=((10,),)
-)
+result = export_model_open_hypergraph("models.SimpleNN", sample_input_args=((10,),))
 
-print(f"Exported {len(result['nodes'])} nodes and {len(result['hyperedges'])} hyperedges")
+print(
+    f"Exported {len(result['nodes'])} nodes and {len(result['hyperedges'])} hyperedges"
+)
 ```
 
 ### Macro Format Export
@@ -40,12 +39,10 @@ print(f"Exported {len(result['nodes'])} nodes and {len(result['hyperedges'])} hy
 ```python
 # Export to macro format (text-based representation)
 result = export_model_open_hypergraph(
-    'models.SimpleNN',
-    sample_input_args=((10,),),
-    out_format="macro"
+    "models.SimpleNN", sample_input_args=((10,),), out_format="macro"
 )
 
-print(result['macro'])
+print(result["macro"])
 ```
 
 ### With Shape Propagation
@@ -53,9 +50,9 @@ print(result['macro'])
 ```python
 # Include tensor shape and dtype information
 result = export_model_open_hypergraph(
-    'models.SimpleCNN',
+    "models.SimpleCNN",
     sample_input_args=((1, 28, 28),),
-    sample_input_dtypes=['float32']
+    sample_input_dtypes=["float32"],
 )
 ```
 
@@ -66,13 +63,11 @@ from visuaml.filters import FilterConfig
 
 # Apply filters to focus on specific operations
 filter_config = FilterConfig(
-    exclude_ops=['relu', 'dropout']  # Example filter
+    exclude_ops=["relu", "dropout"]  # Example filter
 )
 
 result = export_model_open_hypergraph(
-    'models.SimpleNN',
-    sample_input_args=((10,),),
-    filter_config=filter_config
+    "models.SimpleNN", sample_input_args=((10,),), filter_config=filter_config
 )
 ```
 

@@ -31,7 +31,10 @@ export function LandingSections({ onGetStartedClick }: LandingSectionsProps) {
         },
       }}
     >
-      <Container maxWidth="lg" sx={{ px: { xs: 4, md: 6, lg: 8 }, position: 'relative', zIndex: 1 }}>
+      <Container
+        maxWidth="lg"
+        sx={{ px: { xs: 4, md: 6, lg: 8 }, position: 'relative', zIndex: 1 }}
+      >
         <Stack spacing={{ xs: 16, md: 24 }} sx={{ width: '100%' }}>
           {LANDING_SECTIONS.map((section, idx) => (
             <SectionWithAnimation key={section.id} delay={idx * 0.1}>
@@ -82,7 +85,10 @@ export function LandingSections({ onGetStartedClick }: LandingSectionsProps) {
                 </Stack>
 
                 {section.technicalDetails && (
-                  <SectionDetailList title="How it actually works" items={section.technicalDetails} />
+                  <SectionDetailList
+                    title="How it actually works"
+                    items={section.technicalDetails}
+                  />
                 )}
 
                 {section.differentiators && (

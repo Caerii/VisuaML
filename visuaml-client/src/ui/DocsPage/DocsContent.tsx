@@ -22,7 +22,8 @@ export function DocsContent() {
       <DocsSection id="get-started" title="Get Started">
         <Stack spacing={1.5}>
           <Typography sx={DOCS_STYLES.body}>
-            Upload a PyTorch model file and explore its architecture. VisuaML uses PyTorch FX tracing to extract computational graphs.
+            Upload a PyTorch model file and explore its architecture. VisuaML uses PyTorch FX
+            tracing to extract computational graphs.
           </Typography>
           <Box component="ol" sx={{ pl: 3, m: 0 }}>
             {DOCS_DATA.getStarted.map((step, idx) => (
@@ -35,9 +36,7 @@ export function DocsContent() {
       </DocsSection>
 
       <DocsSection id="features" title="Features">
-        <SectionContent
-          description="Real-time collaborative visualization with categorical export—bridges PyTorch and formal mathematics."
-        >
+        <SectionContent description="Real-time collaborative visualization with categorical export—bridges PyTorch and formal mathematics.">
           <Stack spacing={1}>
             {DOCS_DATA.features.map((f, idx) => (
               <FeatureCard key={idx} title={f.title} desc={f.desc} />
@@ -54,7 +53,9 @@ export function DocsContent() {
 
       <DocsSection id="architecture" title="Architecture">
         <SectionContent description="Full-stack application: React frontend, Node.js API server, Python backend with PyTorch FX.">
-          <KeyValueList items={DOCS_DATA.architecture as unknown as { name: string; desc: string }[]} />
+          <KeyValueList
+            items={DOCS_DATA.architecture as unknown as { name: string; desc: string }[]}
+          />
           <CodeBlock>{CODE_SNIPPETS.architecture}</CodeBlock>
         </SectionContent>
       </DocsSection>
@@ -66,7 +67,9 @@ export function DocsContent() {
           description="Layers become typed morphisms with automatic composition validation. Enables formal reasoning about model structure."
         >
           <CodeBlock>{CODE_SNIPPETS.categorical}</CodeBlock>
-          <KeyValueList items={DOCS_DATA.categoricalFoundation as unknown as { name: string; desc: string }[]} />
+          <KeyValueList
+            items={DOCS_DATA.categoricalFoundation as unknown as { name: string; desc: string }[]}
+          />
         </SectionContent>
       </DocsSection>
 
@@ -135,13 +138,17 @@ export function DocsContent() {
           statusText="Research vision"
           description="Transform architecture search from discrete optimization over fixed templates into type-safe compositional exploration over the entire ML ecosystem."
         >
-          <StatusList items={DOCS_DATA.nasStatus as unknown as Array<{ status: string; item: string }>} />
-          <Typography sx={{ ...DOCS_STYLES.body, fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+          <StatusList
+            items={DOCS_DATA.nasStatus as unknown as Array<{ status: string; item: string }>}
+          />
+          <Typography
+            sx={{ ...DOCS_STYLES.body, fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}
+          >
             See{' '}
             <Box component="span" sx={{ color: 'rgba(66, 153, 225, 1)' }}>
               Categorical Neural Architecture Search
-            </Box>
-            {' '}research document for detailed analysis.
+            </Box>{' '}
+            research document for detailed analysis.
           </Typography>
         </SectionContent>
       </DocsSection>
@@ -157,7 +164,9 @@ export function DocsContent() {
               <FeatureCard key={idx} title={item.title} desc={item.desc} />
             ))}
           </Stack>
-          <StatusList items={DOCS_DATA.catgradStatus as unknown as Array<{ status: string; item: string }>} />
+          <StatusList
+            items={DOCS_DATA.catgradStatus as unknown as Array<{ status: string; item: string }>}
+          />
         </SectionContent>
       </DocsSection>
 
@@ -172,7 +181,11 @@ export function DocsContent() {
               <FeatureCard key={idx} title={item.title} desc={item.desc} />
             ))}
           </Stack>
-          <StatusList items={DOCS_DATA.interpretabilityStatus as unknown as Array<{ status: string; item: string }>} />
+          <StatusList
+            items={
+              DOCS_DATA.interpretabilityStatus as unknown as Array<{ status: string; item: string }>
+            }
+          />
         </SectionContent>
       </DocsSection>
 
@@ -182,7 +195,14 @@ export function DocsContent() {
             <Box>
               <Typography sx={DOCS_STYLES.heading}>Framework Support</Typography>
               <Box sx={{ mt: 0.5 }}>
-                <StatusList items={DOCS_DATA.limitations.framework as unknown as Array<{ status: string; item: string }>} />
+                <StatusList
+                  items={
+                    DOCS_DATA.limitations.framework as unknown as Array<{
+                      status: string;
+                      item: string;
+                    }>
+                  }
+                />
               </Box>
             </Box>
             <Box>
@@ -190,7 +210,9 @@ export function DocsContent() {
               <Stack spacing={0.75} sx={{ mt: 0.5 }}>
                 {DOCS_DATA.limitations.compatibility.map((item, idx) => (
                   <Box key={idx}>
-                    <Typography sx={{ ...DOCS_STYLES.subheading, fontSize: '0.9375rem', mb: 0.125 }}>
+                    <Typography
+                      sx={{ ...DOCS_STYLES.subheading, fontSize: '0.9375rem', mb: 0.125 }}
+                    >
                       {item.issue}
                     </Typography>
                     <Typography sx={{ ...DOCS_STYLES.body, fontSize: '0.9375rem' }}>

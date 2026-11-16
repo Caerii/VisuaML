@@ -1,0 +1,252 @@
+{
+  "certifications": [
+    {
+      "architecture_id": "decoder_transformer",
+      "family_checkpoint_certified": false,
+      "full_model_compiler_executable": false,
+      "level": "cross-framework-reference-parity",
+      "max_abs_error": 1.1920928955078125e-7,
+      "physical_hardware_validated": false,
+      "representative_block": "One-layer autoregressive decoder: GQA/RoPE/KV/SwiGLU/logits/greedy generation",
+      "seed_count": 3,
+      "source_kind": "synthetic-cpu-fixtures",
+      "witnesses": [
+        {
+          "checked_arrays": 5,
+          "family": "decoder_transformer",
+          "input_sha256": "c148df80f005cf92e9b282e606d094fa301c42029e2818c1b6b77a5f260226e4",
+          "max_abs_error": 8.940696716308594e-8,
+          "passed": true,
+          "reference_sha256": "49cbff034b28bbff9ca909ed49d5d7061f2af870a0df3671303e54184e5b280e",
+          "seed": 7
+        },
+        {
+          "checked_arrays": 5,
+          "family": "decoder_transformer",
+          "input_sha256": "964d8e259fd89d453042009665779cbf7980ea76de1f41bea4e8a29cc702f8fe",
+          "max_abs_error": 1.1920928955078125e-7,
+          "passed": true,
+          "reference_sha256": "9f29acaf84f6507db48b45f789a59e9c60941067e3f9e54e8c003d1e0e9b19aa",
+          "seed": 19
+        },
+        {
+          "checked_arrays": 5,
+          "family": "decoder_transformer",
+          "input_sha256": "e13ecf6d957c90cf07379d0fe56b698186f7638a59daaa77ed0c7e3651bf6d5e",
+          "max_abs_error": 5.960464477539063e-8,
+          "passed": true,
+          "reference_sha256": "b771f8fc98bb0349f9451161e95b3181c314901b1d752ca79c2450f645e9d39c",
+          "seed": 41
+        }
+      ]
+    },
+    {
+      "architecture_id": "mamba",
+      "family_checkpoint_certified": false,
+      "full_model_compiler_executable": false,
+      "level": "cross-framework-reference-parity",
+      "max_abs_error": 7.450580596923828e-9,
+      "physical_hardware_validated": false,
+      "representative_block": "Causal depthwise Conv1D and diagonal recurrent scan",
+      "seed_count": 3,
+      "source_kind": "synthetic-cpu-fixtures",
+      "witnesses": [
+        {
+          "checked_arrays": 3,
+          "family": "mamba",
+          "input_sha256": "f84c43e9e15e87afbd612fd4e1ef80548b5c78191e56dd38aaf6d3cd856c36e5",
+          "max_abs_error": 4.190951585769653e-9,
+          "passed": true,
+          "reference_sha256": "f64ee584909095ba054b033f2193c30cc05691dac30152db7f33022d35b8fc9f",
+          "seed": 7
+        },
+        {
+          "checked_arrays": 3,
+          "family": "mamba",
+          "input_sha256": "411e35a831b4b91195d77a6634325a2f1b31ea9965f1250a28859b3efd482379",
+          "max_abs_error": 3.725290298461914e-9,
+          "passed": true,
+          "reference_sha256": "5ea8a57c08080f6d317730ef354efc9b46ff5fed5fc848ac7e4c5ab1f5db46af",
+          "seed": 19
+        },
+        {
+          "checked_arrays": 3,
+          "family": "mamba",
+          "input_sha256": "b017ab482eb9b640371b9a206bb8cfaeda76ee93e07fdb9a04df15dc16789c65",
+          "max_abs_error": 7.450580596923828e-9,
+          "passed": true,
+          "reference_sha256": "2c97b7ad14d0ae270910f2d73f0e1a05d1768000699b734c587d23e88084e5f3",
+          "seed": 41
+        }
+      ]
+    },
+    {
+      "architecture_id": "moe",
+      "family_checkpoint_certified": false,
+      "full_model_compiler_executable": false,
+      "level": "cross-framework-reference-parity",
+      "max_abs_error": 2.9802322387695312e-8,
+      "physical_hardware_validated": false,
+      "representative_block": "Top-k sparse expert routing with finite capacity",
+      "seed_count": 3,
+      "source_kind": "synthetic-cpu-fixtures",
+      "witnesses": [
+        {
+          "checked_arrays": 3,
+          "family": "moe",
+          "input_sha256": "e5d76f70a79e15469adc7db87254f2c89312c5a825e114e290ef154add492c81",
+          "max_abs_error": 2.9802322387695312e-8,
+          "passed": true,
+          "reference_sha256": "a64bd90bd9ce72a126a102a6ce4b5efb6ea9c976ba3188c9951178eb067c1213",
+          "seed": 7
+        },
+        {
+          "checked_arrays": 3,
+          "family": "moe",
+          "input_sha256": "1684bfb25983fd32cc1bab53f0e39448a7e09628fd13fc535a092214530e9850",
+          "max_abs_error": 2.9802322387695312e-8,
+          "passed": true,
+          "reference_sha256": "ad06fa0006943c36c2fd844db6cae40820770ffb36762c7da0b634c63a1ff658",
+          "seed": 19
+        },
+        {
+          "checked_arrays": 3,
+          "family": "moe",
+          "input_sha256": "e2bb6b2f01e6ae5489fb37a1a484e7aae4f22165854f005384b4a32f64fb6b10",
+          "max_abs_error": 2.9802322387695312e-8,
+          "passed": true,
+          "reference_sha256": "d61d7dd663cbb6a62c425eaee494d33e9ae90dde4f5487ec8c62f4909ce2db64",
+          "seed": 41
+        }
+      ]
+    },
+    {
+      "architecture_id": "flow_matching",
+      "family_checkpoint_certified": false,
+      "full_model_compiler_executable": false,
+      "level": "cross-framework-reference-parity",
+      "max_abs_error": 2.384185791015625e-7,
+      "physical_hardware_validated": false,
+      "representative_block": "Time-conditioned deterministic Euler/Heun flow sampler",
+      "seed_count": 3,
+      "source_kind": "synthetic-cpu-fixtures",
+      "witnesses": [
+        {
+          "checked_arrays": 2,
+          "family": "flow_matching",
+          "input_sha256": "4fa6fe57169de53532d656f4ae2531f831cd39a99ac3127701de38c664cec0a9",
+          "max_abs_error": 2.384185791015625e-7,
+          "passed": true,
+          "reference_sha256": "d6f8b56695d55251f83bb366ee2bb85f7d0afe7ada932009686a8098d14010ad",
+          "seed": 7
+        },
+        {
+          "checked_arrays": 2,
+          "family": "flow_matching",
+          "input_sha256": "0be8d59f69f35d636deb565b786d88c5ab0940136827c7463597aa4229f4c0d8",
+          "max_abs_error": 1.1920928955078125e-7,
+          "passed": true,
+          "reference_sha256": "7c01af23ee13520f78fc16818dc8fb96a6e09dcf990a3ec733e17f6de1ccd6a1",
+          "seed": 19
+        },
+        {
+          "checked_arrays": 2,
+          "family": "flow_matching",
+          "input_sha256": "6e5f3bcb021744bc9a1c21aa48352b04050738c9e65f6b5da003ebb159df8cfc",
+          "max_abs_error": 1.1920928955078125e-7,
+          "passed": true,
+          "reference_sha256": "6773f317a9fcd4b777e23774bbb4a2929c3ff78d058cb380ce583bd8c8cca8e9",
+          "seed": 41
+        }
+      ]
+    },
+    {
+      "architecture_id": "graph_attention",
+      "family_checkpoint_certified": false,
+      "full_model_compiler_executable": false,
+      "level": "cross-framework-reference-parity",
+      "max_abs_error": 2.9802322387695312e-8,
+      "physical_hardware_validated": false,
+      "representative_block": "Irregular COO graph attention and segment aggregation",
+      "seed_count": 3,
+      "source_kind": "synthetic-cpu-fixtures",
+      "witnesses": [
+        {
+          "checked_arrays": 1,
+          "family": "graph_attention",
+          "input_sha256": "ab49cd9f4822a77ab63813b514a05dde122628b9173abdb8d22f678c2161afec",
+          "max_abs_error": 1.4901161193847656e-8,
+          "passed": true,
+          "reference_sha256": "a116cb22c9d11ba3a001f717d6d89a041a06c812e7d770753465b371039bf55c",
+          "seed": 7
+        },
+        {
+          "checked_arrays": 1,
+          "family": "graph_attention",
+          "input_sha256": "2905a6a350387de6f312d8bb4360709bc6ed1472e82d34c930b8805afb16f72c",
+          "max_abs_error": 1.4901161193847656e-8,
+          "passed": true,
+          "reference_sha256": "1912f41b289ad600370eb3c12b8ff9984d78f61998ae243e0e79d28b7cb1e563",
+          "seed": 19
+        },
+        {
+          "checked_arrays": 1,
+          "family": "graph_attention",
+          "input_sha256": "a35fd59032279e42cc97f1cf2b64139e484e8f805f556f4dfdc15db6a8b47d96",
+          "max_abs_error": 2.9802322387695312e-8,
+          "passed": true,
+          "reference_sha256": "cd21c1fda02462698d5649a412cb84c9cd3d1c997ce3d253019dbd121735f801",
+          "seed": 41
+        }
+      ]
+    },
+    {
+      "architecture_id": "quantized_training",
+      "family_checkpoint_certified": false,
+      "full_model_compiler_executable": false,
+      "level": "cross-framework-reference-parity",
+      "max_abs_error": 1.1920928955078125e-7,
+      "physical_hardware_validated": false,
+      "representative_block": "Per-channel int8 weights and analytic/autograd SGD",
+      "seed_count": 3,
+      "source_kind": "synthetic-cpu-fixtures",
+      "witnesses": [
+        {
+          "checked_arrays": 4,
+          "family": "quantized_training",
+          "input_sha256": "63daebda106e44833b8595a239bc8679af9db1dd4ff736a3378890162a6c6407",
+          "max_abs_error": 1.1920928955078125e-7,
+          "passed": true,
+          "reference_sha256": "8af95a8652eecbcfcf4de8232066944c9971a5b8bb3a9aa29a45cdc68d970cb4",
+          "seed": 7
+        },
+        {
+          "checked_arrays": 4,
+          "family": "quantized_training",
+          "input_sha256": "9b7bd173a7952d27ceac388969a1d49d8f6b780911dd8a24c07902cb636eafe4",
+          "max_abs_error": 1.1920928955078125e-7,
+          "passed": true,
+          "reference_sha256": "0dfc8caed297543c6337d7a98ffda48c873a67d00d97ef39ce067fad9d40d03c",
+          "seed": 19
+        },
+        {
+          "checked_arrays": 4,
+          "family": "quantized_training",
+          "input_sha256": "6a3de200aea88672665dbc73d97d4ba43b1b9e0b43f2547d170081124b6b6ea0",
+          "max_abs_error": 5.960464477539063e-8,
+          "passed": true,
+          "reference_sha256": "183dd9d45f8f9ebe425c9d75ba730a5ccfeb5a1bdafda325c16118a4312e9c75",
+          "seed": 41
+        }
+      ]
+    }
+  ],
+  "claim": "Representative BLOCK parity only; no checkpoint-family compatibility, general AOT lowering, or device performance claim",
+  "numpy_version": "2.1.3",
+  "python_backend": "PyTorch CPU vs NumPy independent reference",
+  "schema": "visuaml.representative-block-certification.v12",
+  "sha256": "f53c3c0d3af540da3259c495cb076486a0941fea44b4b060f3b5245d36be4807",
+  "source_kind": "synthetic-cpu-fixtures",
+  "source_sha256": "99edd7e10b5bcb3eb2a91ab69086f4dd2293c16116f9c8c93131bfba01cbb13c",
+  "torch_version": "2.9.1+cpu"
+}

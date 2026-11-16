@@ -1,9 +1,7 @@
 /** @fileoverview Defines the view components for visualizing an output shape. */
 import React, { useRef, useLayoutEffect } from 'react';
 import { useViewport } from '@xyflow/react';
-import TensorVisualizer3D, {
-  type TensorVisualizer3DHandle,
-} from '../TensorVisualizer3D';
+import TensorVisualizer3D, { type TensorVisualizer3DHandle } from '../TensorVisualizer3D';
 import { useOutputShapeVisualizer } from './useOutputShapeVisualizer';
 import {
   MAX_DIM_DISPLAY_1D,
@@ -146,9 +144,7 @@ const InvalidShape: React.FC<{ shapeString?: string }> = ({ shapeString }) => (
 );
 
 const TooManyDims: React.FC<{ dims: number[] }> = ({ dims }) => (
-  <div className="output-shape__error">
-    Cannot visualize effective shape: ({dims.join(', ')})
-  </div>
+  <div className="output-shape__error">Cannot visualize effective shape: ({dims.join(', ')})</div>
 );
 
 // ===========================

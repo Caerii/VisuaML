@@ -23,7 +23,7 @@ export const DOCS_STYLES = {
     color: 'rgba(255, 255, 255, 0.95)',
     mb: 0,
   },
-  
+
   // Code blocks
   codeBlock: {
     p: 1.75,
@@ -37,7 +37,7 @@ export const DOCS_STYLES = {
     lineHeight: 1.6,
     mb: 0,
   },
-  
+
   // Status badges
   badge: {
     height: '24px',
@@ -61,7 +61,7 @@ export const DOCS_STYLES = {
       px: 1,
     },
   },
-  
+
   // Info boxes
   infoBox: {
     p: 2,
@@ -76,7 +76,7 @@ export const DOCS_STYLES = {
     bgcolor: 'rgba(159, 122, 234, 0.1)',
     borderColor: 'rgba(159, 122, 234, 0.25)',
   },
-  
+
   // Feature/item cards
   featureCard: {
     p: 1.25,
@@ -89,7 +89,7 @@ export const DOCS_STYLES = {
       borderColor: 'rgba(66, 153, 225, 0.3)',
     },
   },
-  
+
   // Lists
   listItem: {
     fontSize: { xs: '0.9375rem', md: '1rem' },

@@ -33,7 +33,7 @@ const designTokens = {
     },
     background: {
       default: '#0f1419', // --bg-primary
-      paper: '#1a1f2e',   // --bg-secondary
+      paper: '#1a1f2e', // --bg-secondary
     },
     text: {
       primary: '#f7fafc',
@@ -85,9 +85,11 @@ export const neuralTheme = createTheme({
   shadows: extendedShadows as ThemeOptions['shadows'],
   custom: {
     neuralTexture: {
-      subtle: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='neuralNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.3' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.26 0 0 0 0 0.36 0 0 0 0 0.56 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23neuralNoise)'/%3E%3C/svg%3E\")",
-      prominent: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strongNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.26 0 0 0 0 0.36 0 0 0 0 0.56 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strongNoise)'/%3E%3C/svg%3E\")",
+      subtle:
+        "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='neuralNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.3' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.26 0 0 0 0 0.36 0 0 0 0 0.56 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23neuralNoise)'/%3E%3C/svg%3E\")",
+      prominent:
+        "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strongNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.26 0 0 0 0 0.36 0 0 0 0 0.56 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strongNoise)'/%3E%3C/svg%3E\")",
     },
-    synapseGlow: "radial-gradient(circle, rgba(66, 153, 225, 0.4) 0%, transparent 70%)",
+    synapseGlow: 'radial-gradient(circle, rgba(66, 153, 225, 0.4) 0%, transparent 70%)',
   },
-}); 
+});

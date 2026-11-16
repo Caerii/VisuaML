@@ -15,12 +15,12 @@
   --color-neural-lightest: #e2e8f0;
 
   /* Synaptic Connection Colors */
-  --color-synapse-blue: #4299e1;      /* Active neural pathways */
-  --color-synapse-cyan: #00d4ff;      /* Data flow */
-  --color-synapse-purple: #9f7aea;    /* Processing nodes */
-  --color-synapse-green: #48bb78;     /* Success/output */
-  --color-synapse-orange: #ed8936;    /* Attention/activation */
-  --color-synapse-pink: #ed64a6;      /* Memory/storage */
+  --color-synapse-blue: #4299e1; /* Active neural pathways */
+  --color-synapse-cyan: #00d4ff; /* Data flow */
+  --color-synapse-purple: #9f7aea; /* Processing nodes */
+  --color-synapse-green: #48bb78; /* Success/output */
+  --color-synapse-orange: #ed8936; /* Attention/activation */
+  --color-synapse-pink: #ed64a6; /* Memory/storage */
 
   /* Node Type Colors */
   --color-input-node: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -31,29 +31,29 @@
   --color-activation-node: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
 
   /* Background Layers */
-  --bg-primary: #0f1419;              /* Main background */
-  --bg-secondary: #1a1f2e;            /* Panel backgrounds */
-  --bg-tertiary: #2d3748;             /* Card backgrounds */
+  --bg-primary: #0f1419; /* Main background */
+  --bg-secondary: #1a1f2e; /* Panel backgrounds */
+  --bg-tertiary: #2d3748; /* Card backgrounds */
   --bg-glass: rgba(26, 31, 46, 0.85); /* Glass panels */
-  --bg-node: rgba(45, 55, 72, 0.95);  /* Node backgrounds */
+  --bg-node: rgba(45, 55, 72, 0.95); /* Node backgrounds */
 
   /* Text Colors */
-  --text-primary: #f7fafc;            /* Main text */
-  --text-secondary: #e2e8f0;          /* Secondary text */
-  --text-muted: #a0aec0;              /* Muted text */
-  --text-neural: #4299e1;             /* Neural accent text */
+  --text-primary: #f7fafc; /* Main text */
+  --text-secondary: #e2e8f0; /* Secondary text */
+  --text-muted: #a0aec0; /* Muted text */
+  --text-neural: #4299e1; /* Neural accent text */
 
   /* Typography */
   --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-family-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 
-  --font-size-xs: 0.75rem;    /* 12px */
-  --font-size-sm: 0.875rem;   /* 14px */
-  --font-size-base: 1rem;     /* 16px */
-  --font-size-lg: 1.125rem;   /* 18px */
-  --font-size-xl: 1.25rem;    /* 20px */
-  --font-size-2xl: 1.5rem;    /* 24px */
-  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -65,21 +65,21 @@
   --line-height-relaxed: 1.75;
 
   /* Spacing Scale */
-  --spacing-xs: 0.25rem;   /* 4px */
-  --spacing-sm: 0.5rem;    /* 8px */
-  --spacing-md: 0.75rem;   /* 12px */
-  --spacing-lg: 1rem;      /* 16px */
-  --spacing-xl: 1.5rem;    /* 24px */
-  --spacing-2xl: 2rem;     /* 32px */
-  --spacing-3xl: 3rem;     /* 48px */
-  --spacing-4xl: 4rem;     /* 64px */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 0.75rem; /* 12px */
+  --spacing-lg: 1rem; /* 16px */
+  --spacing-xl: 1.5rem; /* 24px */
+  --spacing-2xl: 2rem; /* 32px */
+  --spacing-3xl: 3rem; /* 48px */
+  --spacing-4xl: 4rem; /* 64px */
 
   /* Organic border radius */
-  --radius-sm: 0.5rem;     /* 8px */
-  --radius-md: 0.75rem;    /* 12px */
-  --radius-lg: 1rem;       /* 16px */
-  --radius-xl: 1.25rem;    /* 20px */
-  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-sm: 0.5rem; /* 8px */
+  --radius-md: 0.75rem; /* 12px */
+  --radius-lg: 1rem; /* 16px */
+  --radius-xl: 1.25rem; /* 20px */
+  --radius-2xl: 1.5rem; /* 24px */
 
   /* Neural-inspired shadows with color */
   --shadow-neural-sm: 0 2px 8px rgba(66, 153, 225, 0.1), 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -107,9 +107,9 @@
 
   /* Enhanced neural texture patterns */
   --neural-texture-subtle: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='neuralNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.3' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.26 0 0 0 0 0.36 0 0 0 0 0.56 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23neuralNoise)'/%3E%3C/svg%3E");
-  
+
   --neural-texture-prominent: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strongNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.26 0 0 0 0 0.36 0 0 0 0 0.56 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strongNoise)'/%3E%3C/svg%3E");
-  
+
   --synapse-glow: radial-gradient(circle, rgba(66, 153, 225, 0.4) 0%, transparent 70%);
   --synapse-pulse: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 80%);
 }
@@ -152,8 +152,12 @@ body {
   overflow: hidden;
 }
 
-.neural-container--rounded { border-radius: var(--radius-xl); }
-.neural-container--sharp { border-radius: var(--radius-sm); }
+.neural-container--rounded {
+  border-radius: var(--radius-xl);
+}
+.neural-container--sharp {
+  border-radius: var(--radius-sm);
+}
 
 /* Neural Button Base - Reusable button foundation */
 .neural-button {
@@ -186,7 +190,7 @@ body {
   color: var(--text-secondary);
   backdrop-filter: blur(12px) saturate(1.2);
   border-radius: var(--radius-xl);
-  box-shadow: 
+  box-shadow:
     var(--shadow-neural-sm),
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
     0 0 0 0 rgba(66, 153, 225, 0);
@@ -209,8 +213,8 @@ body {
 .neural-button--secondary:hover {
   background: linear-gradient(135deg, rgba(66, 153, 225, 0.25) 0%, rgba(159, 122, 234, 0.15) 100%);
   border-color: var(--color-synapse-blue);
-  box-shadow: 
-    var(--shadow-neural-md), 
+  box-shadow:
+    var(--shadow-neural-md),
     0 0 20px rgba(66, 153, 225, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 0 0 2px rgba(66, 153, 225, 0.1);
@@ -225,48 +229,96 @@ body {
 
 .neural-button--secondary:active {
   transform: translateY(0) scale(0.98);
-  box-shadow: 
-    var(--shadow-neural-sm), 
+  box-shadow:
+    var(--shadow-neural-sm),
     0 0 10px rgba(66, 153, 225, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Neural Text Utilities - Brightness and styling */
-.neural-text--bright { filter: brightness(1.4); }
-.neural-text--medium { filter: brightness(1.2); }
-.neural-text--glow { text-shadow: 0 0 4px rgba(0, 212, 255, 0.3); }
-.neural-text--primary { color: var(--text-primary); }
-.neural-text--secondary { color: var(--text-secondary); }
-.neural-text--accent { color: var(--color-synapse-cyan); }
+.neural-text--bright {
+  filter: brightness(1.4);
+}
+.neural-text--medium {
+  filter: brightness(1.2);
+}
+.neural-text--glow {
+  text-shadow: 0 0 4px rgba(0, 212, 255, 0.3);
+}
+.neural-text--primary {
+  color: var(--text-primary);
+}
+.neural-text--secondary {
+  color: var(--text-secondary);
+}
+.neural-text--accent {
+  color: var(--color-synapse-cyan);
+}
 
 /* Neural Node Type Base - DRY node type system */
 .neural-node-type {
   border-color: var(--node-border-color, rgba(66, 153, 225, 0.4));
-  background: linear-gradient(135deg, rgba(45, 55, 72, 0.95) 0%, var(--node-accent-color, rgba(66, 153, 225, 0.1)) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(45, 55, 72, 0.95) 0%,
+    var(--node-accent-color, rgba(66, 153, 225, 0.1)) 100%
+  );
 }
 
 /* Layout Utilities */
-.flex-center { display: flex; align-items: center; justify-content: center; }
-.flex-between { display: flex; align-items: center; justify-content: space-between; }
-.flex-column { display: flex; flex-direction: column; }
-.flex-gap-sm { gap: var(--spacing-sm); }
-.flex-gap-md { gap: var(--spacing-md); }
-.flex-gap-lg { gap: var(--spacing-lg); }
-.flex-gap-xl { gap: var(--spacing-xl); }
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.flex-gap-sm {
+  gap: var(--spacing-sm);
+}
+.flex-gap-md {
+  gap: var(--spacing-md);
+}
+.flex-gap-lg {
+  gap: var(--spacing-lg);
+}
+.flex-gap-xl {
+  gap: var(--spacing-xl);
+}
 
 /* Animation Utilities */
-.animate-fade-in { animation: fadeIn var(--transition-normal) ease-out; }
-.animate-synapse-pulse { animation: synapsePulse 2s ease-in-out infinite; }
-.animate-node-entrance { animation: nodeEntrance var(--transition-elastic) ease-out; }
-.animate-content-slide { animation: slideInContent var(--transition-fluid) cubic-bezier(0.23, 1, 0.32, 1); }
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal) ease-out;
+}
+.animate-synapse-pulse {
+  animation: synapsePulse 2s ease-in-out infinite;
+}
+.animate-node-entrance {
+  animation: nodeEntrance var(--transition-elastic) ease-out;
+}
+.animate-content-slide {
+  animation: slideInContent var(--transition-fluid) cubic-bezier(0.23, 1, 0.32, 1);
+}
 
 /* ===== COMPONENT STYLES ===== */
 
 /* TopBar Component - Neural Command Center */
 .topbar {
-  background: 
+  background:
     var(--neural-texture-subtle),
-    linear-gradient(135deg, var(--color-neural-dark) 0%, var(--color-neural-deeper) 50%, var(--color-neural-deep) 100%);
+    linear-gradient(
+      135deg,
+      var(--color-neural-dark) 0%,
+      var(--color-neural-deeper) 50%,
+      var(--color-neural-deep) 100%
+    );
   color: var(--text-primary);
   padding: var(--spacing-lg) var(--spacing-xl);
   box-shadow: var(--shadow-neural-lg);
@@ -282,7 +334,13 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--color-synapse-cyan), var(--color-synapse-blue), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-synapse-cyan),
+    var(--color-synapse-blue),
+    transparent
+  );
 }
 
 .topbar__container {
@@ -350,25 +408,33 @@ body {
   -webkit-appearance: none;
   -moz-appearance: none;
   /* Add custom gradient and arrow */
-  background-image: 
+  background-image:
     linear-gradient(135deg, rgba(66, 153, 225, 0.1) 0%, transparent 50%),
     url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%234299e1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-  background-position: left top, right var(--spacing-md) center;
+  background-position:
+    left top,
+    right var(--spacing-md) center;
   background-repeat: no-repeat, no-repeat;
-  background-size: 100% 100%, 1rem;
+  background-size:
+    100% 100%,
+    1rem;
   padding-right: var(--spacing-3xl);
 }
 
 .topbar__select:hover {
   border-color: var(--color-synapse-blue);
-  box-shadow: var(--shadow-neural-lg), 0 0 0 2px rgba(66, 153, 225, 0.2);
+  box-shadow:
+    var(--shadow-neural-lg),
+    0 0 0 2px rgba(66, 153, 225, 0.2);
   transform: translateY(-1px);
 }
 
 .topbar__select:focus {
   outline: none;
   border-color: var(--color-synapse-cyan);
-  box-shadow: var(--shadow-neural-lg), 0 0 0 3px rgba(0, 212, 255, 0.3);
+  box-shadow:
+    var(--shadow-neural-lg),
+    0 0 0 3px rgba(0, 212, 255, 0.3);
 }
 
 .topbar__button {
@@ -416,7 +482,9 @@ body {
 
 .topbar__button:hover {
   background: linear-gradient(135deg, rgba(66, 153, 225, 0.8) 0%, rgba(159, 122, 234, 0.7) 100%);
-  box-shadow: var(--shadow-neural-md), 0 0 12px rgba(66, 153, 225, 0.3);
+  box-shadow:
+    var(--shadow-neural-md),
+    0 0 12px rgba(66, 153, 225, 0.3);
   border-color: var(--color-synapse-blue);
   transform: translateY(-1px);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -437,7 +505,7 @@ body {
   padding: var(--spacing-md) var(--spacing-2xl); /* More padding for longer text */
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  box-shadow: 
+  box-shadow:
     var(--shadow-neural-sm),
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
     0 0 0 0 rgba(66, 153, 225, 0);
@@ -461,8 +529,8 @@ body {
 .topbar__button--secondary:hover {
   background: linear-gradient(135deg, rgba(66, 153, 225, 0.25) 0%, rgba(159, 122, 234, 0.15) 100%);
   border-color: var(--color-synapse-blue);
-  box-shadow: 
-    var(--shadow-neural-md), 
+  box-shadow:
+    var(--shadow-neural-md),
     0 0 20px rgba(66, 153, 225, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 0 0 2px rgba(66, 153, 225, 0.1);
@@ -477,8 +545,8 @@ body {
 
 .topbar__button--secondary:active {
   transform: translateY(0) scale(0.98);
-  box-shadow: 
-    var(--shadow-neural-sm), 
+  box-shadow:
+    var(--shadow-neural-sm),
     0 0 10px rgba(66, 153, 225, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
@@ -488,7 +556,7 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
-  background: 
+  background:
     var(--neural-texture-subtle),
     radial-gradient(ellipse at 20% 80%, rgba(66, 153, 225, 0.05) 0%, transparent 60%),
     radial-gradient(ellipse at 80% 20%, rgba(159, 122, 234, 0.05) 0%, transparent 60%),
@@ -533,7 +601,9 @@ body {
 .ml-node--selected {
   /* REMOVED: width: 280px; The wrapper now controls this. */
   border-color: var(--color-synapse-cyan);
-  box-shadow: var(--shadow-neural-xl), 0 0 32px rgba(0, 212, 255, 0.4);
+  box-shadow:
+    var(--shadow-neural-xl),
+    0 0 32px rgba(0, 212, 255, 0.4);
   transform: translateY(-1px) scale(1.005);
 }
 
@@ -579,7 +649,7 @@ body {
   animation-delay: 0.5s;
 }
 
-.react-flow__node:nth-child(n+11) .ml-node {
+.react-flow__node:nth-child(n + 11) .ml-node {
   animation-delay: calc(0.55s + (var(--node-index, 0) * 0.05s));
 }
 
@@ -599,7 +669,9 @@ body {
 
 .ml-node:hover {
   border-color: var(--color-synapse-blue);
-  box-shadow: var(--shadow-neural-xl), 0 0 24px rgba(66, 153, 225, 0.3);
+  box-shadow:
+    var(--shadow-neural-xl),
+    0 0 24px rgba(66, 153, 225, 0.3);
   transform: translateY(-2px) scale(1.01);
 }
 
@@ -674,7 +746,7 @@ body {
 .ml-node__details {
   max-height: 0;
   overflow: hidden;
-  transition: 
+  transition:
     max-height 0.6s cubic-bezier(0.23, 1, 0.32, 1),
     padding 0.6s cubic-bezier(0.23, 1, 0.32, 1),
     opacity 0.4s ease-out,
@@ -827,7 +899,11 @@ body {
 }
 
 .output-shape__block {
-  background: linear-gradient(135deg, var(--color-synapse-blue) 0%, var(--color-synapse-purple) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-synapse-blue) 0%,
+    var(--color-synapse-purple) 100%
+  );
   border: 1px solid rgba(66, 153, 225, 0.3);
   box-sizing: border-box;
   display: flex;
@@ -917,8 +993,10 @@ body {
   height: 16px;
   border-radius: 50%;
   border: 3px solid var(--color-synapse-blue);
-  box-shadow: var(--shadow-neural-sm), 0 0 8px rgba(66, 153, 225, 0.5);
-  transition: 
+  box-shadow:
+    var(--shadow-neural-sm),
+    0 0 8px rgba(66, 153, 225, 0.5);
+  transition:
     transform var(--transition-bounce),
     background var(--transition-fast),
     border-color var(--transition-fast),
@@ -949,7 +1027,9 @@ body {
   background: linear-gradient(135deg, var(--color-synapse-blue) 0%, var(--color-synapse-cyan) 100%);
   border-color: var(--color-synapse-cyan);
   transform: translateY(-50%) scale(1.3);
-  box-shadow: var(--shadow-neural-md), 0 0 20px rgba(0, 212, 255, 0.8);
+  box-shadow:
+    var(--shadow-neural-md),
+    0 0 20px rgba(0, 212, 255, 0.8);
   animation: handleHoverPulse 0.6s ease-in-out infinite alternate;
 }
 
@@ -989,7 +1069,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--color-synapse-blue) 0%, var(--color-synapse-purple) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-synapse-blue) 0%,
+    var(--color-synapse-purple) 100%
+  );
   border-radius: var(--radius-sm);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -1020,7 +1104,9 @@ textarea:focus-visible,
   /* Initial state for draw-in animation, then flowing pattern */
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: edgeDrawIn 1.2s ease-out forwards, edgeFlow 3s linear infinite 1.2s;
+  animation:
+    edgeDrawIn 1.2s ease-out forwards,
+    edgeFlow 3s linear infinite 1.2s;
 }
 
 /* Staggered edge loading animations */
@@ -1061,7 +1147,7 @@ textarea:focus-visible,
 }
 
 .react-flow__edge:nth-child(10) .react-flow__edge-path {
-  animation-delay: 1.0s;
+  animation-delay: 1s;
 }
 
 .react-flow__edge:nth-child(11) .react-flow__edge-path {
@@ -1073,7 +1159,7 @@ textarea:focus-visible,
 }
 
 /* For larger graphs, use a more general approach */
-.react-flow__edge:nth-child(n+13) .react-flow__edge-path {
+.react-flow__edge:nth-child(n + 13) .react-flow__edge-path {
   animation-delay: calc(1.3s + (var(--edge-index, 0) * 0.1s));
 }
 
@@ -1081,7 +1167,10 @@ textarea:focus-visible,
   stroke: var(--color-synapse-cyan);
   stroke-width: 3px;
   filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.8));
-  transition: stroke var(--transition-fast), stroke-width var(--transition-fast), filter var(--transition-fast);
+  transition:
+    stroke var(--transition-fast),
+    stroke-width var(--transition-fast),
+    filter var(--transition-fast);
   animation: edgeFlow 1.5s linear infinite;
   stroke-dasharray: 12 6;
 }
@@ -1156,7 +1245,7 @@ textarea:focus-visible,
   border: 1px solid rgba(66, 153, 225, 0.25);
   border-radius: var(--radius-xl);
   backdrop-filter: blur(12px) saturate(1.2);
-  box-shadow: 
+  box-shadow:
     var(--shadow-neural-lg),
     0 0 20px rgba(66, 153, 225, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -1183,7 +1272,7 @@ textarea:focus-visible,
   background: linear-gradient(135deg, rgba(66, 153, 225, 0.15) 0%, rgba(159, 122, 234, 0.1) 100%);
   color: var(--color-synapse-cyan);
   transform: scale(1.05);
-  box-shadow: 
+  box-shadow:
     0 0 12px rgba(66, 153, 225, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(66, 153, 225, 0.2);
@@ -1221,16 +1310,25 @@ textarea:focus-visible,
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes synapsePulse {
-  0%, 100% { 
+  0%,
+  100% {
     box-shadow: 0 0 8px rgba(66, 153, 225, 0.5);
   }
-  50% { 
-    box-shadow: 0 0 16px rgba(0, 212, 255, 0.8), 0 0 32px rgba(66, 153, 225, 0.3);
+  50% {
+    box-shadow:
+      0 0 16px rgba(0, 212, 255, 0.8),
+      0 0 32px rgba(66, 153, 225, 0.3);
   }
 }
 
@@ -1238,41 +1336,54 @@ textarea:focus-visible,
 
 /* Smooth node expansion content animation */
 @keyframes slideInContent {
-  from { 
-    opacity: 0; 
-    transform: translateY(-15px) scale(0.98); 
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.98);
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0) scale(1); 
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
 /* Handle pulse animations for connection points */
 @keyframes handlePulse {
-  0%, 100% { 
-    box-shadow: var(--shadow-neural-sm), 0 0 8px rgba(66, 153, 225, 0.5);
+  0%,
+  100% {
+    box-shadow:
+      var(--shadow-neural-sm),
+      0 0 8px rgba(66, 153, 225, 0.5);
   }
-  50% { 
-    box-shadow: var(--shadow-neural-sm), 0 0 12px rgba(66, 153, 225, 0.7);
+  50% {
+    box-shadow:
+      var(--shadow-neural-sm),
+      0 0 12px rgba(66, 153, 225, 0.7);
   }
 }
 
 @keyframes handleHoverPulse {
-  0% { 
-    box-shadow: var(--shadow-neural-md), 0 0 20px rgba(0, 212, 255, 0.8);
+  0% {
+    box-shadow:
+      var(--shadow-neural-md),
+      0 0 20px rgba(0, 212, 255, 0.8);
     transform: translateY(-50%) scale(1.3);
   }
-  100% { 
-    box-shadow: var(--shadow-neural-lg), 0 0 28px rgba(0, 212, 255, 1);
+  100% {
+    box-shadow:
+      var(--shadow-neural-lg),
+      0 0 28px rgba(0, 212, 255, 1);
     transform: translateY(-50%) scale(1.35);
   }
 }
 
 /* Edge connection flow animation */
 @keyframes edgeFlow {
-  0% { stroke-dashoffset: 20; }
-  100% { stroke-dashoffset: 0; }
+  0% {
+    stroke-dashoffset: 20;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* Edge draw-in animation (left to right) - preserves flowing pattern */

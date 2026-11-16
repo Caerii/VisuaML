@@ -70,6 +70,7 @@ composed = model3 @ model2 @ model1  # Category composition
 def json_to_categorical(json_data):
     return {"categorical_analysis": "basic info"}
 
+
 # ✅ Catgrad approach - actual categorical structures
 model = layers.linear(BATCH_TYPE, INPUT_TYPE, OUTPUT_TYPE)
 ```
@@ -141,10 +142,12 @@ from dataclasses import dataclass
 from typing import Tuple, Optional
 from enum import Enum
 
+
 class Dtype(Enum):
     FLOAT32 = "float32"
     INT32 = "int32"
     BOOL = "bool"
+
 
 @dataclass
 class ArrayType:
@@ -153,6 +156,7 @@ class ArrayType:
 
     def __str__(self):
         return f"Array{self.shape}[{self.dtype.value}]"
+
 
 @dataclass
 class TensorType:
@@ -168,6 +172,7 @@ class TensorType:
 ```python
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any
+
 
 class Morphism(ABC):
     """Base class for categorical morphisms"""
@@ -186,9 +191,10 @@ class Morphism(ABC):
         """Convert to open hypergraph representation"""
         pass
 
-    def __matmul__(self, other: 'Morphism') -> 'Morphism':
+    def __matmul__(self, other: "Morphism") -> "Morphism":
         """Categorical composition via @ operator"""
         return ComposedMorphism(other, self)
+
 
 class LinearMorphism(Morphism):
     """Linear transformation morphism"""
@@ -208,7 +214,7 @@ class LinearMorphism(Morphism):
             "type": "linear",
             "input_type": str(self.input_type),
             "output_type": str(self.output_type),
-            "weight_shape": self.weight_shape
+            "weight_shape": self.weight_shape,
         }
 ```
 
@@ -220,7 +226,9 @@ class ComposedMorphism(Morphism):
 
     def __init__(self, first: Morphism, second: Morphism):
         if first.output_type != second.input_type:
-            raise ValueError(f"Cannot compose: {first.output_type} ≠ {second.input_type}")
+            raise ValueError(
+                f"Cannot compose: {first.output_type} ≠ {second.input_type}"
+            )
 
         super().__init__(first.input_type, second.output_type)
         self.first = first
@@ -236,7 +244,7 @@ class ComposedMorphism(Morphism):
             "first": self.first.to_hypergraph(),
             "second": self.second.to_hypergraph(),
             "input_type": str(self.input_type),
-            "output_type": str(self.output_type)
+            "output_type": str(self.output_type),
         }
 ```
 
@@ -249,6 +257,7 @@ from torch.fx import GraphModule, Node
 from ..categorical.morphisms import Morphism, LinearMorphism
 from ..categorical.types import ArrayType, Dtype
 
+
 class PyTorchToCategorical:
     """Converts PyTorch FX graphs to categorical morphisms"""
 
@@ -257,7 +266,7 @@ class PyTorchToCategorical:
         morphisms = []
 
         for node in graph_module.graph.nodes:
-            if node.op == 'call_function':
+            if node.op == "call_function":
                 morphism = self._convert_node(node)
                 if morphism:
                     morphisms.append(morphism)
@@ -271,7 +280,7 @@ class PyTorchToCategorical:
 
     def _convert_node(self, node: Node) -> Optional[Morphism]:
         """Convert individual node to morphism"""
-        if str(node.target) == 'torch.nn.functional.linear':
+        if str(node.target) == "torch.nn.functional.linear":
             # Extract dimensions from node metadata
             input_dim = self._get_input_dim(node)
             output_dim = self._get_output_dim(node)
@@ -288,6 +297,7 @@ class PyTorchToCategorical:
 ```python
 from open_hypergraphs import OpenHypergraph, FiniteFunction
 import numpy as np
+
 
 class CategoricalToOpenHypergraph:
     """Converts categorical morphisms to proper OpenHypergraph objects"""
@@ -310,7 +320,7 @@ class CategoricalToOpenHypergraph:
             sources=sources,
             targets=targets,
             input_boundary=input_boundary,
-            output_boundary=output_boundary
+            output_boundary=output_boundary,
         )
 
     def _create_boundary(self, array_type: ArrayType) -> FiniteFunction:
@@ -333,7 +343,7 @@ class CategoricalExporter:
             "categorical_model": morphism.to_hypergraph(),
             "input_type": str(morphism.input_type),
             "output_type": str(morphism.output_type),
-            "composition_structure": self._analyze_composition(morphism)
+            "composition_structure": self._analyze_composition(morphism),
         }
 
     def export_open_hypergraph(self, morphism: Morphism) -> OpenHypergraph:
@@ -389,7 +399,9 @@ This approach will give us a mathematically sound, well-organized, and extensibl
 Once we have a proper categorical foundation, several revolutionary applications become possible:
 
 ### Neural Architecture Search (NAS)
+
 The categorical morphism system enables **dramatically better NAS** by:
+
 - **Universal Primitive Library**: All open-source ML code becomes searchable morphisms
 - **Type-Safe Composition**: Automatic validation of architecture validity
 - **Cross-Framework Search**: Compose components from PyTorch, TensorFlow, JAX, etc.
@@ -398,7 +410,9 @@ The categorical morphism system enables **dramatically better NAS** by:
 **→ See [Categorical Neural Architecture Search](../../../docs/future-directions/categorical-neural-architecture-search.md) for full analysis**
 
 ### Interpretability Infrastructure
+
 The morphism composition system enables scalable interpretability:
+
 - **Compositional Understanding**: Understand complex models through morphism composition
 - **Reusable Interpretability**: Findings on basic morphisms transfer to compositions
 - **Collaborative Research**: Multiple researchers investigate different morphisms simultaneously
@@ -406,7 +420,9 @@ The morphism composition system enables scalable interpretability:
 **→ See [Categorical Interpretability Thesis](../../../docs/future-directions/categorical-interpretability-thesis.md) for full analysis**
 
 ### Model Composition and Reuse
+
 The type-safe composition enables:
+
 - **Component Libraries**: Build and share reusable morphism libraries
 - **Automatic Composition**: Type system ensures valid compositions
 - **Cross-Framework Integration**: Seamlessly combine best components from all frameworks

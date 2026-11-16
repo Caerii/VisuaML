@@ -1,10 +1,10 @@
 /**
  * Simple CNN Demo - Based on TestModel
  * Conv2d → ReLU → MaxPool → Conv2d → ReLU → MaxPool → Flatten → Linear → ReLU → Dropout → Linear
- * 
+ *
  * NOTE: This is a placeholder. To use actual model data, run:
  *   uv run scripts/generate-demo-networks.py
- * 
+ *
  * This will generate JSON files in src/lib/demo-networks/ from the actual models.
  */
 import type { DemoNetwork } from '../types';

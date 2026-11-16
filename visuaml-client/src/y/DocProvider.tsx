@@ -46,7 +46,7 @@ const useSafeClerkUser = () => {
     // Check if we have access to Clerk context
     const userHook = useUser();
     return userHook;
-  } catch (error) {
+  } catch {
     // If we're not inside ClerkProvider, return safe defaults
     console.log('Clerk not available, running without authentication');
     return { user: null, isSignedIn: false, isLoaded: true };

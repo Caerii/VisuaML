@@ -1,0 +1,80 @@
+{
+  "arbitrary_decoder_supported": false,
+  "architecture_id": "decoder_transformer",
+  "backend": "shape-specialized NumPy-AOT interpreter (CPU only)",
+  "cases": [
+    {
+      "cache_matches_reference": true,
+      "generation_matches_reference": true,
+      "generation_steps": 3,
+      "generation_token_sha256": "1dfe6d4f63ceed6d274e5afb342866af4c501846a70f31fd2d4863009daaa755",
+      "input_sha256": "c81e661e20ab3683351ccadcf6772cb9271b43be45531ff38dec0b19d97126e7",
+      "input_shape": [2, 5],
+      "prefill_manifest_sha256": "108e168169c01041cbff0528743fd0f333912b4e6808c36f6850521859ec5da2",
+      "seed": 0,
+      "witness": {
+        "arrays_checked": 18,
+        "backend": "numpy-aot CPU; no physical accelerator",
+        "chunks": 3,
+        "max_abs_error": 5.960464477539063e-8,
+        "passed": true,
+        "schema": "visuaml.tiny-decoder-aot-witness.v13",
+        "specializations": 3
+      }
+    },
+    {
+      "cache_matches_reference": true,
+      "generation_matches_reference": true,
+      "generation_steps": 3,
+      "generation_token_sha256": "37416ab8883eb8501f0b9fe48cd11267c62309b371bf52789f45d843c5c589e9",
+      "input_sha256": "8b2804be52231fc706cc17f771bbcba4377b9b737b84fbef46cf56b46611e25f",
+      "input_shape": [2, 5],
+      "prefill_manifest_sha256": "115faa8f12e0aa6c2aa9f751f151fe479601d48a7677b803891cb4c1e8a04f36",
+      "seed": 19,
+      "witness": {
+        "arrays_checked": 18,
+        "backend": "numpy-aot CPU; no physical accelerator",
+        "chunks": 3,
+        "max_abs_error": 5.960464477539063e-8,
+        "passed": true,
+        "schema": "visuaml.tiny-decoder-aot-witness.v13",
+        "specializations": 3
+      }
+    },
+    {
+      "cache_matches_reference": true,
+      "generation_matches_reference": true,
+      "generation_steps": 3,
+      "generation_token_sha256": "1d98146c2f26efb9bc79ef886db7724b3dff3ed5ac682316f583dbfb5d1b7661",
+      "input_sha256": "e88061269680f871d65cd2e2bf663836fe4ec8747b4a99caeab5b2e7f21d249e",
+      "input_shape": [2, 5],
+      "prefill_manifest_sha256": "ad300ce57f3c2e7267395bb55063c4ff4901bdff264b8bcf221c1a9259dec951",
+      "seed": 41,
+      "witness": {
+        "arrays_checked": 18,
+        "backend": "numpy-aot CPU; no physical accelerator",
+        "chunks": 3,
+        "max_abs_error": 5.960464477539063e-8,
+        "passed": true,
+        "schema": "visuaml.tiny-decoder-aot-witness.v13",
+        "specializations": 3
+      }
+    }
+  ],
+  "claim_level": "one-synthetic-tiny-decoder-full-chunk-compiler-execution",
+  "family_checkpoint_certified": false,
+  "limitations": [
+    "Each (batch,query,past) specialization is a different static AOT artifact.",
+    "Input token-range validation occurs in the trusted host driver, not in the raw manifest.",
+    "Numerical equivalence is demonstrated on finite witnesses, not proven for all inputs.",
+    "This is a single-layer synthetic decoder, not a pretrained Llama checkpoint.",
+    "No kernel fusion, measured transfer-cost model, or real photonic execution."
+  ],
+  "numpy_version": "2.1.3",
+  "physical_accelerator_validated": false,
+  "schema": "visuaml.decoder-aot-certification.v13",
+  "sha256": "9df880dc63d12e2f99fb80352a0307f6eaf6b51e3f8a52c448e1a3f5659345c8",
+  "source_kind": "synthetic-seeded-weights-and-tokens",
+  "source_sha256": "30b2f09850cabf41545d45ab4ec88a401afc124fc98bd192c83e0a04ff78fb92",
+  "torch_version": "2.9.1+cpu"
+}

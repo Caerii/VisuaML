@@ -1,10 +1,10 @@
 /**
  * Main demo networks file
  * Aggregates all demo networks and applies auto-layout
- * 
+ *
  * To regenerate these demos from actual models, run:
  *   pnpm generate-demos-fast
- * 
+ *
  * This will process the actual models and generate JSON files in demo-networks/
  */
 import type { DemoNetwork } from './types';

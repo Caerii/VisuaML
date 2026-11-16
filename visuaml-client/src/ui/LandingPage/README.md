@@ -23,12 +23,15 @@ LandingPage/
 ## Components
 
 ### LandingHeader
+
 Sticky header component with logo and navigation buttons.
 
 ### LandingHero
+
 Full-viewport hero section with main heading, description, and CTA buttons.
 
 ### LandingSections
+
 Scrollable content sections with animations and detail lists.
 
 ### Reusable Components

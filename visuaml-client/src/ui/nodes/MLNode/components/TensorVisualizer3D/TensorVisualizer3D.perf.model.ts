@@ -136,7 +136,6 @@ export const getCachedGeometry = (size: number): THREE.BoxGeometry => {
   return geometryCache.get(key)!;
 };
 
-
 // ===========================
 // PURE LOGIC FUNCTIONS
 // ===========================
@@ -268,4 +267,4 @@ export const generateVoxelLayout = (
     totalVoxelCount,
     visualHeight: planeVisualHeight,
   };
-}; 
+};

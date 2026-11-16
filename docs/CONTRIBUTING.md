@@ -1,363 +1,75 @@
 # Contributing to VisuaML
 
-Thank you for your interest in contributing to VisuaML! This guide will help you get started with contributing to our interactive neural network visualization platform.
+VisuaML is both a collaborative graph application and an evidence-driven compiler research project. Contributions should improve a real, measurable capability without exaggerating what it proves.
 
-## 🚀 Getting Started
+## Development environment
 
-### Prerequisites
+Recommended baseline: Node.js 20, pnpm 10 and Python 3.12. Clone the repository and install Node dependencies from the workspace root:
 
-- **Node.js** 18+ and **pnpm** (repo is a pnpm workspace)
-- **Python** 3.11+ (only if you need the API/model import/export; see [visuaml-client/PYTHON_SETUP.md](../visuaml-client/PYTHON_SETUP.md))
-- **Git** for version control
-- **Basic knowledge** of React, TypeScript, and PyTorch
+~~~bash
+git clone https://github.com/Caerii/VisuaML.git
+cd VisuaML
+pnpm install
+~~~
 
-### Development Setup
+The frontend can run with **pnpm --filter visuaml-client run dev**. Python dependencies are optional for frontend-only changes; for FX import, backend/Compiler Lab tests, and the guarded API run:
 
-1. **Fork and clone the repository**
-   ```bash
-   git clone https://github.com/Caerii/VisuaML.git
-   cd VisuaML
-   ```
+~~~bash
+pnpm run install-python-deps
+cd visuaml-client
+cp env.example .env.local
+pnpm run check-python
+~~~
 
-2. **Install dependencies** (from repo root)
-   ```bash
-   pnpm install
-   ```
-   Optional, for API and model import/export:
-   ```bash
-   pnpm run install-python-deps
-   ```
+Start API, WebSocket collaboration and frontend in separate terminals with the client package scripts api, ws and dev. See [Client Setup](CLIENT_README.md).
 
-3. **Set up environment**
-   ```bash
-   cd visuaml-client
-   cp env.example .env.local
-   # Edit .env.local: VISUAML_PYTHON, Clerk publishable key, etc.
-   ```
+## Before opening a pull request
 
-4. **Start development servers** (from repo root, one per terminal)
-   ```bash
-   pnpm --filter visuaml-client run api    # Terminal 1: API (needs Python deps)
-   pnpm --filter visuaml-client run ws     # Terminal 2: WebSocket (multiplayer)
-   pnpm --filter visuaml-client run dev   # Terminal 3: Frontend
-   ```
+Make a focused branch, include tests, document the relevant contract and reproduce the affected workflow. Use ordinary conventional commit prefixes such as feat, fix, test, docs, refactor or chore.
 
-## 📋 How to Contribute
+### Full validation
 
-### Types of Contributions
+From the repository root:
 
-- **🐛 Bug Reports**: Found a bug? Please report it!
-- **✨ Feature Requests**: Have an idea? We'd love to hear it!
-- **📝 Documentation**: Help improve our docs
-- **🔧 Code Contributions**: Fix bugs or implement features
-- **🧪 Testing**: Add tests or improve test coverage
-- **🎨 UI/UX**: Improve the user interface and experience
-
-### Before You Start
-
-1. **Check existing issues** to avoid duplicates
-2. **Create an issue** for new features or major changes
-3. **Discuss your approach** in the issue before coding
-4. **Keep changes focused** - one feature/fix per PR
-
-## 🛠️ Development Workflow
-
-### 1. Create a Branch
-
-```bash
-git checkout -b feature/your-feature-name
-# or
-git checkout -b fix/bug-description
-```
-
-### 2. Make Your Changes
-
-Follow our coding standards (see below) and make your changes.
-
-### 3. Test Your Changes
-
-From repo root (client tests):
-```bash
-pnpm --filter visuaml-client run test
+~~~bash
 pnpm --filter visuaml-client run lint
-# type-check if available: pnpm --filter visuaml-client run type-check
-```
+pnpm --filter visuaml-client run test -- --run
+pnpm --filter visuaml-client run build
+pnpm --dir visuaml-client exec prettier --check .
+cd visuaml-client
+python -m pytest -q backend/tests
+cd ..
+ruff check visuaml-client/backend
+~~~
 
-Backend tests (from visuaml-client directory):
-```bash
-cd visuaml-client/backend && python -m pytest
-# Integration: from visuaml-client, python test_export_frontend.py (if present)
-```
+The [CI workflow](../.github/workflows/ci.yml) runs these categories on pushes and PRs. The [pinned pretrained-model workflow](../.github/workflows/v19-pretrained-probe.yml) adds an external verification gate when approved real-model compiler source files change.
 
-### 4. Commit Your Changes
+### Required for a new architecture or backend claim
 
-We use conventional commits:
+1. Specify **admission**: the exact operator list, state semantics, model configuration, tensor shapes, precision and resource bounds.
+2. Provide **negative tests** for unsupported inputs, nonfinite values, malformed graph effects and tampering.
+3. Produce **independent numerical witnesses** using PyTorch/Hugging Face or another trusted reference and inspect logits and per-layer states where relevant.
+4. If claiming pretrained support, pin a named **real model revision**, file hashes, tokenizer expectations and license provenance, and compare against the framework implementation.
+5. If claiming better performance, use matched hardware/workloads, list compilation costs separately, report medians/tails and source fingerprints, and include a competent external baseline before making industry-wide claims.
+6. Clearly distinguish **simulated hardware** from measured physical accelerators, and logical memory-accounting bytes from actual RSS.
+7. Update [Compiler Guide](COMPILER_GUIDE.md), [Verification](VERIFICATION.md), [Architecture](ARCHITECTURE.md) and this release's milestone docs.
 
-```bash
-git commit -m "feat: add new export format"
-git commit -m "fix: resolve shape propagation issue"
-git commit -m "docs: update API documentation"
-```
+A catalogued architecture or passing microprobe is not support for its complete model family. A short CPU benchmark is not evidence of state-of-the-art production inference.
 
-**Commit Types:**
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation changes
-- `style`: Code style changes (formatting, etc.)
-- `refactor`: Code refactoring
-- `test`: Adding or updating tests
-- `chore`: Maintenance tasks
+## Code organization and style
 
-### 5. Push and Create PR
+Frontend code is in [client/src](../visuaml-client/src/), Fastify in [server](../visuaml-client/server/), backend export/compilation in [backend](../visuaml-client/backend/), and typed-IR research under [compiler_lab](../visuaml-client/backend/visuaml/compiler_lab/). Use TypeScript types, reusable React hooks, existing Zod request schemas and explicit Python type hints.
 
-```bash
-git push origin feature/your-feature-name
-```
+Preserve each trusted compiler dialect's closed-world validation. Do not add arbitrary eval/import functionality to stateful lowering or treat a new checkpoint source as safe by file extension. Keep public API and model-upload trust boundaries explicit; see [Security](SECURITY_AND_BOUNDARIES.md).
 
-Then create a Pull Request on GitHub.
+## Documentation quality
 
-## 📏 Coding Standards
+For all new compiler milestones: describe what is executable, what it is compared against, how it was verified, key limitations and the next measurable acceptance gates. Keep examples runnable from a documented working directory. Validate local relative links and do not leave references to nonexistent files.
 
-### TypeScript/React
+Older interpretability and categorical documents express research proposals; update their status if a capability becomes real, rather than retrospectively claiming the proposal has shipped.
 
-- **Use TypeScript strictly** - no `any` types
-- **Functional components** with hooks
-- **File naming**: `PascalCase.tsx` for components, `camelCase.ts` for utilities
-- **Export patterns**: Named exports preferred, default for main component
-- **Documentation**: JSDoc comments for public functions
+## Reviewing and releasing
 
-```typescript
-/** @fileoverview Brief description of the file's purpose. */
+Reviewers should check numerical correctness, safety and provenance separately from formatting. Merge to main only after the PR's code and docs pass CI. A successful merge does not automatically create a packaged release or certify every catalogued model. Keep milestone names distinct from the package version until a release is explicitly made.
 
-/**
- * Processes export results into archive-ready files.
- * 
- * @param allResults - The export results from the API
- * @returns Array of archive files ready for packaging
- */
-export const processExportResults = (
-  allResults: AllExportsData
-): ArchiveFile[] => {
-  // Implementation
-};
-```
-
-### Python
-
-- **Follow PEP 8** style guidelines
-- **Type hints** for all function parameters and returns
-- **Docstrings** for all modules, classes, and functions
-- **Error handling** with specific exception types
-
-```python
-"""Module for exporting PyTorch models to VisuaML graph format."""
-
-from typing import Dict, List, Optional
-
-def export_model_graph(
-    model_path: str,
-    filter_config: Optional[FilterConfig] = None,
-) -> Dict[str, Any]:
-    """
-    Export a PyTorch model to VisuaML graph format.
-    
-    Args:
-        model_path: Module path to the model (e.g., 'models.MyModel')
-        filter_config: Optional filter configuration
-        
-    Returns:
-        Dictionary with 'nodes' and 'edges' lists
-        
-    Raises:
-        ModelLoadError: If model cannot be loaded
-    """
-    # Implementation
-```
-
-### File Organization
-
-```
-src/
-├── ui/                     # UI components
-│   ├── ComponentName/      # Component directory
-│   │   ├── ComponentName.tsx
-│   │   ├── ComponentName.model.ts
-│   │   ├── useComponentName.ts
-│   │   └── index.ts
-├── lib/                    # Utilities
-│   ├── utilityName.ts
-│   └── README.md
-└── store/                  # State management
-```
-
-## 🧪 Testing Guidelines
-
-### Frontend Testing
-
-- **Unit tests** for utility functions
-- **Component tests** for UI components
-- **Integration tests** for workflows
-- **Type tests** for TypeScript interfaces
-
-```typescript
-// Example test
-describe('processExportResults', () => {
-  it('should convert API results to archive files', () => {
-    const mockResults = createMockExportResults();
-    const files = processExportResults(mockResults);
-    
-    expect(files).toHaveLength(4);
-    expect(files[0].name).toMatch(/\.json$/);
-  });
-});
-```
-
-### Backend Testing
-
-- **Unit tests** for individual functions
-- **Integration tests** for model export workflows
-- **Mock tests** for external dependencies
-
-```python
-def test_export_model_graph():
-    """Test basic model export functionality."""
-    result = export_model_graph('models.SimpleNN')
-    
-    assert 'nodes' in result
-    assert 'edges' in result
-    assert len(result['nodes']) > 0
-```
-
-## 📝 Documentation
-
-### Code Documentation
-
-- **File overviews** for all TypeScript files
-- **Function documentation** with JSDoc/docstrings
-- **Type definitions** with clear interfaces
-- **Usage examples** in README files
-
-### API Documentation
-
-When adding new API endpoints:
-
-1. **Document the endpoint** in the main README
-2. **Add request/response examples**
-3. **Update the OpenAPI spec** (if we add one)
-4. **Test the endpoint** with integration tests
-
-## 🎯 Specific Contribution Areas
-
-### Adding New Export Formats
-
-1. **Backend**: Add export logic in `backend/visuaml/`
-2. **API**: Add endpoint in `server/index.ts`
-3. **Frontend**: Add UI controls in `TopBar`
-4. **Types**: Update TypeScript interfaces
-5. **Tests**: Add comprehensive tests
-6. **Docs**: Update documentation
-
-### Adding New Model Types
-
-1. **Create model** in `backend/models/`
-2. **Add to model list** in `TopBar.model.ts`
-3. **Configure sample inputs** in `server/index.ts`
-4. **Test compatibility** with all export formats
-5. **Document usage** in README
-
-### UI/UX Improvements
-
-1. **Follow Material-UI** design patterns
-2. **Ensure accessibility** (ARIA labels, keyboard navigation)
-3. **Test responsiveness** on different screen sizes
-4. **Maintain consistency** with existing design
-5. **Add proper loading states** and error handling
-
-## 🔍 Code Review Process
-
-### What We Look For
-
-- **Functionality**: Does it work as intended?
-- **Code Quality**: Is it readable and maintainable?
-- **Testing**: Are there adequate tests?
-- **Documentation**: Is it properly documented?
-- **Performance**: Does it impact performance?
-- **Security**: Are there any security concerns?
-
-### Review Checklist
-
-- [ ] Code follows style guidelines
-- [ ] Tests pass and coverage is adequate
-- [ ] Documentation is updated
-- [ ] No breaking changes (or properly documented)
-- [ ] Performance impact is acceptable
-- [ ] Security considerations are addressed
-
-## 🐛 Bug Reports
-
-### Before Reporting
-
-1. **Search existing issues** for duplicates
-2. **Try the latest version** to see if it's fixed
-3. **Gather information** about your environment
-
-### Bug Report Template
-
-```markdown
-**Describe the bug**
-A clear description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. See error
-
-**Expected behavior**
-What you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots.
-
-**Environment:**
-- OS: [e.g. Windows 10]
-- Browser: [e.g. Chrome 91]
-- Node.js version: [e.g. 18.0.0]
-- Python version: [e.g. 3.9.0]
-
-**Additional context**
-Any other context about the problem.
-```
-
-## ✨ Feature Requests
-
-### Feature Request Template
-
-```markdown
-**Is your feature request related to a problem?**
-A clear description of what the problem is.
-
-**Describe the solution you'd like**
-A clear description of what you want to happen.
-
-**Describe alternatives you've considered**
-Other solutions you've considered.
-
-**Additional context**
-Any other context or screenshots about the feature request.
-```
-
-## 📞 Getting Help
-
-- **GitHub Issues**: For bugs and feature requests
-- **GitHub Discussions**: For questions and general discussion
-- **Code Review**: Tag maintainers for review help
-
-## 🏆 Recognition
-
-Contributors will be:
-- **Listed in CONTRIBUTORS.md**
-- **Given credit in documentation**
-- **Mentioned in release notes**
-
-Thank you for contributing to VisuaML! 🎉 
+Thanks for making compiler research reproducible rather than mystical.

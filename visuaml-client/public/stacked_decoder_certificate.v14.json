@@ -1,0 +1,86 @@
+{
+  "arbitrary_layer_count_supported": false,
+  "architecture_id": "decoder_transformer",
+  "backend": "standalone NumPy CPU interpreter",
+  "canonical_checkpoint_io": "NumPy NPZ arrays + SHA-256-verified schema; no code execution",
+  "cases": [
+    {
+      "all_layer_cache_matches_reference": true,
+      "checkpoint_sha256": "74be367a8ffbbf20581dc01376686a3c1ff2b1c17bd07f5e869a1f1640b08ea7",
+      "generated_token_sha256": "d280bd5529637eaa7839fa9c7237e3b9c7a4466f117c07ac56f908b81fcf215e",
+      "generation_matches_reference": true,
+      "layers": 1,
+      "seed": 7,
+      "tokens_sha256": "736c987aa9e24230ab979a9f35d8de50fc036fbc49fe1e8fca8498913f69b104",
+      "witness": {
+        "arrays_checked": 9,
+        "backend": "NumPy AOT CPU (no device acceleration)",
+        "checkpoint_sha256": "74be367a8ffbbf20581dc01376686a3c1ff2b1c17bd07f5e869a1f1640b08ea7",
+        "chunks": 3,
+        "layers": 1,
+        "max_abs_error": 2.9802322387695312e-8,
+        "passed": true,
+        "schema": "visuaml.stacked-decoder-witness.v14",
+        "source_kind": "synthetic-cpu-fixture",
+        "specializations": 3
+      }
+    },
+    {
+      "all_layer_cache_matches_reference": true,
+      "checkpoint_sha256": "0d998089ad3c095111698e5baf37c617c85d7a83c026237fc05df68ba81de58f",
+      "generated_token_sha256": "99b467571cfbfe656d103e3ac08e2fbfd27c39f73e12322ef9e9a0966a95f0be",
+      "generation_matches_reference": true,
+      "layers": 2,
+      "seed": 19,
+      "tokens_sha256": "6eb8998cef4eea06e21fbf90ced477313c4e30f608c69888e5bdfbf2223f8939",
+      "witness": {
+        "arrays_checked": 15,
+        "backend": "NumPy AOT CPU (no device acceleration)",
+        "checkpoint_sha256": "0d998089ad3c095111698e5baf37c617c85d7a83c026237fc05df68ba81de58f",
+        "chunks": 3,
+        "layers": 2,
+        "max_abs_error": 1.4901161193847656e-7,
+        "passed": true,
+        "schema": "visuaml.stacked-decoder-witness.v14",
+        "source_kind": "synthetic-cpu-fixture",
+        "specializations": 3
+      }
+    },
+    {
+      "all_layer_cache_matches_reference": true,
+      "checkpoint_sha256": "bf5afa9302c5c5c964399f0f50b1c2a99fc627cef17f77affdc69da6f1a65a65",
+      "generated_token_sha256": "30a0cb25c4434c5eb61a17f166357ed5cf3c72d9c45987547e8569206428e08b",
+      "generation_matches_reference": true,
+      "layers": 4,
+      "seed": 41,
+      "tokens_sha256": "98b65862ca66db97caf88b6dbf3e446555848333a6e9a68a0b36027f58facc9a",
+      "witness": {
+        "arrays_checked": 27,
+        "backend": "NumPy AOT CPU (no device acceleration)",
+        "checkpoint_sha256": "bf5afa9302c5c5c964399f0f50b1c2a99fc627cef17f77affdc69da6f1a65a65",
+        "chunks": 3,
+        "layers": 4,
+        "max_abs_error": 1.1920928955078125e-7,
+        "passed": true,
+        "schema": "visuaml.stacked-decoder-witness.v14",
+        "source_kind": "synthetic-cpu-fixture",
+        "specializations": 3
+      }
+    }
+  ],
+  "claim_level": "1-to-4-layer-synthetic-shape-specialized-numpy-aot-execution",
+  "dynamic_shape_aot_supported": false,
+  "limitations": [
+    "Only 1..4 GQA/RoPE/SwiGLU blocks with concrete dimensions and compatible KV heads.",
+    "Every (batch,query,past) combination produces an independent AOT specialization.",
+    "Canonical checkpoints have user-declared provenance, not authenticated model weights.",
+    "No tokenizer, tied-weight policy, sampling distributions, external model-format adapter, or pretrained checkpoint test.",
+    "The lowerer's PyTorch-free artifact executes on CPU NumPy, never photonic hardware."
+  ],
+  "physical_hardware_validated": false,
+  "pretrained_checkpoint_certified": false,
+  "schema": "visuaml.stacked-decoder-aot-certificate.v14",
+  "sha256": "0c89fc163bac495982883973f09ecec9c797fe36d01d81b3b61d147126002374",
+  "source_kind": "synthetic-seeded-checkpoint-fixtures",
+  "source_sha256": "f8c3eb2cf807c78a4607bcfa758361a11cefa31b10fa47950f3839185ecdef7b"
+}

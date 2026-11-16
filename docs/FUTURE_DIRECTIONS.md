@@ -1,5 +1,13 @@
 # VisuaML: Future Directions
 
+> **Research status note (November 2026):** This document contains
+> interpretability and categorical-computing proposals, not a list of shipped
+> capabilities. The independently verified implementation is the bounded
+> typed-IR/compiler path described in [Compiler Guide](COMPILER_GUIDE.md)
+> and [Verification](VERIFICATION.md). The architecture catalog is not
+> checkpoint support; optical execution is simulated, not physical.
+
+
 > **Note**: This document provides an overview of our future directions. For detailed analysis of specific topics, see the [future-directions/](future-directions/) folder which contains focused documents on each area.
 
 ## The Interpretability Infrastructure Problem

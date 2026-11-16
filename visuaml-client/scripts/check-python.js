@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Python Environment Checker for VisuaML
- * 
+ *
  * This script helps developers verify their Python setup is correctly configured.
  */
 
@@ -23,7 +23,7 @@ try {
   console.log('1. Checking Python version...');
   const version = execSync(`${PYTHON_COMMAND} --version`, { encoding: 'utf8' }).trim();
   console.log(`   ✅ Found: ${version}`);
-  
+
   const versionMatch = version.match(/Python (\d+)\.(\d+)\.(\d+)/);
   if (versionMatch) {
     const [, major, minor] = versionMatch.map(Number);
@@ -44,13 +44,13 @@ try {
 try {
   console.log('\n2. Checking Python packages...');
   const packages = ['torch', 'open_hypergraphs', 'numpy'];
-  
+
   for (const pkg of packages) {
     try {
-      execSync(`${PYTHON_COMMAND} -c "import ${pkg}; print('${pkg}: OK')"`, { 
+      execSync(`${PYTHON_COMMAND} -c "import ${pkg}; print('${pkg}: OK')"`, {
         encoding: 'utf8',
         stdio: 'pipe',
-        env: { ...process.env, KMP_DUPLICATE_LIB_OK: 'TRUE' }
+        env: { ...process.env, KMP_DUPLICATE_LIB_OK: 'TRUE' },
       });
       console.log(`   ✅ ${pkg}: Available`);
     } catch (error) {
@@ -71,9 +71,9 @@ try {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const scriptPath = path.resolve(__dirname, '..', 'backend', 'scripts', 'fx_export.py');
-  execSync(`${PYTHON_COMMAND} "${scriptPath}" --help`, { 
+  execSync(`${PYTHON_COMMAND} "${scriptPath}" --help`, {
     stdio: 'pipe',
-    env: { ...process.env, KMP_DUPLICATE_LIB_OK: 'TRUE' }
+    env: { ...process.env, KMP_DUPLICATE_LIB_OK: 'TRUE' },
   });
   console.log('   ✅ Backend script: Working');
 } catch (error) {
@@ -89,4 +89,4 @@ if (process.env.VISUAML_PYTHON) {
   console.log('   (Set via environment variable)');
 } else {
   console.log('   (Using system default)');
-} 
+}

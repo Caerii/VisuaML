@@ -29,9 +29,8 @@ export const setCategoricalPanelCallback = (callback: (data: ExportHypergraphRes
 
 export const useTopBar = () => {
   // Default to first demo network if available, otherwise first available model
-  const defaultModelPath = DEMO_NETWORKS.length > 0 
-    ? DEMO_NETWORKS[0].id 
-    : AVAILABLE_MODELS[0].value;
+  const defaultModelPath =
+    DEMO_NETWORKS.length > 0 ? DEMO_NETWORKS[0].id : AVAILABLE_MODELS[0].value;
   const [modelPath, setModelPath] = useState(defaultModelPath);
   const [isLoadingUI, setIsLoadingUI] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -57,18 +56,16 @@ export const useTopBar = () => {
 
         // 2. Add new graph data
         const laidOutData = autoLayout(importedData.nodes, importedData.edges);
-        laidOutData.nodes.forEach(node => {
+        laidOutData.nodes.forEach((node) => {
           yNodes.push([new Y.Map(Object.entries(node))]);
         });
-        laidOutData.edges.forEach(edge => {
+        laidOutData.edges.forEach((edge) => {
           yEdges.push([new Y.Map(Object.entries(edge))]);
         });
-        
+
         // 3. Set the authoritative network facts
         const inputNodes = laidOutData.nodes.filter((n) => n.data.op === 'placeholder');
-        const inputShapes = inputNodes.map(
-          (n) => n.data.outputShape || 'N/A'
-        );
+        const inputShapes = inputNodes.map((n) => n.data.outputShape || 'N/A');
         const componentTypes = [
           ...new Set(laidOutData.nodes.map((n) => n.data.layerType || 'unknown')),
         ];
@@ -99,11 +96,7 @@ export const useTopBar = () => {
     const demo = getDemoNetwork(defaultDemoId);
     if (!demo) return;
     hasAutoLoadedDefaultRef.current = true;
-    processImportedData(
-      { nodes: demo.nodes, edges: demo.edges },
-      demo.name,
-      { silent: true },
-    );
+    processImportedData({ nodes: demo.nodes, edges: demo.edges }, demo.name, { silent: true });
   }, [ydoc, processImportedData]);
 
   const handleImportError = useCallback(
@@ -133,14 +126,14 @@ export const useTopBar = () => {
 
   const handleImportClick = async () => {
     setIsLoadingUI(true);
-    
+
     // Check if this is a demo network (works without servers)
     if (isDemoNetwork(modelPath)) {
       const demoNetwork = getDemoNetwork(modelPath);
       if (demoNetwork) {
         const ySharedFacts = ydoc.getMap('sharedNetworkFacts');
         ySharedFacts.set('isLoadingGraph', true);
-        
+
         try {
           // Demo networks are already laid out, just process them
           processImportedData(
@@ -164,7 +157,7 @@ export const useTopBar = () => {
     // Set loading state for all clients
     const ySharedFacts = ydoc.getMap('sharedNetworkFacts');
     ySharedFacts.set('isLoadingGraph', true);
-    
+
     try {
       const importedData = await importModel(modelPath);
       // Let the processor handle the definitive state update
@@ -185,7 +178,7 @@ export const useTopBar = () => {
 
     setIsUploading(true);
     const localNetworkName = file.name;
-    
+
     // Set loading state for all clients
     const ySharedFacts = ydoc.getMap('sharedNetworkFacts');
     ySharedFacts.set('isLoadingGraph', true);
@@ -227,7 +220,9 @@ export const useTopBar = () => {
   const handleExport = useCallback(async () => {
     // Demo networks don't support export (they're client-side only)
     if (isDemoNetwork(modelPath)) {
-      toast.info('Demo networks are client-side only and cannot be exported. Upload a model file to export.');
+      toast.info(
+        'Demo networks are client-side only and cannot be exported. Upload a model file to export.',
+      );
       return;
     }
 
@@ -310,7 +305,9 @@ export const useTopBar = () => {
 
           const nodeCount = result.nodes?.length || 0;
           const edgeCount = result.hyperedges?.length || 0;
-          toast.success(`VisuaML Graph export complete: ${nodeCount} nodes, ${edgeCount} hyperedges`);
+          toast.success(
+            `VisuaML Graph export complete: ${nodeCount} nodes, ${edgeCount} hyperedges`,
+          );
         } else if (exportFormat === 'macro') {
           // Download macro file - handle both 'macro' and 'macro_syntax' field names
           const macroContent = result.macro || result.macro_syntax;

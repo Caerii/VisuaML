@@ -1,80 +1,44 @@
-# VisuaML Documentation
+# VisuaML documentation
 
-This folder contains comprehensive documentation for the VisuaML project. Below is an overview of each document and its purpose.
+VisuaML combines a collaborative neural-network graph application with a separate experimental typed-IR compiler and verified runtime. This index distinguishes **implemented, numerically exercised capabilities** from **historical designs, simulated hardware and research proposals**.
 
-## 📋 Documentation Index
+## Essential guides
 
-### Core Documentation
+| Start here | When to read it |
+| --- | --- |
+| [Project README](../README.md) | Product overview, quick start and accurate current scope |
+| [Compiler Guide](COMPILER_GUIDE.md) | Actual model compatibility, typed IR, backends and executable examples |
+| [Architecture](ARCHITECTURE.md) | Full-stack data flow, compiler modules, state and ownership |
+| [Verification](VERIFICATION.md) | Tests, pinned real-checkpoint witnesses, benchmarks and numerical evidence |
+| [Security and Boundaries](SECURITY_AND_BOUNDARIES.md) | Untrusted model imports, hash limits, memory and isolation boundaries |
+| [Client Setup](CLIENT_README.md) | Running the web app, Fastify API, Yjs service and Python backend |
+| [Contributing](CONTRIBUTING.md) | CI gates, benchmark acceptance and maintaining these documents |
 
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Detailed system architecture and technical design
-  - Frontend architecture (React, TypeScript, React Flow)
-  - Backend systems (Node.js API, Python processing)
-  - Real-time collaboration infrastructure (Yjs, WebSockets)
-  - Authentication and user management
+## Compiler research history
 
-- **[FUTURE_DIRECTIONS.md](FUTURE_DIRECTIONS.md)** - Research roadmap and interpretability infrastructure vision
-  - Overview of the interpretability infrastructure problem
-  - Links to detailed analysis in [future-directions/](future-directions/) folder
-  - Strategic objectives and core thesis
-  - See [future-directions/README.md](future-directions/README.md) for detailed breakdown
+Version labels are **research milestones**, not published package versions.
 
-### Feature Documentation
+| Milestones | Subjects |
+| --- | --- |
+| [v2](COMPILER_LAB_V2.md), [v3](COMPILER_LAB_V3.md), [v4](COMPILER_LAB_V4.md), [v5](COMPILER_LAB_V5.md) | Early compiler, graph and verification contracts |
+| [v6 hardware](HARDWARE_CALIBRATION_V6.md), [v6 state](STATEFUL_ASSEMBLY_V6.md), [v7](EFFECT_PROGRAM_V7.md), [v8](MULTI_AREA_AND_EVIDENCE_V8.md), [v9](MULTIFIBER_AND_EMPIRICAL_V9.md), [v10](COMPILER_LAB_V10.md) | Effectful computation and **simulated** hardware/assembly placement |
+| [v11](ARCHITECTURE_ATLAS_V11.md), [v12](ARCHITECTURE_BLOCK_CERTIFICATION_V12.md) | Architecture catalog, operator audit and bounded reference probes |
+| [v13](DECODER_AOT_V13.md), [v14](STACKED_DECODER_V14.md), [v15](PERFORMANCE_V15.md), [v16](STREAMING_KV_V16.md) | CPU AOT examples, stacked decoders and bounded KV |
+| [v17](KV_SEMANTIC_LOWERING_V17.md), [v18](SEMANTIC_DECODER_V18.md) | State-effect IR and executable decoder mathematics |
+| [v19](V19_ARTIFACTS_BACKENDS_AND_COMPATIBILITY.md), [v20](V20_REAL_LLAMA_SEMANTIC_PIPELINE.md) | Real safetensors, SentencePiece, numerical witnesses and typed Llama IR |
+| [v22](V22_POLYMORPHIC_LLAMA_COMPILATION.md), [v23](V23_SHARED_COMPILED_LLAMA_TEMPLATE.md) | Whole decoder graph, polymorphic cursor and shared executable |
+| [v24](V24_SHARED_WEIGHTS_RUNTIME.md), [v25](V25_VERIFIED_TEMPLATE_REGISTRY.md), [v26](V26_LEASED_KV_SESSION_ACCOUNTING.md), [v27](V27_ACTIVE_MODEL_LIFETIME.md) | Shared model weights, registry eviction and explicit lifetime accounting |
 
-- **[MULTIPLAYER.md](MULTIPLAYER.md)** - Real-time collaboration capabilities
-  - Live cursor tracking
-  - Synchronized state management
-  - Conflict resolution strategies
-  - Performance optimization
+For complete source-bound numeric evidence, visit [benchmarks](../benchmarks/) and read [Verification](VERIFICATION.md). The Architecture Atlas catalogues 59 families; this **does not** certify 59 pretrained model families.
 
-### Development Documentation
+## Web app, research vision and collaboration
 
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute to the project
-  - Development setup
-  - Code style guidelines
-  - Pull request process
-  - Testing requirements
+- [Multiplayer](MULTIPLAYER.md): Yjs/WebSocket collaboration and presence.
+- [Research directions](FUTURE_DIRECTIONS.md): proposals, including interpretability and categorical computing, not a shipped feature list.
+- [Future-directions index](future-directions/README.md): research thesis documents.
+- [Integration summary](INTEGRATION_SUMMARY.md) and [bidirectional integration](BIDIRECTIONAL_INTEGRATION_SUMMARY.md): historical engineering notes.
+- [Contributors](CONTRIBUTORS.md) and [MIT license](LICENSE).
 
-- **[CLIENT_README.md](CLIENT_README.md)** - Client-specific setup and usage
-  - Detailed client installation
-  - Configuration options
-  - Development workflows
-  - Troubleshooting
+## Evidence levels
 
-### Future Directions (Detailed Analysis)
-
-- **[future-directions/](future-directions/)** - Comprehensive future directions analysis
-  - **[README.md](future-directions/README.md)** - Index and overview of all future directions documents
-  - **[interpretability-infrastructure.md](future-directions/interpretability-infrastructure.md)** - Core infrastructure problem and requirements
-  - **[collaborative-investigation.md](future-directions/collaborative-investigation.md)** - Distributed research capabilities
-  - **[safety-applications.md](future-directions/safety-applications.md)** - AI safety and alignment use cases
-  - **[technical-roadmap.md](future-directions/technical-roadmap.md)** - Implementation phases and timelines
-  - **[research-questions.md](future-directions/research-questions.md)** - Open research questions
-
-### Integration Summaries
-
-- **[INTEGRATION_SUMMARY.md](INTEGRATION_SUMMARY.md)** - Summary of system integrations
-- **[BIDIRECTIONAL_INTEGRATION_SUMMARY.md](BIDIRECTIONAL_INTEGRATION_SUMMARY.md)** - Bidirectional data flow documentation
-
-### Project Information
-
-- **[LICENSE](LICENSE)** - MIT License
-- **[CONTRIBUTORS.md](CONTRIBUTORS.md)** - Project contributors
-
-## 🚀 Getting Started
-
-**Install:** From the [repository root](../README.md), run `pnpm install` (Node only; fast). To use the API and model import/export, run `pnpm run install-python-deps` once from the root. See the [main README](../README.md) and [CLIENT_README.md](CLIENT_README.md) for full steps.
-
-If you're new to VisuaML, we recommend reading in this order:
-
-1. **[CLIENT_README.md](CLIENT_README.md)** - Setup and basic usage
-2. **[ARCHITECTURE.md](ARCHITECTURE.md)** - System design
-3. **[MULTIPLAYER.md](MULTIPLAYER.md)** - Collaboration features
-4. **[FUTURE_DIRECTIONS.md](FUTURE_DIRECTIONS.md)** - Research vision
-5. **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
-
-## 🔗 Quick Links
-
-- [Main README](../README.md) - Project overview and quick start
-- [Client Package](../visuaml-client/) - Main application code
-- [Backend Code](../visuaml-client/backend/) - Python processing backend
-- [Frontend Code](../visuaml-client/src/) - React/TypeScript frontend 
+Catalogued family → executable microprobe → independent reference parity → pinned real checkpoint → compiled backend execution → physical device calibration. Each rung must be established separately. Simulated optical results are *not* physical hardware measurements, and finite numerical witnesses are *not* all-input formal proofs.

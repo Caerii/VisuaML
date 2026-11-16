@@ -100,7 +100,8 @@ const NodeArguments: React.FC<NodeArgumentsProps> = ({ args, kwargs }) => {
           <ul className="ml-node__arguments-list">
             {Object.entries(kwargs).map(([key, value]) => (
               <li key={key} className="ml-node__argument-item">
-                <span className="ml-node__argument-key">{key}:</span> <ArgumentRenderer arg={value} />
+                <span className="ml-node__argument-key">{key}:</span>{' '}
+                <ArgumentRenderer arg={value} />
               </li>
             ))}
           </ul>
