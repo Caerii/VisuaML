@@ -1,0 +1,1145 @@
+{
+  "architecture": {
+    "heads": 6,
+    "hidden": 288,
+    "kv_heads": 6,
+    "layers": 6,
+    "vocab": 512
+  },
+  "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+  "comparison": [
+    {
+      "mean_abs_error": 2.1660434867953882e-7,
+      "output_shape": [
+        1,
+        4,
+        512
+      ],
+      "semantic_ir_worst_abs_error": 0.0000011324882507324219,
+      "tokens": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "worst_abs_error": 0.0000011324882507324219
+    },
+    {
+      "mean_abs_error": 2.591208669855405e-7,
+      "output_shape": [
+        1,
+        6,
+        512
+      ],
+      "semantic_ir_worst_abs_error": 0.000001341104507446289,
+      "tokens": [
+        [
+          2,
+          11,
+          9,
+          4,
+          31,
+          8
+        ]
+      ],
+      "worst_abs_error": 0.000001341104507446289
+    }
+  ],
+  "config_sha256": "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02",
+  "declared_source_revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+  "framework": "transformers AutoModelForCausalLM CPU",
+  "fused_ffn_max_abs_error": 9.5367431640625e-7,
+  "fused_ffn_region_calls": 6,
+  "greedy_generated_ids": [
+    [
+      4,
+      4,
+      4
+    ]
+  ],
+  "greedy_tokens_match_hf_recompute": true,
+  "hybrid_compiled_primitive_calls": 67,
+  "hybrid_compiled_primitive_specializations": 7,
+  "hybrid_max_abs_error": 9.238719940185547e-7,
+  "limitations": [
+    "Tokenizer parity is verified on only two short text witnesses.",
+    "v20 uses a Llama-specific typed dialect rather than unrestricted model IR.",
+    "v21 TorchScript graph compiles all decoder math for concrete shapes, not standalone AOT or polymorphic decode.",
+    "No physical GPU/photonic device or throughput claim."
+  ],
+  "matched_cpu_benchmark": {
+    "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+    "config_sha256": "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02",
+    "cpu": "x86_64",
+    "graph_setup_ms": 63.95849,
+    "limitations": [
+      "CPU only, small bounded prompts, no serving concurrency.",
+      "v21 TorchScript graph compiles the whole decoder for concrete shapes, but not standalone AOT or dynamic-shape compile-once.",
+      "Physical RSS, GPU time, compile cost of individual TorchScript kernels and energy not measured."
+    ],
+    "logical_liveness": {
+      "lifetimes": [
+        {
+          "defined_at": 0,
+          "last_used_at": 16,
+          "maximum_bytes": 36864,
+          "value": "embedding_out"
+        },
+        {
+          "defined_at": 1,
+          "last_used_at": 6,
+          "maximum_bytes": 36864,
+          "value": "l0_attn_norm"
+        },
+        {
+          "defined_at": 2,
+          "last_used_at": 3,
+          "maximum_bytes": 36864,
+          "value": "l0_q"
+        },
+        {
+          "defined_at": 3,
+          "last_used_at": 8,
+          "maximum_bytes": 36864,
+          "value": "l0_q_heads"
+        },
+        {
+          "defined_at": 4,
+          "last_used_at": 5,
+          "maximum_bytes": 36864,
+          "value": "l0_k"
+        },
+        {
+          "defined_at": 5,
+          "last_used_at": 9,
+          "maximum_bytes": 36864,
+          "value": "l0_k_heads"
+        },
+        {
+          "defined_at": 6,
+          "last_used_at": 7,
+          "maximum_bytes": 36864,
+          "value": "l0_v"
+        },
+        {
+          "defined_at": 7,
+          "last_used_at": 11,
+          "maximum_bytes": 36864,
+          "value": "l0_v_heads"
+        },
+        {
+          "defined_at": 8,
+          "last_used_at": 14,
+          "maximum_bytes": 36864,
+          "value": "l0_q_rotary"
+        },
+        {
+          "defined_at": 9,
+          "last_used_at": 10,
+          "maximum_bytes": 36864,
+          "value": "l0_k_rotary"
+        },
+        {
+          "defined_at": 12,
+          "last_used_at": 14,
+          "maximum_bytes": 73728,
+          "value": "l0_read_k"
+        },
+        {
+          "defined_at": 13,
+          "last_used_at": 14,
+          "maximum_bytes": 73728,
+          "value": "l0_read_v"
+        },
+        {
+          "defined_at": 14,
+          "last_used_at": 15,
+          "maximum_bytes": 36864,
+          "value": "l0_attention"
+        },
+        {
+          "defined_at": 15,
+          "last_used_at": 16,
+          "maximum_bytes": 36864,
+          "value": "l0_out"
+        },
+        {
+          "defined_at": 16,
+          "last_used_at": 23,
+          "maximum_bytes": 36864,
+          "value": "l0_residual"
+        },
+        {
+          "defined_at": 17,
+          "last_used_at": 20,
+          "maximum_bytes": 36864,
+          "value": "l0_ff_norm"
+        },
+        {
+          "defined_at": 18,
+          "last_used_at": 19,
+          "maximum_bytes": 98304,
+          "value": "l0_gate"
+        },
+        {
+          "defined_at": 19,
+          "last_used_at": 21,
+          "maximum_bytes": 98304,
+          "value": "l0_silu"
+        },
+        {
+          "defined_at": 20,
+          "last_used_at": 21,
+          "maximum_bytes": 98304,
+          "value": "l0_up"
+        },
+        {
+          "defined_at": 21,
+          "last_used_at": 22,
+          "maximum_bytes": 98304,
+          "value": "l0_fused"
+        },
+        {
+          "defined_at": 22,
+          "last_used_at": 23,
+          "maximum_bytes": 36864,
+          "value": "l0_down"
+        },
+        {
+          "defined_at": 23,
+          "last_used_at": 39,
+          "maximum_bytes": 36864,
+          "value": "l0_hidden"
+        },
+        {
+          "defined_at": 24,
+          "last_used_at": 29,
+          "maximum_bytes": 36864,
+          "value": "l1_attn_norm"
+        },
+        {
+          "defined_at": 25,
+          "last_used_at": 26,
+          "maximum_bytes": 36864,
+          "value": "l1_q"
+        },
+        {
+          "defined_at": 26,
+          "last_used_at": 31,
+          "maximum_bytes": 36864,
+          "value": "l1_q_heads"
+        },
+        {
+          "defined_at": 27,
+          "last_used_at": 28,
+          "maximum_bytes": 36864,
+          "value": "l1_k"
+        },
+        {
+          "defined_at": 28,
+          "last_used_at": 32,
+          "maximum_bytes": 36864,
+          "value": "l1_k_heads"
+        },
+        {
+          "defined_at": 29,
+          "last_used_at": 30,
+          "maximum_bytes": 36864,
+          "value": "l1_v"
+        },
+        {
+          "defined_at": 30,
+          "last_used_at": 34,
+          "maximum_bytes": 36864,
+          "value": "l1_v_heads"
+        },
+        {
+          "defined_at": 31,
+          "last_used_at": 37,
+          "maximum_bytes": 36864,
+          "value": "l1_q_rotary"
+        },
+        {
+          "defined_at": 32,
+          "last_used_at": 33,
+          "maximum_bytes": 36864,
+          "value": "l1_k_rotary"
+        },
+        {
+          "defined_at": 35,
+          "last_used_at": 37,
+          "maximum_bytes": 73728,
+          "value": "l1_read_k"
+        },
+        {
+          "defined_at": 36,
+          "last_used_at": 37,
+          "maximum_bytes": 73728,
+          "value": "l1_read_v"
+        },
+        {
+          "defined_at": 37,
+          "last_used_at": 38,
+          "maximum_bytes": 36864,
+          "value": "l1_attention"
+        },
+        {
+          "defined_at": 38,
+          "last_used_at": 39,
+          "maximum_bytes": 36864,
+          "value": "l1_out"
+        },
+        {
+          "defined_at": 39,
+          "last_used_at": 46,
+          "maximum_bytes": 36864,
+          "value": "l1_residual"
+        },
+        {
+          "defined_at": 40,
+          "last_used_at": 43,
+          "maximum_bytes": 36864,
+          "value": "l1_ff_norm"
+        },
+        {
+          "defined_at": 41,
+          "last_used_at": 42,
+          "maximum_bytes": 98304,
+          "value": "l1_gate"
+        },
+        {
+          "defined_at": 42,
+          "last_used_at": 44,
+          "maximum_bytes": 98304,
+          "value": "l1_silu"
+        },
+        {
+          "defined_at": 43,
+          "last_used_at": 44,
+          "maximum_bytes": 98304,
+          "value": "l1_up"
+        },
+        {
+          "defined_at": 44,
+          "last_used_at": 45,
+          "maximum_bytes": 98304,
+          "value": "l1_fused"
+        },
+        {
+          "defined_at": 45,
+          "last_used_at": 46,
+          "maximum_bytes": 36864,
+          "value": "l1_down"
+        },
+        {
+          "defined_at": 46,
+          "last_used_at": 62,
+          "maximum_bytes": 36864,
+          "value": "l1_hidden"
+        },
+        {
+          "defined_at": 47,
+          "last_used_at": 52,
+          "maximum_bytes": 36864,
+          "value": "l2_attn_norm"
+        },
+        {
+          "defined_at": 48,
+          "last_used_at": 49,
+          "maximum_bytes": 36864,
+          "value": "l2_q"
+        },
+        {
+          "defined_at": 49,
+          "last_used_at": 54,
+          "maximum_bytes": 36864,
+          "value": "l2_q_heads"
+        },
+        {
+          "defined_at": 50,
+          "last_used_at": 51,
+          "maximum_bytes": 36864,
+          "value": "l2_k"
+        },
+        {
+          "defined_at": 51,
+          "last_used_at": 55,
+          "maximum_bytes": 36864,
+          "value": "l2_k_heads"
+        },
+        {
+          "defined_at": 52,
+          "last_used_at": 53,
+          "maximum_bytes": 36864,
+          "value": "l2_v"
+        },
+        {
+          "defined_at": 53,
+          "last_used_at": 57,
+          "maximum_bytes": 36864,
+          "value": "l2_v_heads"
+        },
+        {
+          "defined_at": 54,
+          "last_used_at": 60,
+          "maximum_bytes": 36864,
+          "value": "l2_q_rotary"
+        },
+        {
+          "defined_at": 55,
+          "last_used_at": 56,
+          "maximum_bytes": 36864,
+          "value": "l2_k_rotary"
+        },
+        {
+          "defined_at": 58,
+          "last_used_at": 60,
+          "maximum_bytes": 73728,
+          "value": "l2_read_k"
+        },
+        {
+          "defined_at": 59,
+          "last_used_at": 60,
+          "maximum_bytes": 73728,
+          "value": "l2_read_v"
+        },
+        {
+          "defined_at": 60,
+          "last_used_at": 61,
+          "maximum_bytes": 36864,
+          "value": "l2_attention"
+        },
+        {
+          "defined_at": 61,
+          "last_used_at": 62,
+          "maximum_bytes": 36864,
+          "value": "l2_out"
+        },
+        {
+          "defined_at": 62,
+          "last_used_at": 69,
+          "maximum_bytes": 36864,
+          "value": "l2_residual"
+        },
+        {
+          "defined_at": 63,
+          "last_used_at": 66,
+          "maximum_bytes": 36864,
+          "value": "l2_ff_norm"
+        },
+        {
+          "defined_at": 64,
+          "last_used_at": 65,
+          "maximum_bytes": 98304,
+          "value": "l2_gate"
+        },
+        {
+          "defined_at": 65,
+          "last_used_at": 67,
+          "maximum_bytes": 98304,
+          "value": "l2_silu"
+        },
+        {
+          "defined_at": 66,
+          "last_used_at": 67,
+          "maximum_bytes": 98304,
+          "value": "l2_up"
+        },
+        {
+          "defined_at": 67,
+          "last_used_at": 68,
+          "maximum_bytes": 98304,
+          "value": "l2_fused"
+        },
+        {
+          "defined_at": 68,
+          "last_used_at": 69,
+          "maximum_bytes": 36864,
+          "value": "l2_down"
+        },
+        {
+          "defined_at": 69,
+          "last_used_at": 85,
+          "maximum_bytes": 36864,
+          "value": "l2_hidden"
+        },
+        {
+          "defined_at": 70,
+          "last_used_at": 75,
+          "maximum_bytes": 36864,
+          "value": "l3_attn_norm"
+        },
+        {
+          "defined_at": 71,
+          "last_used_at": 72,
+          "maximum_bytes": 36864,
+          "value": "l3_q"
+        },
+        {
+          "defined_at": 72,
+          "last_used_at": 77,
+          "maximum_bytes": 36864,
+          "value": "l3_q_heads"
+        },
+        {
+          "defined_at": 73,
+          "last_used_at": 74,
+          "maximum_bytes": 36864,
+          "value": "l3_k"
+        },
+        {
+          "defined_at": 74,
+          "last_used_at": 78,
+          "maximum_bytes": 36864,
+          "value": "l3_k_heads"
+        },
+        {
+          "defined_at": 75,
+          "last_used_at": 76,
+          "maximum_bytes": 36864,
+          "value": "l3_v"
+        },
+        {
+          "defined_at": 76,
+          "last_used_at": 80,
+          "maximum_bytes": 36864,
+          "value": "l3_v_heads"
+        },
+        {
+          "defined_at": 77,
+          "last_used_at": 83,
+          "maximum_bytes": 36864,
+          "value": "l3_q_rotary"
+        },
+        {
+          "defined_at": 78,
+          "last_used_at": 79,
+          "maximum_bytes": 36864,
+          "value": "l3_k_rotary"
+        },
+        {
+          "defined_at": 81,
+          "last_used_at": 83,
+          "maximum_bytes": 73728,
+          "value": "l3_read_k"
+        },
+        {
+          "defined_at": 82,
+          "last_used_at": 83,
+          "maximum_bytes": 73728,
+          "value": "l3_read_v"
+        },
+        {
+          "defined_at": 83,
+          "last_used_at": 84,
+          "maximum_bytes": 36864,
+          "value": "l3_attention"
+        },
+        {
+          "defined_at": 84,
+          "last_used_at": 85,
+          "maximum_bytes": 36864,
+          "value": "l3_out"
+        },
+        {
+          "defined_at": 85,
+          "last_used_at": 92,
+          "maximum_bytes": 36864,
+          "value": "l3_residual"
+        },
+        {
+          "defined_at": 86,
+          "last_used_at": 89,
+          "maximum_bytes": 36864,
+          "value": "l3_ff_norm"
+        },
+        {
+          "defined_at": 87,
+          "last_used_at": 88,
+          "maximum_bytes": 98304,
+          "value": "l3_gate"
+        },
+        {
+          "defined_at": 88,
+          "last_used_at": 90,
+          "maximum_bytes": 98304,
+          "value": "l3_silu"
+        },
+        {
+          "defined_at": 89,
+          "last_used_at": 90,
+          "maximum_bytes": 98304,
+          "value": "l3_up"
+        },
+        {
+          "defined_at": 90,
+          "last_used_at": 91,
+          "maximum_bytes": 98304,
+          "value": "l3_fused"
+        },
+        {
+          "defined_at": 91,
+          "last_used_at": 92,
+          "maximum_bytes": 36864,
+          "value": "l3_down"
+        },
+        {
+          "defined_at": 92,
+          "last_used_at": 108,
+          "maximum_bytes": 36864,
+          "value": "l3_hidden"
+        },
+        {
+          "defined_at": 93,
+          "last_used_at": 98,
+          "maximum_bytes": 36864,
+          "value": "l4_attn_norm"
+        },
+        {
+          "defined_at": 94,
+          "last_used_at": 95,
+          "maximum_bytes": 36864,
+          "value": "l4_q"
+        },
+        {
+          "defined_at": 95,
+          "last_used_at": 100,
+          "maximum_bytes": 36864,
+          "value": "l4_q_heads"
+        },
+        {
+          "defined_at": 96,
+          "last_used_at": 97,
+          "maximum_bytes": 36864,
+          "value": "l4_k"
+        },
+        {
+          "defined_at": 97,
+          "last_used_at": 101,
+          "maximum_bytes": 36864,
+          "value": "l4_k_heads"
+        },
+        {
+          "defined_at": 98,
+          "last_used_at": 99,
+          "maximum_bytes": 36864,
+          "value": "l4_v"
+        },
+        {
+          "defined_at": 99,
+          "last_used_at": 103,
+          "maximum_bytes": 36864,
+          "value": "l4_v_heads"
+        },
+        {
+          "defined_at": 100,
+          "last_used_at": 106,
+          "maximum_bytes": 36864,
+          "value": "l4_q_rotary"
+        },
+        {
+          "defined_at": 101,
+          "last_used_at": 102,
+          "maximum_bytes": 36864,
+          "value": "l4_k_rotary"
+        },
+        {
+          "defined_at": 104,
+          "last_used_at": 106,
+          "maximum_bytes": 73728,
+          "value": "l4_read_k"
+        },
+        {
+          "defined_at": 105,
+          "last_used_at": 106,
+          "maximum_bytes": 73728,
+          "value": "l4_read_v"
+        },
+        {
+          "defined_at": 106,
+          "last_used_at": 107,
+          "maximum_bytes": 36864,
+          "value": "l4_attention"
+        },
+        {
+          "defined_at": 107,
+          "last_used_at": 108,
+          "maximum_bytes": 36864,
+          "value": "l4_out"
+        },
+        {
+          "defined_at": 108,
+          "last_used_at": 115,
+          "maximum_bytes": 36864,
+          "value": "l4_residual"
+        },
+        {
+          "defined_at": 109,
+          "last_used_at": 112,
+          "maximum_bytes": 36864,
+          "value": "l4_ff_norm"
+        },
+        {
+          "defined_at": 110,
+          "last_used_at": 111,
+          "maximum_bytes": 98304,
+          "value": "l4_gate"
+        },
+        {
+          "defined_at": 111,
+          "last_used_at": 113,
+          "maximum_bytes": 98304,
+          "value": "l4_silu"
+        },
+        {
+          "defined_at": 112,
+          "last_used_at": 113,
+          "maximum_bytes": 98304,
+          "value": "l4_up"
+        },
+        {
+          "defined_at": 113,
+          "last_used_at": 114,
+          "maximum_bytes": 98304,
+          "value": "l4_fused"
+        },
+        {
+          "defined_at": 114,
+          "last_used_at": 115,
+          "maximum_bytes": 36864,
+          "value": "l4_down"
+        },
+        {
+          "defined_at": 115,
+          "last_used_at": 131,
+          "maximum_bytes": 36864,
+          "value": "l4_hidden"
+        },
+        {
+          "defined_at": 116,
+          "last_used_at": 121,
+          "maximum_bytes": 36864,
+          "value": "l5_attn_norm"
+        },
+        {
+          "defined_at": 117,
+          "last_used_at": 118,
+          "maximum_bytes": 36864,
+          "value": "l5_q"
+        },
+        {
+          "defined_at": 118,
+          "last_used_at": 123,
+          "maximum_bytes": 36864,
+          "value": "l5_q_heads"
+        },
+        {
+          "defined_at": 119,
+          "last_used_at": 120,
+          "maximum_bytes": 36864,
+          "value": "l5_k"
+        },
+        {
+          "defined_at": 120,
+          "last_used_at": 124,
+          "maximum_bytes": 36864,
+          "value": "l5_k_heads"
+        },
+        {
+          "defined_at": 121,
+          "last_used_at": 122,
+          "maximum_bytes": 36864,
+          "value": "l5_v"
+        },
+        {
+          "defined_at": 122,
+          "last_used_at": 126,
+          "maximum_bytes": 36864,
+          "value": "l5_v_heads"
+        },
+        {
+          "defined_at": 123,
+          "last_used_at": 129,
+          "maximum_bytes": 36864,
+          "value": "l5_q_rotary"
+        },
+        {
+          "defined_at": 124,
+          "last_used_at": 125,
+          "maximum_bytes": 36864,
+          "value": "l5_k_rotary"
+        },
+        {
+          "defined_at": 127,
+          "last_used_at": 129,
+          "maximum_bytes": 73728,
+          "value": "l5_read_k"
+        },
+        {
+          "defined_at": 128,
+          "last_used_at": 129,
+          "maximum_bytes": 73728,
+          "value": "l5_read_v"
+        },
+        {
+          "defined_at": 129,
+          "last_used_at": 130,
+          "maximum_bytes": 36864,
+          "value": "l5_attention"
+        },
+        {
+          "defined_at": 130,
+          "last_used_at": 131,
+          "maximum_bytes": 36864,
+          "value": "l5_out"
+        },
+        {
+          "defined_at": 131,
+          "last_used_at": 138,
+          "maximum_bytes": 36864,
+          "value": "l5_residual"
+        },
+        {
+          "defined_at": 132,
+          "last_used_at": 135,
+          "maximum_bytes": 36864,
+          "value": "l5_ff_norm"
+        },
+        {
+          "defined_at": 133,
+          "last_used_at": 134,
+          "maximum_bytes": 98304,
+          "value": "l5_gate"
+        },
+        {
+          "defined_at": 134,
+          "last_used_at": 136,
+          "maximum_bytes": 98304,
+          "value": "l5_silu"
+        },
+        {
+          "defined_at": 135,
+          "last_used_at": 136,
+          "maximum_bytes": 98304,
+          "value": "l5_up"
+        },
+        {
+          "defined_at": 136,
+          "last_used_at": 137,
+          "maximum_bytes": 98304,
+          "value": "l5_fused"
+        },
+        {
+          "defined_at": 137,
+          "last_used_at": 138,
+          "maximum_bytes": 36864,
+          "value": "l5_down"
+        },
+        {
+          "defined_at": 138,
+          "last_used_at": 139,
+          "maximum_bytes": 36864,
+          "value": "l5_hidden"
+        },
+        {
+          "defined_at": 139,
+          "last_used_at": 140,
+          "maximum_bytes": 36864,
+          "value": "final_norm"
+        },
+        {
+          "defined_at": 140,
+          "last_used_at": 140,
+          "maximum_bytes": 65536,
+          "value": "logits"
+        }
+      ],
+      "limitations": [
+        "Conservative logical SSA values, not physical peak allocation.",
+        "Views and temporary NumPy allocations are not deduplicated.",
+        "Weights, initial inputs and resident KV storage are excluded."
+      ],
+      "maximum_context": 64,
+      "maximum_query": 32,
+      "peak_logical_bytes": 331776,
+      "peak_logical_values": 5,
+      "schema": "visuaml.semantic-memory-analysis.v19",
+      "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961"
+    },
+    "model_revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+    "numpy": "2.1.3",
+    "openblas_num_threads": "1",
+    "python": "3.12.16",
+    "results": [
+      {
+        "fused_ffn_specializations": 1,
+        "latency": {
+          "numpy": {
+            "mad_ms": 0.050835,
+            "median_ms": 8.212716,
+            "minimum_ms": 8.130424,
+            "p95_ms": 8.269747
+          },
+          "reference_v19": {
+            "mad_ms": 0.192104,
+            "median_ms": 7.015095,
+            "minimum_ms": 6.394407,
+            "p95_ms": 7.170314
+          },
+          "torchscript_fused": {
+            "mad_ms": 0.038257,
+            "median_ms": 8.422566,
+            "minimum_ms": 8.309599,
+            "p95_ms": 8.534644
+          },
+          "torchscript_graph": {
+            "mad_ms": 0.579658,
+            "median_ms": 5.67296,
+            "minimum_ms": 4.981768,
+            "p95_ms": 29.472395
+          },
+          "torchscript_hybrid": {
+            "mad_ms": 0.090974,
+            "median_ms": 16.658006,
+            "minimum_ms": 16.473283,
+            "p95_ms": 16.803357
+          }
+        },
+        "parity": "full logits verified against independent local reference",
+        "tokens": 4,
+        "torchscript_specializations": 7,
+        "whole_graph_kv_reserved_bytes": 1769472,
+        "whole_graph_trace": [
+          {
+            "batch": 1,
+            "graph_nodes": 2116,
+            "past": 0,
+            "query": 4,
+            "trace_ms": 55.342748
+          }
+        ]
+      },
+      {
+        "fused_ffn_specializations": 1,
+        "latency": {
+          "numpy": {
+            "mad_ms": 0.039869,
+            "median_ms": 8.970166,
+            "minimum_ms": 8.877158,
+            "p95_ms": 9.08497
+          },
+          "reference_v19": {
+            "mad_ms": 0.206845,
+            "median_ms": 7.743893,
+            "minimum_ms": 7.014524,
+            "p95_ms": 7.913994
+          },
+          "torchscript_fused": {
+            "mad_ms": 0.056945,
+            "median_ms": 10.045277,
+            "minimum_ms": 9.988332,
+            "p95_ms": 10.271861
+          },
+          "torchscript_graph": {
+            "mad_ms": 0.977766,
+            "median_ms": 5.28766,
+            "minimum_ms": 4.049429,
+            "p95_ms": 29.289337
+          },
+          "torchscript_hybrid": {
+            "mad_ms": 0.298301,
+            "median_ms": 18.357239,
+            "minimum_ms": 18.041672,
+            "p95_ms": 18.69556
+          }
+        },
+        "parity": "full logits verified against independent local reference",
+        "tokens": 8,
+        "torchscript_specializations": 7,
+        "whole_graph_kv_reserved_bytes": 1769472,
+        "whole_graph_trace": [
+          {
+            "batch": 1,
+            "graph_nodes": 2116,
+            "past": 0,
+            "query": 8,
+            "trace_ms": 54.856269
+          }
+        ]
+      },
+      {
+        "fused_ffn_specializations": 1,
+        "latency": {
+          "numpy": {
+            "mad_ms": 0.125987,
+            "median_ms": 10.35891,
+            "minimum_ms": 10.232923,
+            "p95_ms": 10.85653
+          },
+          "reference_v19": {
+            "mad_ms": 0.096522,
+            "median_ms": 9.156232,
+            "minimum_ms": 8.491879,
+            "p95_ms": 9.237453
+          },
+          "torchscript_fused": {
+            "mad_ms": 0.268186,
+            "median_ms": 11.261895,
+            "minimum_ms": 10.993709,
+            "p95_ms": 11.953941
+          },
+          "torchscript_graph": {
+            "mad_ms": 0.652064,
+            "median_ms": 6.082185,
+            "minimum_ms": 4.970982,
+            "p95_ms": 30.314597
+          },
+          "torchscript_hybrid": {
+            "mad_ms": 0.457868,
+            "median_ms": 20.062822,
+            "minimum_ms": 19.514982,
+            "p95_ms": 21.063203
+          }
+        },
+        "parity": "full logits verified against independent local reference",
+        "tokens": 16,
+        "torchscript_specializations": 7,
+        "whole_graph_kv_reserved_bytes": 1769472,
+        "whole_graph_trace": [
+          {
+            "batch": 1,
+            "graph_nodes": 2116,
+            "past": 0,
+            "query": 16,
+            "trace_ms": 55.662451
+          }
+        ]
+      }
+    ],
+    "schema": "visuaml.llama-semantic-cpu-benchmark.v20",
+    "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961"
+  },
+  "polymorphic_cpu_benchmark": {
+    "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+    "compilation": {
+      "torchscript_polymorphic_v22": {
+        "first_graph_nodes": 2097,
+        "specializations": 1,
+        "total_trace_ms": 57.801644
+      },
+      "torchscript_specialized_v21": {
+        "first_graph_nodes": 2116,
+        "specializations": 6,
+        "total_trace_ms": 338.769456
+      }
+    },
+    "final_tokens": 12,
+    "input_chunks": [
+      4,
+      1,
+      1,
+      1,
+      3,
+      2
+    ],
+    "latency": {
+      "numpy_semantic": {
+        "mad_ms": 0.772812,
+        "median_ms": 33.20664,
+        "min_ms": 32.433828,
+        "p95_ms": 36.546984
+      },
+      "torchscript_polymorphic_v22": {
+        "mad_ms": 0.383138,
+        "median_ms": 27.144265,
+        "min_ms": 26.761127,
+        "p95_ms": 27.655448
+      },
+      "torchscript_specialized_v21": {
+        "mad_ms": 1.450545,
+        "median_ms": 27.761347,
+        "min_ms": 25.577497,
+        "p95_ms": 176.921592
+      }
+    },
+    "limitations": [
+      "Warm software CPU pipeline; traces counted separately.",
+      "Polymorphic version copies full-capacity KV inputs and checks outputs.",
+      "No native standalone AOT, CUDA/Triton, or physical-device energy data."
+    ],
+    "numerical_witness": "every chunk's logits and every final KV pair",
+    "numpy": "2.1.3",
+    "openblas_threads": "1",
+    "platform": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+    "resident_cache_reserved_bytes": {
+      "numpy_semantic": 1769472,
+      "torchscript_polymorphic_v22": 1769472,
+      "torchscript_specialized_v21": 1769472
+    },
+    "schema": "visuaml.llama-polymorphic-cache-benchmark.v22",
+    "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+    "trials": 5
+  },
+  "reference_weight_copy": "Tensor-identical safetensors with format=pt metadata",
+  "schema": "visuaml.pretrained-llama-parity.v20",
+  "semantic_ir_max_abs_error": 0.000001341104507446289,
+  "semantic_ir_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+  "source": "manojredhat/tiny-llama",
+  "streaming_ir_cache_tokens": 6,
+  "tokenizer_config_sha256": "3bb9c9aa2c3b5f44436dc1bbe2092a15dfcf6f1d37299bd199a496b1db0aa1e3",
+  "tokenizer_model_sha256": "219d5967cd1bc4dbdd0d880fddcf4d61a703391f79c889dc63a0c4b0eb367823",
+  "tokenizer_parity": [
+    {
+      "logit_max_abs_error": 0.000001430511474609375,
+      "text": "Once upon a time",
+      "token_ids": [
+        1,
+        508,
+        483,
+        331,
+        405,
+        261,
+        377
+      ]
+    },
+    {
+      "logit_max_abs_error": 0.0000016689300537109375,
+      "text": "The little cat ran home.",
+      "token_ids": [
+        1,
+        501,
+        260,
+        375,
+        280,
+        294,
+        352,
+        303,
+        270,
+        416,
+        493
+      ]
+    }
+  ],
+  "tolerance": {
+    "atol": 0.0005,
+    "rtol": 0.0005
+  },
+  "v22_cursor_polymorphic_graphs": 1,
+  "v22_streaming_tokens": 6,
+  "whole_graph_max_abs_error": 8.344650268554688e-7,
+  "whole_graph_streaming_past_tokens": 6,
+  "whole_graph_trace_count": 3,
+  "v22_provenance": {
+    "workflow_run": "https://github.com/Caerii/VisuaML/actions/runs/43911628364",
+    "status": "success",
+    "scope": "real pretrained Tiny Llama on CI CPU; variable query/cursor, full decoded logits and cache; warm pipeline latency, explicit cumulative graph construction",
+    "caveats": [
+      "Fixed model/batch and reserved cache capacity, not unrestricted dynamic network shapes.",
+      "Time varies with host load; no production serving SLOs or physical memory measurements.",
+      "Warm latency excludes TorchScript tracing; compilation totals separately reported.",
+      "Report compares software backends, not GPU/optical hardware."
+    ]
+  }
+}
