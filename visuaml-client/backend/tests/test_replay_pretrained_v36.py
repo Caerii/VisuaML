@@ -7,7 +7,6 @@ fast unit suite. The dedicated pinned-run job performs those independently.
 from __future__ import annotations
 
 import copy
-import json
 from pathlib import Path
 
 import pytest
