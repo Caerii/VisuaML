@@ -166,6 +166,14 @@ def benchmark(
         "decode_ratio_v29_avx2_over_batched": speed_ratio(
             "native_avx2", "native_batched", "decode_ms",
         ),
+        "prefill_dispatch": {
+            name: compiler.prefill_dispatch(prompt)
+            for name, compiler in compilers.items()
+        },
+        "single_token_decode_dispatch": {
+            name: compiler.prefill_dispatch(1)
+            for name, compiler in compilers.items()
+        },
         "compiler_evidence": {
             name: {
                 key: compiler.report()[key]
