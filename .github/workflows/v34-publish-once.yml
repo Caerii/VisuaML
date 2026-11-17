@@ -1,0 +1,39 @@
+name: Temporary v34 checked catalog publisher
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/v34-publish-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: github.event.pull_request.head.repo.full_name == 'Caerii/VisuaML'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/v34-compounding-evidence-library
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate deterministic reviewed v34 catalog
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+        run: |
+          python visuaml-client/backend/scripts/build_evidence_library_v34.py
+          python visuaml-client/backend/scripts/build_evidence_library_v34.py --check
+      - name: Commit generated catalog only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add visuaml-client/public/evidence/library-v34.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'evidence(v34): check in exact reviewed library index'
+            git push origin HEAD:research/v34-compounding-evidence-library
+          fi
