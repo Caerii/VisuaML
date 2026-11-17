@@ -53,9 +53,38 @@ python visuaml-client/backend/scripts/replay_pretrained_v36.py --run --output /t
 
 This code only accepts the hardcoded historical source bundle and model revision. There is no untrusted Python model-upload path, arbitrary native compiler input, automatic production promotion or access to credentials. The repo's generated evidence files remain source-controlled, reviewed and checked for byte drift.
 
+## Actual independent numerical replay (November 17, 2026)
+
+The [dedicated real-checkpoint replay run](https://github.com/Caerii/VisuaML/actions/runs/44193012326) passed both stages: exact source-byte recovery and a new detached-worktree CPU/Hugging Face/NumPy numerical run. The new execution observed:
+
+| Verification | Fresh measured result |
+| --- | ---: |
+| Max absolute native logits error against independent Hugging Face | `1.519918441772461e-6` |
+| Max absolute native logits error against NumPy semantic IR | `1.1920928955078125e-6` |
+| Independent pinned input witnesses | 2 |
+| Chunked KV and greedy-generation parity | Passed |
+| Legacy native C++17 warm CPU median | 35.429234 ms |
+| Native compile time | 602.79612 ms |
+| Native executable SHA-256 | `15f718f94c42921e7c67774e0ea3f8faea91cd96595a76060d2a04cc234e14ef` |
+
+The native executable fingerprint also matches the old recorded v28 executable on the tested GNU C++ toolchain. This is a strong byte-level reproducibility observation, but it does **not** imply all-input equivalence, future cross-platform code identity, or production serving performance.
+
+The complete, newly produced 7,897-byte [v36 JSON record](../benchmarks/pretrained_llama_independent_replay_v36.json) is archived alongside its [exact CI origin manifest](../benchmarks/pretrained_llama_independent_replay_v36.origin.json). The archive retains SHA-256 of the original downloaded CI bytes `a6b06210cc37a78ded00ab52c201c2c96eea0f4f754b427437b6ded3acce48f0` and the full structured numerical record digest `0e5f11a929e9a594f10233bc7e0027af0e86fc8ab2bc487ab13cab7c802da674`. The [archival validator](../visuaml-client/backend/scripts/archive_pretrained_replay_v36.py) checks both historical source fingerprints and this fresh record. It does not treat an unsigned SHA as an authenticated human signature.
+
+### A new knowledge graph, without rewriting old evidence
+
+The deterministic [v36 replay knowledge graph](../visuaml-client/public/evidence/knowledge-v36.json) overlays the existing v35 graph:
+
+- **14 distinct historical/fresh observations** across five reviewed artifacts
+- **21 exact identity relationships** including old-to-new Llama semantic, checkpoint, C++ and native binary identities
+- The original 13 prior study IDs, old v35 static preflight plan, and reviewed roadmap criteria are unchanged
+- One **new, independently executed** real-pretrained witness; still just **one distinct pinned pretrained model family**
+
+The read-only `/research/knowledge` experience distinguishes the recovered new numerical result from the earlier historical CI record and preflight-only plan. Source availability does not mean this frontend route is deployed at visuaml.com.
+
 ## Scientific limitations and next gate
 
-- The successful first-stage source recovery does **not** establish fresh numerical replay success. The second-stage CI result and its source-bound artifact are required.
+- The fresh numerical replay is a finite **new** execution of the exact reconstructed source bundle, not a formal proof or historical CI checkout recovery.
 - The original v28 archival record remains immutable and separately indexable. A new successful v36 result is a **different** experiment on the reconstructed source bundle.
 - Original v28 CI execution cannot be attributed to a Git commit solely by matching source file SHA-256 digests.
 - The legacy historical benchmark records median/p95 summaries, not every raw per-trial sample. Consequently this stage prioritizes correct fresh numerical evidence over throughput claims.
@@ -63,4 +92,4 @@ This code only accepts the hardcoded historical source bundle and model revision
 - The pinned support environment is not an isolation boundary for arbitrary uploaded Python. We only run vetted checked-in code.
 - New empirical evidence alone does not alter the public roadmap's approved weighted acceptance percentage.
 
-Next, if CI produces a fresh passing witness, archive the complete result with GitHub run and source/checkpoint provenance, index it as a separate v36 node, then add direct evidence-navigation from the existing `/research/knowledge` and `/compiler` experiences. Broader architecture coverage still requires a genuinely different pinned pretrained model family, not another Tiny Llama run.
+Next, prioritize a **genuinely distinct pinned pretrained architecture family** with independent numerical oracles and exact model/parameter provenance. Then build a systematic transformation search that reuses the reviewed computational identities, not merely raw benchmark counts. Broader architecture coverage still requires real independent evidence, not another Tiny Llama run.
