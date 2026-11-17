@@ -48,6 +48,14 @@ The context sweep is limited to **at most 64 tokens** to remain within the exist
 
 The independent [trained-model workflow](../.github/workflows/native-cpu-v28.yml) also includes this experiment with a pinned safetensors checkpoint and a shorter three-trial witness. GitHub shared runners are useful for detecting failures and preliminary regressions, not for estimating dedicated-machine throughput or energy efficiency.
 
+## Empirical observation (2026-11-17)
+
+The [pinned pretrained-model and synthetic geometry workflow](https://github.com/Caerii/VisuaML/actions/runs/44141795232) completed with independent numerical and KV verification. The [source-bound compact observation](../benchmarks/native_online_attention_observation_v31.json) preserves its ratios beyond the lifetime of the CI artifacts.
+
+On the pinned Tiny Llama checkpoint, with three warm trials per context, the ratios of materialized-score over online attention decode latency were **1.085×, 1.021×, 0.983×, 0.973×** at past contexts **4, 8, 16, 32** respectively. On three deterministic synthetic geometries (hidden 32, 96, 192), the same ratio at 4/16/32/48 past tokens ranged from **0.828× to 1.106×**. Online attention was faster in some middle/wider cases and slower in others, especially the smallest geometry.
+
+These samples do **not** demonstrate a reliable default-path speedup. The experiment remains opt-in and the materialized-score kernel stays the default. The source reduces one bounded C++ score-vector allocation but this is **not** evidence of reduced physical process memory or energy usage. Additional dedicated-machine and wider model/longer-context studies are necessary. The experimental snapshot is independent of the public roadmap's accepted percentages.
+
 ## Scientific acceptance criteria
 
 1. Compiler and full tests green, including real pretrained-model Hugging Face/NumPy reference logits and transactional KV state.
