@@ -50,6 +50,8 @@ The [v31 optional online-attention experiment](https://github.com/Caerii/VisuaML
 
 The [v32 graph-generated native compiler research](V32_NATIVE_SEMANTIC_CODEGEN.md) begins lowering a strict subset of the shared Semantic IR into independently compiled C++17, rather than calling a fixed model-specific decoder. Its [research implementation PR](https://github.com/Caerii/VisuaML/pull/13) contains separate synthetic residual MLP and Conv2D graphs, a restricted trusted FX importer, independent NumPy/PyTorch checks, and source-bound generated-binary receipts. These are **not independently admitted pretrained architecture families**, general native code generation or signed portable AOT packages. The public acceptance percentage and all underlying criteria are unchanged while the broader v32 scientific obligations remain open.
 
+The [v33 guarded export and evidence investigation](V33_EXPORT_AND_EVIDENCE.md) connects functional exported ATen graphs, lifted parameter digests and exact static guards to the graph-generated native Semantic IR compiler. Its first pure ReLU-idempotence rewrite is independently tested against NumPy and PyTorch, preserving failed concrete witnesses and digest-linked (not signer-authenticated) records. These are finite synthetic witnesses, **not** proof of all-input equivalence or independently certified pretrained families. No roadmap acceptance criterion or weighted percentage changes from this draft work.
+
 ## The evidence review process
 
 A proposed change to the public roadmap should be reviewed like a compiler change.

@@ -1,0 +1,558 @@
+{
+  "limitations": [
+    "Synthetic model weights, not two pinned pretrained architectures.",
+    "Strict static shapes only, no symbolic guard translation.",
+    "Finitely tested outputs, not formal equivalence.",
+    "Untrusted modules must never be traced by the caller.",
+    "Digest integrity does not authenticate an evidence signer.",
+    "No universal throughput, GPU/optical or energy claims."
+  ],
+  "model_witnesses": [
+    {
+      "compiler": {
+        "compilation_ms": 315.05281,
+        "compiler_flags": [
+          "-std=c++17",
+          "-O2",
+          "-fno-fast-math",
+          "-fPIC",
+          "-shared"
+        ],
+        "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+        "generated_cpp_sha256": "d946fcb2d18b84ccef03c37077c4058b9e317932ddb66030969ec04c49ff52e5",
+        "inputs": [
+          {
+            "dtype": "float32",
+            "name": "x",
+            "shape": [
+              3,
+              4
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "__export_weight_0",
+            "shape": [
+              4,
+              7
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "__export_weight_1",
+            "shape": [
+              7,
+              4
+            ]
+          }
+        ],
+        "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+        "native_binary_sha256": "061a2dbc622acfdf0fb75c6c49c56a3ce51c3cc792254747df27e53e4510c6b0",
+        "op_sequence": [
+          "matmul",
+          "relu",
+          "matmul",
+          "add"
+        ],
+        "output_shape": [
+          3,
+          4
+        ],
+        "retained_bytes_upper_bound": 536,
+        "scalar_multiply_upper_bound": 168,
+        "schema": "visuaml.semantic-native-cpu.v32",
+        "semantic_sha256": "f8b5667d751edd0f36b012405e9a37db582cecc8104301fcb093a583909695eb",
+        "source_program_sha256": "31cba985ea00ad25415d578818e1a8b9dbe26235baac3f8b1801ab676c26d351",
+        "target": "x86_64"
+      },
+      "family": "exported_residual_mlp",
+      "generated_cpp": "// Deterministically generated v32 Semantic IR CPU source.\n#include <algorithm>\n#include <cmath>\n#include <cstddef>\n#include <vector>\nextern \"C\" int visuaml_semantic_run(const float* const* inputs, float* output) noexcept {\n  try {\n    if (!inputs || !output) return -1;\n    if (!inputs[0]) return -1;\n    const float* v0 = inputs[0];\n    if (!inputs[1]) return -1;\n    const float* v1 = inputs[1];\n    if (!inputs[2]) return -1;\n    const float* v2 = inputs[2];\n    std::vector<float> storage_3(21);\n    float* v3 = storage_3.data();\n    for (int i=0; i<3; ++i) for (int j=0; j<7; ++j) {\n      float sum = 0.0f;\n      for (int k=0; k<4; ++k) sum += v0[i*4+k] * v1[k*7+j];\n      v3[i*7+j] = sum;\n    }\n    for (size_t i=0; i<21; ++i) if (!std::isfinite(v3[i])) return -3;\n    std::vector<float> storage_4(21);\n    float* v4 = storage_4.data();\n    for (size_t i=0; i<21; ++i) v4[i] = std::max(0.0f, v3[i]);\n    for (size_t i=0; i<21; ++i) if (!std::isfinite(v4[i])) return -3;\n    std::vector<float> storage_5(12);\n    float* v5 = storage_5.data();\n    for (int i=0; i<3; ++i) for (int j=0; j<4; ++j) {\n      float sum = 0.0f;\n      for (int k=0; k<7; ++k) sum += v4[i*7+k] * v2[k*4+j];\n      v5[i*4+j] = sum;\n    }\n    for (size_t i=0; i<12; ++i) if (!std::isfinite(v5[i])) return -3;\n    std::vector<float> storage_6(12);\n    float* v6 = storage_6.data();\n    for (size_t i=0; i<12; ++i) v6[i] = v5[i] + v0[i];\n    for (size_t i=0; i<12; ++i) if (!std::isfinite(v6[i])) return -3;\n    std::copy(v6, v6+12, output);\n    return 0;\n  } catch (...) { return -99; }\n}\n",
+      "input_sha256": {
+        "__export_weight_0": "2908912971c96f6d7468c38c3a8c9ef1285137f837df87b6c8135e05df26c671",
+        "__export_weight_1": "0a1e4f2f7df25f2af7e7527014fedc4250681f1f673b967c0ccb73e8977f63af",
+        "x": "018b9757e5fdb59dc02026da49adb9b75a930c502c43f88a8948f767b6b970df"
+      },
+      "max_abs_error_eager_torch": 0.0,
+      "max_abs_error_second_input": 1.1920928955078125e-07,
+      "op_sequence": [
+        "matmul",
+        "relu",
+        "matmul",
+        "add"
+      ],
+      "output_sha256": "1275ee221b497485ef891db8dbece045639a98f7d1fd13fc375096bf7b86e530",
+      "parameter_sha256": {
+        "__export_weight_0": "2908912971c96f6d7468c38c3a8c9ef1285137f837df87b6c8135e05df26c671",
+        "__export_weight_1": "0a1e4f2f7df25f2af7e7527014fedc4250681f1f673b967c0ccb73e8977f63af"
+      },
+      "source_export_sha256": "31cba985ea00ad25415d578818e1a8b9dbe26235baac3f8b1801ab676c26d351",
+      "warm_native_ms": {
+        "median": 0.055554,
+        "raw": [
+          0.071423,
+          0.057327,
+          0.051185,
+          0.04829,
+          0.047599,
+          0.095538,
+          0.055554
+        ]
+      }
+    },
+    {
+      "compiler": {
+        "compilation_ms": 311.602507,
+        "compiler_flags": [
+          "-std=c++17",
+          "-O2",
+          "-fno-fast-math",
+          "-fPIC",
+          "-shared"
+        ],
+        "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+        "generated_cpp_sha256": "4d31a6e7374554039584a67c4d4c3d6ffd7eb4cb1a74d93fe8871ca627109c04",
+        "inputs": [
+          {
+            "dtype": "float32",
+            "name": "x",
+            "shape": [
+              1,
+              2,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "__export_weight_0",
+            "shape": [
+              2,
+              2,
+              3,
+              3
+            ]
+          }
+        ],
+        "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+        "native_binary_sha256": "d7272fda807ed10d37d3e2e64e680405574995331a9425f456895d94a59101e3",
+        "op_sequence": [
+          "conv2d",
+          "relu",
+          "add"
+        ],
+        "output_shape": [
+          1,
+          2,
+          5,
+          5
+        ],
+        "retained_bytes_upper_bound": 944,
+        "scalar_multiply_upper_bound": 900,
+        "schema": "visuaml.semantic-native-cpu.v32",
+        "semantic_sha256": "df0dfb844b5757b0c6ee61df6e8a95818938c1f5f7a5ecf1ec9caed639d41df7",
+        "source_program_sha256": "3cdcb1cb393a1119fcbd25454d89207fff3c423838274627f5fcf6c4a3b1270c",
+        "target": "x86_64"
+      },
+      "family": "exported_residual_conv",
+      "generated_cpp": "// Deterministically generated v32 Semantic IR CPU source.\n#include <algorithm>\n#include <cmath>\n#include <cstddef>\n#include <vector>\nextern \"C\" int visuaml_semantic_run(const float* const* inputs, float* output) noexcept {\n  try {\n    if (!inputs || !output) return -1;\n    if (!inputs[0]) return -1;\n    const float* v0 = inputs[0];\n    if (!inputs[1]) return -1;\n    const float* v1 = inputs[1];\n    std::vector<float> storage_2(50);\n    float* v2 = storage_2.data();\n    for (int n=0; n<1; ++n)\n      for (int o=0; o<2; ++o)\n        for (int y=0; y<5; ++y)\n          for (int x=0; x<5; ++x) {\n            float sum = 0.0f;\n            for (int c=0; c<2; ++c)\n              for (int ky=0; ky<3; ++ky)\n                for (int kx=0; kx<3; ++kx) {\n                  const int iy = y*1 + ky - 1;\n                  const int ix = x*1 + kx - 1;\n                  if (iy>=0 && iy<5 && ix>=0 && ix<5)\n                    sum += v0[((n*2+c)*5+iy)*5+ix]\n                           * v1[((o*2+c)*3+ky)*3+kx];\n                }\n            v2[((n*2+o)*5+y)*5+x] = sum;\n          }\n    for (size_t i=0; i<50; ++i) if (!std::isfinite(v2[i])) return -3;\n    std::vector<float> storage_3(50);\n    float* v3 = storage_3.data();\n    for (size_t i=0; i<50; ++i) v3[i] = std::max(0.0f, v2[i]);\n    for (size_t i=0; i<50; ++i) if (!std::isfinite(v3[i])) return -3;\n    std::vector<float> storage_4(50);\n    float* v4 = storage_4.data();\n    for (size_t i=0; i<50; ++i) v4[i] = v3[i] + v0[i];\n    for (size_t i=0; i<50; ++i) if (!std::isfinite(v4[i])) return -3;\n    std::copy(v4, v4+50, output);\n    return 0;\n  } catch (...) { return -99; }\n}\n",
+      "input_sha256": {
+        "__export_weight_0": "02c7c529928d5057a52c9eaf8984033e3ee9e4dab512f4112d6f9fd1dc79f8fd",
+        "x": "302477b2e3c0d5797ccf81b453bbf0aba38cb5fdf4d17529078dffa50e3882ee"
+      },
+      "max_abs_error_eager_torch": 2.384185791015625e-07,
+      "max_abs_error_second_input": 1.1920928955078125e-07,
+      "op_sequence": [
+        "conv2d",
+        "relu",
+        "add"
+      ],
+      "output_sha256": "15ac3447370d0d9004baae2fbb73c35be2500ea7cbfc65e8b244f89506da8da8",
+      "parameter_sha256": {
+        "__export_weight_0": "02c7c529928d5057a52c9eaf8984033e3ee9e4dab512f4112d6f9fd1dc79f8fd"
+      },
+      "source_export_sha256": "3cdcb1cb393a1119fcbd25454d89207fff3c423838274627f5fcf6c4a3b1270c",
+      "warm_native_ms": {
+        "median": 0.041166,
+        "raw": [
+          0.063959,
+          0.088125,
+          0.045344,
+          0.040856,
+          0.041166,
+          0.040665,
+          0.038102
+        ]
+      }
+    }
+  ],
+  "optimization_experiment": {
+    "after": {
+      "compilation_ms": 262.207763,
+      "compiler_flags": [
+        "-std=c++17",
+        "-O2",
+        "-fno-fast-math",
+        "-fPIC",
+        "-shared"
+      ],
+      "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+      "generated_cpp_sha256": "0675fa37d2eb712e32cdf9242fe899a1f6a7dfbaca02f78cd6f36ce51eb987de",
+      "inputs": [
+        {
+          "dtype": "float32",
+          "name": "x",
+          "shape": [
+            3,
+            4
+          ]
+        }
+      ],
+      "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+      "native_binary_sha256": "898b67e751cdf675b2944f302971e851015a0c0ec085569965cbfaeb67da58b0",
+      "op_sequence": [
+        "relu"
+      ],
+      "output_shape": [
+        3,
+        4
+      ],
+      "retained_bytes_upper_bound": 96,
+      "scalar_multiply_upper_bound": 0,
+      "schema": "visuaml.semantic-native-cpu.v32",
+      "semantic_sha256": "b7d0aa76b00fa914189ac5c371ccc7ae8d6ec28818fa1638f8acb20ec8fa0afe",
+      "source_program_sha256": "34aa34e53a3ef777722f7c708ef3728340487d5045d6d9a0cb8e11182d6aeee2",
+      "target": "x86_64"
+    },
+    "alternating_order": true,
+    "before": {
+      "compilation_ms": 270.652067,
+      "compiler_flags": [
+        "-std=c++17",
+        "-O2",
+        "-fno-fast-math",
+        "-fPIC",
+        "-shared"
+      ],
+      "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+      "generated_cpp_sha256": "4a504b1d44548aa89561a36a511764bfdc44a515b1c0fc6b82e2ac2f048f301c",
+      "inputs": [
+        {
+          "dtype": "float32",
+          "name": "x",
+          "shape": [
+            3,
+            4
+          ]
+        }
+      ],
+      "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+      "native_binary_sha256": "c52a623e67425b24cdcb510d098e0963c44706ecdc95449ea0f507a58b7bad7a",
+      "op_sequence": [
+        "relu",
+        "relu"
+      ],
+      "output_shape": [
+        3,
+        4
+      ],
+      "retained_bytes_upper_bound": 144,
+      "scalar_multiply_upper_bound": 0,
+      "schema": "visuaml.semantic-native-cpu.v32",
+      "semantic_sha256": "6bac44c06121e081a5a9a496d7997ffc469f9c9e4c9de1d1cbdd04eb169a3aea",
+      "source_program_sha256": "f5dc47bbec80eb8a3d6c1bd4f70faa892524401105c84bf5906a00aac62d57e9",
+      "target": "x86_64"
+    },
+    "input_sha256": {
+      "x": "3dc06c9aad48ee015a2332a987be1c98e8ca66fbd52daaba9135f0ae50ef63c6"
+    },
+    "limitations": "Tiny native CPU warm execution, only one bounded input geometry; excludes compile/model load, energy and serving concurrency. Finite checks are not proofs and speedup is not globally accepted.",
+    "median_ratio_before_over_after": 0.962368,
+    "numerical_evidence": {
+      "after": {
+        "compilation_ms": 262.562475,
+        "compiler_flags": [
+          "-std=c++17",
+          "-O2",
+          "-fno-fast-math",
+          "-fPIC",
+          "-shared"
+        ],
+        "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+        "generated_cpp_sha256": "0675fa37d2eb712e32cdf9242fe899a1f6a7dfbaca02f78cd6f36ce51eb987de",
+        "inputs": [
+          {
+            "dtype": "float32",
+            "name": "x",
+            "shape": [
+              3,
+              4
+            ]
+          }
+        ],
+        "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+        "native_binary_sha256": "898b67e751cdf675b2944f302971e851015a0c0ec085569965cbfaeb67da58b0",
+        "op_sequence": [
+          "relu"
+        ],
+        "output_shape": [
+          3,
+          4
+        ],
+        "retained_bytes_upper_bound": 96,
+        "scalar_multiply_upper_bound": 0,
+        "schema": "visuaml.semantic-native-cpu.v32",
+        "semantic_sha256": "b7d0aa76b00fa914189ac5c371ccc7ae8d6ec28818fa1638f8acb20ec8fa0afe",
+        "source_program_sha256": "34aa34e53a3ef777722f7c708ef3728340487d5045d6d9a0cb8e11182d6aeee2",
+        "target": "x86_64"
+      },
+      "before": {
+        "compilation_ms": 269.494049,
+        "compiler_flags": [
+          "-std=c++17",
+          "-O2",
+          "-fno-fast-math",
+          "-fPIC",
+          "-shared"
+        ],
+        "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+        "generated_cpp_sha256": "4a504b1d44548aa89561a36a511764bfdc44a515b1c0fc6b82e2ac2f048f301c",
+        "inputs": [
+          {
+            "dtype": "float32",
+            "name": "x",
+            "shape": [
+              3,
+              4
+            ]
+          }
+        ],
+        "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+        "native_binary_sha256": "c52a623e67425b24cdcb510d098e0963c44706ecdc95449ea0f507a58b7bad7a",
+        "op_sequence": [
+          "relu",
+          "relu"
+        ],
+        "output_shape": [
+          3,
+          4
+        ],
+        "retained_bytes_upper_bound": 144,
+        "scalar_multiply_upper_bound": 0,
+        "schema": "visuaml.semantic-native-cpu.v32",
+        "semantic_sha256": "6bac44c06121e081a5a9a496d7997ffc469f9c9e4c9de1d1cbdd04eb169a3aea",
+        "source_program_sha256": "f5dc47bbec80eb8a3d6c1bd4f70faa892524401105c84bf5906a00aac62d57e9",
+        "target": "x86_64"
+      },
+      "comparison": {
+        "atol": 2e-05,
+        "counterexample": null,
+        "independent_oracles": [
+          "trusted_numpy",
+          "trusted_pytorch"
+        ],
+        "rtol": 2e-05,
+        "witnesses": [
+          {
+            "input_sha256": {
+              "x": "3dc06c9aad48ee015a2332a987be1c98e8ca66fbd52daaba9135f0ae50ef63c6"
+            },
+            "max_abs_error": {
+              "baseline_vs_numpy": 0.0,
+              "candidate_vs_baseline": 0.0,
+              "candidate_vs_numpy": 0.0,
+              "oracle_numpy_vs_torch": 0.0
+            },
+            "passed": true,
+            "witness_index": 0
+          },
+          {
+            "input_sha256": {
+              "x": "aa0b740c92ce025c73edf3df38fcd19243e9aa60585f78e70ccf4050ecc3854b"
+            },
+            "max_abs_error": {
+              "baseline_vs_numpy": 0.0,
+              "candidate_vs_baseline": 0.0,
+              "candidate_vs_numpy": 0.0,
+              "oracle_numpy_vs_torch": 0.0
+            },
+            "passed": true,
+            "witness_index": 1
+          }
+        ]
+      },
+      "evidence_class": "finite_numeric_witnesses_not_formal_proof",
+      "limits": "These checks only admit finite tested inputs; compiler changes, new model shapes, precisions or target hardware require new evidence. SHA256 integrity does not authenticate a signer.",
+      "platform": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+      "record_sha256": "ea29468b9aab3aa3c2e5f63aa97b4af43a6c9a4c6b4c2bd674366584d3191bb3",
+      "rule": "relu-idempotence-v1",
+      "schema": "visuaml.transformation-evidence.v33",
+      "status": "passed_finite_witnesses"
+    },
+    "record_sha256": "af46bfff2b165789ae3ddce35cf59a862d1110d78a3fa596463bdf6bf9e52d7f",
+    "rule": "relu-idempotence-v1",
+    "schema": "visuaml.optimization-experiment.v33",
+    "status": "exploratory_timing_after_finite_numerical_witnesses",
+    "trials": 7,
+    "warm_ms": {
+      "after": {
+        "median": 0.019186,
+        "raw": [
+          0.019607,
+          0.019186,
+          0.018163,
+          0.017793,
+          0.03245,
+          0.019736,
+          0.017462
+        ]
+      },
+      "before": {
+        "median": 0.018464,
+        "raw": [
+          0.019446,
+          0.018364,
+          0.018464,
+          0.017192,
+          0.045815,
+          0.018465,
+          0.017673
+        ]
+      }
+    },
+    "warmup_per_variant": 2
+  },
+  "platform": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+  "rewrite_witness": {
+    "after": {
+      "compilation_ms": 265.209701,
+      "compiler_flags": [
+        "-std=c++17",
+        "-O2",
+        "-fno-fast-math",
+        "-fPIC",
+        "-shared"
+      ],
+      "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+      "generated_cpp_sha256": "0675fa37d2eb712e32cdf9242fe899a1f6a7dfbaca02f78cd6f36ce51eb987de",
+      "inputs": [
+        {
+          "dtype": "float32",
+          "name": "x",
+          "shape": [
+            3,
+            4
+          ]
+        }
+      ],
+      "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+      "native_binary_sha256": "898b67e751cdf675b2944f302971e851015a0c0ec085569965cbfaeb67da58b0",
+      "op_sequence": [
+        "relu"
+      ],
+      "output_shape": [
+        3,
+        4
+      ],
+      "retained_bytes_upper_bound": 96,
+      "scalar_multiply_upper_bound": 0,
+      "schema": "visuaml.semantic-native-cpu.v32",
+      "semantic_sha256": "b7d0aa76b00fa914189ac5c371ccc7ae8d6ec28818fa1638f8acb20ec8fa0afe",
+      "source_program_sha256": "34aa34e53a3ef777722f7c708ef3728340487d5045d6d9a0cb8e11182d6aeee2",
+      "target": "x86_64"
+    },
+    "before": {
+      "compilation_ms": 272.592485,
+      "compiler_flags": [
+        "-std=c++17",
+        "-O2",
+        "-fno-fast-math",
+        "-fPIC",
+        "-shared"
+      ],
+      "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+      "generated_cpp_sha256": "4a504b1d44548aa89561a36a511764bfdc44a515b1c0fc6b82e2ac2f048f301c",
+      "inputs": [
+        {
+          "dtype": "float32",
+          "name": "x",
+          "shape": [
+            3,
+            4
+          ]
+        }
+      ],
+      "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+      "native_binary_sha256": "c52a623e67425b24cdcb510d098e0963c44706ecdc95449ea0f507a58b7bad7a",
+      "op_sequence": [
+        "relu",
+        "relu"
+      ],
+      "output_shape": [
+        3,
+        4
+      ],
+      "retained_bytes_upper_bound": 144,
+      "scalar_multiply_upper_bound": 0,
+      "schema": "visuaml.semantic-native-cpu.v32",
+      "semantic_sha256": "6bac44c06121e081a5a9a496d7997ffc469f9c9e4c9de1d1cbdd04eb169a3aea",
+      "source_program_sha256": "f5dc47bbec80eb8a3d6c1bd4f70faa892524401105c84bf5906a00aac62d57e9",
+      "target": "x86_64"
+    },
+    "comparison": {
+      "atol": 2e-05,
+      "counterexample": null,
+      "independent_oracles": [
+        "trusted_numpy",
+        "trusted_pytorch"
+      ],
+      "rtol": 2e-05,
+      "witnesses": [
+        {
+          "input_sha256": {
+            "x": "3dc06c9aad48ee015a2332a987be1c98e8ca66fbd52daaba9135f0ae50ef63c6"
+          },
+          "max_abs_error": {
+            "baseline_vs_numpy": 0.0,
+            "candidate_vs_baseline": 0.0,
+            "candidate_vs_numpy": 0.0,
+            "oracle_numpy_vs_torch": 0.0
+          },
+          "passed": true,
+          "witness_index": 0
+        },
+        {
+          "input_sha256": {
+            "x": "aa0b740c92ce025c73edf3df38fcd19243e9aa60585f78e70ccf4050ecc3854b"
+          },
+          "max_abs_error": {
+            "baseline_vs_numpy": 0.0,
+            "candidate_vs_baseline": 0.0,
+            "candidate_vs_numpy": 0.0,
+            "oracle_numpy_vs_torch": 0.0
+          },
+          "passed": true,
+          "witness_index": 1
+        }
+      ]
+    },
+    "evidence_class": "finite_numeric_witnesses_not_formal_proof",
+    "limits": "These checks only admit finite tested inputs; compiler changes, new model shapes, precisions or target hardware require new evidence. SHA256 integrity does not authenticate a signer.",
+    "platform": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+    "record_sha256": "2f21fe5a16581f24be4c8faa29f7a069259de7e4a582b6d71d77dc6e5cf6ff34",
+    "rule": "relu-idempotence-v1",
+    "schema": "visuaml.transformation-evidence.v33",
+    "status": "passed_finite_witnesses"
+  },
+  "schema": "visuaml.export-evidence-demonstration.v33",
+  "seed": 3303,
+  "source": "trusted synthetic locally defined PyTorch modules",
+  "source_sha256": {
+    "examples/export_evidence_demo_v33.py": "e7fcf630bcaeecc7bc9fcf658a8ce8332f085f2f4dc970aeb9a9426330a2c51f",
+    "visuaml/compiler_lab/native_export_frontend_v33.py": "3366c5c6402a13bef969205fec2ba1de7718fd11f87b00c2f8e5e2764bee7f2b",
+    "visuaml/compiler_lab/native_semantic_codegen_v32.py": "8aeccd38d911ef1aad4d8d6ecc90ca84009056e08fa78b90bf6e290ca0a6a7fd",
+    "visuaml/compiler_lab/optimization_search_v33.py": "d4533a851861b0b7c0e90b2bc8edd2220a15f0bd09432ae43b0f2803cdb771ef",
+    "visuaml/compiler_lab/transformation_evidence_v33.py": "f359c8da9d2475f804e7cefd8f8e8a9d4be68443a13e7fe7fc97e86f334e86cd"
+  },
+  "torch": "2.9.1+cpu",
+  "trials": 7
+}

@@ -1,0 +1,63 @@
+name: Guarded export and transformation evidence v33
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/native_export_frontend_v33.py
+      - visuaml-client/backend/visuaml/compiler_lab/transformation_evidence_v33.py
+      - visuaml-client/backend/visuaml/compiler_lab/optimization_search_v33.py
+      - visuaml-client/backend/tests/test_optimization_search_v33.py
+      - visuaml-client/backend/tests/test_native_export_frontend_v33.py
+      - visuaml-client/backend/tests/test_transformation_evidence_v33.py
+      - visuaml-client/backend/examples/export_evidence_demo_v33.py
+      - .github/workflows/native-evidence-v33.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/native_export_frontend_v33.py
+      - visuaml-client/backend/visuaml/compiler_lab/transformation_evidence_v33.py
+      - visuaml-client/backend/visuaml/compiler_lab/optimization_search_v33.py
+      - visuaml-client/backend/tests/test_optimization_search_v33.py
+      - visuaml-client/backend/tests/test_native_export_frontend_v33.py
+      - visuaml-client/backend/tests/test_transformation_evidence_v33.py
+      - visuaml-client/backend/examples/export_evidence_demo_v33.py
+      - .github/workflows/native-evidence-v33.yml
+
+jobs:
+  native-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned trusted CPU reference
+        run: |
+          python -m pip install torch==2.9.1+cpu torchvision==0.24.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r visuaml-client/backend/requirements.txt
+          python -m pip install pytest ruff
+      - name: Check v33 import style
+        run: |
+          ruff check visuaml-client/backend/visuaml/compiler_lab/native_export_frontend_v33.py visuaml-client/backend/visuaml/compiler_lab/transformation_evidence_v33.py visuaml-client/backend/visuaml/compiler_lab/optimization_search_v33.py visuaml-client/backend/tests/test_native_export_frontend_v33.py visuaml-client/backend/tests/test_transformation_evidence_v33.py visuaml-client/backend/tests/test_optimization_search_v33.py visuaml-client/backend/examples/export_evidence_demo_v33.py
+      - name: Verify independent export and transformation numerical witnesses
+        env:
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+        run: |
+          cd visuaml-client
+          python -m pytest -q backend/tests/test_native_export_frontend_v33.py backend/tests/test_transformation_evidence_v33.py backend/tests/test_optimization_search_v33.py
+      - name: Produce deterministic source-bound investigation record
+        env:
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+        run: |
+          PYTHONPATH=visuaml-client/backend python visuaml-client/backend/examples/export_evidence_demo_v33.py --seed 3303 --trials 7 --output export-evidence-v33.json
+          python -c "import json; d=json.load(open('export-evidence-v33.json')); assert d['schema']=='visuaml.export-evidence-demonstration.v33' and len(d['model_witnesses'])==2 and d['rewrite_witness']['status']=='passed_finite_witnesses' and d['optimization_experiment']['status']=='exploratory_timing_after_finite_numerical_witnesses'"
+      - name: Upload reproducible export and rewrite evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: export-evidence-v33
+          path: export-evidence-v33.json
+          if-no-files-found: error
+          retention-days: 30
