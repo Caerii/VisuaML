@@ -69,6 +69,19 @@ PYTHONPATH=backend python backend/examples/native_fx_codegen_demo_v32.py --seed 
 
 The [dedicated GitHub workflow](../.github/workflows/native-semantic-v32.yml) runs the independent fixture checks and publishes a time-bounded, source-bound benchmark artifact. The usual full repository CI remains mandatory. No warm-latency speedup is claimed: this prototype prioritizes semantic admission and inspectable native generation over optimization.
 
+## Independently inspectable evidence integrity
+
+The dedicated CI workflow publishes full generated C++ source for each manual/FX fixture, its SHA-256, the native library hash and exact source-branch commit. A separate [evidence integrity checker](../visuaml-client/backend/scripts/verify_native_semantic_evidence_v32.py) verifies the checked-out source-file fingerprints, generated source SHA, declared runtime tensor fingerprints, finite numerical witness tolerances, and the equivalence of generated C++ source/binary for the same graph geometry whether it originated from an explicit Semantic IR fixture or the trusted FX frontend. The artifacts contain a third integrity summary JSON.
+
+```bash
+python backend/scripts/verify_native_semantic_evidence_v32.py \
+  --declared /tmp/native-semantic-v32.json \
+  --fx /tmp/native-fx-v32.json \
+  --source-commit YOUR_EXACT_GIT_COMMIT
+```
+
+The verifier is deliberately an **integrity and consistency check**, not cryptographic authentication: an attacker who controls the source and all hashes can rehash them. It is not an independent numerical rerun or proof of correctness for arbitrary inputs. Reproduce the two model runs on a trusted local machine and compare their receipts before accepting broader claims.
+
 ## Next substantial work
 
 Expand the first restricted trusted FX frontend to carry richer operator contracts and externally auditable parameter/constant provenance; independently admit a second **pretrained** model architecture; generate a versioned offline ABI manifest and load it in a separate process; introduce explicit liveness-aware scratch allocation, input/output alias checks, better numerical error instrumentation and standardized performance suites.
