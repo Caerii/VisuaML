@@ -178,3 +178,34 @@ def test_static_export_does_not_mutate_original_input():
     bound = lower_static_export(export, sample, trusted=True)
     NativeSemanticCompiler(bound.program).run(**bound.validated_inputs())
     torch.testing.assert_close(sample, original)
+
+
+class ParameterMatMul(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.weight = nn.Parameter(torch.randn(4, 3) * 0.1)
+
+    def forward(self, x):
+        return x @ self.weight
+
+
+def test_exported_rank_two_parameter_matmul_is_bound_and_generated():
+    torch.manual_seed(333)
+    model = ParameterMatMul().eval()
+    first = torch.randn(2, 4)
+    program = torch.export.export(model, (first,), strict=True)
+    bound = lower_static_export(program, first, trusted=True)
+    assert [op.op for op in bound.program.regions[0].operations] == ["matmul"]
+    assert len(bound.parameter_sha256) == 1
+    compiler = NativeSemanticCompiler(bound.program)
+    native = compiler.run(**bound.validated_inputs())
+    with torch.no_grad():
+        baseline = model(first).numpy()
+    np.testing.assert_allclose(native, baseline, atol=2e-5, rtol=2e-5)
+    second = torch.randn(2, 4)
+    alternative = compiler.run(**bound.validated_inputs(second))
+    with torch.no_grad():
+        torch_alternative = model(second).numpy()
+    np.testing.assert_allclose(
+        alternative, torch_alternative, atol=2e-5, rtol=2e-5
+    )
