@@ -42,8 +42,12 @@ int visuaml_native_llama_decode(
 
 namespace {
 
+// Preserve a separately compilable scalar reference for differential testing.
+// The default path processes four output rows per input traversal. The per-row
+// accumulation order stays identical; no fast-math reassociation is enabled.
 inline void linear(const float* input, const float* weight,
                    float* output, int input_width, int output_width) {
+#if defined(VISUAML_NATIVE_SCALAR_REFERENCE)
   for (int row = 0; row < output_width; ++row) {
     float sum = 0.0f;
     const float* w = weight + static_cast<size_t>(row) * input_width;
@@ -52,6 +56,35 @@ inline void linear(const float* input, const float* weight,
     }
     output[row] = sum;
   }
+#else
+  int row = 0;
+  for (; row + 3 < output_width; row += 4) {
+    const float* w0 = weight + static_cast<size_t>(row) * input_width;
+    const float* w1 = w0 + input_width;
+    const float* w2 = w1 + input_width;
+    const float* w3 = w2 + input_width;
+    float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+    for (int col = 0; col < input_width; ++col) {
+      const float x = input[col];
+      a += w0[col] * x;
+      b += w1[col] * x;
+      c += w2[col] * x;
+      d += w3[col] * x;
+    }
+    output[row] = a;
+    output[row + 1] = b;
+    output[row + 2] = c;
+    output[row + 3] = d;
+  }
+  for (; row < output_width; ++row) {
+    float sum = 0.0f;
+    const float* w = weight + static_cast<size_t>(row) * input_width;
+    for (int col = 0; col < input_width; ++col) {
+      sum += w[col] * input[col];
+    }
+    output[row] = sum;
+  }
+#endif
 }
 
 inline void rmsnorm(const float* input, const float* gain, float* output,
@@ -139,6 +172,23 @@ extern "C" int visuaml_native_llama_decode(
     const float scaling = 1.0f / std::sqrt(static_cast<float>(depth));
     const int heads_per_kv = c.heads / c.kv_heads;
     std::vector<float> state(rows * h);
+    // Reuse scratch across layers and heads, eliminating repeated allocations.
+    const size_t kv_len = rows * kwidth;
+    std::vector<float> normed(rows * h);
+    std::vector<float> q(rows * h);
+    std::vector<float> attended(rows * h);
+    std::vector<float> keys(kv_len);
+    std::vector<float> values(kv_len);
+    std::vector<float> rope_sine(depth / 2);
+    std::vector<float> rope_cosine(depth / 2);
+    std::vector<float> scores(c.capacity);
+    std::vector<float> projection(h);
+    std::vector<float> ff_norm(h);
+    std::vector<float> gate(c.inner);
+    std::vector<float> up(c.inner);
+    std::vector<float> product(c.inner);
+    std::vector<float> ff_out(h);
+    std::vector<float> normalized(h);
 
     for (size_t row = 0; row < rows; ++row) {
       const float* start = weights[0] + tokens[row] * h;
@@ -157,16 +207,7 @@ extern "C" int visuaml_native_llama_decode(
       const float* wup = weights[index + 7];
       const float* wdown = weights[index + 8];
 
-      std::vector<float> normed(rows * h);
-      std::vector<float> q(rows * h);
-      std::vector<float> attended(rows * h, 0.0f);
-      const size_t kv_len = rows * kwidth;
-      // Mathematically distinct from Python's NumPy kernels.
-      std::vector<float> keys(kv_len);
-      std::vector<float> values(kv_len);
-      std::vector<float> rope_sine(depth / 2);
-      std::vector<float> rope_cosine(depth / 2);
-
+      std::fill(attended.begin(), attended.end(), 0.0f);
       for (size_t row = 0; row < rows; ++row) {
         const size_t off = row * h;
         const size_t kv_off = row * kwidth;
@@ -199,7 +240,6 @@ extern "C" int visuaml_native_llama_decode(
             const float* query_head =
                 q.data() + (static_cast<size_t>(batch) * query + t) * h
                 + head * depth;
-            std::vector<float> scores(available);
             float peak = -std::numeric_limits<float>::infinity();
             for (int ctx = 0; ctx < available; ++ctx) {
               const float* key_ptr =
@@ -238,12 +278,6 @@ extern "C" int visuaml_native_llama_decode(
         }
       }
 
-      std::vector<float> projection(h);
-      std::vector<float> ff_norm(h);
-      std::vector<float> gate(c.inner);
-      std::vector<float> up(c.inner);
-      std::vector<float> product(c.inner);
-      std::vector<float> ff_out(h);
       for (size_t row = 0; row < rows; ++row) {
         const size_t off = row * h;
         linear(attended.data() + off, wo, projection.data(), h, h);
@@ -261,7 +295,6 @@ extern "C" int visuaml_native_llama_decode(
 
     const float* final_gain = weights[1];
     const float* lm_head = weights[c.tied_head ? 0 : 2];
-    std::vector<float> normalized(h);
     for (size_t row = 0; row < rows; ++row) {
       rmsnorm(state.data() + row * h, final_gain, normalized.data(), h, c.epsilon);
       linear(normalized.data(), lm_head, logits + row * c.vocabulary,
