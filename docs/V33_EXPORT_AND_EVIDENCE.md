@@ -67,7 +67,15 @@ The demonstration uses three locally defined trusted synthetic modules: a residu
 
 **These are synthetic models, not two pinned real pretrained architecture families.** They do not establish arbitrary `torch.export` support, dynamic-shape compilation, low-level GPU code generation, generalized stateful effects, speedup over external production compilers or physical hardware economics.
 
-## 5. Architecture of the compounding loop
+## 5. Research evidence in the browser
+
+The new read-only [`/research` route](../visuaml-client/src/ui/ResearchEvidence/ResearchEvidencePage.tsx) loads a versioned static [v33 observation snapshot](../visuaml-client/public/evidence/v33-observation.json). It does **not** need the Python API or execute user-submitted models. The page displays the source revision, source-generated native binary fingerprints, finite numerical errors, accepted rewrite witness status, and the observed non-winning experimental timing. It links to the exact GitHub CI workflow that produced the original data.
+
+This small public JSON is an explicitly **curated summary** of a verified CI artifact, not the entire numerical receipt or a cryptographically signed record. The full CI JSON remains the authoritative reproducibility source, and its GitHub artifact may expire under retention rules. The page validates the read-only snapshot schema and refuses unknown provenance links rather than silently rendering unsupported content.
+
+GitHub source changes alone do **not** establish deployment. The user-visible research route becomes accessible on `visuaml.com` only after the production host deploys an appropriate client build and supports direct SPA navigation. Hosting verification remains in [issue #8](https://github.com/Caerii/VisuaML/issues/8).
+
+## 6. Architecture of the compounding loop
 
 ```text
 trusted PyTorch exported program
