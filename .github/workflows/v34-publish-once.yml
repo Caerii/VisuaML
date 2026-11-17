@@ -45,5 +45,7 @@ jobs:
           git add visuaml-client/public/evidence/library-v34.json visuaml-client/src/ui/ResearchEvidence/libraryModel.ts visuaml-client/src/ui/ResearchEvidence/libraryModel.test.ts visuaml-client/src/ui/ResearchEvidence/ResearchLibraryPage.tsx
           if ! git diff --cached --quiet; then
             git commit -m 'style(v34): publish exact catalog and project-formatted evidence browser'
+            git fetch origin research/v34-compounding-evidence-library
+            git rebase origin/research/v34-compounding-evidence-library
             git push origin HEAD:research/v34-compounding-evidence-library
           fi
