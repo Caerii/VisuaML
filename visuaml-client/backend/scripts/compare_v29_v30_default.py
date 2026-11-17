@@ -21,7 +21,6 @@ from pathlib import Path
 
 from huggingface_hub import snapshot_download
 
-
 BASE_COMMIT = "bd3086c8e7f3ea35f588a290bdeb4f149ec2b8d4"
 MODEL_ID = "manojredhat/tiny-llama"
 REVISION = "756e9746eb801752d69771ef3e9bc433b21d853d"
