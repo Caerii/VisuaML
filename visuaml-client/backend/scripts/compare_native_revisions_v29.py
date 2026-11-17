@@ -134,8 +134,29 @@ def run(*, pairs: int, trials: int) -> dict:
                     "baseline": a,
                     "current": b,
                 })
+            memory_record = None
+            if Path("/proc/self/status").is_file():
+                env = os.environ.copy()
+                env["PYTHONPATH"] = str(root / BACKEND)
+                env["OPENBLAS_NUM_THREADS"] = "1"
+                memory_probe = root / "visuaml-client/backend/examples/native_cpu_memory_v29.py"
+                measurement = subprocess.run(
+                    (
+                        sys.executable, str(memory_probe), str(checkpoint),
+                        "--revision", REVISION, "--repetitions", "2",
+                    ),
+                    cwd=root, env=env, capture_output=True,
+                    text=True, check=True, timeout=360,
+                )
+                memory_record = json.loads(measurement.stdout)
+                if any(
+                    item["checkpoint_sha256"] != WEIGHTS_SHA
+                    for item in memory_record["samples"]
+                ):
+                    raise RuntimeError("RSS probe checkpoint mismatch")
             return {
                 "schema": "visuaml.paired-native-v28-v29.v1",
+                "physical_memory_probe": memory_record,
                 "base_commit": BASE_COMMIT,
                 "model": MODEL_ID,
                 "model_revision": REVISION,
