@@ -11,7 +11,7 @@ import argparse
 import json
 from pathlib import Path
 
-from visuaml.compiler_lab.evidence_library_v34 import EvidenceLibrary
+from visuaml_evidence.library_v34 import EvidenceLibrary
 
 
 def render(repo: Path) -> bytes:
