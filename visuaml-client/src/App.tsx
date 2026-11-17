@@ -7,6 +7,7 @@ import { ArchitectureAtlasPage } from './ui/ArchitectureAtlas/ArchitectureAtlasP
 import { RoadmapPage } from './ui/Roadmap/RoadmapPage';
 import { ResearchEvidencePage } from './ui/ResearchEvidence/ResearchEvidencePage';
 import { ResearchLibraryPage } from './ui/ResearchEvidence/ResearchLibraryPage';
+import { ResearchKnowledgePage } from './ui/ResearchEvidence/ResearchKnowledgePage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/roadmap" element={<RoadmapPage />} />
         <Route path="/research" element={<ResearchEvidencePage />} />
         <Route path="/research/library" element={<ResearchLibraryPage />} />
+        <Route path="/research/knowledge" element={<ResearchKnowledgePage />} />
       </Routes>
     </Router>
   );
