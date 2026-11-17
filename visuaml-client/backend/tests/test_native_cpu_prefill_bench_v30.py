@@ -39,6 +39,9 @@ def test_native_prefill_benchmark_separates_prefill_from_decode(
     assert a["batched_prefill_requested"] is False
     assert b["batched_prefill_requested"] is True
     assert a["executable_sha256"] != b["executable_sha256"]
+    assert record["prefill_dispatch"]["native_batched"]["query_tokens"] == prompt
+    assert record["prefill_dispatch"]["native_batched"]["native_batched_selected"] is False
+    assert record["single_token_decode_dispatch"]["native_batched"]["execution"] == "v29_native"
     assert len(record["source_sha256"]) == 3
 
 
