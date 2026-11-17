@@ -122,6 +122,13 @@ def benchmark(
         "chunks": list(chunks),
         "trials": trials,
         "latency": {key: summarize(value) for key, value in timings.items()},
+        # Preserve individual samples for matched-device replication and
+        # confidence intervals; aggregate statistics alone hide instability.
+        "raw_samples_ms": {
+            key: [round(sample, 6) for sample in values]
+            for key, values in timings.items()
+        },
+        "timing_order": "forward on even trials; reverse on odd trials",
         "compilation": {
             "native_cpp_ms": native.report()["compilation_ms"],
             "torchscript_traces": engines["torchscript_whole"].report()["traces"],
