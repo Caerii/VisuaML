@@ -1,0 +1,59 @@
+{
+  "schema": "visuaml.public-evidence-snapshot.v1",
+  "asOf": "2026-11-17",
+  "sourceCommit": "93bdfe0eabe975b8eabf0f85b0c6a379bdefd28c",
+  "workflowRun": "https://github.com/Caerii/VisuaML/actions/runs/44167207128",
+  "methodology": "Bounded synthetic models; independent eager PyTorch comparisons, guarded native compilation and finite numerical rewrite witnesses.",
+  "evidenceClass": "Finite research witnesses, not formal equivalence proof, signed provenance, or production performance",
+  "models": [
+    {
+      "family": "Residual MLP",
+      "kind": "Synthetic trusted torch.export graph",
+      "operations": [
+        "matmul",
+        "relu",
+        "matmul",
+        "add"
+      ],
+      "maximumAbsoluteError": 0,
+      "secondInputMaximumAbsoluteError": 1.1920928955078125e-7,
+      "semanticSha256": "f8b5667d751edd0f36b012405e9a37db582cecc8104301fcb093a583909695eb",
+      "generatedCppSha256": "d946fcb2d18b84ccef03c37077c4058b9e317932ddb66030969ec04c49ff52e5",
+      "binarySha256": "061a2dbc622acfdf0fb75c6c49c56a3ce51c3cc792254747df27e53e4510c6b0",
+      "compileMs": 315.05281,
+      "warmMedianMs": 0.055554
+    },
+    {
+      "family": "Convolutional residual",
+      "kind": "Synthetic trusted torch.export graph",
+      "operations": [
+        "conv2d",
+        "relu",
+        "add"
+      ],
+      "maximumAbsoluteError": 2.384185791015625e-7,
+      "secondInputMaximumAbsoluteError": 1.1920928955078125e-7,
+      "semanticSha256": "df0dfb844b5757b0c6ee61df6e8a95818938c1f5f7a5ecf1ec9caed639d41df7",
+      "generatedCppSha256": "4d31a6e7374554039584a67c4d4c3d6ffd7eb4cb1a74d93fe8871ca627109c04",
+      "binarySha256": "d7272fda807ed10d37d3e2e64e680405574995331a9425f456895d94a59101e3",
+      "compileMs": 311.602507,
+      "warmMedianMs": 0.041166
+    }
+  ],
+  "transformation": {
+    "rule": "relu-idempotence-v1",
+    "numericalStatus": "passed_finite_witnesses",
+    "evidenceSha256": "2f21fe5a16581f24be4c8faa29f7a069259de7e4a582b6d71d77dc6e5cf6ff34",
+    "experimentalStatus": "exploratory_timing_after_finite_numerical_witnesses",
+    "medianRatioBeforeOverAfter": 0.962368,
+    "interpretation": "The transformed program was slightly slower in this seven-trial tiny CPU experiment; do not promote it as a speedup."
+  },
+  "limitations": [
+    "Evidence from one pinned CI run, not a continually updated service.",
+    "Random synthetic fixtures, not pretrained model-family certification.",
+    "Finite numerical checks cannot prove all-input equivalence.",
+    "SHA-256 fingerprints are not authenticated digital signatures.",
+    "Warm timings include Python/native overhead and do not establish serving throughput.",
+    "This curated public summary links to the fuller CI JSON, which has time-limited artifact retention."
+  ]
+}
