@@ -16,6 +16,7 @@ from scripts.archive_pretrained_replay_v36 import (
     ARCHIVE,
     verify_checked_in_archive,
 )
+
 from .knowledge_graph_v35 import knowledge_graph as historical_graph
 
 SCHEMA = "visuaml.knowledge-graph.v36"
