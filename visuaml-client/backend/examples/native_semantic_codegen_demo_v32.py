@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import platform
 import statistics
 import time
@@ -183,6 +184,7 @@ def benchmark(trials: int = 9, seed: int = 832) -> dict:
     )
     return {
         "schema": "visuaml.semantic-native-fixtures.v32",
+        "source_commit": os.environ.get("VISUAML_SOURCE_COMMIT"),
         "seed": seed,
         "trials": trials,
         "platform": platform.platform(),
