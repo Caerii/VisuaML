@@ -29,11 +29,9 @@ export function ResearchKnowledgePage() {
         const validated = parseKnowledgeGraph(raw);
         if (!controller.signal.aborted) {
           setGraph(validated);
-          const pinned = validated.nodes.find(
-            (node) => node.kind === 'pinned_pretrained_independent_replay',
-          ) ?? validated.nodes.find(
-            (node) => node.kind === 'pinned_pretrained_native_witness',
-          );
+          const pinned =
+            validated.nodes.find((node) => node.kind === 'pinned_pretrained_independent_replay') ??
+            validated.nodes.find((node) => node.kind === 'pinned_pretrained_native_witness');
           setSelected(pinned?.entry_id ?? validated.nodes[0]?.entry_id ?? null);
         }
       } catch (reason) {
@@ -245,11 +243,11 @@ export function ResearchKnowledgePage() {
             <p className="research-evidence-eyebrow">II. INDEPENDENT REPLAY</p>
             <h2>A source hash is not a rerun. A fresh execution is.</h2>
             <p>
-              The v35 historical replay plan remains a preflight-only record.
-              A separate v36 experiment reconstructed the three original source files
-              from independently verified Git objects, then performed new pretrained
-              C++17 execution against independent Hugging Face and NumPy oracles.
-              The original CI checkout was never established as one Git commit.
+              The v35 historical replay plan remains a preflight-only record. A separate v36
+              experiment reconstructed the three original source files from independently verified
+              Git objects, then performed new pretrained C++17 execution against independent Hugging
+              Face and NumPy oracles. The original CI checkout was never established as one Git
+              commit.
             </p>
             <div className="knowledge-plan">
               <div>
@@ -261,7 +259,9 @@ export function ResearchKnowledgePage() {
                   href="https://github.com/Caerii/VisuaML/blob/main/docs/V35_REPLAYABLE_KNOWLEDGE_GRAPH.md"
                   target="_blank"
                   rel="noreferrer"
-                >Original v35 reproducibility plan</a>
+                >
+                  Original v35 reproducibility plan
+                </a>
               </div>
               {graph.fresh_replays?.[0] ? (
                 <div>
@@ -271,8 +271,8 @@ export function ResearchKnowledgePage() {
                     The exact reconstructed source-bundle digest is{' '}
                     <code title={graph.fresh_replays[0].source_bundle_sha256}>
                       {short(graph.fresh_replays[0].source_bundle_sha256)}
-                    </code>.
-                    No single original source Git commit was claimed.
+                    </code>
+                    . No single original source Git commit was claimed.
                   </p>
                   <p>
                     A new C++/Hugging Face/NumPy numerical witness is bound to the{' '}
@@ -280,15 +280,19 @@ export function ResearchKnowledgePage() {
                       href={graph.fresh_replays[0].producing_ci_run}
                       target="_blank"
                       rel="noreferrer"
-                    >fresh GitHub Actions run</a>.
-                    It remains a finite test, not a formal proof.
+                    >
+                      fresh GitHub Actions run
+                    </a>
+                    . It remains a finite test, not a formal proof.
                   </p>
                   <p>
                     <a
                       href="https://github.com/Caerii/VisuaML/blob/main/docs/V36_PRETRAINED_REPLAY.md"
                       target="_blank"
                       rel="noreferrer"
-                    >Read the exact source reconstruction and numerical protocol</a>
+                    >
+                      Read the exact source reconstruction and numerical protocol
+                    </a>
                   </p>
                 </div>
               ) : (

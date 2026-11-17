@@ -129,7 +129,9 @@ const numbers = (value: unknown): value is Record<string, number> =>
 export function parseKnowledgeGraph(value: unknown): KnowledgeGraph {
   if (
     !isObject(value) ||
-    !['visuaml.knowledge-graph.v35', 'visuaml.knowledge-graph.v36'].includes(String(value.schema)) ||
+    !['visuaml.knowledge-graph.v35', 'visuaml.knowledge-graph.v36'].includes(
+      String(value.schema),
+    ) ||
     !digest(value.parent_catalog_sha256) ||
     !digest(value.knowledge_graph_sha256) ||
     !isObject(value.counts) ||
@@ -139,9 +141,8 @@ export function parseKnowledgeGraph(value: unknown): KnowledgeGraph {
     !Number.isInteger(value.counts.source_artifacts) ||
     typeof value.counts.identity_edges !== 'number' ||
     !Number.isInteger(value.counts.identity_edges) ||
-    value.counts.pinned_pretrained_witnesses !== (
-      value.schema === 'visuaml.knowledge-graph.v36' ? 2 : 1
-    ) ||
+    value.counts.pinned_pretrained_witnesses !==
+      (value.schema === 'visuaml.knowledge-graph.v36' ? 2 : 1) ||
     !isObject(value.reviewed_artifacts) ||
     !Object.entries(value.reviewed_artifacts).every(
       ([path, hash]) => paths.has(path) && digest(hash),
@@ -262,7 +263,8 @@ export function parseKnowledgeGraph(value: unknown): KnowledgeGraph {
       !isObject(fresh.source_file_commits) ||
       Object.keys(fresh.source_file_commits).length !== 3 ||
       !Object.entries(fresh.source_file_commits).every(
-        ([path, commit]) => sourceFiles.has(path) && typeof commit === 'string' && revision.test(commit),
+        ([path, commit]) =>
+          sourceFiles.has(path) && typeof commit === 'string' && revision.test(commit),
       ) ||
       typeof fresh.producing_ci_run !== 'string' ||
       !githubRun.test(fresh.producing_ci_run) ||

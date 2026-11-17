@@ -157,7 +157,6 @@ describe('replayable computational knowledge graph', () => {
   });
 });
 
-
 const freshSource = 'benchmarks/pretrained_llama_independent_replay_v36.json';
 
 const replayedV36 = () => {
@@ -197,24 +196,26 @@ const replayedV36 = () => {
       distinct_pinned_pretrained_models: 1,
       fresh_independent_replays: 1,
     },
-    fresh_replays: [{
-      schema: 'visuaml.independent-pretrained-replay-summary.v36',
-      study_id: h('6'),
-      record_bytes_sha256: h('8'),
-      numerical_record_sha256: h('9'),
-      source_bundle_sha256: h('0'),
-      source_file_commits: {
-        'examples/native_cpu_bench_v28.py': revision,
-        'visuaml/compiler_lab/native_cpu_v28.cpp': 'b'.repeat(40),
-        'visuaml/compiler_lab/native_cpu_v28.py': 'c'.repeat(40),
+    fresh_replays: [
+      {
+        schema: 'visuaml.independent-pretrained-replay-summary.v36',
+        study_id: h('6'),
+        record_bytes_sha256: h('8'),
+        numerical_record_sha256: h('9'),
+        source_bundle_sha256: h('0'),
+        source_file_commits: {
+          'examples/native_cpu_bench_v28.py': revision,
+          'visuaml/compiler_lab/native_cpu_v28.cpp': 'b'.repeat(40),
+          'visuaml/compiler_lab/native_cpu_v28.py': 'c'.repeat(40),
+        },
+        producing_ci_run: 'https://github.com/Caerii/VisuaML/actions/runs/44193012326',
+        producing_branch_head: revision,
+        original_experiment_commit: null,
+        numerical_replay_performed: true,
+        passed: true,
+        limits: 'Finite real-model numerical test; not formal proof.',
       },
-      producing_ci_run: 'https://github.com/Caerii/VisuaML/actions/runs/44193012326',
-      producing_branch_head: revision,
-      original_experiment_commit: null,
-      numerical_replay_performed: true,
-      passed: true,
-      limits: 'Finite real-model numerical test; not formal proof.',
-    }],
+    ],
   };
 };
 
@@ -230,33 +231,46 @@ describe('v36 fresh pretrained numerical replay integrity', () => {
 
   it('rejects false success, changed archive and invented original commit', () => {
     const graph = replayedV36();
-    expect(() => parseKnowledgeGraph({
-      ...graph,
-      fresh_replays: [{ ...graph.fresh_replays[0], passed: false }],
-    })).toThrow();
-    expect(() => parseKnowledgeGraph({
-      ...graph,
-      fresh_replays: [{ ...graph.fresh_replays[0], original_experiment_commit: revision }],
-    })).toThrow();
-    expect(() => parseKnowledgeGraph({
-      ...graph,
-      nodes: graph.nodes.map((item) => item.entry_id === h('6')
-        ? { ...item, artifact_sha256: h('f') } : item),
-    })).toThrow();
-    expect(() => parseKnowledgeGraph({
-      ...graph,
-      fresh_replays: [{
-        ...graph.fresh_replays[0],
-        source_file_commits: { '../untracked': revision },
-      }],
-    })).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...graph,
+        fresh_replays: [{ ...graph.fresh_replays[0], passed: false }],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...graph,
+        fresh_replays: [{ ...graph.fresh_replays[0], original_experiment_commit: revision }],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...graph,
+        nodes: graph.nodes.map((item) =>
+          item.entry_id === h('6') ? { ...item, artifact_sha256: h('f') } : item,
+        ),
+      }),
+    ).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...graph,
+        fresh_replays: [
+          {
+            ...graph.fresh_replays[0],
+            source_file_commits: { '../untracked': revision },
+          },
+        ],
+      }),
+    ).toThrow();
   });
 
   it('rejects a replay falsely presented as a second pretrained model family', () => {
     const graph = replayedV36();
-    expect(() => parseKnowledgeGraph({
-      ...graph,
-      counts: { ...graph.counts, distinct_pinned_pretrained_models: 2 },
-    })).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...graph,
+        counts: { ...graph.counts, distinct_pinned_pretrained_models: 2 },
+      }),
+    ).toThrow();
   });
 });
