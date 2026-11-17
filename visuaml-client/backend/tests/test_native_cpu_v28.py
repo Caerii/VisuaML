@@ -299,3 +299,115 @@ def test_native_avx2_selection_rejects_conflicting_modes(tmp_path):
         NativeCpuLlamaCompiler(plan, reference_kernels=True, enable_avx2=True)
     with pytest.raises(NativeCpuError, match="booleans"):
         NativeCpuLlamaCompiler(plan, enable_avx2="true")
+
+
+@pytest.mark.parametrize(
+    "shape,batch",
+    (
+        ({"hidden": 32, "heads": 4, "kv": 2, "middle": 80, "vocab": 64}, 1),
+        ({"hidden": 48, "heads": 6, "kv": 3, "middle": 101, "vocab": 67}, 2),
+        ({"hidden": 128, "heads": 8, "kv": 4, "middle": 384, "vocab": 257}, 1),
+        ({"hidden": 128, "heads": 8, "kv": 4, "middle": 384, "vocab": 257}, 2),
+    ),
+)
+def test_native_batched_prefill_matches_avx2_scalar_and_numpy(
+    tmp_path, shape, batch
+):
+    """All six projection sites preserve chunked logits and every KV layer."""
+    fixture(tmp_path, layers=2, **shape)
+    model = load_hf_llama_local(tmp_path, declared_revision="a" * 40)
+    plan = lower_llama_semantic_program(
+        make_llama_semantic_program(model, batch=batch), model, batch=batch
+    )
+    baseline = NativeCpuLlamaCompiler(plan, enable_avx2=True)
+    batched = NativeCpuLlamaCompiler(
+        plan, enable_avx2=True, enable_batched_prefill=True
+    )
+    scalar = NativeCpuLlamaCompiler(plan, reference_kernels=True)
+    assert batched.report()["batched_prefill_requested"] is True
+    assert baseline.report()["batched_prefill_requested"] is False
+    expected_gate = (
+        bool(batched.report()["avx2_active"]) and shape["hidden"] >= 128
+    )
+    assert batched.prefill_dispatch(7)["native_batched_selected"] == expected_gate
+    assert batched.prefill_dispatch(1)["native_batched_selected"] is False
+    assert baseline.prefill_dispatch(7)["native_batched_selected"] is False
+    assert (
+        baseline.report()["executable_sha256"]
+        != batched.report()["executable_sha256"]
+    )
+    sessions = (
+        baseline.new_session(),
+        batched.new_session(),
+        scalar.new_session(),
+        plan.new_session(backend="numpy"),
+    )
+    rng = np.random.default_rng(3001)
+    # Prefill, decode, a longer continuation, and another decode.
+    for length in (7, 1, 4, 1):
+        tokens = rng.integers(
+            0, model.profile.vocabulary, size=(batch, length),
+            dtype=np.int64,
+        )
+        outputs = [session.step(tokens) for session in sessions]
+        for actual in outputs[:-1]:
+            np.testing.assert_allclose(
+                actual, outputs[-1], atol=2e-4, rtol=2e-4
+            )
+        states = [session.snapshot() for session in sessions]
+        for state in states[:-1]:
+            for actual, expected in zip(state.layers, states[-1].layers):
+                np.testing.assert_allclose(
+                    actual.keys, expected.keys, atol=2e-4, rtol=2e-4
+                )
+                np.testing.assert_allclose(
+                    actual.values, expected.values, atol=2e-4, rtol=2e-4
+                )
+    assert sessions[1].cursor == 13
+
+
+def test_native_batched_prefill_rejects_unsafe_selection(tmp_path):
+    _, _, _, plan = prepare(tmp_path, layers=1)
+    with pytest.raises(NativeCpuError, match="Scalar reference"):
+        NativeCpuLlamaCompiler(
+            plan, reference_kernels=True, enable_batched_prefill=True
+        )
+    with pytest.raises(NativeCpuError, match="booleans"):
+        NativeCpuLlamaCompiler(plan, enable_batched_prefill="yes")
+    with pytest.raises(NativeCpuError, match="requires guarded AVX2"):
+        NativeCpuLlamaCompiler(plan, enable_batched_prefill=True)
+    compiler = NativeCpuLlamaCompiler(plan, enable_avx2=True)
+    with pytest.raises(NativeCpuError, match="Invalid prefill"):
+        compiler.prefill_dispatch(0)
+    with pytest.raises(NativeCpuError, match="Invalid prefill"):
+        compiler.prefill_dispatch(33)
+
+
+def test_native_batched_prefill_does_not_publish_partial_kv_on_error(
+    tmp_path, monkeypatch
+):
+    fixture(
+        tmp_path, layers=1, hidden=128, heads=8, kv=4,
+        middle=384, vocab=257,
+    )
+    model = load_hf_llama_local(tmp_path, declared_revision="a" * 40)
+    plan = lower_llama_semantic_program(
+        make_llama_semantic_program(model), model
+    )
+    compiler = NativeCpuLlamaCompiler(
+        plan, enable_avx2=True, enable_batched_prefill=True
+    )
+    session = compiler.new_session()
+    session.step(np.array([[1, 2, 3, 4]], dtype=np.int64))
+    snapshot = session.snapshot()
+    original = compiler._decode
+    monkeypatch.setattr(compiler, "_decode", lambda *args: -99)
+    with pytest.raises(NativeCpuError, match="failed"):
+        session.step(np.array([[5, 6, 7, 8]], dtype=np.int64))
+    monkeypatch.setattr(compiler, "_decode", original)
+    assert session.cursor == 4
+    for actual, expected in zip(
+        session.snapshot().layers, snapshot.layers
+    ):
+        np.testing.assert_array_equal(actual.keys, expected.keys)
+        np.testing.assert_array_equal(actual.values, expected.values)

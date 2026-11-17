@@ -38,6 +38,8 @@ struct VisuaMLLlamaConfig {
 };
 
 int visuaml_native_avx2_active() noexcept;
+int visuaml_native_prefill_eligible(
+    const VisuaMLLlamaConfig* c, int query) noexcept;
 
 int visuaml_native_llama_decode(
     const VisuaMLLlamaConfig* c,
@@ -179,6 +181,118 @@ inline void linear(const float* input, const float* weight,
 #endif
 }
 
+// Multi-token prefill: for each four output channels, share a contiguous
+// weight vector across two independent token rows. Keep 8 AVX2 accumulators
+// (4 channels x 2 tokens) inside a CPU-target-specific function.
+// The old single-token AVX2 kernel remains the fallback for decode and tails.
+#if VISUAML_HAS_OPTIONAL_AVX2 && defined(VISUAML_NATIVE_BATCHED_PREFILL)
+__attribute__((target("avx2")))
+void linear_rows_avx2(const float* inputs, const float* weight,
+                      float* outputs, int rows, int input_width,
+                      int output_width) {
+  for (int rb = 0; rb < rows; rb += 2) {
+    const float* x0 = inputs + static_cast<size_t>(rb) * input_width;
+    float* y0 = outputs + static_cast<size_t>(rb) * output_width;
+    if (rb + 1 >= rows) {
+      linear_avx2(x0, weight, y0, input_width, output_width);
+      break;
+    }
+    const float* x1 = x0 + input_width;
+    float* y1 = y0 + output_width;
+    int output = 0;
+    for (; output + 3 < output_width; output += 4) {
+      const float* w[4] = {
+          weight + static_cast<size_t>(output) * input_width,
+          weight + static_cast<size_t>(output + 1) * input_width,
+          weight + static_cast<size_t>(output + 2) * input_width,
+          weight + static_cast<size_t>(output + 3) * input_width,
+      };
+      // Explicit accumulators prevent hot-loop array-indexing and
+      // register-spill overhead in the 2-token/4-output microkernel.
+      __m256 a0 = _mm256_setzero_ps();
+      __m256 a1 = _mm256_setzero_ps();
+      __m256 a2 = _mm256_setzero_ps();
+      __m256 a3 = _mm256_setzero_ps();
+      __m256 b0 = _mm256_setzero_ps();
+      __m256 b1 = _mm256_setzero_ps();
+      __m256 b2 = _mm256_setzero_ps();
+      __m256 b3 = _mm256_setzero_ps();
+      int col = 0;
+      for (; col + 7 < input_width; col += 8) {
+        const __m256 x0v = _mm256_loadu_ps(x0 + col);
+        const __m256 x1v = _mm256_loadu_ps(x1 + col);
+        const __m256 w0 = _mm256_loadu_ps(w[0] + col);
+        const __m256 w1 = _mm256_loadu_ps(w[1] + col);
+        const __m256 w2 = _mm256_loadu_ps(w[2] + col);
+        const __m256 w3 = _mm256_loadu_ps(w[3] + col);
+        a0 = _mm256_add_ps(a0, _mm256_mul_ps(w0, x0v));
+        a1 = _mm256_add_ps(a1, _mm256_mul_ps(w1, x0v));
+        a2 = _mm256_add_ps(a2, _mm256_mul_ps(w2, x0v));
+        a3 = _mm256_add_ps(a3, _mm256_mul_ps(w3, x0v));
+        b0 = _mm256_add_ps(b0, _mm256_mul_ps(w0, x1v));
+        b1 = _mm256_add_ps(b1, _mm256_mul_ps(w1, x1v));
+        b2 = _mm256_add_ps(b2, _mm256_mul_ps(w2, x1v));
+        b3 = _mm256_add_ps(b3, _mm256_mul_ps(w3, x1v));
+      }
+      alignas(32) float lanes[64];
+      _mm256_store_ps(lanes, a0);
+      _mm256_store_ps(lanes + 8, a1);
+      _mm256_store_ps(lanes + 16, a2);
+      _mm256_store_ps(lanes + 24, a3);
+      _mm256_store_ps(lanes + 32, b0);
+      _mm256_store_ps(lanes + 40, b1);
+      _mm256_store_ps(lanes + 48, b2);
+      _mm256_store_ps(lanes + 56, b3);
+      float sums[8] = {};
+      for (int k = 0; k < 8; ++k) {
+        for (int i = 0; i < 8; ++i) sums[k] += lanes[8 * k + i];
+      }
+      for (; col < input_width; ++col) {
+        for (int k = 0; k < 4; ++k) {
+          const float coefficient = w[k][col];
+          sums[k] += coefficient * x0[col];
+          sums[k + 4] += coefficient * x1[col];
+        }
+      }
+      for (int k = 0; k < 4; ++k) {
+        y0[output + k] = sums[k];
+        y1[output + k] = sums[k + 4];
+      }
+    }
+    // Explicitly handle output widths that are not divisible by four.
+    for (; output < output_width; ++output) {
+      const float* w = weight + static_cast<size_t>(output) * input_width;
+      float a = 0.0f, b = 0.0f;
+      for (int col = 0; col < input_width; ++col) {
+        a += w[col] * x0[col];
+        b += w[col] * x1[col];
+      }
+      y0[output] = a;
+      y1[output] = b;
+    }
+  }
+}
+#endif
+
+inline void linear_rows(const float* inputs, const float* weight,
+                        float* outputs, int rows, int input_width,
+                        int output_width, bool prefill) {
+#if VISUAML_HAS_OPTIONAL_AVX2 && defined(VISUAML_NATIVE_BATCHED_PREFILL)
+  if (prefill && rows >= 2 && input_width >= 32 &&
+      native_avx2_available()) {
+    linear_rows_avx2(inputs, weight, outputs, rows,
+                     input_width, output_width);
+    return;
+  }
+#endif
+  // Unsupported CPUs and one-token decode use the verified v29 dispatch.
+  for (int row = 0; row < rows; ++row) {
+    linear(inputs + static_cast<size_t>(row) * input_width, weight,
+           outputs + static_cast<size_t>(row) * output_width,
+           input_width, output_width);
+  }
+}
+
 inline void rmsnorm(const float* input, const float* gain, float* output,
                     int width, float epsilon) {
   float sum = 0.0f;
@@ -241,6 +355,21 @@ extern "C" int visuaml_native_avx2_active() noexcept {
   return native_avx2_available() ? 1 : 0;
 }
 
+// Introspect the exact bounded v30 dispatch gate without executing a model.
+// Unsupported targets and non-prefill chunks cannot enter the batched kernel.
+extern "C" int visuaml_native_prefill_eligible(
+    const VisuaMLLlamaConfig* c, int query) noexcept {
+#if VISUAML_HAS_OPTIONAL_AVX2 && defined(VISUAML_NATIVE_BATCHED_PREFILL)
+  if (!c || !admitted(*c, query, 0)) return 0;
+  return (query >= 4 && c->hidden >= 128 &&
+          native_avx2_available()) ? 1 : 0;
+#else
+  (void)c;
+  (void)query;
+  return 0;
+#endif
+}
+
 extern "C" int visuaml_native_llama_decode(
     const VisuaMLLlamaConfig* config, const int64_t* tokens,
     int query, int past, const float* const* weights,
@@ -263,6 +392,8 @@ extern "C" int visuaml_native_llama_decode(
       if (tokens[row] < 0 || tokens[row] >= c.vocabulary) return -5;
     }
     const int h = c.hidden;
+    const bool batched_prefill =
+        visuaml_native_prefill_eligible(&c, query) != 0;
     const int depth = c.head_dim;
     const int kwidth = c.kv_heads * depth;
     const float scaling = 1.0f / std::sqrt(static_cast<float>(depth));
@@ -278,13 +409,13 @@ extern "C" int visuaml_native_llama_decode(
     std::vector<float> rope_sine(depth / 2);
     std::vector<float> rope_cosine(depth / 2);
     std::vector<float> scores(c.capacity);
-    std::vector<float> projection(h);
-    std::vector<float> ff_norm(h);
-    std::vector<float> gate(c.inner);
-    std::vector<float> up(c.inner);
-    std::vector<float> product(c.inner);
-    std::vector<float> ff_out(h);
-    std::vector<float> normalized(h);
+    std::vector<float> projection(rows * h);
+    std::vector<float> ff_norm(rows * h);
+    std::vector<float> gate(rows * c.inner);
+    std::vector<float> up(rows * c.inner);
+    std::vector<float> product(rows * c.inner);
+    std::vector<float> ff_out(rows * h);
+    std::vector<float> normalized(rows * h);
 
     for (size_t row = 0; row < rows; ++row) {
       const float* start = weights[0] + tokens[row] * h;
@@ -306,12 +437,18 @@ extern "C" int visuaml_native_llama_decode(
       std::fill(attended.begin(), attended.end(), 0.0f);
       for (size_t row = 0; row < rows; ++row) {
         const size_t off = row * h;
-        const size_t kv_off = row * kwidth;
         rmsnorm(state.data() + off, norm_attn, normed.data() + off,
                 h, c.epsilon);
-        linear(normed.data() + off, wq, q.data() + off, h, h);
-        linear(normed.data() + off, wk, keys.data() + kv_off, h, kwidth);
-        linear(normed.data() + off, wv, values.data() + kv_off, h, kwidth);
+      }
+      linear_rows(normed.data(), wq, q.data(), static_cast<int>(rows),
+                  h, h, batched_prefill);
+      linear_rows(normed.data(), wk, keys.data(), static_cast<int>(rows),
+                  h, kwidth, batched_prefill);
+      linear_rows(normed.data(), wv, values.data(), static_cast<int>(rows),
+                  h, kwidth, batched_prefill);
+      for (size_t row = 0; row < rows; ++row) {
+        const size_t off = row * h;
+        const size_t kv_off = row * kwidth;
         const int position = past + static_cast<int>(row % query);
         rope_angles(position, depth, c.rope_theta, rope_sine, rope_cosine);
         for (int head = 0; head < c.heads; ++head) {
@@ -374,28 +511,37 @@ extern "C" int visuaml_native_llama_decode(
         }
       }
 
+      linear_rows(attended.data(), wo, projection.data(), static_cast<int>(rows),
+                  h, h, batched_prefill);
       for (size_t row = 0; row < rows; ++row) {
         const size_t off = row * h;
-        linear(attended.data() + off, wo, projection.data(), h, h);
-        for (int d = 0; d < h; ++d) state[off + d] += projection[d];
-        rmsnorm(state.data() + off, norm_ff, ff_norm.data(), h, c.epsilon);
-        linear(ff_norm.data(), wgate, gate.data(), h, c.inner);
-        linear(ff_norm.data(), wup, up.data(), h, c.inner);
-        for (int i = 0; i < c.inner; ++i) {
-          product[i] = gate[i] * (1.0f / (1.0f + std::exp(-gate[i]))) * up[i];
-        }
-        linear(product.data(), wdown, ff_out.data(), c.inner, h);
-        for (int d = 0; d < h; ++d) state[off + d] += ff_out[d];
+        for (int d = 0; d < h; ++d) state[off + d] += projection[off + d];
+        rmsnorm(state.data() + off, norm_ff, ff_norm.data() + off,
+                h, c.epsilon);
+      }
+      linear_rows(ff_norm.data(), wgate, gate.data(), static_cast<int>(rows),
+                  h, c.inner, batched_prefill);
+      linear_rows(ff_norm.data(), wup, up.data(), static_cast<int>(rows),
+                  h, c.inner, batched_prefill);
+      for (size_t i = 0; i < rows * static_cast<size_t>(c.inner); ++i) {
+        const float g = gate[i];
+        product[i] = g * (1.0f / (1.0f + std::exp(-g))) * up[i];
+      }
+      linear_rows(product.data(), wdown, ff_out.data(), static_cast<int>(rows),
+                  c.inner, h, batched_prefill);
+      for (size_t i = 0; i < rows * static_cast<size_t>(h); ++i) {
+        state[i] += ff_out[i];
       }
     }
 
     const float* final_gain = weights[1];
     const float* lm_head = weights[c.tied_head ? 0 : 2];
     for (size_t row = 0; row < rows; ++row) {
-      rmsnorm(state.data() + row * h, final_gain, normalized.data(), h, c.epsilon);
-      linear(normalized.data(), lm_head, logits + row * c.vocabulary,
-             h, c.vocabulary);
+      rmsnorm(state.data() + row * h, final_gain,
+              normalized.data() + row * h, h, c.epsilon);
     }
+    linear_rows(normalized.data(), lm_head, logits, static_cast<int>(rows),
+                h, c.vocabulary, batched_prefill);
     for (size_t i = 0; i < rows * c.vocabulary; ++i) {
       if (!std::isfinite(logits[i])) return -7;
     }

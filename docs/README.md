@@ -7,7 +7,9 @@ VisuaML combines a collaborative neural-network graph application with a separat
 | Start here | When to read it |
 | --- | --- |
 | [Project README](../README.md) | Product overview, quick start and accurate current scope |
-| [v29 native performance](V29_NATIVE_CPU_PERFORMANCE.md) | Reproducible scalar versus four-row execution, resident memory methodology and validation gates |\n| [Public Research Roadmap](ROADMAP.md) | Auditable progress percentages, acceptance gates, global access and review methodology |
+| [v30 experimental prefill](V30_NATIVE_PREFILL.md) | Bounded batched AVX2 prefill, numerical acceptance, negative results and geometry sweep |
+| [v29 native performance](V29_NATIVE_CPU_PERFORMANCE.md) | Reproducible scalar versus four-row execution, resident memory methodology and validation gates |
+| [Public Research Roadmap](ROADMAP.md) | Auditable progress percentages, acceptance gates, global access and review methodology |
 | [Compiler Guide](COMPILER_GUIDE.md) | Actual model compatibility, typed IR, backends and executable examples |
 | [Architecture](ARCHITECTURE.md) | Full-stack data flow, compiler modules, state and ownership |
 | [Verification](VERIFICATION.md) | Tests, pinned real-checkpoint witnesses, benchmarks and numerical evidence |
@@ -30,6 +32,7 @@ Version labels are **research milestones**, not published package versions.
 | [v22](V22_POLYMORPHIC_LLAMA_COMPILATION.md), [v23](V23_SHARED_COMPILED_LLAMA_TEMPLATE.md) | Whole decoder graph, polymorphic cursor and shared executable |
 | [v24](V24_SHARED_WEIGHTS_RUNTIME.md), [v25](V25_VERIFIED_TEMPLATE_REGISTRY.md), [v26](V26_LEASED_KV_SESSION_ACCOUNTING.md), [v27](V27_ACTIVE_MODEL_LIFETIME.md) | Shared model weights, registry eviction and explicit lifetime accounting |
 | [v28 native CPU](V28_NATIVE_CPU_COMPILER.md) | Independent scalar C++17 model execution and pinned Llama numerical certification |
+| [v29 CPU performance](V29_NATIVE_CPU_PERFORMANCE.md), [v30 prefill research](V30_NATIVE_PREFILL.md) | Measured AVX2 improvement and ongoing shape-aware prefill experiments |
 
 For complete source-bound numeric evidence, visit [benchmarks](../benchmarks/) and read [Verification](VERIFICATION.md). The Architecture Atlas catalogues 59 families; this **does not** certify 59 pretrained model families.
 

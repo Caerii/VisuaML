@@ -121,14 +121,21 @@ class NativeCpuLlamaCompiler:
 
     def __init__(
         self, plan: LlamaSemanticPlan, *, reference_kernels: bool = False,
-        enable_avx2: bool = False,
+        enable_avx2: bool = False, enable_batched_prefill: bool = False,
     ):
-        if type(reference_kernels) is not bool or type(enable_avx2) is not bool:
+        if (
+            type(reference_kernels) is not bool
+            or type(enable_avx2) is not bool
+            or type(enable_batched_prefill) is not bool
+        ):
             raise NativeCpuError("Kernel selection flags must be booleans")
-        if reference_kernels and enable_avx2:
-            raise NativeCpuError("Scalar reference cannot also enable SIMD")
+        if reference_kernels and (enable_avx2 or enable_batched_prefill):
+            raise NativeCpuError("Scalar reference cannot enable optimized kernels")
+        if enable_batched_prefill and not enable_avx2:
+            raise NativeCpuError("Batched prefill requires guarded AVX2 mode")
         self.reference_kernels = reference_kernels
         self.enable_avx2 = enable_avx2
+        self.enable_batched_prefill = enable_batched_prefill
         if not isinstance(plan, LlamaSemanticPlan):
             raise NativeCpuError("Expected a canonical Llama semantic plan")
         self.plan = lower_llama_semantic_program(
@@ -180,6 +187,8 @@ class NativeCpuLlamaCompiler:
             args.append("-DVISUAML_NATIVE_SCALAR_REFERENCE=1")
         if self.enable_avx2:
             args.append("-DVISUAML_NATIVE_AVX2_RUNTIME=1")
+        if self.enable_batched_prefill:
+            args.append("-DVISUAML_NATIVE_BATCHED_PREFILL=1")
         args.extend((str(_SOURCE), "-o", str(target)))
         try:
             result = subprocess.run(
@@ -206,6 +215,11 @@ class NativeCpuLlamaCompiler:
         self._avx2_capability.restype = ctypes.c_int
         self._avx2_capability.argtypes = []
         self._avx2_active = bool(self._avx2_capability())
+        self._prefill_eligible = self._library.visuaml_native_prefill_eligible
+        self._prefill_eligible.restype = ctypes.c_int
+        self._prefill_eligible.argtypes = [
+            ctypes.POINTER(_Config), ctypes.c_int,
+        ]
         self._decode = self._library.visuaml_native_llama_decode
         self._decode.restype = ctypes.c_int
         self._decode.argtypes = [
@@ -263,6 +277,25 @@ class NativeCpuLlamaCompiler:
     def new_session(self) -> NativeCpuLlamaSession:
         return NativeCpuLlamaSession(self)
 
+    def prefill_dispatch(self, query_tokens: int) -> dict:
+        """Read the native dispatch gate, not a guessed Python heuristic."""
+        if (
+            type(query_tokens) is not int
+            or not 1 <= query_tokens <= min(32, self.plan.capacity)
+        ):
+            raise NativeCpuError("Invalid prefill query length")
+        selected = bool(
+            self._prefill_eligible(ctypes.byref(self._config), query_tokens)
+        )
+        return {
+            "query_tokens": query_tokens,
+            "hidden": self._config.hidden,
+            "requested": self.enable_batched_prefill,
+            "avx2_active": self._avx2_active,
+            "native_batched_selected": selected,
+            "execution": "batched_avx2" if selected else "v29_native",
+        }
+
     def report(self) -> dict:
         kernel = "scalar_reference" if self.reference_kernels else "four_row"
         if self.enable_avx2 and self._avx2_active:
@@ -272,11 +305,21 @@ class NativeCpuLlamaCompiler:
             "linear_kernel": kernel,
             "avx2_requested": self.enable_avx2,
             "avx2_active": self._avx2_active,
+            "batched_prefill_requested": self.enable_batched_prefill,
+            "batched_prefill_active": (
+                self.enable_batched_prefill and self._avx2_active
+            ),
+            "batched_prefill_dispatch": (
+                "guarded_avx2_query_ge_4_hidden_ge_128_width_ge_32"
+                if self.enable_batched_prefill else "disabled"
+            ),
             "kernel_compile_flags": (
-                ["-DVISUAML_NATIVE_SCALAR_REFERENCE=1"]
-                if self.reference_kernels else
-                ["-DVISUAML_NATIVE_AVX2_RUNTIME=1"]
-                if self.enable_avx2 else []
+                (["-DVISUAML_NATIVE_SCALAR_REFERENCE=1"]
+                 if self.reference_kernels else [])
+                + (["-DVISUAML_NATIVE_AVX2_RUNTIME=1"]
+                   if self.enable_avx2 else [])
+                + (["-DVISUAML_NATIVE_BATCHED_PREFILL=1"]
+                   if self.enable_batched_prefill else [])
             ),
         }
 
