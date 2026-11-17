@@ -122,11 +122,13 @@ class NativeCpuLlamaCompiler:
     def __init__(
         self, plan: LlamaSemanticPlan, *, reference_kernels: bool = False,
         enable_avx2: bool = False, enable_batched_prefill: bool = False,
+        enable_online_attention: bool = False,
     ):
         if (
             type(reference_kernels) is not bool
             or type(enable_avx2) is not bool
             or type(enable_batched_prefill) is not bool
+            or type(enable_online_attention) is not bool
         ):
             raise NativeCpuError("Kernel selection flags must be booleans")
         if reference_kernels and (enable_avx2 or enable_batched_prefill):
@@ -136,6 +138,7 @@ class NativeCpuLlamaCompiler:
         self.reference_kernels = reference_kernels
         self.enable_avx2 = enable_avx2
         self.enable_batched_prefill = enable_batched_prefill
+        self.enable_online_attention = enable_online_attention
         if not isinstance(plan, LlamaSemanticPlan):
             raise NativeCpuError("Expected a canonical Llama semantic plan")
         self.plan = lower_llama_semantic_program(
@@ -189,6 +192,8 @@ class NativeCpuLlamaCompiler:
             args.append("-DVISUAML_NATIVE_AVX2_RUNTIME=1")
         if self.enable_batched_prefill:
             args.append("-DVISUAML_NATIVE_BATCHED_PREFILL=1")
+        if self.enable_online_attention:
+            args.append("-DVISUAML_NATIVE_ONLINE_ATTENTION=1")
         args.extend((str(_SOURCE), "-o", str(target)))
         try:
             result = subprocess.run(
@@ -305,6 +310,11 @@ class NativeCpuLlamaCompiler:
             "linear_kernel": kernel,
             "avx2_requested": self.enable_avx2,
             "avx2_active": self._avx2_active,
+            "attention_kernel": (
+                "online_stable_softmax" if self.enable_online_attention
+                else "materialized_scores"
+            ),
+            "online_attention_requested": self.enable_online_attention,
             "batched_prefill_requested": self.enable_batched_prefill,
             "batched_prefill_active": (
                 self.enable_batched_prefill and self._avx2_active
@@ -320,6 +330,8 @@ class NativeCpuLlamaCompiler:
                    if self.enable_avx2 else [])
                 + (["-DVISUAML_NATIVE_BATCHED_PREFILL=1"]
                    if self.enable_batched_prefill else [])
+                + (["-DVISUAML_NATIVE_ONLINE_ATTENTION=1"]
+                   if self.enable_online_attention else [])
             ),
         }
 
