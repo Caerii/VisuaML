@@ -27,6 +27,7 @@ sys.path.insert(0, str(BACKEND))
 
 from examples.native_cpu_bench_v28 import benchmark
 from examples.native_cpu_prefill_bench_v30 import benchmark as prefill_benchmark
+from examples.native_online_attention_bench_v31 import benchmark as attention_benchmark
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
     lower_llama_semantic_program,
@@ -156,10 +157,18 @@ def run() -> dict:
         prefill_performance = prefill_benchmark(
             imported, prompt=8, decode=(1, 1), trials=5,
         )
+        admitted_prefixes = tuple(
+            length for length in (4, 8, 16, 32)
+            if length < min(imported.profile.context, 64)
+        )
+        attention_performance = attention_benchmark(
+            imported, prefixes=admitted_prefixes, trials=3,
+        )
         return {
             "schema": "visuaml.pinned-native-llama-v28",
             "matched_cpu_benchmark": matched_performance,
             "v30_prefill_decode_benchmark": prefill_performance,
+            "v31_online_attention_benchmark": attention_performance,
             "source": MODEL_ID,
             "revision": REVISION,
             "checkpoint_sha256": imported.checkpoint_sha256,
