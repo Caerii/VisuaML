@@ -61,7 +61,9 @@ def test_restricted_trusted_fx_to_generated_cpp_against_torch(
     binding = lower_trusted_fx(model, example, trusted=True)
     assert binding.program.source_sha256
     compiler = NativeSemanticCompiler(binding.program)
-    result, evidence = compiler.run_with_receipt(**binding.inputs)
+    result, evidence = compiler.run_with_receipt(
+        **binding.validated_inputs()
+    )
     with torch.no_grad():
         oracle = model(example).numpy()
     np.testing.assert_allclose(result, oracle, atol=2e-5, rtol=2e-5)
@@ -138,3 +140,30 @@ def test_restricted_fx_rejects_shape_and_malformed_program_before_codegen():
         NativeSemanticCompiler(malformed)
     with pytest.raises(NativeIRCodegenError, match="bounded"):
         lower_trusted_fx(model, torch.full((3, 4), float("nan")), trusted=True)
+
+
+def test_fx_parameter_binding_rejects_mutation_after_provenance_capture():
+    model = ResidualMLP().eval()
+    original = torch.randn(3, 4)
+    binding = lower_trusted_fx(model, original, trusted=True)
+    assert set(binding.validated_inputs()) == set(binding.inputs)
+    name = next(iter(binding.source_tensor_hashes))
+    binding.inputs[name][0, 0] += np.float32(0.1)
+    with pytest.raises(NativeIRCodegenError, match="digest changed"):
+        binding.validated_inputs()
+
+
+def test_rejected_inplace_fx_module_does_not_mutate_original_sample():
+    class Inplace(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.act = nn.ReLU(inplace=True)
+
+        def forward(self, x):
+            return self.act(x)
+
+    sample = torch.tensor([[-1.0, 2.0, -3.0]], dtype=torch.float32)
+    original = sample.clone()
+    with pytest.raises(NativeIRCodegenError, match="In-place"):
+        lower_trusted_fx(Inplace().eval(), sample, trusted=True)
+    torch.testing.assert_close(sample, original)
