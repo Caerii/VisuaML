@@ -7,6 +7,7 @@ VisuaML combines a collaborative neural-network graph application with a separat
 | Start here | When to read it |
 | --- | --- |
 | [Project README](../README.md) | Product overview, quick start and accurate current scope |
+| [v36 reconstructed-source pretrained numerical replay](V36_PRETRAINED_REPLAY.md) | Actual fresh Tiny Llama C++/PyTorch/NumPy parity from exact three-Git-blob bundle, permanent CI evidence and v36 lineage graph |
 | [v35 replayable computational knowledge graph](V35_REPLAYABLE_KNOWLEDGE_GRAPH.md) | Historical real-checkpoint identity links, source/checkpoint hash-bound replay preflight, deterministic graph and limitations |
 | [v34 compounding evidence library](V34_COMPOUNDING_EVIDENCE_LIBRARY.md) | Source-bound, searchable cross-version observations, negative results, exact binary lineage and standard-library-only tools |
 | [v33 exported compilation and transformation evidence](V33_EXPORT_AND_EVIDENCE.md) | Guarded static `torch.export`, native/oracle execution, finite-witness rewrite ledger and counterexamples |
