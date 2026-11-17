@@ -7,6 +7,7 @@ fast unit suite. The dedicated pinned-run job performs those independently.
 from __future__ import annotations
 
 import copy
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -22,7 +23,25 @@ from scripts.replay_pretrained_v36 import (
 ROOT = Path(__file__).resolve().parents[3]
 
 
+def _requires_full_history() -> None:
+    """Full Git source-history tests run in the dedicated fetch-depth=0 job."""
+    found = subprocess.run(
+        ("git", "cat-file", "-e", f"{CANDIDATE_COMMIT}^{{commit}}"),
+        cwd=ROOT, capture_output=True, check=False,
+    )
+    if found.returncode:
+        pytest.skip("Full Git history required; independently run in v36 source CI")
+
+
+def _admitted_source_contract() -> dict:
+    historical, _ = load_archive(ROOT)
+    return {
+        "source_sha256": historical["matched_cpu_benchmark"]["source_sha256"],
+    }
+
+
 def test_historical_source_matches_all_archived_sha256_bytes():
+    _requires_full_history()
     recovery = verify_source(ROOT)
     assert recovery["schema"] == "visuaml.historical-source-bundle.v36"
     assert recovery["source_verified"] is True
@@ -43,7 +62,7 @@ def test_historical_base_commit_is_explicitly_allowlisted():
 
 def test_replay_validation_requires_exact_model_and_source_contract():
     archived, _ = load_archive(ROOT)
-    recovery = verify_source(ROOT)
+    recovery = _admitted_source_contract()
     # Unit exercise only: old data is NOT presented as a fresh run.
     valid = verify_fresh(copy.deepcopy(archived), archived, recovery)
     assert valid["passed"] is True
@@ -66,7 +85,7 @@ def test_replay_validation_requires_exact_model_and_source_contract():
 
 def test_fresh_model_numerics_fail_closed_on_missing_or_wrong_witness():
     archived, _ = load_archive(ROOT)
-    recovery = verify_source(ROOT)
+    recovery = _admitted_source_contract()
 
     changed = copy.deepcopy(archived)
     changed["witnesses"][0]["tokens"][0][0] = 11
@@ -104,6 +123,7 @@ def test_historical_archive_has_no_fabricated_replay_metadata():
 def test_recovery_finds_source_versions_but_no_single_historical_checkout():
     from scripts.replay_pretrained_v36 import discover_historical_sources
 
+    _requires_full_history()
     forensics = discover_historical_sources(ROOT)
     assert forensics["schema"] == "visuaml.historical-source-discovery.v36"
     assert forensics["candidate_is_complete_match"] is False
