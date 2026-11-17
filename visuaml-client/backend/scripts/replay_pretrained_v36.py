@@ -115,7 +115,12 @@ def discover_historical_sources(repo: Path) -> dict:
         matching[relative] = found
     # Per-file change-commit intersection cannot determine whether a later
     # commit tree contains all three source blobs. Audit full reachable trees.
-    from scripts.audit_full_source_tree_v36 import run_audit
+    # The probe is invoked both as a script and imported under scripts.* in
+    # pytest. Resolve the sibling audit through the appropriate package form.
+    if __package__:
+        from .audit_full_source_tree_v36 import run_audit
+    else:
+        from audit_full_source_tree_v36 import run_audit
 
     full_trees = run_audit(repo)
     complete = full_trees["exact_matching_tree_commits"]
