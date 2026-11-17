@@ -73,6 +73,57 @@ def load_archive(repo: Path) -> tuple[dict, str]:
     return record, sha(raw)
 
 
+def discover_historical_sources(repo: Path) -> dict:
+    """Locate exact observed source-byte versions across full Git history.
+
+    A version matching every tracked source digest is a *candidate checkout*,
+    not proof of the source commit of the original GitHub Actions run.
+    If no common commit exists, report each verifiable file version instead of
+    inventing a checkout that never existed.
+    """
+    archive, archived_sha = load_archive(repo)
+    expected = archive["matched_cpu_benchmark"]["source_sha256"]
+    if set(expected) != set(SOURCE_KEYS):
+        raise ReplayError("Unrecognized historical source inventory")
+    matching: dict[str, list[str]] = {}
+    counts: dict[str, int] = {}
+    for relative in SOURCE_KEYS:
+        path = f"{BACKEND}/{relative}"
+        output = git(
+            repo, "log", "--all", "--format=%H", "--", path, timeout=120,
+        )
+        candidates = list(dict.fromkeys(
+            line for line in output.decode("ascii").splitlines() if line
+        ))
+        if not candidates or len(candidates) > 5000:
+            raise ReplayError("No bounded historical source history")
+        counts[relative] = len(candidates)
+        found = []
+        for commit in candidates:
+            try:
+                original = git(repo, "show", f"{commit}:{path}", timeout=20)
+            except ReplayError:
+                continue
+            if sha(original) == expected[relative]:
+                found.append(commit)
+        matching[relative] = found
+    common = set.intersection(*(set(matches) for matches in matching.values()))
+    return {
+        "schema": "visuaml.historical-source-discovery.v36",
+        "archive_sha256": archived_sha,
+        "candidate_checked": CANDIDATE_COMMIT,
+        "candidate_is_complete_match": CANDIDATE_COMMIT in common,
+        "complete_matching_commits": sorted(common),
+        "file_matching_commits": matching,
+        "file_revision_counts": counts,
+        "found_all_files": all(matching.values()),
+        "limitations": (
+            "A source file digest match verifies exact bytes in a Git object. "
+            "It does not identify which Git commit the original CI executed."
+        ),
+    }
+
+
 def verify_source(repo: Path, commit: str = CANDIDATE_COMMIT) -> dict:
     if commit != CANDIDATE_COMMIT:
         raise ReplayError("Historical commit is not on the source allowlist")
@@ -259,18 +310,24 @@ def main() -> None:
         "--repo", type=Path, default=Path(__file__).resolve().parents[3],
     )
     parser.add_argument("--verify-source", action="store_true")
+    parser.add_argument("--discover-source", action="store_true")
     parser.add_argument("--run", action="store_true")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    if args.verify_source == args.run:
-        parser.error("Choose exactly one of --verify-source or --run")
+    if sum((args.verify_source, args.discover_source, args.run)) != 1:
+        parser.error("Choose exactly one of --verify-source, --discover-source, or --run")
     repo = args.repo.resolve()
-    result = verify_source(repo) if args.verify_source else execute(repo)
+    if args.discover_source:
+        result = discover_historical_sources(repo)
+    elif args.verify_source:
+        result = verify_source(repo)
+    else:
+        result = execute(repo)
     wire = json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n"
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(wire, encoding="utf-8")
-    print(wire if args.verify_source else json.dumps({
+    print(wire if (args.verify_source or args.discover_source) else json.dumps({
         "schema": result["schema"],
         "status": result["status"],
         "record_sha256": result["record_sha256"],
