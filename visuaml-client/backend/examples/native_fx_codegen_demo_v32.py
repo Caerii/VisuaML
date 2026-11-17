@@ -14,9 +14,8 @@ from pathlib import Path
 
 import numpy as np
 import torch
-from torch import nn
-
 from examples.native_semantic_codegen_demo_v32 import numpy_conv
+from torch import nn
 from visuaml.compiler_lab.native_fx_frontend_v32 import lower_trusted_fx
 from visuaml.compiler_lab.native_semantic_codegen_v32 import NativeSemanticCompiler
 
