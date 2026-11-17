@@ -17,7 +17,7 @@ const describe = (kind: string): string =>
     rewrite_evaluation: 'Transformation experiment',
   })[kind] || kind.replace(/_/g, ' ');
 
-const brief = (sha: string | null) => sha ? sha.slice(0, 12) : 'Not recorded';
+const brief = (sha: string | null) => (sha ? sha.slice(0, 12) : 'Not recorded');
 
 export function ResearchLibraryPage() {
   const [catalog, setCatalog] = useState<EvidenceCatalog | null>(null);
@@ -64,7 +64,7 @@ export function ResearchLibraryPage() {
     [catalog, selectedId],
   );
   const similar = useMemo(
-    () => selected ? exactLineage(catalog?.entries ?? [], selected) : [],
+    () => (selected ? exactLineage(catalog?.entries ?? [], selected) : []),
     [catalog, selected],
   );
   const operations = useMemo(
@@ -84,8 +84,8 @@ export function ResearchLibraryPage() {
         <h1>The computational evidence library.</h1>
         <p className="research-evidence-intro">
           Discover the exact source, mathematical operations, target assumptions, and limitations
-          behind our compiler experiments. Shared hashes connect past implementations; they do
-          not automatically prove correctness or authorize a performance claim.
+          behind our compiler experiments. Shared hashes connect past implementations; they do not
+          automatically prove correctness or authorize a performance claim.
         </p>
       </header>
 
@@ -100,12 +100,18 @@ export function ResearchLibraryPage() {
       {catalog && (
         <>
           <section className="research-library-overview" aria-label="Library coverage">
-            <div><span className="research-evidence-label">INDEXED OBSERVATIONS</span>
-              <strong>{catalog.counts.studies}</strong></div>
-            <div><span className="research-evidence-label">SOURCE ARTIFACTS</span>
-              <strong>{catalog.counts.source_artifacts}</strong></div>
-            <div><span className="research-evidence-label">CATALOG SHA-256</span>
-              <code title={catalog.catalog_sha256}>{brief(catalog.catalog_sha256)}</code></div>
+            <div>
+              <span className="research-evidence-label">INDEXED OBSERVATIONS</span>
+              <strong>{catalog.counts.studies}</strong>
+            </div>
+            <div>
+              <span className="research-evidence-label">SOURCE ARTIFACTS</span>
+              <strong>{catalog.counts.source_artifacts}</strong>
+            </div>
+            <div>
+              <span className="research-evidence-label">CATALOG SHA-256</span>
+              <code title={catalog.catalog_sha256}>{brief(catalog.catalog_sha256)}</code>
+            </div>
           </section>
 
           <section className="research-evidence-section">
@@ -125,9 +131,13 @@ export function ResearchLibraryPage() {
                 Type of study
                 <select value={kind} onChange={(event) => setKind(event.target.value)}>
                   <option value="all">All studies</option>
-                  {Object.keys(catalog.counts.kinds).sort().map((value) => (
-                    <option value={value} key={value}>{describe(value)}</option>
-                  ))}
+                  {Object.keys(catalog.counts.kinds)
+                    .sort()
+                    .map((value) => (
+                      <option value={value} key={value}>
+                        {describe(value)}
+                      </option>
+                    ))}
                 </select>
               </label>
               <label>
@@ -135,7 +145,9 @@ export function ResearchLibraryPage() {
                 <select value={operation} onChange={(event) => setOperation(event.target.value)}>
                   <option value="all">All operators</option>
                   {operations.map((value) => (
-                    <option value={value} key={value}>{value}</option>
+                    <option value={value} key={value}>
+                      {value}
+                    </option>
                   ))}
                 </select>
               </label>
@@ -176,13 +188,18 @@ export function ResearchLibraryPage() {
                     <h4>Admitted mathematical operations</h4>
                     <div className="research-evidence-ops">
                       {selected.op_sequence.map((op, i) => (
-                        <span key={i}><code>{op}</code></span>
+                        <span key={i}>
+                          <code>{op}</code>
+                        </span>
                       ))}
                     </div>
                     <h4>Context and assumptions</h4>
                     <dl className="research-library-key-values">
                       {Object.entries(selected.context).map(([key, value]) => (
-                        <div key={key}><dt>{key.replace(/_/g, ' ')}</dt><dd>{value}</dd></div>
+                        <div key={key}>
+                          <dt>{key.replace(/_/g, ' ')}</dt>
+                          <dd>{value}</dd>
+                        </div>
                       ))}
                     </dl>
                     <h4>Observed metrics</h4>
@@ -196,14 +213,20 @@ export function ResearchLibraryPage() {
                     </dl>
                     <h4>Source and native identity</h4>
                     <dl className="research-library-key-values fingerprints">
-                      {([
-                        ['IR digest', selected.semantic_sha256],
-                        ['Generated C++', selected.generated_cpp_sha256],
-                        ['Native binary', selected.native_binary_sha256],
-                        ['Pinned checkpoint', selected.checkpoint_sha256],
-                      ] as const).map(([label, hash]) => (
-                        <div key={label}><dt>{label}</dt>
-                          <dd><code title={hash || ''}>{brief(hash)}</code></dd></div>
+                      {(
+                        [
+                          ['IR digest', selected.semantic_sha256],
+                          ['Generated C++', selected.generated_cpp_sha256],
+                          ['Native binary', selected.native_binary_sha256],
+                          ['Pinned checkpoint', selected.checkpoint_sha256],
+                        ] as const
+                      ).map(([label, hash]) => (
+                        <div key={label}>
+                          <dt>{label}</dt>
+                          <dd>
+                            <code title={hash || ''}>{brief(hash)}</code>
+                          </dd>
+                        </div>
                       ))}
                     </dl>
                     <p className="research-library-links">
@@ -211,7 +234,9 @@ export function ResearchLibraryPage() {
                         href={`https://github.com/Caerii/VisuaML/blob/main/${selected.source_path}`}
                         target="_blank"
                         rel="noreferrer"
-                      >Read archived observation</a>
+                      >
+                        Read archived observation
+                      </a>
                       <a href={selected.workflow_url} target="_blank" rel="noreferrer">
                         Inspect original CI
                       </a>
@@ -220,7 +245,10 @@ export function ResearchLibraryPage() {
                     {similar.length ? (
                       <div className="research-library-lineage">
                         {similar.map((entry) => (
-                          <button key={entry.entry_id} onClick={() => setSelectedId(entry.entry_id)}>
+                          <button
+                            key={entry.entry_id}
+                            onClick={() => setSelectedId(entry.entry_id)}
+                          >
                             {entry.label} <span>same binary fingerprint</span>
                           </button>
                         ))}
@@ -231,7 +259,9 @@ export function ResearchLibraryPage() {
                     <details>
                       <summary>Scientific limitations and interpretation</summary>
                       <ul>
-                        {selected.limitations.map((item) => <li key={item}>{item}</li>)}
+                        {selected.limitations.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
                       </ul>
                     </details>
                   </>
@@ -251,8 +281,8 @@ export function ResearchLibraryPage() {
               provenance. Performance findings additionally depend on workload and CPU environment.
             </p>
             <p>
-              New proposals stay unreviewed until independent replay and human acceptance.
-              The official roadmap's reviewed progress is unaffected by indexing an observation.
+              New proposals stay unreviewed until independent replay and human acceptance. The
+              official roadmap's reviewed progress is unaffected by indexing an observation.
             </p>
           </section>
         </>

@@ -99,9 +99,11 @@ describe('source-bound evidence catalog', () => {
     const entries = parseEvidenceCatalog(fixture()).entries;
     expect(exactLineage(entries, entries[0])).toEqual([entries[1]]);
     expect(exactLineage(entries, { ...entries[0], native_binary_sha256: null })).toEqual([]);
-    expect(exactLineage(entries, {
-      ...entries[0],
-      native_binary_sha256: h('5'),
-    })).toEqual([]);
+    expect(
+      exactLineage(entries, {
+        ...entries[0],
+        native_binary_sha256: h('5'),
+      }),
+    ).toEqual([]);
   });
 });

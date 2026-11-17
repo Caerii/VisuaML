@@ -88,9 +88,10 @@ export function parseEvidenceCatalog(value: unknown): EvidenceCatalog {
         allowedPaths.has(path) && typeof digest === 'string' && sha256.test(digest),
     ) ||
     !object(value.counts) ||
-    (typeof value.counts.studies !== 'number' || !Number.isInteger(value.counts.studies)) ||
-    (typeof value.counts.source_artifacts !== 'number' ||
-      !Number.isInteger(value.counts.source_artifacts)) ||
+    typeof value.counts.studies !== 'number' ||
+    !Number.isInteger(value.counts.studies) ||
+    typeof value.counts.source_artifacts !== 'number' ||
+    !Number.isInteger(value.counts.source_artifacts) ||
     !numericalMap(value.counts.kinds) ||
     !stringArray(value.limitations, 30)
   ) {
@@ -143,10 +144,7 @@ export function parseEvidenceCatalog(value: unknown): EvidenceCatalog {
     const kind = (entry as EvidenceEntry).kind;
     actualKinds[kind] = (actualKinds[kind] || 0) + 1;
   }
-  for (const key of new Set([
-    ...Object.keys(actualKinds),
-    ...Object.keys(value.counts.kinds),
-  ])) {
+  for (const key of new Set([...Object.keys(actualKinds), ...Object.keys(value.counts.kinds)])) {
     if (actualKinds[key] !== value.counts.kinds[key]) {
       throw new Error('Evidence category counts do not match the catalog');
     }
@@ -161,8 +159,12 @@ export function matchingEvidence(
   const phrase = (query.text || '').trim().toLowerCase();
   return entries.filter((entry) => {
     if (query.kind && query.kind !== 'all' && entry.kind !== query.kind) return false;
-    if (query.operation && query.operation !== 'all' &&
-        !entry.op_sequence.includes(query.operation)) return false;
+    if (
+      query.operation &&
+      query.operation !== 'all' &&
+      !entry.op_sequence.includes(query.operation)
+    )
+      return false;
     if (!phrase) return true;
     return [
       entry.label,
