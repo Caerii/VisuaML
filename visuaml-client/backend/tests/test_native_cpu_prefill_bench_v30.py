@@ -8,7 +8,6 @@ from test_hf_llama_checkpoint_v19 import fixture
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.native_cpu_v28 import compiler_available
 
-
 pytestmark = pytest.mark.skipif(
     not compiler_available(), reason="Native C++17 compiler not installed"
 )
