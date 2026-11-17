@@ -49,7 +49,15 @@ export function LandingHeader() {
           </Box>
 
           {/* Public research paths and workspace navigation */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, md: 2 }, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: { xs: 1, md: 2 },
+              flexWrap: 'wrap',
+              justifyContent: 'flex-end',
+            }}
+          >
             <Button
               onClick={() => navigate('/roadmap')}
               variant="text"

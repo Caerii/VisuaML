@@ -27,11 +27,12 @@ function admit(value: unknown): value is InspectionReport {
     report.schema === 'visuaml.semantic-inspection.v19' &&
     Array.isArray(report.operations) &&
     report.operations.length > 0 &&
-    report.operations.every((op) =>
-      typeof op.name === 'string' &&
-      typeof op.opcode === 'string' &&
-      typeof op.effect === 'string' &&
-      Array.isArray(op.operands),
+    report.operations.every(
+      (op) =>
+        typeof op.name === 'string' &&
+        typeof op.opcode === 'string' &&
+        typeof op.effect === 'string' &&
+        Array.isArray(op.operands),
     ) &&
     typeof report.semantic_sha256 === 'string' &&
     typeof report.checkpoint_sha256 === 'string' &&
@@ -101,16 +102,18 @@ export function SemanticExecutionPanel() {
   }, [report]);
 
   const filtered = useMemo(
-    () => report?.operations.filter((op) => {
-      const inEffect = !showEffectsOnly || op.effect !== 'pure';
-      const needle = query.trim().toLowerCase();
-      return inEffect && (
-        !needle ||
-        [op.name, op.opcode, op.cell ?? '', ...op.operands].some(
-          (value) => value.toLowerCase().includes(needle),
-        )
-      );
-    }) ?? [],
+    () =>
+      report?.operations.filter((op) => {
+        const inEffect = !showEffectsOnly || op.effect !== 'pure';
+        const needle = query.trim().toLowerCase();
+        return (
+          inEffect &&
+          (!needle ||
+            [op.name, op.opcode, op.cell ?? '', ...op.operands].some((value) =>
+              value.toLowerCase().includes(needle),
+            ))
+        );
+      }) ?? [],
     [report, query, showEffectsOnly],
   );
   const current = report?.operations.find((item) => item.name === selected);
@@ -123,13 +126,17 @@ export function SemanticExecutionPanel() {
           <span className="semantic-studio-kicker">THE EXECUTABLE REPRESENTATION</span>
           <h2 id="semantic-studio-title">Study the computation beneath the graph.</h2>
           <p>
-            The visual graph tells us what connects. The semantic execution ledger reveals
-            which operations run, the state they read and write, and the numerical witnesses
-            supporting an admitted compiler program.
+            The visual graph tells us what connects. The semantic execution ledger reveals which
+            operations run, the state they read and write, and the numerical witnesses supporting an
+            admitted compiler program.
           </p>
         </div>
-        <button type="button" className="semantic-studio-open"
-          aria-expanded={open} onClick={() => setOpen((value) => !value)}>
+        <button
+          type="button"
+          className="semantic-studio-open"
+          aria-expanded={open}
+          onClick={() => setOpen((value) => !value)}
+        >
           {open ? 'Close the inspector' : 'Inspect the semantic program ↗'}
         </button>
       </div>
@@ -141,22 +148,35 @@ export function SemanticExecutionPanel() {
               Decoder depth
               <select value={layers} onChange={(event) => setLayers(Number(event.target.value))}>
                 {[1, 2, 3, 4].map((count) => (
-                  <option value={count} key={count}>{count} layers</option>
+                  <option value={count} key={count}>
+                    {count} layers
+                  </option>
                 ))}
               </select>
             </label>
             <label>
               Find an operation
-              <input value={query} onChange={(event) => setQuery(event.target.value)}
-                type="search" placeholder="e.g. attention, rope, stage_key" />
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                type="search"
+                placeholder="e.g. attention, rope, stage_key"
+              />
             </label>
             <label className="semantic-studio-check">
-              <input type="checkbox" checked={showEffectsOnly}
-                onChange={(event) => setShowEffectsOnly(event.target.checked)} />
+              <input
+                type="checkbox"
+                checked={showEffectsOnly}
+                onChange={(event) => setShowEffectsOnly(event.target.checked)}
+              />
               State effects only
             </label>
           </div>
-          {loading && <p role="status" className="semantic-studio-notice">Checking a bounded, seeded CPU decoder…</p>}
+          {loading && (
+            <p role="status" className="semantic-studio-notice">
+              Checking a bounded, seeded CPU decoder…
+            </p>
+          )}
           {error && (
             <p role="alert" className="semantic-studio-notice">
               {error} This inspector accepts fixed synthetic fixtures only; the public
@@ -184,23 +204,31 @@ export function SemanticExecutionPanel() {
                 </div>
               </div>
               <div className="semantic-studio-layout">
-                <div className="semantic-studio-operations" role="group"
-                  aria-label="Operations in verified execution order">
+                <div
+                  className="semantic-studio-operations"
+                  role="group"
+                  aria-label="Operations in verified execution order"
+                >
                   <p className="semantic-studio-small">
                     {filtered.length} of {report.operations.length} instructions
                   </p>
                   {filtered.map((op, index) => (
-                    <button type="button" key={op.name}
+                    <button
+                      type="button"
+                      key={op.name}
                       className={'semantic-studio-op' + (selected === op.name ? ' active' : '')}
                       aria-pressed={selected === op.name}
-                      onClick={() => setSelected(op.name)}>
+                      onClick={() => setSelected(op.name)}
+                    >
                       <span>{String(index + 1).padStart(2, '0')}</span>
                       <strong>{op.name}</strong>
                       <em>{op.opcode}</em>
                       {op.effect !== 'pure' && <b>{op.effect}</b>}
                     </button>
                   ))}
-                  {filtered.length === 0 && <p className="semantic-studio-small">No matching operations.</p>}
+                  {filtered.length === 0 && (
+                    <p className="semantic-studio-small">No matching operations.</p>
+                  )}
                 </div>
                 <div className="semantic-studio-detail">
                   {current ? (
@@ -213,20 +241,33 @@ export function SemanticExecutionPanel() {
                           : 'Ordered state effect. Its position is part of the decoder contract.'}
                       </p>
                       <dl>
-                        <dt>Opcode</dt><dd>{current.opcode}</dd>
-                        <dt>Arguments</dt><dd>{current.operands.join(' · ')}</dd>
-                        <dt>Result</dt><dd>{current.result ?? 'Effect only'}</dd>
-                        <dt>Tensor shape</dt><dd>{current.shape?.join(' × ') ?? 'No tensor result'}</dd>
-                        <dt>State cell</dt><dd>{current.cell ?? 'None'}</dd>
+                        <dt>Opcode</dt>
+                        <dd>{current.opcode}</dd>
+                        <dt>Arguments</dt>
+                        <dd>{current.operands.join(' · ')}</dd>
+                        <dt>Result</dt>
+                        <dd>{current.result ?? 'Effect only'}</dd>
+                        <dt>Tensor shape</dt>
+                        <dd>{current.shape?.join(' × ') ?? 'No tensor result'}</dd>
+                        <dt>State cell</dt>
+                        <dd>{current.cell ?? 'None'}</dd>
                       </dl>
                     </>
-                  ) : <p>Select a typed operation to inspect its contract.</p>}
+                  ) : (
+                    <p>Select a typed operation to inspect its contract.</p>
+                  )}
                   <h4>Operation distribution</h4>
                   <div className="semantic-studio-histogram">
                     {histogram.slice(0, 9).map(([name, count]) => (
                       <div key={name}>
                         <span>{name}</span>
-                        <div><span style={{ width: String(100 * count / report.operations.length) + '%' }} /></div>
+                        <div>
+                          <span
+                            style={{
+                              width: String((100 * count) / report.operations.length) + '%',
+                            }}
+                          />
+                        </div>
                         <b>{count}</b>
                       </div>
                     ))}
@@ -238,21 +279,28 @@ export function SemanticExecutionPanel() {
                   <strong>Numerical reference: {report.verification.reference}</strong>
                   <p>
                     Semantic SHA-256: {report.semantic_sha256}
-                    <br />Checkpoint SHA-256: {report.checkpoint_sha256}
+                    <br />
+                    Checkpoint SHA-256: {report.checkpoint_sha256}
                   </p>
-                  <p>Fixed synthetic CPU input only. No pretrained checkpoint, native GPU or optical device is certified by this view.</p>
+                  <p>
+                    Fixed synthetic CPU input only. No pretrained checkpoint, native GPU or optical
+                    device is certified by this view.
+                  </p>
                 </div>
-                <button type="button" onClick={() => {
-                  const blob = new Blob([JSON.stringify(report, null, 2)], {
-                    type: 'application/json',
-                  });
-                  const url = URL.createObjectURL(blob);
-                  const anchor = document.createElement('a');
-                  anchor.href = url;
-                  anchor.download = 'visuaml-semantic-evidence.json';
-                  anchor.click();
-                  URL.revokeObjectURL(url);
-                }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const blob = new Blob([JSON.stringify(report, null, 2)], {
+                      type: 'application/json',
+                    });
+                    const url = URL.createObjectURL(blob);
+                    const anchor = document.createElement('a');
+                    anchor.href = url;
+                    anchor.download = 'visuaml-semantic-evidence.json';
+                    anchor.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                >
                   Export evidence JSON ↗
                 </button>
               </div>

@@ -14,41 +14,75 @@ const fixture = {
   title: 'A testable roadmap',
   subtitle: 'Progress is evidence.',
   methodology: {
-    name: 'Gates', text: 'Only evidence counts',
-    caveat: 'A snapshot', refresh: 'On deployments',
+    name: 'Gates',
+    text: 'Only evidence counts',
+    caveat: 'A snapshot',
+    refresh: 'On deployments',
   },
   workstreams: [
     {
-      id: 'first', title: 'First', kicker: 'MATH', weight: 60,
-      summary: 'One', impact: 'Because', now: 'Done', next: 'More',
+      id: 'first',
+      title: 'First',
+      kicker: 'MATH',
+      weight: 60,
+      summary: 'One',
+      impact: 'Because',
+      now: 'Done',
+      next: 'More',
       criteria: [
         {
-          id: 'verified', title: 'Certified', weight: 40, status: 'verified',
+          id: 'verified',
+          title: 'Certified',
+          weight: 40,
+          status: 'verified',
           why: 'Has evidence',
-          evidence: [{
-            label: 'Commit', url: 'https://github.com/Caerii/VisuaML/commit/abc',
-          }],
+          evidence: [
+            {
+              label: 'Commit',
+              url: 'https://github.com/Caerii/VisuaML/commit/abc',
+            },
+          ],
         },
         {
-          id: 'future', title: 'Research', weight: 60, status: 'in-progress',
-          why: 'Not proven', evidence: [],
+          id: 'future',
+          title: 'Research',
+          weight: 60,
+          status: 'in-progress',
+          why: 'Not proven',
+          evidence: [],
         },
       ],
     },
     {
-      id: 'second', title: 'Second', kicker: 'EXPERIMENT', weight: 40,
-      summary: 'Two', impact: 'Because', now: 'Done', next: 'More',
+      id: 'second',
+      title: 'Second',
+      kicker: 'EXPERIMENT',
+      weight: 40,
+      summary: 'Two',
+      impact: 'Because',
+      now: 'Done',
+      next: 'More',
       criteria: [
         {
-          id: 'yes', title: 'Checked', weight: 70, status: 'verified',
+          id: 'yes',
+          title: 'Checked',
+          weight: 70,
+          status: 'verified',
           why: 'Proof',
-          evidence: [{
-            label: 'CI', url: 'https://github.com/Caerii/VisuaML/actions',
-          }],
+          evidence: [
+            {
+              label: 'CI',
+              url: 'https://github.com/Caerii/VisuaML/actions',
+            },
+          ],
         },
         {
-          id: 'no', title: 'Later', weight: 30, status: 'planned',
-          why: 'Future', evidence: [],
+          id: 'no',
+          title: 'Later',
+          weight: 30,
+          status: 'planned',
+          why: 'Future',
+          evidence: [],
         },
       ],
     },
@@ -62,7 +96,10 @@ describe('public research roadmap', () => {
     expect(workstreamProgress(manifest.workstreams[1])).toBe(70);
     expect(portfolioProgress(manifest)).toBe(52);
     expect(countRoadmapGates(manifest)).toEqual({
-      all: 4, verified: 2, inProgress: 1, planned: 1,
+      all: 4,
+      verified: 2,
+      inProgress: 1,
+      planned: 1,
     });
   });
   it('rejects verified gates without evidence and mismatched portfolio weights', () => {
