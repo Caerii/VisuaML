@@ -38,6 +38,8 @@ struct VisuaMLLlamaConfig {
 };
 
 int visuaml_native_avx2_active() noexcept;
+int visuaml_native_prefill_eligible(
+    const VisuaMLLlamaConfig* c, int query) noexcept;
 
 int visuaml_native_llama_decode(
     const VisuaMLLlamaConfig* c,
@@ -353,6 +355,21 @@ extern "C" int visuaml_native_avx2_active() noexcept {
   return native_avx2_available() ? 1 : 0;
 }
 
+// Introspect the exact bounded v30 dispatch gate without executing a model.
+// Unsupported targets and non-prefill chunks cannot enter the batched kernel.
+extern "C" int visuaml_native_prefill_eligible(
+    const VisuaMLLlamaConfig* c, int query) noexcept {
+#if VISUAML_HAS_OPTIONAL_AVX2 && defined(VISUAML_NATIVE_BATCHED_PREFILL)
+  if (!c || !admitted(*c, query, 0)) return 0;
+  return (query >= 4 && c->hidden >= 128 &&
+          native_avx2_available()) ? 1 : 0;
+#else
+  (void)c;
+  (void)query;
+  return 0;
+#endif
+}
+
 extern "C" int visuaml_native_llama_decode(
     const VisuaMLLlamaConfig* config, const int64_t* tokens,
     int query, int past, const float* const* weights,
@@ -375,6 +392,8 @@ extern "C" int visuaml_native_llama_decode(
       if (tokens[row] < 0 || tokens[row] >= c.vocabulary) return -5;
     }
     const int h = c.hidden;
+    const bool batched_prefill =
+        visuaml_native_prefill_eligible(&c, query) != 0;
     const int depth = c.head_dim;
     const int kwidth = c.kv_heads * depth;
     const float scaling = 1.0f / std::sqrt(static_cast<float>(depth));
@@ -422,11 +441,11 @@ extern "C" int visuaml_native_llama_decode(
                 h, c.epsilon);
       }
       linear_rows(normed.data(), wq, q.data(), static_cast<int>(rows),
-                  h, h, query > 1);
+                  h, h, batched_prefill);
       linear_rows(normed.data(), wk, keys.data(), static_cast<int>(rows),
-                  h, kwidth, query > 1);
+                  h, kwidth, batched_prefill);
       linear_rows(normed.data(), wv, values.data(), static_cast<int>(rows),
-                  h, kwidth, query > 1);
+                  h, kwidth, batched_prefill);
       for (size_t row = 0; row < rows; ++row) {
         const size_t off = row * h;
         const size_t kv_off = row * kwidth;
@@ -493,7 +512,7 @@ extern "C" int visuaml_native_llama_decode(
       }
 
       linear_rows(attended.data(), wo, projection.data(), static_cast<int>(rows),
-                  h, h, query > 1);
+                  h, h, batched_prefill);
       for (size_t row = 0; row < rows; ++row) {
         const size_t off = row * h;
         for (int d = 0; d < h; ++d) state[off + d] += projection[off + d];
@@ -501,15 +520,15 @@ extern "C" int visuaml_native_llama_decode(
                 h, c.epsilon);
       }
       linear_rows(ff_norm.data(), wgate, gate.data(), static_cast<int>(rows),
-                  h, c.inner, query > 1);
+                  h, c.inner, batched_prefill);
       linear_rows(ff_norm.data(), wup, up.data(), static_cast<int>(rows),
-                  h, c.inner, query > 1);
+                  h, c.inner, batched_prefill);
       for (size_t i = 0; i < rows * static_cast<size_t>(c.inner); ++i) {
         const float g = gate[i];
         product[i] = g * (1.0f / (1.0f + std::exp(-g))) * up[i];
       }
       linear_rows(product.data(), wdown, ff_out.data(), static_cast<int>(rows),
-                  c.inner, h, query > 1);
+                  c.inner, h, batched_prefill);
       for (size_t i = 0; i < rows * static_cast<size_t>(h); ++i) {
         state[i] += ff_out[i];
       }
@@ -522,7 +541,7 @@ extern "C" int visuaml_native_llama_decode(
               normalized.data() + row * h, h, c.epsilon);
     }
     linear_rows(normalized.data(), lm_head, logits, static_cast<int>(rows),
-                h, c.vocabulary, query > 1);
+                h, c.vocabulary, batched_prefill);
     for (size_t i = 0; i < rows * c.vocabulary; ++i) {
       if (!std::isfinite(logits[i])) return -7;
     }
