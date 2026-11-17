@@ -15,11 +15,15 @@ Y[token, output] = sum_{input=0..width-1}
     W[output, input] * X[token, input]
 ```
 
-A multi-token call can reuse the same weight row across up to four token rows. The v30 loop keeps a **separate ordered accumulator per token/output pair**, reusing weight loads without introducing cross-token dependencies. The reference implementation remains available in the original scalar and runtime-guarded AVX2 modes.
+A multi-token call can reuse each weight vector across **two token rows** and four output channels through independently accumulated AVX2 lanes. This changes floating-point reduction order, so the existing finite-tolerance NumPy and scalar references remain mandatory; no cross-token dependencies are introduced. The reference implementation remains available in the original scalar and runtime-guarded AVX2 modes.
 
-The optimization is only eligible when **the current input chunk has more than one token** and input width is at least 16. It is opt-in through `NativeCpuLlamaCompiler(plan, enable_batched_prefill=True, enable_avx2=True)`; `reference_kernels=True` cannot be combined with the experimental prefill flag. Single-token decode falls through to the previous native `linear` kernel. When AVX2 is not supported by the machine, existing runtime dispatch falls back to scalar/four-row code.
+The optimization is only eligible when **the current input chunk has more than one token**, input width is at least 32, and the runtime CPU supports AVX2. It is opt-in through `NativeCpuLlamaCompiler(plan, enable_batched_prefill=True, enable_avx2=True)`; guarded AVX2 must be explicitly requested and `reference_kernels=True` cannot be combined with the experimental prefill flag. Single-token decode falls through to the previous native `linear` kernel. When AVX2 is not supported by the machine, existing runtime dispatch falls back to scalar/four-row code.
 
 The projection layout is reorganized into a uniform row-major batch for Q, K, V, attention output, gated feed-forward projections, down projection, and final vocabulary projection. RMSNorm, rotary embedding, the softmax attention loop, residual updates and transactional KV publication retain their existing mathematical and state contracts. The scratch storage is now sized for the admitted per-invocation row count; no mutable scratch is shared across sessions. This is **not** a claim of lower peak RSS, and the temporary geometry can increase scratch footprint.
+
+## First negative result and design correction
+
+The initial scalar cross-token loop passed numerical verification but measured **0.132× and 0.128×** v29 AVX2 prefill speed ratios in two five-trial, shared-runner pinned-model witnesses (i.e. roughly 7.6–7.8 times slower). This result ruled out promoting that implementation. The code has now been replaced by a **CPU-feature-guarded, two-token/four-output-channel AVX2 prefill microkernel**, with fallback to the v29 verified path when the AVX2 preconditions are not met. The replacement's performance must be independently remeasured; the negative result is preserved as part of the experiment history.
 
 ## Evidence and verification
 
