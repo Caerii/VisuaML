@@ -43,3 +43,19 @@ def test_native_cpu_benchmark_rejects_oversized_context(tmp_path):
     )
     with pytest.raises(ValueError):
         benchmark(weights, prompt=32, chunk_sizes=(32, 1), trials=2)
+
+
+def test_native_cpu_benchmark_compares_scalar_and_four_row_binaries(tmp_path):
+    fixture(tmp_path, layers=1)
+    weights = load_hf_llama_local(tmp_path, declared_revision="a" * 40)
+    result = benchmark(
+        weights, prompt=3, chunk_sizes=(1, 2), trials=2,
+        compare_native_reference=True,
+    )
+    assert result["native_linear_variants"] == {
+        "native_cpp": "four_row",
+        "native_scalar_reference": "scalar_reference",
+    }
+    assert result["compilation"]["native_scalar_reference_ms"] > 0
+    assert result["warm_native_speedup_vs_scalar"] > 0
+    assert len(result["raw_samples_ms"]["native_scalar_reference"]) == 2
