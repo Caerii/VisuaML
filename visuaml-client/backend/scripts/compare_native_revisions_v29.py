@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import platform
 import statistics
@@ -118,7 +119,21 @@ def run(*, pairs: int, trials: int) -> dict:
                 a, b = results["v28"], results["v29"]
                 if a["semantic_sha256"] != b["semantic_sha256"]:
                     raise RuntimeError("Semantic program changed across versions")
+                old_ms = a["latency"]["native_cpp"]["median_ms"]
+                avx_ms = b["latency"]["native_avx2"]["median_ms"]
+                saved_ms = old_ms - avx_ms
+                incremental_compile_ms = (
+                    b["compilation"]["native_avx2_ms"]
+                    - a["compilation"]["native_cpp_ms"]
+                )
+                break_even = (
+                    math.ceil(max(0.0, incremental_compile_ms) / saved_ms)
+                    if saved_ms > 0 else None
+                )
                 observations.append({
+                    "estimated_warm_runs_to_amortize_extra_avx_compile": break_even,
+                    "incremental_avx_compile_ms": round(incremental_compile_ms, 6),
+                    "warm_time_saved_per_run_ms": round(saved_ms, 6),
                     "order": list(order),
                     "baseline_native_ms": a["latency"]["native_cpp"]["median_ms"],
                     "v29_four_row_ms": b["latency"]["native_cpp"]["median_ms"],
@@ -176,6 +191,7 @@ def run(*, pairs: int, trials: int) -> dict:
                     "One CI runner; subject to contention, clock scaling and thermal drift.",
                     "Short pinned Llama workload, not production token throughput.",
                     "The baseline is a separate process but uses the same checkpoint and toolchain.",
+                    "Compile amortization uses per-process build and median warm latency only; it omits startup, concurrent work, thermal shifts and serving overhead.",
                     "Baseline v28 retains aggregate timings; v29 retains raw timing samples.",
                     "This is a comparison experiment, not a general speedup guarantee.",
                 ],
