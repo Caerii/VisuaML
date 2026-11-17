@@ -21,7 +21,7 @@ Run the trained model witness described in [Verification](VERIFICATION.md), then
 PYTHONPATH=backend python backend/examples/native_cpu_bench_v28.py /path/to/pinned/checkpoint --revision YOUR_PINNED_COMMIT_SHA --prompt 4 --chunks 1 1 2 --trials 21 --output /tmp/visuaml-v29-rope.json
 ```
 
-The benchmark checks chunked logits and final K/V state against NumPy before recording warm latency. Compare against the v28 baseline using the **same CPU, thread settings, checkpoint hash, input sequence, trials, and compiler flags**. Do not compare across heterogeneous CI machines as evidence of a speedup. Report median and p95 separately; record the compilation time separately from warm inference. Warm-up and interleaved order reduce but do not eliminate benchmarking biases.
+The benchmark checks chunked logits and final K/V state against NumPy before recording warm latency. The v29 branch also records the individual warm-run samples in `raw_samples_ms` and the alternating measurement order; compare raw distributions rather than relying on a single median. Compare against the v28 baseline using the **same CPU, thread settings, checkpoint hash, input sequence, trials, and compiler flags**. Do not compare across heterogeneous CI machines as evidence of a speedup. Report median and p95 separately; record the compilation time separately from warm inference. Warm-up and interleaved order reduce but do not eliminate benchmarking biases.
 
 ## Acceptance conditions
 
