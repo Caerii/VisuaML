@@ -6,7 +6,7 @@
 
 VisuaML is an open-source research platform combining interactive, collaborative PyTorch graph visualization with an experimental typed-intermediate-representation compiler and inference runtime. The web application helps researchers inspect model structures and tensor relationships. The Python Compiler Lab investigates how to represent, transform, execute, compare, and safely reuse neural computation across different execution strategies.
 
-**Current development milestone: v28 (November 2026).** The native CPU and redesigned client additions are committed on the v28 feature branch until their CI checks pass and they merge. The client package still reports version 0.0.0; development milestones are *not* published semantic-version releases.
+**Current integrated milestone: v28 (November 2026).** The native CPU and redesigned client additions have been merged into `main`. The v29 native CPU performance work is experimental and proceeds on a separate research branch pending reproducible performance and numerical verification. The client package still reports version 0.0.0; research milestones are *not* published semantic-version releases.
 
 [Public research roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
 
