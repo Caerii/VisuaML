@@ -36,4 +36,12 @@ jobs:
           PYTHONNOUSERSITE: "1"
           OPENBLAS_NUM_THREADS: "1"
         run: |
-          PYTHONPATH=visuaml-client/backend python visuaml-client/backend/scripts/probe_native_llama_v28.py
+          PYTHONPATH=visuaml-client/backend python visuaml-client/backend/scripts/probe_native_llama_v28.py > native-cpu-pretrained-witness.json
+          cat native-cpu-pretrained-witness.json
+      - name: Upload pinned model numerical and latency witness
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-cpu-pretrained-witness
+          path: native-cpu-pretrained-witness.json
+          if-no-files-found: error
+          retention-days: 30
