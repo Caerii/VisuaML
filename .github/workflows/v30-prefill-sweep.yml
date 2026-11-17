@@ -6,6 +6,7 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.py
       - visuaml-client/backend/examples/native_cpu_prefill_bench_v30.py
       - visuaml-client/backend/scripts/sweep_native_prefill_v30.py
+      - visuaml-client/backend/scripts/compare_v29_v30_default.py
       - .github/workflows/v30-prefill-sweep.yml
   workflow_dispatch:
 jobs:
@@ -14,6 +15,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -34,5 +37,19 @@ jobs:
         with:
           name: v30-prefill-shape-sweep
           path: v30-prefill-shape-sweep.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Paired default AVX2 v29 to v30 regression check
+        env:
+          PYTHONNOUSERSITE: "1"
+          HF_HUB_DISABLE_XET: "1"
+          OPENBLAS_NUM_THREADS: "1"
+        run: |
+          python visuaml-client/backend/scripts/compare_v29_v30_default.py --pairs 2 --trials 7 --output v29-v30-default-avx2.json
+      - name: Upload source-bound default-regression evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: v29-v30-default-avx2
+          path: v29-v30-default-avx2.json
           if-no-files-found: error
           retention-days: 30
