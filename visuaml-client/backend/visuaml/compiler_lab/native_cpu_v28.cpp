@@ -179,34 +179,93 @@ inline void linear(const float* input, const float* weight,
 #endif
 }
 
-// v30 experiment: share each contiguous weight row across up to four token
-// rows in prefill. The inner reduction for each output/token remains ordered.
-// When disabled, or during single-token decode, defer to the v29 kernel.
+// Multi-token prefill: for each four output channels, share a contiguous
+// weight vector across two independent token rows. Keep 8 AVX2 accumulators
+// (4 channels x 2 tokens) inside a CPU-target-specific function.
+// The old single-token AVX2 kernel remains the fallback for decode and tails.
+#if VISUAML_HAS_OPTIONAL_AVX2 && defined(VISUAML_NATIVE_BATCHED_PREFILL)
+__attribute__((target("avx2")))
+void linear_rows_avx2(const float* inputs, const float* weight,
+                      float* outputs, int rows, int input_width,
+                      int output_width) {
+  for (int rb = 0; rb < rows; rb += 2) {
+    const float* x0 = inputs + static_cast<size_t>(rb) * input_width;
+    float* y0 = outputs + static_cast<size_t>(rb) * output_width;
+    if (rb + 1 >= rows) {
+      linear_avx2(x0, weight, y0, input_width, output_width);
+      break;
+    }
+    const float* x1 = x0 + input_width;
+    float* y1 = y0 + output_width;
+    int output = 0;
+    for (; output + 3 < output_width; output += 4) {
+      const float* w[4] = {
+          weight + static_cast<size_t>(output) * input_width,
+          weight + static_cast<size_t>(output + 1) * input_width,
+          weight + static_cast<size_t>(output + 2) * input_width,
+          weight + static_cast<size_t>(output + 3) * input_width,
+      };
+      __m256 acc[8];
+      for (int i = 0; i < 8; ++i) acc[i] = _mm256_setzero_ps();
+      int col = 0;
+      for (; col + 7 < input_width; col += 8) {
+        const __m256 token0 = _mm256_loadu_ps(x0 + col);
+        const __m256 token1 = _mm256_loadu_ps(x1 + col);
+        for (int k = 0; k < 4; ++k) {
+          const __m256 values = _mm256_loadu_ps(w[k] + col);
+          acc[k] = _mm256_add_ps(
+              acc[k], _mm256_mul_ps(values, token0));
+          acc[k + 4] = _mm256_add_ps(
+              acc[k + 4], _mm256_mul_ps(values, token1));
+        }
+      }
+      alignas(32) float lanes[64];
+      for (int k = 0; k < 8; ++k) {
+        _mm256_store_ps(lanes + 8 * k, acc[k]);
+      }
+      float sums[8] = {};
+      for (int k = 0; k < 8; ++k) {
+        for (int i = 0; i < 8; ++i) sums[k] += lanes[8 * k + i];
+      }
+      for (; col < input_width; ++col) {
+        for (int k = 0; k < 4; ++k) {
+          const float coefficient = w[k][col];
+          sums[k] += coefficient * x0[col];
+          sums[k + 4] += coefficient * x1[col];
+        }
+      }
+      for (int k = 0; k < 4; ++k) {
+        y0[output + k] = sums[k];
+        y1[output + k] = sums[k + 4];
+      }
+    }
+    // Explicitly handle output widths that are not divisible by four.
+    for (; output < output_width; ++output) {
+      const float* w = weight + static_cast<size_t>(output) * input_width;
+      float a = 0.0f, b = 0.0f;
+      for (int col = 0; col < input_width; ++col) {
+        a += w[col] * x0[col];
+        b += w[col] * x1[col];
+      }
+      y0[output] = a;
+      y1[output] = b;
+    }
+  }
+}
+#endif
+
 inline void linear_rows(const float* inputs, const float* weight,
                         float* outputs, int rows, int input_width,
                         int output_width, bool prefill) {
-#if defined(VISUAML_NATIVE_BATCHED_PREFILL)
-  if (prefill && rows >= 2 && input_width >= 16) {
-    for (int output = 0; output < output_width; ++output) {
-      const float* w = weight + static_cast<size_t>(output) * input_width;
-      for (int rb = 0; rb < rows; rb += 4) {
-        const int count = std::min(4, rows - rb);
-        float accum[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-        for (int col = 0; col < input_width; ++col) {
-          const float value = w[col];
-          for (int r = 0; r < count; ++r) {
-            accum[r] += value * inputs[
-                static_cast<size_t>(rb + r) * input_width + col];
-          }
-        }
-        for (int r = 0; r < count; ++r) {
-          outputs[static_cast<size_t>(rb + r) * output_width + output] = accum[r];
-        }
-      }
-    }
+#if VISUAML_HAS_OPTIONAL_AVX2 && defined(VISUAML_NATIVE_BATCHED_PREFILL)
+  if (prefill && rows >= 2 && input_width >= 32 &&
+      native_avx2_available()) {
+    linear_rows_avx2(inputs, weight, outputs, rows,
+                     input_width, output_width);
     return;
   }
 #endif
+  // Unsupported CPUs and one-token decode use the verified v29 dispatch.
   for (int row = 0; row < rows; ++row) {
     linear(inputs + static_cast<size_t>(row) * input_width, weight,
            outputs + static_cast<size_t>(row) * output_width,
