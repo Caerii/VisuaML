@@ -33,6 +33,7 @@ export type EvidenceSnapshot = {
 };
 
 const hex64 = /^[0-9a-f]{64}$/;
+const hex40 = /^[0-9a-f]{40}$/;
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
 const positive = (value: unknown): value is number =>
@@ -44,7 +45,7 @@ export function parseEvidenceSnapshot(value: unknown): EvidenceSnapshot {
       typeof value.asOf !== 'string' ||
       !/^\d{4}-\d{2}-\d{2}$/.test(value.asOf) ||
       typeof value.sourceCommit !== 'string' ||
-      !hex64.test(value.sourceCommit) ||
+      !hex40.test(value.sourceCommit) ||
       typeof value.workflowRun !== 'string' ||
       !/^https:\/\/github\.com\/Caerii\/VisuaML\/actions\/runs\/\d+$/.test(value.workflowRun) ||
       typeof value.methodology !== 'string' ||
