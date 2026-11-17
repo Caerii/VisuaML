@@ -53,7 +53,7 @@ jobs:
           PYTHONNOUSERSITE: "1"
         run: |
           python visuaml-client/backend/scripts/build_evidence_library_v34.py --output /tmp/library-v34.json
-          python -c "import json; d=json.load(open('/tmp/library-v34.json')); assert d['schema']=='visuaml.evidence-library.v34' and d['counts']['source_artifacts']==3 and d['counts']['studies']==11"
+          python -c "import json; d=json.load(open('/tmp/library-v34.json')); assert d['schema']=='visuaml.evidence-library.v34' and d['counts']['source_artifacts']==3 and d['counts']['studies']==12"
       - name: Verify checked-in catalog has not drifted
         if: hashFiles('visuaml-client/public/evidence/library-v34.json') != ''
         env:
