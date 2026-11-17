@@ -78,6 +78,7 @@ export function ResearchLibraryPage() {
       <header className="research-evidence-header">
         <nav aria-label="Research navigation">
           <a href="/research">Research evidence</a>
+          <a href="/research/knowledge">Computational knowledge graph</a>
           <a href="/compiler">Compiler Lab</a>
           <a href="/roadmap">Public roadmap</a>
         </nav>
