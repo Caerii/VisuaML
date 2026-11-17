@@ -288,18 +288,39 @@ def _v33(data: dict, sha: str, source: str, origin: dict) -> list[EvidenceEntry]
             limitations=tuple(data["limitations"]),
         ))
     rewrite = data["rewrite_witness"]
-    digest = _hash(rewrite["record_sha256"], "rewrite")
-    unsigned = {k: v for k, v in rewrite.items() if k != "record_sha256"}
-    if _digest(unsigned) != digest:
-        raise EvidenceLibraryError("Rewrite numerical record digest mismatch")
-    if rewrite["status"] not in ("passed_finite_witnesses", "rejected"):
-        raise EvidenceLibraryError("Unknown numerical rewrite result")
     optimizer = data["optimization_experiment"]
-    if optimizer["numerical_evidence"]["record_sha256"] != digest:
-        raise EvidenceLibraryError("Optimization/numerical lineage mismatch")
-    ratio = _bounded_real(optimizer["median_ratio_before_over_after"])
-    if ratio == 0:
-        raise EvidenceLibraryError("Invalid optimizer speed ratio")
+    repeated = optimizer["numerical_evidence"]
+    # These are TWO independently produced receipts for the same computation.
+    # Different compile timings create different record hashes legitimately.
+    for receipt in (rewrite, repeated):
+        digest = _hash(receipt["record_sha256"], "rewrite")
+        unsigned = {k: v for k, v in receipt.items() if k != "record_sha256"}
+        if _digest(unsigned) != digest:
+            raise EvidenceLibraryError("Rewrite numerical record digest mismatch")
+        if receipt["status"] not in ("passed_finite_witnesses", "rejected"):
+            raise EvidenceLibraryError("Unknown numerical rewrite result")
+        for side in ("before", "after"):
+            for key in (
+                "semantic_sha256", "generated_cpp_sha256",
+                "native_binary_sha256",
+            ):
+                _hash(receipt[side][key], "rewrite program")
+    for side in ("before", "after"):
+        for key in ("semantic_sha256", "generated_cpp_sha256", "native_binary_sha256"):
+            if rewrite[side][key] != repeated[side][key]:
+                raise EvidenceLibraryError("Optimization changed rewrite identity")
+    if rewrite["rule"] != repeated["rule"] or rewrite["status"] != repeated["status"]:
+        raise EvidenceLibraryError("Optimization changed rewrite rule or status")
+    first_witnesses = [x["input_sha256"] for x in rewrite["comparison"]["witnesses"]]
+    second_witnesses = [x["input_sha256"] for x in repeated["comparison"]["witnesses"]]
+    if first_witnesses != second_witnesses:
+        raise EvidenceLibraryError("Optimization used different untracked witnesses")
+    identity_context = {
+        "rule": rewrite["rule"],
+        "precision": "float32",
+        "native_target": str(rewrite["before"]["target"]),
+        "compiler": str(rewrite["before"]["compiler_identity"])[:160],
+    }
     entries.append(_entry(
         sha=sha, source=source, schema=data["schema"], kind="rewrite_evaluation",
         label=rewrite["rule"], evidence_class="source_bound_finite_numeric_witnesses",
@@ -307,14 +328,31 @@ def _v33(data: dict, sha: str, source: str, origin: dict) -> list[EvidenceEntry]
         semantic=_hash(rewrite["before"]["semantic_sha256"], "rewrite source IR"),
         cpp=_hash(rewrite["after"]["generated_cpp_sha256"], "rewrite generated C++"),
         binary=_hash(rewrite["after"]["native_binary_sha256"], "rewrite binary"),
-        ops=("relu", "relu"), context={
-            "rule": rewrite["rule"],
-            "precision": "float32",
-            "native_target": str(rewrite["before"]["target"]),
-            "compiler": str(rewrite["before"]["compiler_identity"])[:160],
-        }, result={
+        ops=("relu", "relu"),
+        context={**identity_context, "numerical_receipt": rewrite["record_sha256"]},
+        result={"witness_count": len(first_witnesses)},
+        limitations=tuple(data["limitations"]),
+    ))
+    ratio = _bounded_real(optimizer["median_ratio_before_over_after"])
+    if (
+        ratio == 0
+        or optimizer["status"] != "exploratory_timing_after_finite_numerical_witnesses"
+        or repeated["status"] != "passed_finite_witnesses"
+    ):
+        raise EvidenceLibraryError("Unverified or invalid optimization performance claim")
+    entries.append(_entry(
+        sha=sha, source=source, schema=data["schema"],
+        kind="optimization_measurement", label=rewrite["rule"] + " warm CPU comparison",
+        evidence_class="exploratory_timing_after_finite_witnesses",
+        status="measured_not_promoted", run=run, source_commit=commit,
+        semantic=_hash(repeated["before"]["semantic_sha256"], "optimizer source IR"),
+        cpp=_hash(repeated["after"]["generated_cpp_sha256"], "optimizer C++"),
+        binary=_hash(repeated["after"]["native_binary_sha256"], "optimizer binary"),
+        ops=("relu", "relu"),
+        context={**identity_context, "numerical_receipt": repeated["record_sha256"]},
+        result={
             "before_over_after_latency_ratio": ratio,
-            "witness_count": len(rewrite["comparison"]["witnesses"]),
+            "witness_count": len(second_witnesses),
         }, limitations=tuple(data["limitations"]),
     ))
     return entries
