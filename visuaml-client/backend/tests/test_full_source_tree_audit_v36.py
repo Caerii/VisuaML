@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 from scripts.audit_full_source_tree_v36 import (
-    AuditError,
     SOURCE_REVISIONS,
+    AuditError,
     expected_blob_hashes,
     run_audit,
     scan_exact_trees,
