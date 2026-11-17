@@ -36,6 +36,26 @@ class TrustedFXNativeBinding:
     inputs: dict[str, np.ndarray]
     source_tensor_hashes: dict[str, str]
 
+    def validated_inputs(self) -> dict[str, np.ndarray]:
+        """Return isolated buffers only when source-bound weights are intact."""
+        checked = {}
+        for name, array in self.inputs.items():
+            if (
+                not isinstance(array, np.ndarray)
+                or array.dtype != np.float32
+                or not np.isfinite(array).all()
+            ):
+                raise NativeIRCodegenError("Invalid bound FX input tensor")
+            contiguous = np.ascontiguousarray(array).copy()
+            expected = self.source_tensor_hashes.get(name)
+            if (
+                expected is not None
+                and hashlib.sha256(contiguous.tobytes()).hexdigest() != expected
+            ):
+                raise NativeIRCodegenError("FX weight digest changed after lowering")
+            checked[name] = contiguous
+        return checked
+
 
 def _type(node: Node) -> ValueType:
     metadata = node.meta.get("tensor_meta")
@@ -88,7 +108,7 @@ def lower_trusted_fx(
         or sample.numel() > 65_536
     ):
         raise NativeIRCodegenError("Expected bounded finite CPU float32 sample")
-    input_tensor = sample.detach().contiguous()
+    input_tensor = sample.detach().contiguous().clone()
     try:
         traced = symbolic_trace(module)
         with torch.no_grad():
