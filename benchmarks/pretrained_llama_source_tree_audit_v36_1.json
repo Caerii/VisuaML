@@ -1,0 +1,28 @@
+{
+  "corrects": "Prior per-file history intersection examined file-changing commits only; it could not establish the absence of a later commit containing all three source blobs.",
+  "exact_matching_tree_commits": [
+    "12c6070373b92f1a3628581e0d37094ea5cc82db",
+    "49313aac64d01c3f0cda175712f179ff526116b5",
+    "71b575b2e7e5858bcc1e5beda5304fb884b2ed35",
+    "852e2346ff4d67a1ece5e8e373f6b93a3646cc8a",
+    "e1e92e8bf168cac89a418384e99e6cfa9176734c",
+    "ff773237aa09fee8588733cd8a537ad456fe2202"
+  ],
+  "exact_original_file_sha256": {
+    "visuaml-client/backend/examples/native_cpu_bench_v28.py": "f4b8c517876dd18af7977a415e2f4c587ee8c02086a1e6e9b62eb3c2a7bea4d9",
+    "visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.cpp": "408054895f5f017817022f2a7399980d8913fb86655fd43f15d81ab62cb20579",
+    "visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.py": "d0836801810f42404f3c4549d8ea20cdc466acbccfee78e717ef388c4489c3be"
+  },
+  "historical_artifact_sha256": "5fd0a8ddc9034489c88e825e07b5f35eca1b3b9d2f199520f92008b974ce7414",
+  "matching_tree_count": 6,
+  "original_ci_commit_established": false,
+  "reachable_git_commits_scanned": 620,
+  "scan_exhaustive_for_reachable_refs": true,
+  "schema": "visuaml.exhaustive-source-tree-audit.v36.1",
+  "source_blob_git_sha1": {
+    "visuaml-client/backend/examples/native_cpu_bench_v28.py": "059b9a8b5bcc2a34d6bc18ad158eca665fdd8270",
+    "visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.cpp": "b83fe57dc1bc26206b0e40f2ff67aa846aa50dd1",
+    "visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.py": "f65b030afff16c133fcc61c9a3acf08fbeb5b710"
+  },
+  "statement": "Exact full Git-tree matching is independently audited across all reachable refs. Matching tree bytes do not prove the old CI runner used any particular commit."
+}
