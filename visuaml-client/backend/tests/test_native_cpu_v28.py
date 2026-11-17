@@ -307,6 +307,7 @@ def test_native_avx2_selection_rejects_conflicting_modes(tmp_path):
         ({"hidden": 32, "heads": 4, "kv": 2, "middle": 80, "vocab": 64}, 1),
         ({"hidden": 48, "heads": 6, "kv": 3, "middle": 101, "vocab": 67}, 2),
         ({"hidden": 128, "heads": 8, "kv": 4, "middle": 384, "vocab": 257}, 1),
+        ({"hidden": 128, "heads": 8, "kv": 4, "middle": 384, "vocab": 257}, 2),
     ),
 )
 def test_native_batched_prefill_matches_avx2_scalar_and_numpy(
@@ -380,3 +381,33 @@ def test_native_batched_prefill_rejects_unsafe_selection(tmp_path):
         compiler.prefill_dispatch(0)
     with pytest.raises(NativeCpuError, match="Invalid prefill"):
         compiler.prefill_dispatch(33)
+
+
+def test_native_batched_prefill_does_not_publish_partial_kv_on_error(
+    tmp_path, monkeypatch
+):
+    fixture(
+        tmp_path, layers=1, hidden=128, heads=8, kv=4,
+        middle=384, vocab=257,
+    )
+    model = load_hf_llama_local(tmp_path, declared_revision="a" * 40)
+    plan = lower_llama_semantic_program(
+        make_llama_semantic_program(model), model
+    )
+    compiler = NativeCpuLlamaCompiler(
+        plan, enable_avx2=True, enable_batched_prefill=True
+    )
+    session = compiler.new_session()
+    session.step(np.array([[1, 2, 3, 4]], dtype=np.int64))
+    snapshot = session.snapshot()
+    original = compiler._decode
+    monkeypatch.setattr(compiler, "_decode", lambda *args: -99)
+    with pytest.raises(NativeCpuError, match="failed"):
+        session.step(np.array([[5, 6, 7, 8]], dtype=np.int64))
+    monkeypatch.setattr(compiler, "_decode", original)
+    assert session.cursor == 4
+    for actual, expected in zip(
+        session.snapshot().layers, snapshot.layers
+    ):
+        np.testing.assert_array_equal(actual.keys, expected.keys)
+        np.testing.assert_array_equal(actual.values, expected.values)
