@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import platform
 from pathlib import Path
 
@@ -96,6 +97,7 @@ def run(seed: int = 32) -> dict:
     )
     return {
         "schema": "visuaml.trusted-fx-generated-native.v32",
+        "source_commit": os.environ.get("VISUAML_SOURCE_COMMIT"),
         "seed": seed,
         "torch": torch.__version__,
         "platform": platform.platform(),
