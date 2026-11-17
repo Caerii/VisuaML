@@ -63,8 +63,10 @@ def benchmark_source(
         raise RuntimeError("Benchmark model revision mismatch")
     if result["trials"] != trials or result["chunks"] != [4, 1, 1, 2]:
         raise RuntimeError("Benchmark workload changed")
-    if len(result["raw_samples_ms"]["native_cpp"]) != trials:
-        raise RuntimeError("Missing individual native samples")
+    if simd and len(result.get("raw_samples_ms", {}).get("native_cpp", [])) != trials:
+        raise RuntimeError("Missing current-branch individual native samples")
+    if result["latency"]["native_cpp"]["median_ms"] <= 0:
+        raise RuntimeError("Invalid measured native latency")
     if simd and "native_avx2" not in result["latency"]:
         raise RuntimeError("Current branch lacks guarded SIMD comparator")
     return result
@@ -153,7 +155,7 @@ def run(*, pairs: int, trials: int) -> dict:
                     "One CI runner; subject to contention, clock scaling and thermal drift.",
                     "Short pinned Llama workload, not production token throughput.",
                     "The baseline is a separate process but uses the same checkpoint and toolchain.",
-                    "All source hashes, raw samples and per-variant parity receipts are retained.",
+                    "Baseline v28 retains aggregate timings; v29 retains raw timing samples.",
                     "This is a comparison experiment, not a general speedup guarantee.",
                 ],
             }
