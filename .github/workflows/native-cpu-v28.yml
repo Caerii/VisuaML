@@ -10,6 +10,10 @@ on:
       - visuaml-client/backend/scripts/probe_native_llama_v28.py
       - visuaml-client/backend/examples/native_cpu_bench_v28.py
       - visuaml-client/backend/scripts/compare_native_revisions_v29.py
+      - visuaml-client/backend/examples/native_cpu_memory_v29.py
+      - visuaml-client/backend/tests/test_native_cpu_memory_v29.py
+      - visuaml-client/backend/tests/test_native_cpu_v28.py
+      - visuaml-client/backend/tests/test_native_cpu_bench_v28.py
       - .github/workflows/native-cpu-v28.yml
   pull_request:
     paths:
@@ -18,6 +22,10 @@ on:
       - visuaml-client/backend/scripts/probe_native_llama_v28.py
       - visuaml-client/backend/examples/native_cpu_bench_v28.py
       - visuaml-client/backend/scripts/compare_native_revisions_v29.py
+      - visuaml-client/backend/examples/native_cpu_memory_v29.py
+      - visuaml-client/backend/tests/test_native_cpu_memory_v29.py
+      - visuaml-client/backend/tests/test_native_cpu_v28.py
+      - visuaml-client/backend/tests/test_native_cpu_bench_v28.py
 jobs:
   native-parity:
     runs-on: ubuntu-latest
