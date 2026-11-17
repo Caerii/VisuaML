@@ -8,7 +8,6 @@ not a general equivalence theorem or portable performance result.
 from __future__ import annotations
 
 import hashlib
-import itertools
 import json
 from pathlib import Path
 from typing import Any
