@@ -119,7 +119,16 @@ def _tensor_names(plan: LlamaSemanticPlan) -> tuple[str, ...]:
 class NativeCpuLlamaCompiler:
     """Source-bound compiler for one validated Llama program and weight layout."""
 
-    def __init__(self, plan: LlamaSemanticPlan):
+    def __init__(
+        self, plan: LlamaSemanticPlan, *, reference_kernels: bool = False,
+        enable_avx2: bool = False,
+    ):
+        if type(reference_kernels) is not bool or type(enable_avx2) is not bool:
+            raise NativeCpuError("Kernel selection flags must be booleans")
+        if reference_kernels and enable_avx2:
+            raise NativeCpuError("Scalar reference cannot also enable SIMD")
+        self.reference_kernels = reference_kernels
+        self.enable_avx2 = enable_avx2
         if not isinstance(plan, LlamaSemanticPlan):
             raise NativeCpuError("Expected a canonical Llama semantic plan")
         self.plan = lower_llama_semantic_program(
@@ -165,8 +174,13 @@ class NativeCpuLlamaCompiler:
         started = time.perf_counter_ns()
         args = [
             compiler, "-std=c++17", "-O2", "-fPIC", "-shared",
-            "-fno-fast-math", str(_SOURCE), "-o", str(target),
+            "-fno-fast-math",
         ]
+        if self.reference_kernels:
+            args.append("-DVISUAML_NATIVE_SCALAR_REFERENCE=1")
+        if self.enable_avx2:
+            args.append("-DVISUAML_NATIVE_AVX2_RUNTIME=1")
+        args.extend((str(_SOURCE), "-o", str(target)))
         try:
             result = subprocess.run(
                 args, capture_output=True, text=True, check=False, timeout=90,
@@ -188,6 +202,10 @@ class NativeCpuLlamaCompiler:
             self._library = ctypes.CDLL(str(target))
         except OSError as exc:
             raise NativeCpuError("Compiled native library failed to load") from exc
+        self._avx2_capability = self._library.visuaml_native_avx2_active
+        self._avx2_capability.restype = ctypes.c_int
+        self._avx2_capability.argtypes = []
+        self._avx2_active = bool(self._avx2_capability())
         self._decode = self._library.visuaml_native_llama_decode
         self._decode.restype = ctypes.c_int
         self._decode.argtypes = [
@@ -246,7 +264,21 @@ class NativeCpuLlamaCompiler:
         return NativeCpuLlamaSession(self)
 
     def report(self) -> dict:
-        return asdict(self._evidence)
+        kernel = "scalar_reference" if self.reference_kernels else "four_row"
+        if self.enable_avx2 and self._avx2_active:
+            kernel = "avx2_runtime_with_short_width_fallback"
+        return {
+            **asdict(self._evidence),
+            "linear_kernel": kernel,
+            "avx2_requested": self.enable_avx2,
+            "avx2_active": self._avx2_active,
+            "kernel_compile_flags": (
+                ["-DVISUAML_NATIVE_SCALAR_REFERENCE=1"]
+                if self.reference_kernels else
+                ["-DVISUAML_NATIVE_AVX2_RUNTIME=1"]
+                if self.enable_avx2 else []
+            ),
+        }
 
 
 class NativeCpuLlamaSession:

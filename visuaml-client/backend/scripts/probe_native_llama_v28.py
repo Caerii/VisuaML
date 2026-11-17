@@ -128,7 +128,8 @@ def run() -> dict:
             np.testing.assert_allclose(a.keys, b.keys, atol=3e-4, rtol=3e-4)
             np.testing.assert_allclose(a.values, b.values, atol=3e-4, rtol=3e-4)
         matched_performance = benchmark(
-            imported, prompt=4, chunk_sizes=(1, 1, 2), trials=5
+            imported, prompt=4, chunk_sizes=(1, 1, 2), trials=7,
+            compare_native_reference=True, compare_simd=True,
         )
         return {
             "schema": "visuaml.pinned-native-llama-v28",

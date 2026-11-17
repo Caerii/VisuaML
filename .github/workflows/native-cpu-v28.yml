@@ -9,6 +9,11 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.py
       - visuaml-client/backend/scripts/probe_native_llama_v28.py
       - visuaml-client/backend/examples/native_cpu_bench_v28.py
+      - visuaml-client/backend/scripts/compare_native_revisions_v29.py
+      - visuaml-client/backend/examples/native_cpu_memory_v29.py
+      - visuaml-client/backend/tests/test_native_cpu_memory_v29.py
+      - visuaml-client/backend/tests/test_native_cpu_v28.py
+      - visuaml-client/backend/tests/test_native_cpu_bench_v28.py
       - .github/workflows/native-cpu-v28.yml
   pull_request:
     paths:
@@ -16,12 +21,19 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.py
       - visuaml-client/backend/scripts/probe_native_llama_v28.py
       - visuaml-client/backend/examples/native_cpu_bench_v28.py
+      - visuaml-client/backend/scripts/compare_native_revisions_v29.py
+      - visuaml-client/backend/examples/native_cpu_memory_v29.py
+      - visuaml-client/backend/tests/test_native_cpu_memory_v29.py
+      - visuaml-client/backend/tests/test_native_cpu_v28.py
+      - visuaml-client/backend/tests/test_native_cpu_bench_v28.py
 jobs:
   native-parity:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -36,4 +48,29 @@ jobs:
           PYTHONNOUSERSITE: "1"
           OPENBLAS_NUM_THREADS: "1"
         run: |
-          PYTHONPATH=visuaml-client/backend python visuaml-client/backend/scripts/probe_native_llama_v28.py
+          PYTHONPATH=visuaml-client/backend python visuaml-client/backend/scripts/probe_native_llama_v28.py > native-cpu-pretrained-witness.json
+          cat native-cpu-pretrained-witness.json
+      - name: Upload pinned model numerical and latency witness
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-cpu-pretrained-witness
+          path: native-cpu-pretrained-witness.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Paired v28-v29 baseline on this GitHub runner
+        if: github.event_name == 'pull_request'
+        env:
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          HF_HUB_DISABLE_XET: "1"
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+        run: |
+          python visuaml-client/backend/scripts/compare_native_revisions_v29.py --pairs 2 --trials 7 --output native-cpu-v28-v29-paired.json
+      - name: Upload source-bound paired benchmark evidence
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-cpu-v28-v29-paired
+          path: native-cpu-v28-v29-paired.json
+          if-no-files-found: error
+          retention-days: 30

@@ -7,7 +7,7 @@ VisuaML combines a collaborative neural-network graph application with a separat
 | Start here | When to read it |
 | --- | --- |
 | [Project README](../README.md) | Product overview, quick start and accurate current scope |
-| [Public Research Roadmap](ROADMAP.md) | Auditable progress percentages, acceptance gates, global access and review methodology |
+| [v29 native performance](V29_NATIVE_CPU_PERFORMANCE.md) | Reproducible scalar versus four-row execution, resident memory methodology and validation gates |\n| [Public Research Roadmap](ROADMAP.md) | Auditable progress percentages, acceptance gates, global access and review methodology |
 | [Compiler Guide](COMPILER_GUIDE.md) | Actual model compatibility, typed IR, backends and executable examples |
 | [Architecture](ARCHITECTURE.md) | Full-stack data flow, compiler modules, state and ownership |
 | [Verification](VERIFICATION.md) | Tests, pinned real-checkpoint witnesses, benchmarks and numerical evidence |

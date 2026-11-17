@@ -160,3 +160,142 @@ def test_native_sessions_share_binary_but_not_mutable_cache(tmp_path):
         b.step(second), model.forward(second), atol=2e-4, rtol=2e-4
     )
     assert a.cursor == 2 and b.cursor == 3
+
+
+@pytest.mark.parametrize(
+    "chunks",
+    (
+        (1, 1, 1, 1, 1, 1),
+        (2, 4),
+        (4, 2),
+        (6,),
+    ),
+)
+def test_native_rope_reuse_is_chunk_partition_invariant(tmp_path, chunks):
+    """Q/K angle reuse must not depend on prefill/decode chunk boundaries."""
+    _, _, model, plan = prepare(tmp_path, layers=1, batch=2)
+    compiler = NativeCpuLlamaCompiler(plan)
+    native = compiler.new_session()
+    oracle = plan.new_session(backend="numpy")
+    rng = np.random.default_rng(629)
+    tokens = rng.integers(
+        0, model.profile.vocabulary, size=(2, 6), dtype=np.int64
+    )
+    cursor = 0
+    actual_parts = []
+    expected_parts = []
+    for width in chunks:
+        part = tokens[:, cursor:cursor + width]
+        actual_parts.append(native.step(part))
+        expected_parts.append(oracle.step(part))
+        cursor += width
+    assert cursor == tokens.shape[1]
+    np.testing.assert_allclose(
+        np.concatenate(actual_parts, axis=1),
+        np.concatenate(expected_parts, axis=1),
+        atol=2e-4, rtol=2e-4,
+    )
+    for actual, expected in zip(
+        native.snapshot().layers, oracle.snapshot().layers
+    ):
+        np.testing.assert_allclose(
+            actual.keys, expected.keys, atol=2e-4, rtol=2e-4
+        )
+        np.testing.assert_allclose(
+            actual.values, expected.values, atol=2e-4, rtol=2e-4
+        )
+
+
+@pytest.mark.parametrize("layers,batch", ((1, 1), (2, 2)))
+def test_native_four_row_linear_matches_separate_scalar_binary(
+    tmp_path, layers, batch
+):
+    """Two independently compiled kernel variants must agree, including KV."""
+    _, _, model, plan = prepare(tmp_path, layers=layers, batch=batch)
+    fast_compiler = NativeCpuLlamaCompiler(plan)
+    reference_compiler = NativeCpuLlamaCompiler(plan, reference_kernels=True)
+    assert fast_compiler.report()["linear_kernel"] == "four_row"
+    assert reference_compiler.report()["linear_kernel"] == "scalar_reference"
+    assert (
+        fast_compiler.report()["executable_sha256"]
+        != reference_compiler.report()["executable_sha256"]
+    )
+    fast, reference = fast_compiler.new_session(), reference_compiler.new_session()
+    semantic = plan.new_session(backend="numpy")
+    rng = np.random.default_rng(831 + layers)
+    for width in (3, 1, 4, 2):
+        tokens = rng.integers(
+            0, model.profile.vocabulary, size=(batch, width), dtype=np.int64
+        )
+        a, b, c = fast.step(tokens), reference.step(tokens), semantic.step(tokens)
+        np.testing.assert_allclose(a, b, rtol=2e-4, atol=2e-4)
+        np.testing.assert_allclose(a, c, rtol=2e-4, atol=2e-4)
+        for af, bf, cf in zip(
+            fast.snapshot().layers,
+            reference.snapshot().layers,
+            semantic.snapshot().layers,
+        ):
+            np.testing.assert_allclose(af.keys, bf.keys, rtol=2e-4, atol=2e-4)
+            np.testing.assert_allclose(af.values, bf.values, rtol=2e-4, atol=2e-4)
+            np.testing.assert_allclose(af.keys, cf.keys, rtol=2e-4, atol=2e-4)
+            np.testing.assert_allclose(af.values, cf.values, rtol=2e-4, atol=2e-4)
+
+
+@pytest.mark.parametrize(
+    "shape",
+    (
+        {"hidden": 32, "heads": 4, "kv": 2, "middle": 80, "vocab": 64},
+        {"hidden": 48, "heads": 6, "kv": 3, "middle": 101, "vocab": 67},
+    ),
+)
+def test_optional_native_avx2_matches_scalar_four_row_and_numpy(tmp_path, shape):
+    """Runtime SIMD dispatch must preserve full decoding and KV state.
+
+    The second geometry exercises non-multiple-of-eight output widths and
+    input tails, without requiring that the test machine actually has AVX2.
+    """
+    fixture(tmp_path, layers=2, **shape)
+    model = load_hf_llama_local(tmp_path, declared_revision="a" * 40)
+    plan = lower_llama_semantic_program(
+        make_llama_semantic_program(model, batch=2), model, batch=2
+    )
+    simd = NativeCpuLlamaCompiler(plan, enable_avx2=True)
+    four_row = NativeCpuLlamaCompiler(plan)
+    scalar = NativeCpuLlamaCompiler(plan, reference_kernels=True)
+    assert simd.report()["avx2_requested"] is True
+    assert four_row.report()["avx2_requested"] is False
+    if simd.report()["avx2_active"]:
+        assert simd.report()["linear_kernel"].startswith("avx2_runtime")
+    else:
+        assert simd.report()["linear_kernel"] == "four_row"
+    sessions = [
+        simd.new_session(), four_row.new_session(), scalar.new_session(),
+        plan.new_session(backend="numpy"),
+    ]
+    rng = np.random.default_rng(2929)
+    for width in (3, 1, 5):
+        tokens = rng.integers(
+            0, model.profile.vocabulary, size=(2, width), dtype=np.int64
+        )
+        outputs = [session.step(tokens) for session in sessions]
+        for output in outputs[:-1]:
+            np.testing.assert_allclose(
+                output, outputs[-1], atol=2e-4, rtol=2e-4
+            )
+        states = [session.snapshot() for session in sessions]
+        for state in states[:-1]:
+            for actual, reference in zip(state.layers, states[-1].layers):
+                np.testing.assert_allclose(
+                    actual.keys, reference.keys, atol=2e-4, rtol=2e-4
+                )
+                np.testing.assert_allclose(
+                    actual.values, reference.values, atol=2e-4, rtol=2e-4
+                )
+
+
+def test_native_avx2_selection_rejects_conflicting_modes(tmp_path):
+    _, _, _, plan = prepare(tmp_path, layers=1)
+    with pytest.raises(NativeCpuError, match="Scalar reference"):
+        NativeCpuLlamaCompiler(plan, reference_kernels=True, enable_avx2=True)
+    with pytest.raises(NativeCpuError, match="booleans"):
+        NativeCpuLlamaCompiler(plan, enable_avx2="true")

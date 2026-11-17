@@ -6,9 +6,9 @@
 
 VisuaML is an open-source research platform combining interactive, collaborative PyTorch graph visualization with an experimental typed-intermediate-representation compiler and inference runtime. The web application helps researchers inspect model structures and tensor relationships. The Python Compiler Lab investigates how to represent, transform, execute, compare, and safely reuse neural computation across different execution strategies.
 
-**Current development milestone: v28 (November 2026).** The native CPU and redesigned client additions are committed on the v28 feature branch until their CI checks pass and they merge. The client package still reports version 0.0.0; development milestones are *not* published semantic-version releases.
+**Current research milestone: v29 (November 2026).** The v28 independent native CPU backend and redesigned client are integrated. The v29 research adds an independently compared scalar/four-row execution path, optional CPU-guarded AVX2 acceleration, source-bound paired benchmarks and process-memory evidence. These remain bounded Llama experiments, not a production inference backend or general IR-to-native compiler. The client package still reports version 0.0.0; research milestones are *not* published semantic-version releases.
 
-[Public research roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
+[v29 native performance research](docs/V29_NATIVE_CPU_PERFORMANCE.md) · [Public research roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
 
 [![CI](https://github.com/Caerii/VisuaML/actions/workflows/ci.yml/badge.svg)](https://github.com/Caerii/VisuaML/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](docs/LICENSE)
 
@@ -34,7 +34,7 @@ The Compiler Lab represents a supported computation in a typed Semantic IR, expl
 | Architecture Atlas | 59 **catalogued** families; not 59 fully runnable model families |
 | Semantic representation | Tensor/value types, closed-world operators, ordered state effects and admission guards |
 | Checkpoints | Strict local unsharded Llama safetensors and compatible tokenizer settings |
-| CPU execution | NumPy reference, TorchScript primitives/fused/whole-decoder traces, plus independently executed native C++17 reference code |
+| CPU execution | NumPy reference and TorchScript, plus independently compiled native C++17 scalar, four-row and opt-in AVX2 Llama kernels with numerical/KV parity gates |
 | Dynamic decoding | One traced Llama graph reused across different valid chunk lengths and KV cursor values |
 | Model reuse | Verified graph/weight sharing between sessions; disjoint transactional K/V buffers |
 | Model and session lifecycle | LRU template ownership, explicit KV leases and logical active-model weight accounting |
@@ -136,6 +136,7 @@ A few measured milestones illustrate the approach, each on a narrowly defined, s
 - **v23–v24:** sharing a verified graph and its weight-bearing module reduced measured four-session cold startup from approximately 532 ms to 256 ms in one three-trial CI benchmark.
 - **v25–v27:** model-template LRU eviction, private KV leases, and active model lifetime accounting make resource ownership more explicit; these are **logical**, not OS-enforced physical memory budgets.
 - **v28:** a closed-world, independently compiled scalar C++17 CPU decoder has passed a pinned trained Llama numerical witness. It is a distinct implementation, not a claim of faster native inference.
+- **v29:** RoPE angle reuse, per-invocation scratch reuse, four-row linear traversal and CPU-guarded AVX2 have source-bound numerical witnesses. A same-runner paired v28→v29 comparison measured a median **5.45×** AVX2 warm-latency ratio across two pairs on one AMD EPYC 7763 runner; a different shared runner measured a different ratio. See [v29 methodology](docs/V29_NATIVE_CPU_PERFORMANCE.md). Neither result demonstrates general large-model throughput or reduced physical peak memory.
 
 Benchmark sources and complete caveats are indexed in [Verification](docs/VERIFICATION.md) and committed as JSON in [benchmarks](benchmarks/). The project is **not** claiming to outperform mature production inference engines, support all catalogued architectures, or deliver real photonic acceleration.
 

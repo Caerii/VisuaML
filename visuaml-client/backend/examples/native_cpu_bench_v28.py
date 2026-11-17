@@ -44,7 +44,8 @@ def summarize(samples: list[float]) -> dict:
 def benchmark(
     model: LlamaLocalCheckpoint, *, prompt: int = 4,
     chunk_sizes: tuple[int, ...] = (1, 1, 2), trials: int = 7,
-    seed: int = 101,
+    seed: int = 101, compare_native_reference: bool = False,
+    compare_simd: bool = False,
 ) -> dict:
     if (
         type(prompt) is not int or not 1 <= prompt <= 32
@@ -63,6 +64,17 @@ def benchmark(
         "torchscript_whole": plan.new_session(backend="torchscript_poly"),
         "native_cpp": native.new_session(),
     }
+    native_compilers = {"native_cpp": native}
+    native_reference = None
+    if compare_native_reference:
+        native_reference = NativeCpuLlamaCompiler(plan, reference_kernels=True)
+        engines["native_scalar_reference"] = native_reference.new_session()
+        native_compilers["native_scalar_reference"] = native_reference
+    native_simd = None
+    if compare_simd:
+        native_simd = NativeCpuLlamaCompiler(plan, enable_avx2=True)
+        engines["native_avx2"] = native_simd.new_session()
+        native_compilers["native_avx2"] = native_simd
     rng = np.random.default_rng(seed)
     sample = rng.integers(
         0, model.profile.vocabulary,
@@ -122,11 +134,60 @@ def benchmark(
         "chunks": list(chunks),
         "trials": trials,
         "latency": {key: summarize(value) for key, value in timings.items()},
+        # Preserve individual samples for matched-device replication and
+        # confidence intervals; aggregate statistics alone hide instability.
+        "raw_samples_ms": {
+            key: [round(sample, 6) for sample in values]
+            for key, values in timings.items()
+        },
+        "timing_order": "forward on even trials; reverse on odd trials",
         "compilation": {
             "native_cpp_ms": native.report()["compilation_ms"],
+            "native_scalar_reference_ms": (
+                native_reference.report()["compilation_ms"]
+                if native_reference is not None else None
+            ),
+            "native_avx2_ms": (
+                native_simd.report()["compilation_ms"]
+                if native_simd is not None else None
+            ),
             "torchscript_traces": engines["torchscript_whole"].report()["traces"],
         },
         "numerical_certificate": "all chunked logits and final layer KV match NumPy IR",
+        "native_compiler_evidence": {
+            name: {
+                key: compiler.report()[key]
+                for key in (
+                    "linear_kernel", "avx2_requested", "avx2_active",
+                    "kernel_compile_flags", "compiler_identity", "target",
+                    "cpp_source_sha256", "executable_sha256", "compilation_ms",
+                )
+            }
+            for name, compiler in native_compilers.items()
+        },
+        "native_linear_variants": {
+            "native_cpp": native.report()["linear_kernel"],
+            **(
+                {"native_scalar_reference": native_reference.report()["linear_kernel"]}
+                if native_reference is not None else {}
+            ),
+            **(
+                {"native_avx2": native_simd.report()["linear_kernel"]}
+                if native_simd is not None else {}
+            ),
+        },
+        "warm_native_speedup_vs_scalar": (
+            round(
+                statistics.median(timings["native_scalar_reference"])
+                / statistics.median(timings["native_cpp"]), 6
+            ) if native_reference is not None else None
+        ),
+        "warm_simd_speedup_vs_four_row": (
+            round(
+                statistics.median(timings["native_cpp"])
+                / statistics.median(timings["native_avx2"]), 6
+            ) if native_simd is not None else None
+        ),
         "python": platform.python_version(),
         "numpy": np.__version__,
         "cpu": platform.processor() or platform.machine(),
@@ -151,6 +212,14 @@ def main() -> None:
     parser.add_argument("--prompt", type=int, default=4)
     parser.add_argument("--chunks", nargs="+", type=int, default=[1, 1, 2])
     parser.add_argument("--trials", type=int, default=7)
+    parser.add_argument(
+        "--compare-native-reference", action="store_true",
+        help="Compile scalar and four-row native binaries for matched comparison",
+    )
+    parser.add_argument(
+        "--compare-simd", action="store_true",
+        help="Compile a guarded AVX2 binary, retaining four-row fallback",
+    )
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     model = load_hf_llama_local(
@@ -159,6 +228,8 @@ def main() -> None:
     record = benchmark(
         model, prompt=args.prompt,
         chunk_sizes=tuple(args.chunks), trials=args.trials,
+        compare_native_reference=args.compare_native_reference,
+        compare_simd=args.compare_simd,
     )
     wire = json.dumps(record, indent=2, sort_keys=True) + "\n"
     if args.output:
