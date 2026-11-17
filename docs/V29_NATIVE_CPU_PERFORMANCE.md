@@ -44,13 +44,15 @@ Run the comparison with:
 PYTHONPATH=backend python backend/examples/native_cpu_bench_v28.py /path/to/pinned/checkpoint --revision YOUR_PINNED_COMMIT_SHA --prompt 4 --chunks 1 1 2 --trials 21 --compare-native-reference --output /tmp/visuaml-v29-compare.json
 ```
 
-The [native parity GitHub Actions workflow](../.github/workflows/native-cpu-v28.yml) now includes this comparison on the pinned real pretrained checkpoint, and uploads its full JSON result as a 30-day `native-cpu-pretrained-witness` artifact. A CI runner is not stable matched hardware for longitudinal performance claims; do not compare its ratios against unrelated machines.\n\nThe output includes `native_scalar_reference` timing samples, `native_linear_variants`, separate native compilation times, and `warm_native_speedup_vs_scalar` calculated as median scalar time divided by median four-row time. It is a *ratio*, not an established speedup claim unless reproduced with controlled hardware and enough trials. A combined v28-to-v29 measurement additionally captures RoPE and allocation effects.
+The [native parity GitHub Actions workflow](../.github/workflows/native-cpu-v28.yml) now includes this comparison on the pinned real pretrained checkpoint, and uploads its full JSON result as a 30-day `native-cpu-pretrained-witness` artifact. A CI runner is not stable matched hardware for longitudinal performance claims; do not compare its ratios against unrelated machines.
+
+The output includes `native_scalar_reference` timing samples, `native_linear_variants`, separate native compilation times, and `warm_native_speedup_vs_scalar` calculated as median scalar time divided by median four-row time. It is a *ratio*, not an established speedup claim unless reproduced with controlled hardware and enough trials. A combined v28-to-v29 measurement additionally captures RoPE and allocation effects.
 
 **Additional safeguards:** compiler flags use `-O2 -fno-fast-math`; optimized and scalar streams must match independent NumPy logits and all KV states. The existing native pretrained witness remains mandatory. Numerical agreement for tested models is not a proof of all possible inputs. Future physical-memory experiments must distinguish RSS/peak high-water measurements from logical live KV budgets.
 
 ## Physical process memory probe (Linux)
 
-The independent `examples/native_cpu_memory_v29.py` probe executes each native linear variant in a **fresh child process**, alternating the order across repetitions. It collects Linux `VmRSS` and `VmHWM` before model loading, after loading, after native compilation, and after an initial + streaming decode. These are observed physical resident-process statistics—not the sizes of Python logical KV leases.
+The independent `examples/native_cpu_memory_v29.py` probe executes the scalar-reference, four-row, and AVX2-requested variants in a **fresh child process**, alternating the order across repetitions. It collects Linux `VmRSS` and `VmHWM` before model loading, after loading, after native compilation, and after an initial + streaming decode. These are observed physical resident-process statistics—not the sizes of Python logical KV leases.
 
 ```sh
 PYTHONPATH=backend python backend/examples/native_cpu_memory_v29.py /path/to/pinned/checkpoint --revision YOUR_PINNED_COMMIT_SHA --repetitions 3 --output /tmp/visuaml-v29-memory.json
@@ -69,6 +71,14 @@ PYTHONPATH=backend python backend/examples/native_cpu_bench_v28.py /path/to/pinn
 On [one seven-trial pinned pretrained CI run](https://github.com/Caerii/VisuaML/actions/runs/44124083185), median warm execution was 40.078 ms (native scalar reference), 14.988 ms (four-row), **6.528 ms (AVX2)**, 20.761 ms (NumPy semantic reference) and 14.973 ms (TorchScript whole graph). The median AVX2/four-row speed ratio was **2.296×** on that runner, and this is **not** a broad production throughput or cross-hardware claim. Both native variants preserve the documented numerical and KV witnesses. These are early CI observations, not a finished benchmark campaign.
 
 The [paired revision runner](../visuaml-client/backend/scripts/compare_native_revisions_v29.py) measures the merged v28 C++ baseline and v29 variants against the **same pinned checkpoint** on one GitHub runner, alternating process order and publishing source-bound artifacts. It checks pinned safetensors/configuration hashes and semantic identity. The original v28 script records aggregate statistics only; the current branch records raw individual latency samples. Both compare outputs against the independent NumPy program. GitHub shared-runner contention, DVFS, thermals, process startup, and limited model dimensions remain important limitations. Future dedicated-hardware experiments must test different shapes, large vocabularies, longer contexts, and energy/performance over time.
+
+### v28-to-v29 matched-revision witness (November 17, 2026)
+
+The [paired CI run](https://github.com/Caerii/VisuaML/actions/runs/44124932669) compiled the merged v28 commit `a2e2042` and the experimental v29 branch on the **same AMD EPYC 7763 runner**, with exact pinned checkpoint and semantic hashes, alternating process order, two pairs and seven trials per backend per pair. The two v28 native medians were **41.156 / 40.901 ms**; v29 four-row medians were **16.972 / 15.914 ms**; v29 AVX2 medians were **7.978 / 7.112 ms**. The median of the paired v28-to-v29 ratios was **2.497×** for four-row and **5.455×** for AVX2. The downloadable artifact retains per-pair source fingerprints, compiler identity, and current-branch individual latency samples.
+
+This comparison adds a controlled revision-to-revision observation; it is **not** a multi-run, dedicated-machine, representative-model study, nor does it establish a production performance guarantee. The v28 benchmark did not retain individual raw timing samples, so the paired comparator explicitly preserves v28 aggregate statistics rather than fabricating its raw distribution. Repeating on a dedicated machine and wider shapes remains necessary.
+
+The paired workflow also has an opt-in Linux whole-process RSS experiment for all three v29 kernel variants. That evidence is a process-memory observation—not an allocator-isolated measurement or proof that scratch reuse lowers physical peak memory.
 
 The native code remains architecture-specific and experimental. A fast finite witness does **not** establish semantic equivalence for every model input or competitive industry serving economics.
 
