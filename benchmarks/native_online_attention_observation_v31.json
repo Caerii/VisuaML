@@ -1,0 +1,87 @@
+{
+  "schema": "visuaml.native-online-attention-observation.v31",
+  "asOf": "2026-11-17",
+  "evidenceOrigin": {
+    "nativeWorkflowUrl": "https://github.com/Caerii/VisuaML/actions/runs/44141795232",
+    "artifacts": [
+      "native-cpu-pretrained-witness",
+      "native-online-attention-geometry-v31"
+    ],
+    "note": "The full CI artifact records the individual warm samples and compiler evidence. This checked-in compact observation preserves the findings after CI artifacts expire."
+  },
+  "sourceSha256": {
+    "visuaml/compiler_lab/native_cpu_v28.cpp": "7ff215cbb486a53858d8338fe6d8773b4cd53390bf54ba51a6f49465dd22e117",
+    "visuaml/compiler_lab/native_cpu_v28.py": "c347c7645163346afcfe675046935dd13dbbc725e3b545596a1c3646e11ebeab",
+    "examples/native_online_attention_bench_v31.py": "698fa5333f3bd579139045e5144c30a5d851f30b199c48cdfd0216911b2d8e78"
+  },
+  "metric": "median materialized-score decode latency divided by online-attention decode latency; >1 favors online",
+  "pretrained": {
+    "source": "manojredhat/tiny-llama",
+    "revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+    "checkpointSha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+    "trials": 3,
+    "pastTokens": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "ratios": [
+      1.085116,
+      1.02081,
+      0.982948,
+      0.972735
+    ],
+    "parity": "Full native CI trained-model witness passed including independent NumPy logits and final KV states."
+  },
+  "synthetic": {
+    "trials": 3,
+    "pastTokens": [
+      4,
+      16,
+      32,
+      48
+    ],
+    "shapes": [
+      {
+        "name": "small",
+        "hidden": 32,
+        "ratios": [
+          0.969019,
+          0.973083,
+          0.963832,
+          0.954021
+        ]
+      },
+      {
+        "name": "middle",
+        "hidden": 96,
+        "ratios": [
+          0.998324,
+          1.082782,
+          1.081747,
+          1.020314
+        ]
+      },
+      {
+        "name": "wide_long_prefill",
+        "hidden": 192,
+        "ratios": [
+          0.82782,
+          1.106085,
+          1.042699,
+          0.988684
+        ]
+      }
+    ],
+    "parity": "All candidate geometries passed independent NumPy prefill/decode logit and final KV checks."
+  },
+  "decision": "Do not switch the default from materialized_scores; retain opt-in online kernel for bounded research and future profiling.",
+  "limitations": [
+    "Two variants of the same bounded Llama-specific native decoder, not a general IR code generator.",
+    "At most 64-token context sweep and 1–2 layer tiny programs; not production long-context serving.",
+    "Shared CI runner and three trials per case; ratios are noisy and shape-dependent.",
+    "Eliminating one small scores vector does not demonstrate lower process peak RSS or energy consumption.",
+    "No measured GPU or photonic hardware backend."
+  ]
+}
