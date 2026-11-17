@@ -7,7 +7,6 @@ import hashlib
 import numpy as np
 import pytest
 import torch
-
 from visuaml.compiler_lab.optimization_search_v33 import evaluate_relu_candidate
 from visuaml.compiler_lab.semantic_ir import (
     SemanticOperation,
