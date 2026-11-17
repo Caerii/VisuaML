@@ -82,12 +82,10 @@ def load_archive(repo: Path) -> tuple[dict, str]:
 
 
 def discover_historical_sources(repo: Path) -> dict:
-    """Locate exact observed source-byte versions across full Git history.
+    """Find exact file versions AND matching full Git trees, never just changes.
 
-    A version matching every tracked source digest is a *candidate checkout*,
-    not proof of the source commit of the original GitHub Actions run.
-    If no common commit exists, report each verifiable file version instead of
-    inventing a checkout that never existed.
+    v36.1 corrected the earlier invalid intersection of per-file changing
+    commits. Matching source trees do not establish the original CI checkout.
     """
     archive, archived_sha = load_archive(repo)
     expected = archive["matched_cpu_benchmark"]["source_sha256"]
@@ -115,13 +113,21 @@ def discover_historical_sources(repo: Path) -> dict:
             if sha(original) == expected[relative]:
                 found.append(commit)
         matching[relative] = found
-    common = set.intersection(*(set(matches) for matches in matching.values()))
+    # Per-file change-commit intersection cannot determine whether a later
+    # commit tree contains all three source blobs. Audit full reachable trees.
+    from scripts.audit_full_source_tree_v36 import run_audit
+
+    full_trees = run_audit(repo)
+    complete = full_trees["exact_matching_tree_commits"]
     return {
         "schema": "visuaml.historical-source-discovery.v36",
         "archive_sha256": archived_sha,
         "candidate_checked": CANDIDATE_COMMIT,
-        "candidate_is_complete_match": CANDIDATE_COMMIT in common,
-        "complete_matching_commits": sorted(common),
+        "candidate_is_complete_match": CANDIDATE_COMMIT in complete,
+        "complete_matching_commits": complete,
+        "commits_scanned_for_complete_source": full_trees[
+            "reachable_git_commits_scanned"
+        ],
         "file_matching_commits": matching,
         "file_revision_counts": counts,
         "found_all_files": all(matching.values()),
@@ -171,10 +177,11 @@ def verify_source(repo: Path, commit: str = CANDIDATE_COMMIT) -> dict:
     for relative, source_ref in SOURCE_BLOB_COMMITS.items():
         if source_ref not in discovered["file_matching_commits"][relative]:
             raise ReplayError("Recorded source file commit is not in Git history")
-    if discovered["complete_matching_commits"]:
-        # The published recovery strategy and scientific explanation depend on
-        # the absence of a single suitable commit. Re-review if that changes.
-        raise ReplayError("A complete original source candidate requires review")
+    # A matching tree is not evidence that the original CI selected it.
+    # This reconstructed source bundle remains an explicitly versioned
+    # experiment even when complete matching trees exist elsewhere.
+    if discovered["candidate_is_complete_match"]:
+        raise ReplayError("Unexpected base checkout identity must be re-reviewed")
     probe_source = git(repo, "show", f"{commit}:{PROBE}")
     bundle = {
         "base_checkout_commit": commit,
@@ -192,7 +199,10 @@ def verify_source(repo: Path, commit: str = CANDIDATE_COMMIT) -> dict:
         "source_sha256": matches,
         "support_probe_sha256": sha(probe_source),
         "reconstructed_source_bundle_sha256": bundle_sha,
-        "single_commit_contains_all_recorded_sources": False,
+        "single_commit_contains_all_recorded_sources": bool(
+            discovered["complete_matching_commits"]
+        ),
+        "matching_source_tree_count": len(discovered["complete_matching_commits"]),
         "original_ci_source_commit": None,
         "source_verified": True,
         "archive_sha256": archive_hash,
