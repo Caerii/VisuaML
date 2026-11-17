@@ -182,3 +182,19 @@ def test_no_future_work_is_misrepresented_as_verified():
     assert "numerical" not in graph["plans"][0]["status"]
     assert all("identity_" in edge["scope"] for edge in graph["edges"])
     assert any("not freshly" in issue for issue in graph["limitations"])
+
+
+def test_historical_native_error_and_token_vocabulary_are_bounded(tmp_path):
+    repo = copy_evidence(tmp_path)
+    archive = repo / SOURCES[-1]
+    original = json.loads(archive.read_text())
+    forged = json.loads(json.dumps(original))
+    forged["backend"]["independent_max_abs_error"] = 0.5
+    archive.write_text(json.dumps(forged))
+    with pytest.raises(KnowledgeGraphError, match="native historical numerical tolerance"):
+        _load_v28(repo)
+    forged = json.loads(json.dumps(original))
+    forged["witnesses"][0]["tokens"][0][0] = 512
+    archive.write_text(json.dumps(forged))
+    with pytest.raises(KnowledgeGraphError, match="witness geometry"):
+        _load_v28(repo)
