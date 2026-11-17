@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 
 import pytest
+from scripts.audit_full_source_tree_v36 import AuditError, verify_archived_correction
 
 ROOT = Path(__file__).resolve().parents[3]
 AUDIT = ROOT / "benchmarks/pretrained_llama_source_tree_audit_v36_1.json"
@@ -72,12 +73,43 @@ def test_corrective_audit_preserves_original_numerical_artifact():
     assert report["matching_tree_count"] > 0
 
 
-def test_archive_verifier_rejects_a_mutated_audit_digest(tmp_path):
-    raw = AUDIT.read_bytes()
-    origin = json.loads(ORIGIN.read_bytes())
-    edited = bytearray(raw)
-    edited[10] = 32 if edited[10] != 32 else 10
-    altered_digest = hashlib.sha256(edited).hexdigest()
-    assert altered_digest != origin["audit_source_bytes_sha256"]
-    with pytest.raises(AssertionError):
-        assert altered_digest == origin["audit_source_bytes_sha256"]
+def test_archive_verifier_rejects_mutated_audit_bytes(tmp_path):
+    import shutil
+
+    root = tmp_path
+    for relative in (
+        "benchmarks/pretrained_llama_source_tree_audit_v36_1.json",
+        "benchmarks/pretrained_llama_source_tree_audit_v36_1.origin.json",
+        "benchmarks/pretrained_llama_native_cpu_benchmark_v28.json",
+    ):
+        target = root / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / relative, target)
+
+    assert verify_archived_correction(root)["matching_tree_count"] == 6
+    source = root / "benchmarks/pretrained_llama_source_tree_audit_v36_1.json"
+    obj = json.loads(source.read_bytes())
+    obj["matching_tree_count"] = 0
+    source.write_text(json.dumps(obj))
+    with pytest.raises(AuditError, match="origin disagrees"):
+        verify_archived_correction(root)
+
+
+def test_archived_origin_cannot_forge_original_ci_commit(tmp_path):
+    import shutil
+
+    root = tmp_path
+    for relative in (
+        "benchmarks/pretrained_llama_source_tree_audit_v36_1.json",
+        "benchmarks/pretrained_llama_source_tree_audit_v36_1.origin.json",
+        "benchmarks/pretrained_llama_native_cpu_benchmark_v28.json",
+    ):
+        target = root / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / relative, target)
+    origin = root / "benchmarks/pretrained_llama_source_tree_audit_v36_1.origin.json"
+    obj = json.loads(origin.read_bytes())
+    obj["original_ci_commit_established"] = True
+    origin.write_text(json.dumps(obj))
+    with pytest.raises(AuditError, match="origin disagrees"):
+        verify_archived_correction(root)
