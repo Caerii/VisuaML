@@ -9,7 +9,6 @@ from math import prod
 import numpy as np
 import pytest
 import torch
-
 from visuaml.compiler_lab.native_semantic_codegen_v32 import NativeSemanticCompiler
 from visuaml.compiler_lab.semantic_ir import (
     SemanticOperation, SemanticProgram, SemanticRegion, ValueType,
