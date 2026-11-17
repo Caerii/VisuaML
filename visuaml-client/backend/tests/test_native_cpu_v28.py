@@ -160,3 +160,47 @@ def test_native_sessions_share_binary_but_not_mutable_cache(tmp_path):
         b.step(second), model.forward(second), atol=2e-4, rtol=2e-4
     )
     assert a.cursor == 2 and b.cursor == 3
+
+
+@pytest.mark.parametrize(
+    "chunks",
+    (
+        (1, 1, 1, 1, 1, 1),
+        (2, 4),
+        (4, 2),
+        (6,),
+    ),
+)
+def test_native_rope_reuse_is_chunk_partition_invariant(tmp_path, chunks):
+    """Q/K angle reuse must not depend on prefill/decode chunk boundaries."""
+    _, _, model, plan = prepare(tmp_path, layers=1, batch=2)
+    compiler = NativeCpuLlamaCompiler(plan)
+    native = compiler.new_session()
+    oracle = plan.new_session(backend="numpy")
+    rng = np.random.default_rng(629)
+    tokens = rng.integers(
+        0, model.profile.vocabulary, size=(2, 6), dtype=np.int64
+    )
+    cursor = 0
+    actual_parts = []
+    expected_parts = []
+    for width in chunks:
+        part = tokens[:, cursor:cursor + width]
+        actual_parts.append(native.step(part))
+        expected_parts.append(oracle.step(part))
+        cursor += width
+    assert cursor == tokens.shape[1]
+    np.testing.assert_allclose(
+        np.concatenate(actual_parts, axis=1),
+        np.concatenate(expected_parts, axis=1),
+        atol=2e-4, rtol=2e-4,
+    )
+    for actual, expected in zip(
+        native.snapshot().layers, oracle.snapshot().layers
+    ):
+        np.testing.assert_allclose(
+            actual.keys, expected.keys, atol=2e-4, rtol=2e-4
+        )
+        np.testing.assert_allclose(
+            actual.values, expected.values, atol=2e-4, rtol=2e-4
+        )
