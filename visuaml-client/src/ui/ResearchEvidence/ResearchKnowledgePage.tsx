@@ -272,7 +272,20 @@ export function ResearchKnowledgePage() {
                     <code title={graph.fresh_replays[0].source_bundle_sha256}>
                       {short(graph.fresh_replays[0].source_bundle_sha256)}
                     </code>
-                    . No single original source Git commit was claimed.
+                    . The original CI checkout remains unknown.
+                  </p>
+                  <p>
+                    A corrected{' '}
+                    <a
+                      href="https://github.com/Caerii/VisuaML/blob/main/benchmarks/pretrained_llama_source_tree_audit_v36_1.json"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      exhaustive historical source-tree audit
+                    </a>{' '}
+                    found six Git commits containing all three recorded source files. This corrects
+                    the earlier claim that none existed; it does not identify the original CI
+                    runner's Git commit.
                   </p>
                   <p>
                     A new C++/Hugging Face/NumPy numerical witness is bound to the{' '}

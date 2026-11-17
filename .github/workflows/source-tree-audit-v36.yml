@@ -1,0 +1,61 @@
+name: v36.1 exhaustive historical source tree audit
+on:
+  pull_request:
+    paths:
+      - visuaml-client/backend/scripts/audit_full_source_tree_v36.py
+      - visuaml-client/backend/tests/test_full_source_tree_audit_v36.py
+      - visuaml-client/backend/tests/test_source_tree_audit_archive_v36.py
+      - benchmarks/pretrained_llama_source_tree_audit_v36_1.json
+      - benchmarks/pretrained_llama_source_tree_audit_v36_1.origin.json
+      - .github/workflows/source-tree-audit-v36.yml
+  push:
+    branches:
+      - main
+    paths:
+      - visuaml-client/backend/scripts/audit_full_source_tree_v36.py
+      - visuaml-client/backend/tests/test_full_source_tree_audit_v36.py
+      - visuaml-client/backend/tests/test_source_tree_audit_archive_v36.py
+      - benchmarks/pretrained_llama_source_tree_audit_v36_1.json
+      - benchmarks/pretrained_llama_source_tree_audit_v36_1.origin.json
+      - .github/workflows/source-tree-audit-v36.yml
+
+jobs:
+  audit-source-trees:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Lint audit and run adversarial tests
+        run: |
+          python -m pip install pytest ruff
+          ruff check visuaml-client/backend/scripts/audit_full_source_tree_v36.py visuaml-client/backend/tests/test_full_source_tree_audit_v36.py visuaml-client/backend/tests/test_source_tree_audit_archive_v36.py
+          PYTHONPATH=visuaml-client/backend python -m pytest -q visuaml-client/backend/tests/test_full_source_tree_audit_v36.py visuaml-client/backend/tests/test_source_tree_audit_archive_v36.py
+          python visuaml-client/backend/scripts/audit_full_source_tree_v36.py --check-archive > /tmp/v36-archive-correction-verified.json
+      - name: Exhaustively compare source bytes across every reachable Git tree
+        run: |
+          python visuaml-client/backend/scripts/audit_full_source_tree_v36.py --output /tmp/v36-exhaustive-source-audit.json
+      - name: Verify complete audit reporting without asserting its outcome
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("/tmp/v36-exhaustive-source-audit.json").read_text())
+          assert report["schema"] == "visuaml.exhaustive-source-tree-audit.v36.1"
+          assert report["scan_exhaustive_for_reachable_refs"] is True
+          assert report["reachable_git_commits_scanned"] > 0
+          assert len(report["source_blob_git_sha1"]) == 3
+          assert report["matching_tree_count"] == len(report["exact_matching_tree_commits"])
+          assert report["original_ci_commit_established"] is False
+          print("Full-tree matching commits:", report["exact_matching_tree_commits"])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: exhaustive-v36-source-tree-audit
+          path: /tmp/v36-exhaustive-source-audit.json
+          if-no-files-found: error
+          retention-days: 90

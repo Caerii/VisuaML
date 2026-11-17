@@ -4,7 +4,9 @@
 
 The original v28 evidence established that VisuaML's independent C++17 decoder could reproduce Hugging Face and NumPy results for a **real, pinned Tiny Llama checkpoint**. v35 indexed that historical record and reported that replay was blocked because the currently merged sources were different.
 
-v36 audited the original source manifest against actual Git history rather than simply assuming the v28 merge represented the running experiment. The audit found **no single Git commit containing the three recorded source files in their exact recorded versions**.
+v36 verified the individual recorded source-file hashes in Git history rather than simply assuming the v28 merge represented the running experiment. **Correction (v36.1):** the original per-file *change-commit* intersection was insufficient to rule out a later commit containing all three files. An exhaustive scan of **620 reachable Git commit trees** found **six commits** with all three exact recorded source files together. See the [source-tree audit](../benchmarks/pretrained_llama_source_tree_audit_v36_1.json) and its [CI origin](../benchmarks/pretrained_llama_source_tree_audit_v36_1.origin.json).
+
+**No original CI checkout has been established.** Finding commits with the same source file bytes is not evidence that the original CI runner selected a particular one. The new numerical replay itself remains valid and its original archived JSON remains immutable; the archived `single_commit_contains_all_recorded_sources: false` field is a historical claim **superseded by this correction**, not a fact to reuse in subsequent experiments.
 
 Each exact byte sequence does, however, exist in Git history:
 
@@ -14,7 +16,7 @@ Each exact byte sequence does, however, exist in Git history:
 | `visuaml/compiler_lab/native_cpu_v28.cpp` | `408054895f5f017817022f2a7399980d8913fb86655fd43f15d81ab62cb20579` | `9afd8ed006ea40b2f1010c0909d510a1a89a476b` |
 | `visuaml/compiler_lab/native_cpu_v28.py` | `d0836801810f42404f3c4549d8ea20cdc466acbccfee78e717ef388c4489c3be` | `ac8ad81bf22b6e8eef8e43f775e7006c2fffa39e` |
 
-**This is a reconstructed source bundle, not an original Git checkout.** The v28 merge `a2e2042cca69028bce528bef86246ec7f387bd5b` serves only as a pinned base for other supporting Python modules and the original reference probe. The three source files are overlaid with their independently hash-verified blobs before execution. The repository does **not** assert which exact composite tree or commit the old CI runner used.
+**The v36 replay executed a reconstructed source bundle; it was not a recovery of the original CI checkout.** Although the later v36.1 audit recovered six other commits whose tracked source trees match all three bytes simultaneously, v36 used independently recovered source blobs to make the fresh numerical record. The v28 merge `a2e2042cca69028bce528bef86246ec7f387bd5b` serves only as a pinned base for other supporting Python modules and the original reference probe. The three source files are overlaid with their independently hash-verified blobs before execution. The repository does **not** assert which commit the old CI runner used. The separate v36.1 audit records potential complete source trees, not their execution histories.
 
 ## The two-stage reproducibility contract
 
