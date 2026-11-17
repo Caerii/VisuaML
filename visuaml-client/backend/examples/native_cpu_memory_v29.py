@@ -43,7 +43,7 @@ def linux_memory_kib() -> dict[str, int]:
 
 
 def worker(checkpoint: Path, revision: str, variant: str) -> dict:
-    if variant not in ("four_row", "scalar_reference"):
+    if variant not in ("four_row", "scalar_reference", "avx2"):
         raise ValueError("Unknown native kernel variant")
     before = linux_memory_kib()
     weights = load_hf_llama_local(checkpoint, declared_revision=revision)
@@ -52,7 +52,8 @@ def worker(checkpoint: Path, revision: str, variant: str) -> dict:
     )
     after_checkpoint = linux_memory_kib()
     compiler = NativeCpuLlamaCompiler(
-        plan, reference_kernels=variant == "scalar_reference"
+        plan, reference_kernels=variant == "scalar_reference",
+        enable_avx2=variant == "avx2",
     )
     after_compilation = linux_memory_kib()
     session = compiler.new_session()
@@ -66,7 +67,9 @@ def worker(checkpoint: Path, revision: str, variant: str) -> dict:
     after_execution = linux_memory_kib()
     return {
         "schema": "visuaml.native-process-rss.v29",
-        "variant": compiler.report()["linear_kernel"],
+        "requested_variant": variant,
+        "effective_variant": compiler.report()["linear_kernel"],
+        "avx2_active": compiler.report()["avx2_active"],
         "checkpoint_sha256": weights.checkpoint_sha256,
         "native_source_sha256": compiler.report()["cpp_source_sha256"],
         "compiler_identity": compiler.report()["compiler_identity"],
@@ -91,7 +94,7 @@ def compare(checkpoint: Path, revision: str, repetitions: int) -> dict:
     samples = []
     script = Path(__file__).resolve()
     for run in range(repetitions):
-        order = ("four_row", "scalar_reference")
+        order = ("four_row", "scalar_reference", "avx2")
         if run % 2:
             order = tuple(reversed(order))
         for variant in order:
@@ -124,7 +127,7 @@ def main() -> None:
     parser.add_argument("--revision", required=True)
     parser.add_argument("--repetitions", type=int, default=3)
     parser.add_argument(
-        "--worker", choices=("four_row", "scalar_reference")
+        "--worker", choices=("four_row", "scalar_reference", "avx2")
     )
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
