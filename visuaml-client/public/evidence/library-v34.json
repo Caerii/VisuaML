@@ -39,7 +39,11 @@
         "No measured GPU or photonic hardware backend."
       ],
       "native_binary_sha256": null,
-      "op_sequence": ["attention", "softmax", "value_accumulation"],
+      "op_sequence": [
+        "attention",
+        "softmax",
+        "value_accumulation"
+      ],
       "result": {
         "max_speed_ratio": 1.085116,
         "min_speed_ratio": 0.972735,
@@ -74,7 +78,11 @@
         "No measured GPU or photonic hardware backend."
       ],
       "native_binary_sha256": null,
-      "op_sequence": ["attention", "softmax", "value_accumulation"],
+      "op_sequence": [
+        "attention",
+        "softmax",
+        "value_accumulation"
+      ],
       "result": {
         "max_speed_ratio": 1.082782,
         "min_speed_ratio": 0.998324,
@@ -109,7 +117,11 @@
         "No measured GPU or photonic hardware backend."
       ],
       "native_binary_sha256": null,
-      "op_sequence": ["attention", "softmax", "value_accumulation"],
+      "op_sequence": [
+        "attention",
+        "softmax",
+        "value_accumulation"
+      ],
       "result": {
         "max_speed_ratio": 0.973083,
         "min_speed_ratio": 0.954021,
@@ -144,7 +156,11 @@
         "No measured GPU or photonic hardware backend."
       ],
       "native_binary_sha256": null,
-      "op_sequence": ["attention", "softmax", "value_accumulation"],
+      "op_sequence": [
+        "attention",
+        "softmax",
+        "value_accumulation"
+      ],
       "result": {
         "max_speed_ratio": 1.106085,
         "min_speed_ratio": 0.82782,
@@ -181,10 +197,14 @@
         "No universal throughput, GPU/optical or energy claims."
       ],
       "native_binary_sha256": "d7272fda807ed10d37d3e2e64e680405574995331a9425f456895d94a59101e3",
-      "op_sequence": ["conv2d", "relu", "add"],
+      "op_sequence": [
+        "conv2d",
+        "relu",
+        "add"
+      ],
       "result": {
-        "max_abs_error_eager_torch": 2.384185791015625e-7,
-        "max_abs_error_second_input": 1.1920928955078125e-7,
+        "max_abs_error_eager_torch": 2.384185791015625e-07,
+        "max_abs_error_second_input": 1.1920928955078125e-07,
         "warm_median_ms": 0.041166
       },
       "schema": "visuaml.export-evidence-demonstration.v33",
@@ -218,10 +238,15 @@
         "No universal throughput, GPU/optical or energy claims."
       ],
       "native_binary_sha256": "061a2dbc622acfdf0fb75c6c49c56a3ce51c3cc792254747df27e53e4510c6b0",
-      "op_sequence": ["matmul", "relu", "matmul", "add"],
+      "op_sequence": [
+        "matmul",
+        "relu",
+        "matmul",
+        "add"
+      ],
       "result": {
         "max_abs_error_eager_torch": 0.0,
-        "max_abs_error_second_input": 1.1920928955078125e-7,
+        "max_abs_error_second_input": 1.1920928955078125e-07,
         "warm_median_ms": 0.055554
       },
       "schema": "visuaml.export-evidence-demonstration.v33",
@@ -252,10 +277,14 @@
         "Only pure static float32 rank <=4 with matmul/add/relu/conv2d; not general PyTorch"
       ],
       "native_binary_sha256": "d7272fda807ed10d37d3e2e64e680405574995331a9425f456895d94a59101e3",
-      "op_sequence": ["conv2d", "relu", "add"],
+      "op_sequence": [
+        "conv2d",
+        "relu",
+        "add"
+      ],
       "result": {
         "compile_ms": 276.238544,
-        "max_abs_error_numpy": 1.4901161193847656e-8,
+        "max_abs_error_numpy": 1.4901161193847656e-08,
         "max_abs_error_torch": 0.0,
         "warm_median_ms": 0.017405
       },
@@ -287,7 +316,12 @@
         "Only pure static float32 rank <=4 with matmul/add/relu/conv2d; not general PyTorch"
       ],
       "native_binary_sha256": "061a2dbc622acfdf0fb75c6c49c56a3ce51c3cc792254747df27e53e4510c6b0",
-      "op_sequence": ["matmul", "relu", "matmul", "add"],
+      "op_sequence": [
+        "matmul",
+        "relu",
+        "matmul",
+        "add"
+      ],
       "result": {
         "compile_ms": 269.346555,
         "max_abs_error_numpy": 0.0,
@@ -322,10 +356,14 @@
         "Only pure static float32 rank <=4 with matmul/add/relu/conv2d; not general PyTorch"
       ],
       "native_binary_sha256": "d7272fda807ed10d37d3e2e64e680405574995331a9425f456895d94a59101e3",
-      "op_sequence": ["conv2d", "relu", "add"],
+      "op_sequence": [
+        "conv2d",
+        "relu",
+        "add"
+      ],
       "result": {
         "compile_ms": 276.783576,
-        "max_abs_error_numpy": 5.960464477539063e-8,
+        "max_abs_error_numpy": 5.960464477539063e-08,
         "max_abs_error_torch": 0.0
       },
       "schema": "visuaml.native-semantic-observation.v32",
@@ -356,11 +394,16 @@
         "Only pure static float32 rank <=4 with matmul/add/relu/conv2d; not general PyTorch"
       ],
       "native_binary_sha256": "061a2dbc622acfdf0fb75c6c49c56a3ce51c3cc792254747df27e53e4510c6b0",
-      "op_sequence": ["matmul", "relu", "matmul", "add"],
+      "op_sequence": [
+        "matmul",
+        "relu",
+        "matmul",
+        "add"
+      ],
       "result": {
         "compile_ms": 272.017482,
-        "max_abs_error_numpy": 1.1920928955078125e-7,
-        "max_abs_error_torch": 1.1920928955078125e-7
+        "max_abs_error_numpy": 1.1920928955078125e-07,
+        "max_abs_error_torch": 1.1920928955078125e-07
       },
       "schema": "visuaml.native-semantic-observation.v32",
       "semantic_sha256": null,
@@ -393,7 +436,10 @@
         "No universal throughput, GPU/optical or energy claims."
       ],
       "native_binary_sha256": "898b67e751cdf675b2944f302971e851015a0c0ec085569965cbfaeb67da58b0",
-      "op_sequence": ["relu", "relu"],
+      "op_sequence": [
+        "relu",
+        "relu"
+      ],
       "result": {
         "before_over_after_latency_ratio": 0.962368,
         "witness_count": 2.0
@@ -429,7 +475,10 @@
         "No universal throughput, GPU/optical or energy claims."
       ],
       "native_binary_sha256": "898b67e751cdf675b2944f302971e851015a0c0ec085569965cbfaeb67da58b0",
-      "op_sequence": ["relu", "relu"],
+      "op_sequence": [
+        "relu",
+        "relu"
+      ],
       "result": {
         "witness_count": 2.0
       },
