@@ -23,7 +23,7 @@ The projection layout is reorganized into a uniform row-major batch for Q, K, V,
 
 ## First negative result and design correction
 
-The initial scalar cross-token loop passed numerical verification but measured **0.132× and 0.128×** v29 AVX2 prefill speed ratios in two five-trial, shared-runner pinned-model witnesses (i.e. roughly 7.6–7.8 times slower). This result ruled out promoting that implementation. The code has now been replaced by a **CPU-feature-guarded, two-token/four-output-channel AVX2 prefill microkernel**, with fallback to the v29 verified path when the AVX2 preconditions are not met. The replacement's performance must be independently remeasured; the negative result is preserved as part of the experiment history.
+The initial scalar cross-token loop passed numerical verification but measured **0.132× and 0.128×** v29 AVX2 prefill speed ratios in two five-trial, shared-runner pinned-model witnesses (i.e. roughly 7.6–7.8 times slower). This result ruled out promoting that implementation. The code has now been replaced by a **CPU-feature-guarded, two-token/four-output-channel AVX2 prefill microkernel**, with fallback to the v29 verified path when the AVX2 preconditions are not met. The first [replacement-kernel pinned-model run](https://github.com/Caerii/VisuaML/actions/runs/44132428720) measured **0.822×** relative prefill latency on one GitHub CI runner, while decode was approximately neutral (**1.020×**). The replacement is substantially better than the rejected scalar loop, but it **still loses on this small model**. It must remain opt-in; no positive speedup is claimed. The original negative result is preserved as part of the experiment history.
 
 ## Evidence and verification
 
@@ -44,6 +44,12 @@ PYTHONPATH=backend python backend/examples/native_cpu_prefill_bench_v30.py /path
 The benchmark instantiates separate scalar, AVX2, and AVX2-plus-batched compiler binaries, checks every chunk of logits and all final K/V state against NumPy **before timing**, then reports separately: warm prefill, warm decode, and warm end-to-end single-request latency. It retains individual timing samples and source, compiler, checkpoint and binary hashes. The arithmetic work is bounded by the existing admitted model; no arbitrary uploaded native code is compiled.
 
 The pretrained [native parity workflow](../.github/workflows/native-cpu-v28.yml) now includes one pinned v30 prefill/decode benchmark in its JSON witness. The same CI pipeline still records the v28-to-v29 paired baseline for comparison. Source changes should be compared on the **same physical CPU** and with the **same checkpoint and workload**; separate cloud runners are not a matched comparison.
+
+## Shape-dependent crossover experiment
+
+The separate [v30 geometry sweep](../visuaml-client/backend/scripts/sweep_native_prefill_v30.py) uses deterministic **synthetic** Llama weights with independent NumPy parity and records raw prefill/decode latencies across five bounded configurations, including a vocabulary-heavy case. Its [GitHub workflow](../.github/workflows/v30-prefill-sweep.yml) attaches full source/compilation evidence and observed ratios. This is not a substitute for pinned **trained-model** verification; both experiments must be considered before choosing a dispatch policy.
+
+An opt-in batched microkernel should only be promoted for verified geometry classes where it wins, with a fallback to v29 AVX2 everywhere else. Unsupported x86 variants or CPUs without AVX2 must never execute AVX2 instructions. Any crossover threshold must be grounded in measurements rather than marketing optimism.
 
 ## Research acceptance gates
 
