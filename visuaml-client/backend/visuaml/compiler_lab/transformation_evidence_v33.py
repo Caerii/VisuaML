@@ -13,12 +13,12 @@ import hashlib
 import json
 import math
 import platform
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import replace
-from typing import Callable, Mapping, Sequence
 
 import numpy as np
 
-from .native_semantic_codegen_v32 import NativeIRCodegenError, NativeSemanticCompiler
+from .native_semantic_codegen_v32 import NativeSemanticCompiler
 from .semantic_ir import SemanticProgram, validate_semantic_program
 
 SCHEMA = "visuaml.transformation-evidence.v33"
