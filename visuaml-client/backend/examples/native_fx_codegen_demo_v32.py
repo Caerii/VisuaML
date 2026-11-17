@@ -73,6 +73,9 @@ def run(seed: int = 32) -> dict:
         np.testing.assert_allclose(
             generated, numpy_expected, atol=2e-5, rtol=2e-5,
         )
+        assert hashlib.sha256(compiler.source.encode()).hexdigest() == (
+            receipt["generated_cpp_sha256"]
+        )
         results.append({
             "family": family,
             "model_provenance_sha256": binding.program.source_sha256,
@@ -84,6 +87,7 @@ def run(seed: int = 32) -> dict:
                 np.max(np.abs(generated - torch_expected))
             ),
             "compiler": receipt,
+            "generated_cpp": compiler.source,
         })
     root = Path(__file__).resolve().parents[1]
     paths = (
