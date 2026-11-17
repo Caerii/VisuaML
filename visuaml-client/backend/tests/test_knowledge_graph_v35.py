@@ -191,7 +191,7 @@ def test_historical_native_error_and_token_vocabulary_are_bounded(tmp_path):
     forged = json.loads(json.dumps(original))
     forged["backend"]["independent_max_abs_error"] = 0.5
     archive.write_text(json.dumps(forged))
-    with pytest.raises(KnowledgeGraphError, match="native historical numerical tolerance"):
+    with pytest.raises(KnowledgeGraphError, match="Native historical numerical tolerance"):
         _load_v28(repo)
     forged = json.loads(json.dumps(original))
     forged["witnesses"][0]["tokens"][0][0] = 512
