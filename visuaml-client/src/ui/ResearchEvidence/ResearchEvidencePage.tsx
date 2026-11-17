@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  parseEvidenceSnapshot,
-  type EvidenceSnapshot,
-} from './evidenceModel';
+import { parseEvidenceSnapshot, type EvidenceSnapshot } from './evidenceModel';
 import './ResearchEvidencePage.css';
 
 const shortHash = (value: string) => value.slice(0, 12);
@@ -46,14 +43,16 @@ export function ResearchEvidencePage() {
         <nav aria-label="Research navigation">
           <a href="/compiler">Compiler Lab</a>
           <a href="/roadmap">Public roadmap</a>
-          <a href="https://github.com/Caerii/VisuaML" target="_blank" rel="noreferrer">Open-source repository</a>
+          <a href="https://github.com/Caerii/VisuaML" target="_blank" rel="noreferrer">
+            Open-source repository
+          </a>
         </nav>
         <p className="research-evidence-eyebrow">VISUAML · COMPUTATIONAL RESEARCH</p>
         <h1>Evidence is part of the computation.</h1>
         <p className="research-evidence-intro">
-          Trace exported mathematical operations into native code, independent numerical
-          witnesses, and the actual outcome of proposed transformations. This page shows
-          a reviewed CI snapshot—not a continuous live monitor or proof of all inputs.
+          Trace exported mathematical operations into native code, independent numerical witnesses,
+          and the actual outcome of proposed transformations. This page shows a reviewed CI
+          snapshot—not a continuous live monitor or proof of all inputs.
         </p>
       </header>
 
@@ -105,20 +104,33 @@ export function ResearchEvidencePage() {
                   <h3>{model.family}</h3>
                   <div className="research-evidence-ops" aria-label="Compiled operator sequence">
                     {model.operations.map((op, index) => (
-                      <span key={index}><code>{op}</code></span>
+                      <span key={index}>
+                        <code>{op}</code>
+                      </span>
                     ))}
                   </div>
                   <dl className="research-evidence-metrics">
-                    <div><dt>Maximum numerical difference</dt>
-                      <dd>{formatError(model.maximumAbsoluteError)}</dd></div>
-                    <div><dt>Compilation</dt><dd>{formatMs(model.compileMs)} ms</dd></div>
-                    <div><dt>Warm invocation median</dt><dd>{formatMs(model.warmMedianMs)} ms</dd></div>
+                    <div>
+                      <dt>Maximum numerical difference</dt>
+                      <dd>{formatError(model.maximumAbsoluteError)}</dd>
+                    </div>
+                    <div>
+                      <dt>Compilation</dt>
+                      <dd>{formatMs(model.compileMs)} ms</dd>
+                    </div>
+                    <div>
+                      <dt>Warm invocation median</dt>
+                      <dd>{formatMs(model.warmMedianMs)} ms</dd>
+                    </div>
                   </dl>
                   <details>
                     <summary>Inspect source-bound native fingerprints</summary>
-                    <p>Semantic IR SHA-256</p><code>{model.semanticSha256}</code>
-                    <p>Generated C++ SHA-256</p><code>{model.generatedCppSha256}</code>
-                    <p>Compiled binary SHA-256</p><code>{model.binarySha256}</code>
+                    <p>Semantic IR SHA-256</p>
+                    <code>{model.semanticSha256}</code>
+                    <p>Generated C++ SHA-256</p>
+                    <code>{model.generatedCppSha256}</code>
+                    <p>Compiled binary SHA-256</p>
+                    <code>{model.binarySha256}</code>
                   </details>
                 </article>
               ))}
@@ -131,7 +143,9 @@ export function ResearchEvidencePage() {
             <div className="research-evidence-experiment">
               <div>
                 <span className="research-evidence-label">REWRITE RULE</span>
-                <h3><code>{snapshot.transformation.rule}</code></h3>
+                <h3>
+                  <code>{snapshot.transformation.rule}</code>
+                </h3>
                 <p>{snapshot.transformation.interpretation}</p>
                 <p className="research-evidence-technical">
                   Numerical status: <strong>{snapshot.transformation.numericalStatus}</strong>
@@ -167,8 +181,8 @@ export function ResearchEvidencePage() {
                 rel="noreferrer"
               >
                 the v33 research protocol
-              </a>.
-              Accepted roadmap progress remains a separate reviewed decision.
+              </a>
+              . Accepted roadmap progress remains a separate reviewed decision.
             </p>
           </section>
         </>
