@@ -132,14 +132,77 @@ def run_audit(repo: Path) -> dict:
     }
 
 
+def verify_archived_correction(repo: Path) -> dict:
+    """Validate the additive audit against original numeric and Git evidence.
+
+    The old v36 replay result remains immutable, including its now-corrected
+    source-tree metadata. This validator never changes or promotes that result.
+    """
+    root = Path(repo)
+    source = root / "benchmarks/pretrained_llama_source_tree_audit_v36_1.json"
+    origin_path = root / "benchmarks/pretrained_llama_source_tree_audit_v36_1.origin.json"
+    raw = source.read_bytes()
+    try:
+        report = json.loads(raw)
+        origin = json.loads(origin_path.read_bytes())
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise AuditError("Malformed correction archive or origin") from exc
+    expected_origin = {
+        "schema": "visuaml.source-tree-audit-origin.v36.1",
+        "source_path": "benchmarks/pretrained_llama_source_tree_audit_v36_1.json",
+        "audit_source_bytes_sha256": sha256(raw),
+        "producing_ci_run": "https://github.com/Caerii/VisuaML/actions/runs/44196790520",
+        "original_ci_commit_established": False,
+        "status": "corrected_source_provenance_not_signed",
+        "supersedes_claim": (
+            "v36 no single Git commit contains the three exact source blobs"
+        ),
+        "limitations": (
+            "Full reachable Git trees prove source coexistence; they do not "
+            "establish which commit the original CI ran."
+        ),
+    }
+    if origin != expected_origin:
+        raise AuditError("Correction archive origin disagrees with exact original bytes")
+    if (
+        report.get("schema") != "visuaml.exhaustive-source-tree-audit.v36.1"
+        or report.get("historical_artifact_sha256")
+           != sha256((root / ARCHIVE).read_bytes())
+        or report.get("scan_exhaustive_for_reachable_refs") is not True
+        or report.get("original_ci_commit_established") is not False
+        or type(report.get("matching_tree_count")) is not int
+        or report["matching_tree_count"] <= 0
+        or report.get("reachable_git_commits_scanned") != 620
+        or report["matching_tree_count"] != len(report.get("exact_matching_tree_commits", []))
+        or len(set(report["exact_matching_tree_commits"])) != report["matching_tree_count"]
+        or any(
+            not isinstance(commit, str) or len(commit) != 40
+            for commit in report["exact_matching_tree_commits"]
+        )
+    ):
+        raise AuditError("Corrected source-tree audit is malformed or incomplete")
+    archive = json.loads((root / ARCHIVE).read_bytes())
+    historical = {
+        f"{BACKEND}/{path}": value
+        for path, value in archive["matched_cpu_benchmark"]["source_sha256"].items()
+    }
+    if report["exact_original_file_sha256"] != historical:
+        raise AuditError("Corrected source-tree audit no longer matches old source")
+    return report
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--repo", type=Path, default=Path(__file__).resolve().parents[3],
     )
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--check-archive", action="store_true")
     args = parser.parse_args()
-    result = run_audit(args.repo)
+    result = (
+        verify_archived_correction(args.repo)
+        if args.check_archive else run_audit(args.repo)
+    )
     wire = json.dumps(result, indent=2, sort_keys=True) + "\n"
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
