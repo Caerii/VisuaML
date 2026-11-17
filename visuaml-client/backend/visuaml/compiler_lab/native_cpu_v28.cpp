@@ -179,6 +179,41 @@ inline void linear(const float* input, const float* weight,
 #endif
 }
 
+// v30 experiment: share each contiguous weight row across up to four token
+// rows in prefill. The inner reduction for each output/token remains ordered.
+// When disabled, or during single-token decode, defer to the v29 kernel.
+inline void linear_rows(const float* inputs, const float* weight,
+                        float* outputs, int rows, int input_width,
+                        int output_width, bool prefill) {
+#if defined(VISUAML_NATIVE_BATCHED_PREFILL)
+  if (prefill && rows >= 2 && input_width >= 16) {
+    for (int output = 0; output < output_width; ++output) {
+      const float* w = weight + static_cast<size_t>(output) * input_width;
+      for (int rb = 0; rb < rows; rb += 4) {
+        const int count = std::min(4, rows - rb);
+        float accum[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+        for (int col = 0; col < input_width; ++col) {
+          const float value = w[col];
+          for (int r = 0; r < count; ++r) {
+            accum[r] += value * inputs[
+                static_cast<size_t>(rb + r) * input_width + col];
+          }
+        }
+        for (int r = 0; r < count; ++r) {
+          outputs[static_cast<size_t>(rb + r) * output_width + output] = accum[r];
+        }
+      }
+    }
+    return;
+  }
+#endif
+  for (int row = 0; row < rows; ++row) {
+    linear(inputs + static_cast<size_t>(row) * input_width, weight,
+           outputs + static_cast<size_t>(row) * output_width,
+           input_width, output_width);
+  }
+}
+
 inline void rmsnorm(const float* input, const float* gain, float* output,
                     int width, float epsilon) {
   float sum = 0.0f;
@@ -278,13 +313,13 @@ extern "C" int visuaml_native_llama_decode(
     std::vector<float> rope_sine(depth / 2);
     std::vector<float> rope_cosine(depth / 2);
     std::vector<float> scores(c.capacity);
-    std::vector<float> projection(h);
-    std::vector<float> ff_norm(h);
-    std::vector<float> gate(c.inner);
-    std::vector<float> up(c.inner);
-    std::vector<float> product(c.inner);
-    std::vector<float> ff_out(h);
-    std::vector<float> normalized(h);
+    std::vector<float> projection(rows * h);
+    std::vector<float> ff_norm(rows * h);
+    std::vector<float> gate(rows * c.inner);
+    std::vector<float> up(rows * c.inner);
+    std::vector<float> product(rows * c.inner);
+    std::vector<float> ff_out(rows * h);
+    std::vector<float> normalized(rows * h);
 
     for (size_t row = 0; row < rows; ++row) {
       const float* start = weights[0] + tokens[row] * h;
@@ -306,12 +341,18 @@ extern "C" int visuaml_native_llama_decode(
       std::fill(attended.begin(), attended.end(), 0.0f);
       for (size_t row = 0; row < rows; ++row) {
         const size_t off = row * h;
-        const size_t kv_off = row * kwidth;
         rmsnorm(state.data() + off, norm_attn, normed.data() + off,
                 h, c.epsilon);
-        linear(normed.data() + off, wq, q.data() + off, h, h);
-        linear(normed.data() + off, wk, keys.data() + kv_off, h, kwidth);
-        linear(normed.data() + off, wv, values.data() + kv_off, h, kwidth);
+      }
+      linear_rows(normed.data(), wq, q.data(), static_cast<int>(rows),
+                  h, h, query > 1);
+      linear_rows(normed.data(), wk, keys.data(), static_cast<int>(rows),
+                  h, kwidth, query > 1);
+      linear_rows(normed.data(), wv, values.data(), static_cast<int>(rows),
+                  h, kwidth, query > 1);
+      for (size_t row = 0; row < rows; ++row) {
+        const size_t off = row * h;
+        const size_t kv_off = row * kwidth;
         const int position = past + static_cast<int>(row % query);
         rope_angles(position, depth, c.rope_theta, rope_sine, rope_cosine);
         for (int head = 0; head < c.heads; ++head) {
@@ -374,28 +415,37 @@ extern "C" int visuaml_native_llama_decode(
         }
       }
 
+      linear_rows(attended.data(), wo, projection.data(), static_cast<int>(rows),
+                  h, h, query > 1);
       for (size_t row = 0; row < rows; ++row) {
         const size_t off = row * h;
-        linear(attended.data() + off, wo, projection.data(), h, h);
-        for (int d = 0; d < h; ++d) state[off + d] += projection[d];
-        rmsnorm(state.data() + off, norm_ff, ff_norm.data(), h, c.epsilon);
-        linear(ff_norm.data(), wgate, gate.data(), h, c.inner);
-        linear(ff_norm.data(), wup, up.data(), h, c.inner);
-        for (int i = 0; i < c.inner; ++i) {
-          product[i] = gate[i] * (1.0f / (1.0f + std::exp(-gate[i]))) * up[i];
-        }
-        linear(product.data(), wdown, ff_out.data(), c.inner, h);
-        for (int d = 0; d < h; ++d) state[off + d] += ff_out[d];
+        for (int d = 0; d < h; ++d) state[off + d] += projection[off + d];
+        rmsnorm(state.data() + off, norm_ff, ff_norm.data() + off,
+                h, c.epsilon);
+      }
+      linear_rows(ff_norm.data(), wgate, gate.data(), static_cast<int>(rows),
+                  h, c.inner, query > 1);
+      linear_rows(ff_norm.data(), wup, up.data(), static_cast<int>(rows),
+                  h, c.inner, query > 1);
+      for (size_t i = 0; i < rows * static_cast<size_t>(c.inner); ++i) {
+        const float g = gate[i];
+        product[i] = g * (1.0f / (1.0f + std::exp(-g))) * up[i];
+      }
+      linear_rows(product.data(), wdown, ff_out.data(), static_cast<int>(rows),
+                  c.inner, h, query > 1);
+      for (size_t i = 0; i < rows * static_cast<size_t>(h); ++i) {
+        state[i] += ff_out[i];
       }
     }
 
     const float* final_gain = weights[1];
     const float* lm_head = weights[c.tied_head ? 0 : 2];
     for (size_t row = 0; row < rows; ++row) {
-      rmsnorm(state.data() + row * h, final_gain, normalized.data(), h, c.epsilon);
-      linear(normalized.data(), lm_head, logits + row * c.vocabulary,
-             h, c.vocabulary);
+      rmsnorm(state.data() + row * h, final_gain,
+              normalized.data() + row * h, h, c.epsilon);
     }
+    linear_rows(normalized.data(), lm_head, logits, static_cast<int>(rows),
+                h, c.vocabulary, query > 1);
     for (size_t i = 0; i < rows * c.vocabulary; ++i) {
       if (!std::isfinite(logits[i])) return -7;
     }
