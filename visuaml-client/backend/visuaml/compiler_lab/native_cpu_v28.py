@@ -215,6 +215,11 @@ class NativeCpuLlamaCompiler:
         self._avx2_capability.restype = ctypes.c_int
         self._avx2_capability.argtypes = []
         self._avx2_active = bool(self._avx2_capability())
+        self._prefill_eligible = self._library.visuaml_native_prefill_eligible
+        self._prefill_eligible.restype = ctypes.c_int
+        self._prefill_eligible.argtypes = [
+            ctypes.POINTER(_Config), ctypes.c_int,
+        ]
         self._decode = self._library.visuaml_native_llama_decode
         self._decode.restype = ctypes.c_int
         self._decode.argtypes = [
@@ -272,6 +277,25 @@ class NativeCpuLlamaCompiler:
     def new_session(self) -> NativeCpuLlamaSession:
         return NativeCpuLlamaSession(self)
 
+    def prefill_dispatch(self, query_tokens: int) -> dict:
+        """Read the native dispatch gate, not a guessed Python heuristic."""
+        if (
+            type(query_tokens) is not int
+            or not 1 <= query_tokens <= min(32, self.plan.capacity)
+        ):
+            raise NativeCpuError("Invalid prefill query length")
+        selected = bool(
+            self._prefill_eligible(ctypes.byref(self._config), query_tokens)
+        )
+        return {
+            "query_tokens": query_tokens,
+            "hidden": self._config.hidden,
+            "requested": self.enable_batched_prefill,
+            "avx2_active": self._avx2_active,
+            "native_batched_selected": selected,
+            "execution": "batched_avx2" if selected else "v29_native",
+        }
+
     def report(self) -> dict:
         kernel = "scalar_reference" if self.reference_kernels else "four_row"
         if self.enable_avx2 and self._avx2_active:
@@ -286,7 +310,7 @@ class NativeCpuLlamaCompiler:
                 self.enable_batched_prefill and self._avx2_active
             ),
             "batched_prefill_dispatch": (
-                "guarded_avx2_query_gt_1_and_width_ge_32"
+                "guarded_avx2_query_ge_4_hidden_ge_128_width_ge_32"
                 if self.enable_batched_prefill else "disabled"
             ),
             "kernel_compile_flags": (
