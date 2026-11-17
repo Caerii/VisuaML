@@ -44,22 +44,30 @@ This is **finite empirical evidence**, not a formal equivalence proof or a crypt
 
 The current rule is deliberately conservative. Future rewrites should be independent, registered operators with explicit preconditions and tests, not arbitrary code submitted to the evidence evaluator.
 
-## 3. Reproduce the end-to-end witness
+## 3. Evidence-gated search, not automatic adoption
+
+The `optimization_search_v33.py` harness builds on those receipts. It first verifies a candidate with two independent numerical references; a rejected candidate **never enters performance measurement**. After successful finite witnesses, it recompiles the source and candidate programs, replays the previously tested input, verifies numerical parity again and records alternating-order warm CPU measurements for both generated native binaries.
+
+It preserves individual samples, medians, build/compiler provenance, the embedded numerical receipt and the candidate rule identity. Every result is labeled `exploratory_timing_after_finite_numerical_witnesses`, not `production_faster`. An inapplicable rule returns a `not_applicable` record rather than pretending a transformation occurred, and an oracle disagreement returns `rejected_no_performance_measurement` with its counterexample.
+
+This closes one small but real loop: **capture → admit → propose → independently verify → measure → retain the evidence**. It is deliberately not a general e-graph optimizer, autoscheduler, signed certificate authority, native device profiler or formal translation validator.
+
+## 4. Reproduce the end-to-end witness
 
 With a trusted installed C++17 compiler and the pinned Python dependency set:
 
 ```bash
 cd visuaml-client
-python -m pytest -q backend/tests/test_native_export_frontend_v33.py backend/tests/test_transformation_evidence_v33.py
+python -m pytest -q backend/tests/test_native_export_frontend_v33.py backend/tests/test_transformation_evidence_v33.py backend/tests/test_optimization_search_v33.py
 python -m pytest -q backend/tests
 PYTHONPATH=backend python backend/examples/export_evidence_demo_v33.py --seed 3303 --trials 7 --output /tmp/visuaml-v33-evidence.json
 ```
 
-The demonstration uses three locally defined trusted synthetic modules: a residual MLP, a residual Conv2D network and a double-ReLU program. It exports the first two, compiles both through v32's graph-generated native engine, checks against eager PyTorch on two different input tensors per model, and records the generated C++ source and full compiler fingerprints. The double-ReLU program is rewritten and separately cross-checked against NumPy and PyTorch. The [v33 GitHub workflow](../.github/workflows/native-evidence-v33.yml) publishes a versioned JSON artifact upon successful CI.
+The demonstration uses three locally defined trusted synthetic modules: a residual MLP, a residual Conv2D network and a double-ReLU program. It exports the first two, compiles both through v32's graph-generated native engine, checks against eager PyTorch on two different input tensors per model, and records the generated C++ source and full compiler fingerprints. The double-ReLU program is rewritten and separately cross-checked against NumPy and PyTorch; its accepted finite witness then gates an experimental before/after native timing comparison. The [v33 GitHub workflow](../.github/workflows/native-evidence-v33.yml) publishes a versioned JSON artifact upon successful CI.
 
 **These are synthetic models, not two pinned real pretrained architecture families.** They do not establish arbitrary `torch.export` support, dynamic-shape compilation, low-level GPU code generation, generalized stateful effects, speedup over external production compilers or physical hardware economics.
 
-## 4. Architecture of the compounding loop
+## 5. Architecture of the compounding loop
 
 ```text
 trusted PyTorch exported program
