@@ -48,6 +48,16 @@ The output includes `native_scalar_reference` timing samples, `native_linear_var
 
 **Additional safeguards:** compiler flags use `-O2 -fno-fast-math`; optimized and scalar streams must match independent NumPy logits and all KV states. The existing native pretrained witness remains mandatory. Numerical agreement for tested models is not a proof of all possible inputs. Future physical-memory experiments must distinguish RSS/peak high-water measurements from logical live KV budgets.
 
+## Physical process memory probe (Linux)
+
+The independent `examples/native_cpu_memory_v29.py` probe executes each native linear variant in a **fresh child process**, alternating the order across repetitions. It collects Linux `VmRSS` and `VmHWM` before model loading, after loading, after native compilation, and after an initial + streaming decode. These are observed physical resident-process statistics—not the sizes of Python logical KV leases.
+
+```sh
+PYTHONPATH=backend python backend/examples/native_cpu_memory_v29.py /path/to/pinned/checkpoint --revision YOUR_PINNED_COMMIT_SHA --repetitions 3 --output /tmp/visuaml-v29-memory.json
+```
+
+The JSON includes checkpoint and C++ source hashes, compiler identity, platform, and per-process samples. Compare distributions without assuming that differences are attributable solely to C++ scratch reuse: `VmHWM` is a process high-water measure including Python, checkpoint weights, shared libraries, and compiler activity. This first probe is not a statistically controlled heap profiler and is not available on Windows or macOS. No physical-memory reduction should be claimed until repeated measurements support it.
+
 ## Planned next kernels
 
 Measure linear projection and vocabulary-head costs first. Evaluate safe contiguous vectorization and matrix multiplication blocking, then attention score/value accumulation and reusable scratch buffers. Keep scalar/reference and optimized paths separable for independent comparison. Investigate physically measured RSS/peak allocation and long-context behavior before claiming memory reductions. GPU and optical code generation remain separate future milestones.
