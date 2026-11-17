@@ -170,6 +170,10 @@ export function CompilerLabPage() {
           <a href="/research" className="compiler-back">
             Published evidence ledger ↗
           </a>
+          <span aria-hidden="true"> · </span>
+          <a href="/research/library" className="compiler-back">
+            Compounding evidence library ↗
+          </a>
           <h1>
             Compiler Lab <span>executable semantic research</span>
           </h1>
