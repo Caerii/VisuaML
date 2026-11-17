@@ -31,6 +31,10 @@ pnpm --dir visuaml-client exec prettier --check .
 
 The [standard CI workflow](../.github/workflows/ci.yml) executes the corresponding checks plus Ruff. The independent [pretrained-model workflow](../.github/workflows/v19-pretrained-probe.yml) downloads a specific public model revision and checks tokenizer and CPU model oracles. Its historical filename does not imply its capabilities stop at v19.
 
+## v35: pinned-checkpoint provenance and conservative replay admission
+
+The [v35 protocol](V35_REPLAYABLE_KNOWLEDGE_GRAPH.md) validates the checked-in historical v28 pretrained Llama witness against exact model revision, checkpoint/configuration hashes, semantic IR/native binary/source hashes, finite numerical tolerances and original CI provenance. A deterministic knowledge graph overlays v34 without changing prior IDs; its exact checkpoint edge links v28 to the pinned v31 attention observations. A separate standard-library-only preflight checks historical code hashes against the checkout and optionally verifies local safetensors/config bytes, reporting explicit blockers rather than executing a model. Historical CI evidence is **not** a freshly rerun numerical certificate.
+
 ## v34: historical research evidence indexing
 
 The [v34 compounding library](V34_COMPOUNDING_EVIDENCE_LIBRARY.md) uses a lightweight standard-library Python package to derive a deterministic, hash-bound catalog from three reviewed historical JSON artifacts. It verifies the complete v33 original CI bytes and nested rewrite records, preserves separate direct-certification and optimization-time receipts, and exposes exact search/lineage APIs without inferring untested correctness. The [dedicated v34 CI workflow](../.github/workflows/evidence-library-v34.yml) tests tampering, unknown schemas, proposals, catalog reproduction and immutable historical source identity. The read-only browser route `/research/library` structurally validates the published catalog and presents negative observations; its link to an artifact is not a fresh numerical replay.
