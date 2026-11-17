@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
+from safetensors.torch import save_file
 from test_hf_llama_checkpoint_v19 import fixture
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
@@ -103,3 +104,47 @@ def test_online_attention_selection_is_explicit(tmp_path):
     assert len(report["cpp_source_sha256"]) == 64
     with pytest.raises(NativeCpuError, match="booleans"):
         NativeCpuLlamaCompiler(plan, enable_online_attention="true")
+
+
+def test_online_attention_extreme_finite_score_separation(tmp_path):
+    """Sharp but finite scores must preserve stable-softmax model behavior.
+
+    Multiply only Q/K projection weights, preserving an otherwise admitted
+    Llama graph; independent NumPy execution remains the numerical oracle.
+    """
+    tensors, _ = fixture(tmp_path, layers=1)
+    for name in (
+        "model.layers.0.self_attn.q_proj.weight",
+        "model.layers.0.self_attn.k_proj.weight",
+    ):
+        tensors[name] = tensors[name] * 120.0
+    save_file(tensors, str(tmp_path / "model.safetensors"))
+    model = load_hf_llama_local(tmp_path, declared_revision="a" * 40)
+    plan = lower_llama_semantic_program(
+        make_llama_semantic_program(model), model
+    )
+    candidate = NativeCpuLlamaCompiler(
+        plan, enable_online_attention=True
+    ).new_session()
+    reference = plan.new_session(backend="numpy")
+    baseline = NativeCpuLlamaCompiler(plan).new_session()
+    sequence = np.array(
+        [[1, 2, 7, 3, 5, 11, 9, 4, 13, 2, 8, 6, 1, 7, 12, 5]],
+        dtype=np.int64,
+    )
+    for piece in (sequence[:, :8], sequence[:, 8:12], sequence[:, 12:]):
+        expected = reference.step(piece)
+        for engine in (candidate, baseline):
+            actual = engine.step(piece)
+            np.testing.assert_allclose(
+                actual, expected, atol=3e-4, rtol=3e-4
+            )
+            for layer, verified in zip(
+                engine.snapshot().layers, reference.snapshot().layers
+            ):
+                np.testing.assert_allclose(
+                    layer.keys, verified.keys, atol=3e-4, rtol=3e-4
+                )
+                np.testing.assert_allclose(
+                    layer.values, verified.values, atol=3e-4, rtol=3e-4
+                )
