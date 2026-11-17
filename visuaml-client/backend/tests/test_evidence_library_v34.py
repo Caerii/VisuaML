@@ -177,6 +177,8 @@ def test_unreviewed_proposals_are_content_addressed_idempotent_and_excluded(tmp_
     assert first.read_bytes() == data
     assert verify_unreviewed_proposal(first)
     assert first.stem == hashlib.sha256(data).hexdigest()
+    origin = first.with_name(first.stem + ".origin.json")
+    assert json.loads(origin.read_text())["source_url"] == url
     assert len(EvidenceLibrary.from_repo(ROOT).entries) == 12
     first.write_bytes(data + b" ")
     assert not verify_unreviewed_proposal(first)
@@ -199,4 +201,34 @@ def test_proposals_cannot_become_reviewed_or_executable_by_shape(tmp_path):
         submit_unreviewed_proposal(
             tmp_path, b"a" * (1024 * 1024 + 1),
             source_url="https://github.com/Caerii/VisuaML/actions/runs/1",
+        )
+
+
+def test_staged_proposal_rejects_missing_or_forged_origin(tmp_path):
+    data = (
+        ROOT / "benchmarks/export_evidence_observation_v33.json"
+    ).read_bytes()
+    run = "https://github.com/Caerii/VisuaML/actions/runs/44167207128"
+    path = submit_unreviewed_proposal(tmp_path, data, source_url=run)
+    origin = path.with_name(path.stem + ".origin.json")
+    metadata = json.loads(origin.read_text())
+    metadata["status"] = "reviewed"
+    origin.write_text(json.dumps(metadata))
+    assert not verify_unreviewed_proposal(path)
+    with pytest.raises(EvidenceLibraryError, match="tampering"):
+        submit_unreviewed_proposal(tmp_path, data, source_url=run)
+    origin.unlink()
+    assert not verify_unreviewed_proposal(path)
+
+
+def test_duplicate_content_with_different_source_requires_review(tmp_path):
+    data = (
+        ROOT / "benchmarks/export_evidence_observation_v33.json"
+    ).read_bytes()
+    first = "https://github.com/Caerii/VisuaML/actions/runs/44167207128"
+    submit_unreviewed_proposal(tmp_path, data, source_url=first)
+    with pytest.raises(EvidenceLibraryError, match="tampering"):
+        submit_unreviewed_proposal(
+            tmp_path, data,
+            source_url="https://github.com/Caerii/VisuaML/actions/runs/9999999",
         )
