@@ -1,0 +1,60 @@
+name: Temporary v33 durable evidence publisher
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/v33-publish-evidence-once.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  preserve:
+    if: github.event.pull_request.head.repo.full_name == 'Caerii/VisuaML'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/v33-export-evidence-spine
+          persist-credentials: true
+      - name: Retrieve exact previously verified CI artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/visuaml-v33-evidence
+          gh run download 44167207128 --repo Caerii/VisuaML --name export-evidence-v33 --dir /tmp/visuaml-v33-evidence
+          cp /tmp/visuaml-v33-evidence/export-evidence-v33.json benchmarks/export_evidence_observation_v33.json
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          p = Path('benchmarks/export_evidence_observation_v33.json')
+          d = json.loads(p.read_text())
+          assert d['schema'] == 'visuaml.export-evidence-demonstration.v33'
+          assert len(d['model_witnesses']) == 2
+          assert d['rewrite_witness']['status'] == 'passed_finite_witnesses'
+          assert d['optimization_experiment']['status'] == 'exploratory_timing_after_finite_numerical_witnesses'
+          meta = {
+              'schema': 'visuaml.durable-evidence-origin.v1',
+              'source_commit': '93bdfe0eabe975b8eabf0f85b0c6a379bdefd28c',
+              'ci_run': 'https://github.com/Caerii/VisuaML/actions/runs/44167207128',
+              'original_artifact': 'export-evidence-v33',
+              'evidence_sha256': hashlib.sha256(p.read_bytes()).hexdigest(),
+              'status': 'reviewed historical CI snapshot, not a current measurement or signature',
+          }
+          Path('benchmarks/export_evidence_observation_v33.origin.json').write_text(
+              json.dumps(meta, indent=2, sort_keys=True) + '\n'
+          )
+          print('verified archived numerical witness', meta['evidence_sha256'])
+          PY
+      - name: Commit archived source-bound witness
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/export_evidence_observation_v33.json benchmarks/export_evidence_observation_v33.origin.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'evidence(v33): archive exact CI-generated export and rewrite witness'
+            git push origin HEAD:research/v33-export-evidence-spine
+          fi
