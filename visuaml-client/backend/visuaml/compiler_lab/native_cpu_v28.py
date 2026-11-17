@@ -131,6 +131,8 @@ class NativeCpuLlamaCompiler:
             raise NativeCpuError("Kernel selection flags must be booleans")
         if reference_kernels and (enable_avx2 or enable_batched_prefill):
             raise NativeCpuError("Scalar reference cannot enable optimized kernels")
+        if enable_batched_prefill and not enable_avx2:
+            raise NativeCpuError("Batched prefill requires guarded AVX2 mode")
         self.reference_kernels = reference_kernels
         self.enable_avx2 = enable_avx2
         self.enable_batched_prefill = enable_batched_prefill
@@ -280,8 +282,11 @@ class NativeCpuLlamaCompiler:
             "avx2_requested": self.enable_avx2,
             "avx2_active": self._avx2_active,
             "batched_prefill_requested": self.enable_batched_prefill,
+            "batched_prefill_active": (
+                self.enable_batched_prefill and self._avx2_active
+            ),
             "batched_prefill_dispatch": (
-                "query_gt_1_and_width_ge_16"
+                "guarded_avx2_query_gt_1_and_width_ge_32"
                 if self.enable_batched_prefill else "disabled"
             ),
             "kernel_compile_flags": (
