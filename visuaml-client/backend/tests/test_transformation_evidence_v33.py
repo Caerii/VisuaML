@@ -11,7 +11,10 @@ import pytest
 import torch
 from visuaml.compiler_lab.native_semantic_codegen_v32 import NativeSemanticCompiler
 from visuaml.compiler_lab.semantic_ir import (
-    SemanticOperation, SemanticProgram, SemanticRegion, ValueType,
+    SemanticOperation,
+    SemanticProgram,
+    SemanticRegion,
+    ValueType,
 )
 from visuaml.compiler_lab.transformation_evidence_v33 import (
     TransformationEvidenceError,
