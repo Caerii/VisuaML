@@ -9,13 +9,15 @@ import {
 import './ResearchEvidencePage.css';
 import './ResearchLibraryPage.css';
 
+const descriptions: Record<string, string> = {
+  attention_context_sweep: 'Attention / context experiment',
+  native_generated_graph: 'Graph-generated CPU witness',
+  native_exported_graph: 'Exported native program',
+  rewrite_evaluation: 'Transformation experiment',
+  optimization_measurement: 'Experimental optimization measurement',
+};
 const describe = (kind: string): string =>
-  ({
-    attention_context_sweep: 'Attention / context experiment',
-    native_generated_graph: 'Graph-generated CPU witness',
-    native_exported_graph: 'Exported native program',
-    rewrite_evaluation: 'Transformation experiment',
-  })[kind] || kind.replace(/_/g, ' ');
+  descriptions[kind] || kind.replace(/_/g, ' ');
 
 const brief = (sha: string | null) => (sha ? sha.slice(0, 12) : 'Not recorded');
 
@@ -60,8 +62,8 @@ export function ResearchLibraryPage() {
     [catalog, phrase, kind, operation],
   );
   const selected: EvidenceEntry | null = useMemo(
-    () => catalog?.entries.find((entry) => entry.entry_id === selectedId) ?? null,
-    [catalog, selectedId],
+    () => results.find((entry) => entry.entry_id === selectedId) ?? results[0] ?? null,
+    [results, selectedId],
   );
   const similar = useMemo(
     () => (selected ? exactLineage(catalog?.entries ?? [], selected) : []),
