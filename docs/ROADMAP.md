@@ -54,6 +54,8 @@ The [v33 guarded export and evidence investigation](V33_EXPORT_AND_EVIDENCE.md) 
 
 The [v34 compounding evidence library](V34_COMPOUNDING_EVIDENCE_LIBRARY.md) indexes historical attention, generated native graph, exported-model and transformation experiments through exact source/IR/binary identities. The [research PR](https://github.com/Caerii/VisuaML/pull/16) distinguishes reviewed source-bound records from curated historical summaries and append-only unreviewed proposals. Its catalog counts **observations**, not independent architectures, proven transformations, transferable speedups or formal proof obligations. **No public roadmap acceptance status or percentage changes from creating this index.**
 
+The [v35 replayable computational knowledge graph research](V35_REPLAYABLE_KNOWLEDGE_GRAPH.md) connects the historical v28 **real pinned Tiny Llama** numerical witness to the v31 attention study through exact checkpoint SHA-256, without modifying existing v34 study IDs. Its replay plan explicitly reports code/checkpoint drift and does not perform inference or claim a new independent numerical reproduction. The reviewed roadmap weights and percentages remain unchanged: an additional historical entry is not new compiler coverage or all-input proof.
+
 ## The evidence review process
 
 A proposed change to the public roadmap should be reviewed like a compiler change.

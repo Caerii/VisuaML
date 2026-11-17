@@ -1,0 +1,67 @@
+# v35 — Replayable computational knowledge, not replay theater
+
+VisuaML v34 created a standard-library-only, source-bound registry of 12 historical numerical and optimization observations. The next milestone tests whether that knowledge remains useful **across compiler revisions and independently pinned real models**, while being precise about what is and is not actually reproduced.
+
+## First expansion: a real pretrained Llama witness
+
+The original [v28 pinned Tiny Llama artifact](../benchmarks/pretrained_llama_native_cpu_benchmark_v28.json) is a checked-in, full historical record of a real pretrained checkpoint, an independent native C++17 decoder, comparisons against Hugging Face and NumPy semantic execution, final KV parity, and bounded CPU latency. The original [GitHub run](https://github.com/Caerii/VisuaML/actions/runs/43953072394) is referenced by the artifact. The evidence includes an exact safetensors SHA-256, configuration SHA-256, 40-character model revision, semantic IR digest, C++ source and executable digests, two finite logit witnesses and a five-trial CPU benchmark.
+
+These are **historical CI observations**. The v35 loader checks source JSON structure, cross-field identities, numerical tolerance bounds, declared execution geometry and approved GitHub provenance before admitting them, but it does not claim to have re-executed the checkpoint.
+
+## One connected knowledge graph
+
+The [v35 knowledge graph](../visuaml-client/backend/visuaml_evidence/knowledge_graph_v35.py) is an **overlay over the v34 catalog**, not a destructive migration.
+
+- All 12 existing v34 observation IDs remain unchanged, and the prior v34 generated catalog remains untouched.
+- A new 13th node records the historical v28 pretrained numerical witness with its actual source and checkpoint identities.
+- Exact binary, generated-source, semantic and checkpoint identity edges are generated without guessing missing identifiers.
+- The v28 pinned Llama node is connected to the v31 online-attention pinned-model study through the same exact checkpoint hash.
+- An identity edge is **not** an equivalence proof, generalization of numerical results, or a transferable performance claim; the associated device and input assumptions may differ.
+
+This creates a useful long-lived research question: *which compiler transformations have been observed for the same model, source computation, or native implementation, and which assumptions still need independent verification?*
+
+## A truthful experiment replay plan
+
+The v35 replay plan for v28 explicitly lists its historical source artifact, byte hash, expected C++ and Python source file SHA-256 digests, checkpoint/configuration hashes, pinned source revision, semantic digest, numerical tolerance policy and original CI run.
+
+`preflight_replay` runs with only Python's standard library. It verifies:
+
+1. The source artifact still matches its admitted structured evidence and the plan is exactly derived from it.
+2. The currently checked-out source files match their **historical hashes**, rather than assuming `main` contains v28's original execution implementation.
+3. An optional trusted **local** checkpoint contains the original `config.json` and `model.safetensors` bytes.
+
+If any requirement is missing or drifted, the plan reports explicit blockers with `numerical_replay_performed: false`. Even if these static preconditions pass, the result remains `static_preflight_passed_pending_trusted_execution`: an actual independent numerical replay needs a separate, pinned, trusted CPU runner and fresh output/KV comparisons. The v28 artifact **does not establish a historical Git source commit**; v35 explicitly records it as `null` instead of inventing one.
+
+The plan never downloads a model, runs model Python, loads untrusted pickle, compiles native source or claims success from a checksum alone.
+
+### Reproduce the metadata and replay preflight
+
+From the repository root:
+
+```sh
+PYTHONPATH=visuaml-client/backend python -m pytest -q visuaml-client/backend/tests/test_knowledge_graph_v35.py
+
+PYTHONPATH=visuaml-client/backend python visuaml-client/backend/scripts/build_knowledge_graph_v35.py --check
+
+# No model download or numerical execution; report missing requirements.
+PYTHONPATH=visuaml-client/backend python visuaml-client/backend/scripts/build_knowledge_graph_v35.py --preflight
+
+# Optional: verify only the bytes of a checkpoint you already have locally.
+PYTHONPATH=visuaml-client/backend python visuaml-client/backend/scripts/build_knowledge_graph_v35.py --preflight --checkpoint /path/to/trusted/local/checkpoint
+```
+
+The dedicated [v35 workflow](../.github/workflows/knowledge-graph-v35.yml) verifies the v34 identity stability, source-bound metadata, provenance tamper cases, source drift rejection, and deterministic v35 JSON generation. It uploads the generated graph and blocked replay preflight results as CI artifacts. The published [static v35 graph](../visuaml-client/public/evidence/knowledge-v35.json) is generated by the same code and must match its exact bytes in CI.
+
+## Compounding principles and next scientific gates
+
+The immediate library advance is **better scientific memory**, not higher architecture-count marketing:
+
+- **Source-bound reuse:** discover experiments on the same exact pretrained checkpoint or semantic source instead of manually re-deriving prior research.
+- **Explicit replayability:** say when an old experiment cannot currently be reproduced, and which code/model bytes must be restored.
+- **Stable accumulated identifiers:** add new evidence without rewriting the history of previous records.
+- **Independent validation:** a future trusted replay runner must check source revision, environment, checkpoint, independent numerical outputs/KV, numerical policy and raw samples before publishing a *new* result.
+- **Separated authority:** an authenticated human review remains distinct from hash integrity; no source or performance observation becomes universally accepted by automatic promotion.
+
+The critical next step is to recover and hash-bind the exact original v28 source revision, rerun the real pretrained model on a controlled machine, and publish a **new** source-bound numerical result. Then extend the same protocol to a genuinely independent pretrained architecture family rather than counting new synthetic graphs as generality.
+
+Production `visuaml.com/research/library`, `/research/replay` (if added), and `/roadmap` routes require independent deployment checks in [issue #8](https://github.com/Caerii/VisuaML/issues/8). Existing reviewed roadmap percentages do **not** increase merely because we have indexed an additional historical experiment.
