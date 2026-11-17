@@ -51,9 +51,9 @@ jobs:
           VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           PYTHONPATH=visuaml-client/backend python visuaml-client/backend/examples/native_semantic_codegen_demo_v32.py --trials 9 --output native-semantic-v32-evidence.json > /dev/null
-          python -c "import json; d=json.load(open('native-semantic-v32-evidence.json')); assert d['schema']=='visuaml.semantic-native-fixtures.v32' and len(d['fixtures'])==2; print([(x['family'], x['warm_single_run_ms']['median']) for x in d['fixtures']])"
+          python -c "import json; d=json.load(open('native-semantic-v32-evidence.json')); assert d['schema']=='visuaml.semantic-native-fixtures.v32' and len(d['fixtures'])==2 and isinstance(d['source_commit'],str) and len(d['source_commit'])==40; print([(x['family'], x['warm_single_run_ms']['median']) for x in d['fixtures']])"
           PYTHONPATH=visuaml-client/backend python visuaml-client/backend/examples/native_fx_codegen_demo_v32.py --seed 32 --output native-fx-v32-evidence.json > /dev/null
-          python -c "import json; d=json.load(open('native-fx-v32-evidence.json')); assert d['schema']=='visuaml.trusted-fx-generated-native.v32' and len(d['fixtures'])==2; print([(x['family'],x['max_abs_error_torch']) for x in d['fixtures']])"
+          python -c "import json; d=json.load(open('native-fx-v32-evidence.json')); assert d['schema']=='visuaml.trusted-fx-generated-native.v32' and len(d['fixtures'])==2 and isinstance(d['source_commit'],str) and len(d['source_commit'])==40; print([(x['family'],x['max_abs_error_torch']) for x in d['fixtures']])"
       - name: Upload generated source-bound evidence
         uses: actions/upload-artifact@v4
         with:
