@@ -20,6 +20,7 @@ import torch
 from torch import nn
 from visuaml.compiler_lab.native_export_frontend_v33 import lower_static_export
 from visuaml.compiler_lab.native_semantic_codegen_v32 import NativeSemanticCompiler
+from visuaml.compiler_lab.optimization_search_v33 import evaluate_relu_candidate
 from visuaml.compiler_lab.transformation_evidence_v33 import (
     certify_native_rewrite,
     eliminate_idempotent_relu,
@@ -145,11 +146,19 @@ def run(*, seed: int = 3303, trials: int = 7) -> dict:
         raise RuntimeError("The experimental rewrite did not pass its witnesses")
     if not verify_record_integrity(rewrite):
         raise RuntimeError("Evidence record integrity verification failed")
+    optimization = evaluate_relu_candidate(
+        before, witnesses=witnesses,
+        numpy_oracle=numpy_oracle, torch_oracle=torch_oracle,
+        trials=trials,
+    )
+    if optimization["status"] != "exploratory_timing_after_finite_numerical_witnesses":
+        raise RuntimeError("Rejected candidate cannot enter experimental search")
     root = Path(__file__).resolve().parents[1]
     files = (
         "examples/export_evidence_demo_v33.py",
         "visuaml/compiler_lab/native_export_frontend_v33.py",
         "visuaml/compiler_lab/transformation_evidence_v33.py",
+        "visuaml/compiler_lab/optimization_search_v33.py",
         "visuaml/compiler_lab/native_semantic_codegen_v32.py",
     )
     return {
@@ -161,6 +170,7 @@ def run(*, seed: int = 3303, trials: int = 7) -> dict:
         "platform": platform.platform(),
         "model_witnesses": entries,
         "rewrite_witness": rewrite,
+        "optimization_experiment": optimization,
         "source_sha256": {
             file: hashlib.sha256((root / file).read_bytes()).hexdigest()
             for file in files
@@ -193,6 +203,7 @@ def main() -> None:
         "errors": [item["max_abs_error_eager_torch"] for item in record["model_witnesses"]],
         "rewrite_status": record["rewrite_witness"]["status"],
         "rewrite_digest": record["rewrite_witness"]["record_sha256"],
+        "optimization_status": record["optimization_experiment"]["status"],
     }, indent=2, sort_keys=True))
 
 
