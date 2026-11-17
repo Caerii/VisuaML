@@ -86,14 +86,18 @@ void linear_avx2(const float* input, const float* weight, float* output,
       c = _mm256_add_ps(c, _mm256_mul_ps(x, _mm256_loadu_ps(w2 + col)));
       d = _mm256_add_ps(d, _mm256_mul_ps(x, _mm256_loadu_ps(w3 + col)));
     }
-    alignas(32) float lane[8];
-    auto reduce = [&lane](__m256 value) {
-      _mm256_store_ps(lane, value);
-      float sum = 0.0f;
-      for (int i = 0; i < 8; ++i) sum += lane[i];
-      return sum;
-    };
-    float sums[4] = {reduce(a), reduce(b), reduce(c), reduce(d)};
+    alignas(32) float lanes[32];
+    _mm256_store_ps(lanes, a);
+    _mm256_store_ps(lanes + 8, b);
+    _mm256_store_ps(lanes + 16, c);
+    _mm256_store_ps(lanes + 24, d);
+    float sums[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+    for (int i = 0; i < 8; ++i) {
+      sums[0] += lanes[i];
+      sums[1] += lanes[8 + i];
+      sums[2] += lanes[16 + i];
+      sums[3] += lanes[24 + i];
+    }
     for (; col < input_width; ++col) {
       const float x = input[col];
       sums[0] += w0[col] * x;
