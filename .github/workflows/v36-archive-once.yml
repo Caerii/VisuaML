@@ -31,6 +31,9 @@ jobs:
           mkdir -p /tmp/v36-fresh
           gh run download 44193012326 --repo Caerii/VisuaML --name v36-independent-pretrained-numerical-replay --dir /tmp/v36-fresh
       - name: Admit original JSON and preserve an immutable origin manifest
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
         run: |
           python visuaml-client/backend/scripts/archive_pretrained_replay_v36.py --input /tmp/v36-fresh/replay-v36.json
           python visuaml-client/backend/scripts/archive_pretrained_replay_v36.py --check
