@@ -15,7 +15,7 @@ const describe = (kind: string): string =>
     native_generated_graph: 'Graph-generated CPU witness',
     native_exported_graph: 'Exported native program',
     rewrite_evaluation: 'Transformation experiment',
-  })[kind] || kind.replaceAll('_', ' ');
+  })[kind] || kind.replace(/_/g, ' ');
 
 const brief = (sha: string | null) => sha ? sha.slice(0, 12) : 'Not recorded';
 
@@ -158,7 +158,7 @@ export function ResearchLibraryPage() {
                     <span className="research-evidence-label">{describe(entry.kind)}</span>
                     <strong>{entry.label}</strong>
                     <span className="research-library-item-foot">
-                      <span>{entry.evidence_class.replaceAll('_', ' ')}</span>
+                      <span>{entry.evidence_class.replace(/_/g, ' ')}</span>
                       <code>{brief(entry.artifact_sha256)}</code>
                     </span>
                   </button>
@@ -171,7 +171,7 @@ export function ResearchLibraryPage() {
                     <span className="research-evidence-label">{describe(selected.kind)}</span>
                     <h3>{selected.label}</h3>
                     <p className="research-library-detail-status">
-                      {selected.status.replaceAll('_', ' ')}
+                      {selected.status.replace(/_/g, ' ')}
                     </p>
                     <h4>Admitted mathematical operations</h4>
                     <div className="research-evidence-ops">
@@ -182,14 +182,14 @@ export function ResearchLibraryPage() {
                     <h4>Context and assumptions</h4>
                     <dl className="research-library-key-values">
                       {Object.entries(selected.context).map(([key, value]) => (
-                        <div key={key}><dt>{key.replaceAll('_', ' ')}</dt><dd>{value}</dd></div>
+                        <div key={key}><dt>{key.replace(/_/g, ' ')}</dt><dd>{value}</dd></div>
                       ))}
                     </dl>
                     <h4>Observed metrics</h4>
                     <dl className="research-library-key-values">
                       {Object.entries(selected.result).map(([key, value]) => (
                         <div key={key}>
-                          <dt>{key.replaceAll('_', ' ')}</dt>
+                          <dt>{key.replace(/_/g, ' ')}</dt>
                           <dd>{Number(value).toPrecision(6)}</dd>
                         </div>
                       ))}
