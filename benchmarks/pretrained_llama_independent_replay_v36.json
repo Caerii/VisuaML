@@ -1,0 +1,183 @@
+{
+  "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+  "config_sha256": "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02",
+  "environment": {
+    "machine": "x86_64",
+    "os": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+    "python": "3.12.16"
+  },
+  "fresh_numerical_result": {
+    "backend": {
+      "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+      "compilation_ms": 602.79612,
+      "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+      "cpp_source_sha256": "408054895f5f017817022f2a7399980d8913fb86655fd43f15d81ab62cb20579",
+      "executable_sha256": "15f718f94c42921e7c67774e0ea3f8faea91cd96595a76060d2a04cc234e14ef",
+      "independent_max_abs_error": 1.1920928955078125e-06,
+      "schema": "visuaml.native-cpu-llama.v28",
+      "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+      "target": "x86_64"
+    },
+    "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+    "chunked_KV_and_greedy_parity": true,
+    "config_sha256": "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02",
+    "limitations": [
+      "A scalar independent C++17 CPU kernel, not GPU or photonic hardware.",
+      "Numerical tolerances hold for only the pinned inputs and model.",
+      "This backend is not yet optimized against production CPU inference engines.",
+      "Temporary local library is not a portable independently signed native AOT package."
+    ],
+    "matched_cpu_benchmark": {
+      "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+      "chunks": [
+        4,
+        1,
+        1,
+        2
+      ],
+      "compilation": {
+        "native_cpp_ms": 465.177255,
+        "torchscript_traces": [
+          {
+            "batch": 1,
+            "graph_nodes": 2097,
+            "past": -1,
+            "query": -1,
+            "trace_ms": 45.212537
+          }
+        ]
+      },
+      "cpu": "x86_64",
+      "latency": {
+        "native_cpp": {
+          "mad_ms": 0.056564,
+          "median_ms": 35.429234,
+          "minimum_ms": 35.37267,
+          "p95_ms": 35.946265
+        },
+        "numpy_semantic": {
+          "mad_ms": 1.623167,
+          "median_ms": 13.415013,
+          "minimum_ms": 9.598688,
+          "p95_ms": 14.807695
+        },
+        "torchscript_whole": {
+          "mad_ms": 0.599774,
+          "median_ms": 13.727238,
+          "minimum_ms": 13.000515,
+          "p95_ms": 14.605992
+        }
+      },
+      "limitations": [
+        "Scalar C++17 research CPU backend; not a production-optimized native kernel.",
+        "These short CPU measurements cannot establish industry-scale throughput.",
+        "Warm inference excludes initial compilation; compile cost is separate.",
+        "No GPU, optical device, parallel serving or physical energy measurement."
+      ],
+      "numerical_certificate": "all chunked logits and final layer KV match NumPy IR",
+      "numpy": "2.1.3",
+      "openblas_threads": "1",
+      "python": "3.12.16",
+      "schema": "visuaml.native-cpu-benchmark.v28",
+      "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+      "source_model_revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+      "source_sha256": {
+        "examples/native_cpu_bench_v28.py": "f4b8c517876dd18af7977a415e2f4c587ee8c02086a1e6e9b62eb3c2a7bea4d9",
+        "visuaml/compiler_lab/native_cpu_v28.cpp": "408054895f5f017817022f2a7399980d8913fb86655fd43f15d81ab62cb20579",
+        "visuaml/compiler_lab/native_cpu_v28.py": "d0836801810f42404f3c4549d8ea20cdc466acbccfee78e717ef388c4489c3be"
+      },
+      "trials": 5
+    },
+    "revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+    "schema": "visuaml.pinned-native-llama-v28",
+    "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+    "source": "manojredhat/tiny-llama",
+    "witnesses": [
+      {
+        "logit_shape": [
+          1,
+          4,
+          512
+        ],
+        "max_abs_error_against_HF": 1.2516975402832031e-06,
+        "max_abs_error_against_semantic_IR": 1.1920928955078125e-06,
+        "tokens": [
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ]
+      },
+      {
+        "logit_shape": [
+          1,
+          6,
+          512
+        ],
+        "max_abs_error_against_HF": 1.519918441772461e-06,
+        "max_abs_error_against_semantic_IR": 1.0728836059570312e-06,
+        "tokens": [
+          [
+            7,
+            3,
+            8,
+            2,
+            1,
+            9
+          ]
+        ]
+      }
+    ]
+  },
+  "fresh_result_sha256": "930b1ef4db2f38f4e380e9a5e95055fb1a44f7f66fc61e43076bc83bb6bab378",
+  "historical_source_recovery": {
+    "archive_sha256": "5fd0a8ddc9034489c88e825e07b5f35eca1b3b9d2f199520f92008b974ce7414",
+    "base_checkout_commit": "a2e2042cca69028bce528bef86246ec7f387bd5b",
+    "original_ci": "https://github.com/Caerii/VisuaML/actions/runs/43953072394",
+    "original_ci_source_commit": null,
+    "reconstructed_source_bundle_sha256": "9d06f35b8ffd17a5e3786a756c2e87feca25faf4017fd7dab93a563ecc8b8167",
+    "schema": "visuaml.historical-source-bundle.v36",
+    "single_commit_contains_all_recorded_sources": false,
+    "source_file_commits": {
+      "examples/native_cpu_bench_v28.py": "12c6070373b92f1a3628581e0d37094ea5cc82db",
+      "visuaml/compiler_lab/native_cpu_v28.cpp": "9afd8ed006ea40b2f1010c0909d510a1a89a476b",
+      "visuaml/compiler_lab/native_cpu_v28.py": "ac8ad81bf22b6e8eef8e43f775e7006c2fffa39e"
+    },
+    "source_sha256": {
+      "examples/native_cpu_bench_v28.py": "f4b8c517876dd18af7977a415e2f4c587ee8c02086a1e6e9b62eb3c2a7bea4d9",
+      "visuaml/compiler_lab/native_cpu_v28.cpp": "408054895f5f017817022f2a7399980d8913fb86655fd43f15d81ab62cb20579",
+      "visuaml/compiler_lab/native_cpu_v28.py": "d0836801810f42404f3c4549d8ea20cdc466acbccfee78e717ef388c4489c3be"
+    },
+    "source_verified": true,
+    "statement": "Three independent Git source blobs match all originally recorded SHA-256 bytes; the support checkout is pinned separately. No single original source Git commit has been established.",
+    "support_probe_sha256": "7883ff1fb25359af3b6359a7d7172eb571765b5b687b9d8c0eb8cf00430d9b74"
+  },
+  "limitations": [
+    "Fresh finite numerical witness, not formal all-input equivalence.",
+    "Checkpoint comes from a pinned Hugging Face revision; network download is limited to two named files.",
+    "Exact three-file source bundle reconstructed from different Git commits. Support modules come from a pinned base commit; the original CI checkout is unknown.",
+    "Original legacy benchmark has summary statistics, not per-trial raw latency samples.",
+    "GitHub runner timing does not establish dedicated-server throughput.",
+    "No signed reviewer authority or production deployment claim."
+  ],
+  "model_revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+  "record_sha256": "0e5f11a929e9a594f10233bc7e0027af0e86fc8ab2bc487ab13cab7c802da674",
+  "schema": "visuaml.pinned-pretrained-independent-replay.v36",
+  "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+  "status": "fresh_independent_numerical_witness_passed",
+  "verification": {
+    "max_abs_error_hf": 1.519918441772461e-06,
+    "max_abs_error_semantic": 1.1920928955078125e-06,
+    "native_compile_ms": 602.79612,
+    "native_compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "native_cpp_source_sha256": "408054895f5f017817022f2a7399980d8913fb86655fd43f15d81ab62cb20579",
+    "native_executable_sha256": "15f718f94c42921e7c67774e0ea3f8faea91cd96595a76060d2a04cc234e14ef",
+    "passed": true,
+    "tolerance_atol": 0.0003,
+    "tolerance_rtol": 0.0003,
+    "warm_native_median_ms": 35.429234,
+    "witness_count": 2
+  }
+}
