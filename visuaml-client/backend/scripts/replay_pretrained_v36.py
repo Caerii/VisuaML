@@ -28,6 +28,14 @@ SOURCE_KEYS = (
     "visuaml/compiler_lab/native_cpu_v28.cpp",
     "visuaml/compiler_lab/native_cpu_v28.py",
 )
+# All three exact source blobs are present in Git history, but no single
+# historical commit contains this exact three-file combination. This is a
+# reconstructed bundle and MUST NOT be reported as an original Git checkout.
+SOURCE_BLOB_COMMITS = {
+    "examples/native_cpu_bench_v28.py": "12c6070373b92f1a3628581e0d37094ea5cc82db",
+    "visuaml/compiler_lab/native_cpu_v28.cpp": "9afd8ed006ea40b2f1010c0909d510a1a89a476b",
+    "visuaml/compiler_lab/native_cpu_v28.py": "ac8ad81bf22b6e8eef8e43f775e7006c2fffa39e",
+}
 ATOL = 3e-4
 RTOL = 3e-4
 
@@ -125,39 +133,76 @@ def discover_historical_sources(repo: Path) -> dict:
 
 
 def verify_source(repo: Path, commit: str = CANDIDATE_COMMIT) -> dict:
+    """Verify each recorded original file against an exact Git object.
+
+    The pinned base checkout contains other historical support code, while
+    the three source-file versions must be overlaid from their individually
+    verified blobs. This is NOT proof of one original full Git checkout.
+    """
     if commit != CANDIDATE_COMMIT:
-        raise ReplayError("Historical commit is not on the source allowlist")
+        raise ReplayError("Historical base commit is not on the source allowlist")
     record, archive_hash = load_archive(repo)
     resolved = git(repo, "rev-parse", "--verify", f"{commit}^{{commit}}").decode().strip()
     if resolved != commit:
-        raise ReplayError("Historical source Git object identity mismatch")
+        raise ReplayError("Pinned base Git commit identity mismatch")
     legacy = record["matched_cpu_benchmark"]["source_sha256"]
-    if set(legacy) != set(SOURCE_KEYS):
-        raise ReplayError("Unexpected source file contract in historical archive")
-    source_hashes = {}
+    if set(legacy) != set(SOURCE_KEYS) or set(SOURCE_BLOB_COMMITS) != set(SOURCE_KEYS):
+        raise ReplayError("Unexpected historical source inventory")
+    matches: dict[str, str] = {}
     for relative in SOURCE_KEYS:
-        historical_bytes = git(repo, "show", f"{commit}:{BACKEND}/{relative}")
-        digest = sha(historical_bytes)
+        source_ref = SOURCE_BLOB_COMMITS[relative]
+        resolved_blob_commit = git(
+            repo, "rev-parse", "--verify", f"{source_ref}^{{commit}}"
+        ).decode().strip()
+        if resolved_blob_commit != source_ref:
+            raise ReplayError("Source file Git reference is not the approved commit")
+        bytes_from_history = git(
+            repo, "show", f"{source_ref}:{BACKEND}/{relative}"
+        )
+        digest = sha(bytes_from_history)
         if digest != legacy[relative]:
             raise ReplayError(f"Historical source digest mismatch: {relative}")
-        source_hashes[relative] = digest
-    if source_hashes["visuaml/compiler_lab/native_cpu_v28.cpp"] != record[
+        matches[relative] = digest
+    if matches["visuaml/compiler_lab/native_cpu_v28.cpp"] != record[
         "backend"
     ]["cpp_source_sha256"]:
         raise ReplayError("Native C++ file fingerprint conflicts with archive")
+    discovered = discover_historical_sources(repo)
+    for relative, source_ref in SOURCE_BLOB_COMMITS.items():
+        if source_ref not in discovered["file_matching_commits"][relative]:
+            raise ReplayError("Recorded source file commit is not in Git history")
+    if discovered["complete_matching_commits"]:
+        # The published recovery strategy and scientific explanation depend on
+        # the absence of a single suitable commit. Re-review if that changes.
+        raise ReplayError("A complete original source candidate requires review")
+    probe_source = git(repo, "show", f"{commit}:{PROBE}")
+    bundle = {
+        "base_checkout_commit": commit,
+        "source_file_commits": SOURCE_BLOB_COMMITS,
+        "source_sha256": matches,
+        "support_probe_sha256": sha(probe_source),
+    }
+    bundle_sha = sha(json.dumps(
+        bundle, sort_keys=True, separators=(",", ":")
+    ).encode())
     return {
-        "schema": "visuaml.historical-source-recovery.v36",
-        "candidate_commit": commit,
+        "schema": "visuaml.historical-source-bundle.v36",
+        "base_checkout_commit": commit,
+        "source_file_commits": SOURCE_BLOB_COMMITS,
+        "source_sha256": matches,
+        "support_probe_sha256": sha(probe_source),
+        "reconstructed_source_bundle_sha256": bundle_sha,
+        "single_commit_contains_all_recorded_sources": False,
+        "original_ci_source_commit": None,
         "source_verified": True,
         "archive_sha256": archive_hash,
-        "source_sha256": source_hashes,
         "original_ci": record["evidence_provenance"]["workflow_url"],
         "statement": (
-            "Candidate Git commit matches every source file byte fingerprint; "
-            "this does not prove the historical CI ran on this specific commit."
+            "Three independent Git source blobs match all originally recorded "
+            "SHA-256 bytes; the support checkout is pinned separately. No "
+            "single original source Git commit has been established."
         ),
     }
-
 
 def _finite(value: object, label: str) -> float:
     if type(value) not in (int, float) or not math.isfinite(value):
@@ -243,6 +288,17 @@ def execute(repo: Path) -> dict:
         checkout = Path(directory) / "source"
         git(repo, "worktree", "add", "--detach", str(checkout), CANDIDATE_COMMIT, timeout=90)
         try:
+            for relative in SOURCE_KEYS:
+                source_ref = SOURCE_BLOB_COMMITS[relative]
+                exact_bytes = git(repo, "show", f"{source_ref}:{BACKEND}/{relative}")
+                if sha(exact_bytes) != recovery["source_sha256"][relative]:
+                    raise ReplayError("Historical source changed during reconstruction")
+                destination = checkout / BACKEND / relative
+                if not destination.is_file() or destination.is_symlink():
+                    raise ReplayError("Unexpected historical worktree source path")
+                destination.write_bytes(exact_bytes)
+                if sha(destination.read_bytes()) != recovery["source_sha256"][relative]:
+                    raise ReplayError("Reconstructed source bytes failed verification")
             environment = os.environ.copy()
             environment.update({
                 "PYTHONPATH": str(checkout / BACKEND),
@@ -290,7 +346,7 @@ def execute(repo: Path) -> dict:
                 "limitations": [
                     "Fresh finite numerical witness, not formal all-input equivalence.",
                     "Checkpoint comes from a pinned Hugging Face revision; network download is limited to two named files.",
-                    "Exact historical source bytes verified against the old source manifest, not proof that the original CI ran on that commit.",
+                    "Exact three-file source bundle reconstructed from different Git commits. Support modules come from a pinned base commit; the original CI checkout is unknown.",
                     "Original legacy benchmark has summary statistics, not per-trial raw latency samples.",
                     "GitHub runner timing does not establish dedicated-server throughput.",
                     "No signed reviewer authority or production deployment claim.",
