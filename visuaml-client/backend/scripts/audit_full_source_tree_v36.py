@@ -104,6 +104,8 @@ def scan_exact_trees(
 
 def run_audit(repo: Path) -> dict:
     root = Path(repo).resolve()
+    if git(root, "rev-parse", "--is-shallow-repository").strip() != b"false":
+        raise AuditError("Exhaustive source audit requires non-shallow Git history")
     expected_blobs, expected_hashes = expected_blob_hashes(root)
     commits = git(root, "rev-list", "--all", timeout=120).decode().splitlines()
     if not commits or len(commits) > MAX_COMMITS:
