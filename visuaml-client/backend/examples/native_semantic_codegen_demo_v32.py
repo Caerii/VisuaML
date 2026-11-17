@@ -156,6 +156,9 @@ def benchmark(trials: int = 9, seed: int = 832) -> dict:
             start = time.perf_counter_ns()
             compiled.run(**arrays)
             times.append((time.perf_counter_ns() - start) / 1e6)
+        assert hashlib.sha256(compiled.source.encode()).hexdigest() == (
+            receipt["generated_cpp_sha256"]
+        )
         entries.append({
             "family": name,
             "op_sequence": receipt["op_sequence"],
@@ -166,6 +169,7 @@ def benchmark(trials: int = 9, seed: int = 832) -> dict:
                 np.max(np.abs(observed - expected_torch))
             ),
             "compiler": receipt,
+            "generated_cpp": compiled.source,
             "warm_single_run_ms": {
                 "median": round(statistics.median(times), 6),
                 "raw_samples": [round(value, 6) for value in times],
