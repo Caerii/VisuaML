@@ -8,7 +8,7 @@ import shutil
 from pathlib import Path
 
 import pytest
-from visuaml.compiler_lab.evidence_library_v34 import (
+from visuaml_evidence.library_v34 import (
     EvidenceLibrary,
     EvidenceLibraryError,
     submit_unreviewed_proposal,
