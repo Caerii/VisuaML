@@ -56,6 +56,8 @@ The [v34 compounding evidence library](V34_COMPOUNDING_EVIDENCE_LIBRARY.md) inde
 
 The [v35 replayable computational knowledge graph research](V35_REPLAYABLE_KNOWLEDGE_GRAPH.md) connects the historical v28 **real pinned Tiny Llama** numerical witness to the v31 attention study through exact checkpoint SHA-256, without modifying existing v34 study IDs. Its replay plan explicitly reports code/checkpoint drift and does not perform inference or claim a new independent numerical reproduction. The reviewed roadmap weights and percentages remain unchanged: an additional historical entry is not new compiler coverage or all-input proof.
 
+The [v36 independent pretrained replay](V36_PRETRAINED_REPLAY.md) reconstructed the exact three source files recorded by v28 from separate Git objects, executed the original bounded Tiny Llama C++17 decoder on a fresh CI runner, and passed independent Hugging Face/NumPy logits, streaming KV and generation checks. A [new permanent numerical record](../benchmarks/pretrained_llama_independent_replay_v36.json), [CI-origin manifest](../benchmarks/pretrained_llama_independent_replay_v36.origin.json) and [versioned knowledge graph](../visuaml-client/public/evidence/knowledge-v36.json) keep historical and fresh observations distinct. This adds **reproducibility evidence for the same one pinned pretrained model**, not a second architecture family, formal all-input proof or production-speedup claim. Roadmap acceptance weights/statuses remain unchanged.
+
 ## The evidence review process
 
 A proposed change to the public roadmap should be reviewed like a compiler change.

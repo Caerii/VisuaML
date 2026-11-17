@@ -1,0 +1,112 @@
+name: v36 independent historical pretrained Llama replay
+
+on:
+  pull_request:
+    paths:
+      - visuaml-client/backend/scripts/replay_pretrained_v36.py
+      - visuaml-client/backend/tests/test_replay_pretrained_v36.py
+      - benchmarks/pretrained_llama_native_cpu_benchmark_v28.json
+      - .github/workflows/pretrained-replay-v36.yml
+  push:
+    branches:
+      - main
+    paths:
+      - visuaml-client/backend/scripts/replay_pretrained_v36.py
+      - visuaml-client/backend/tests/test_replay_pretrained_v36.py
+      - benchmarks/pretrained_llama_native_cpu_benchmark_v28.json
+      - .github/workflows/pretrained-replay-v36.yml
+
+permissions:
+  contents: read
+
+jobs:
+  historical-source-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Discover source revisions by independently recorded SHA-256 bytes
+        run: |
+          python visuaml-client/backend/scripts/replay_pretrained_v36.py --discover-source --output discovery-v36.json
+      - name: Verify exact v28 historical Git source bytes
+        run: |
+          python visuaml-client/backend/scripts/replay_pretrained_v36.py --verify-source --output recovery-v36.json
+      - name: Retain historical source discovery even on subsequent failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v36-historical-source-discovery
+          path: discovery-v36.json
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Fast admission and negative-case tests
+        env:
+          PYTHONPATH: visuaml-client/backend
+        run: |
+          python -m pip install pytest ruff
+          ruff check visuaml-client/backend/scripts/replay_pretrained_v36.py visuaml-client/backend/tests/test_replay_pretrained_v36.py
+          python -m pytest -q visuaml-client/backend/tests/test_replay_pretrained_v36.py
+      - name: Upload source recovery certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: v36-historical-source-recovery
+          path: recovery-v36.json
+          if-no-files-found: error
+          retention-days: 90
+
+  independent-pretrained-replay:
+    needs: historical-source-recovery
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned independent CPU model reference
+        run: |
+          python -m pip install torch==2.9.1+cpu torchvision==0.24.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install numpy==2.1.3 transformers==4.46.3 huggingface-hub==0.36.2 safetensors==0.4.5 sentencepiece==0.2.1 protobuf==5.29.5
+      - name: Re-run historical native decoder against independent Hugging Face and NumPy
+        env:
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          HF_HUB_DISABLE_XET: "1"
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+        run: |
+          python visuaml-client/backend/scripts/replay_pretrained_v36.py --run --output replay-v36.json
+      - name: Confirm freshly executed result, independent numerical witness and original source bytes
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          p = Path("replay-v36.json")
+          d = json.loads(p.read_text())
+          assert d["schema"] == "visuaml.pinned-pretrained-independent-replay.v36"
+          assert d["status"] == "fresh_independent_numerical_witness_passed"
+          assert d["historical_source_recovery"]["source_verified"] is True
+          assert d["verification"]["passed"] is True
+          assert d["verification"]["witness_count"] == 2
+          assert d["verification"]["max_abs_error_hf"] <= 3e-4
+          assert d["fresh_numerical_result"]["chunked_KV_and_greedy_parity"] is True
+          record = {k: v for k, v in d.items() if k != "record_sha256"}
+          canonical = json.dumps(record, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+          assert hashlib.sha256(canonical).hexdigest() == d["record_sha256"]
+          print("Fresh numerical parity verified:", d["record_sha256"])
+          PY
+      - name: Upload independently regenerated full numerical and latency record
+        uses: actions/upload-artifact@v4
+        with:
+          name: v36-independent-pretrained-numerical-replay
+          path: replay-v36.json
+          if-no-files-found: error
+          retention-days: 90

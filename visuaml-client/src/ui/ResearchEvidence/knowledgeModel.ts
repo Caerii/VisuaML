@@ -48,9 +48,26 @@ export type ReplayPlan = {
   ci_run: string;
 };
 
+export type FreshReplaySummary = {
+  schema: 'visuaml.independent-pretrained-replay-summary.v36';
+  study_id: string;
+  record_bytes_sha256: string;
+  numerical_record_sha256: string;
+  source_bundle_sha256: string;
+  source_file_commits: Record<string, string>;
+  producing_ci_run: string;
+  producing_branch_head: string;
+  original_experiment_commit: null;
+  numerical_replay_performed: true;
+  passed: true;
+  limits: string;
+};
+
 export type KnowledgeGraph = {
-  schema: 'visuaml.knowledge-graph.v35';
+  schema: 'visuaml.knowledge-graph.v35' | 'visuaml.knowledge-graph.v36';
   parent_catalog_sha256: string;
+  parent_graph_sha256?: string;
+  fresh_replays?: FreshReplaySummary[];
   knowledge_graph_sha256: string;
   nodes: KnowledgeNode[];
   edges: KnowledgeEdge[];
@@ -61,6 +78,8 @@ export type KnowledgeGraph = {
     source_artifacts: number;
     identity_edges: number;
     pinned_pretrained_witnesses: number;
+    distinct_pinned_pretrained_models?: number;
+    fresh_independent_replays?: number;
   };
   limitations: string[];
 };
@@ -73,6 +92,12 @@ const paths = new Set([
   'benchmarks/native_semantic_codegen_observation_v32.json',
   'benchmarks/export_evidence_observation_v33.json',
   'benchmarks/pretrained_llama_native_cpu_benchmark_v28.json',
+  'benchmarks/pretrained_llama_independent_replay_v36.json',
+]);
+const sourceFiles = new Set([
+  'examples/native_cpu_bench_v28.py',
+  'visuaml/compiler_lab/native_cpu_v28.cpp',
+  'visuaml/compiler_lab/native_cpu_v28.py',
 ]);
 const relationships = new Set([
   'identical_native_binary_bytes',
@@ -104,7 +129,9 @@ const numbers = (value: unknown): value is Record<string, number> =>
 export function parseKnowledgeGraph(value: unknown): KnowledgeGraph {
   if (
     !isObject(value) ||
-    value.schema !== 'visuaml.knowledge-graph.v35' ||
+    !['visuaml.knowledge-graph.v35', 'visuaml.knowledge-graph.v36'].includes(
+      String(value.schema),
+    ) ||
     !digest(value.parent_catalog_sha256) ||
     !digest(value.knowledge_graph_sha256) ||
     !isObject(value.counts) ||
@@ -114,7 +141,8 @@ export function parseKnowledgeGraph(value: unknown): KnowledgeGraph {
     !Number.isInteger(value.counts.source_artifacts) ||
     typeof value.counts.identity_edges !== 'number' ||
     !Number.isInteger(value.counts.identity_edges) ||
-    value.counts.pinned_pretrained_witnesses !== 1 ||
+    value.counts.pinned_pretrained_witnesses !==
+      (value.schema === 'visuaml.knowledge-graph.v36' ? 2 : 1) ||
     !isObject(value.reviewed_artifacts) ||
     !Object.entries(value.reviewed_artifacts).every(
       ([path, hash]) => paths.has(path) && digest(hash),
@@ -206,6 +234,59 @@ export function parseKnowledgeGraph(value: unknown): KnowledgeGraph {
     !githubRun.test(plan.ci_run)
   ) {
     throw new Error('Replay plan violates strict historical admission');
+  }
+  if (value.schema === 'visuaml.knowledge-graph.v36') {
+    if (
+      !digest(value.parent_graph_sha256) ||
+      value.counts.distinct_pinned_pretrained_models !== 1 ||
+      value.counts.fresh_independent_replays !== 1 ||
+      !Array.isArray(value.fresh_replays) ||
+      value.fresh_replays.length !== 1
+    ) {
+      throw new Error('v36 must preserve its original v35 graph and one verified replay');
+    }
+    const fresh = value.fresh_replays[0];
+    const expectedSource = 'benchmarks/pretrained_llama_independent_replay_v36.json';
+    const original = value.nodes.find(
+      (entry) => isObject(entry) && entry.kind === 'pinned_pretrained_native_witness',
+    );
+    const current = value.nodes.find(
+      (entry) => isObject(entry) && entry.kind === 'pinned_pretrained_independent_replay',
+    );
+    if (
+      !isObject(fresh) ||
+      fresh.schema !== 'visuaml.independent-pretrained-replay-summary.v36' ||
+      !digest(fresh.study_id) ||
+      !digest(fresh.record_bytes_sha256) ||
+      !digest(fresh.numerical_record_sha256) ||
+      !digest(fresh.source_bundle_sha256) ||
+      !isObject(fresh.source_file_commits) ||
+      Object.keys(fresh.source_file_commits).length !== 3 ||
+      !Object.entries(fresh.source_file_commits).every(
+        ([path, commit]) =>
+          sourceFiles.has(path) && typeof commit === 'string' && revision.test(commit),
+      ) ||
+      typeof fresh.producing_ci_run !== 'string' ||
+      !githubRun.test(fresh.producing_ci_run) ||
+      typeof fresh.producing_branch_head !== 'string' ||
+      !revision.test(fresh.producing_branch_head) ||
+      fresh.original_experiment_commit !== null ||
+      fresh.numerical_replay_performed !== true ||
+      fresh.passed !== true ||
+      typeof fresh.limits !== 'string' ||
+      !isObject(current) ||
+      !isObject(original) ||
+      current.entry_id !== fresh.study_id ||
+      current.source_path !== expectedSource ||
+      current.artifact_sha256 !== fresh.record_bytes_sha256 ||
+      current.workflow_url !== fresh.producing_ci_run ||
+      current.status !== 'fresh_independent_numerical_witness_passed' ||
+      current.source_commit !== null ||
+      current.checkpoint_sha256 !== original.checkpoint_sha256 ||
+      current.semantic_sha256 !== original.semantic_sha256
+    ) {
+      throw new Error('v36 new pretrained replay provenance is incomplete or forged');
+    }
   }
   return value as KnowledgeGraph;
 }

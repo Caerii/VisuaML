@@ -20,7 +20,7 @@ export function ResearchKnowledgePage() {
     const controller = new AbortController();
     const load = async () => {
       try {
-        const response = await fetch('/evidence/knowledge-v35.json', {
+        const response = await fetch('/evidence/knowledge-v36.json', {
           signal: controller.signal,
           cache: 'no-store',
         });
@@ -29,9 +29,9 @@ export function ResearchKnowledgePage() {
         const validated = parseKnowledgeGraph(raw);
         if (!controller.signal.aborted) {
           setGraph(validated);
-          const pinned = validated.nodes.find(
-            (node) => node.kind === 'pinned_pretrained_native_witness',
-          );
+          const pinned =
+            validated.nodes.find((node) => node.kind === 'pinned_pretrained_independent_replay') ??
+            validated.nodes.find((node) => node.kind === 'pinned_pretrained_native_witness');
           setSelected(pinned?.entry_id ?? validated.nodes[0]?.entry_id ?? null);
         }
       } catch (reason) {
@@ -83,8 +83,8 @@ export function ResearchKnowledgePage() {
         <h1>Computation has a history.</h1>
         <p className="research-evidence-intro">
           Follow exact checkpoint, semantic, source-code and binary identities across compiler
-          experiments. Discover what can be reproduced, what remains uncertain, and which historical
-          assumptions must be recovered.
+          experiments. Inspect the old pretrained witness, the newly reconstructed source bundle,
+          and independently measured numerical results without conflating them.
         </p>
       </header>
 
@@ -101,7 +101,7 @@ export function ResearchKnowledgePage() {
         <>
           <section className="knowledge-statistics" aria-label="Knowledge coverage">
             <div>
-              <span className="research-evidence-label">HISTORICAL STUDIES</span>
+              <span className="research-evidence-label">INDEXED STUDIES</span>
               <strong>{graph.counts.studies}</strong>
             </div>
             <div>
@@ -240,45 +240,69 @@ export function ResearchKnowledgePage() {
           </section>
 
           <section className="research-evidence-section knowledge-replay">
-            <p className="research-evidence-eyebrow">II. REPLAY CONTRACT</p>
-            <h2>A source hash is not a rerun.</h2>
+            <p className="research-evidence-eyebrow">II. INDEPENDENT REPLAY</p>
+            <h2>A source hash is not a rerun. A fresh execution is.</h2>
             <p>
-              The first v35 plan describes the historical pinned Tiny Llama witness. It requires
-              exact historical compiler files and checkpoint contents before any trusted runtime can
-              attempt a new numerical verification.
+              The v35 historical replay plan remains a preflight-only record. A separate v36
+              experiment reconstructed the three original source files from independently verified
+              Git objects, then performed new pretrained C++17 execution against independent Hugging
+              Face and NumPy oracles. The original CI checkout was never established as one Git
+              commit.
             </p>
             <div className="knowledge-plan">
               <div>
-                <span className="research-evidence-label">REPLAY ELIGIBILITY</span>
-                <strong>Static preflight only</strong>
-                <p>The original Git source commit was not recorded in this artifact.</p>
-                <p>Numerical replay and performance replay have not been performed by v35.</p>
+                <span className="research-evidence-label">ORIGINAL V35 PLAN</span>
+                <strong>Source/checkpoint preflight only</strong>
+                <p>The old Git checkout identity was not recorded in the original evidence.</p>
+                <p>That historical plan was not rewritten or silently marked successful.</p>
+                <a
+                  href="https://github.com/Caerii/VisuaML/blob/main/docs/V35_REPLAYABLE_KNOWLEDGE_GRAPH.md"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Original v35 reproducibility plan
+                </a>
               </div>
-              <div>
-                <span className="research-evidence-label">REQUIRED LOCAL CHECKPOINT</span>
-                <code>{graph.plans[0].model}</code>
-                <p>
-                  Revision <code>{short(graph.plans[0].model_revision)}</code>
-                </p>
-                {Object.entries(graph.plans[0].checkpoint_files_sha256).map(([file, digest]) => (
-                  <p key={file}>
-                    {file}: <code title={digest}>{short(digest)}</code>
+              {graph.fresh_replays?.[0] ? (
+                <div>
+                  <span className="research-evidence-label">NEW V36 NUMERICAL RESULT</span>
+                  <strong>Independent finite replay passed</strong>
+                  <p>
+                    The exact reconstructed source-bundle digest is{' '}
+                    <code title={graph.fresh_replays[0].source_bundle_sha256}>
+                      {short(graph.fresh_replays[0].source_bundle_sha256)}
+                    </code>
+                    . No single original source Git commit was claimed.
                   </p>
-                ))}
-              </div>
+                  <p>
+                    A new C++/Hugging Face/NumPy numerical witness is bound to the{' '}
+                    <a
+                      href={graph.fresh_replays[0].producing_ci_run}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      fresh GitHub Actions run
+                    </a>
+                    . It remains a finite test, not a formal proof.
+                  </p>
+                  <p>
+                    <a
+                      href="https://github.com/Caerii/VisuaML/blob/main/docs/V36_PRETRAINED_REPLAY.md"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Read the exact source reconstruction and numerical protocol
+                    </a>
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <span className="research-evidence-label">FRESH REPLAY</span>
+                  <strong>Not yet verified on this snapshot</strong>
+                  <p>Use the historical source and model preflight to identify blockers.</p>
+                </div>
+              )}
             </div>
-            <p>
-              Run the documented local <code>--preflight</code> command to identify source and
-              checkpoint blockers; it never downloads or executes model code. See the{' '}
-              <a
-                href="https://github.com/Caerii/VisuaML/blob/main/docs/V35_REPLAYABLE_KNOWLEDGE_GRAPH.md"
-                target="_blank"
-                rel="noreferrer"
-              >
-                v35 reproducibility protocol
-              </a>
-              .
-            </p>
           </section>
         </>
       )}

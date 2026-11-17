@@ -1,0 +1,82 @@
+name: v36 permanent pretrained replay and computational lineage
+
+on:
+  pull_request:
+    paths:
+      - visuaml-client/backend/scripts/archive_pretrained_replay_v36.py
+      - visuaml-client/backend/scripts/build_replay_graph_v36.py
+      - visuaml-client/backend/visuaml_evidence/knowledge_graph_v36.py
+      - visuaml-client/backend/tests/test_archive_pretrained_replay_v36.py
+      - visuaml-client/backend/tests/test_knowledge_graph_v36.py
+      - benchmarks/pretrained_llama_independent_replay_v36.json
+      - benchmarks/pretrained_llama_independent_replay_v36.origin.json
+      - visuaml-client/public/evidence/knowledge-v36.json
+      - .github/workflows/replay-evidence-v36.yml
+  push:
+    branches:
+      - main
+    paths:
+      - visuaml-client/backend/scripts/archive_pretrained_replay_v36.py
+      - visuaml-client/backend/scripts/build_replay_graph_v36.py
+      - visuaml-client/backend/visuaml_evidence/knowledge_graph_v36.py
+      - visuaml-client/backend/tests/test_archive_pretrained_replay_v36.py
+      - visuaml-client/backend/tests/test_knowledge_graph_v36.py
+      - benchmarks/pretrained_llama_independent_replay_v36.json
+      - benchmarks/pretrained_llama_independent_replay_v36.origin.json
+      - visuaml-client/public/evidence/knowledge-v36.json
+      - .github/workflows/replay-evidence-v36.yml
+
+jobs:
+  archive-and-lineage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install minimal standard-library evidence test dependencies
+        run: |
+          python -m pip install pytest ruff
+      - name: Lint standalone archival and lineage code
+        run: |
+          ruff check visuaml-client/backend/scripts/archive_pretrained_replay_v36.py visuaml-client/backend/scripts/build_replay_graph_v36.py visuaml-client/backend/visuaml_evidence/knowledge_graph_v36.py visuaml-client/backend/tests/test_archive_pretrained_replay_v36.py visuaml-client/backend/tests/test_knowledge_graph_v36.py
+      - name: Independently check historical CI bytes, origin, and graph lineage
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_archive_pretrained_replay_v36.py visuaml-client/backend/tests/test_knowledge_graph_v36.py
+          python visuaml-client/backend/scripts/archive_pretrained_replay_v36.py --check
+      - name: Regenerate exact v36 graph
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+        run: |
+          python visuaml-client/backend/scripts/build_replay_graph_v36.py --output /tmp/knowledge-v36.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          value = json.loads(Path("/tmp/knowledge-v36.json").read_text())
+          assert value["schema"] == "visuaml.knowledge-graph.v36"
+          assert value["counts"]["studies"] == 14
+          assert value["counts"]["source_artifacts"] == 5
+          assert value["counts"]["fresh_independent_replays"] == 1
+          assert value["counts"]["distinct_pinned_pretrained_models"] == 1
+          assert value["fresh_replays"][0]["numerical_replay_performed"] is True
+          assert value["fresh_replays"][0]["original_experiment_commit"] is None
+          print(value["knowledge_graph_sha256"])
+          PY
+      - name: Reject any checked-in graph drift
+        if: hashFiles('visuaml-client/public/evidence/knowledge-v36.json') != ''
+        env:
+          PYTHONPATH: visuaml-client/backend
+        run: |
+          python visuaml-client/backend/scripts/build_replay_graph_v36.py --check
+      - name: Upload permanent-archive validation and generated graph
+        uses: actions/upload-artifact@v4
+        with:
+          name: v36-source-bound-replay-knowledge
+          path: /tmp/knowledge-v36.json
+          if-no-files-found: error
+          retention-days: 90
