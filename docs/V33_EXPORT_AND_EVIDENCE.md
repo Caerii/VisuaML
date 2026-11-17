@@ -15,7 +15,7 @@ The initial admitted vocabulary is intentionally tiny:
 | Functional ATen | Generated Semantic IR | Limit |
 | --- | --- | --- |
 | `aten.linear.default` | `matmul` | rank-2, bias-free, explicit transposed weight |
-| `aten.mm.default` | `matmul` | rank-2, both operands must be known |
+| `aten.mm.default`, `aten.matmul.default` | `matmul` | rank-2 only; operands must be known, or a source-bound lifted weight parameter |
 | `aten.conv2d.default` | `conv2d` | NCHW/OIHW, ungrouped, undilated, zero-padded, no bias |
 | `aten.relu.default` | `relu` | pure, shape-preserving |
 | `aten.add.Tensor` | `add` | exact equal shapes, unit alpha, no broadcasting |
