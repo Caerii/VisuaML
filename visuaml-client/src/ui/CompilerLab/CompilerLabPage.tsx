@@ -166,6 +166,10 @@ export function CompilerLabPage() {
           <a href="/roadmap" className="compiler-back">
             Public research roadmap ↗
           </a>
+          <span aria-hidden="true"> · </span>
+          <a href="/research" className="compiler-back">
+            Published evidence ledger ↗
+          </a>
           <h1>
             Compiler Lab <span>executable semantic research</span>
           </h1>
