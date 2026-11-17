@@ -1,0 +1,241 @@
+.research-evidence {
+  min-height: 100vh;
+  background: #0b1420;
+  color: #eaf1f8;
+  padding: 0 max(24px, calc((100vw - 1180px) / 2)) 100px;
+  line-height: 1.65;
+}
+
+.research-evidence a {
+  color: #91d8d4;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.research-evidence-header {
+  padding: 44px 0 48px;
+  border-bottom: 1px solid #314359;
+}
+
+.research-evidence-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 32px;
+  margin-bottom: 72px;
+  font-size: 14px;
+}
+
+.research-evidence-eyebrow,
+.research-evidence-label {
+  display: block;
+  color: #96abbf;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.research-evidence h1 {
+  font-size: clamp(38px, 6vw, 68px);
+  max-width: 850px;
+  line-height: 1.13;
+  letter-spacing: -0.035em;
+  margin: 20px 0;
+}
+
+.research-evidence-intro {
+  color: #bacbda;
+  font-size: clamp(16px, 2vw, 19px);
+  max-width: 780px;
+}
+
+.research-evidence h2 {
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin: 12px 0 22px;
+}
+
+.research-evidence h3 {
+  font-size: 20px;
+  margin: 12px 0 20px;
+}
+
+.research-evidence p,
+.research-evidence li {
+  max-width: 870px;
+  color: #b9cada;
+}
+
+.research-evidence-provenance {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid #314359;
+}
+
+.research-evidence-provenance > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.research-evidence-section {
+  padding-top: 60px;
+}
+
+.research-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.research-evidence-card,
+.research-evidence-experiment,
+.research-evidence-unavailable {
+  background: #132338;
+  border: 1px solid #35506a;
+  border-radius: 16px;
+  padding: 26px;
+}
+
+.research-evidence-ops {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.research-evidence-ops span {
+  padding: 5px 10px;
+  background: #203852;
+  border-radius: 8px;
+  color: #c6f1e7;
+}
+
+.research-evidence code {
+  overflow-wrap: anywhere;
+  font-size: 0.89em;
+}
+
+.research-evidence-metrics {
+  margin: 0;
+}
+
+.research-evidence-metrics > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid #30465e;
+}
+
+.research-evidence dt {
+  color: #b2c5d6;
+}
+
+.research-evidence dd {
+  color: #eef9f6;
+  margin: 0;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.research-evidence details {
+  margin-top: 22px;
+  border-top: 1px solid #30465e;
+  padding-top: 16px;
+}
+
+.research-evidence summary {
+  cursor: pointer;
+  color: #a5e7df;
+  font-weight: 600;
+}
+
+.research-evidence details p {
+  font-size: 12px;
+  margin: 12px 0 3px;
+}
+
+.research-evidence details code {
+  display: block;
+  color: #d4dce8;
+  overflow-wrap: anywhere;
+}
+
+.research-evidence-experiment {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  gap: 30px;
+}
+
+.research-evidence-technical,
+.research-evidence-emphasis {
+  color: #d4f0e8 !important;
+}
+
+.research-evidence-ratio {
+  border-left: 1px solid #35506a;
+  padding-left: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.research-evidence-ratio strong {
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #f0f5fb;
+}
+
+.research-evidence-ratio > span:last-child {
+  color: #b8cbda;
+  font-size: 13px;
+}
+
+.research-evidence-unavailable {
+  margin-top: 48px;
+}
+
+@media (max-width: 760px) {
+  .research-evidence {
+    padding: 0 18px 60px;
+  }
+
+  .research-evidence-header {
+    padding: 24px 0 32px;
+  }
+
+  .research-evidence-header nav {
+    margin-bottom: 46px;
+  }
+
+  .research-evidence-provenance,
+  .research-evidence-grid,
+  .research-evidence-experiment {
+    grid-template-columns: 1fr;
+  }
+
+  .research-evidence-section {
+    padding-top: 42px;
+  }
+
+  .research-evidence-ratio {
+    border-left: 0;
+    border-top: 1px solid #35506a;
+    padding: 22px 0 0;
+  }
+
+  .research-evidence-metrics > div {
+    align-items: start;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
