@@ -49,7 +49,8 @@ def test_historical_source_matches_all_archived_sha256_bytes():
     assert recovery["source_file_commits"] == SOURCE_BLOB_COMMITS
     assert len(recovery["source_sha256"]) == 3
     assert all(len(value) == 64 for value in recovery["source_sha256"].values())
-    assert recovery["single_commit_contains_all_recorded_sources"] is False
+    assert recovery["single_commit_contains_all_recorded_sources"] is True
+    assert recovery["matching_source_tree_count"] == 6
     assert recovery["original_ci_source_commit"] is None
     assert len(set(recovery["source_file_commits"].values())) == 3
     assert len(recovery["reconstructed_source_bundle_sha256"]) == 64
@@ -120,14 +121,15 @@ def test_historical_archive_has_no_fabricated_replay_metadata():
     assert archive.get("schema") != "visuaml.pinned-pretrained-independent-replay.v36"
 
 
-def test_recovery_finds_source_versions_but_no_single_historical_checkout():
+def test_recovery_distinguishes_matching_trees_from_original_ci_checkout():
     from scripts.replay_pretrained_v36 import discover_historical_sources
 
     _requires_full_history()
     forensics = discover_historical_sources(ROOT)
     assert forensics["schema"] == "visuaml.historical-source-discovery.v36"
     assert forensics["candidate_is_complete_match"] is False
-    assert forensics["complete_matching_commits"] == []
+    assert len(forensics["complete_matching_commits"]) == 6
+    assert forensics["commits_scanned_for_complete_source"] >= 620
     assert forensics["found_all_files"] is True
     for path, commit in SOURCE_BLOB_COMMITS.items():
         assert commit in forensics["file_matching_commits"][path]
