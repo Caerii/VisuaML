@@ -44,7 +44,7 @@ def summarize(samples: list[float]) -> dict:
 def benchmark(
     model: LlamaLocalCheckpoint, *, prompt: int = 4,
     chunk_sizes: tuple[int, ...] = (1, 1, 2), trials: int = 7,
-    seed: int = 101,
+    seed: int = 101, compare_native_reference: bool = False,
 ) -> dict:
     if (
         type(prompt) is not int or not 1 <= prompt <= 32
@@ -63,6 +63,10 @@ def benchmark(
         "torchscript_whole": plan.new_session(backend="torchscript_poly"),
         "native_cpp": native.new_session(),
     }
+    native_reference = None
+    if compare_native_reference:
+        native_reference = NativeCpuLlamaCompiler(plan, reference_kernels=True)
+        engines["native_scalar_reference"] = native_reference.new_session()
     rng = np.random.default_rng(seed)
     sample = rng.integers(
         0, model.profile.vocabulary,
@@ -131,9 +135,26 @@ def benchmark(
         "timing_order": "forward on even trials; reverse on odd trials",
         "compilation": {
             "native_cpp_ms": native.report()["compilation_ms"],
+            "native_scalar_reference_ms": (
+                native_reference.report()["compilation_ms"]
+                if native_reference is not None else None
+            ),
             "torchscript_traces": engines["torchscript_whole"].report()["traces"],
         },
         "numerical_certificate": "all chunked logits and final layer KV match NumPy IR",
+        "native_linear_variants": {
+            "native_cpp": native.report()["linear_kernel"],
+            **(
+                {"native_scalar_reference": native_reference.report()["linear_kernel"]}
+                if native_reference is not None else {}
+            ),
+        },
+        "warm_native_speedup_vs_scalar": (
+            round(
+                statistics.median(timings["native_scalar_reference"])
+                / statistics.median(timings["native_cpp"]), 6
+            ) if native_reference is not None else None
+        ),
         "python": platform.python_version(),
         "numpy": np.__version__,
         "cpu": platform.processor() or platform.machine(),
@@ -158,6 +179,10 @@ def main() -> None:
     parser.add_argument("--prompt", type=int, default=4)
     parser.add_argument("--chunks", nargs="+", type=int, default=[1, 1, 2])
     parser.add_argument("--trials", type=int, default=7)
+    parser.add_argument(
+        "--compare-native-reference", action="store_true",
+        help="Compile scalar and four-row native binaries for matched comparison",
+    )
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     model = load_hf_llama_local(
@@ -166,6 +191,7 @@ def main() -> None:
     record = benchmark(
         model, prompt=args.prompt,
         chunk_sizes=tuple(args.chunks), trials=args.trials,
+        compare_native_reference=args.compare_native_reference,
     )
     wire = json.dumps(record, indent=2, sort_keys=True) + "\n"
     if args.output:
