@@ -197,6 +197,7 @@ def lower_static_export(
     allowed_targets = {
         torch.ops.aten.linear.default: "linear",
         torch.ops.aten.mm.default: "matmul",
+        torch.ops.aten.matmul.default: "matmul",
         torch.ops.aten.conv2d.default: "conv2d",
         torch.ops.aten.relu.default: "relu",
         torch.ops.aten.add.Tensor: "add",
@@ -267,8 +268,25 @@ def lower_static_export(
             opcode = "relu"
         elif kind == "matmul":
             if len(args) != 2 or node.kwargs:
-                raise NativeIRCodegenError("Unsupported exported mm form")
-            operands = (_node(args[0], known), _node(args[1], known))
+                raise NativeIRCodegenError("Unsupported exported matmul form")
+            lhs = _node(args[0], known)
+            right = args[1]
+            if isinstance(right, Node) and right.name in param_nodes:
+                weight = param_nodes[right.name]
+                if weight.ndim != 2:
+                    raise NativeIRCodegenError("Lifted matmul parameter must be rank two")
+                pname = f"__export_weight_{param_counter}"
+                param_counter += 1
+                if pname in known or pname in param_nodes:
+                    raise NativeIRCodegenError("Export matmul weight SSA collision")
+                declarations.append((
+                    pname, ValueType(tuple(weight.shape), "float32", weight.nbytes),
+                ))
+                tensors[pname] = weight
+                known.add(pname)
+                operands = (lhs, pname)
+            else:
+                operands = (lhs, _node(right, known))
             opcode = "matmul"
         else:
             if len(args) not in (2, 3):
