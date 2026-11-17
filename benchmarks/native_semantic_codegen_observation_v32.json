@@ -1,0 +1,73 @@
+{
+  "schema": "visuaml.native-semantic-observation.v32",
+  "observed_date": "2026-11-17",
+  "source_commit": "a0aac856602a72e81777b777942027ae109b9b82",
+  "workflow_url": "https://github.com/Caerii/VisuaML/actions/runs/44163199285",
+  "artifact_name": "native-semantic-v32-evidence",
+  "artifact_id": 14365205575,
+  "scope": "Two synthetic graph structures compiled from explicit SemanticProgram and from restricted trusted PyTorch FX; one CI runner; no pretrained model or performance-superiority claim",
+  "independent_references": [
+    "NumPy",
+    "eager PyTorch"
+  ],
+  "tolerance_absolute": 0.00002,
+  "manual_fixtures": [
+    {
+      "family": "residual-mlp",
+      "generated_cpp_sha256": "d946fcb2d18b84ccef03c37077c4058b9e317932ddb66030969ec04c49ff52e5",
+      "binary_sha256": "061a2dbc622acfdf0fb75c6c49c56a3ce51c3cc792254747df27e53e4510c6b0",
+      "maximum_abs_error_numpy": 0,
+      "maximum_abs_error_torch": 0,
+      "compile_ms": 269.346555,
+      "warm_median_ms": 0.01944
+    },
+    {
+      "family": "convolutional-residual",
+      "generated_cpp_sha256": "4d31a6e7374554039584a67c4d4c3d6ffd7eb4cb1a74d93fe8871ca627109c04",
+      "binary_sha256": "d7272fda807ed10d37d3e2e64e680405574995331a9425f456895d94a59101e3",
+      "maximum_abs_error_numpy": 1.4901161193847656e-8,
+      "maximum_abs_error_torch": 0,
+      "compile_ms": 276.238544,
+      "warm_median_ms": 0.017405
+    }
+  ],
+  "trusted_fx_fixtures": [
+    {
+      "family": "trusted_fx_mlp",
+      "generated_cpp_sha256": "d946fcb2d18b84ccef03c37077c4058b9e317932ddb66030969ec04c49ff52e5",
+      "binary_sha256": "061a2dbc622acfdf0fb75c6c49c56a3ce51c3cc792254747df27e53e4510c6b0",
+      "maximum_abs_error_numpy": 1.1920928955078125e-7,
+      "maximum_abs_error_torch": 1.1920928955078125e-7,
+      "compile_ms": 272.017482
+    },
+    {
+      "family": "trusted_fx_conv",
+      "generated_cpp_sha256": "4d31a6e7374554039584a67c4d4c3d6ffd7eb4cb1a74d93fe8871ca627109c04",
+      "binary_sha256": "d7272fda807ed10d37d3e2e64e680405574995331a9425f456895d94a59101e3",
+      "maximum_abs_error_numpy": 5.960464477539063e-8,
+      "maximum_abs_error_torch": 0,
+      "compile_ms": 276.783576
+    }
+  ],
+  "integrity_verification": {
+    "schema": "visuaml.native-semantic-evidence-integrity.v32",
+    "source_and_cpp_hashes_verified": true,
+    "same_generated_cpp_and_binary_for_matched_manual_fx_graphs": true,
+    "not_a_digital_signature": true
+  },
+  "source_sha256": {
+    "examples/native_semantic_codegen_demo_v32.py": "e86f793ea7c7b51a6f14bf8c6167364d13da69c3c4cdbb813282f26b0d68e3ca",
+    "examples/native_fx_codegen_demo_v32.py": "e678e55d7295bf01aff8b27da74f37b5fb54e188065d512c3d95601ed532bc35",
+    "visuaml/compiler_lab/native_semantic_codegen_v32.py": "8aeccd38d911ef1aad4d8d6ecc90ca84009056e08fa78b90bf6e290ca0a6a7fd",
+    "visuaml/compiler_lab/native_fx_frontend_v32.py": "85541982485d0db0bc7e819ce85961d8576e3ce3915a6def102043207ad21162",
+    "visuaml/compiler_lab/semantic_ir.py": "35dea853818baa739398f06d90073c48f08c30ab564920023ebb969346998d79"
+  },
+  "limitations": [
+    "Finite synthetic numerical witnesses, not independent pretrained model-family certification",
+    "Warm times contain Python validation and ctypes overhead; no external engine comparison",
+    "Toolchain compilation costs and results observed on one shared CI runner",
+    "Artifact expires under GitHub retention; rerun exact source to regenerate full evidence",
+    "SHA256 consistency does not establish signer identity, sandboxing or all-input equivalence",
+    "Only pure static float32 rank <=4 with matmul/add/relu/conv2d; not general PyTorch"
+  ]
+}

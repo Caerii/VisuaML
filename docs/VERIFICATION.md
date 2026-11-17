@@ -31,6 +31,24 @@ pnpm --dir visuaml-client exec prettier --check .
 
 The [standard CI workflow](../.github/workflows/ci.yml) executes the corresponding checks plus Ruff. The independent [pretrained-model workflow](../.github/workflows/v19-pretrained-probe.yml) downloads a specific public model revision and checks tokenizer and CPU model oracles. Its historical filename does not imply its capabilities stop at v19.
 
+## v32: executable Semantic IR-to-native research
+
+The [permanent v32 numerical observation](../benchmarks/native_semantic_codegen_observation_v32.json) pins the synthetic graph and trusted-FX witness, generated C++ and executable hashes, compiler measurements and independent CI run. The full temporary CI artifact contains raw timings and generated source. Reproduction code and acceptance scope are documented below.
+
+The [v32 graph-generated CPU report](V32_NATIVE_SEMANTIC_CODEGEN.md) documents the first bounded **SemanticProgram → generated C++17** execution path, distinct from the fixed native Llama decoder. The [native codegen workflow](../.github/workflows/native-semantic-v32.yml) verifies generated residual MLP and convolution programs against both NumPy and eager PyTorch, checks negative/fail-closed admission cases, and publishes source/binary/IR fingerprints and warm execution samples. A separate **restricted trusted FX** import path derives the same graph dialect from local eval-mode PyTorch modules, including explicit frozen parameter hashes.
+
+These are *synthetic* graph and FX witnesses, **not two independently verified pretrained model families**. The trusted FX importer executes Python for tracing and shape propagation; it must never handle untrusted uploads. Compiler-generated source is allowed only from the closed-world validated operator subset and is not a native sandbox.
+
+From `visuaml-client`:
+
+```bash
+python -m pytest -q backend/tests/test_native_semantic_codegen_v32.py backend/tests/test_native_fx_frontend_v32.py
+PYTHONPATH=backend python backend/examples/native_semantic_codegen_demo_v32.py --output /tmp/native-semantic-v32.json
+PYTHONPATH=backend python backend/examples/native_fx_codegen_demo_v32.py --output /tmp/native-fx-v32.json
+```
+
+Do not update the roadmap's verified native-family acceptance criterion until real independently pinned architecture-family witnesses exist.
+
 ## Pinned Tiny Llama model
 
 The research reference is **manojredhat/tiny-llama**, source revision:

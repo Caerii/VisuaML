@@ -7,6 +7,7 @@ VisuaML combines a collaborative neural-network graph application with a separat
 | Start here | When to read it |
 | --- | --- |
 | [Project README](../README.md) | Product overview, quick start and accurate current scope |
+| [v32 graph-generated native compiler](V32_NATIVE_SEMANTIC_CODEGEN.md) | Closed-world Semantic IR-to-C++ execution, restricted trusted FX import, synthetic MLP/Conv numerical evidence and explicit limitations |
 | [v31 online attention experiment](V31_ONLINE_ATTENTION.md) | Stable streaming softmax and bounded context sweeps, with independent numerical evidence and explicit limitations |
 | [v30 experimental prefill](V30_NATIVE_PREFILL.md) | Bounded batched AVX2 prefill, numerical acceptance, negative results and geometry sweep |
 | [v29 native performance](V29_NATIVE_CPU_PERFORMANCE.md) | Reproducible scalar versus four-row execution, resident memory methodology and validation gates |
@@ -34,6 +35,7 @@ Version labels are **research milestones**, not published package versions.
 | [v24](V24_SHARED_WEIGHTS_RUNTIME.md), [v25](V25_VERIFIED_TEMPLATE_REGISTRY.md), [v26](V26_LEASED_KV_SESSION_ACCOUNTING.md), [v27](V27_ACTIVE_MODEL_LIFETIME.md) | Shared model weights, registry eviction and explicit lifetime accounting |
 | [v28 native CPU](V28_NATIVE_CPU_COMPILER.md) | Independent scalar C++17 model execution and pinned Llama numerical certification |
 | [v29 CPU performance](V29_NATIVE_CPU_PERFORMANCE.md), [v30 prefill research](V30_NATIVE_PREFILL.md) | Measured AVX2 improvement and ongoing shape-aware prefill experiments |
+| [v31 online attention](V31_ONLINE_ATTENTION.md), [v32 native Semantic IR](V32_NATIVE_SEMANTIC_CODEGEN.md) | Optional stable online attention plus first generic graph-generated C++17 subset, not pretrained architecture generality |
 | [v31 online attention](V31_ONLINE_ATTENTION.md) | Experimental fused normalization/value accumulation, bounded context and synthetic geometry comparisons |
 
 For complete source-bound numeric evidence, visit [benchmarks](../benchmarks/) and read [Verification](VERIFICATION.md). The Architecture Atlas catalogues 59 families; this **does not** certify 59 pretrained model families.

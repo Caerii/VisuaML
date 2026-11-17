@@ -1,0 +1,71 @@
+name: Graph-generated native Semantic IR v32
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/native_semantic_codegen_v32.py
+      - visuaml-client/backend/tests/test_native_semantic_codegen_v32.py
+      - visuaml-client/backend/visuaml/compiler_lab/native_fx_frontend_v32.py
+      - visuaml-client/backend/tests/test_native_fx_frontend_v32.py
+      - visuaml-client/backend/tests/test_native_semantic_evidence_v32.py
+      - visuaml-client/backend/scripts/verify_native_semantic_evidence_v32.py
+      - visuaml-client/backend/examples/native_fx_codegen_demo_v32.py
+      - visuaml-client/backend/examples/native_semantic_codegen_demo_v32.py
+      - .github/workflows/native-semantic-v32.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/native_semantic_codegen_v32.py
+      - visuaml-client/backend/tests/test_native_semantic_codegen_v32.py
+      - visuaml-client/backend/visuaml/compiler_lab/native_fx_frontend_v32.py
+      - visuaml-client/backend/tests/test_native_fx_frontend_v32.py
+      - visuaml-client/backend/tests/test_native_semantic_evidence_v32.py
+      - visuaml-client/backend/scripts/verify_native_semantic_evidence_v32.py
+      - visuaml-client/backend/examples/native_fx_codegen_demo_v32.py
+      - visuaml-client/backend/examples/native_semantic_codegen_demo_v32.py
+      - .github/workflows/native-semantic-v32.yml
+
+jobs:
+  native-graph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned trusted CPU dependencies
+        run: |
+          python -m pip install torch==2.9.1+cpu torchvision==0.24.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r visuaml-client/backend/requirements.txt
+          python -m pip install pytest
+      - name: Reject invalid IR and independently verify generated MLP/Conv2D
+        env:
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          cd visuaml-client
+          python -m pytest -q backend/tests/test_native_semantic_codegen_v32.py backend/tests/test_native_fx_frontend_v32.py backend/tests/test_native_semantic_evidence_v32.py
+      - name: Produce source-bound graph generation evidence
+        env:
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          PYTHONPATH=visuaml-client/backend python visuaml-client/backend/examples/native_semantic_codegen_demo_v32.py --trials 9 --output native-semantic-v32-evidence.json > /dev/null
+          python -c "import json; d=json.load(open('native-semantic-v32-evidence.json')); assert d['schema']=='visuaml.semantic-native-fixtures.v32' and len(d['fixtures'])==2 and isinstance(d['source_commit'],str) and len(d['source_commit'])==40; print([(x['family'], x['warm_single_run_ms']['median']) for x in d['fixtures']])"
+          PYTHONPATH=visuaml-client/backend python visuaml-client/backend/examples/native_fx_codegen_demo_v32.py --seed 32 --output native-fx-v32-evidence.json > /dev/null
+          python -c "import json; d=json.load(open('native-fx-v32-evidence.json')); assert d['schema']=='visuaml.trusted-fx-generated-native.v32' and len(d['fixtures'])==2 and isinstance(d['source_commit'],str) and len(d['source_commit'])==40; print([(x['family'],x['max_abs_error_torch']) for x in d['fixtures']])"
+          python visuaml-client/backend/scripts/verify_native_semantic_evidence_v32.py --declared native-semantic-v32-evidence.json --fx native-fx-v32-evidence.json --source-commit "$VISUAML_SOURCE_COMMIT" > native-semantic-v32-integrity.json
+      - name: Upload generated source-bound evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-semantic-v32-evidence
+          path: |
+            native-semantic-v32-evidence.json
+            native-fx-v32-evidence.json
+            native-semantic-v32-integrity.json
+          if-no-files-found: error
+          retention-days: 30
