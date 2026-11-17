@@ -58,6 +58,20 @@ PYTHONPATH=backend python backend/examples/native_cpu_memory_v29.py /path/to/pin
 
 The JSON includes checkpoint and C++ source hashes, compiler identity, platform, and per-process samples. Compare distributions without assuming that differences are attributable solely to C++ scratch reuse: `VmHWM` is a process high-water measure including Python, checkpoint weights, shared libraries, and compiler activity. This first probe is not a statistically controlled heap profiler and is not available on Windows or macOS. No physical-memory reduction should be claimed until repeated measurements support it.
 
+## Experimental AVX2 kernel and matched revision study
+
+The v29 branch includes an **explicitly opt-in**, runtime-guarded AVX2 four-row matrix-vector kernel. `NativeCpuLlamaCompiler(plan, enable_avx2=True)` compiles AVX2 instructions only inside a target-specific function on supported GNU/Clang x86 processors; `__builtin_cpu_supports("avx2")` guards execution. Unsupported CPUs retain the four-row fallback, and input widths below 32 also use the fallback. No global `-mavx2` is added. The returned compiler evidence identifies the **requested** and **effective** implementation, native binary hash and compiler flags.
+
+```sh
+PYTHONPATH=backend python backend/examples/native_cpu_bench_v28.py /path/to/pinned/checkpoint --revision YOUR_PINNED_COMMIT_SHA --prompt 4 --chunks 1 1 2 --trials 21 --compare-native-reference --compare-simd --output /tmp/visuaml-v29-all-kernels.json
+```
+
+On [one seven-trial pinned pretrained CI run](https://github.com/Caerii/VisuaML/actions/runs/44124083185), median warm execution was 40.078 ms (native scalar reference), 14.988 ms (four-row), **6.528 ms (AVX2)**, 20.761 ms (NumPy semantic reference) and 14.973 ms (TorchScript whole graph). The median AVX2/four-row speed ratio was **2.296×** on that runner, and this is **not** a broad production throughput or cross-hardware claim. Both native variants preserve the documented numerical and KV witnesses. These are early CI observations, not a finished benchmark campaign.
+
+The [paired revision runner](../visuaml-client/backend/scripts/compare_native_revisions_v29.py) measures the merged v28 C++ baseline and v29 variants against the **same pinned checkpoint** on one GitHub runner, alternating process order and publishing source-bound artifacts. It checks pinned safetensors/configuration hashes and semantic identity. The original v28 script records aggregate statistics only; the current branch records raw individual latency samples. Both compare outputs against the independent NumPy program. GitHub shared-runner contention, DVFS, thermals, process startup, and limited model dimensions remain important limitations. Future dedicated-hardware experiments must test different shapes, large vocabularies, longer contexts, and energy/performance over time.
+
+The native code remains architecture-specific and experimental. A fast finite witness does **not** establish semantic equivalence for every model input or competitive industry serving economics.
+
 ## Planned next kernels
 
 Measure linear projection and vocabulary-head costs first. Evaluate safe contiguous vectorization and matrix multiplication blocking, then attention score/value accumulation and reusable scratch buffers. Keep scalar/reference and optimized paths separable for independent comparison. Investigate physically measured RSS/peak allocation and long-context behavior before claiming memory reductions. GPU and optical code generation remain separate future milestones.
