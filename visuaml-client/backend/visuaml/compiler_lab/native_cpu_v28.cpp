@@ -205,24 +205,42 @@ void linear_rows_avx2(const float* inputs, const float* weight,
           weight + static_cast<size_t>(output + 2) * input_width,
           weight + static_cast<size_t>(output + 3) * input_width,
       };
-      __m256 acc[8];
-      for (int i = 0; i < 8; ++i) acc[i] = _mm256_setzero_ps();
+      // Explicit accumulators prevent hot-loop array-indexing and
+      // register-spill overhead in the 2-token/4-output microkernel.
+      __m256 a0 = _mm256_setzero_ps();
+      __m256 a1 = _mm256_setzero_ps();
+      __m256 a2 = _mm256_setzero_ps();
+      __m256 a3 = _mm256_setzero_ps();
+      __m256 b0 = _mm256_setzero_ps();
+      __m256 b1 = _mm256_setzero_ps();
+      __m256 b2 = _mm256_setzero_ps();
+      __m256 b3 = _mm256_setzero_ps();
       int col = 0;
       for (; col + 7 < input_width; col += 8) {
-        const __m256 token0 = _mm256_loadu_ps(x0 + col);
-        const __m256 token1 = _mm256_loadu_ps(x1 + col);
-        for (int k = 0; k < 4; ++k) {
-          const __m256 values = _mm256_loadu_ps(w[k] + col);
-          acc[k] = _mm256_add_ps(
-              acc[k], _mm256_mul_ps(values, token0));
-          acc[k + 4] = _mm256_add_ps(
-              acc[k + 4], _mm256_mul_ps(values, token1));
-        }
+        const __m256 x0v = _mm256_loadu_ps(x0 + col);
+        const __m256 x1v = _mm256_loadu_ps(x1 + col);
+        const __m256 w0 = _mm256_loadu_ps(w[0] + col);
+        const __m256 w1 = _mm256_loadu_ps(w[1] + col);
+        const __m256 w2 = _mm256_loadu_ps(w[2] + col);
+        const __m256 w3 = _mm256_loadu_ps(w[3] + col);
+        a0 = _mm256_add_ps(a0, _mm256_mul_ps(w0, x0v));
+        a1 = _mm256_add_ps(a1, _mm256_mul_ps(w1, x0v));
+        a2 = _mm256_add_ps(a2, _mm256_mul_ps(w2, x0v));
+        a3 = _mm256_add_ps(a3, _mm256_mul_ps(w3, x0v));
+        b0 = _mm256_add_ps(b0, _mm256_mul_ps(w0, x1v));
+        b1 = _mm256_add_ps(b1, _mm256_mul_ps(w1, x1v));
+        b2 = _mm256_add_ps(b2, _mm256_mul_ps(w2, x1v));
+        b3 = _mm256_add_ps(b3, _mm256_mul_ps(w3, x1v));
       }
       alignas(32) float lanes[64];
-      for (int k = 0; k < 8; ++k) {
-        _mm256_store_ps(lanes + 8 * k, acc[k]);
-      }
+      _mm256_store_ps(lanes, a0);
+      _mm256_store_ps(lanes + 8, a1);
+      _mm256_store_ps(lanes + 16, a2);
+      _mm256_store_ps(lanes + 24, a3);
+      _mm256_store_ps(lanes + 32, b0);
+      _mm256_store_ps(lanes + 40, b1);
+      _mm256_store_ps(lanes + 48, b2);
+      _mm256_store_ps(lanes + 56, b3);
       float sums[8] = {};
       for (int k = 0; k < 8; ++k) {
         for (int i = 0; i < 8; ++i) sums[k] += lanes[8 * k + i];
