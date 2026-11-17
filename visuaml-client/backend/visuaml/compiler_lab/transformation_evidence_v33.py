@@ -41,9 +41,13 @@ def verify_record_integrity(record: dict) -> bool:
     actual = record.get("record_sha256")
     if not isinstance(actual, str) or len(actual) != 64:
         return False
-    return actual == _digest({
-        key: value for key, value in record.items() if key != "record_sha256"
-    })
+    try:
+        computed = _digest({
+            key: value for key, value in record.items() if key != "record_sha256"
+        })
+    except (TypeError, ValueError):
+        return False
+    return actual == computed
 
 
 def eliminate_idempotent_relu(program: SemanticProgram) -> SemanticProgram:
@@ -142,6 +146,9 @@ def certify_native_rewrite(
         raise TransformationEvidenceError("Invalid numerical tolerance")
     if not isinstance(witnesses, (tuple, list)) or not 1 <= len(witnesses) <= 32:
         raise TransformationEvidenceError("Need 1..32 bounded witnesses")
+    canonical = eliminate_idempotent_relu(before)
+    if canonical.digest() != after.digest():
+        raise TransformationEvidenceError("Candidate is not the declared rewrite")
     # Admitting both programs before execution prevents tests from implicitly
     # endorsing unsupported effects, free symbols, or unbounded allocations.
     baseline = NativeSemanticCompiler(before)
@@ -166,6 +173,8 @@ def certify_native_rewrite(
                 baseline.plan.input_shapes, strict=True,
             )
         }
+        if sum(value.size for value in inputs.values()) > 4096:
+            raise TransformationEvidenceError("Counterexample artifact element budget exceeded")
         expected_numpy = _numeric(numpy_oracle(**inputs), shape)
         expected_torch = _numeric(torch_oracle(**inputs), shape)
         actual_before = baseline.run(**inputs)
