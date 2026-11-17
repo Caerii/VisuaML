@@ -491,31 +491,53 @@ class EvidenceLibrary:
         return {**data, "catalog_sha256": _digest(data)}
 
 
+def _write_exclusive(path: Path, data: bytes) -> None:
+    """Never replace a prior content-addressed payload or its origin claim."""
+    try:
+        with path.open("xb") as stream:
+            stream.write(data)
+            stream.flush()
+            os.fsync(stream.fileno())
+    except FileExistsError:
+        if path.read_bytes() != data:
+            raise EvidenceLibraryError("Content-address collision or tampering") from None
+
+
+def _proposal_origin(path: Path) -> Path:
+    return path.with_name(path.stem + ".origin.json")
+
+
 def submit_unreviewed_proposal(
     directory: Path, data: bytes, *, source_url: str,
 ) -> Path:
-    """Atomically add a bounded known-schema JSON proposal, never promote it.
+    """Add bounded content AND immutable run provenance, never promote it.
 
-    The store is intentionally not scanned by EvidenceLibrary.from_repo.
-    Proposed records cannot change the reviewed catalog without a source PR.
+    A process interrupted between the two exclusive writes leaves an invalid
+    incomplete proposal which cannot be accepted without deliberate recovery.
+    This is a local staging API, not a safe multi-tenant remote upload service.
     """
     if not isinstance(data, bytes) or not 1 <= len(data) <= _MAX_BLOB:
         raise EvidenceLibraryError("Proposal exceeds byte budget")
-    _run(source_url)
+    run = _run(source_url)
     _blob(data, "visuaml.export-evidence-demonstration.v33")
     digest = _sha(data)
     destination = Path(directory) / "proposals"
     destination.mkdir(parents=True, exist_ok=True)
     target = destination / (digest + ".json")
-    # Exclusive create: cannot overwrite accepted or previously submitted data.
-    try:
-        with target.open("xb") as output:
-            output.write(data)
-            output.flush()
-            os.fsync(output.fileno())
-    except FileExistsError:
-        if target.read_bytes() != data:
-            raise EvidenceLibraryError("Content-address collision or tampering") from None
+    origin = {
+        "schema": _PROPOSAL_SCHEMA,
+        "artifact_sha256": digest,
+        "evidence_schema": "visuaml.export-evidence-demonstration.v33",
+        "source_url": run,
+        "status": "unreviewed",
+    }
+    origin_bytes = (
+        json.dumps(origin, sort_keys=True, indent=2, allow_nan=False) + "\n"
+    ).encode("utf-8")
+    _write_exclusive(target, data)
+    _write_exclusive(_proposal_origin(target), origin_bytes)
+    if not verify_unreviewed_proposal(target):
+        raise EvidenceLibraryError("Incomplete or invalid staged proposal provenance")
     return target
 
 
@@ -526,6 +548,19 @@ def verify_unreviewed_proposal(path: Path) -> bool:
     try:
         data = selected.read_bytes()
         _blob(data, "visuaml.export-evidence-demonstration.v33")
+        origin = _blob(
+            _proposal_origin(selected).read_bytes(), _PROPOSAL_SCHEMA
+        )
+        if set(origin) != {
+            "schema", "artifact_sha256", "evidence_schema",
+            "source_url", "status",
+        }:
+            return False
+        _run(origin["source_url"])
     except (OSError, ValueError):
         return False
-    return _sha(data) == selected.stem
+    return (
+        _sha(data) == selected.stem == origin["artifact_sha256"]
+        and origin["evidence_schema"] == "visuaml.export-evidence-demonstration.v33"
+        and origin["status"] == "unreviewed"
+    )
