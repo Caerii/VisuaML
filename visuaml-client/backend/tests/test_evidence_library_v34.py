@@ -8,7 +8,6 @@ import shutil
 from pathlib import Path
 
 import pytest
-
 from visuaml.compiler_lab.evidence_library_v34 import (
     EvidenceLibrary,
     EvidenceLibraryError,
@@ -147,7 +146,7 @@ def test_generated_cpp_source_is_checked_even_if_origin_sha_updated(tmp_path):
     metadata = json.loads(origin.read_text())
     metadata["evidence_sha256"] = hashlib.sha256(file.read_bytes()).hexdigest()
     origin.write_text(json.dumps(metadata))
-    with pytest.raises(EvidenceLibraryError, match="Generated C\+\+ bytes diverged"):
+    with pytest.raises(EvidenceLibraryError, match=r"Generated C\+\+ bytes diverged"):
         EvidenceLibrary.from_repo(repo)
 
 
