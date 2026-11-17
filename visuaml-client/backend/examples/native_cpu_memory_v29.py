@@ -2,7 +2,8 @@
 
 Each sample uses a fresh process. VmRSS is instantaneous and VmHWM is the
 process high-water mark, NOT a native allocator-only peak. Both include Python,
-checkpoint loading, compiler and shared libraries. This is an observation,
+checkpoint loading and mapped native libraries; the external C++ compiler
+subprocess has its own RSS and is NOT included. This is an observation,
 not proof of reduced physical allocations or an energy/serving benchmark.
 """
 
@@ -79,9 +80,9 @@ def worker(checkpoint: Path, revision: str, variant: str) -> dict:
         "after_compilation": after_compilation,
         "after_execution": after_execution,
         "limitations": (
-            "Linux process VmRSS/VmHWM include Python, weights, compiler, "
-            "runtime and shared libraries; peak RSS cannot be attributed "
-            "to native scratch allocation in isolation."
+            "Linux process VmRSS/VmHWM include Python, weights, runtime and "
+            "mapped native libraries but exclude the external C++ compiler "
+            "subprocess; peak RSS cannot isolate native scratch allocation."
         ),
     }
 
