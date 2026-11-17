@@ -204,3 +204,38 @@ def test_native_rope_reuse_is_chunk_partition_invariant(tmp_path, chunks):
         np.testing.assert_allclose(
             actual.values, expected.values, atol=2e-4, rtol=2e-4
         )
+
+
+@pytest.mark.parametrize("layers,batch", ((1, 1), (2, 2)))
+def test_native_four_row_linear_matches_separate_scalar_binary(
+    tmp_path, layers, batch
+):
+    """Two independently compiled kernel variants must agree, including KV."""
+    _, _, model, plan = prepare(tmp_path, layers=layers, batch=batch)
+    fast_compiler = NativeCpuLlamaCompiler(plan)
+    reference_compiler = NativeCpuLlamaCompiler(plan, reference_kernels=True)
+    assert fast_compiler.report()["linear_kernel"] == "four_row"
+    assert reference_compiler.report()["linear_kernel"] == "scalar_reference"
+    assert (
+        fast_compiler.report()["executable_sha256"]
+        != reference_compiler.report()["executable_sha256"]
+    )
+    fast, reference = fast_compiler.new_session(), reference_compiler.new_session()
+    semantic = plan.new_session(backend="numpy")
+    rng = np.random.default_rng(831 + layers)
+    for width in (3, 1, 4, 2):
+        tokens = rng.integers(
+            0, model.profile.vocabulary, size=(batch, width), dtype=np.int64
+        )
+        a, b, c = fast.step(tokens), reference.step(tokens), semantic.step(tokens)
+        np.testing.assert_allclose(a, b, rtol=2e-4, atol=2e-4)
+        np.testing.assert_allclose(a, c, rtol=2e-4, atol=2e-4)
+        for af, bf, cf in zip(
+            fast.snapshot().layers,
+            reference.snapshot().layers,
+            semantic.snapshot().layers,
+        ):
+            np.testing.assert_allclose(af.keys, bf.keys, rtol=2e-4, atol=2e-4)
+            np.testing.assert_allclose(af.values, bf.values, rtol=2e-4, atol=2e-4)
+            np.testing.assert_allclose(af.keys, cf.keys, rtol=2e-4, atol=2e-4)
+            np.testing.assert_allclose(af.values, cf.values, rtol=2e-4, atol=2e-4)
