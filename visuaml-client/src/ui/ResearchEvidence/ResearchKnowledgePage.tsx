@@ -50,13 +50,15 @@ export function ResearchKnowledgePage() {
   const visible = useMemo(() => {
     const query = search.trim().toLowerCase();
     return query
-      ? nodes.filter((node) => [
-          node.label,
-          node.kind,
-          node.status,
-          ...node.op_sequence,
-          ...Object.values(node.context),
-        ].some((term) => term.toLowerCase().includes(query)))
+      ? nodes.filter((node) =>
+          [
+            node.label,
+            node.kind,
+            node.status,
+            ...node.op_sequence,
+            ...Object.values(node.context),
+          ].some((term) => term.toLowerCase().includes(query)),
+        )
       : nodes;
   }, [nodes, search]);
   const chosen = useMemo(
@@ -64,7 +66,7 @@ export function ResearchKnowledgePage() {
     [visible, selected],
   );
   const connections = useMemo(
-    () => graph && chosen ? relatedKnowledge(graph, chosen.entry_id) : [],
+    () => (graph && chosen ? relatedKnowledge(graph, chosen.entry_id) : []),
     [graph, chosen],
   );
 
@@ -81,36 +83,44 @@ export function ResearchKnowledgePage() {
         <h1>Computation has a history.</h1>
         <p className="research-evidence-intro">
           Follow exact checkpoint, semantic, source-code and binary identities across compiler
-          experiments. Discover what can be reproduced, what remains uncertain, and which
-          historical assumptions must be recovered.
+          experiments. Discover what can be reproduced, what remains uncertain, and which historical
+          assumptions must be recovered.
         </p>
       </header>
 
       {loading && <p role="status">Reading the reviewed computational knowledge graph…</p>}
-      {error && <section className="research-evidence-unavailable" role="alert">
-        <h2>Knowledge graph unavailable on this deployment</h2>
-        <p>{error}. Merged source code does not imply the site is deployed.</p>
-        <a href="https://github.com/Caerii/VisuaML">Inspect the source repository</a>
-      </section>}
+      {error && (
+        <section className="research-evidence-unavailable" role="alert">
+          <h2>Knowledge graph unavailable on this deployment</h2>
+          <p>{error}. Merged source code does not imply the site is deployed.</p>
+          <a href="https://github.com/Caerii/VisuaML">Inspect the source repository</a>
+        </section>
+      )}
 
       {graph && (
         <>
           <section className="knowledge-statistics" aria-label="Knowledge coverage">
-            <div><span className="research-evidence-label">HISTORICAL STUDIES</span>
-              <strong>{graph.counts.studies}</strong></div>
-            <div><span className="research-evidence-label">SOURCE ARTIFACTS</span>
-              <strong>{graph.counts.source_artifacts}</strong></div>
-            <div><span className="research-evidence-label">EXACT IDENTITY RELATIONS</span>
-              <strong>{graph.counts.identity_edges}</strong></div>
+            <div>
+              <span className="research-evidence-label">HISTORICAL STUDIES</span>
+              <strong>{graph.counts.studies}</strong>
+            </div>
+            <div>
+              <span className="research-evidence-label">SOURCE ARTIFACTS</span>
+              <strong>{graph.counts.source_artifacts}</strong>
+            </div>
+            <div>
+              <span className="research-evidence-label">EXACT IDENTITY RELATIONS</span>
+              <strong>{graph.counts.identity_edges}</strong>
+            </div>
           </section>
 
           <section className="research-evidence-section">
             <p className="research-evidence-eyebrow">I. THE KNOWLEDGE GRAPH</p>
             <h2>Different experiments, inspectable relationships.</h2>
             <p>
-              An identical checkpoint digest is evidence of shared model bytes, not a proof
-              that an optimization is correct for every input or faster on another CPU.
-              Numerical and performance claims retain their original finite context.
+              An identical checkpoint digest is evidence of shared model bytes, not a proof that an
+              optimization is correct for every input or faster on another CPU. Numerical and
+              performance claims retain their original finite context.
             </p>
             <label className="knowledge-search">
               Search indexed studies
@@ -146,21 +156,27 @@ export function ResearchKnowledgePage() {
                     <p className="knowledge-status">{label(chosen.status)}</p>
                     <div className="research-evidence-ops">
                       {chosen.op_sequence.map((op, index) => (
-                        <span key={index}><code>{op}</code></span>
+                        <span key={index}>
+                          <code>{op}</code>
+                        </span>
                       ))}
                     </div>
                     <h4>Recorded computational identity</h4>
                     <dl className="knowledge-metadata">
-                      {([
-                        ['Checkpoint', chosen.checkpoint_sha256],
-                        ['Semantic IR', chosen.semantic_sha256],
-                        ['Generated C++', chosen.generated_cpp_sha256],
-                        ['Native binary', chosen.native_binary_sha256],
-                        ['Model revision', chosen.model_revision],
-                      ] as const).map(([name, value]) => (
+                      {(
+                        [
+                          ['Checkpoint', chosen.checkpoint_sha256],
+                          ['Semantic IR', chosen.semantic_sha256],
+                          ['Generated C++', chosen.generated_cpp_sha256],
+                          ['Native binary', chosen.native_binary_sha256],
+                          ['Model revision', chosen.model_revision],
+                        ] as const
+                      ).map(([name, value]) => (
                         <div key={name}>
                           <dt>{name}</dt>
-                          <dd><code title={value || ''}>{short(value)}</code></dd>
+                          <dd>
+                            <code title={value || ''}>{short(value)}</code>
+                          </dd>
                         </div>
                       ))}
                     </dl>
@@ -190,23 +206,35 @@ export function ResearchKnowledgePage() {
                           </button>
                         ))}
                       </div>
-                    ) : <p>No exact matching identity found in the current corpus.</p>}
+                    ) : (
+                      <p>No exact matching identity found in the current corpus.</p>
+                    )}
                     <details>
                       <summary>Recorded limitations and provenance</summary>
-                      <p><a
-                        href={chosen.workflow_url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >Original CI workflow</a></p>
-                      <p><a
-                        href={`https://github.com/Caerii/VisuaML/blob/main/${chosen.source_path}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >Reviewed source artifact</a></p>
-                      <ul>{chosen.limitations.map((item) => <li key={item}>{item}</li>)}</ul>
+                      <p>
+                        <a href={chosen.workflow_url} target="_blank" rel="noreferrer">
+                          Original CI workflow
+                        </a>
+                      </p>
+                      <p>
+                        <a
+                          href={`https://github.com/Caerii/VisuaML/blob/main/${chosen.source_path}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Reviewed source artifact
+                        </a>
+                      </p>
+                      <ul>
+                        {chosen.limitations.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
                     </details>
                   </>
-                ) : <p>Select a study to inspect its source and lineage.</p>}
+                ) : (
+                  <p>Select a study to inspect its source and lineage.</p>
+                )}
               </article>
             </div>
           </section>
@@ -215,9 +243,9 @@ export function ResearchKnowledgePage() {
             <p className="research-evidence-eyebrow">II. REPLAY CONTRACT</p>
             <h2>A source hash is not a rerun.</h2>
             <p>
-              The first v35 plan describes the historical pinned Tiny Llama witness. It
-              requires exact historical compiler files and checkpoint contents before
-              any trusted runtime can attempt a new numerical verification.
+              The first v35 plan describes the historical pinned Tiny Llama witness. It requires
+              exact historical compiler files and checkpoint contents before any trusted runtime can
+              attempt a new numerical verification.
             </p>
             <div className="knowledge-plan">
               <div>
@@ -229,22 +257,27 @@ export function ResearchKnowledgePage() {
               <div>
                 <span className="research-evidence-label">REQUIRED LOCAL CHECKPOINT</span>
                 <code>{graph.plans[0].model}</code>
-                <p>Revision <code>{short(graph.plans[0].model_revision)}</code></p>
-                {Object.entries(graph.plans[0].checkpoint_files_sha256).map(
-                  ([file, digest]) => (
-                    <p key={file}>{file}: <code title={digest}>{short(digest)}</code></p>
-                  ),
-                )}
+                <p>
+                  Revision <code>{short(graph.plans[0].model_revision)}</code>
+                </p>
+                {Object.entries(graph.plans[0].checkpoint_files_sha256).map(([file, digest]) => (
+                  <p key={file}>
+                    {file}: <code title={digest}>{short(digest)}</code>
+                  </p>
+                ))}
               </div>
             </div>
             <p>
-              Run the documented local <code>--preflight</code> command to identify
-              source and checkpoint blockers; it never downloads or executes model code.
-              See the <a
+              Run the documented local <code>--preflight</code> command to identify source and
+              checkpoint blockers; it never downloads or executes model code. See the{' '}
+              <a
                 href="https://github.com/Caerii/VisuaML/blob/main/docs/V35_REPLAYABLE_KNOWLEDGE_GRAPH.md"
                 target="_blank"
                 rel="noreferrer"
-              >v35 reproducibility protocol</a>.
+              >
+                v35 reproducibility protocol
+              </a>
+              .
             </p>
           </section>
         </>

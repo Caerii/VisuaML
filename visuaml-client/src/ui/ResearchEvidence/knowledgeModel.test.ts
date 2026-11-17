@@ -36,32 +36,36 @@ const sample = () => ({
     [older]: h('4'),
   },
   nodes: [node('1', '3', source), node('5', '4', older)],
-  edges: [{
-    from: h('1'),
-    to: h('5'),
-    relation: 'identical_checkpoint_fingerprint',
-    sha256: h('e'),
-    scope: 'identity_only_not_transferable_correctness_or_performance',
-  }],
-  plans: [{
-    schema: 'visuaml.replay-plan.v35',
-    plan_id: h('f'),
-    source_artifact_path: source,
-    source_artifact_sha256: h('3'),
-    evidence_class: 'historical_ci_numerical_witness_not_replayed_here',
-    model: 'manojredhat/tiny-llama',
-    model_revision: revision,
-    checkpoint_files_sha256: {
-      'model.safetensors': h('e'),
-      'config.json': h('6'),
+  edges: [
+    {
+      from: h('1'),
+      to: h('5'),
+      relation: 'identical_checkpoint_fingerprint',
+      sha256: h('e'),
+      scope: 'identity_only_not_transferable_correctness_or_performance',
     },
-    source_files_sha256: { 'visuaml/compiler_lab/native_cpu_v28.cpp': h('c') },
-    steps: ['verify_archive_bytes', 'verify_source_bytes'],
-    historical_source_commit: null,
-    status: 'preflight_only_no_executable_replay',
-    limitations: ['Not a fresh numerical replay'],
-    ci_run: 'https://github.com/Caerii/VisuaML/actions/runs/123',
-  }],
+  ],
+  plans: [
+    {
+      schema: 'visuaml.replay-plan.v35',
+      plan_id: h('f'),
+      source_artifact_path: source,
+      source_artifact_sha256: h('3'),
+      evidence_class: 'historical_ci_numerical_witness_not_replayed_here',
+      model: 'manojredhat/tiny-llama',
+      model_revision: revision,
+      checkpoint_files_sha256: {
+        'model.safetensors': h('e'),
+        'config.json': h('6'),
+      },
+      source_files_sha256: { 'visuaml/compiler_lab/native_cpu_v28.cpp': h('c') },
+      steps: ['verify_archive_bytes', 'verify_source_bytes'],
+      historical_source_commit: null,
+      status: 'preflight_only_no_executable_replay',
+      limitations: ['Not a fresh numerical replay'],
+      ci_run: 'https://github.com/Caerii/VisuaML/actions/runs/123',
+    },
+  ],
   counts: {
     studies: 2,
     source_artifacts: 2,
@@ -82,47 +86,73 @@ describe('replayable computational knowledge graph', () => {
   });
 
   it('rejects unapproved artifact paths, malformed IDs, and source drift', () => {
-    expect(() => parseKnowledgeGraph({
-      ...sample(), nodes: [{ ...node('1', '3', '../../secret'), node: 'unknown' }, node('5', '4', older)],
-    })).toThrow();
-    expect(() => parseKnowledgeGraph({
-      ...sample(), nodes: [node('1', '7', source), node('5', '4', older)],
-    })).toThrow();
-    expect(() => parseKnowledgeGraph({
-      ...sample(), knowledge_graph_sha256: 'not-a-digest',
-    })).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...sample(),
+        nodes: [{ ...node('1', '3', '../../secret'), node: 'unknown' }, node('5', '4', older)],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...sample(),
+        nodes: [node('1', '7', source), node('5', '4', older)],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...sample(),
+        knowledge_graph_sha256: 'not-a-digest',
+      }),
+    ).toThrow();
   });
 
   it('rejects broken identity edges and missing study endpoints', () => {
-    expect(() => parseKnowledgeGraph({
-      ...sample(),
-      edges: [{ ...sample().edges[0], to: h('9') }],
-    })).toThrow();
-    expect(() => parseKnowledgeGraph({
-      ...sample(),
-      edges: [{ ...sample().edges[0], scope: 'verified-universal-equivalence' }],
-    })).toThrow();
-    expect(() => parseKnowledgeGraph({
-      ...sample(),
-      counts: { ...sample().counts, identity_edges: 2 },
-    })).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...sample(),
+        edges: [{ ...sample().edges[0], to: h('9') }],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...sample(),
+        edges: [{ ...sample().edges[0], scope: 'verified-universal-equivalence' }],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...sample(),
+        counts: { ...sample().counts, identity_edges: 2 },
+      }),
+    ).toThrow();
   });
 
   it('refuses to display a replay as executed or recovered source checkout', () => {
     const base = sample();
-    expect(() => parseKnowledgeGraph({
-      ...base,
-      plans: [{ ...base.plans[0], status: 'numerical_replayed_successfully' }],
-    })).toThrow();
-    expect(() => parseKnowledgeGraph({
-      ...base,
-      plans: [{ ...base.plans[0], historical_source_commit: revision }],
-    })).toThrow();
-    expect(() => parseKnowledgeGraph({
-      ...base,
-      plans: [{ ...base.plans[0], checkpoint_files_sha256: {
-        'config.json': 'not-a-hash',
-      } }],
-    })).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...base,
+        plans: [{ ...base.plans[0], status: 'numerical_replayed_successfully' }],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...base,
+        plans: [{ ...base.plans[0], historical_source_commit: revision }],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseKnowledgeGraph({
+        ...base,
+        plans: [
+          {
+            ...base.plans[0],
+            checkpoint_files_sha256: {
+              'config.json': 'not-a-hash',
+            },
+          },
+        ],
+      }),
+    ).toThrow();
   });
 });
