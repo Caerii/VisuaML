@@ -31,6 +31,10 @@ pnpm --dir visuaml-client exec prettier --check .
 
 The [standard CI workflow](../.github/workflows/ci.yml) executes the corresponding checks plus Ruff. The independent [pretrained-model workflow](../.github/workflows/v19-pretrained-probe.yml) downloads a specific public model revision and checks tokenizer and CPU model oracles. Its historical filename does not imply its capabilities stop at v19.
 
+## v33: exported graph and reusable transformation evidence
+
+The [v33 protocol](V33_EXPORT_AND_EVIDENCE.md) adds fail-closed static `torch.export` admission to the bounded generated native compiler. The [dedicated CI workflow](../.github/workflows/native-evidence-v33.yml) checks synthetic MLP/Conv2D exported graphs against eager PyTorch on multiple inputs, with strict parameter digests and shape guards. A ReLU-idempotence rewrite records independent NumPy/PyTorch finite witnesses and bounded concrete counterexamples on failure. The record SHA-256 is an integrity checksum, **not** an authenticated signer or formal proof. The public research percentage is unchanged.
+
 ## v32: executable Semantic IR-to-native research
 
 The [permanent v32 numerical observation](../benchmarks/native_semantic_codegen_observation_v32.json) pins the synthetic graph and trusted-FX witness, generated C++ and executable hashes, compiler measurements and independent CI run. The full temporary CI artifact contains raw timings and generated source. Reproduction code and acceptance scope are documented below.
