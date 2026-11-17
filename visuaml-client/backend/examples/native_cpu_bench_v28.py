@@ -151,6 +151,23 @@ def benchmark(
             "torchscript_traces": engines["torchscript_whole"].report()["traces"],
         },
         "numerical_certificate": "all chunked logits and final layer KV match NumPy IR",
+        "native_compiler_evidence": {
+            name: {
+                key: compiler.report()[key]
+                for key in (
+                    "linear_kernel", "avx2_requested", "avx2_active",
+                    "kernel_compile_flags", "compiler_identity", "target",
+                    "cpp_source_sha256", "executable_sha256", "compilation_ms",
+                )
+            }
+            for name, compiler in (
+                ("native_cpp", native),
+                *((("native_scalar_reference", native_reference),)
+                  if native_reference is not None else ()),
+                *((("native_avx2", native_simd),)
+                  if native_simd is not None else ()),
+            )
+        },
         "native_linear_variants": {
             "native_cpp": native.report()["linear_kernel"],
             **(
