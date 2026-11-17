@@ -62,17 +62,26 @@ inline void rmsnorm(const float* input, const float* gain, float* output,
   for (int i = 0; i < width; ++i) output[i] = input[i] * factor * gain[i];
 }
 
-inline void rotate_half(float* value, int position, int depth, double theta) {
-  const int half = depth / 2;
-  for (int i = 0; i < half; ++i) {
+// Cache the RoPE angles once per position, shared across Q/K heads.
+inline void rope_angles(int position, int depth, double theta,
+                        std::vector<float>& sine, std::vector<float>& cosine) {
+  for (int i = 0; i < depth / 2; ++i) {
     const double phase =
         position * std::pow(theta, -2.0 * static_cast<double>(i) / depth);
-    const float sine = static_cast<float>(std::sin(phase));
-    const float cosine = static_cast<float>(std::cos(phase));
+    sine[i] = static_cast<float>(std::sin(phase));
+    cosine[i] = static_cast<float>(std::cos(phase));
+  }
+}
+
+inline void rotate_half(float* value, int depth,
+                        const std::vector<float>& sine,
+                        const std::vector<float>& cosine) {
+  const int half = depth / 2;
+  for (int i = 0; i < half; ++i) {
     const float a = value[i];
     const float b = value[i + half];
-    value[i] = a * cosine - b * sine;
-    value[i + half] = b * cosine + a * sine;
+    value[i] = a * cosine[i] - b * sine[i];
+    value[i + half] = b * cosine[i] + a * sine[i];
   }
 }
 
@@ -155,6 +164,8 @@ extern "C" int visuaml_native_llama_decode(
       // Mathematically distinct from Python's NumPy kernels.
       std::vector<float> keys(kv_len);
       std::vector<float> values(kv_len);
+      std::vector<float> rope_sine(depth / 2);
+      std::vector<float> rope_cosine(depth / 2);
 
       for (size_t row = 0; row < rows; ++row) {
         const size_t off = row * h;
@@ -165,13 +176,14 @@ extern "C" int visuaml_native_llama_decode(
         linear(normed.data() + off, wk, keys.data() + kv_off, h, kwidth);
         linear(normed.data() + off, wv, values.data() + kv_off, h, kwidth);
         const int position = past + static_cast<int>(row % query);
+        rope_angles(position, depth, c.rope_theta, rope_sine, rope_cosine);
         for (int head = 0; head < c.heads; ++head) {
           rotate_half(q.data() + off + head * depth,
-                      position, depth, c.rope_theta);
+                      depth, rope_sine, rope_cosine);
         }
         for (int head = 0; head < c.kv_heads; ++head) {
           rotate_half(keys.data() + kv_off + head * depth,
-                      position, depth, c.rope_theta);
+                      depth, rope_sine, rope_cosine);
         }
       }
       std::copy(keys.begin(), keys.end(), emitted_kv[2 * layer]);
