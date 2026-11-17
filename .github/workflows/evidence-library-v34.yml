@@ -4,7 +4,8 @@ on:
     branches:
       - main
     paths:
-      - visuaml-client/backend/visuaml/compiler_lab/evidence_library_v34.py
+      - visuaml-client/backend/visuaml_evidence/library_v34.py
+      - visuaml-client/backend/visuaml_evidence/__init__.py
       - visuaml-client/backend/tests/test_evidence_library_v34.py
       - visuaml-client/backend/scripts/build_evidence_library_v34.py
       - benchmarks/native_online_attention_observation_v31.json
@@ -15,7 +16,7 @@ on:
       - .github/workflows/evidence-library-v34.yml
   pull_request:
     paths:
-      - visuaml-client/backend/visuaml/compiler_lab/evidence_library_v34.py
+      - visuaml-client/backend/visuaml_evidence/library_v34.py
       - visuaml-client/backend/tests/test_evidence_library_v34.py
       - visuaml-client/backend/scripts/build_evidence_library_v34.py
       - benchmarks/native_online_attention_observation_v31.json
@@ -39,7 +40,7 @@ jobs:
           python -m pip install pytest ruff
       - name: Lint compounding evidence library
         run: |
-          ruff check visuaml-client/backend/visuaml/compiler_lab/evidence_library_v34.py visuaml-client/backend/tests/test_evidence_library_v34.py visuaml-client/backend/scripts/build_evidence_library_v34.py
+          ruff check visuaml-client/backend/visuaml_evidence visuaml-client/backend/tests/test_evidence_library_v34.py visuaml-client/backend/scripts/build_evidence_library_v34.py
       - name: Verify repository historical artifacts and fail-closed records
         env:
           PYTHONPATH: visuaml-client/backend
