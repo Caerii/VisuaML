@@ -408,7 +408,9 @@ extern "C" int visuaml_native_llama_decode(
     std::vector<float> values(kv_len);
     std::vector<float> rope_sine(depth / 2);
     std::vector<float> rope_cosine(depth / 2);
+#if !defined(VISUAML_NATIVE_ONLINE_ATTENTION)
     std::vector<float> scores(c.capacity);
+#endif
     std::vector<float> projection(rows * h);
     std::vector<float> ff_norm(rows * h);
     std::vector<float> gate(rows * c.inner);
@@ -473,6 +475,50 @@ extern "C" int visuaml_native_llama_decode(
             const float* query_head =
                 q.data() + (static_cast<size_t>(batch) * query + t) * h
                 + head * depth;
+            float* output_head =
+                attended.data() + (static_cast<size_t>(batch) * query + t) * h
+                + head * depth;
+#if defined(VISUAML_NATIVE_ONLINE_ATTENTION)
+            // Stable streaming softmax: no materialized score vector.
+            // For prefix j: m=max(score), z=sum(exp(score-m)),
+            // and acc=sum(exp(score-m)*value). All states are private to
+            // this head/query. The denominator is checked before publishing.
+            float running_max = -std::numeric_limits<float>::infinity();
+            float running_sum = 0.0f;
+            for (int ctx = 0; ctx < available; ++ctx) {
+              const float* key_ptr =
+                  ctx < past
+                  ? old_keys + kv_index(batch, ctx, kh, 0, past, c.kv_heads, depth)
+                  : keys.data() +
+                    kv_index(batch, ctx - past, kh, 0, query, c.kv_heads, depth);
+              const float* value_ptr =
+                  ctx < past
+                  ? old_values + kv_index(batch, ctx, kh, 0, past, c.kv_heads, depth)
+                  : values.data() +
+                    kv_index(batch, ctx - past, kh, 0, query, c.kv_heads, depth);
+              float dot = 0.0f;
+              for (int d = 0; d < depth; ++d) {
+                dot += query_head[d] * key_ptr[d];
+              }
+              const float score = dot * scaling;
+              if (!std::isfinite(score)) return -6;
+              const float next_max = std::max(running_max, score);
+              const float rescale = ctx == 0 ? 0.0f
+                  : std::exp(running_max - next_max);
+              const float contribution = std::exp(score - next_max);
+              running_sum = running_sum * rescale + contribution;
+              for (int d = 0; d < depth; ++d) {
+                output_head[d] = output_head[d] * rescale +
+                                 contribution * value_ptr[d];
+              }
+              running_max = next_max;
+            }
+            if (!(running_sum > 0.0f) || !std::isfinite(running_sum)) return -6;
+            const float inverse = 1.0f / running_sum;
+            for (int d = 0; d < depth; ++d) {
+              output_head[d] *= inverse;
+            }
+#else
             float peak = -std::numeric_limits<float>::infinity();
             for (int ctx = 0; ctx < available; ++ctx) {
               const float* key_ptr =
@@ -493,9 +539,6 @@ extern "C" int visuaml_native_llama_decode(
               denominator += scores[ctx];
             }
             if (!(denominator > 0.0f) || !std::isfinite(denominator)) return -6;
-            float* output_head =
-                attended.data() + (static_cast<size_t>(batch) * query + t) * h
-                + head * depth;
             for (int ctx = 0; ctx < available; ++ctx) {
               const float* value_ptr =
                   ctx < past
@@ -507,6 +550,7 @@ extern "C" int visuaml_native_llama_decode(
                 output_head[d] += probability * value_ptr[d];
               }
             }
+#endif
           }
         }
       }
