@@ -6,7 +6,6 @@ import hashlib
 import json
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[3]
 BACKEND = ROOT / "visuaml-client" / "backend"
 EVIDENCE = ROOT / "benchmarks" / "native_online_attention_observation_v31.json"
