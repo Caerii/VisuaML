@@ -290,3 +290,295 @@
     padding: 10px 18px;
   }
 }
+
+/* Research-grade typed-operation inspector, separate from hypothetical placement. */
+.semantic-studio {
+  border-block: 1px solid #304660;
+  color: #e8f0fb;
+  background:
+    radial-gradient(ellipse 48% 85% at 90% 10%, rgba(76, 123, 187, 0.12), transparent), #0b131e;
+}
+.semantic-studio-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 28px;
+  padding: 46px clamp(24px, 4vw, 72px);
+}
+.semantic-studio-kicker {
+  color: #a3c7f3;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.semantic-studio-intro h2 {
+  font:
+    400 clamp(30px, 3.5vw, 53px) / 1.09 Georgia,
+    serif;
+  letter-spacing: -0.04em;
+  max-width: 720px;
+  margin: 14px 0 16px;
+}
+.semantic-studio-intro p {
+  color: #a6b7cc;
+  max-width: 790px;
+  line-height: 1.8;
+  font-size: 13px;
+  margin: 0;
+}
+.semantic-studio button {
+  cursor: pointer;
+}
+.semantic-studio-open,
+.semantic-studio-provenance button {
+  border: 1px solid #6786ac;
+  padding: 12px 18px;
+  color: #d7e9ff;
+  background: rgba(58, 95, 144, 0.14);
+  border-radius: 2px;
+  min-height: 42px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.semantic-studio-open:hover,
+.semantic-studio-provenance button:hover {
+  background: rgba(76, 115, 166, 0.25);
+}
+.semantic-studio button:focus-visible,
+.semantic-studio input:focus-visible,
+.semantic-studio select:focus-visible {
+  outline: 2px solid #bad8ff;
+  outline-offset: 3px;
+}
+.semantic-studio-body {
+  border-top: 1px solid #29405a;
+  padding: 30px clamp(24px, 4vw, 72px) 55px;
+}
+.semantic-studio-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+.semantic-studio-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #98b1cd;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.semantic-studio-controls input[type='search'] {
+  width: min(330px, 75vw);
+}
+.semantic-studio-controls input,
+.semantic-studio-controls select {
+  padding: 10px 13px;
+  background: #142335;
+  border: 1px solid #385371;
+  color: #e8f3ff;
+  border-radius: 3px;
+}
+.semantic-studio-controls .semantic-studio-check {
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 11px;
+  letter-spacing: 0;
+}
+.semantic-studio-check input {
+  accent-color: #91c5fb;
+}
+.semantic-studio-notice {
+  color: #bfcce0;
+  line-height: 1.75;
+  font-size: 13px;
+  border: 1px solid #36516e;
+  padding: 16px 20px;
+}
+.semantic-studio-notice a {
+  color: #b1d7ff;
+}
+.semantic-studio-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid #304359;
+  margin: 24px 0;
+}
+.semantic-studio-metrics > div {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 24px;
+  border-right: 1px solid #304359;
+}
+.semantic-studio-metrics > div:last-child {
+  border-right: 0;
+}
+.semantic-studio-metrics span {
+  font-size: 10px;
+  color: #93abc6;
+}
+.semantic-studio-metrics strong {
+  font:
+    400 clamp(23px, 2.8vw, 40px) / 1 Georgia,
+    serif;
+  color: #d1e5fc;
+  overflow-wrap: anywhere;
+}
+.semantic-studio-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.95fr) minmax(0, 1.05fr);
+  border: 1px solid #304359;
+}
+.semantic-studio-operations {
+  border-right: 1px solid #304359;
+  max-height: 650px;
+  overflow: auto;
+}
+.semantic-studio-small {
+  color: #8ba2bd;
+  font-size: 12px;
+  margin: 16px 18px;
+}
+.semantic-studio-op {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 28px 1fr auto auto;
+  gap: 11px;
+  align-items: center;
+  padding: 13px 18px;
+  background: transparent;
+  color: #dfecf9;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid #22364e;
+  font:
+    12px Inter,
+    sans-serif;
+}
+.semantic-studio-op:hover,
+.semantic-studio-op.active {
+  background: #1c3149;
+}
+.semantic-studio-op.active {
+  box-shadow: inset 3px 0 #9bc7ff;
+}
+.semantic-studio-op > span {
+  color: #7695b8;
+}
+.semantic-studio-op strong {
+  overflow-wrap: anywhere;
+}
+.semantic-studio-op em {
+  font-size: 10px;
+  color: #9cb4d0;
+  font-style: normal;
+}
+.semantic-studio-op b {
+  color: #bad9ba;
+  font-size: 10px;
+}
+.semantic-studio-detail {
+  padding: clamp(22px, 3vw, 45px);
+}
+.semantic-studio-detail h3 {
+  font:
+    400 clamp(26px, 3vw, 43px) / 1.1 Georgia,
+    serif;
+  margin: 16px 0;
+  overflow-wrap: anywhere;
+}
+.semantic-studio-detail > p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #a8bcd1;
+}
+.semantic-studio-detail dl {
+  display: grid;
+  grid-template-columns: 105px 1fr;
+  gap: 9px 18px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.semantic-studio-detail dt {
+  color: #88a7cb;
+}
+.semantic-studio-detail dd {
+  margin: 0;
+  color: #d4e1f0;
+}
+.semantic-studio-detail h4 {
+  color: #c3d9f5;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  margin: 36px 0 18px;
+}
+.semantic-studio-histogram {
+  display: grid;
+  gap: 12px;
+}
+.semantic-studio-histogram > div {
+  display: grid;
+  grid-template-columns: 120px 1fr 25px;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+}
+.semantic-studio-histogram > div > span {
+  color: #9eb3cc;
+}
+.semantic-studio-histogram > div > div {
+  background: #233347;
+  height: 4px;
+}
+.semantic-studio-histogram > div > div > span {
+  height: 4px;
+  background: #8dbbec;
+  display: block;
+}
+.semantic-studio-histogram b {
+  font-weight: 500;
+}
+.semantic-studio-provenance {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  border: 1px solid #304359;
+  border-top: 0;
+  padding: 25px;
+}
+.semantic-studio-provenance strong {
+  font-size: 12px;
+}
+.semantic-studio-provenance p {
+  font-size: 11px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+  color: #96aac1;
+}
+@media (max-width: 880px) {
+  .semantic-studio-intro {
+    grid-template-columns: 1fr;
+  }
+  .semantic-studio-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  .semantic-studio-metrics > div:nth-child(2) {
+    border-right: 0;
+  }
+  .semantic-studio-metrics > div:nth-child(-n + 2) {
+    border-bottom: 1px solid #304359;
+  }
+  .semantic-studio-layout {
+    grid-template-columns: 1fr;
+  }
+  .semantic-studio-operations {
+    border-right: 0;
+    border-bottom: 1px solid #304359;
+    max-height: 360px;
+  }
+}

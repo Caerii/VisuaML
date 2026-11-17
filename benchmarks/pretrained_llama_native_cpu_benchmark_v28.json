@@ -1,0 +1,136 @@
+{
+  "backend": {
+    "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+    "compilation_ms": 850.611034,
+    "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "cpp_source_sha256": "408054895f5f017817022f2a7399980d8913fb86655fd43f15d81ab62cb20579",
+    "executable_sha256": "15f718f94c42921e7c67774e0ea3f8faea91cd96595a76060d2a04cc234e14ef",
+    "independent_max_abs_error": 0.0000011920928955078125,
+    "schema": "visuaml.native-cpu-llama.v28",
+    "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+    "target": "x86_64"
+  },
+  "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+  "chunked_KV_and_greedy_parity": true,
+  "config_sha256": "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02",
+  "limitations": [
+    "A scalar independent C++17 CPU kernel, not GPU or photonic hardware.",
+    "Numerical tolerances hold for only the pinned inputs and model.",
+    "This backend is not yet optimized against production CPU inference engines.",
+    "Temporary local library is not a portable independently signed native AOT package."
+  ],
+  "matched_cpu_benchmark": {
+    "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+    "chunks": [
+      4,
+      1,
+      1,
+      2
+    ],
+    "compilation": {
+      "native_cpp_ms": 467.992425,
+      "torchscript_traces": [
+        {
+          "batch": 1,
+          "graph_nodes": 2097,
+          "past": -1,
+          "query": -1,
+          "trace_ms": 45.587031
+        }
+      ]
+    },
+    "cpu": "x86_64",
+    "latency": {
+      "native_cpp": {
+        "mad_ms": 0.102615,
+        "median_ms": 35.127437,
+        "minimum_ms": 34.89088,
+        "p95_ms": 35.315496
+      },
+      "numpy_semantic": {
+        "mad_ms": 2.913715,
+        "median_ms": 13.541163,
+        "minimum_ms": 10.503641,
+        "p95_ms": 16.483827
+      },
+      "torchscript_whole": {
+        "mad_ms": 0.061591,
+        "median_ms": 13.545048,
+        "minimum_ms": 13.483457,
+        "p95_ms": 14.357612
+      }
+    },
+    "limitations": [
+      "Scalar C++17 research CPU backend; not a production-optimized native kernel.",
+      "These short CPU measurements cannot establish industry-scale throughput.",
+      "Warm inference excludes initial compilation; compile cost is separate.",
+      "No GPU, optical device, parallel serving or physical energy measurement."
+    ],
+    "numerical_certificate": "all chunked logits and final layer KV match NumPy IR",
+    "numpy": "2.1.3",
+    "openblas_threads": "1",
+    "python": "3.12.16",
+    "schema": "visuaml.native-cpu-benchmark.v28",
+    "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+    "source_model_revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+    "source_sha256": {
+      "examples/native_cpu_bench_v28.py": "f4b8c517876dd18af7977a415e2f4c587ee8c02086a1e6e9b62eb3c2a7bea4d9",
+      "visuaml/compiler_lab/native_cpu_v28.cpp": "408054895f5f017817022f2a7399980d8913fb86655fd43f15d81ab62cb20579",
+      "visuaml/compiler_lab/native_cpu_v28.py": "d0836801810f42404f3c4549d8ea20cdc466acbccfee78e717ef388c4489c3be"
+    },
+    "trials": 5
+  },
+  "revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+  "schema": "visuaml.pinned-native-llama-v28",
+  "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+  "source": "manojredhat/tiny-llama",
+  "witnesses": [
+    {
+      "logit_shape": [
+        1,
+        4,
+        512
+      ],
+      "max_abs_error_against_HF": 0.0000012516975402832031,
+      "max_abs_error_against_semantic_IR": 0.0000011920928955078125,
+      "tokens": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "logit_shape": [
+        1,
+        6,
+        512
+      ],
+      "max_abs_error_against_HF": 0.000001519918441772461,
+      "max_abs_error_against_semantic_IR": 0.0000010728836059570312,
+      "tokens": [
+        [
+          7,
+          3,
+          8,
+          2,
+          1,
+          9
+        ]
+      ]
+    }
+  ],
+  "evidence_provenance": {
+    "workflow_url": "https://github.com/Caerii/VisuaML/actions/runs/43953072394",
+    "conclusion": "success",
+    "scope": "Source-bound real Llama native C++ whole decoder, HF oracle, KV states, generation and matched warm CPU run",
+    "caveats": [
+      "Single GitHub Actions CPU and five warm trials; no production speedup inference.",
+      "Compilation and warm inference are reported separately.",
+      "This is a scalar C++ reference backend, not an optimized native SIMD/BLAS engine.",
+      "Finite FP32 witness inputs only, not all-input formal equivalence."
+    ]
+  }
+}

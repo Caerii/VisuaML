@@ -1,0 +1,74 @@
+{
+  "backend": {
+    "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+    "compilation_ms": 2835.738276,
+    "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "cpp_source_sha256": "408054895f5f017817022f2a7399980d8913fb86655fd43f15d81ab62cb20579",
+    "executable_sha256": "15f718f94c42921e7c67774e0ea3f8faea91cd96595a76060d2a04cc234e14ef",
+    "independent_max_abs_error": 0.0000015497207641601562,
+    "schema": "visuaml.native-cpu-llama.v28",
+    "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+    "target": "x86_64"
+  },
+  "checkpoint_sha256": "d910edc7031721de23a7af111e355e6c09d5f1b3a2c43c0b6b0aa6a9135ffe03",
+  "chunked_KV_and_greedy_parity": true,
+  "config_sha256": "b53aec3cd6cfb1be4b96cadf8ca0c5b9e0279d751100dbebd8f93ff6564c0e02",
+  "limitations": [
+    "A scalar independent C++17 CPU kernel, not GPU or photonic hardware.",
+    "Numerical tolerances hold for only the pinned inputs and model.",
+    "This backend is not yet optimized against production CPU inference engines.",
+    "Temporary local library is not a portable independently signed native AOT package."
+  ],
+  "revision": "756e9746eb801752d69771ef3e9bc433b21d853d",
+  "schema": "visuaml.pinned-native-llama-v28",
+  "semantic_sha256": "351d9b568ae8fe1aad4d1a11a75fc0c713770e1517f81a97e7cf9b82b1f6a961",
+  "source": "manojredhat/tiny-llama",
+  "witnesses": [
+    {
+      "logit_shape": [
+        1,
+        4,
+        512
+      ],
+      "max_abs_error_against_HF": 0.0000012516975402832031,
+      "max_abs_error_against_semantic_IR": 0.0000015497207641601562,
+      "tokens": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "logit_shape": [
+        1,
+        6,
+        512
+      ],
+      "max_abs_error_against_HF": 0.000001519918441772461,
+      "max_abs_error_against_semantic_IR": 0.0000015497207641601562,
+      "tokens": [
+        [
+          7,
+          3,
+          8,
+          2,
+          1,
+          9
+        ]
+      ]
+    }
+  ],
+  "evidence_provenance": {
+    "workflow": "https://github.com/Caerii/VisuaML/actions/runs/43952463605",
+    "conclusion": "success",
+    "scope": "Real pinned pretrained Llama model; independent native C++17 CPU whole decoder versus Hugging Face and NumPy typed IR; chunked cache and greedy generation witnesses",
+    "caveats": [
+      "Finite test inputs and FP32 tolerances; no all-input mathematical proof.",
+      "Scalar CPU kernel, not an optimized BLAS/CUDA/IREE engine.",
+      "Native source is compiled locally and the transient library is not a signed portable AOT artifact."
+    ]
+  }
+}

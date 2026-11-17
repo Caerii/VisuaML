@@ -2,7 +2,7 @@
 
 The client is a React/TypeScript application for interactive neural-network graphs and real-time collaboration. The optional local Python backend performs trusted model analysis and hosts the experimental Compiler Lab's fixed-fixture evidence API.
 
-For the compiler capabilities and support limits, read the [Compiler Guide](COMPILER_GUIDE.md). For the complete architecture, see [Architecture](ARCHITECTURE.md).
+For compiler capabilities and support limits, read the [Compiler Guide](COMPILER_GUIDE.md). The [public research roadmap](ROADMAP.md) is also available through the /roadmap route once the client is deployed with single-page application routing. For the complete architecture, see [Architecture](ARCHITECTURE.md).
 
 ## Requirements and installation
 
@@ -64,3 +64,11 @@ python -m pytest -q backend/tests
 If the frontend loads but model import fails, confirm the API process is running and VISUAML_PYTHON selects the correct Python environment. If collaboration is disconnected, check the WebSocket service and VITE_WEBSOCKET_URL in your local environment. A 404 from a compiler-lab endpoint generally means the guarded opt-in is disabled.
 
 For resource/identity limitations and malicious-model concerns, see [Security](SECURITY_AND_BOUNDARIES.md).
+
+## Public roadmap and deployment
+
+The upgraded client defines a public **/roadmap** route that reads the version-controlled **visuaml-client/public/roadmap.json** asset and displays a reviewed research acceptance ledger. The page needs no user authentication, model API or Python runtime. The frontend validates weights, evidence references and status before displaying percentages. Its as-of date and baseline commit make snapshot age explicit.
+
+Local Vite development supports direct access to /roadmap. Production hosting must serve the Vite index.html fallback for client-side routes. The repository alone does not prove **visuaml.com** has deployed a branch: check the host's connected repository, production revision and direct navigation to https://visuaml.com/roadmap after merging.
+
+See [Roadmap methodology](ROADMAP.md) for the calculations and review process.

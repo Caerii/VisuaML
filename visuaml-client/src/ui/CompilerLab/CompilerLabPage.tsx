@@ -3,6 +3,7 @@ import { ReactFlow, Background, Controls, type Edge, type Node } from '@xyflow/r
 import dagre from 'dagre';
 import '@xyflow/react/dist/style.css';
 import { analyzeScenario, type CompilerReport, type CompilerNode, type Scenario } from './types';
+import { SemanticExecutionPanel } from './SemanticExecutionPanel';
 import './CompilerLab.css';
 
 const SCENARIOS: { value: Scenario; label: string; summary: string }[] = [
@@ -159,12 +160,19 @@ export function CompilerLabPage() {
       <header className="compiler-header">
         <div>
           <a href="/app" className="compiler-back">
-            ← Back to VisuaML
+            ← Back to the workspace
+          </a>
+          <span aria-hidden="true"> · </span>
+          <a href="/roadmap" className="compiler-back">
+            Public research roadmap ↗
           </a>
           <h1>
-            Compiler Lab <span>v4 integration</span>
+            Compiler Lab <span>executable semantic research</span>
           </h1>
-          <p>Decompose, validate, lower, and inspect captured neural programs.</p>
+          <p>
+            Inspect bounded computational programs, compare transformations, and follow independent
+            numerical evidence.
+          </p>
         </div>
         <div className="compiler-form">
           <label>
@@ -209,6 +217,7 @@ export function CompilerLabPage() {
           <code>VISUAML_COMPILER_LAB_ENABLED=1</code>.
         </div>
       )}
+      <SemanticExecutionPanel />
       {!report ? (
         <main className="compiler-empty">
           {loading ? 'Analyzing a reproducible example…' : 'Select a workload to begin.'}

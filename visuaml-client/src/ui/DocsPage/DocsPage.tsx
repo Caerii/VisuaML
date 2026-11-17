@@ -70,6 +70,20 @@ export function DocsPage() {
                 >
                   Documentation
                 </Typography>
+                <Box
+                  component="a"
+                  href="/roadmap"
+                  sx={{
+                    color: '#a9ccfb',
+                    fontSize: 13,
+                    textDecoration: 'none',
+                    borderBottom: '1px solid rgba(169,204,251,.42)',
+                    width: 'fit-content',
+                    pb: 0.7,
+                  }}
+                >
+                  Read the evidence-weighted public roadmap ↗
+                </Box>
                 <Typography
                   sx={{
                     fontSize: {
@@ -82,10 +96,10 @@ export function DocsPage() {
                     maxWidth: '800px',
                   }}
                 >
-                  Comprehensive documentation covering current capabilities, categorical foundation,
-                  bridge architecture, and research vision. Learn how to visualize PyTorch models,
-                  collaborate in real-time, export to categorical structures, and explore our
-                  research directions.
+                  VisuaML is a collaborative computational research environment. These guides
+                  distinguish working model inspection, typed semantic execution and independently
+                  checked research from the broader architecture catalogue and future proposals. The
+                  public roadmap shows exactly which acceptance criteria have been verified.
                 </Typography>
               </Stack>
 
