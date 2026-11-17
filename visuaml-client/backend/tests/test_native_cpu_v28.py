@@ -366,3 +366,5 @@ def test_native_batched_prefill_rejects_unsafe_selection(tmp_path):
         )
     with pytest.raises(NativeCpuError, match="booleans"):
         NativeCpuLlamaCompiler(plan, enable_batched_prefill="yes")
+    with pytest.raises(NativeCpuError, match="requires guarded AVX2"):
+        NativeCpuLlamaCompiler(plan, enable_batched_prefill=True)
