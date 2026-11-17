@@ -31,6 +31,23 @@ The benchmark checks chunked logits and final K/V state against NumPy before rec
 4. Matched-device before/after performance has raw samples and hardware/compiler metadata. A speedup is reported only if supported by those measurements; a regression reverts the optimization.
 5. No roadmap acceptance status is changed merely because the code exists.
 
+
+## v29 implementation progress: linear and scratch work
+
+The native C++17 decoder now includes a default four-output-row linear kernel (single input traversal with independent per-row accumulators) and a separately compiled `VISUAML_NATIVE_SCALAR_REFERENCE` variant. The latter preserves the conventional one-output-row loop so the implementation can compare actual native binaries, rather than only native execution against the NumPy oracle. These two variants share RoPE caching and scratch reuse; therefore their comparison isolates the changed linear traversal more closely than a v28-to-v29 comparison.
+
+Per-layer tensors and attention-score scratch are now allocated once per decoder invocation and reused across layers/heads. The attention output is explicitly cleared each layer; scores are fully written over the active prefix. This reduces repeated vector-allocation calls but does **not** prove lower physical peak RSS. Scratch remains invocation-owned, not shared mutable state across sessions.
+
+Run the comparison with:
+
+```sh
+PYTHONPATH=backend python backend/examples/native_cpu_bench_v28.py /path/to/pinned/checkpoint --revision YOUR_PINNED_COMMIT_SHA --prompt 4 --chunks 1 1 2 --trials 21 --compare-native-reference --output /tmp/visuaml-v29-compare.json
+```
+
+The output includes `native_scalar_reference` timing samples, `native_linear_variants`, separate native compilation times, and `warm_native_speedup_vs_scalar` calculated as median scalar time divided by median four-row time. It is a *ratio*, not an established speedup claim unless reproduced with controlled hardware and enough trials. A combined v28-to-v29 measurement additionally captures RoPE and allocation effects.
+
+**Additional safeguards:** compiler flags use `-O2 -fno-fast-math`; optimized and scalar streams must match independent NumPy logits and all KV states. The existing native pretrained witness remains mandatory. Numerical agreement for tested models is not a proof of all possible inputs. Future physical-memory experiments must distinguish RSS/peak high-water measurements from logical live KV budgets.
+
 ## Planned next kernels
 
 Measure linear projection and vocabulary-head costs first. Evaluate safe contiguous vectorization and matrix multiplication blocking, then attention score/value accumulation and reusable scratch buffers. Keep scalar/reference and optimized paths separable for independent comparison. Investigate physically measured RSS/peak allocation and long-context behavior before claiming memory reductions. GPU and optical code generation remain separate future milestones.
