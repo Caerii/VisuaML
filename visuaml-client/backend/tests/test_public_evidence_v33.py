@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import re
@@ -43,3 +44,61 @@ def test_published_v33_evidence_is_bounded_and_source_linked():
     assert 0 < transform["medianRatioBeforeOverAfter"] < 1
     assert any("synthetic" in x.lower() for x in data["limitations"])
     assert any("not authenticated" in x.lower() for x in data["limitations"])
+
+
+def test_public_summary_replays_the_permanent_source_bound_ci_record():
+    """The read-only site cannot invent results absent from archived evidence."""
+    root = Path(__file__).resolve().parents[3]
+    archive = root / "benchmarks" / "export_evidence_observation_v33.json"
+    origin_file = root / "benchmarks" / "export_evidence_observation_v33.origin.json"
+    asset = root / "visuaml-client" / "public" / "evidence" / "v33-observation.json"
+    exact_bytes = archive.read_bytes()
+    full = json.loads(exact_bytes)
+    origin = json.loads(origin_file.read_text(encoding="utf-8"))
+    visible = json.loads(asset.read_text(encoding="utf-8"))
+
+    assert origin["schema"] == "visuaml.durable-evidence-origin.v1"
+    assert origin["evidence_sha256"] == hashlib.sha256(exact_bytes).hexdigest()
+    assert origin["source_commit"] == visible["sourceCommit"]
+    assert origin["ci_run"] == visible["workflowRun"]
+    assert full["schema"] == "visuaml.export-evidence-demonstration.v33"
+    assert len(full["model_witnesses"]) == len(visible["models"]) == 2
+
+    for published, witness in zip(
+        visible["models"], full["model_witnesses"], strict=True
+    ):
+        compiler = witness["compiler"]
+        assert published["operations"] == compiler["op_sequence"]
+        assert published["semanticSha256"] == compiler["semantic_sha256"]
+        assert published["generatedCppSha256"] == compiler["generated_cpp_sha256"]
+        assert published["binarySha256"] == compiler["native_binary_sha256"]
+        assert published["compileMs"] == compiler["compilation_ms"]
+        assert published["warmMedianMs"] == witness["warm_native_ms"]["median"]
+        assert published["maximumAbsoluteError"] == witness["max_abs_error_eager_torch"]
+        assert (
+            published["secondInputMaximumAbsoluteError"]
+            == witness["max_abs_error_second_input"]
+        )
+        assert hashlib.sha256(witness["generated_cpp"].encode()).hexdigest() == (
+            compiler["generated_cpp_sha256"]
+        )
+
+    published_rewrite = visible["transformation"]
+    full_rewrite = full["rewrite_witness"]
+    full_timing = full["optimization_experiment"]
+    assert published_rewrite["numericalStatus"] == full_rewrite["status"]
+    assert published_rewrite["evidenceSha256"] == full_rewrite["record_sha256"]
+    assert (
+        published_rewrite["experimentalStatus"] == full_timing["status"]
+    )
+    assert published_rewrite["medianRatioBeforeOverAfter"] == (
+        full_timing["median_ratio_before_over_after"]
+    )
+    unsigned = {
+        key: value for key, value in full_rewrite.items()
+        if key != "record_sha256"
+    }
+    canonical = json.dumps(
+        unsigned, sort_keys=True, separators=(",", ":"), allow_nan=False
+    ).encode()
+    assert hashlib.sha256(canonical).hexdigest() == full_rewrite["record_sha256"]
