@@ -306,6 +306,7 @@ def test_native_avx2_selection_rejects_conflicting_modes(tmp_path):
     (
         ({"hidden": 32, "heads": 4, "kv": 2, "middle": 80, "vocab": 64}, 1),
         ({"hidden": 48, "heads": 6, "kv": 3, "middle": 101, "vocab": 67}, 2),
+        ({"hidden": 128, "heads": 8, "kv": 4, "middle": 384, "vocab": 257}, 1),
     ),
 )
 def test_native_batched_prefill_matches_avx2_scalar_and_numpy(
@@ -324,6 +325,12 @@ def test_native_batched_prefill_matches_avx2_scalar_and_numpy(
     scalar = NativeCpuLlamaCompiler(plan, reference_kernels=True)
     assert batched.report()["batched_prefill_requested"] is True
     assert baseline.report()["batched_prefill_requested"] is False
+    expected_gate = (
+        bool(batched.report()["avx2_active"]) and shape["hidden"] >= 128
+    )
+    assert batched.prefill_dispatch(7)["native_batched_selected"] == expected_gate
+    assert batched.prefill_dispatch(1)["native_batched_selected"] is False
+    assert baseline.prefill_dispatch(7)["native_batched_selected"] is False
     assert (
         baseline.report()["executable_sha256"]
         != batched.report()["executable_sha256"]
@@ -368,3 +375,8 @@ def test_native_batched_prefill_rejects_unsafe_selection(tmp_path):
         NativeCpuLlamaCompiler(plan, enable_batched_prefill="yes")
     with pytest.raises(NativeCpuError, match="requires guarded AVX2"):
         NativeCpuLlamaCompiler(plan, enable_batched_prefill=True)
+    compiler = NativeCpuLlamaCompiler(plan, enable_avx2=True)
+    with pytest.raises(NativeCpuError, match="Invalid prefill"):
+        compiler.prefill_dispatch(0)
+    with pytest.raises(NativeCpuError, match="Invalid prefill"):
+        compiler.prefill_dispatch(33)
