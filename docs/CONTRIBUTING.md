@@ -73,3 +73,23 @@ Older interpretability and categorical documents express research proposals; upd
 Reviewers should check numerical correctness, safety and provenance separately from formatting. Merge to main only after the PR's code and docs pass CI. A successful merge does not automatically create a packaged release or certify every catalogued model. Keep milestone names distinct from the package version until a release is explicitly made.
 
 Thanks for making compiler research reproducible rather than mystical.
+
+## Updating the public roadmap
+
+The public /roadmap page calculates its percentages from [roadmap.json](../visuaml-client/public/roadmap.json). New acceptance criteria should be reviewed like compiler changes: state precisely what passed, link reproducible source evidence, declare scope and preserve explicit weights. **In-progress and planned work earns no points.** Attractive presentation does not itself justify advancing a technical acceptance gate.
+
+A roadmap PR must keep each workstream's criteria at 100 points, portfolio weights at 100 and verified gates linked to repository evidence. Run:
+
+~~~bash
+cd visuaml-client
+python -m pytest -q backend/tests/test_public_roadmap_v28.py
+pnpm exec vitest run src/ui/Roadmap/roadmapModel.test.ts
+pnpm exec prettier --check src/ui/Roadmap
+pnpm run build
+~~~
+
+The site is a versioned snapshot, not a background monitor. The public state changes only after a reviewed commit is deployed. A percentage may legitimately fall if new research reveals additional obligations. See [Roadmap methodology](ROADMAP.md).
+
+## Independently compiled native code
+
+The [v28 native CPU target](V28_NATIVE_CPU_COMPILER.md) computes scalar Llama decoder math in C++17; it is **not** a general IR code generator. Extensions must provide source-bound checkpoint admission, ABI and layout contracts, independent numerical oracles, explicit error budgets, failure atomicity and fair baseline measurements. Never replace an arbitrary-model security boundary with a native pointer cast.

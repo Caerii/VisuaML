@@ -29,8 +29,14 @@ A SHA-256 hash establishes that two pieces of content match. It is **not** a sig
 
 A model family appearing in the Architecture Atlas means it was **catalogued**, not that pretrained weights, training, or inference for that family have passed. Numerical parity tests establish agreement only for the pinned models, shapes and tolerances exercised. Small CPU measurements are not evidence of production inference superiority.
 
-Optical placement, attenuation and noise modules are research **simulations**, not physical photonic accelerator benchmarks. Native GPU and standalone CPU AOT execution remain future work.
+Optical placement, attenuation and noise modules are research **simulations**, not physical photonic accelerator benchmarks. The independent v28 C++17 decoder executes a bounded Llama model in a locally compiled **temporary native shared library**. This is not a general native IR code generator or a signed portable artifact; it requires a trusted system compiler and passes raw ABI pointers. Arbitrary C++ source is not admitted. Native GPU and photonic accelerator execution remain future work.
 
 Do not commit secrets or personal information. Environment variables prefixed with VITE_ are sent to the browser build, so never store secrets in them. Handle security reports privately rather than publishing exploitable details or tokens in GitHub issues.
 
 For implementation scope, see [Architecture](ARCHITECTURE.md); for exact evidence, see [Verification](VERIFICATION.md).
+
+## Native execution and the public roadmap
+
+The [native C++ research backend](V28_NATIVE_CPU_COMPILER.md) compiles fixed repository-owned C++17 into a temporary process-local library. Python checks checkpoint identity, tensor layouts and numeric outputs before publishing state. **Native execution is not sandboxed** and cannot safely run hostile binary modules inside the API process. A file hash identifies bytes but does not authenticate the publisher.
+
+The [public roadmap](ROADMAP.md) comes from reviewed repository JSON, not arbitrary user submissions. Its percentages describe evidence-backed acceptance decisions, not guaranteed completion time. Only deployed revisions are publicly visible.

@@ -1,6 +1,6 @@
 # VisuaML architecture
 
-This is the architectural source of truth for the collaborative graph application and the research compiler as of the **v27 development milestone (November 2026)**. Milestone labels are not published package versions.
+This is the architectural source of truth for the collaborative graph application and the research compiler as of the **v28 development milestone (November 2026)**. Milestone labels are not published package versions.
 
 ## Two cooperating systems
 
@@ -67,6 +67,7 @@ The modules are under [compiler_lab](../visuaml-client/backend/visuaml/compiler_
 | Local pretrained intake | hf_llama_checkpoint_v19.py, sentencepiece_tokenizer_v20.py | Allowed Llama config/tensor schema and explicit hashes |
 | Real-model semantics | llama_semantic_v20.py | Rotate-half RoPE, norm epsilon, GQA, SwiGLU, final norm |
 | Compiled CPU | torchscript_graph_v21.py | Whole forward graph with valid changing query/cursor inputs |
+| Independent native CPU | native_cpu_v28.cpp, native_cpu_v28.py | Statically maintained C++17 decoder with checked model ABI, independent scalar math and transactional KV |
 | Execution reuse | compiled_template_v23.py, shared_weights_v24.py | One graph and weight module, many private KV sessions |
 | Model ownership | template_registry_v25.py | Canonical semantic identity, bounded LRU and explicit eviction |
 | Active KV | session_leases_v26.py | Logical KV byte quotas, release, best-effort abandoned-lease cleanup |
@@ -78,6 +79,8 @@ The modules are under [compiler_lab](../visuaml-client/backend/visuaml/compiler_
 The model loader checks local config.json and model.safetensors against a restricted Llama-style model schema. It rejects unknown architectures, unsupported shapes and unexpected weights. The lowerer regenerates a canonical typed SemanticProgram, binding operator order and model content to an identity.
 
 The NumPy reference and independent Hugging Face/PyTorch CPU path supply finite numerical witnesses. CPU TorchScript traces the whole mathematical program; v22 accepts runtime token length and cache cursor rather than recompiling for every position. The graph consumes live KV prefixes and returns only the newly produced suffix tensors. The resident state validates these outputs, then atomically publishes a new cursor.
+
+The v28 compiler also admits a second execution implementation in [independent C++17 native CPU code](V28_NATIVE_CPU_COMPILER.md), checks its outputs against NumPy and a pinned Hugging Face checkpoint, and publishes K/V through the same transactional runtime. This is a **fixed closed-world Llama backend**, not general IR-to-C++ program synthesis, a signed portable artifact, or a GPU accelerator.
 
 A verified template can be shared across client sessions. Session K/V storage remains private. Model eviction removes **registry ownership**, not a model already leased by an active session. Separate quotas account for cached model buffers, active private KV buffers and active weight modules. These quotas are **logical accounting**, not physical RSS limits.
 
@@ -95,6 +98,10 @@ A verified template can be shared across client sessions. Session K/V storage re
 
 The [main CI workflow](../.github/workflows/ci.yml) runs Python pytest and Ruff plus frontend lint, tests, typecheck, build and Prettier. The [pinned-model workflow](../.github/workflows/v19-pretrained-probe.yml) independently verifies trained Tiny Llama weights and tokenizer against Hugging Face. Evidence lives in [benchmarks](../benchmarks/).
 
-This is an experimental CPU inference runtime, not a public multi-tenant model-hosting service, a standalone native AOT compiler, or a physical optical processor. Deploying arbitrary models requires hardened OS-level isolation, resource limits, and separate threat modeling.
+This is an experimental CPU inference runtime, not a public multi-tenant model-hosting service, a general native IR code generator, a signed portable AOT deployment system, or a physical optical processor. Deploying arbitrary models requires hardened OS-level isolation, resource limits, and separate threat modeling.
 
 See the [Compiler Guide](COMPILER_GUIDE.md), [Verification](VERIFICATION.md), and [historical milestones](README.md).
+
+## Public research roadmap
+
+The browser route **/roadmap** is an evidence-weighted public ledger, with the reviewed snapshot in [roadmap.json](../visuaml-client/public/roadmap.json). Each acceptance gate declares a weight, status and evidence; percentages are computed from verified gates. Python and Vitest validate the method. This is a **versioned deployment snapshot**, not a live background monitor or universal percentage of scientific completeness. See [roadmap methodology](ROADMAP.md).

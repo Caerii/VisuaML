@@ -19,6 +19,8 @@ CORE_DOCS = (
     "docs/CONTRIBUTING.md",
     "docs/CLIENT_README.md",
     "docs/V27_ACTIVE_MODEL_LIFETIME.md",
+    "docs/ROADMAP.md",
+    "docs/V28_NATIVE_CPU_COMPILER.md",
 )
 INLINE_LINK = re.compile(r"!?\[[^\]\n]*\]\(([^)\n]+)\)")
 
