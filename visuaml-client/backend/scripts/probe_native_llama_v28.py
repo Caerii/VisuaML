@@ -64,6 +64,9 @@ def run() -> dict:
         semantic = make_llama_semantic_program(imported)
         plan = lower_llama_semantic_program(semantic, imported)
         native_compiler = NativeCpuLlamaCompiler(plan)
+        batched_compiler = NativeCpuLlamaCompiler(
+            plan, enable_avx2=True, enable_batched_prefill=True
+        )
 
         # Metadata-normalize only the independent reference copy:
         # the original source bytes stay separately pinned and unchanged.
@@ -91,9 +94,16 @@ def run() -> dict:
             with torch.no_grad():
                 expected = framework(torch.from_numpy(tokens)).logits.cpu().numpy()
             actual = native.step(tokens)
+            from_batched = batched_compiler.new_session().step(tokens)
             from_ir = semantic_session.step(tokens)
             np.testing.assert_allclose(actual, expected, rtol=3e-4, atol=3e-4)
             np.testing.assert_allclose(actual, from_ir, rtol=3e-4, atol=3e-4)
+            np.testing.assert_allclose(
+                from_batched, expected, rtol=3e-4, atol=3e-4
+            )
+            np.testing.assert_allclose(
+                from_batched, from_ir, rtol=3e-4, atol=3e-4
+            )
             for a, b in zip(native.snapshot().layers, semantic_session.snapshot().layers):
                 np.testing.assert_allclose(a.keys, b.keys, rtol=3e-4, atol=3e-4)
                 np.testing.assert_allclose(a.values, b.values, rtol=3e-4, atol=3e-4)
@@ -102,20 +112,31 @@ def run() -> dict:
                 "logit_shape": list(actual.shape),
                 "max_abs_error_against_HF": float(np.max(np.abs(actual - expected))),
                 "max_abs_error_against_semantic_IR": float(np.max(np.abs(actual - from_ir))),
+                "max_abs_error_batched_against_HF": float(
+                    np.max(np.abs(from_batched - expected))
+                ),
             })
 
         # The decoder carries a private resident KV across arbitrary chunks.
         full = np.array([[1, 2, 3, 5, 4, 7]], dtype=np.int64)
         native = native_compiler.new_session()
+        batched = batched_compiler.new_session()
         oracle = plan.new_session(backend="numpy")
         offsets = ((0, 3), (3, 4), (4, 6))
         for lo, hi in offsets:
             got = native.step(full[:, lo:hi])
+            got_batched = batched.step(full[:, lo:hi])
             direct = oracle.step(full[:, lo:hi])
             with torch.no_grad():
                 expected = framework(torch.from_numpy(full[:, :hi])).logits.cpu().numpy()[:, lo:hi]
             np.testing.assert_allclose(got, direct, rtol=3e-4, atol=3e-4)
             np.testing.assert_allclose(got, expected, rtol=3e-4, atol=3e-4)
+            np.testing.assert_allclose(
+                got_batched, expected, rtol=3e-4, atol=3e-4
+            )
+        for a, b in zip(batched.snapshot().layers, oracle.snapshot().layers):
+            np.testing.assert_allclose(a.keys, b.keys, rtol=3e-4, atol=3e-4)
+            np.testing.assert_allclose(a.values, b.values, rtol=3e-4, atol=3e-4)
         for a, b in zip(native.snapshot().layers, oracle.snapshot().layers):
             np.testing.assert_allclose(a.keys, b.keys, rtol=3e-4, atol=3e-4)
             np.testing.assert_allclose(a.values, b.values, rtol=3e-4, atol=3e-4)
@@ -145,6 +166,7 @@ def run() -> dict:
             "config_sha256": imported.config_sha256,
             "semantic_sha256": plan.semantic_sha256,
             "backend": native_compiler.report(),
+            "batched_backend": batched_compiler.report(),
             "witnesses": witnesses,
             "chunked_KV_and_greedy_parity": True,
             "limitations": [
