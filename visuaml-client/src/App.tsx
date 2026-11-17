@@ -6,6 +6,7 @@ import { CompilerLabPage } from './ui/CompilerLab/CompilerLabPage';
 import { ArchitectureAtlasPage } from './ui/ArchitectureAtlas/ArchitectureAtlasPage';
 import { RoadmapPage } from './ui/Roadmap/RoadmapPage';
 import { ResearchEvidencePage } from './ui/ResearchEvidence/ResearchEvidencePage';
+import { ResearchLibraryPage } from './ui/ResearchEvidence/ResearchLibraryPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/architectures" element={<ArchitectureAtlasPage />} />
         <Route path="/roadmap" element={<RoadmapPage />} />
         <Route path="/research" element={<ResearchEvidencePage />} />
+        <Route path="/research/library" element={<ResearchLibraryPage />} />
       </Routes>
     </Router>
   );
