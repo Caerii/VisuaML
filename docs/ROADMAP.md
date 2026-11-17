@@ -52,6 +52,8 @@ The [v32 graph-generated native compiler research](V32_NATIVE_SEMANTIC_CODEGEN.m
 
 The [v33 guarded export and evidence investigation](V33_EXPORT_AND_EVIDENCE.md) connects functional exported ATen graphs, lifted parameter digests and exact static guards to the graph-generated native Semantic IR compiler. Its first pure ReLU-idempotence rewrite is independently tested against NumPy and PyTorch, preserving failed concrete witnesses and digest-linked (not signer-authenticated) records. These are finite synthetic witnesses, **not** proof of all-input equivalence or independently certified pretrained families. No roadmap acceptance criterion or weighted percentage changes from this draft work.
 
+The [v34 compounding evidence library](V34_COMPOUNDING_EVIDENCE_LIBRARY.md) indexes historical attention, generated native graph, exported-model and transformation experiments through exact source/IR/binary identities. The [research PR](https://github.com/Caerii/VisuaML/pull/16) distinguishes reviewed source-bound records from curated historical summaries and append-only unreviewed proposals. Its catalog counts **observations**, not independent architectures, proven transformations, transferable speedups or formal proof obligations. **No public roadmap acceptance status or percentage changes from creating this index.**
+
 ## The evidence review process
 
 A proposed change to the public roadmap should be reviewed like a compiler change.
