@@ -239,3 +239,59 @@ def test_codegen_is_bounded_and_emits_only_fixed_cpp_identifiers():
         NativeSemanticCompiler(replace(base, input_types=(
             ("x", ty(128, 128, 128, 128)), *base.input_types[1:]
         )))
+
+
+def test_generated_stride_two_conv_with_distinct_channel_counts():
+    """One operation is generated from geometry, not a fixed CNN fixture."""
+    p = program(
+        "v32 distinct strided convolution",
+        (("x", ty(1, 1, 7, 7)), ("weight", ty(2, 1, 3, 3))),
+        (
+            operation(
+                "strided", "conv2d", ("x", "weight"),
+                ty(1, 2, 4, 4),
+                (("padding", 1), ("stride", 2)),
+            ),
+        ),
+        "strided",
+    )
+    rng = np.random.default_rng(222)
+    x = rng.standard_normal((1, 1, 7, 7)).astype(np.float32) * 0.2
+    weight = rng.standard_normal((2, 1, 3, 3)).astype(np.float32) * 0.1
+    native = NativeSemanticCompiler(p).run(x=x, weight=weight)
+    with torch.no_grad():
+        eager = F.conv2d(
+            torch.from_numpy(x), torch.from_numpy(weight),
+            stride=2, padding=1,
+        ).numpy()
+    reference = np.zeros((1, 2, 4, 4), dtype=np.float32)
+    for channel in range(2):
+        for y in range(4):
+            for z in range(4):
+                total = np.float32(0.0)
+                for ky in range(3):
+                    for kx in range(3):
+                        iy, ix = y * 2 + ky - 1, z * 2 + kx - 1
+                        if 0 <= iy < 7 and 0 <= ix < 7:
+                            total += (
+                                x[0, 0, iy, ix]
+                                * weight[channel, 0, ky, kx]
+                            )
+                reference[0, channel, y, z] = total
+    np.testing.assert_allclose(native, eager, atol=2e-5, rtol=2e-5)
+    np.testing.assert_allclose(native, reference, atol=2e-5, rtol=2e-5)
+
+
+def test_codegen_does_not_silently_broadcast_or_return_raw_inputs():
+    base = mlp()
+    operations = list(base.regions[0].operations)
+    operations[-1] = replace(
+        operations[-1], result_type=ty(3, 7),
+    )
+    malformed = replace(base, regions=(
+        replace(base.regions[0], operations=tuple(operations)),
+    ))
+    with pytest.raises(NativeIRCodegenError, match="elementwise"):
+        NativeSemanticCompiler(malformed)
+    with pytest.raises(NativeIRCodegenError, match="computed"):
+        NativeSemanticCompiler(replace(base, outputs=("x",)))
