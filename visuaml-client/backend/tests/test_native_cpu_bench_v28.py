@@ -27,6 +27,12 @@ def test_native_cpu_benchmark_executes_and_checks_two_backends(tmp_path):
     assert result["latency"]["numpy_semantic"]["median_ms"] > 0
     assert result["latency"]["torchscript_whole"]["median_ms"] > 0
     assert result["compilation"]["native_cpp_ms"] > 0
+    assert result["timing_order"] == "forward on even trials; reverse on odd trials"
+    assert set(result["raw_samples_ms"]) == set(result["latency"])
+    assert all(
+        len(samples) == 2 and all(value > 0 for value in samples)
+        for samples in result["raw_samples_ms"].values()
+    )
     assert len(result["source_sha256"]) == 3
 
 
