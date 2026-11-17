@@ -61,6 +61,7 @@ The reference workflow normalizes a missing safetensors format metadata field in
 | [v24 shared weights](../benchmarks/pretrained_llama_shared_weights_v24.json) | Four-session module sharing, logical weight bytes and cold startup |
 | [v25 cache ownership](../benchmarks/pretrained_llama_verified_registry_v25.json) | Eviction and live session survival |
 | [v26 KV leases](../benchmarks/pretrained_llama_leased_registry_v26.json) | Active KV quota, release and eviction survival |
+| [v28 native CPU](../benchmarks/pretrained_llama_native_cpu_v28.json) | Independent static C++17 whole-decoder CPU implementation versus NumPy/Hugging Face references |
 | [v27 active model lifetime](../benchmarks/pretrained_llama_active_models_v27.json) | Real-checkpoint module identity across eviction/readmission and last-lease cleanup |
 
 The v27 active-model lifetime also passed the pinned trained-checkpoint workflow on main. The evidence records distinct active modules across eviction/readmission, correct independent logits, and release of the active model-weight budget after closing both leases.
@@ -77,7 +78,13 @@ The v27 active-model lifetime also passed the pinned trained-checkpoint workflow
 
 **v25–v27:** LRU, KV leases and active module lifetimes are software ownership invariants. They do not demonstrate OS-enforced physical-memory limits or serving throughput.
 
+**v28:** A separately compiled scalar C++17 CPU kernel has passed pinned real Tiny Llama full-decoder, chunked K/V and generation witnesses. Its backend mathematics are independent of NumPy and TorchScript, but it is a fixed Llama ABI implementation, not arbitrary IR-to-native generation or an optimized production backend. See the [native compiler report](V28_NATIVE_CPU_COMPILER.md).
+
 Avoid adding compile time to a wall-clock duration that already includes it. Benchmark every candidate on identical inputs, comparable threading, hardware and warm/cold conditions. Report medians, tails, hashes, tolerances and failure cases.
+
+## Public evidence-weighted roadmap
+
+The [public roadmap](ROADMAP.md) derives percentages from weighted acceptance criteria, counting only individually verified gates with source links. The reviewed v28 snapshot is **72.5%** under the published rubric, not a scientific prediction of the project's ultimate completeness. Changes to the rubric require versioned review and reproducible acceptance evidence.
 
 ## Reproduce a model benchmark
 

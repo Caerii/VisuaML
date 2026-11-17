@@ -2,7 +2,7 @@
 
 The objective is to understand and transform computation without conflating **its mathematical meaning** with its first implementation. VisuaML's experimental Compiler Lab builds typed semantic programs with explicit tensor shapes and effects, then runs admitted versions on reference and compiled backends.
 
-It does **not** compile arbitrary Python, all PyTorch operations, all Hugging Face architectures, or physical optical hardware.
+It does **not** compile arbitrary Python, all PyTorch operations, all Hugging Face architectures, or physical optical hardware. V28 adds an independent native **scalar C++17 implementation** for one admitted Llama dialect; it is not yet general source-generation from arbitrary SemanticProgram operations.
 
 ## The working end-to-end pipeline
 
@@ -100,11 +100,27 @@ Run a script from the client directory, or set PYTHONPATH=visuaml-client/backend
 | TorchScript primitives | Independently checked selected arithmetic operators | Excessive per-operator call boundaries |
 | TorchScript fused FFN | One checked pure SwiGLU region | Not a complete native compiled model |
 | TorchScript whole graph | All admitted Llama decoder math in one CPU traced graph | Concrete-shape specialization in v21 |
+| Native C++17 research backend | Independently compiled Llama mathematical and KV decoder behind a narrow C ABI | Fixed admitted Llama dialect; not general native code generation, GPU, or tuned BLAS |
 | Polymorphic TorchScript | One model/batch graph handles changing query length and KV cursor | CPU-only and bounded model/context |
 | Verified shared templates | Reuse executable and immutable weights across clients | Per-client KV and process-local ownership |
 | LRU/leases | Bounded cached weight, active KV and active model-module *logical* byte accounting | Not actual process RSS or OS isolation |
 
 Under the polymorphic backend, the compiled graph reads only the live KV prefix and returns new K/V suffixes. The separate resident state validates and atomically commits outputs; failures cannot publish a half-finished cursor.
+
+## Independent C++17 CPU target (v28)
+
+For the same admitted model and canonical plan, a new [native CPU compiler](../visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.py) builds a trusted fixed C++17 kernel locally and checks the entire mathematical execution against an independently implemented NumPy oracle before allowing the executable to be used. Session K/V suffixes remain validated and transactional. The [pinned trained Tiny Llama evidence](../benchmarks/pretrained_llama_native_cpu_v28.json) compares the same independent C++ implementation with Hugging Face/PyTorch and the semantic interpreter.
+
+~~~python
+from visuaml.compiler_lab.native_cpu_v28 import NativeCpuLlamaCompiler
+
+native = NativeCpuLlamaCompiler(plan)  # trusted system C++17 compiler required
+with_oracle_checked = native.new_session()
+native_logits = with_oracle_checked.step(np.array([[1, 2, 3]], dtype=np.int64))
+print(native_logits.shape, native.report())
+~~~
+
+This is a **model-specific native implementation**, not automatic arbitrary-program IR-to-C++ code generation; it has no demonstrated production inference speed advantage. See [v28 native CPU research](V28_NATIVE_CPU_COMPILER.md) and the [public roadmap](ROADMAP.md).
 
 ## Interpreting evidence
 
@@ -114,4 +130,4 @@ The [Verification guide](VERIFICATION.md) records model and source hashes, measu
 
 ## Next real milestones
 
-A deployable independent native CPU/GPU AOT backend; measured peak RSS and allocator lifetime; long-context prefill/decode scheduling; safe memory pooling; additional real pretrained architectures only after numerical certification; eventually hardware-algorithm co-design. The optical placement infrastructure remains **simulation**, not accelerator execution.
+A general, independently deployable native IR-to-CPU/GPU AOT generator; measured peak RSS and allocator lifetime; long-context prefill/decode scheduling; safe memory pooling; additional real pretrained architectures only after numerical certification; eventually hardware-algorithm co-design. The optical placement infrastructure remains **simulation**, not accelerator execution.
