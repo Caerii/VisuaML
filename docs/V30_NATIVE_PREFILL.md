@@ -17,7 +17,7 @@ Y[token, output] = sum_{input=0..width-1}
 
 A multi-token call can reuse each weight vector across **two token rows** and four output channels through independently accumulated AVX2 lanes. This changes floating-point reduction order, so the existing finite-tolerance NumPy and scalar references remain mandatory; no cross-token dependencies are introduced. The reference implementation remains available in the original scalar and runtime-guarded AVX2 modes.
 
-The optimization is only eligible when **the current input chunk has more than one token**, input width is at least 32, and the runtime CPU supports AVX2. It is opt-in through `NativeCpuLlamaCompiler(plan, enable_batched_prefill=True, enable_avx2=True)`; guarded AVX2 must be explicitly requested and `reference_kernels=True` cannot be combined with the experimental prefill flag. Single-token decode falls through to the previous native `linear` kernel. When AVX2 is not supported by the machine, existing runtime dispatch falls back to scalar/four-row code.
+The conservative research dispatch is only eligible when **the current input chunk contains at least four tokens**, the model hidden width is at least 128, the projection input width is at least 32, and the runtime CPU supports AVX2. The user must additionally opt in. This threshold is provisional and backed by a limited geometry sweep, not a universal hardware rule. It is opt-in through `NativeCpuLlamaCompiler(plan, enable_batched_prefill=True, enable_avx2=True)`; guarded AVX2 must be explicitly requested and `reference_kernels=True` cannot be combined with the experimental prefill flag. Single-token decode falls through to the previous native `linear` kernel. When AVX2 is not supported by the machine, existing runtime dispatch falls back to scalar/four-row code.
 
 The projection layout is reorganized into a uniform row-major batch for Q, K, V, attention output, gated feed-forward projections, down projection, and final vocabulary projection. RMSNorm, rotary embedding, the softmax attention loop, residual updates and transactional KV publication retain their existing mathematical and state contracts. The scratch storage is now sized for the admitted per-invocation row count; no mutable scratch is shared across sessions. This is **not** a claim of lower peak RSS, and the temporary geometry can increase scratch footprint.
 
@@ -51,6 +51,12 @@ The separate [v30 geometry sweep](../visuaml-client/backend/scripts/sweep_native
 
 An opt-in batched microkernel should only be promoted for verified geometry classes where it wins, with a fallback to v29 AVX2 everywhere else. Unsupported x86 variants or CPUs without AVX2 must never execute AVX2 instructions. Any crossover threshold must be grounded in measurements rather than marketing optimism.
 
+## Results and conservative shape gate
+
+The [initial five-case shape sweep](https://github.com/Caerii/VisuaML/actions/runs/44133097934) found the first indexed-accumulator batched SIMD implementation slower on every shape, with v29/batched ratios ranging from **0.53× to 0.79×**. A second, [explicitly unrolled AVX2 study](https://github.com/Caerii/VisuaML/actions/runs/44133451387) improved the experimental kernel: **0.95× small**, **1.04× medium**, **1.19× wide**, **1.30× wide long prefill** and **1.21× vocabulary-heavy**, in each case on one shared CI runner with five trials. These observations motivate a conservative opt-in **query ≥ 4 and hidden ≥ 128** dispatch gate; they do not prove the heuristic is optimal or portable. Small/marginal cases continue using the verified v29 path.
+
+The C++ library exports a bounded query/geometry eligibility check. The Python `NativeCpuLlamaCompiler.prefill_dispatch(query_tokens)` reports the actual native gate, including whether an eligible batched path was selected. The benchmark records these decisions beside source hashes, numerical evidence and latency samples, making it possible to distinguish a real batched execution from a silent fallback. Single-token decode always uses v29.
+
 ## Research acceptance gates
 
 1. All existing native C++ scalar, four-row, and AVX2 tests remain green, including the pinned real pretrained model.
@@ -61,4 +67,4 @@ An opt-in batched microkernel should only be promoted for verified geometry clas
 
 ## Next candidate
 
-A separate AVX2 batched matrix-vector/matrix-matrix microkernel may improve multi-token weight reuse while maintaining CPU-dispatch safety. That next optimization should be justified by v30 prefill measurements; it must not silently replace a faster AVX2 decode kernel on short chunks.
+Broader prefill speedups require a more general batched matrix/matrix microkernel and dedicated-hardware replication. The present two-token/four-output AVX2 kernel remains experimental, with explicit fallback when its shape gate is not satisfied. That next optimization should be justified by v30 prefill measurements; it must not silently replace a faster AVX2 decode kernel on short chunks.
