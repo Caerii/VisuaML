@@ -283,9 +283,9 @@ export function ResearchKnowledgePage() {
                     >
                       exhaustive historical source-tree audit
                     </a>{' '}
-                    found six Git commits containing all three recorded source files.
-                    This corrects the earlier claim that none existed; it does not identify
-                    the original CI runner's Git commit.
+                    found six Git commits containing all three recorded source files. This corrects
+                    the earlier claim that none existed; it does not identify the original CI
+                    runner's Git commit.
                   </p>
                   <p>
                     A new C++/Hugging Face/NumPy numerical witness is bound to the{' '}
