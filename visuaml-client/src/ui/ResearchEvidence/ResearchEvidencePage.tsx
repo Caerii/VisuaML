@@ -43,6 +43,7 @@ export function ResearchEvidencePage() {
         <nav aria-label="Research navigation">
           <a href="/compiler">Compiler Lab</a>
           <a href="/roadmap">Public roadmap</a>
+          <a href="/research/library">Evidence library</a>
           <a href="https://github.com/Caerii/VisuaML" target="_blank" rel="noreferrer">
             Open-source repository
           </a>
