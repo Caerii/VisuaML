@@ -11,6 +11,15 @@
 #include <limits>
 #include <vector>
 
+#if defined(VISUAML_NATIVE_AVX2_RUNTIME) && \
+    (defined(__x86_64__) || defined(__i386__)) && \
+    (defined(__GNUC__) || defined(__clang__))
+#include <immintrin.h>
+#define VISUAML_HAS_OPTIONAL_AVX2 1
+#else
+#define VISUAML_HAS_OPTIONAL_AVX2 0
+#endif
+
 extern "C" {
 
 struct VisuaMLLlamaConfig {
@@ -28,6 +37,8 @@ struct VisuaMLLlamaConfig {
   int tied_head;
 };
 
+int visuaml_native_avx2_active() noexcept;
+
 int visuaml_native_llama_decode(
     const VisuaMLLlamaConfig* c,
     const int64_t* tokens,
@@ -42,11 +53,88 @@ int visuaml_native_llama_decode(
 
 namespace {
 
+// AVX2 lives in a target-specific function, not a global -mavx2 binary.
+// The runtime guard ensures that binaries remain runnable on non-AVX2 CPUs.
+inline bool native_avx2_available() noexcept {
+#if VISUAML_HAS_OPTIONAL_AVX2
+  static const bool supported = __builtin_cpu_supports("avx2") != 0;
+  return supported;
+#else
+  return false;
+#endif
+}
+
+#if VISUAML_HAS_OPTIONAL_AVX2
+__attribute__((target("avx2")))
+void linear_avx2(const float* input, const float* weight, float* output,
+                 int input_width, int output_width) {
+  int row = 0;
+  for (; row + 3 < output_width; row += 4) {
+    const float* w0 = weight + static_cast<size_t>(row) * input_width;
+    const float* w1 = w0 + input_width;
+    const float* w2 = w1 + input_width;
+    const float* w3 = w2 + input_width;
+    __m256 a = _mm256_setzero_ps();
+    __m256 b = _mm256_setzero_ps();
+    __m256 c = _mm256_setzero_ps();
+    __m256 d = _mm256_setzero_ps();
+    int col = 0;
+    for (; col + 7 < input_width; col += 8) {
+      const __m256 x = _mm256_loadu_ps(input + col);
+      a = _mm256_add_ps(a, _mm256_mul_ps(x, _mm256_loadu_ps(w0 + col)));
+      b = _mm256_add_ps(b, _mm256_mul_ps(x, _mm256_loadu_ps(w1 + col)));
+      c = _mm256_add_ps(c, _mm256_mul_ps(x, _mm256_loadu_ps(w2 + col)));
+      d = _mm256_add_ps(d, _mm256_mul_ps(x, _mm256_loadu_ps(w3 + col)));
+    }
+    alignas(32) float lane[8];
+    auto reduce = [&lane](__m256 value) {
+      _mm256_store_ps(lane, value);
+      float sum = 0.0f;
+      for (int i = 0; i < 8; ++i) sum += lane[i];
+      return sum;
+    };
+    float sums[4] = {reduce(a), reduce(b), reduce(c), reduce(d)};
+    for (; col < input_width; ++col) {
+      const float x = input[col];
+      sums[0] += w0[col] * x;
+      sums[1] += w1[col] * x;
+      sums[2] += w2[col] * x;
+      sums[3] += w3[col] * x;
+    }
+    for (int i = 0; i < 4; ++i) output[row + i] = sums[i];
+  }
+  for (; row < output_width; ++row) {
+    const float* w = weight + static_cast<size_t>(row) * input_width;
+    __m256 accumulator = _mm256_setzero_ps();
+    int col = 0;
+    for (; col + 7 < input_width; col += 8) {
+      accumulator = _mm256_add_ps(
+          accumulator,
+          _mm256_mul_ps(_mm256_loadu_ps(w + col),
+                        _mm256_loadu_ps(input + col)));
+    }
+    alignas(32) float lane[8];
+    _mm256_store_ps(lane, accumulator);
+    float sum = 0.0f;
+    for (int i = 0; i < 8; ++i) sum += lane[i];
+    for (; col < input_width; ++col) sum += w[col] * input[col];
+    output[row] = sum;
+  }
+}
+#endif
+
 // Preserve a separately compilable scalar reference for differential testing.
 // The default path processes four output rows per input traversal. The per-row
 // accumulation order stays identical; no fast-math reassociation is enabled.
 inline void linear(const float* input, const float* weight,
                    float* output, int input_width, int output_width) {
+#if VISUAML_HAS_OPTIONAL_AVX2
+  // Short widths favor scalar traversal; dispatch cost dominates there.
+  if (input_width >= 32 && native_avx2_available()) {
+    linear_avx2(input, weight, output, input_width, output_width);
+    return;
+  }
+#endif
 #if defined(VISUAML_NATIVE_SCALAR_REFERENCE)
   for (int row = 0; row < output_width; ++row) {
     float sum = 0.0f;
@@ -144,6 +232,10 @@ inline bool admitted(const VisuaMLLlamaConfig& c, int query, int past) {
 }
 
 }  // namespace
+
+extern "C" int visuaml_native_avx2_active() noexcept {
+  return native_avx2_available() ? 1 : 0;
+}
 
 extern "C" int visuaml_native_llama_decode(
     const VisuaMLLlamaConfig* config, const int64_t* tokens,
