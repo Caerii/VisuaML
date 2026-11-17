@@ -69,16 +69,20 @@ def expected_blob_hashes(root: Path) -> tuple[dict[str, str], dict[str, str]]:
     return blob_ids, verified_sha
 
 
-def run_audit(repo: Path) -> dict:
-    root = Path(repo).resolve()
-    expected_blobs, expected_hashes = expected_blob_hashes(root)
-    commits = git(root, "rev-list", "--all", timeout=120).decode().splitlines()
-    if not commits or len(commits) > MAX_COMMITS:
-        raise AuditError("Cannot make exhaustive claim about unbounded history")
+def scan_exact_trees(
+    repo: Path, commits: list[str], expected_blobs: dict[str, str],
+) -> list[str]:
+    """Inspect every listed commit's full tree, never only per-path changes."""
     matching = []
     paths = tuple(sorted(expected_blobs))
+    if not commits or len(commits) > MAX_COMMITS:
+        raise AuditError("Unbounded or empty commit list")
+    if not 1 <= len(paths) <= 16:
+        raise AuditError("Invalid source inventory")
     for commit in commits:
-        entries = git(root, "ls-tree", "-z", commit, "--", *paths, timeout=20)
+        if len(commit) != 40 or any(c not in "0123456789abcdef" for c in commit):
+            raise AuditError("Noncanonical Git commit identifier")
+        entries = git(repo, "ls-tree", "-z", commit, "--", *paths, timeout=20)
         observed = {}
         for item in entries.split(b"\0"):
             if not item:
@@ -95,6 +99,16 @@ def run_audit(repo: Path) -> dict:
                 observed[name] = object_id
         if all(observed.get(name) == expected_blobs[name] for name in paths):
             matching.append(commit)
+    return sorted(matching)
+
+
+def run_audit(repo: Path) -> dict:
+    root = Path(repo).resolve()
+    expected_blobs, expected_hashes = expected_blob_hashes(root)
+    commits = git(root, "rev-list", "--all", timeout=120).decode().splitlines()
+    if not commits or len(commits) > MAX_COMMITS:
+        raise AuditError("Cannot make exhaustive claim about unbounded history")
+    matching = scan_exact_trees(root, commits, expected_blobs)
     return {
         "schema": "visuaml.exhaustive-source-tree-audit.v36.1",
         "historical_artifact_sha256": sha256((root / ARCHIVE).read_bytes()),
