@@ -12,6 +12,7 @@ from pathlib import Path
 import pytest
 from scripts.replay_pretrained_v36 import (
     CANDIDATE_COMMIT,
+    SOURCE_BLOB_COMMITS,
     ReplayError,
     load_archive,
     verify_fresh,
@@ -23,14 +24,19 @@ ROOT = Path(__file__).resolve().parents[3]
 
 def test_historical_source_matches_all_archived_sha256_bytes():
     recovery = verify_source(ROOT)
-    assert recovery["schema"] == "visuaml.historical-source-recovery.v36"
+    assert recovery["schema"] == "visuaml.historical-source-bundle.v36"
     assert recovery["source_verified"] is True
-    assert recovery["candidate_commit"] == CANDIDATE_COMMIT
+    assert recovery["base_checkout_commit"] == CANDIDATE_COMMIT
+    assert recovery["source_file_commits"] == SOURCE_BLOB_COMMITS
     assert len(recovery["source_sha256"]) == 3
     assert all(len(value) == 64 for value in recovery["source_sha256"].values())
+    assert recovery["single_commit_contains_all_recorded_sources"] is False
+    assert recovery["original_ci_source_commit"] is None
+    assert len(set(recovery["source_file_commits"].values())) == 3
+    assert len(recovery["reconstructed_source_bundle_sha256"]) == 64
 
 
-def test_historical_source_commit_is_explicitly_allowlisted():
+def test_historical_base_commit_is_explicitly_allowlisted():
     with pytest.raises(ReplayError, match="source allowlist"):
         verify_source(ROOT, "f" * 40)
 
@@ -93,3 +99,15 @@ def test_historical_archive_has_no_fabricated_replay_metadata():
     # An old successful result cannot be transformed into a signed or fresh
     # verification merely by copying its JSON record.
     assert archive.get("schema") != "visuaml.pinned-pretrained-independent-replay.v36"
+
+
+def test_recovery_finds_source_versions_but_no_single_historical_checkout():
+    from scripts.replay_pretrained_v36 import discover_historical_sources
+
+    forensics = discover_historical_sources(ROOT)
+    assert forensics["schema"] == "visuaml.historical-source-discovery.v36"
+    assert forensics["candidate_is_complete_match"] is False
+    assert forensics["complete_matching_commits"] == []
+    assert forensics["found_all_files"] is True
+    for path, commit in SOURCE_BLOB_COMMITS.items():
+        assert commit in forensics["file_matching_commits"][path]
