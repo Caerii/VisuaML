@@ -119,7 +119,10 @@ def _tensor_names(plan: LlamaSemanticPlan) -> tuple[str, ...]:
 class NativeCpuLlamaCompiler:
     """Source-bound compiler for one validated Llama program and weight layout."""
 
-    def __init__(self, plan: LlamaSemanticPlan):
+    def __init__(self, plan: LlamaSemanticPlan, *, reference_kernels: bool = False):
+        if type(reference_kernels) is not bool:
+            raise NativeCpuError("reference_kernels must be a boolean")
+        self.reference_kernels = reference_kernels
         if not isinstance(plan, LlamaSemanticPlan):
             raise NativeCpuError("Expected a canonical Llama semantic plan")
         self.plan = lower_llama_semantic_program(
@@ -165,8 +168,11 @@ class NativeCpuLlamaCompiler:
         started = time.perf_counter_ns()
         args = [
             compiler, "-std=c++17", "-O2", "-fPIC", "-shared",
-            "-fno-fast-math", str(_SOURCE), "-o", str(target),
+            "-fno-fast-math",
         ]
+        if self.reference_kernels:
+            args.append("-DVISUAML_NATIVE_SCALAR_REFERENCE=1")
+        args.extend((str(_SOURCE), "-o", str(target)))
         try:
             result = subprocess.run(
                 args, capture_output=True, text=True, check=False, timeout=90,
@@ -246,7 +252,12 @@ class NativeCpuLlamaCompiler:
         return NativeCpuLlamaSession(self)
 
     def report(self) -> dict:
-        return asdict(self._evidence)
+        return {
+            **asdict(self._evidence),
+            "linear_kernel": (
+                "scalar_reference" if self.reference_kernels else "four_row"
+            ),
+        }
 
 
 class NativeCpuLlamaSession:
