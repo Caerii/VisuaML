@@ -34,7 +34,7 @@ def temp_repo(tmp_path: Path) -> Path:
 
 def test_library_indexes_three_sources_without_elevating_evidence():
     library = EvidenceLibrary.from_repo(ROOT)
-    assert len(library.entries) == 11
+    assert len(library.entries) == 12
     catalog = library.catalog()
     assert catalog["schema"] == "visuaml.evidence-library.v34"
     assert catalog["counts"]["source_artifacts"] == 3
@@ -43,6 +43,7 @@ def test_library_indexes_three_sources_without_elevating_evidence():
         "native_exported_graph": 2,
         "native_generated_graph": 4,
         "rewrite_evaluation": 1,
+        "optimization_measurement": 1,
     }
     assert len(catalog["catalog_sha256"]) == 64
     assert all("proof" not in entry.status for entry in library.entries)
@@ -119,15 +120,21 @@ def test_library_preserves_negative_rewrite_timing():
     library = EvidenceLibrary.from_repo(ROOT)
     record, = library.query(kind="rewrite_evaluation")
     assert record.status == "passed_finite_witnesses"
-    assert dict(record.result)["before_over_after_latency_ratio"] < 1
+    assert dict(record.result)["witness_count"] == 2
     assert record.evidence_class == "source_bound_finite_numeric_witnesses"
-    # A passing numerical witness never implies a faster implementation.
-    assert "optimization_accepted" not in record.status
+    experiment, = library.query(kind="optimization_measurement")
+    assert experiment.status == "measured_not_promoted"
+    assert dict(experiment.result)["before_over_after_latency_ratio"] < 1
+    assert experiment.semantic_sha256 == record.semantic_sha256
+    assert experiment.native_binary_sha256 == record.native_binary_sha256
+    assert dict(experiment.context)["numerical_receipt"] != (
+        dict(record.context)["numerical_receipt"]
+    )
 
 
 def test_source_bytes_and_origin_digest_must_match(tmp_path):
     repo = temp_repo(tmp_path)
-    assert len(EvidenceLibrary.from_repo(repo).entries) == 11
+    assert len(EvidenceLibrary.from_repo(repo).entries) == 12
     file = repo / "benchmarks/export_evidence_observation_v33.json"
     data = json.loads(file.read_text())
     data["model_witnesses"][0]["max_abs_error_eager_torch"] = 0.5
@@ -170,7 +177,7 @@ def test_unreviewed_proposals_are_content_addressed_idempotent_and_excluded(tmp_
     assert first.read_bytes() == data
     assert verify_unreviewed_proposal(first)
     assert first.stem == hashlib.sha256(data).hexdigest()
-    assert len(EvidenceLibrary.from_repo(ROOT).entries) == 11
+    assert len(EvidenceLibrary.from_repo(ROOT).entries) == 12
     first.write_bytes(data + b" ")
     assert not verify_unreviewed_proposal(first)
     with pytest.raises(EvidenceLibraryError, match="tampering"):
