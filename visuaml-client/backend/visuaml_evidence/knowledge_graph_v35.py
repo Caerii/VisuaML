@@ -91,8 +91,8 @@ def _load_v28(repo: Path) -> tuple[dict[str, Any], str]:
         raise KnowledgeGraphError("Missing pinned 40-character model revision")
     if record["source"] != "manojredhat/tiny-llama":
         raise KnowledgeGraphError("Unapproved historical model source")
-    checkpoint = _hash64(record["checkpoint_sha256"], "checkpoint")
-    config = _hash64(record["config_sha256"], "config")
+    _hash64(record["checkpoint_sha256"], "checkpoint")
+    _hash64(record["config_sha256"], "config")
     semantic = _hash64(record["semantic_sha256"], "semantic")
     if (
         record["checkpoint_sha256"] != backend["checkpoint_sha256"]
