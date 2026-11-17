@@ -31,6 +31,10 @@ pnpm --dir visuaml-client exec prettier --check .
 
 The [standard CI workflow](../.github/workflows/ci.yml) executes the corresponding checks plus Ruff. The independent [pretrained-model workflow](../.github/workflows/v19-pretrained-probe.yml) downloads a specific public model revision and checks tokenizer and CPU model oracles. Its historical filename does not imply its capabilities stop at v19.
 
+## v34: historical research evidence indexing
+
+The [v34 compounding library](V34_COMPOUNDING_EVIDENCE_LIBRARY.md) uses a lightweight standard-library Python package to derive a deterministic, hash-bound catalog from three reviewed historical JSON artifacts. It verifies the complete v33 original CI bytes and nested rewrite records, preserves separate direct-certification and optimization-time receipts, and exposes exact search/lineage APIs without inferring untested correctness. The [dedicated v34 CI workflow](../.github/workflows/evidence-library-v34.yml) tests tampering, unknown schemas, proposals, catalog reproduction and immutable historical source identity. The read-only browser route `/research/library` structurally validates the published catalog and presents negative observations; its link to an artifact is not a fresh numerical replay.
+
 ## v33: exported graph and reusable transformation evidence
 
 The [v33 protocol](V33_EXPORT_AND_EVIDENCE.md) adds fail-closed static `torch.export` admission to the bounded generated native compiler. The [dedicated CI workflow](../.github/workflows/native-evidence-v33.yml) checks synthetic MLP/Conv2D exported graphs against eager PyTorch on multiple inputs, with strict parameter digests and shape guards. A ReLU-idempotence rewrite records independent NumPy/PyTorch finite witnesses and bounded concrete counterexamples on failure. The record SHA-256 is an integrity checksum, **not** an authenticated signer or formal proof. The public research percentage is unchanged.
