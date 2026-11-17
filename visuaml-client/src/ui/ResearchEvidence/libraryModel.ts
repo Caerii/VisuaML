@@ -88,8 +88,9 @@ export function parseEvidenceCatalog(value: unknown): EvidenceCatalog {
         allowedPaths.has(path) && typeof digest === 'string' && sha256.test(digest),
     ) ||
     !object(value.counts) ||
-    !Number.isInteger(value.counts.studies) ||
-    !Number.isInteger(value.counts.source_artifacts) ||
+    (typeof value.counts.studies !== 'number' || !Number.isInteger(value.counts.studies)) ||
+    (typeof value.counts.source_artifacts !== 'number' ||
+      !Number.isInteger(value.counts.source_artifacts)) ||
     !numericalMap(value.counts.kinds) ||
     !stringArray(value.limitations, 30)
   ) {
