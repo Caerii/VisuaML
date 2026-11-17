@@ -57,6 +57,14 @@ The [initial five-case shape sweep](https://github.com/Caerii/VisuaML/actions/ru
 
 The C++ library exports a bounded query/geometry eligibility check. The Python `NativeCpuLlamaCompiler.prefill_dispatch(query_tokens)` reports the actual native gate, including whether an eligible batched path was selected. The benchmark records these decisions beside source hashes, numerical evidence and latency samples, making it possible to distinguish a real batched execution from a silent fallback. Single-token decode always uses v29.
 
+## Guarded execution and cross-revision findings
+
+After introducing the conservative gate, a [five-case synthetic sweep](https://github.com/Caerii/VisuaML/actions/runs/44134124112) observed prefill ratios (v29 AVX2 time divided by v30 batched-eligible time) of **0.962× small**, **1.009× medium**, **1.403× wide**, **1.276× wide long-prefill**, and **1.283× vocabulary-heavy**. The first two configurations were excluded from batching and therefore reflect the same AVX2 execution kernel plus shared-runner noise. For large admitted shapes, the experimental path was selected. The tool records C++-reported dispatch eligibility, source hashes and raw samples. The gains apply only to these synthetic shapes and this runner.
+
+A separate [same-runner paired v29→v30 default experiment](https://github.com/Caerii/VisuaML/actions/runs/44134736516) used the pinned **real pretrained** checkpoint and compared the original merged v29 commit `bd3086c` against v30 **without enabling batching**. The native AVX2 warm medians were **6.237 ms versus 6.275 ms** and **6.228 ms versus 6.235 ms** for the two paired orders, each with seven warm samples per build. The median paired ratio was **0.996×**. This shows no material default-path difference at this small sample size; it is not a guarantee of zero regression across model dimensions or hardware.
+
+The wider row-major scratch buffers have different theoretical allocation requirements from v29 and have **not** been shown to reduce physical RSS. More detailed allocator and long-context experiments remain outstanding. Default execution stays v29-compatible; this new kernel cannot become production-default based solely on these experiments.
+
 ## Research acceptance gates
 
 1. All existing native C++ scalar, four-row, and AVX2 tests remain green, including the pinned real pretrained model.
