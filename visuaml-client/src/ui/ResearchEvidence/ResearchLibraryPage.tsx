@@ -16,8 +16,7 @@ const descriptions: Record<string, string> = {
   rewrite_evaluation: 'Transformation experiment',
   optimization_measurement: 'Experimental optimization measurement',
 };
-const describe = (kind: string): string =>
-  descriptions[kind] || kind.replace(/_/g, ' ');
+const describe = (kind: string): string => descriptions[kind] || kind.replace(/_/g, ' ');
 
 const brief = (sha: string | null) => (sha ? sha.slice(0, 12) : 'Not recorded');
 
