@@ -104,9 +104,12 @@ export function parseKnowledgeGraph(value: unknown): KnowledgeGraph {
       !digest(value.parent_catalog_sha256) ||
       !digest(value.knowledge_graph_sha256) ||
       !isObject(value.counts) ||
-      !Number.isInteger(value.counts.studies) ||
-      !Number.isInteger(value.counts.source_artifacts) ||
-      !Number.isInteger(value.counts.identity_edges) ||
+      (typeof value.counts.studies !== 'number' ||
+        !Number.isInteger(value.counts.studies)) ||
+      (typeof value.counts.source_artifacts !== 'number' ||
+        !Number.isInteger(value.counts.source_artifacts)) ||
+      (typeof value.counts.identity_edges !== 'number' ||
+        !Number.isInteger(value.counts.identity_edges)) ||
       value.counts.pinned_pretrained_witnesses !== 1 ||
       !isObject(value.reviewed_artifacts) ||
       !Object.entries(value.reviewed_artifacts).every(
