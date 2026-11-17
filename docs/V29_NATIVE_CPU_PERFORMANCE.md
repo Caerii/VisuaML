@@ -58,7 +58,7 @@ The independent `examples/native_cpu_memory_v29.py` probe executes the scalar-re
 PYTHONPATH=backend python backend/examples/native_cpu_memory_v29.py /path/to/pinned/checkpoint --revision YOUR_PINNED_COMMIT_SHA --repetitions 3 --output /tmp/visuaml-v29-memory.json
 ```
 
-The JSON includes checkpoint and C++ source hashes, compiler identity, platform, and per-process samples. Compare distributions without assuming that differences are attributable solely to C++ scratch reuse: `VmHWM` is a process high-water measure including Python, checkpoint weights, shared libraries, and compiler activity. This first probe is not a statistically controlled heap profiler and is not available on Windows or macOS. No physical-memory reduction should be claimed until repeated measurements support it.
+The JSON includes checkpoint and C++ source hashes, compiler identity, platform, and per-process samples. Compare distributions without assuming that differences are attributable solely to C++ scratch reuse: `VmHWM` is a process high-water measure including Python, checkpoint weights and loaded shared libraries; it excludes RSS used by the external C++ compiler subprocess. This first probe is not a statistically controlled heap profiler and is not available on Windows or macOS. No physical-memory reduction should be claimed until repeated measurements support it.
 
 ## Experimental AVX2 kernel and matched revision study
 
@@ -78,7 +78,7 @@ The [paired CI run](https://github.com/Caerii/VisuaML/actions/runs/44124932669) 
 
 This comparison adds a controlled revision-to-revision observation; it is **not** a multi-run, dedicated-machine, representative-model study, nor does it establish a production performance guarantee. The v28 benchmark did not retain individual raw timing samples, so the paired comparator explicitly preserves v28 aggregate statistics rather than fabricating its raw distribution. Repeating on a dedicated machine and wider shapes remains necessary.
 
-The paired workflow also has an opt-in Linux whole-process RSS experiment for all three v29 kernel variants. That evidence is a process-memory observation—not an allocator-isolated measurement or proof that scratch reuse lowers physical peak memory.
+The paired workflow additionally captures Linux whole-process RSS observations for all three v29 kernel variants. That evidence is a process-memory observation—not an allocator-isolated measurement or proof that scratch reuse lowers physical peak memory.
 
 The native code remains architecture-specific and experimental. A fast finite witness does **not** establish semantic equivalence for every model input or competitive industry serving economics.
 
