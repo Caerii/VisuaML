@@ -30,6 +30,23 @@ Each native result is independently compared against a NumPy computation and eag
 
 **Important boundary:** These are two structurally distinct *synthetic computation graphs*, **not two independently admitted pretrained model families**. This completes only the initial native code-generation vertical slice of [v32 issue #12](https://github.com/Caerii/VisuaML/issues/12). Importing actual checkpoint-bound FX graphs, preserving parameter/constant provenance, running two named pretrained architectures and robust graph-level effect lowering remain future acceptance gates.
 
+## Trusted PyTorch FX-to-native admission
+
+The second v32 integration layer is the narrowly scoped `native_fx_frontend_v32.py`. For a trusted, local, eval-mode `torch.nn.Module` and a finite CPU float32 example tensor, it uses `torch.fx.symbolic_trace` and `ShapeProp` to derive **real module graph structure and concrete tensor metadata**. It accepts only bias-free `nn.Linear`, bias-free/ungrouped/undilated zero-padded `nn.Conv2d`, non-inplace `nn.ReLU`, and pure residual `operator.add`. Unknown operations, module effects, unsupported convolution attributes, multiple outputs, dynamic/symbolic shapes and dtype mismatches fail admission.
+
+Linear weights are explicitly transposed into the rank-2 `matmul` contract, while Conv2D weights use OIHW layout; each is a separate named runtime input. The importer records SHA-256 fingerprints of the weight snapshots in the source provenance and exposes `binding.validated_inputs()` to reject later mutations before execution. The native emitter remains **exactly the same one** used for hand-declared typed fixtures—there is no MLP or CNN template hidden inside native code generation.
+
+```python
+# For a trusted local model only: tracing executes its Python forward.
+binding = lower_trusted_fx(model.eval(), example, trusted=True)
+compiler = NativeSemanticCompiler(binding.program)
+output, receipt = compiler.run_with_receipt(**binding.validated_inputs())
+```
+
+`trusted=True` is explicit acknowledgement, **not a sandbox**. `symbolic_trace` and `ShapeProp` execute the trusted module; never pass untrusted uploaded Python or unknown model-hub code. Shape propagation uses a detached, contiguous **clone** to avoid mutating the caller's original example tensor even when rejecting an inplace operation. Only the bound snapshot hashes are certified; a generic native compilation accepts independent runtime tensors, and per-run receipts describe their actual bytes.
+
+These are actual PyTorch FX graphs with random/synthetic weights, separately verified against eager PyTorch and independent NumPy. They still do **not** constitute two pretrained architecture-family certifications.
+
 ## Provenance and ABI
 
 The generated native symbol is `visuaml_semantic_run(const float* const* inputs, float* output)`, compiled as a temporary process-owned shared library with `-O2 -fno-fast-math`. The Python wrapper checks exact input names, float32 dtype, shapes, finite values and contiguity before calling. It allocates a private output array, and the C++ code copies the output only after validating every intermediate for finiteness. A failure raises a Python error rather than returning partially published output.
@@ -44,15 +61,16 @@ With the pinned Python dependencies and trusted C++17 compiler installed:
 
 ```bash
 cd visuaml-client
-python -m pytest -q backend/tests/test_native_semantic_codegen_v32.py
+python -m pytest -q backend/tests/test_native_semantic_codegen_v32.py backend/tests/test_native_fx_frontend_v32.py
 python -m pytest -q backend/tests
 PYTHONPATH=backend python backend/examples/native_semantic_codegen_demo_v32.py --trials 9 --output /tmp/native-semantic-v32.json
+PYTHONPATH=backend python backend/examples/native_fx_codegen_demo_v32.py --seed 32 --output /tmp/native-fx-v32.json
 ```
 
 The [dedicated GitHub workflow](../.github/workflows/native-semantic-v32.yml) runs the independent fixture checks and publishes a time-bounded, source-bound benchmark artifact. The usual full repository CI remains mandatory. No warm-latency speedup is claimed: this prototype prioritizes semantic admission and inspectable native generation over optimization.
 
 ## Next substantial work
 
-Integrate a real FX/portable-IR frontend that carries exact shapes, operator attributes, original parameter hashes and effect constraints into `SemanticProgram`; lower an independently admitted second **pretrained** model architecture; generate a versioned offline ABI manifest and load it in a separate process; introduce explicit liveness-aware scratch allocation, input/output alias checks, better numerical error instrumentation and standardized performance suites.
+Expand the first restricted trusted FX frontend to carry richer operator contracts and externally auditable parameter/constant provenance; independently admit a second **pretrained** model architecture; generate a versioned offline ABI manifest and load it in a separate process; introduce explicit liveness-aware scratch allocation, input/output alias checks, better numerical error instrumentation and standardized performance suites.
 
 The public roadmap's acceptance percentages remain unchanged until these criteria pass review. Website deployment at `visuaml.com/roadmap` is separately tracked in [issue #8](https://github.com/Caerii/VisuaML/issues/8).
