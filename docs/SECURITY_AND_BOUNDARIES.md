@@ -35,6 +35,14 @@ Do not commit secrets or personal information. Environment variables prefixed wi
 
 For implementation scope, see [Architecture](ARCHITECTURE.md); for exact evidence, see [Verification](VERIFICATION.md).
 
+## v32 generated C++ and trusted FX admission
+
+The [v32 experimental IR-to-native compiler](V32_NATIVE_SEMANTIC_CODEGEN.md) is a strictly closed-world, pure float32 Semantic IR subset. It validates fixed shapes, tensor counts, defined SSA operations, computation bounds and expected operator attributes before generating any C++17 source. C++ identifiers are compiler-owned numeric slots; arbitrary graph names are never inserted into source. The native library is compiled through a fixed argument vector by an installed trusted compiler, **without executing user-provided source**.
+
+This is nevertheless **not a security sandbox**. The generated native binary executes in the Python process with raw pointers; an attacker controlling that process or invoking its ABI directly can bypass Python shape/length guards. Do not execute arbitrary native libraries or admit attacker-controlled Python. The restricted `lower_trusted_fx` frontend calls `torch.fx.symbolic_trace` and `ShapeProp`, which execute the trusted local module's Python code. The `trusted=True` acknowledgement is not isolation, and this API must never become a backend endpoint for untrusted uploaded Python without a separate capability-limited sandbox.
+
+The v32 FX binding snapshots learned parameters and hashes them into the source provenance; `validated_inputs()` checks those hashes before constructing fresh execution inputs. The generic native runtime independently hashes actual runtime inputs in each receipt. These fingerprints establish reproducibility, **not cryptographic authorization or signer identity**. Unsupported bias, grouped/dilated convolution, mutation, dynamic dimensions and state effects fail closed rather than silently falling back.
+
 ## Native execution and the public roadmap
 
 The [native C++ research backend](V28_NATIVE_CPU_COMPILER.md) compiles fixed repository-owned C++17 into a temporary process-local library. Python checks checkpoint identity, tensor layouts and numeric outputs before publishing state. **Native execution is not sandboxed** and cannot safely run hostile binary modules inside the API process. A file hash identifies bytes but does not authenticate the publisher.
