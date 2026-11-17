@@ -37,7 +37,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Format static catalog and the evidence library UI
         run: |
-          pnpm --dir visuaml-client exec prettier --write public/evidence/library-v34.json src/ui/ResearchEvidence/libraryModel.ts src/ui/ResearchEvidence/libraryModel.test.ts src/ui/ResearchEvidence/ResearchLibraryPage.tsx
+          pnpm --dir visuaml-client exec prettier --write src/ui/ResearchEvidence/libraryModel.ts src/ui/ResearchEvidence/libraryModel.test.ts src/ui/ResearchEvidence/ResearchLibraryPage.tsx
       - name: Commit generated catalog and exact formatting
         run: |
           git config user.name 'github-actions[bot]'
