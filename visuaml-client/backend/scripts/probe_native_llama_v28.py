@@ -26,6 +26,7 @@ BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
 from examples.native_cpu_bench_v28 import benchmark
+from examples.native_cpu_prefill_bench_v30 import benchmark as prefill_benchmark
 from visuaml.compiler_lab.hf_llama_checkpoint_v19 import load_hf_llama_local
 from visuaml.compiler_lab.llama_semantic_v20 import (
     lower_llama_semantic_program,
@@ -131,9 +132,13 @@ def run() -> dict:
             imported, prompt=4, chunk_sizes=(1, 1, 2), trials=7,
             compare_native_reference=True, compare_simd=True,
         )
+        prefill_performance = prefill_benchmark(
+            imported, prompt=8, decode=(1, 1), trials=5,
+        )
         return {
             "schema": "visuaml.pinned-native-llama-v28",
             "matched_cpu_benchmark": matched_performance,
+            "v30_prefill_decode_benchmark": prefill_performance,
             "source": MODEL_ID,
             "revision": REVISION,
             "checkpoint_sha256": imported.checkpoint_sha256,
