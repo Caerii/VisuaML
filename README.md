@@ -8,7 +8,7 @@ VisuaML is an open-source research platform combining interactive, collaborative
 
 **Current integrated milestone: v28 (November 2026).** The native CPU and redesigned client additions have been merged into `main`. The v29 native CPU performance work is experimental and proceeds on a separate research branch pending reproducible performance and numerical verification. The client package still reports version 0.0.0; research milestones are *not* published semantic-version releases.
 
-[Public research roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
+[v29 native performance research](docs/V29_NATIVE_CPU_PERFORMANCE.md) · [Public research roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
 
 [![CI](https://github.com/Caerii/VisuaML/actions/workflows/ci.yml/badge.svg)](https://github.com/Caerii/VisuaML/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](docs/LICENSE)
 
