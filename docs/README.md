@@ -7,6 +7,7 @@ VisuaML combines a collaborative neural-network graph application with a separat
 | Start here | When to read it |
 | --- | --- |
 | [Project README](../README.md) | Product overview, quick start and accurate current scope |
+| [v33 exported compilation and transformation evidence](V33_EXPORT_AND_EVIDENCE.md) | Guarded static `torch.export`, native/oracle execution, finite-witness rewrite ledger and counterexamples |
 | [v32 graph-generated native compiler](V32_NATIVE_SEMANTIC_CODEGEN.md) | Closed-world Semantic IR-to-C++ execution, restricted trusted FX import, synthetic MLP/Conv numerical evidence and explicit limitations |
 | [v31 online attention experiment](V31_ONLINE_ATTENTION.md) | Stable streaming softmax and bounded context sweeps, with independent numerical evidence and explicit limitations |
 | [v30 experimental prefill](V30_NATIVE_PREFILL.md) | Bounded batched AVX2 prefill, numerical acceptance, negative results and geometry sweep |
