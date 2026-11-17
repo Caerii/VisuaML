@@ -40,6 +40,10 @@ The public [roadmap.json](../visuaml-client/public/roadmap.json) is the canonica
 
 The roadmap intentionally assigns lower progress to independent GPU and physical-hardware support than to earlier semantic and numerical work. Architecture family names, simulated optical effects, and general interest do not earn the same status as executable numerical witnesses.
 
+## Active research without a percentage increase
+
+A [draft v29 native-performance pull request](https://github.com/Caerii/VisuaML/pull/7) is experimenting with RoPE reuse, four-row and runtime-guarded AVX2 kernels, repeatable CPU timings and physical-memory probes. Its [methodology](V29_NATIVE_CPU_PERFORMANCE.md) and [source-bound pretrained CI witness](https://github.com/Caerii/VisuaML/actions/runs/44124083185) are independently inspectable. Initial short-workload AVX2 results are promising, but do **not** by themselves satisfy the roadmap's unverified GPU, portable AOT, representative serving, physical-energy or model-family criteria. No existing status or portfolio percentage should change merely because a draft experiment is fast.
+
 ## The evidence review process
 
 A proposed change to the public roadmap should be reviewed like a compiler change.
