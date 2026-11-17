@@ -8,7 +8,6 @@ import shutil
 from pathlib import Path
 
 import pytest
-
 from visuaml_evidence.knowledge_graph_v35 import (
     KnowledgeGraphError,
     _load_v28,
