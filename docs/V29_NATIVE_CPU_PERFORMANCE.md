@@ -82,6 +82,12 @@ The paired workflow additionally captures Linux whole-process RSS observations f
 
 The native code remains architecture-specific and experimental. A fast finite witness does **not** establish semantic equivalence for every model input or competitive industry serving economics.
 
+## Compiler amortization and memory findings
+
+A second [paired benchmark run](https://github.com/Caerii/VisuaML/actions/runs/44125999334) on an AMD EPYC 9V74 runner found a median-of-pairs v28-to-v29 AVX2 warm ratio of **5.808×**, differing from the earlier **5.455×** measured on an AMD EPYC 7763. The newer benchmark records the incremental compilation time versus the v28 native baseline and estimates how many repetitions of **this same warm workload** would amortize it: **9 and 15 warm runs** in the two paired observations. This is a simple ratio of extra measured compile latency to measured per-run savings. It excludes startup, model loading, concurrency and longer-context economics; it must not be extrapolated to unrelated workloads.
+
+A [fresh-process RSS sample](https://github.com/Caerii/VisuaML/actions/runs/44125756451) on the shared Linux runner recorded median parent-process VmHWM of approximately **412,534 KiB** for scalar, **412,456 KiB** for four-row and **412,522 KiB** for AVX2 across two repeats. At this precision those differences **do not demonstrate lower physical peak resident memory**. Physical-memory improvement remains unverified and should not be promoted to a roadmap acceptance gate. More detailed per-native-allocator and longer-context measurements are necessary.
+
 ## Planned next kernels
 
 Measure linear projection and vocabulary-head costs first. Evaluate safe contiguous vectorization and matrix multiplication blocking, then attention score/value accumulation and reusable scratch buffers. Keep scalar/reference and optimized paths separable for independent comparison. Investigate physically measured RSS/peak allocation and long-context behavior before claiming memory reductions. GPU and optical code generation remain separate future milestones.
