@@ -126,7 +126,8 @@ def _load_v28(repo: Path) -> tuple[dict[str, Any], str]:
             or any(type(n) is not int or not 1 <= n <= 4096 for n in shape)
             or not isinstance(tokens, list) or len(tokens) != shape[0]
             or any(not isinstance(row, list) or len(row) != shape[1]
-                   or any(type(value) is not int or value < 0 for value in row)
+                   or any(type(value) is not int or not 0 <= value < shape[2]
+                          for value in row)
                    for row in tokens)
         ):
             raise KnowledgeGraphError("Malformed historical witness geometry")
@@ -140,7 +141,8 @@ def _load_v28(repo: Path) -> tuple[dict[str, Any], str]:
         metrics = benchmark["latency"][variant]
         for name in ("median_ms", "minimum_ms", "p95_ms"):
             _numeric(metrics[name], f"{variant}.{name}", positive=True)
-    _numeric(backend["independent_max_abs_error"], "native error")
+    if _numeric(backend["independent_max_abs_error"], "native error") > 3e-4:
+        raise KnowledgeGraphError("Native historical numerical tolerance exceeded")
     _numeric(backend["compilation_ms"], "native compile", positive=True)
     _numeric(benchmark["compilation"]["native_cpp_ms"], "benchmark compile", positive=True)
     if benchmark["numerical_certificate"] != (
