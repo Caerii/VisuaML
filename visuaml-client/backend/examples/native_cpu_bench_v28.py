@@ -64,14 +64,17 @@ def benchmark(
         "torchscript_whole": plan.new_session(backend="torchscript_poly"),
         "native_cpp": native.new_session(),
     }
+    native_compilers = {"native_cpp": native}
     native_reference = None
     if compare_native_reference:
         native_reference = NativeCpuLlamaCompiler(plan, reference_kernels=True)
         engines["native_scalar_reference"] = native_reference.new_session()
+        native_compilers["native_scalar_reference"] = native_reference
     native_simd = None
     if compare_simd:
         native_simd = NativeCpuLlamaCompiler(plan, enable_avx2=True)
         engines["native_avx2"] = native_simd.new_session()
+        native_compilers["native_avx2"] = native_simd
     rng = np.random.default_rng(seed)
     sample = rng.integers(
         0, model.profile.vocabulary,
@@ -160,13 +163,7 @@ def benchmark(
                     "cpp_source_sha256", "executable_sha256", "compilation_ms",
                 )
             }
-            for name, compiler in (
-                ("native_cpp", native),
-                *((("native_scalar_reference", native_reference),)
-                  if native_reference is not None else ()),
-                *((("native_avx2", native_simd),)
-                  if native_simd is not None else ()),
-            )
+            for name, compiler in native_compilers.items()
         },
         "native_linear_variants": {
             "native_cpp": native.report()["linear_kernel"],
