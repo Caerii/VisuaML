@@ -88,14 +88,18 @@ def attempt(workload: RoundtripWorkload, *,
             workload, timeout_ms=timeout_ms, audit=audit,
         )
     except (BehavioralSynthesisError, AssertionError) as exc:
+        classification = classify_failure(exc)
+        invalid = classification in (
+            "synthesis_protocol_error", "semantic_or_replay_mismatch",
+        )
         return {
             "name": workload.name,
             "split": workload.split,
             "source_wasm_sha256": _digest(original),
             "source_wasm_hex": original.hex(),
             "audit": audit,
-            "status": "rejected",
-            "failure_class": classify_failure(exc),
+            "status": "invalid" if invalid else "rejected",
+            "failure_class": classification,
             "exception_type": type(exc).__name__,
             "message": str(exc),
             "elapsed_ns": time.perf_counter_ns() - start,
@@ -126,23 +130,33 @@ def summarize(attempts: list[dict]) -> dict:
     for split in sorted({x["split"] for x in attempts}):
         cases = [x for x in attempts if x["split"] == split]
         verified = sum(x["status"] == "verified" for x in cases)
-        rejected = len(cases) - verified
+        rejected = sum(x["status"] == "rejected" for x in cases)
+        invalid = sum(x["status"] == "invalid" for x in cases)
+        if verified + rejected + invalid != len(cases):
+            raise ValueError("Unrecognized recovery outcome in denominator")
         classes = {}
         for item in cases:
-            if item["status"] == "rejected":
+            if item["status"] != "verified":
                 kind = item["failure_class"]
                 classes[kind] = classes.get(kind, 0) + 1
         per_split[split] = {
             "attempted": len(cases),
             "verified": verified,
             "rejected": rejected,
-            "verified_fraction": verified / len(cases),
+            "invalid": invalid,
+            "verified_fraction_of_all_attempts": verified / len(cases),
+            "verified_fraction_of_valid_attempts": (
+                verified / (verified + rejected)
+                if verified + rejected else None
+            ),
+            "valid_scientific_attempts": verified + rejected,
             "failure_classes": classes,
         }
     return {
         "total_attempted": len(attempts),
         "total_verified": sum(x["status"] == "verified" for x in attempts),
         "total_rejected": sum(x["status"] == "rejected" for x in attempts),
+        "total_invalid": sum(x["status"] == "invalid" for x in attempts),
         "by_split": per_split,
         "definition": (
             "Finite attempted source programs within an explicit bounded "
@@ -172,8 +186,10 @@ def run(*, holdout: bool, timeout_ms: int, root: Path) -> dict:
         attempts.append(attempt(workload, timeout_ms=timeout_ms))
     summary = summarize(attempts)
     negative = summary["by_split"]["negative_control"]
-    if negative["verified"] != 0:
-        raise AssertionError("Nonadmitted negative-control behavior accepted")
+    if negative["verified"] != 0 or negative["invalid"] != 0:
+        raise AssertionError(
+            "Nonadmitted cubic negative control must reject cleanly"
+        )
     return {
         "schema": SCHEMA,
         "source": source,
