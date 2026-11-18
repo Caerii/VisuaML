@@ -57,3 +57,24 @@ operand-index and destination selectors. Integrate it into the live
 executor and falsify host fallback using gate ablation. Then create bounded
 linear-memory gates with real WASM bounds/traps, followed by calls and
 call-frames. Only then consider broader WASM feature conformance.
+
+## v56.1 generated-program differential corpus
+
+`tests/test_generated_wasm_alu_v56.py` builds **16 seeded, distinct,
+canonical original WASM binaries** using four-step expression chains that
+combine exact i32 arithmetic, signed comparisons, `eqz`, and a mutable
+`local.tee`/`local.get` data dependency. These are *new source programs*,
+not new inputs to the six historical hand-built programs. Each is checked
+at seven adversarial i32 inputs (112 generated source/input executions),
+and the test compares:
+
+- Independent Wasmtime module admission and result
+- The v51 original host interpreter
+- The v55 tensor operand executor
+- The v56 constructed ALU executor, including every executed state step
+
+This expands compositional evidence while preserving the distinction
+between tested finite witnesses and all-input formal equivalence.
+The test is deterministic and repeats exactly under the same source hash.
+A passing CI run is required before these counts can be reported as
+verified executed witnesses.
