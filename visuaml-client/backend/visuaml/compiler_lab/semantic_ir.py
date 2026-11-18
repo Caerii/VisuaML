@@ -60,7 +60,7 @@ class SemanticRegion:
 
 @dataclass(frozen=True)
 class SemanticProgram:
-    origin: Literal["torch-fx", "effect-program"]
+    origin: Literal["torch-fx", "effect-program", "onnx"]
     input_types: tuple[tuple[str, ValueType], ...]
     state_types: tuple[tuple[str, ValueType], ...]
     regions: tuple[SemanticRegion, ...]
