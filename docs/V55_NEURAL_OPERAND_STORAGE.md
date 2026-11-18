@@ -62,3 +62,26 @@ The dedicated component tests cover:
 **No universal WASM, memory semantics, arbitrary learned-weight
 decompilation, or full neural virtual computer is claimed.** These
 need separate verified boundaries and full stack integration.
+
+## Experimental executable integration
+
+The additional `neural_operand_adapter_v55.py` exposes only top-of-stack,
+push, pop, tail truncation, length and trace iteration. It owns exactly
+one `OperandState`, not an auxiliary host list of i32 values. Each physical
+push/pop/truncation delegates to `step_operands` and its fixed-weight
+one-hot selector; top reads are matrix-selected from the tensor.
+
+The separate `neural_operand_executor_v55.py` takes the v54 program
+counter, neural frame-event, and neural frame-transition circuit, replacing
+the Python operand list with that tensor adapter. Source instruction
+dispatch, program metadata, locals and frame lexical validation remain
+host-side. The explicit v55 integration tests compare per-instruction
+state with the independently verified v54 executor and v51 interpreter,
+and original source WASM with independent Wasmtime.
+
+**Source-head verification must pass before claiming implementation
+complete.** This is a restricted constructed neural operand *storage*
+mechanism and not yet a fully neural WASM decoder or unrestricted memory
+subsystem. Host opcodes still determine which operand operation to request.
+The next gate must replace host operand-operation decoding with
+constructed opcode/data selectors, with provenance-bound execution archives.
