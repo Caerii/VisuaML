@@ -11,6 +11,11 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/kan_teacher_slice_v45.py
       - visuaml-client/backend/scripts/probe_pretrained_kan_slice_v45.py
       - visuaml-client/backend/tests/test_kan_teacher_slice_v45.py
+      - visuaml-client/backend/tests/test_kan_archive_v45.py
+      - benchmarks/kan_mechanism_replay_v45.json
+      - benchmarks/kan_mechanism_replay_v45.origin.json
+      - benchmarks/pretrained_kan_surrogate_v45.json
+      - benchmarks/pretrained_kan_surrogate_v45.origin.json
       - visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py
       - visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py
       - .github/workflows/kan-mechanisms-v45.yml
@@ -22,6 +27,11 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/kan_teacher_slice_v45.py
       - visuaml-client/backend/scripts/probe_pretrained_kan_slice_v45.py
       - visuaml-client/backend/tests/test_kan_teacher_slice_v45.py
+      - visuaml-client/backend/tests/test_kan_archive_v45.py
+      - benchmarks/kan_mechanism_replay_v45.json
+      - benchmarks/kan_mechanism_replay_v45.origin.json
+      - benchmarks/pretrained_kan_surrogate_v45.json
+      - benchmarks/pretrained_kan_surrogate_v45.origin.json
       - visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py
       - visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py
       - .github/workflows/kan-mechanisms-v45.yml
@@ -47,8 +57,8 @@ jobs:
           OPENBLAS_NUM_THREADS: "1"
           OMP_NUM_THREADS: "1"
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py visuaml-client/backend/tests/test_kan_teacher_slice_v45.py visuaml-client/backend/tests/test_neural_symbolic_archive_v43.py
-          ruff check visuaml-client/backend/visuaml/compiler_lab/kan_mechanism_ir_v45.py visuaml-client/backend/visuaml/compiler_lab/kan_symbolic_frontend_v45.py visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py visuaml-client/backend/scripts/probe_kan_mechanisms_v45.py visuaml-client/backend/visuaml/compiler_lab/kan_teacher_slice_v45.py visuaml-client/backend/scripts/probe_pretrained_kan_slice_v45.py visuaml-client/backend/tests/test_kan_teacher_slice_v45.py
+          python -m pytest -q visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py visuaml-client/backend/tests/test_kan_teacher_slice_v45.py visuaml-client/backend/tests/test_neural_symbolic_archive_v43.py visuaml-client/backend/tests/test_kan_archive_v45.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/kan_mechanism_ir_v45.py visuaml-client/backend/visuaml/compiler_lab/kan_symbolic_frontend_v45.py visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py visuaml-client/backend/scripts/probe_kan_mechanisms_v45.py visuaml-client/backend/visuaml/compiler_lab/kan_teacher_slice_v45.py visuaml-client/backend/scripts/probe_pretrained_kan_slice_v45.py visuaml-client/backend/tests/test_kan_teacher_slice_v45.py visuaml-client/backend/tests/test_kan_archive_v45.py
       - name: Independently replay v41 neural through KAN and typed WASM in 256-point signed-i8 domain
         env:
           PYTHONPATH: visuaml-client/backend
