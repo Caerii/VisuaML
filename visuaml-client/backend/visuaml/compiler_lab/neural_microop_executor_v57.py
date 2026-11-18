@@ -58,6 +58,7 @@ from .neural_local_bank_v57 import (
     apply_local_microop,
 )
 from .typed_microop_ir_v57 import (
+    LOCALS_WIDTH,
     MicroopWeights,
     ProgramMicroopTokens,
     compile_microop_tokens,
@@ -158,7 +159,7 @@ def execute_microop_routed_control(
         construct_local_bank_weights() if local_fixed is None
         else local_fixed
     )
-    local_bank = np.zeros((5, 32), dtype=np.float64)
+    local_bank = np.zeros((LOCALS_WIDTH, 32), dtype=np.float64)
     local_bank[0] = _bits(argument)
     operand_fixed = (
         fixed_operand_weights() if operand_fixed is None else operand_fixed
