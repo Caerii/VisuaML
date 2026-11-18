@@ -101,7 +101,8 @@ def test_reject_unsupported_onnx_opcode_and_invalid_reshape():
     for tensor in model.graph.initializer:
         if tensor.name == "shape":
             tensor.CopyFrom(numpy_helper.from_array(np.array([1, 3], np.int64), name="shape"))
-    with pytest.raises(NativeIRCodegenError, match="Reshape"):
+    with pytest.raises(NativeIRCodegenError, match="preflight"):
+        # ONNX full shape inference rejects the impossible MatMul first.
         _lower(model.SerializeToString())
 
 
