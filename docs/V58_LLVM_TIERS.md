@@ -72,7 +72,8 @@ The artifact manifest matches each tier's pre-optimization IR hashes
 with the independent scalar Z3 receipts. Z3 proved 33 expressions over
 all i32 inputs. The two longer programs retained finite execution
 coverage. The proof tool caught the deliberate mutation, and the
-reference fault campaign detected all ten injections.
+reference fault campaign detected all ten injections. The full backend
+suite finished with 1,189 passed and 20 skipped.
 
 Use the pinned research environment with `llvmlite==0.46.0` and a C++17
 compiler. The manifest records the exact producer for each artifact.
