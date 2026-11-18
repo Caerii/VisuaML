@@ -231,28 +231,22 @@ def _admit(program: SemanticProgram) -> _Plan:
                 or len(input_shapes[1]) != 4
             ):
                 raise NativeIRCodegenError("Convolution requires NCHW and OIHW")
-            if (
-                not isinstance(op.parameters, tuple)
-                or any(
-                    not isinstance(p, tuple) or len(p) != 2
-                    or not isinstance(p[0], str) or type(p[1]) is not int
-                    for p in op.parameters
-                )
-            ):
-                raise NativeIRCodegenError("Invalid convolution parameters")
-            opts = dict(op.parameters)
-            if (
-                len(op.parameters) != 2
-                or set(opts) != {"stride", "padding"}
-                or not 1 <= opts["stride"] <= 4
-                or not 0 <= opts["padding"] <= 3
+            opts = _int_params(op.parameters)
+            if set(opts) == {"stride", "padding"}:
+                pt = pl = pb = pr = opts["padding"]
+            elif set(opts) == {"stride", "pad_top", "pad_left", "pad_bottom", "pad_right"}:
+                pt, pl, pb, pr = (opts[k] for k in ("pad_top", "pad_left", "pad_bottom", "pad_right"))
+            else:
+                raise NativeIRCodegenError("Unsupported convolution parameters")
+            if not 1 <= opts["stride"] <= 4 or not all(
+                0 <= p <= 4 for p in (pt, pl, pb, pr)
             ):
                 raise NativeIRCodegenError("Unsupported convolution geometry")
             batch, in_channels, height, width = input_shapes[0]
             out_channels, weight_channels, kh, kw = input_shapes[1]
-            stride, padding = opts["stride"], opts["padding"]
-            oh = (height + 2 * padding - kh) // stride + 1
-            ow = (width + 2 * padding - kw) // stride + 1
+            stride = opts["stride"]
+            oh = (height + pt + pb - kh) // stride + 1
+            ow = (width + pl + pr - kw) // stride + 1
             if (
                 in_channels != weight_channels
                 or oh <= 0 or ow <= 0
@@ -260,7 +254,7 @@ def _admit(program: SemanticProgram) -> _Plan:
             ):
                 raise NativeIRCodegenError("Convolution result geometry mismatch")
             multiplied += batch * out_channels * oh * ow * in_channels * kh * kw
-            params = (stride, padding)
+            params = (stride, pt, pl, pb, pr)
         retained += 4 * math.prod(out_shape)
         if retained > _MAX_BYTES or multiplied > _MAX_MULTIPLIES:
             raise NativeIRCodegenError("Native retained memory/work budget exceeded")
