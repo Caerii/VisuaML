@@ -1,0 +1,5757 @@
+{
+  "claims_arbitrary_neural_decompilation": false,
+  "fuel_exhausted_on_mathematically_terminating_large_input": true,
+  "fuel_exhaustion_means_nontermination": false,
+  "full_wasm_supported": false,
+  "gcd_12_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a47014501017f2000450440410c0f0b2000410048044041000f0b410c210102400340200020016b450d01200020014a0440200020016b210005200120006b21010b0c000b0b20000b",
+  "gcd_12_source_wasm_sha256": "fb3be46abd3487a2bfff05f6c62a7a23cc3885267ecd0438bc217679adb006ce",
+  "general_gcd_all_i32_semantics_proved": false,
+  "independent_mathematical_reference_used": true,
+  "limitations": "One original WASM gcd(x,12) repeated-subtraction algorithm. Negative input uses documented sentinel zero. Host routing handles control frames/PC, v49 constructed gates compute i32 arithmetic. Wasmtime and mathematical GCD verify finite inputs; large positive value is resource-limited, not semantically nonterminating. No memory/calls or unbounded proof.",
+  "neural_routing_of_branch_targets": false,
+  "original_binary_wasmtime_validated": true,
+  "program_sha256": "91566354388a3f536e8551f85176e4fe1fd8cd24c0c53a7838409f29fe1f3a84",
+  "sample_count": 27,
+  "sampled_complete_control_traces": [
+    {
+      "complete_machine_trace": [
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            0,
+            0
+          ],
+          "next_pc": 1,
+          "opcode": "local.get",
+          "pc": 0,
+          "stack_i32": [
+            0
+          ],
+          "step": 0
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            0,
+            0
+          ],
+          "next_pc": 2,
+          "opcode": "i32.eqz",
+          "pc": 1,
+          "stack_i32": [
+            1
+          ],
+          "step": 1
+        },
+        {
+          "control_labels": [
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            0,
+            0
+          ],
+          "next_pc": 3,
+          "opcode": "if",
+          "pc": 2,
+          "stack_i32": [],
+          "step": 2
+        },
+        {
+          "control_labels": [
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            0,
+            0
+          ],
+          "next_pc": 4,
+          "opcode": "i32.const",
+          "pc": 3,
+          "stack_i32": [
+            12
+          ],
+          "step": 3
+        },
+        {
+          "control_labels": [],
+          "halted": true,
+          "locals_i32": [
+            0,
+            0
+          ],
+          "next_pc": 41,
+          "opcode": "return",
+          "pc": 4,
+          "stack_i32": [
+            12
+          ],
+          "step": 4
+        }
+      ],
+      "input_i32": 0
+    },
+    {
+      "complete_machine_trace": [
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            0
+          ],
+          "next_pc": 1,
+          "opcode": "local.get",
+          "pc": 0,
+          "stack_i32": [
+            1
+          ],
+          "step": 0
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            0
+          ],
+          "next_pc": 2,
+          "opcode": "i32.eqz",
+          "pc": 1,
+          "stack_i32": [
+            0
+          ],
+          "step": 1
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            0
+          ],
+          "next_pc": 6,
+          "opcode": "if",
+          "pc": 2,
+          "stack_i32": [],
+          "step": 2
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            0
+          ],
+          "next_pc": 7,
+          "opcode": "local.get",
+          "pc": 6,
+          "stack_i32": [
+            1
+          ],
+          "step": 3
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            0
+          ],
+          "next_pc": 8,
+          "opcode": "i32.const",
+          "pc": 7,
+          "stack_i32": [
+            1,
+            0
+          ],
+          "step": 4
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            0
+          ],
+          "next_pc": 9,
+          "opcode": "i32.lt_s",
+          "pc": 8,
+          "stack_i32": [
+            0
+          ],
+          "step": 5
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            0
+          ],
+          "next_pc": 13,
+          "opcode": "if",
+          "pc": 9,
+          "stack_i32": [],
+          "step": 6
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            0
+          ],
+          "next_pc": 14,
+          "opcode": "i32.const",
+          "pc": 13,
+          "stack_i32": [
+            12
+          ],
+          "step": 7
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 15,
+          "opcode": "local.set",
+          "pc": 14,
+          "stack_i32": [],
+          "step": 8
+        },
+        {
+          "control_labels": [
+            "block"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 16,
+          "opcode": "block",
+          "pc": 15,
+          "stack_i32": [],
+          "step": 9
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 17,
+          "opcode": "loop",
+          "pc": 16,
+          "stack_i32": [],
+          "step": 10
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 11
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            12
+          ],
+          "step": 12
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -11
+          ],
+          "step": 13
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 14
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 15
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 16
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            12
+          ],
+          "step": 17
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 18
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 19
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            12
+          ],
+          "step": 20
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            12,
+            1
+          ],
+          "step": 21
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            12
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            11
+          ],
+          "step": 22
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 23
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 24
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 25
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 26
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            11
+          ],
+          "step": 27
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -10
+          ],
+          "step": 28
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 29
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 30
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 31
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            11
+          ],
+          "step": 32
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 33
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 34
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            11
+          ],
+          "step": 35
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            11,
+            1
+          ],
+          "step": 36
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            11
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            10
+          ],
+          "step": 37
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 38
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 39
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 40
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 41
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            10
+          ],
+          "step": 42
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -9
+          ],
+          "step": 43
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 44
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 45
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 46
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            10
+          ],
+          "step": 47
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 48
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 49
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            10
+          ],
+          "step": 50
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            10,
+            1
+          ],
+          "step": 51
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            10
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            9
+          ],
+          "step": 52
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 53
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 54
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 55
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 56
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            9
+          ],
+          "step": 57
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -8
+          ],
+          "step": 58
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 59
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 60
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 61
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            9
+          ],
+          "step": 62
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 63
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 64
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            9
+          ],
+          "step": 65
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            9,
+            1
+          ],
+          "step": 66
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            9
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            8
+          ],
+          "step": 67
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 68
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 69
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 70
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 71
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            8
+          ],
+          "step": 72
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -7
+          ],
+          "step": 73
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 74
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 75
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 76
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            8
+          ],
+          "step": 77
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 78
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 79
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            8
+          ],
+          "step": 80
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            8,
+            1
+          ],
+          "step": 81
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            8
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            7
+          ],
+          "step": 82
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 83
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 84
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 85
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 86
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            7
+          ],
+          "step": 87
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -6
+          ],
+          "step": 88
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 89
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 90
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 91
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            7
+          ],
+          "step": 92
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 93
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 94
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            7
+          ],
+          "step": 95
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            7,
+            1
+          ],
+          "step": 96
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            7
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            6
+          ],
+          "step": 97
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 98
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 99
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 100
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 101
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            6
+          ],
+          "step": 102
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -5
+          ],
+          "step": 103
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 104
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 105
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 106
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            6
+          ],
+          "step": 107
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 108
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 109
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            6
+          ],
+          "step": 110
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            6,
+            1
+          ],
+          "step": 111
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            6
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            5
+          ],
+          "step": 112
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 113
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 114
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 115
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 116
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            5
+          ],
+          "step": 117
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -4
+          ],
+          "step": 118
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 119
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 120
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 121
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            5
+          ],
+          "step": 122
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 123
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 124
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            5
+          ],
+          "step": 125
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            5,
+            1
+          ],
+          "step": 126
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            5
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            4
+          ],
+          "step": 127
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 128
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 129
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 130
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 131
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            4
+          ],
+          "step": 132
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -3
+          ],
+          "step": 133
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 134
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 135
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 136
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            4
+          ],
+          "step": 137
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 138
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 139
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            4
+          ],
+          "step": 140
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            4,
+            1
+          ],
+          "step": 141
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            4
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            3
+          ],
+          "step": 142
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 143
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 144
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 145
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 146
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            3
+          ],
+          "step": 147
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -2
+          ],
+          "step": 148
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 149
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 150
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 151
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            3
+          ],
+          "step": 152
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 153
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 154
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            3
+          ],
+          "step": 155
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            3,
+            1
+          ],
+          "step": 156
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            3
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            2
+          ],
+          "step": 157
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 158
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 159
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 160
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 161
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            2
+          ],
+          "step": 162
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -1
+          ],
+          "step": 163
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 164
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 165
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 166
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            2
+          ],
+          "step": 167
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 168
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 169
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            2
+          ],
+          "step": 170
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            2,
+            1
+          ],
+          "step": 171
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            1
+          ],
+          "step": 172
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 173
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 174
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 175
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 176
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            1
+          ],
+          "step": 177
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            0
+          ],
+          "step": 178
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            1
+          ],
+          "step": 179
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 39,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 180
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 40,
+          "opcode": "local.get",
+          "pc": 39,
+          "stack_i32": [
+            1
+          ],
+          "step": 181
+        },
+        {
+          "control_labels": [],
+          "halted": true,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 41,
+          "opcode": "end",
+          "pc": 40,
+          "stack_i32": [
+            1
+          ],
+          "step": 182
+        }
+      ],
+      "input_i32": 1
+    },
+    {
+      "complete_machine_trace": [
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            0
+          ],
+          "next_pc": 1,
+          "opcode": "local.get",
+          "pc": 0,
+          "stack_i32": [
+            12
+          ],
+          "step": 0
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            0
+          ],
+          "next_pc": 2,
+          "opcode": "i32.eqz",
+          "pc": 1,
+          "stack_i32": [
+            0
+          ],
+          "step": 1
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            0
+          ],
+          "next_pc": 6,
+          "opcode": "if",
+          "pc": 2,
+          "stack_i32": [],
+          "step": 2
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            0
+          ],
+          "next_pc": 7,
+          "opcode": "local.get",
+          "pc": 6,
+          "stack_i32": [
+            12
+          ],
+          "step": 3
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            0
+          ],
+          "next_pc": 8,
+          "opcode": "i32.const",
+          "pc": 7,
+          "stack_i32": [
+            12,
+            0
+          ],
+          "step": 4
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            0
+          ],
+          "next_pc": 9,
+          "opcode": "i32.lt_s",
+          "pc": 8,
+          "stack_i32": [
+            0
+          ],
+          "step": 5
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            0
+          ],
+          "next_pc": 13,
+          "opcode": "if",
+          "pc": 9,
+          "stack_i32": [],
+          "step": 6
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            0
+          ],
+          "next_pc": 14,
+          "opcode": "i32.const",
+          "pc": 13,
+          "stack_i32": [
+            12
+          ],
+          "step": 7
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 15,
+          "opcode": "local.set",
+          "pc": 14,
+          "stack_i32": [],
+          "step": 8
+        },
+        {
+          "control_labels": [
+            "block"
+          ],
+          "halted": false,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 16,
+          "opcode": "block",
+          "pc": 15,
+          "stack_i32": [],
+          "step": 9
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 17,
+          "opcode": "loop",
+          "pc": 16,
+          "stack_i32": [],
+          "step": 10
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            12
+          ],
+          "step": 11
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            12,
+            12
+          ],
+          "step": 12
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            0
+          ],
+          "step": 13
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            1
+          ],
+          "step": 14
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 39,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 15
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 40,
+          "opcode": "local.get",
+          "pc": 39,
+          "stack_i32": [
+            12
+          ],
+          "step": 16
+        },
+        {
+          "control_labels": [],
+          "halted": true,
+          "locals_i32": [
+            12,
+            12
+          ],
+          "next_pc": 41,
+          "opcode": "end",
+          "pc": 40,
+          "stack_i32": [
+            12
+          ],
+          "step": 17
+        }
+      ],
+      "input_i32": 12
+    },
+    {
+      "complete_machine_trace": [
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            17,
+            0
+          ],
+          "next_pc": 1,
+          "opcode": "local.get",
+          "pc": 0,
+          "stack_i32": [
+            17
+          ],
+          "step": 0
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            17,
+            0
+          ],
+          "next_pc": 2,
+          "opcode": "i32.eqz",
+          "pc": 1,
+          "stack_i32": [
+            0
+          ],
+          "step": 1
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            17,
+            0
+          ],
+          "next_pc": 6,
+          "opcode": "if",
+          "pc": 2,
+          "stack_i32": [],
+          "step": 2
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            17,
+            0
+          ],
+          "next_pc": 7,
+          "opcode": "local.get",
+          "pc": 6,
+          "stack_i32": [
+            17
+          ],
+          "step": 3
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            17,
+            0
+          ],
+          "next_pc": 8,
+          "opcode": "i32.const",
+          "pc": 7,
+          "stack_i32": [
+            17,
+            0
+          ],
+          "step": 4
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            17,
+            0
+          ],
+          "next_pc": 9,
+          "opcode": "i32.lt_s",
+          "pc": 8,
+          "stack_i32": [
+            0
+          ],
+          "step": 5
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            17,
+            0
+          ],
+          "next_pc": 13,
+          "opcode": "if",
+          "pc": 9,
+          "stack_i32": [],
+          "step": 6
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            17,
+            0
+          ],
+          "next_pc": 14,
+          "opcode": "i32.const",
+          "pc": 13,
+          "stack_i32": [
+            12
+          ],
+          "step": 7
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 15,
+          "opcode": "local.set",
+          "pc": 14,
+          "stack_i32": [],
+          "step": 8
+        },
+        {
+          "control_labels": [
+            "block"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 16,
+          "opcode": "block",
+          "pc": 15,
+          "stack_i32": [],
+          "step": 9
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 17,
+          "opcode": "loop",
+          "pc": 16,
+          "stack_i32": [],
+          "step": 10
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            17
+          ],
+          "step": 11
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            17,
+            12
+          ],
+          "step": 12
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            5
+          ],
+          "step": 13
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 14
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 15
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            17
+          ],
+          "step": 16
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            17,
+            12
+          ],
+          "step": 17
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            1
+          ],
+          "step": 18
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 26,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 19
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 27,
+          "opcode": "local.get",
+          "pc": 26,
+          "stack_i32": [
+            17
+          ],
+          "step": 20
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 28,
+          "opcode": "local.get",
+          "pc": 27,
+          "stack_i32": [
+            17,
+            12
+          ],
+          "step": 21
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            17,
+            12
+          ],
+          "next_pc": 29,
+          "opcode": "i32.sub",
+          "pc": 28,
+          "stack_i32": [
+            5
+          ],
+          "step": 22
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 30,
+          "opcode": "local.set",
+          "pc": 29,
+          "stack_i32": [],
+          "step": 23
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 36,
+          "opcode": "else",
+          "pc": 30,
+          "stack_i32": [],
+          "step": 24
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 25
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            5
+          ],
+          "step": 26
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            5,
+            12
+          ],
+          "step": 27
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -7
+          ],
+          "step": 28
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 29
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 30
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            5
+          ],
+          "step": 31
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            5,
+            12
+          ],
+          "step": 32
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 33
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 34
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            12
+          ],
+          "step": 35
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            12,
+            5
+          ],
+          "step": 36
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            12
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            7
+          ],
+          "step": 37
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 38
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 39
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 40
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            5
+          ],
+          "step": 41
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            5,
+            7
+          ],
+          "step": 42
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -2
+          ],
+          "step": 43
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 44
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 45
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            5
+          ],
+          "step": 46
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            5,
+            7
+          ],
+          "step": 47
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 48
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 49
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            7
+          ],
+          "step": 50
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            7,
+            5
+          ],
+          "step": 51
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            7
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            2
+          ],
+          "step": 52
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 53
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 54
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 55
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            5
+          ],
+          "step": 56
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            5,
+            2
+          ],
+          "step": 57
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            3
+          ],
+          "step": 58
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 59
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 60
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            5
+          ],
+          "step": 61
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            5,
+            2
+          ],
+          "step": 62
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            1
+          ],
+          "step": 63
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 26,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 64
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 27,
+          "opcode": "local.get",
+          "pc": 26,
+          "stack_i32": [
+            5
+          ],
+          "step": 65
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 28,
+          "opcode": "local.get",
+          "pc": 27,
+          "stack_i32": [
+            5,
+            2
+          ],
+          "step": 66
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            5,
+            2
+          ],
+          "next_pc": 29,
+          "opcode": "i32.sub",
+          "pc": 28,
+          "stack_i32": [
+            3
+          ],
+          "step": 67
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 30,
+          "opcode": "local.set",
+          "pc": 29,
+          "stack_i32": [],
+          "step": 68
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 36,
+          "opcode": "else",
+          "pc": 30,
+          "stack_i32": [],
+          "step": 69
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 70
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            3
+          ],
+          "step": 71
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            3,
+            2
+          ],
+          "step": 72
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            1
+          ],
+          "step": 73
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 74
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 75
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            3
+          ],
+          "step": 76
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            3,
+            2
+          ],
+          "step": 77
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            1
+          ],
+          "step": 78
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 26,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 79
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 27,
+          "opcode": "local.get",
+          "pc": 26,
+          "stack_i32": [
+            3
+          ],
+          "step": 80
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 28,
+          "opcode": "local.get",
+          "pc": 27,
+          "stack_i32": [
+            3,
+            2
+          ],
+          "step": 81
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            3,
+            2
+          ],
+          "next_pc": 29,
+          "opcode": "i32.sub",
+          "pc": 28,
+          "stack_i32": [
+            1
+          ],
+          "step": 82
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 30,
+          "opcode": "local.set",
+          "pc": 29,
+          "stack_i32": [],
+          "step": 83
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 36,
+          "opcode": "else",
+          "pc": 30,
+          "stack_i32": [],
+          "step": 84
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 85
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 86
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            2
+          ],
+          "step": 87
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            -1
+          ],
+          "step": 88
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            0
+          ],
+          "step": 89
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 22,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 90
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 23,
+          "opcode": "local.get",
+          "pc": 22,
+          "stack_i32": [
+            1
+          ],
+          "step": 91
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 24,
+          "opcode": "local.get",
+          "pc": 23,
+          "stack_i32": [
+            1,
+            2
+          ],
+          "step": 92
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 25,
+          "opcode": "i32.gt_s",
+          "pc": 24,
+          "stack_i32": [
+            0
+          ],
+          "step": 93
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 31,
+          "opcode": "if",
+          "pc": 25,
+          "stack_i32": [],
+          "step": 94
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 32,
+          "opcode": "local.get",
+          "pc": 31,
+          "stack_i32": [
+            2
+          ],
+          "step": 95
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 33,
+          "opcode": "local.get",
+          "pc": 32,
+          "stack_i32": [
+            2,
+            1
+          ],
+          "step": 96
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            2
+          ],
+          "next_pc": 34,
+          "opcode": "i32.sub",
+          "pc": 33,
+          "stack_i32": [
+            1
+          ],
+          "step": 97
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop",
+            "if"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 35,
+          "opcode": "local.set",
+          "pc": 34,
+          "stack_i32": [],
+          "step": 98
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 36,
+          "opcode": "end",
+          "pc": 35,
+          "stack_i32": [],
+          "step": 99
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 17,
+          "opcode": "br",
+          "pc": 36,
+          "stack_i32": [],
+          "step": 100
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 18,
+          "opcode": "local.get",
+          "pc": 17,
+          "stack_i32": [
+            1
+          ],
+          "step": 101
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 19,
+          "opcode": "local.get",
+          "pc": 18,
+          "stack_i32": [
+            1,
+            1
+          ],
+          "step": 102
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 20,
+          "opcode": "i32.sub",
+          "pc": 19,
+          "stack_i32": [
+            0
+          ],
+          "step": 103
+        },
+        {
+          "control_labels": [
+            "block",
+            "loop"
+          ],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 21,
+          "opcode": "i32.eqz",
+          "pc": 20,
+          "stack_i32": [
+            1
+          ],
+          "step": 104
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 39,
+          "opcode": "br_if",
+          "pc": 21,
+          "stack_i32": [],
+          "step": 105
+        },
+        {
+          "control_labels": [],
+          "halted": false,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 40,
+          "opcode": "local.get",
+          "pc": 39,
+          "stack_i32": [
+            1
+          ],
+          "step": 106
+        },
+        {
+          "control_labels": [],
+          "halted": true,
+          "locals_i32": [
+            1,
+            1
+          ],
+          "next_pc": 41,
+          "opcode": "end",
+          "pc": 40,
+          "stack_i32": [
+            1
+          ],
+          "step": 107
+        }
+      ],
+      "input_i32": 17
+    }
+  ],
+  "schema": "visuaml.real-wasm-gcd-control-evidence.v51.1",
+  "source_commit": "6ea371af0b4983896b0ecae91e469b39ec9f9824",
+  "source_file_sha256": {
+    "scripts/probe_wasm_gcd_v51_1.py": "4e802cd7f7e69a0b64af7766a7151320204432a0023024bd277b97df40161249",
+    "visuaml/compiler_lab/bit_neural_vm_v49.py": "b17dc58a4d378e722e4db501404d122fdbf5a795f0b1f61678a0c71a364ecb07",
+    "visuaml/compiler_lab/wasm_control_flow_v51.py": "84825bd788430e8133d9754eb3f798974fd9c84be142c0dd8032f4ae58e11bd3"
+  },
+  "source_instruction_count": 41,
+  "source_program_local_count": 1,
+  "source_wasm_real_runtime_executed": true,
+  "total_executed_control_transitions": 2225,
+  "witnesses": [
+    {
+      "branch_back_edges": 0,
+      "gcd_reference_i32": 0,
+      "host_control_bit_gates_i32": 0,
+      "input_i32": -123,
+      "instruction_transitions": 9,
+      "passed": true,
+      "wasmtime_i32": 0
+    },
+    {
+      "branch_back_edges": 0,
+      "gcd_reference_i32": 0,
+      "host_control_bit_gates_i32": 0,
+      "input_i32": -1,
+      "instruction_transitions": 9,
+      "passed": true,
+      "wasmtime_i32": 0
+    },
+    {
+      "branch_back_edges": 0,
+      "gcd_reference_i32": 12,
+      "host_control_bit_gates_i32": 12,
+      "input_i32": 0,
+      "instruction_transitions": 5,
+      "passed": true,
+      "wasmtime_i32": 12
+    },
+    {
+      "branch_back_edges": 11,
+      "gcd_reference_i32": 1,
+      "host_control_bit_gates_i32": 1,
+      "input_i32": 1,
+      "instruction_transitions": 183,
+      "passed": true,
+      "wasmtime_i32": 1
+    },
+    {
+      "branch_back_edges": 5,
+      "gcd_reference_i32": 2,
+      "host_control_bit_gates_i32": 2,
+      "input_i32": 2,
+      "instruction_transitions": 93,
+      "passed": true,
+      "wasmtime_i32": 2
+    },
+    {
+      "branch_back_edges": 3,
+      "gcd_reference_i32": 3,
+      "host_control_bit_gates_i32": 3,
+      "input_i32": 3,
+      "instruction_transitions": 63,
+      "passed": true,
+      "wasmtime_i32": 3
+    },
+    {
+      "branch_back_edges": 2,
+      "gcd_reference_i32": 4,
+      "host_control_bit_gates_i32": 4,
+      "input_i32": 4,
+      "instruction_transitions": 48,
+      "passed": true,
+      "wasmtime_i32": 4
+    },
+    {
+      "branch_back_edges": 5,
+      "gcd_reference_i32": 1,
+      "host_control_bit_gates_i32": 1,
+      "input_i32": 5,
+      "instruction_transitions": 93,
+      "passed": true,
+      "wasmtime_i32": 1
+    },
+    {
+      "branch_back_edges": 1,
+      "gcd_reference_i32": 6,
+      "host_control_bit_gates_i32": 6,
+      "input_i32": 6,
+      "instruction_transitions": 33,
+      "passed": true,
+      "wasmtime_i32": 6
+    },
+    {
+      "branch_back_edges": 5,
+      "gcd_reference_i32": 1,
+      "host_control_bit_gates_i32": 1,
+      "input_i32": 7,
+      "instruction_transitions": 93,
+      "passed": true,
+      "wasmtime_i32": 1
+    },
+    {
+      "branch_back_edges": 2,
+      "gcd_reference_i32": 4,
+      "host_control_bit_gates_i32": 4,
+      "input_i32": 8,
+      "instruction_transitions": 48,
+      "passed": true,
+      "wasmtime_i32": 4
+    },
+    {
+      "branch_back_edges": 3,
+      "gcd_reference_i32": 3,
+      "host_control_bit_gates_i32": 3,
+      "input_i32": 9,
+      "instruction_transitions": 63,
+      "passed": true,
+      "wasmtime_i32": 3
+    },
+    {
+      "branch_back_edges": 5,
+      "gcd_reference_i32": 2,
+      "host_control_bit_gates_i32": 2,
+      "input_i32": 10,
+      "instruction_transitions": 93,
+      "passed": true,
+      "wasmtime_i32": 2
+    },
+    {
+      "branch_back_edges": 11,
+      "gcd_reference_i32": 1,
+      "host_control_bit_gates_i32": 1,
+      "input_i32": 11,
+      "instruction_transitions": 183,
+      "passed": true,
+      "wasmtime_i32": 1
+    },
+    {
+      "branch_back_edges": 0,
+      "gcd_reference_i32": 12,
+      "host_control_bit_gates_i32": 12,
+      "input_i32": 12,
+      "instruction_transitions": 18,
+      "passed": true,
+      "wasmtime_i32": 12
+    },
+    {
+      "branch_back_edges": 12,
+      "gcd_reference_i32": 1,
+      "host_control_bit_gates_i32": 1,
+      "input_i32": 13,
+      "instruction_transitions": 198,
+      "passed": true,
+      "wasmtime_i32": 1
+    },
+    {
+      "branch_back_edges": 6,
+      "gcd_reference_i32": 2,
+      "host_control_bit_gates_i32": 2,
+      "input_i32": 14,
+      "instruction_transitions": 108,
+      "passed": true,
+      "wasmtime_i32": 2
+    },
+    {
+      "branch_back_edges": 4,
+      "gcd_reference_i32": 3,
+      "host_control_bit_gates_i32": 3,
+      "input_i32": 15,
+      "instruction_transitions": 78,
+      "passed": true,
+      "wasmtime_i32": 3
+    },
+    {
+      "branch_back_edges": 3,
+      "gcd_reference_i32": 4,
+      "host_control_bit_gates_i32": 4,
+      "input_i32": 16,
+      "instruction_transitions": 63,
+      "passed": true,
+      "wasmtime_i32": 4
+    },
+    {
+      "branch_back_edges": 6,
+      "gcd_reference_i32": 1,
+      "host_control_bit_gates_i32": 1,
+      "input_i32": 17,
+      "instruction_transitions": 108,
+      "passed": true,
+      "wasmtime_i32": 1
+    },
+    {
+      "branch_back_edges": 2,
+      "gcd_reference_i32": 6,
+      "host_control_bit_gates_i32": 6,
+      "input_i32": 18,
+      "instruction_transitions": 48,
+      "passed": true,
+      "wasmtime_i32": 6
+    },
+    {
+      "branch_back_edges": 6,
+      "gcd_reference_i32": 1,
+      "host_control_bit_gates_i32": 1,
+      "input_i32": 19,
+      "instruction_transitions": 108,
+      "passed": true,
+      "wasmtime_i32": 1
+    },
+    {
+      "branch_back_edges": 3,
+      "gcd_reference_i32": 4,
+      "host_control_bit_gates_i32": 4,
+      "input_i32": 20,
+      "instruction_transitions": 63,
+      "passed": true,
+      "wasmtime_i32": 4
+    },
+    {
+      "branch_back_edges": 4,
+      "gcd_reference_i32": 3,
+      "host_control_bit_gates_i32": 3,
+      "input_i32": 21,
+      "instruction_transitions": 78,
+      "passed": true,
+      "wasmtime_i32": 3
+    },
+    {
+      "branch_back_edges": 6,
+      "gcd_reference_i32": 2,
+      "host_control_bit_gates_i32": 2,
+      "input_i32": 22,
+      "instruction_transitions": 108,
+      "passed": true,
+      "wasmtime_i32": 2
+    },
+    {
+      "branch_back_edges": 12,
+      "gcd_reference_i32": 1,
+      "host_control_bit_gates_i32": 1,
+      "input_i32": 23,
+      "instruction_transitions": 198,
+      "passed": true,
+      "wasmtime_i32": 1
+    },
+    {
+      "branch_back_edges": 1,
+      "gcd_reference_i32": 12,
+      "host_control_bit_gates_i32": 12,
+      "input_i32": 24,
+      "instruction_transitions": 33,
+      "passed": true,
+      "wasmtime_i32": 12
+    }
+  ]
+}
