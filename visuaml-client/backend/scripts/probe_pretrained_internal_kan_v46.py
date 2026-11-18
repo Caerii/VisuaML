@@ -19,8 +19,8 @@ import numpy as np
 from visuaml.compiler_lab.kan_mechanism_ir_v45 import execute_kan_vector
 from visuaml.compiler_lab.kan_teacher_slice_v45 import fit_teacher_slice
 from visuaml.compiler_lab.onnx_activation_causality_v46 import (
-    CHECKPOINT_SHA256,
     CHECKPOINT_REVISION,
+    CHECKPOINT_SHA256,
     TARGET,
     ablate_channel,
     instrument_activation,
