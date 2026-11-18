@@ -22,7 +22,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import asdict, dataclass
-from typing import Callable
+from collections.abc import Callable
 
 from .wasm_state_vm_v40 import I32Program, VMOperation, encode_program
 
