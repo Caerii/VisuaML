@@ -27,9 +27,9 @@ from visuaml.compiler_lab.bit_neural_vm_v49 import (
     run_bit_vm,
 )
 from visuaml.compiler_lab.blinded_behavioral_synthesis_v50 import (
+    SCHEMA,
     BehavioralSynthesisError,
     Candidate,
-    SCHEMA,
     emit_canonical_wasm,
     synthesize_from_oracle,
     verify_against_typed_source,
