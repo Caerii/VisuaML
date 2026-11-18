@@ -19,7 +19,6 @@ import os
 import platform
 import statistics
 import subprocess
-import sys
 import time
 import tracemalloc
 from dataclasses import dataclass
