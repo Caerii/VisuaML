@@ -18,7 +18,7 @@ on:
       - .github/workflows/neural-symbolic-v43.yml
       - docs/V43_NEURAL_SYMBOLIC_VERIFICATION.md
 permissions:
-  contents: read
+  contents: write
 jobs:
   symbolic-verified:
     runs-on: ubuntu-latest
@@ -74,3 +74,64 @@ jobs:
           path: evidence-v43/neural-symbolic-v43.json
           if-no-files-found: error
           retention-days: 30
+
+      - name: Permanently archive first passing v43 proof and original raw transcript
+        env:
+          PYTHONNOUSERSITE: "1"
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v43-neural-symbolic-recovery" ]; then
+            echo "Writes prohibited from pull requests and unrelated branches."
+            exit 0
+          fi
+          if [ -e benchmarks/neural_symbolic_roundtrip_v43.json ] || [ -e benchmarks/neural_symbolic_roundtrip_v43.origin.json ]; then
+            test -f benchmarks/neural_symbolic_roundtrip_v43.json
+            test -f benchmarks/neural_symbolic_roundtrip_v43.origin.json
+            echo "Historical evidence already exists; will not overwrite."
+            exit 0
+          fi
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          raw = Path("evidence-v43/neural-symbolic-v43.json").read_bytes()
+          record = json.loads(raw)
+          assert record["schema"] == "visuaml.verified-neural-symbolic-roundtrip.v43"
+          assert record["github_source_commit"] == os.environ["GITHUB_SHA"]
+          assert record["all_i32_symbolic_vs_source_smt"]["solver_outcome"] == "unsat"
+          assert record["wrong_symbolic_hypothesis_smt"]["solver_outcome"] == "sat"
+          assert record["exact_bounded_neural_witness_count"] == 256
+          assert record["runtime_witness_count"] == 326
+          assert all(w["pass"] for w in record["observations"])
+          assert record["outside_domain_neural_counterexample"]["different"]
+          assert not record["neural_all_i32_equivalent"]
+          assert not record["arbitrary_learned_neural_program_decompiled"]
+          assert not record["smt_result_is_machine_checked_proof_object"]
+          path=Path("benchmarks/neural_symbolic_roundtrip_v43.json")
+          origin=Path("benchmarks/neural_symbolic_roundtrip_v43.origin.json")
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_bytes(raw)
+          manifest={
+              "schema": "visuaml.neural-symbolic-origin.v43",
+              "source_commit": os.environ["GITHUB_SHA"],
+              "workflow_run_url": "https://github.com/"+os.environ["GITHUB_REPOSITORY"]+"/actions/runs/"+os.environ["GITHUB_RUN_ID"],
+              "raw_bytes": len(raw),
+              "raw_sha256": hashlib.sha256(raw).hexdigest(),
+              "source_file_sha256": record["source_file_sha256"],
+              "historical_v41_raw_sha256": record["historical_v41_raw_sha256"],
+              "source_wasm_sha256": record["original_wasm_sha256"],
+              "recovered_wasm_sha256": record["compiled_wasm_sha256"],
+              "native_binary_sha256": record["compiled_native_binary_sha256"],
+              "recovered_polynomial_sha256": record["all_i32_symbolic_vs_source_smt"]["symbolic_candidate_sha256"],
+              "smt_outcome": "unsat",
+              "negative_control_smt_outcome": "sat",
+              "neural_domain": [-128,127],
+              "neural_domain_not_extended": True,
+              "independent_wasmtime_and_cpp": True,
+              "authentication": "GitHub Actions CI-origin metadata and digests; not a signed proof object",
+          }
+          origin.write_text(json.dumps(manifest,indent=2,sort_keys=True,allow_nan=False)+"\n")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/neural_symbolic_roundtrip_v43.json benchmarks/neural_symbolic_roundtrip_v43.origin.json
+          git commit -m "v43: archive all-i32 symbolic SMT and bounded neural witnesses [skip ci]"
+          git push origin "HEAD:refs/heads/research/v43-neural-symbolic-recovery"
