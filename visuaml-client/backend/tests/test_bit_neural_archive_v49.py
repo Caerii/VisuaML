@@ -103,7 +103,10 @@ def test_original_raw_wasm_and_all_286_witnesses_are_consistent():
             ):
                 state, transition = step(program, state)
                 assert recorded["opcode"] == operation.opcode
-                assert recorded["state"] == asdict(state)
-                assert recorded["typed_transition"] == asdict(transition)
+                # JSON encodes tuple-valued stack/local snapshots as arrays.
+                assert recorded["state"] == json.loads(json.dumps(asdict(state)))
+                assert recorded["typed_transition"] == json.loads(
+                    json.dumps(asdict(transition))
+                )
         else:
             assert witness["full_step_trace"] == []
