@@ -27,6 +27,7 @@ from visuaml.compiler_lab.constructed_reglu_quadratic_v44 import (
 )
 from visuaml.compiler_lab.neural_symbolic_recovery_v43 import (
     RecoveredPolynomial,
+    SymbolicRecoveryError,
     recover_quadratic_from_weights,
 )
 from visuaml.compiler_lab.wasm_state_vm_v40 import (
@@ -134,7 +135,7 @@ def test_pretrained_polynomial_digest_mismatch_rejected_at_build_time():
     _, poly = _source_recovered()
     with pytest.raises(GatedConstructionError, match="bound neural function"):
         construct_from_symbolic(replace(poly, c=8))
-    with pytest.raises(GatedConstructionError, match="bound neural function"):
+    with pytest.raises(SymbolicRecoveryError, match="degree label"):
         construct_from_symbolic(replace(poly, a=0))
 
 
