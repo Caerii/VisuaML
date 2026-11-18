@@ -1,0 +1,108 @@
+{
+  "schema": "visuaml.neural-wasm-benchmark-spec.v58",
+  "status": "unmeasured",
+  "reference_version": "2026-11-18",
+  "architecture": "bounded constructed neural i32 WebAssembly experiment",
+  "claims_policy": {
+    "correctness_is_hard_gate": true,
+    "measurements_are_real_only_if_produced_by_runner": true,
+    "unsupported_features_not_counted_as_failures_or_successes": true,
+    "no_universal_wasm_percentage": true,
+    "no_hardware_speedup_from_python_np": true,
+    "github_actions_disabled": true
+  },
+  "workload_suites": [
+    {
+      "id": "source-replay",
+      "family": "semantic correctness",
+      "scope": "19 public programs + 8 independent held-out generated programs; exact canonical source WASM and state traces",
+      "metric": "exact_state_parity",
+      "gate": "all witnessed instruction-state fields match v51/v56/v57 and original Wasmtime; no tolerance"
+    },
+    {
+      "id": "microstep",
+      "family": "machine compositionality",
+      "scope": "16 public + 8 held-out straight-line generated WASM programs",
+      "metric": "v58_live_microstep_state_parity",
+      "gate": "all source PCs, stacks, locals, halt flags match independent v51/v57"
+    },
+    {
+      "id": "warm-latency",
+      "family": "execution performance",
+      "scope": "same source program and argument on v51/v56/v57/v58/Wasmtime",
+      "metric": "paired_median_and_p95_ns_per_run",
+      "gate": "report median p95 raw samples and geometric mean paired comparisons; exclude compilation from timed segment"
+    },
+    {
+      "id": "normalized-execution",
+      "family": "execution cost",
+      "scope": "same finite instruction witnesses",
+      "metric": "wall_ns_per_executed_instruction",
+      "gate": "report observed instructions; distinguish cost from constant-opcode program count"
+    },
+    {
+      "id": "program-admission",
+      "family": "compile/prepare cost",
+      "scope": "canonical source-bound token compilation",
+      "metric": "tokenization_median_ns",
+      "gate": "measure separately from warm runtime"
+    },
+    {
+      "id": "holdout-generalization",
+      "family": "programmatic generality",
+      "scope": "generated seeds 128..135 excluded from public generated 0..15",
+      "metric": "distinct_verified_programs_and_input_witnesses",
+      "gate": "separate public and holdout; disclose finite coverage and no arbitrary WASM percentage"
+    },
+    {
+      "id": "fault-detection",
+      "family": "security/falsification",
+      "scope": "10 activated analytic weight or source-token mutations",
+      "metric": "detected_mutations_over_activated_mutations",
+      "gate": "record exceptions and full trace divergence; preserve all undetected cases"
+    },
+    {
+      "id": "resource-scaling",
+      "family": "memory and compute",
+      "scope": "vary instruction length, operand depth and frame nesting within admitted capacities",
+      "metric": "peak_memory_bytes_and_wall_ns",
+      "gate": "pending: build scaling variant and measure under pinned thread/host settings; report max admitted sizes"
+    },
+    {
+      "id": "portability",
+      "family": "reproducibility",
+      "scope": "Linux Windows x86-64 ARM64 CPUs; other hardware only if measured",
+      "metric": "source_digest_and_result_consistency",
+      "gate": "pending independently measured platform inventory, no inferred device support"
+    }
+  ],
+  "comparability": {
+    "require_equal_source_wasm_hashes": true,
+    "require_equal_source_inputs": true,
+    "require_equal_semantic_results": true,
+    "require_environment_version_and_thread_policy_reporting": true,
+    "strict_comparison_rejects_mismatches": true,
+    "timing_speedup_definition": "baseline_median_ns / candidate_median_ns; >1 means faster candidate",
+    "aggregation": "geometric mean over paired matching cases; also report p10 speedup, median speedup, worst slowdown and fraction slower",
+    "performance_experiment_default": {
+      "warmups": 1,
+      "repeats": 5,
+      "holdout_generated_programs": 8,
+      "fuel": 1500
+    },
+    "environment_factors": [
+      "os",
+      "cpu_family",
+      "processor",
+      "python_version",
+      "numpy_version",
+      "wasmtime_version",
+      "OMP_NUM_THREADS",
+      "OPENBLAS_NUM_THREADS",
+      "MKL_NUM_THREADS",
+      "NUMEXPR_NUM_THREADS"
+    ]
+  },
+  "results": null,
+  "notes": "Benchmark specification is not a measured result. v58 experimental executor admits straight-line data WASM only; v57 handles restricted structured control."
+}
