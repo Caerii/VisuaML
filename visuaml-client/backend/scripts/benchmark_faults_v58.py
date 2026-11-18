@@ -9,6 +9,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import platform
+import subprocess
 from dataclasses import dataclass, replace
 from pathlib import Path
 
@@ -37,6 +39,7 @@ from visuaml.compiler_lab.typed_microop_ir_v57 import (
     EFFECTS, OPCODES, compile_microop_tokens, construct_microop_weights,
 )
 from visuaml.compiler_lab.wasm_research_corpus_v57 import countdown, generated
+from visuaml.compiler_lab.wasm_control_flow_v51 import encode_control
 
 SCHEMA = "visuaml.neural-vm-fault-campaign.v58"
 
@@ -187,6 +190,9 @@ def run_attack(attack: Attack) -> dict:
         "input_i32": argument,
         "opcode_activated": attack.opcode_activated,
         "source_program_sha256": program.digest(),
+        "source_wasm_sha256": hashlib.sha256(
+            encode_control(program)
+        ).hexdigest(),
         "baseline_result_i32": baseline.result_i32,
         "baseline_trace_sha256": trace_hash(baseline),
         "mutated_result_i32": (
@@ -224,7 +230,23 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--require-all-detected", action="store_true")
     args = parser.parse_args()
+    root = Path(__file__).resolve().parents[3]
+    def git(*arguments: str) -> str:
+        return subprocess.check_output(
+            ("git", "-C", str(root), *arguments),
+            text=True, stderr=subprocess.DEVNULL,
+        ).strip()
+    if git("status", "--porcelain", "--untracked-files=normal"):
+        parser.error("Fault evidence requires a clean Git worktree")
     report = campaign()
+    report["source"] = {
+        "commit": git("rev-parse", "HEAD"),
+        "tree": git("rev-parse", "HEAD^{tree}"),
+    }
+    report["environment"] = {
+        "python": platform.python_version(),
+        "platform": platform.platform(),
+    }
     output = args.output.resolve()
     if output.exists():
         parser.error(f"Refusing to overwrite existing artifact: {output}")
