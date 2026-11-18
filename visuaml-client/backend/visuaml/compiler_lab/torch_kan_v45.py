@@ -12,7 +12,7 @@ import math
 import torch
 from torch import nn
 
-from .typed_kan_v45 import KANAdmissionError, KANProgram, MAX_ROWS, validate_kan
+from .typed_kan_v45 import MAX_ROWS, KANAdmissionError, KANProgram, validate_kan
 
 
 class TorchKAN(nn.Module):
