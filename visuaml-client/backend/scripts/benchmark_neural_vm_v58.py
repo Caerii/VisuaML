@@ -47,6 +47,7 @@ from visuaml.compiler_lab.wasm_research_corpus_v57 import (
     corpus,
     generated,
 )
+from visuaml.compiler_lab.wasm_scale_corpus_v58 import scaling_corpus
 
 
 SCHEMA = "visuaml.neural-wasm-benchmark.v58"
@@ -91,7 +92,7 @@ class Workload:
     split: str
 
 
-def workloads(*, holdout: int = 8) -> list[Workload]:
+def workloads(*, holdout: int = 8, scaling: bool = False) -> list[Workload]:
     if type(holdout) is not int or not 0 <= holdout <= 64:
         raise ValueError("Holdout count must be 0..64")
     result = []
@@ -105,6 +106,13 @@ def workloads(*, holdout: int = 8) -> list[Workload]:
             f"heldout_{seed}", "generated_out_of_sample",
             generated(seed), DEFAULT_INPUTS, "heldout",
         ))
+    if scaling:
+        for name, (program, arguments, dimension) in sorted(
+            scaling_corpus().items()
+        ):
+            result.append(Workload(
+                name, dimension, program, tuple(arguments), "scaling",
+            ))
     digests = [hashlib.sha256(encode_control(x.program)).hexdigest()
                for x in result]
     if len(set(digests)) != len(digests):
@@ -168,6 +176,7 @@ def measure(action, *, warmups: int, repeats: int) -> dict:
 def run(
     root: Path, *, repeats: int, warmups: int, holdout: int,
     fuel: int,
+    scaling: bool = False,
 ) -> dict:
     if type(repeats) is not int or not 1 <= repeats <= 10000:
         raise ValueError("Repeat count outside benchmark policy")
@@ -181,7 +190,7 @@ def run(
     wasmtime_engine = wasmtime.Engine()
     rows = []
     overall = {"programs": 0, "witnesses": 0, "instruction_transitions": 0}
-    for workload in workloads(holdout=holdout):
+    for workload in workloads(holdout=holdout, scaling=scaling):
         source = encode_control(workload.program)
         wasmtime.Module.validate(wasmtime_engine, source)
         # Setup/compile is explicitly excluded from warm execution time.
@@ -320,6 +329,7 @@ def run(
         "policy": {
             "repeats": repeats, "warmups": warmups, "fuel": fuel,
             "holdout_programs": holdout,
+            "scaling_suite_enabled": scaling,
             "timing_scope": "Python/NumPy engine invocation including traces",
             "setup_excluded_from_warm": True,
             "wasmtime_calls_include_python_binding_overhead": True,
@@ -342,6 +352,8 @@ def main() -> None:
     parser.add_argument("--warmups", type=int, default=1)
     parser.add_argument("--holdout", type=int, default=8)
     parser.add_argument("--fuel", type=int, default=1500)
+    parser.add_argument("--scaling", action="store_true",
+                        help="Include controlled workload growth sweeps")
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists():
@@ -350,6 +362,7 @@ def main() -> None:
     record = run(
         root, repeats=args.repeats, warmups=args.warmups,
         holdout=args.holdout, fuel=args.fuel,
+        scaling=args.scaling,
     )
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(stable_bytes(record) + b"\n")
