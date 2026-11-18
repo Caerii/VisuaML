@@ -1,0 +1,48 @@
+name: v47 spatial donor patching and causal KAN prediction
+on:
+  push:
+    branches: [research/v47-spatial-causal-patching, main]
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/spatial_activation_patching_v47.py
+      - visuaml-client/backend/tests/test_spatial_activation_patching_v47.py
+      - visuaml-client/backend/scripts/probe_spatial_causal_kan_v47.py
+      - visuaml-client/backend/tests/test_spatial_causal_kan_archive_v47.py
+      - .github/workflows/spatial-causal-kan-v47.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/spatial_activation_patching_v47.py
+      - visuaml-client/backend/tests/test_spatial_activation_patching_v47.py
+      - visuaml-client/backend/scripts/probe_spatial_causal_kan_v47.py
+      - visuaml-client/backend/tests/test_spatial_causal_kan_archive_v47.py
+      - .github/workflows/spatial-causal-kan-v47.yml
+permissions:
+  contents: read
+jobs:
+  donor-patching:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install source-bound independent ONNX and numerical tooling
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check onnx==1.18.0 onnxruntime==1.22.1 numpy==2.2.6 pytest==8.4.2 ruff==0.17.5
+      - name: Fetch original checkpoint by immutable upstream revision and SHA
+        run: |
+          mkdir -p evidence-v47
+          curl --fail --location --retry 3 --max-time 75 'https://huggingface.co/onnxmodelzoo/mnist-8/resolve/a19f9a8c2333de1df9b03f10f5739f468b699a1a/mnist-8.onnx' --output evidence-v47/mnist-8.onnx
+          echo '2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf  evidence-v47/mnist-8.onnx' | sha256sum --check
+          test "$(wc -c < evidence-v47/mnist-8.onnx)" -eq 26454
+      - name: Verify patched WASM? No, original real ONNX donor patching against scalar reference
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          VISUAML_PINNED_MODEL: evidence-v47/mnist-8.onnx
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_spatial_activation_patching_v47.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/spatial_activation_patching_v47.py visuaml-client/backend/tests/test_spatial_activation_patching_v47.py
