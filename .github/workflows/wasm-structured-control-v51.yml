@@ -13,6 +13,9 @@ on:
       - docs/WASM_CONFORMANCE_LEDGER_V51.json
       - visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py
       - visuaml-client/backend/scripts/probe_wasm_gcd_v51_1.py
+      - visuaml-client/backend/tests/test_wasm_gcd_archive_v51_1.py
+      - benchmarks/wasm_control_gcd_v51_1.json
+      - benchmarks/wasm_control_gcd_v51_1.origin.json
       - .github/workflows/wasm-structured-control-v51.yml
   pull_request:
     paths:
@@ -24,6 +27,9 @@ on:
       - docs/WASM_CONFORMANCE_LEDGER_V51.json
       - visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py
       - visuaml-client/backend/scripts/probe_wasm_gcd_v51_1.py
+      - visuaml-client/backend/tests/test_wasm_gcd_archive_v51_1.py
+      - benchmarks/wasm_control_gcd_v51_1.json
+      - benchmarks/wasm_control_gcd_v51_1.origin.json
       - .github/workflows/wasm-structured-control-v51.yml
 permissions:
   contents: write
@@ -47,8 +53,8 @@ jobs:
           OPENBLAS_NUM_THREADS: "1"
           OMP_NUM_THREADS: "1"
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_archive_v51.py
-          ruff check visuaml-client/backend/visuaml/compiler_lab/wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_flow_v51.py visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_archive_v51.py visuaml-client/backend/scripts/probe_wasm_gcd_v51_1.py
+          python -m pytest -q visuaml-client/backend/tests/test_wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_archive_v51.py visuaml-client/backend/tests/test_wasm_gcd_archive_v51_1.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_flow_v51.py visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_archive_v51.py visuaml-client/backend/scripts/probe_wasm_gcd_v51_1.py visuaml-client/backend/tests/test_wasm_gcd_archive_v51_1.py
       - name: Record original source WASM, control traces and independent oracle results
         env:
           PYTHONPATH: visuaml-client/backend
