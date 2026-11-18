@@ -50,13 +50,13 @@ from .neural_frame_events_v54 import (
     fixed_event_weights,
     select_frame_action,
 )
-from .neural_operand_adapter_v55 import TensorOperandStack
-from .neural_operand_storage_v55 import OperandWeights, fixed_operand_weights
 from .neural_local_bank_v57 import (
     LocalBankWeights,
-    construct_local_bank_weights,
     apply_local_microop,
+    construct_local_bank_weights,
 )
+from .neural_operand_adapter_v55 import TensorOperandStack
+from .neural_operand_storage_v55 import OperandWeights, fixed_operand_weights
 from .typed_microop_ir_v57 import (
     LOCALS_WIDTH,
     MicroopWeights,
