@@ -15,7 +15,6 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.analytic_relu_specialization_v41 import (
     AnalyticRelu,
     NeuralSpecializationError,
@@ -24,7 +23,6 @@ from visuaml.compiler_lab.analytic_relu_specialization_v41 import (
     permute_hidden_neurons,
 )
 from visuaml.compiler_lab.neural_symbolic_recovery_v43 import (
-    RecoveredPolynomial,
     SymbolicRecoveryError,
     check_all_i32_equivalence,
     compile_polynomial_cpp17,
