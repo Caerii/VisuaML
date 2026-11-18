@@ -96,6 +96,33 @@
       "admission": "synthesizer sees oracle I/O but no original source, weights, manifests or traces; solver proves typed source-to-symbolic candidate across full i32 domain; original and recovered Wasmtime and V58 finite traces agree; do not infer neural all-input proof or unknown-model decompilation"
     },
     {
+      "id": "recovery-failure-ledger",
+      "title": "Failure-complete blinded neural-to-symbolic synthesis experiment",
+      "status": "implemented_unmeasured",
+      "runner": "visuaml-client/backend/scripts/benchmark_recovery_failures_v58.py",
+      "units": [
+        "attempted source behaviors",
+        "verified",
+        "rejected by grammar or budget",
+        "invalid experiments",
+        "neural oracle queries",
+        "SMT invocations"
+      ],
+      "dimensions": [
+        "synthesis generalization",
+        "proof validity",
+        "failure attribution",
+        "negative control sensitivity"
+      ],
+      "baselines": [
+        "v50 source-bound five historical cases",
+        "eight held-out source programs",
+        "cubic outside admitted grammar"
+      ],
+      "source_binding": "original source WASM bytes plus SHA-256, fixed bit-VM hash, Git tree, per-attempt audit and independent archive verifier",
+      "admission": "all attempts preserved, cubic negative rejected, source digests match known source inputs, independent SMT/Wasmtime/v58 reruns every successful receipt, invalid protocol/trace results never count as scientific rejection"
+    },
+    {
       "id": "representation-cost",
       "title": "Proof-gated original-versus-recovered WASM cost and specialization amortization",
       "status": "implemented_unmeasured",
