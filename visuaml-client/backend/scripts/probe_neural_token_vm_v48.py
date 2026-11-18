@@ -20,8 +20,8 @@ import numpy as np
 import wasmtime
 from visuaml.compiler_lab.fixed_neural_token_vm_v48 import (
     OPCODES,
-    construct_fixed_weights,
     compare_typed_programs_smt,
+    construct_fixed_weights,
     decode_state,
     detokenize_program,
     initial_neural_state,
