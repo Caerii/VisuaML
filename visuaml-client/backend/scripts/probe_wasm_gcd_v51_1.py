@@ -18,7 +18,6 @@ import os
 from pathlib import Path
 
 import wasmtime
-
 from visuaml.compiler_lab.wasm_control_flow_v51 import (
     ControlFuelExhausted,
     ControlOperation,
