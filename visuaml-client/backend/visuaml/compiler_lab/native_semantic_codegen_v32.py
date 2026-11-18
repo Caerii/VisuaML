@@ -284,6 +284,7 @@ def _source(plan: _Plan) -> str:
         "#include <algorithm>",
         "#include <cmath>",
         "#include <cstddef>",
+        "#include <limits>",
         "#include <vector>",
         'extern "C" int visuaml_semantic_run(const float* const* inputs, float* output) noexcept {',
         "  try {",
@@ -312,6 +313,36 @@ def _source(plan: _Plan) -> str:
             lines.append(
                 f"    for (size_t i=0; i<{elements}; ++i) v{slot}[i] = {a}[i] + {b}[i];"
             )
+        elif op.code == "reshape":
+            lines.append(f"    std::copy({a}, {a}+{elements}, v{slot});")
+        elif op.code == "broadcast_add":
+            b = f"v{op.sources[1]}"
+            ia = _broadcast_index(_shape_for(plan, op.sources[0]), op.result_shape)
+            ib = _broadcast_index(_shape_for(plan, op.sources[1]), op.result_shape)
+            lines.append(
+                f"    for (size_t i=0; i<{elements}; ++i) "
+                f"v{slot}[i] = {a}[{ia}] + {b}[{ib}];"
+            )
+        elif op.code == "maxpool2d":
+            batch, channels, height, width = _shape_for(plan, op.sources[0])
+            _, _, oh, ow = op.result_shape
+            kernel, stride, pt, pl, _, _ = op.parameters
+            lines += [
+                f"    for (int n=0; n<{batch}; ++n)",
+                f"      for (int c=0; c<{channels}; ++c)",
+                f"        for (int y=0; y<{oh}; ++y)",
+                f"          for (int x=0; x<{ow}; ++x) {{",
+                "            float maximum = -std::numeric_limits<float>::infinity();",
+                f"            for (int ky=0; ky<{kernel}; ++ky)",
+                f"              for (int kx=0; kx<{kernel}; ++kx) {{",
+                f"                const int iy=y*{stride}+ky-{pt};",
+                f"                const int ix=x*{stride}+kx-{pl};",
+                f"                if (iy>=0 && iy<{height} && ix>=0 && ix<{width})",
+                f"                  maximum=std::max(maximum, {a}[((n*{channels}+c)*{height}+iy)*{width}+ix]);",
+                "              }",
+                f"            v{slot}[((n*{channels}+c)*{oh}+y)*{ow}+x]=maximum;",
+                "          }",
+            ]
         elif op.code == "matmul":
             m, k = _shape_for(plan, op.sources[0])
             _, n = _shape_for(plan, op.sources[1])
@@ -327,7 +358,7 @@ def _source(plan: _Plan) -> str:
             batch, channels, height, width = _shape_for(plan, op.sources[0])
             out_channels, _, kh, kw = _shape_for(plan, op.sources[1])
             _, _, oh, ow = op.result_shape
-            stride, pad = op.parameters
+            stride, pt, pl, _, _ = op.parameters
             b = f"v{op.sources[1]}"
             lines += [
                 f"    for (int n=0; n<{batch}; ++n)",
@@ -338,8 +369,8 @@ def _source(plan: _Plan) -> str:
                 f"            for (int c=0; c<{channels}; ++c)",
                 f"              for (int ky=0; ky<{kh}; ++ky)",
                 f"                for (int kx=0; kx<{kw}; ++kx) {{",
-                f"                  const int iy = y*{stride} + ky - {pad};",
-                f"                  const int ix = x*{stride} + kx - {pad};",
+                f"                  const int iy = y*{stride} + ky - {pt};",
+                f"                  const int ix = x*{stride} + kx - {pl};",
                 f"                  if (iy>=0 && iy<{height} && ix>=0 && ix<{width})",
                 f"                    sum += {a}[((n*{channels}+c)*{height}+iy)*{width}+ix]",
                 f"                           * {b}[((o*{channels}+c)*{kh}+ky)*{kw}+kx];",
