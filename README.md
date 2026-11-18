@@ -41,6 +41,34 @@ and [cross-system benchmark registry](benchmarks/VISUAML_SYSTEM_BENCHMARK_REGIST
 Do not interpret NumPy-based timings as native GPU or optical hardware
 execution.
 
+## Neural-to-symbolic round-trip research (v58, unverified)
+
+The v58 laboratory now includes an **end-to-end experimental bridge**
+from v49's constructed neural bit-VM through v50's blinded CEGIS
+synthesis and independent full-i32 typed-source Z3 verifier, back into
+canonical WASM executed by both Wasmtime and v58's fixed microstep
+machine. It preserves original/recovered source bytes and an independently
+replayable proof/evidence receipt.
+
+A separate **proof-gated representation-cost experiment** compares the
+original versus recovered WASM on the same engine and inputs, accounting
+for the recovery/SMT cost before interpreting any measured speedup.
+This is not specialization of neural interpreter weights or arbitrary
+learned-network decompilation.
+
+These experiments are committed but **not yet run or independently
+numerically verified**. To run them locally without GitHub Actions:
+
+```bash
+python -m pip install -r visuaml-client/backend/requirements.txt pytest ruff wasmtime z3-solver
+python visuaml-client/backend/scripts/verify_offline_v58.py \
+  --output-dir /tmp/visuaml-v58-roundtrip \
+  --roundtrip --roundtrip-holdout --representation-cost
+```
+
+See [v58 experiment methodology](docs/V58_BENCHMARK_LAB.md) and
+[the research implications](docs/V58_IMPLICATIONS_AND_BENCHMARK_THESIS.md).
+
 ## Constructed neural WASM research and verification
 
 The **reviewed WASM subset** admits one canonical exported `run(i32)->i32` with restricted locals, structured control and exact bit-sliced arithmetic. It is deliberately not advertised as universal WASM support. Distinguish the independent claims:
