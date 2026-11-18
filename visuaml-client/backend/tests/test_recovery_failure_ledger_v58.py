@@ -41,7 +41,7 @@ def test_failed_attempt_cannot_disappear_from_denominator(monkeypatch):
     assert score["total_attempted"] == 1
     assert score["total_verified"] == 0
     assert score["total_rejected"] == 1
-    assert score["by_split"]["historical"]["verified_fraction"] == 0.
+    assert score["by_split"]["historical"]["verified_fraction_of_all_attempts"] == 0.
 
 
 def test_verified_attempt_requires_actual_receipt(monkeypatch):
@@ -87,3 +87,23 @@ def test_out_of_grammar_neural_cubic_is_not_accepted():
     outcome = benchmark.attempt(benchmark.negative_cubic())
     assert outcome["status"] == "rejected"
     assert outcome["failure_class"] == "grammar_rejection"
+
+
+def test_invalid_smt_or_replay_is_not_scored_as_grammar_rejection(monkeypatch):
+    source = source_workloads()[0]
+
+    def broken(*args, **kwargs):
+        raise AssertionError("independent oracle state mismatch")
+
+    monkeypatch.setattr(benchmark, "verify_roundtrip", broken)
+    outcome = benchmark.attempt(source)
+    assert outcome["status"] == "invalid"
+    assert outcome["failure_class"] == "semantic_or_replay_mismatch"
+    scores = benchmark.summarize([outcome])
+    assert scores["total_attempted"] == 1
+    assert scores["total_invalid"] == 1
+    assert scores["total_rejected"] == 0
+    assert scores["total_verified"] == 0
+    assert scores["by_split"]["historical"][
+        "verified_fraction_of_valid_attempts"
+    ] is None
