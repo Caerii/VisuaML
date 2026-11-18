@@ -128,3 +128,15 @@ The complete raw original program graph and experimental records, including ever
 - [Pretrained surrogate's CI-origin manifest](../benchmarks/pretrained_kan_surrogate_v45.origin.json)
 
 Archive integrity regression tests ensure the records' original byte content and negative scientific boundaries cannot silently drift.
+
+## Native code generation for the exact polynomial subset
+
+A further **bounded** bridge now connects the KAN IR back to the existing v43 typed compiler:
+
+`KAN polynomial sum/product DAG` → `independent rational symbolic normalization` → `i32 polynomial certificate` → `existing strict v40 WASM encoder` and `safe v43 C++17 emitter`.
+
+The bridge only admits a **single-input/single-output**, signed-i8-domain KAN whose exact rational polynomial has degree≤2 and integer signed-i32 coefficients and whose outputs fit signed i32 on the full declared input interval. For every input in that interval, it checks the actual KAN evaluator against the exact symbolic value before emitting any native code. No spline, RBF, Fourier, noninteger, or higher-order KAN may silently fall back to this path. Dedicated CI independently compiles the generated WASM in Wasmtime and the emitted native C++17 with a real system compiler, comparing their results against the typed machine on 256 admitted inputs plus additional full-i32 edge/random witnesses.
+
+This bridge establishes **reuse of the existing conventional compiler**, not a general fast KAN backend. Its generated WASM and C++ operate with modular signed-i32 semantics even outside the original KAN domain; the float-valued KAN itself has no equivalence certificate there. Native throughput, GPU acceleration and pykan checkpoint interoperability remain unverified and unimplemented respectively.
+
+The all-important architectural gain is that *typed edge semantics can serve as an inspectable middle representation*, not simply as an auxiliary fitting layer. Once a mechanism is admitted mathematically, it can be lowered back into independent executable form with its original source/function identity preserved.
