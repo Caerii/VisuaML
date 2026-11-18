@@ -26,7 +26,7 @@ on:
       - visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py
       - .github/workflows/kan-mechanisms-v45.yml
 permissions:
-  contents: read
+  contents: write
 jobs:
   kan:
     runs-on: ubuntu-latest
@@ -118,3 +118,90 @@ jobs:
           path: evidence-v45/kan-mechanisms-v45.json
           if-no-files-found: error
           retention-days: 30
+
+      - name: Archive original KAN and pretrained-surrogate evidence on trusted branch pushes
+        env:
+          PYTHONNOUSERSITE: "1"
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v45-kan-mechanism-ir" ]; then
+            echo "No archival mutations on PRs, forks, main, or unrelated branches."
+            exit 0
+          fi
+          if [ -e benchmarks/kan_mechanism_replay_v45.json ] || [ -e benchmarks/pretrained_kan_surrogate_v45.json ]; then
+            test -f benchmarks/kan_mechanism_replay_v45.json
+            test -f benchmarks/kan_mechanism_replay_v45.origin.json
+            test -f benchmarks/pretrained_kan_surrogate_v45.json
+            test -f benchmarks/pretrained_kan_surrogate_v45.origin.json
+            echo "Existing v45 original records must never be overwritten."
+            exit 0
+          fi
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          directory=Path("benchmarks")
+          directory.mkdir(parents=True, exist_ok=True)
+          jobs=(
+              ("kan-mechanisms-v45.json", "kan_mechanism_replay_v45",
+               "visuaml.kan-symbolic-construction-replay.v45",
+               "typed-kan-mechanisms-v45"),
+              ("pretrained-kan-slice-v45.json", "pretrained_kan_surrogate_v45",
+               "visuaml.pretrained-kan-surrogate-slice.v45",
+               "pretrained-kan-surrogate-v45"),
+          )
+          for original_name, base, schema, artifact in jobs:
+              raw=Path("evidence-v45", original_name).read_bytes()
+              record=json.loads(raw)
+              assert record["schema"] == schema
+              assert record["source_commit"] == os.environ["GITHUB_SHA"]
+              if schema.startswith("visuaml.kan-symbolic"):
+                  assert record["full_domain_bounded_witnesses"] == 256
+                  assert all(w["pass"] for w in record["witnesses"])
+                  assert record["independently_normalized_polynomial_coefficients"] == ["7","-3","1"]
+                  assert not record["kan_is_pretrained_mechanism"]
+                  assert not record["all_i32_kan_graph_proved"]
+              else:
+                  assert record["train_count"] == 33 and record["heldout_count"] == 32
+                  assert not record["selection_uses_heldout_data"]
+                  assert record["least_squares_fitted_surrogate"]
+                  assert not record["pretrained_internal_mechanism_extracted"]
+                  assert record["all_variants_finite"]
+              archive=directory / (base+".json")
+              origin=directory / (base+".origin.json")
+              if archive.exists() or origin.exists():
+                  raise SystemExit("Refuse partial or conflicting evidence archive")
+              archive.write_bytes(raw)
+              metadata={
+                  "schema": "visuaml.evidence-origin.v45",
+                  "record_schema": schema,
+                  "record_name": base,
+                  "source_commit": os.environ["GITHUB_SHA"],
+                  "workflow_run_url": (
+                      "https://github.com/"+os.environ["GITHUB_REPOSITORY"]
+                      +"/actions/runs/"+os.environ["GITHUB_RUN_ID"]
+                  ),
+                  "github_artifact_name": artifact,
+                  "raw_sha256": hashlib.sha256(raw).hexdigest(),
+                  "raw_bytes": len(raw),
+                  "source_file_sha256": record["source_file_sha256"],
+                  "actual_pretrained_checkpoint_sha256": (
+                      record["source_checkpoint_sha256"]
+                      if "source_checkpoint_sha256" in record else None
+                  ),
+                  "evidence_scope": (
+                      "constructed exact rational KAN identity and finite original-model replay"
+                      if "kan_graph_digest" in record
+                      else "fitted KAN surrogates on one measured pretrained scalar response"
+                  ),
+                  "signed_external_attestation": False,
+                  "generic_pretrained_mechanism_certified": False,
+              }
+              origin.write_text(
+                  json.dumps(metadata,indent=2,sort_keys=True,allow_nan=False)+"\n",
+                  encoding="utf-8",
+              )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/kan_mechanism_replay_v45.json benchmarks/kan_mechanism_replay_v45.origin.json benchmarks/pretrained_kan_surrogate_v45.json benchmarks/pretrained_kan_surrogate_v45.origin.json
+          git commit -m "v45: preserve original KAN identities and real-teacher surrogate evidence [skip ci]"
+          git push origin "HEAD:refs/heads/research/v45-kan-mechanism-ir"
