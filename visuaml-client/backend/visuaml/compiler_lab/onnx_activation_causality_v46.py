@@ -14,7 +14,6 @@ import hashlib
 from dataclasses import dataclass
 
 import numpy as np
-
 from scripts.audit_pretrained_onnx_v37 import audit_bytes
 from scripts.probe_pretrained_mnist8_oracles_v37 import (
     _attrs,
@@ -116,8 +115,7 @@ def ablate_channel(data: bytes, channel: int | None) -> tuple[bytes, dict]:
     model, _, info = _admitted(data)
     if channel is not None and (type(channel) is not int or not 0 <= channel < CHANNELS):
         raise ActivationTraceError("Channel index outside reviewed tensor shape")
-    if (channel is None and not all(x not in data for x in (
-        b"__visuaml_v46_", ))) or b"__visuaml_v46_" in data:
+    if b"__visuaml_v46_" in data:
         raise ActivationTraceError("Reserved intervention symbol collision")
     intermediate_name = "__visuaml_v46_unmasked"
     mask_name = "__visuaml_v46_mask"
