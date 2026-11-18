@@ -178,3 +178,12 @@ execution was 2,347–2,643× faster than traced v58 across 197 paired witnesses
 Cold C++ compilation changes the tradeoff against Wasmtime. The
 [experiment report](V58_NATIVE_SPECIALIZATION.md) pins the code, replays,
 proof coverage, warm results, and estimated crossover for future work.
+
+## v58 cached native batching
+
+The native large-batch advantage survived a Wasmtime loop with the
+original scalar body and a single Python call per batch. Two scaling
+runs measured 6.50–6.61× resident and 5.48–5.73× with copies included.
+Caching reduced native setup to 1.18–1.38 ms. The
+[batch experiment](V58_NATIVE_BATCHING.md) records the break-even work,
+source hashes, cache contract and replay commands.

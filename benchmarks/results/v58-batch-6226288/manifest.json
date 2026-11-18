@@ -1,0 +1,198 @@
+{
+  "artifacts": {
+    "run-1.json.gz": {
+      "bytes": 17963,
+      "sha256": "c3a96fc6cd9e9821eaf8a6a8b5c357c54e23d47388660a8135b7d3116043a1b9",
+      "uncompressed_sha256": "94f09bb8b2a7a56793e9c51af454790f2ac65ce3a3b8ba7a2522f59e79ed8a7a"
+    },
+    "run-2.json.gz": {
+      "bytes": 18109,
+      "sha256": "a6e134d6635413dc9a0da6e1e836cba26ecfb8c3f44613d947a1c734cce34bb4",
+      "uncompressed_sha256": "b0344895ad9a3a041b2e63dd89876c3b821b45a921bc0a2893a858cc4cda1463"
+    },
+    "translation-validation.json": {
+      "bytes": 9260,
+      "sha256": "983eeeb102bac0079d5f73f77d17d050b59719aa3dfb422579ea3f0e5168ce7d"
+    }
+  },
+  "runs": [
+    {
+      "artifact": "run-1.json.gz",
+      "median_break_even_batches_cold": 1812,
+      "median_break_even_batches_reload": 19,
+      "setup_median_ns": {
+        "native_cold_ns": 97462828,
+        "native_reload_ns": 1182736,
+        "wasmtime_compile_ns": 1384230,
+        "wasmtime_instantiate_ns": 79342,
+        "wasmtime_reload_ns": 191458,
+        "wasmtime_serialize_ns": 190742,
+        "wasmtime_wrapper_ns": 302505
+      },
+      "source": {
+        "branch": "research/v58-native-batching",
+        "commit": "6226288a3b7a34f7840ccaaf70432690ebc47028",
+        "tree": "f1be7de5f1edb9dff6145b8bfe56cd9ff44f8826"
+      },
+      "summary": {
+        "batches": {
+          "1": {
+            "median_ns_per_value": {
+              "native": 5300.0,
+              "wasmtime": 22324.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.195496407798005
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "native": 5.26953125,
+              "wasmtime": 23.4072265625
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.463037062743969
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "native": 0.505615234375,
+              "wasmtime": 3.311767578125
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 6.496391772610342
+          },
+          "32": {
+            "median_ns_per_value": {
+              "native": 159.84375,
+              "wasmtime": 676.46875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.283198940441999
+          }
+        },
+        "copied_batches": {
+          "1": {
+            "median_ns_per_value": {
+              "native": 5685.0,
+              "wasmtime": 23313.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.1057985396636125
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "native": 5.9365234375,
+              "wasmtime": 25.173828125
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.285526694374992
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "native": 0.65570068359375,
+              "wasmtime": 3.687744140625
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 5.482305668294148
+          },
+          "32": {
+            "median_ns_per_value": {
+              "native": 174.3125,
+              "wasmtime": 722.8125
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.146365664581472
+          }
+        }
+      }
+    },
+    {
+      "artifact": "run-2.json.gz",
+      "median_break_even_batches_cold": 1782,
+      "median_break_even_batches_reload": 22,
+      "setup_median_ns": {
+        "native_cold_ns": 93171631,
+        "native_reload_ns": 1380487,
+        "wasmtime_compile_ns": 1410435,
+        "wasmtime_instantiate_ns": 78583,
+        "wasmtime_reload_ns": 207952,
+        "wasmtime_serialize_ns": 215473,
+        "wasmtime_wrapper_ns": 341802
+      },
+      "source": {
+        "branch": "research/v58-native-batching",
+        "commit": "6226288a3b7a34f7840ccaaf70432690ebc47028",
+        "tree": "f1be7de5f1edb9dff6145b8bfe56cd9ff44f8826"
+      },
+      "summary": {
+        "batches": {
+          "1": {
+            "median_ns_per_value": {
+              "native": 5527.0,
+              "wasmtime": 23353.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.138810604675696
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "native": 5.5029296875,
+              "wasmtime": 24.740234375
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.487414202419897
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "native": 0.52606201171875,
+              "wasmtime": 3.30047607421875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 6.605171091909991
+          },
+          "32": {
+            "median_ns_per_value": {
+              "native": 161.59375,
+              "wasmtime": 705.8125
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.486607724944758
+          }
+        },
+        "copied_batches": {
+          "1": {
+            "median_ns_per_value": {
+              "native": 5871.0,
+              "wasmtime": 24101.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.198358931491714
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "native": 6.0693359375,
+              "wasmtime": 26.1826171875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.318754385324862
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "native": 0.6552734375,
+              "wasmtime": 3.62615966796875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 5.7343012586026125
+          },
+          "32": {
+            "median_ns_per_value": {
+              "native": 182.59375,
+              "wasmtime": 762.53125
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_native_speedup": 4.2096957929366825
+          }
+        }
+      }
+    }
+  ]
+}
