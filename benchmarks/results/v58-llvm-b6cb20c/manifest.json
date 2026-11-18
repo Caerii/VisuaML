@@ -1,0 +1,247 @@
+{
+  "artifacts": {
+    "cpp-proof.json": {
+      "sha256": "d7109201b4b987bb02cc9492ab99b700fb4043d0ad66ed0cff6015f975880123",
+      "size_bytes": 9259
+    },
+    "faults.json": {
+      "sha256": "e0a00b78992e6ad7f74fb1c13263c780fc55fc7a44c28942a43b604a9ab202d9",
+      "size_bytes": 6735
+    },
+    "llvm-proof.json": {
+      "sha256": "0a433255e9f5fb62665aea77833de5c0fc07b78582a256baa648951ff176a47b",
+      "size_bytes": 6094
+    },
+    "run-1.json.gz": {
+      "sha256": "ac031332d5aaf31d0b6cbcb6fb8bfe1e0577acb789315086cb1c6cb637623365",
+      "size_bytes": 25770,
+      "uncompressed_sha256": "fc6df573d4aa886ece0356678a007c7862961b5d92a7442ae938c248b77119c6"
+    },
+    "run-2.json.gz": {
+      "sha256": "a732e2273a9b9ac50f3c51b62429c00210a1c25eaa1a42269131fec46346d0aa",
+      "size_bytes": 25682,
+      "uncompressed_sha256": "09233df0eae392107279d829388fbd7a2a9fcd01384279c7c2b2e0ff3f52289b"
+    }
+  },
+  "runs": [
+    {
+      "artifact": "run-1.json.gz",
+      "break_even_vs_cold_wasmtime": {
+        "median_batches": 211,
+        "programs": 35
+      },
+      "first_llvm_setup_ns": 72929005,
+      "median_setup_ns": {
+        "llvm_compile_ns": 14641881,
+        "native_cold_ns": 95314651,
+        "native_reload_ns": 1212037,
+        "wasmtime_compile_ns": 1531577,
+        "wasmtime_instantiate_ns": 94455,
+        "wasmtime_reload_ns": 200660,
+        "wasmtime_serialize_ns": 198032,
+        "wasmtime_wrapper_ns": 386732
+      },
+      "source": {
+        "branch": "research/v58-inprocess-llvm",
+        "commit": "b6cb20c4cfa953bcd3560b4d65da343166209060",
+        "tree": "0ff71a1a2b6f0d90695a92b942c700e388e0f95d"
+      },
+      "summary": {
+        "batches": {
+          "1": {
+            "median_ns_per_value": {
+              "llvm": 5152.0,
+              "native": 5109.0,
+              "wasmtime": 24341.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 4.798899903641508,
+            "paired_geomean_native_speedup": 4.922573681110378
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "llvm": 5.1396484375,
+              "native": 5.19140625,
+              "wasmtime": 25.30859375
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 5.057638702421637,
+            "paired_geomean_native_speedup": 4.9133988828386626
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "llvm": 0.47052001953125,
+              "native": 0.494140625,
+              "wasmtime": 3.77490234375
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 8.06700344194877,
+            "paired_geomean_native_speedup": 7.730018456365428
+          },
+          "32": {
+            "median_ns_per_value": {
+              "llvm": 153.84375,
+              "native": 155.0,
+              "wasmtime": 729.46875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 4.805151061117377,
+            "paired_geomean_native_speedup": 4.893356455959421
+          }
+        },
+        "copied_batches": {
+          "1": {
+            "median_ns_per_value": {
+              "llvm": 5445.0,
+              "native": 5574.0,
+              "wasmtime": 25643.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 4.792486051971736,
+            "paired_geomean_native_speedup": 4.7279966686785775
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "llvm": 5.7724609375,
+              "native": 5.98046875,
+              "wasmtime": 26.654296875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 4.761523745143848,
+            "paired_geomean_native_speedup": 4.659814533455836
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "llvm": 0.594482421875,
+              "native": 0.6029052734375,
+              "wasmtime": 4.0740966796875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 6.709194137407725,
+            "paired_geomean_native_speedup": 6.55355261819829
+          },
+          "32": {
+            "median_ns_per_value": {
+              "llvm": 163.46875,
+              "native": 166.4375,
+              "wasmtime": 759.5625
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 4.802025455249148,
+            "paired_geomean_native_speedup": 4.6945908708312905
+          }
+        }
+      }
+    },
+    {
+      "artifact": "run-2.json.gz",
+      "break_even_vs_cold_wasmtime": {
+        "median_batches": 169,
+        "programs": 35
+      },
+      "first_llvm_setup_ns": 33604843,
+      "median_setup_ns": {
+        "llvm_compile_ns": 13192957,
+        "native_cold_ns": 87288906,
+        "native_reload_ns": 1316277,
+        "wasmtime_compile_ns": 1428078,
+        "wasmtime_instantiate_ns": 85429,
+        "wasmtime_reload_ns": 194436,
+        "wasmtime_serialize_ns": 223382,
+        "wasmtime_wrapper_ns": 344179
+      },
+      "source": {
+        "branch": "research/v58-inprocess-llvm",
+        "commit": "b6cb20c4cfa953bcd3560b4d65da343166209060",
+        "tree": "0ff71a1a2b6f0d90695a92b942c700e388e0f95d"
+      },
+      "summary": {
+        "batches": {
+          "1": {
+            "median_ns_per_value": {
+              "llvm": 5076.0,
+              "native": 4949.0,
+              "wasmtime": 23479.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 4.772228507412835,
+            "paired_geomean_native_speedup": 4.753580899090809
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "llvm": 4.9873046875,
+              "native": 5.15625,
+              "wasmtime": 24.28515625
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 5.0135406762546175,
+            "paired_geomean_native_speedup": 4.909668801024053
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "llvm": 0.45501708984375,
+              "native": 0.46929931640625,
+              "wasmtime": 3.6865234375
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 7.718208367784761,
+            "paired_geomean_native_speedup": 7.461769917647684
+          },
+          "32": {
+            "median_ns_per_value": {
+              "llvm": 151.40625,
+              "native": 155.125,
+              "wasmtime": 716.6875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 4.883235992468102,
+            "paired_geomean_native_speedup": 4.791560589404609
+          }
+        },
+        "copied_batches": {
+          "1": {
+            "median_ns_per_value": {
+              "llvm": 5334.0,
+              "native": 5306.0,
+              "wasmtime": 24522.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 4.730760118909094,
+            "paired_geomean_native_speedup": 4.749864389414436
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "llvm": 5.59765625,
+              "native": 5.765625,
+              "wasmtime": 26.998046875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 5.002969443785237,
+            "paired_geomean_native_speedup": 4.824123233600369
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "llvm": 0.6031494140625,
+              "native": 0.60736083984375,
+              "wasmtime": 3.99432373046875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 6.862638246439241,
+            "paired_geomean_native_speedup": 6.7046403130550285
+          },
+          "32": {
+            "median_ns_per_value": {
+              "llvm": 168.875,
+              "native": 170.53125,
+              "wasmtime": 768.96875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_speedup": 4.769722636117073,
+            "paired_geomean_native_speedup": 4.73048758494568
+          }
+        }
+      }
+    }
+  ],
+  "schema": "visuaml.llvm-specialization-experiment.v58"
+}

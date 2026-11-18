@@ -187,3 +187,10 @@ runs measured 6.50–6.61× resident and 5.48–5.73× with copies included.
 Caching reduced native setup to 1.18–1.38 ms. The
 [batch experiment](V58_NATIVE_BATCHING.md) records the break-even work,
 source hashes, cache contract and replay commands.
+
+## v58 in-process LLVM specialization
+
+The optional LLVM path reduced median per-program compilation to
+13–15 ms versus 87–95 ms for C++, with similar large-batch throughput.
+The [LLVM report](V58_LLVM_SPECIALIZATION.md) records first-use setup,
+break-even estimates, scalar proof coverage, and batch replays.
