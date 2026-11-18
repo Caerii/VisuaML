@@ -15,7 +15,7 @@ from .wasm_control_flow_v51 import ControlProgram
 
 
 def _snapshot(value, shape):
-    if not isinstance(value, np.ndarray) or value.shape != shape or value.dtype != np.float64:
+    if type(value) is not np.ndarray or value.shape != shape or value.dtype != np.float64:
         raise NeuralControlError("Invalid compact routing tensor")
     return np.array(value, copy=True, order="C", subok=False)
 

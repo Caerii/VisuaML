@@ -75,6 +75,9 @@ def test_compact_pc_uses_live_gains_and_rejects_corruption():
     invalid_target[branch_pc] = np.roll(invalid_target[branch_pc], 1)
     with pytest.raises(NeuralControlError, match="Altered routing targets"):
         CompactRouter(program, replace(tokens, alternate=invalid_target), fixed, bit)
+    masked_flags = np.ma.array(tokens.guard_kind, mask=True)
+    with pytest.raises(NeuralControlError, match="Invalid compact routing tensor"):
+        CompactRouter(program, replace(tokens, guard_kind=masked_flags), fixed, bit)
     router = CompactRouter(program, tokens, fixed, bit)
     with pytest.raises(NeuralControlError, match="Invalid binary condition"):
         router.step(pc, np.full(32, 0.5))
