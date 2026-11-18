@@ -16,7 +16,6 @@ from dataclasses import asdict
 from pathlib import Path
 
 import numpy as np
-
 from visuaml.compiler_lab.kan_mechanism_ir_v45 import execute_kan_vector
 from visuaml.compiler_lab.kan_teacher_slice_v45 import fit_teacher_slice
 from visuaml.compiler_lab.onnx_activation_causality_v46 import (
