@@ -8,6 +8,9 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/pretrained_primitive_candidates_v42.py
       - visuaml-client/backend/scripts/probe_pretrained_primitives_v42.py
       - visuaml-client/backend/tests/test_pretrained_primitive_candidates_v42.py
+      - visuaml-client/backend/tests/test_pretrained_primitive_archive_v42.py
+      - benchmarks/pretrained_primitive_screening_v42.json
+      - benchmarks/pretrained_primitive_screening_v42.origin.json
       - docs/V42_PRETRAINED_PRIMITIVE_SCREENING.md
       - .github/workflows/pretrained-primitives-v42.yml
   pull_request:
@@ -15,6 +18,9 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/pretrained_primitive_candidates_v42.py
       - visuaml-client/backend/scripts/probe_pretrained_primitives_v42.py
       - visuaml-client/backend/tests/test_pretrained_primitive_candidates_v42.py
+      - visuaml-client/backend/tests/test_pretrained_primitive_archive_v42.py
+      - benchmarks/pretrained_primitive_screening_v42.json
+      - benchmarks/pretrained_primitive_screening_v42.origin.json
       - docs/V42_PRETRAINED_PRIMITIVE_SCREENING.md
       - .github/workflows/pretrained-primitives-v42.yml
 permissions:
@@ -39,7 +45,7 @@ jobs:
           OPENBLAS_NUM_THREADS: "1"
           OMP_NUM_THREADS: "1"
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_pretrained_primitive_candidates_v42.py
+          python -m pytest -q visuaml-client/backend/tests/test_pretrained_primitive_candidates_v42.py visuaml-client/backend/tests/test_pretrained_primitive_archive_v42.py
           ruff check visuaml-client/backend/visuaml/compiler_lab/pretrained_primitive_candidates_v42.py visuaml-client/backend/scripts/probe_pretrained_primitives_v42.py visuaml-client/backend/tests/test_pretrained_primitive_candidates_v42.py
       - name: Recover pinned exact pretrained MNIST-8 checkpoint
         run: |
