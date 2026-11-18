@@ -7,6 +7,9 @@ on:
       - visuaml-client/backend/tests/test_pretrained_mnist8_oracles_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_preflight_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_archive_v37.py
+      - visuaml-client/backend/tests/test_pretrained_onnx_numerical_archive_v37.py
+      - benchmarks/pretrained_mnist8_onnx_numpy_oracles_v37.json
+      - benchmarks/pretrained_mnist8_onnx_numpy_oracles_v37.origin.json
       - benchmarks/pretrained_mnist8_onnx_preflight_v37.json
       - benchmarks/pretrained_mnist8_onnx_preflight_v37.origin.json
       - .github/workflows/pretrained-cnn-preflight-v37.yml
@@ -20,6 +23,9 @@ on:
       - visuaml-client/backend/tests/test_pretrained_mnist8_oracles_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_preflight_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_archive_v37.py
+      - visuaml-client/backend/tests/test_pretrained_onnx_numerical_archive_v37.py
+      - benchmarks/pretrained_mnist8_onnx_numpy_oracles_v37.json
+      - benchmarks/pretrained_mnist8_onnx_numpy_oracles_v37.origin.json
       - benchmarks/pretrained_mnist8_onnx_preflight_v37.json
       - benchmarks/pretrained_mnist8_onnx_preflight_v37.origin.json
       - .github/workflows/pretrained-cnn-preflight-v37.yml
@@ -42,7 +48,7 @@ jobs:
           PYTHONNOUSERSITE: "1"
         run: |
           cd visuaml-client/backend
-          python -m pytest -q tests/test_pretrained_onnx_preflight_v37.py tests/test_pretrained_onnx_archive_v37.py
+          python -m pytest -q tests/test_pretrained_onnx_preflight_v37.py tests/test_pretrained_onnx_archive_v37.py tests/test_pretrained_onnx_numerical_archive_v37.py
       - name: Retrieve exact published ONNX Model Zoo checkpoint bytes
         run: |
           mkdir -p pretrained-v37
