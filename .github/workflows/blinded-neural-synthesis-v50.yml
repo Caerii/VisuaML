@@ -16,7 +16,7 @@ on:
       - visuaml-client/backend/tests/test_blinded_behavioral_synthesis_v50.py
       - .github/workflows/blinded-neural-synthesis-v50.yml
 permissions:
-  contents: read
+  contents: write
 jobs:
   bounded-decompilation:
     runs-on: ubuntu-latest
@@ -74,3 +74,66 @@ jobs:
           path: evidence-v50/blinded-neural-cegis.json
           if-no-files-found: error
           retention-days: 30
+
+      - name: Preserve first verified blinded-source transcript with independent CI origin
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v50-blinded-neural-behavior-synthesis" ]; then
+            echo "Do not mutate archives from PRs, forks, main or unrelated branches."
+            exit 0
+          fi
+          if [ -e benchmarks/blinded_neural_cegis_v50.json ] || [ -e benchmarks/blinded_neural_cegis_v50.origin.json ]; then
+            test -f benchmarks/blinded_neural_cegis_v50.json
+            test -f benchmarks/blinded_neural_cegis_v50.origin.json
+            echo "Original v50 evidence exists and must never be overwritten."
+            exit 0
+          fi
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          raw=Path("evidence-v50/blinded-neural-cegis.json").read_bytes()
+          record=json.loads(raw)
+          assert record["schema"]=="visuaml.blinded-neural-behavior-evidence.v50"
+          assert record["source_commit"]==os.environ["GITHUB_SHA"]
+          assert record["program_count"]==5
+          assert record["heldout_values_per_program"]==16
+          assert record["all_i32_source_candidate_smt_checked"]
+          assert record["true_source_wasm_compiled_by_wasmtime"]
+          assert record["cubic_outside_grammar_rejected"]
+          assert record["multiple_source_programs_same_behavior_possible"]
+          assert all(x["synthesis_report"]["all_i32_source_vs_candidate_equivalent"] for x in record["results"])
+          assert all(x["synthesis_report"]["rounds"][-1]["verification"]["solver_outcome"]=="unsat" for x in record["results"])
+          assert all(all(w["pass"] for w in x["heldout_witnesses"]) for x in record["results"])
+          assert not record["arbitrary_neural_model_decompilation_claimed"]
+          assert not record["neural_gate_all_i32_equivalence_proved"]
+          output=Path("benchmarks/blinded_neural_cegis_v50.json")
+          origin=Path("benchmarks/blinded_neural_cegis_v50.origin.json")
+          output.parent.mkdir(parents=True,exist_ok=True)
+          output.write_bytes(raw)
+          manifest={
+              "schema":"visuaml.blinded-cegis-origin.v50",
+              "source_commit":os.environ["GITHUB_SHA"],
+              "workflow_url":"https://github.com/"+os.environ["GITHUB_REPOSITORY"]+"/actions/runs/"+os.environ["GITHUB_RUN_ID"],
+              "artifact_name":"blinded-neural-cegis-v50",
+              "raw_sha256":hashlib.sha256(raw).hexdigest(),
+              "raw_bytes":len(raw),
+              "source_file_sha256":record["source_file_sha256"],
+              "fixed_neural_weights_sha256":record["fixed_bit_weights_sha256"],
+              "program_count":record["program_count"],
+              "heldout_case_count":record["program_count"]*record["heldout_values_per_program"],
+              "source_not_passed_into_synthesizer":True,
+              "all_i32_symbolic_equivalence_smt_checked":True,
+              "arbitrary_weight_decompilation_claimed":False,
+              "unique_original_program_recovery_claimed":False,
+              "all_i32_neural_gate_equivalence_proved":False,
+              "external_signed_attestation":False,
+          }
+          origin.write_text(
+              json.dumps(manifest,indent=2,sort_keys=True,allow_nan=False)+"\n",
+              encoding="utf-8"
+          )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/blinded_neural_cegis_v50.json benchmarks/blinded_neural_cegis_v50.origin.json
+          git commit -m "v50: archive full blinded neural CEGIS SMT/WASM evidence [skip ci]"
+          git push origin "HEAD:refs/heads/research/v50-blinded-neural-behavior-synthesis"
