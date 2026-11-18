@@ -11,7 +11,6 @@ from fractions import Fraction
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.kan_mechanism_ir_v45 import (
     EdgeFunction,
     KANAdmissionError,
@@ -125,7 +124,6 @@ def test_kan_shape_and_effect_safety_guards():
 
 
 def test_invalid_basis_parameters_fail_closed():
-    p = quadratic_kan()
     variants = (
         EdgeFunction("x", "x", "polynomial", (float("nan"),)),
         EdgeFunction("x", "x", "polynomial", tuple(range(8))),
