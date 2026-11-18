@@ -134,6 +134,16 @@ def ablate_channel(data: bytes, channel: int | None) -> tuple[bytes, dict]:
     model.graph.initializer.add().CopyFrom(
         numpy_helper.from_array(mask, name=mask_name)
     )
+    # The original MNIST-8 ONNX uses a legacy IR version that requires
+    # every initializer to also be declared in graph.input. ONNX Runtime
+    # treats that input as optional because its default is the initializer.
+    # Never silently upgrade the source graph's IR or opset to bypass this.
+    if model.ir_version <= 3:
+        model.graph.input.add().CopyFrom(
+            onnx.helper.make_tensor_value_info(
+                mask_name, onnx.TensorProto.FLOAT, [1, CHANNELS, 1, 1]
+            )
+        )
     onnx.checker.check_model(model, full_check=True)
     patched = model.SerializeToString(deterministic=True)
     if _sha(patched) == _sha(data):
