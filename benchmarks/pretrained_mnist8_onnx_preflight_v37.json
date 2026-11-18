@@ -1,0 +1,348 @@
+{
+  "checkpoint_bytes": 26454,
+  "checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+  "executed_native": false,
+  "initializer_bytes": 24008,
+  "initializers": [
+    {
+      "bytes": 10240,
+      "canonical_array_sha256": "418379b078799df7956f1bd51e1839a728002f001228aba5b81ac67ad6e26772",
+      "dtype": "float32",
+      "name": "Parameter193",
+      "shape": [
+        16,
+        4,
+        4,
+        10
+      ],
+      "tensor_proto_sha256": "1bdfd3230c852c8658461f33448fd71839b06f2fcde5ecb6891847f9b8b7d39f"
+    },
+    {
+      "bytes": 12800,
+      "canonical_array_sha256": "c05769cb4e565cb329e466cac5e51f3819b861c5fe72988a2941fa622819c1d9",
+      "dtype": "float32",
+      "name": "Parameter87",
+      "shape": [
+        16,
+        8,
+        5,
+        5
+      ],
+      "tensor_proto_sha256": "cb4b9935a0ae9345454970674e65d07ed4914b5f44d48e4e48242eb5a3474c8d"
+    },
+    {
+      "bytes": 800,
+      "canonical_array_sha256": "0b574bb7c806df5a9ae9e5a724b9374fae2f623ef4bd229da3b0c50bdceb050f",
+      "dtype": "float32",
+      "name": "Parameter5",
+      "shape": [
+        8,
+        1,
+        5,
+        5
+      ],
+      "tensor_proto_sha256": "15e2eeec2feb78207e6b19a4513b4d05794c5ae627dcc64ec264b6ed7dee2add"
+    },
+    {
+      "bytes": 32,
+      "canonical_array_sha256": "3b01b3dc7fd60ff07764a77f74d3e01cb1d6617cb32416816feb03bdd642b680",
+      "dtype": "float32",
+      "name": "Parameter6",
+      "shape": [
+        8,
+        1,
+        1
+      ],
+      "tensor_proto_sha256": "e563ac3f046632ccfee54a0dbaf5039b6dc59513e50335d4878c56c52ace3744"
+    },
+    {
+      "bytes": 64,
+      "canonical_array_sha256": "e345d59308978b6cc3a49eb1c2236aba153d6d8ead9ecdcdaad0d68cb8880809",
+      "dtype": "float32",
+      "name": "Parameter88",
+      "shape": [
+        16,
+        1,
+        1
+      ],
+      "tensor_proto_sha256": "0af8e548b0e329d325d33843cfd968e6ce04787dce750fffd4cbb5e42a2e1de9"
+    },
+    {
+      "bytes": 16,
+      "canonical_array_sha256": "89063da2926620b0bcd927a7ef76480cb4772b71306d614f79e016c826e8a0e8",
+      "dtype": "int64",
+      "name": "Pooling160_Output_0_reshape0_shape",
+      "shape": [
+        2
+      ],
+      "tensor_proto_sha256": "d1a7edd3d4abc66d903f22ecb6b70c8777bbf6ab36ca91bb622baee013f53e1e"
+    },
+    {
+      "bytes": 16,
+      "canonical_array_sha256": "e26a3f262edf725815e90291867a8afa1453d750f0ef60bb46437147e77b8b2d",
+      "dtype": "int64",
+      "name": "Parameter193_reshape1_shape",
+      "shape": [
+        2
+      ],
+      "tensor_proto_sha256": "7ba6f4d4e696b5f7af36d408da53c540f2d75c1d909d24293d24d67304873289"
+    },
+    {
+      "bytes": 40,
+      "canonical_array_sha256": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+      "dtype": "float32",
+      "name": "Parameter194",
+      "shape": [
+        1,
+        10
+      ],
+      "tensor_proto_sha256": "f1bb238a6bfafedccd9e2f2ae175ac2d23d7dec6979b894ae57299741852c00a"
+    }
+  ],
+  "input": {
+    "dtype_id": 1,
+    "name": "Input3",
+    "shape": [
+      1,
+      1,
+      28,
+      28
+    ]
+  },
+  "limitations": "Exact-byte static ONNX inventory; no compiled Semantic IR, native inference, ONNX Runtime comparison, image accuracy, or independent trained-family certification. Candidate operator names are not shape/attribute admission certificates.",
+  "nodes": [
+    {
+      "attrs": {},
+      "candidate_native_op": null,
+      "index": 0,
+      "inputs": [
+        "Parameter193",
+        "Parameter193_reshape1_shape"
+      ],
+      "op": "Reshape",
+      "output": "Parameter193_reshape1"
+    },
+    {
+      "attrs": {
+        "auto_pad": {
+          "size": 10,
+          "utf8_or_binary_sha256": "24c4b53787c41af575a7233f3333a8c5014630344cbd9fba9b9ce6da34c5f8de"
+        },
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      },
+      "candidate_native_op": "conv2d",
+      "index": 1,
+      "inputs": [
+        "Input3",
+        "Parameter5"
+      ],
+      "op": "Conv",
+      "output": "Convolution28_Output_0"
+    },
+    {
+      "attrs": {},
+      "candidate_native_op": "add",
+      "index": 2,
+      "inputs": [
+        "Convolution28_Output_0",
+        "Parameter6"
+      ],
+      "op": "Add",
+      "output": "Plus30_Output_0"
+    },
+    {
+      "attrs": {},
+      "candidate_native_op": "relu",
+      "index": 3,
+      "inputs": [
+        "Plus30_Output_0"
+      ],
+      "op": "Relu",
+      "output": "ReLU32_Output_0"
+    },
+    {
+      "attrs": {
+        "auto_pad": {
+          "size": 6,
+          "utf8_or_binary_sha256": "ba6459b546ccb4c3f94048a0e2bbefbf951bcf5bc9fc5c9ece61e202e84bdecf"
+        },
+        "kernel_shape": [
+          2,
+          2
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          2,
+          2
+        ]
+      },
+      "candidate_native_op": null,
+      "index": 4,
+      "inputs": [
+        "ReLU32_Output_0"
+      ],
+      "op": "MaxPool",
+      "output": "Pooling66_Output_0"
+    },
+    {
+      "attrs": {
+        "auto_pad": {
+          "size": 10,
+          "utf8_or_binary_sha256": "24c4b53787c41af575a7233f3333a8c5014630344cbd9fba9b9ce6da34c5f8de"
+        },
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      },
+      "candidate_native_op": "conv2d",
+      "index": 5,
+      "inputs": [
+        "Pooling66_Output_0",
+        "Parameter87"
+      ],
+      "op": "Conv",
+      "output": "Convolution110_Output_0"
+    },
+    {
+      "attrs": {},
+      "candidate_native_op": "add",
+      "index": 6,
+      "inputs": [
+        "Convolution110_Output_0",
+        "Parameter88"
+      ],
+      "op": "Add",
+      "output": "Plus112_Output_0"
+    },
+    {
+      "attrs": {},
+      "candidate_native_op": "relu",
+      "index": 7,
+      "inputs": [
+        "Plus112_Output_0"
+      ],
+      "op": "Relu",
+      "output": "ReLU114_Output_0"
+    },
+    {
+      "attrs": {
+        "auto_pad": {
+          "size": 6,
+          "utf8_or_binary_sha256": "ba6459b546ccb4c3f94048a0e2bbefbf951bcf5bc9fc5c9ece61e202e84bdecf"
+        },
+        "kernel_shape": [
+          3,
+          3
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          3,
+          3
+        ]
+      },
+      "candidate_native_op": null,
+      "index": 8,
+      "inputs": [
+        "ReLU114_Output_0"
+      ],
+      "op": "MaxPool",
+      "output": "Pooling160_Output_0"
+    },
+    {
+      "attrs": {},
+      "candidate_native_op": null,
+      "index": 9,
+      "inputs": [
+        "Pooling160_Output_0",
+        "Pooling160_Output_0_reshape0_shape"
+      ],
+      "op": "Reshape",
+      "output": "Pooling160_Output_0_reshape0"
+    },
+    {
+      "attrs": {},
+      "candidate_native_op": "matmul",
+      "index": 10,
+      "inputs": [
+        "Pooling160_Output_0_reshape0",
+        "Parameter193_reshape1"
+      ],
+      "op": "MatMul",
+      "output": "Times212_Output_0"
+    },
+    {
+      "attrs": {},
+      "candidate_native_op": "add",
+      "index": 11,
+      "inputs": [
+        "Times212_Output_0",
+        "Parameter194"
+      ],
+      "op": "Add",
+      "output": "Plus214_Output_0"
+    }
+  ],
+  "numerical_oracle_executed": false,
+  "onnx_ir_version": 3,
+  "onnx_opsets": [
+    {
+      "domain": "",
+      "version": 8
+    }
+  ],
+  "op_histogram": {
+    "Add": 3,
+    "Conv": 2,
+    "MatMul": 1,
+    "MaxPool": 2,
+    "Relu": 2,
+    "Reshape": 2
+  },
+  "operators_requiring_extension_or_independent_admission": [
+    "MaxPool",
+    "Reshape"
+  ],
+  "output": {
+    "dtype_id": 1,
+    "name": "Plus214_Output_0",
+    "shape": [
+      1,
+      10
+    ]
+  },
+  "schema": "visuaml.pretrained-onnx-preflight.v37",
+  "source_revision": "a19f9a8c2333de1df9b03f10f5739f468b699a1a",
+  "status": "preflight_only"
+}
