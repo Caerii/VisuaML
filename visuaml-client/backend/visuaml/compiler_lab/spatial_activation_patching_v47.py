@@ -184,6 +184,20 @@ def downstream_reference(
         for t in model.graph.initializer
     }
     tensors[TARGET] = graft
+    # The pretrained model also contains a constant-only weight Reshape
+    # upstream of the graft. Materialize that independent initializer
+    # computation without replaying any unrelated upstream activations.
+    constant_node = model.graph.node[0]
+    if (constant_node.op_type != "Reshape"
+            or tuple(constant_node.input) != (
+                "Parameter193", "Parameter193_reshape1_shape"
+            )
+            or tuple(constant_node.output) != ("Parameter193_reshape1",)
+            or any(name not in tensors for name in constant_node.input)):
+        raise ActivationTraceError("Pretrained constant-folding contract changed")
+    tensors[constant_node.output[0]] = _reshape_onnx(
+        tensors[constant_node.input[0]], tensors[constant_node.input[1]]
+    )
     for node in model.graph.node[info.source_node_index + 1:]:
         attrs = _attrs(node, onnx)
         args = [tensors[name] for name in node.input]
