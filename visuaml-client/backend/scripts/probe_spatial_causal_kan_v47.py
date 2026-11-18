@@ -21,14 +21,12 @@ from dataclasses import asdict
 from pathlib import Path
 
 import numpy as np
-
 from visuaml.compiler_lab.kan_mechanism_ir_v45 import execute_kan_vector
 from visuaml.compiler_lab.kan_teacher_slice_v45 import fit_teacher_slice
 from visuaml.compiler_lab.onnx_activation_causality_v46 import (
     CHECKPOINT_SHA256,
     instrument_activation,
     numerical_parity,
-    reference_trace,
 )
 from visuaml.compiler_lab.spatial_activation_patching_v47 import (
     DONOR,
