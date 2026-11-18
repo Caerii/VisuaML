@@ -5,7 +5,6 @@ from __future__ import annotations
 import hashlib
 
 import pytest
-
 from scripts.audit_pretrained_onnx_v37 import (
     CheckpointPreflightError,
     audit_bytes,
@@ -35,7 +34,7 @@ def test_oversized_checkpoint_rejected_before_decoding():
 
 
 def _synthetic_model():
-    onnx = pytest.importorskip("onnx")
+    pytest.importorskip("onnx")
     from onnx import TensorProto, helper
 
     tensor = helper.make_tensor("w", TensorProto.FLOAT, [1, 3], [0.25, -1.0, 2.0])
