@@ -8,12 +8,13 @@ Control flow, memory and calls are NOT yet implemented by this executor.
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Iterable
 from dataclasses import dataclass, fields, replace
 
 import numpy as np
 
 from .bit_neural_vm_v49 import (
-    _bits, _int, BitCircuitWeights, construct_bit_weights,
+    _bits, _int, _validate_i32, BitCircuitWeights, construct_bit_weights,
 )
 from .compact_routing_v58 import CompactRouter
 from .native_microstep_v58 import _NativeMicrostep
@@ -60,6 +61,13 @@ class MicrostepExecution:
     source_program_tokens_sha256: str
     host_structural_end: bool = True
     data_effects_driven_by_microstep: bool = True
+
+
+@dataclass(frozen=True)
+class MicrostepBatchFailure:
+    """The error this input would raise in an individual run."""
+
+    error: Exception
 
 
 def _microstep_digest(weights: MicrostepWeights) -> str:
@@ -119,6 +127,10 @@ def _snapshot_weights(weights):
 def _validate_run_options(fuel: int, capture_trace: bool) -> None:
     if type(capture_trace) is not bool:
         raise MicrostepAdmissionError("capture_trace must be a boolean")
+    _validate_fuel(fuel)
+
+
+def _validate_fuel(fuel: int) -> None:
     if type(fuel) is not int or not 1 <= fuel <= MAX_FUEL:
         raise MicrostepAdmissionError("Invalid v58 execution fuel")
 
@@ -293,6 +305,58 @@ class PreparedMicrostepProgram:
     ) -> MicrostepExecution:
         _validate_run_options(fuel, capture_trace)
         return _run(self._inputs, argument, fuel, capture_trace)
+
+
+    def run_many(
+        self, arguments: Iterable[int], *, fuel: int | Iterable[int] = 400,
+        capture_trace: bool = True,
+    ) -> tuple[MicrostepExecution | MicrostepBatchFailure, ...]:
+        """Run independent inputs in order with one native call for admitted entries.
+
+        Fuel can be shared or supplied once per input. Admission failures and
+        execution traps are returned in their input positions. The prepared
+        program must have been created with native loop execution enabled.
+        """
+        inputs = self._inputs
+        if not inputs.native_loop:
+            raise MicrostepAdmissionError("Batch execution requires use_native_loop=True")
+        if type(capture_trace) is not bool:
+            raise MicrostepAdmissionError("capture_trace must be a boolean")
+        arguments = tuple(arguments)
+        if type(fuel) is int:
+            fuels = (fuel,) * len(arguments)
+        else:
+            try:
+                fuels = tuple(fuel)
+            except TypeError:
+                raise MicrostepAdmissionError("Expected shared fuel or one fuel value per input") from None
+            if len(fuels) != len(arguments):
+                raise MicrostepAdmissionError("Expected one fuel value per input")
+
+        admitted, limits, failures = [], [], {}
+        for i, (argument, limit) in enumerate(zip(arguments, fuels, strict=True)):
+            try:
+                _validate_fuel(limit)
+                _validate_i32(argument)
+            except ValueError as error:
+                failures[i] = MicrostepBatchFailure(error.with_traceback(None))
+            else:
+                admitted.append(argument)
+                limits.append(limit)
+
+        results = iter(inputs.native_microstep.run_many(admitted, limits, capture_trace)) if admitted else iter(())
+        outcomes = []
+        for i in range(len(arguments)):
+            if i in failures:
+                outcomes.append(failures[i])
+                continue
+            result = next(results)
+            if isinstance(result, Exception):
+                outcomes.append(MicrostepBatchFailure(result))
+            else:
+                value, steps, trace = result
+                outcomes.append(MicrostepExecution(value, trace, steps, *inputs.provenance))
+        return tuple(outcomes)
 
 
 def _run(inputs: _ExecutionInputs, argument: int, fuel: int, capture_trace: bool) -> MicrostepExecution:

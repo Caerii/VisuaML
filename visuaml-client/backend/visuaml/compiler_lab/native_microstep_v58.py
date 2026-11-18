@@ -104,6 +104,7 @@ class _NativeMicrostep:
         kernels = compiled_alu()
         self._gate = kernels.data_microstep
         self._loop = kernels.prepared_loop
+        self._batch = kernels.prepared_batch
         self._pointers = self._rows.ctypes.data, self._fixed.ctypes.data
 
     def apply(self, pc, buffers):
@@ -141,13 +142,16 @@ class _NativeMicrostep:
             *self._pointers, *self._router._pointers, result, state_pointer, route_pointer,
         )
         if status:
-            error, message = _ERRORS[status]
-            raise error(message.format(fuel=fuel))
+            raise _loop_error(status, fuel)
 
         value, steps = result
         if not capture_trace:
             return value, steps, ()
 
+        return value, steps, self._trace(steps, states, routes)
+
+    def _trace(self, steps, states, routes):
+        count = len(self._opcodes)
         records = []
         for tick, (state, route) in enumerate(zip(
             states[:steps].tolist(), routes[:steps].tolist(), strict=True,
@@ -165,4 +169,36 @@ class _NativeMicrostep:
                 "halted": pc == count - 1,
                 "neural_route": details,
             })
-        return value, steps, tuple(records)
+        return tuple(records)
+
+    def run_many(self, arguments, fuels, capture_trace):
+        """Yield outcomes for admitted inputs after one native batch call."""
+        size = len(arguments)
+        arguments = np.asarray(arguments, dtype=np.int32)
+        limits = np.asarray(fuels, dtype=np.int32)
+        results = np.zeros((size, 2), dtype=np.int32)
+        statuses = np.empty(size, dtype=np.int32)
+        count = len(self._opcodes)
+        stride = 0
+        state_pointer = route_pointer = None
+        if capture_trace:
+            stride = min(max(fuels), count)
+            states = np.zeros((size, stride, 2 + MAX_STACK + self._visible_locals), dtype=np.int32)
+            routes = np.empty((size, stride, 5), dtype=np.float64)
+            state_pointer, route_pointer = states.ctypes.data, routes.ctypes.data
+        self._batch(
+            arguments.ctypes.data, limits.ctypes.data, size,
+            count, TERMINAL, self._visible_locals, stride,
+            *self._pointers, *self._router._pointers,
+            results.ctypes.data, statuses.ctypes.data, state_pointer, route_pointer,
+        )
+        for i, (status, (value, steps)) in enumerate(zip(statuses.tolist(), results.tolist(), strict=True)):
+            if status:
+                yield _loop_error(status, fuels[i])
+            else:
+                yield value, steps, self._trace(steps, states[i], routes[i]) if capture_trace else ()
+
+
+def _loop_error(status: int, fuel: int) -> Exception:
+    error, message = _ERRORS[status]
+    return error(message.format(fuel=fuel))

@@ -376,14 +376,18 @@ extern "C" int visuaml_data_microstep(
     return status;
 }
 
-extern "C" int visuaml_prepared_loop(
+namespace {
+constexpr std::size_t prepared_stack_size = 24;
+constexpr std::size_t prepared_locals_size = 5;
+
+int prepared_loop(
         std::int32_t argument, std::size_t fuel, std::size_t count, std::size_t terminal,
         std::size_t visible_locals, const double* rows, const double* fixed,
         const std::int32_t* targets, const double* guards, const double* guard_weights,
         const double* path_weights, const double* and_weight, std::int32_t* result,
         std::int32_t* trace_states, double* trace_routes) {
-    constexpr std::size_t stack_size = 24;
-    constexpr std::size_t locals_size = 5;
+    constexpr auto stack_size = prepared_stack_size;
+    constexpr auto locals_size = prepared_locals_size;
     double cells[stack_size * width] = {};
     double locals[locals_size * width] = {};
     const double zero[width] = {};
@@ -443,4 +447,35 @@ extern "C" int visuaml_prepared_loop(
         pc = next;
     }
     return fuel_exhausted;
+}
+
+} // namespace
+
+extern "C" int visuaml_prepared_loop(
+        std::int32_t argument, std::size_t fuel, std::size_t count, std::size_t terminal,
+        std::size_t visible_locals, const double* rows, const double* fixed,
+        const std::int32_t* targets, const double* guards, const double* guard_weights,
+        const double* path_weights, const double* and_weight, std::int32_t* result,
+        std::int32_t* trace_states, double* trace_routes) {
+    return prepared_loop(argument, fuel, count, terminal, visible_locals, rows, fixed,
+                         targets, guards, guard_weights, path_weights, and_weight,
+                         result, trace_states, trace_routes);
+}
+
+extern "C" void visuaml_prepared_batch(
+        const std::int32_t* arguments, const std::int32_t* fuels, std::size_t size,
+        std::size_t count, std::size_t terminal, std::size_t visible_locals, std::size_t trace_stride,
+        const double* rows, const double* fixed, const std::int32_t* targets, const double* guards,
+        const double* guard_weights, const double* path_weights, const double* and_weight,
+        std::int32_t* results, std::int32_t* statuses, std::int32_t* trace_states, double* trace_routes) {
+    const auto state_stride = trace_stride * (2 + prepared_stack_size + visible_locals);
+    const auto route_stride = trace_stride * 5;
+    for (std::size_t i = 0; i < size; ++i) {
+        // Loop state is invocation-local, including when a neighboring input traps.
+        statuses[i] = prepared_loop(
+            arguments[i], fuels[i], count, terminal, visible_locals, rows, fixed,
+            targets, guards, guard_weights, path_weights, and_weight, results + 2 * i,
+            trace_states ? trace_states + i * state_stride : nullptr,
+            trace_routes ? trace_routes + i * route_stride : nullptr);
+    }
 }

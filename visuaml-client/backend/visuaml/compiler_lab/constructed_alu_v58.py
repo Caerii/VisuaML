@@ -27,6 +27,7 @@ class CompiledAlu:
     indexed_route: object
     data_microstep: object
     prepared_loop: object
+    prepared_batch: object
     source_sha256: str
     binary_sha256: str
     compiler: str
@@ -60,7 +61,10 @@ def compiled_alu():
         prepared_loop = library.visuaml_prepared_loop
         prepared_loop.argtypes = (ctypes.c_int32, *((ctypes.c_size_t,) * 4), *((_P,) * 10))
         prepared_loop.restype = ctypes.c_int
-    return CompiledAlu(function, route, indexed_route, data_microstep, prepared_loop,
+        prepared_batch = library.visuaml_prepared_batch
+        prepared_batch.argtypes = (_P, _P, *((ctypes.c_size_t,) * 5), *((_P,) * 11))
+        prepared_batch.restype = None
+    return CompiledAlu(function, route, indexed_route, data_microstep, prepared_loop, prepared_batch,
                        hashlib.sha256(source.read_bytes()).hexdigest(),
                        binary_id, version, _FLAGS)
 
