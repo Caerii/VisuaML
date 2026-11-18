@@ -232,9 +232,6 @@ def run(checkpoint: bytes) -> dict:
         ("heldout_first", heldout_cases[0][0]),
         ("cross_image_first", cross_cases[0][0]),
     ):
-        _, stage, _ = fetch(base_a, 1.) if group == "train_one" else (
-            sample, None, None
-        )
         _, observed_logits, observed_stage = (
             fetch(base_a, 1.) if group == "train_one"
             else fetch(base_a if group == "heldout_first" else base_b,
