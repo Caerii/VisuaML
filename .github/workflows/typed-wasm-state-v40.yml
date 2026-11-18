@@ -1,0 +1,63 @@
+name: v40 typed WASM state transitions and alpha-equivalence
+on:
+  push:
+    branches:
+      - research/v40-typed-wasm-transitions
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/wasm_state_vm_v40.py
+      - visuaml-client/backend/tests/test_wasm_state_vm_v40.py
+      - visuaml-client/backend/scripts/probe_wasm_state_vm_v40.py
+      - .github/workflows/typed-wasm-state-v40.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/wasm_state_vm_v40.py
+      - visuaml-client/backend/tests/test_wasm_state_vm_v40.py
+      - visuaml-client/backend/scripts/probe_wasm_state_vm_v40.py
+      - .github/workflows/typed-wasm-state-v40.yml
+permissions:
+  contents: read
+jobs:
+  typed-wasm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install independent Wasmtime reference and regression dependencies
+        run: python -m pip install --disable-pip-version-check pytest==8.4.2 wasmtime==28.0.0 ruff==0.17.5
+      - name: Validate typed transitions, real binary alpha rewrites and Wasmtime parity
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_wasm_state_vm_v40.py
+          python -m pytest -q visuaml-client/backend/tests/test_verified_representation_rewrites_v39.py -k 'wasm'
+          ruff check visuaml-client/backend/visuaml/compiler_lab/wasm_state_vm_v40.py visuaml-client/backend/tests/test_wasm_state_vm_v40.py visuaml-client/backend/scripts/probe_wasm_state_vm_v40.py
+      - name: Publish source-bound complete finite-domain differential transcript
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+        run: |
+          mkdir -p evidence-v40
+          python visuaml-client/backend/scripts/probe_wasm_state_vm_v40.py --output evidence-v40/typed-wasm-v40.json
+          python - <<'PY'
+          import json
+          d=json.load(open("evidence-v40/typed-wasm-v40.json"))
+          assert d["schema"]=="visuaml.wasm-state-differential.v40"
+          assert d["complete"] is True
+          assert d["checked_inputs"] == 260
+          assert d["source_sha256"] != d["target_sha256"]
+          assert d["independent_wasmtime"] is True
+          assert d["neural_weights_executed"] is False
+          print("Execution witnesses", d["checked_inputs"])
+          PY
+      - name: Upload complete auditable differential transcript and binary bytes
+        uses: actions/upload-artifact@v4
+        with:
+          name: typed-wasm-state-differential-v40
+          path: evidence-v40/typed-wasm-v40.json
+          if-no-files-found: error
+          retention-days: 30
