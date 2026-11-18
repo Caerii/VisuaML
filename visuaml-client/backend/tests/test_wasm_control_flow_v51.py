@@ -64,6 +64,36 @@ def early_return():
     ))
 
 
+def gcd_with_12():
+    """Euclid repeated-subtraction GCD(n,12) for nonnegative n.
+
+    Negative values return sentinel 0 (not mathematical GCD).
+    The input-zero case returns 12. Branching uses actual WASM control
+    constructs, not Python while loops or custom pseudo-opcodes.
+    """
+    return ControlProgram(1, (
+        op("local.get", 0), op("i32.eqz"),
+        op("if"), op("i32.const", 12), op("return"), op("end"),
+        op("local.get", 0), op("i32.const", 0), op("i32.lt_s"),
+        op("if"), op("i32.const", 0), op("return"), op("end"),
+        op("i32.const", 12), op("local.set", 1),
+        op("block"), op("loop"),
+        op("local.get", 0), op("local.get", 1),
+        op("i32.sub"), op("i32.eqz"), op("br_if", 1),
+        op("local.get", 0), op("local.get", 1), op("i32.gt_s"),
+        op("if"),
+        op("local.get", 0), op("local.get", 1),
+        op("i32.sub"), op("local.set", 0),
+        op("else"),
+        op("local.get", 1), op("local.get", 0),
+        op("i32.sub"), op("local.set", 1),
+        op("end"),
+        op("br", 0),
+        op("end"), op("end"),
+        op("local.get", 0), op("end"),
+    ))
+
+
 def infinite():
     return ControlProgram(0, (
         op("loop"), op("br", 0), op("end"),
@@ -157,6 +187,32 @@ def test_malformed_branch_nesting_and_nonempty_blocks_rejected():
         decode_control(raw.replace(b"\x04\x40",b"\x04\x7f",1))
     with pytest.raises(ControlAdmissionError):
         decode_control(raw+b"\0")
+
+
+@pytest.mark.parametrize("x, expected", [
+    (-1, 0), (0, 12), (1, 1), (2, 2), (3, 3),
+    (4, 4), (5, 1), (6, 6), (7, 1),
+    (8, 4), (9, 3), (10, 2), (11, 1),
+    (12, 12), (15, 3), (16, 4), (18, 6),
+    (20, 4), (21, 3), (24, 12),
+])
+def test_real_wasm_gcd_repeated_subtraction_with_host_bit_neural_arithmetic(x, expected):
+    wasmtime = pytest.importorskip("wasmtime")
+    p = gcd_with_12()
+    wasm = encode_control(p)
+    engine = wasmtime.Engine()
+    wasmtime.Module.validate(engine, wasm)
+    store = wasmtime.Store(engine)
+    func = wasmtime.Instance(
+        store, wasmtime.Module(engine, wasm), []
+    ).exports(store)["run"]
+    computed = execute_control(p, x, fuel=1500)
+    assert computed.value == expected == func(store, x)
+    assert computed.transitions == len(computed.trace)
+    if x > 0 and x != 12:
+        assert any(w["opcode"] == "br" for w in computed.trace)
+        assert any(w["opcode"] == "br_if" for w in computed.trace)
+    assert computed.host_control_routing
 
 
 def test_host_control_arithmetic_uses_modular_i32_gates():
