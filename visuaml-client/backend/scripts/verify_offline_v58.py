@@ -97,7 +97,15 @@ def main() -> None:
         "backend/tests/test_neural_benchmarks_v58.py",
         "backend/tests/test_neural_scaling_faults_v58.py",
     )
-    invoke((sys.executable, "-m", "compileall", "-q",
+    syntax_check = (
+        "import ast,pathlib,sys; "
+        "roots=[pathlib.Path(a) for a in sys.argv[1:]]; "
+        "files=sorted(p for root in roots for p in root.rglob('*.py')); "
+        "[ast.parse(p.read_text(encoding='utf-8'),filename=str(p)) "
+        "for p in files]; "
+        "print(f'AST syntax validated: {len(files)} Python sources')"
+    )
+    invoke((sys.executable, "-B", "-c", syntax_check,
             str(backend / "visuaml" / "compiler_lab"),
             str(backend / "scripts")),
            client=client, env=env)
