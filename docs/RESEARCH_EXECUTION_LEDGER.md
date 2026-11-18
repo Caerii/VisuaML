@@ -192,3 +192,11 @@ untraced paired speedups against the compiled-ALU path. Full trace
 hashes matched all 3,387 archived states, and the original ten fault
 interventions remained effective.
 [Fused state benchmark](V58_FUSED_STATE.md)
+
+## v58 deliberately ambiguous recovery
+
+Seven composed threshold sources forced an incorrect initial hypothesis
+and a successful solver refutation. Six recovered after two to five
+refinements. The out-of-grammar control was rejected and retained in
+the same archive. A second run matched the semantic evidence.
+[Counterexample stress report](V58_CEGIS_COUNTEREXAMPLES.md)

@@ -1,0 +1,76 @@
+{
+  "artifacts": {
+    "recovery-replay.json.gz": {
+      "bytes": 8572,
+      "sha256": "bca26ef6f85da3595309ac84337510a2fd3131291192ac84e52d2e832a5cee7d",
+      "source": {
+        "branch": "research/v58-counterexample-recovery",
+        "commit": "db0fa96924c4980f9102b15a164cbd2f27ddf0b6",
+        "tree": "cc30e3d43826b2db7736a226bc15e1dd0efe32f6"
+      },
+      "uncompressed_sha256": "6e16202d8f843ce504ab2b68a1db22f8dee64dc3a7d9f8b5ab540962dd91089e"
+    },
+    "recovery.json.gz": {
+      "bytes": 8568,
+      "sha256": "f9d2fabd0bf9978fd22073a52041a1e65ae696d689e37831812bf50ad317681c",
+      "source": {
+        "branch": "research/v58-counterexample-recovery",
+        "commit": "db0fa96924c4980f9102b15a164cbd2f27ddf0b6",
+        "tree": "cc30e3d43826b2db7736a226bc15e1dd0efe32f6"
+      },
+      "uncompressed_sha256": "db76f3cdfba05d06a35b25c0f7e93eabdd7f05c38033278b45305794fb0f5db3"
+    }
+  },
+  "cases": [
+    {
+      "name": "complement_lt_8",
+      "rejection": null,
+      "solver_calls": 6,
+      "status": "recovered"
+    },
+    {
+      "name": "complement_lt_11",
+      "rejection": null,
+      "solver_calls": 5,
+      "status": "recovered"
+    },
+    {
+      "name": "complement_lt_15",
+      "rejection": null,
+      "solver_calls": 6,
+      "status": "recovered"
+    },
+    {
+      "name": "complement_gt_-8",
+      "rejection": null,
+      "solver_calls": 4,
+      "status": "recovered"
+    },
+    {
+      "name": "complement_gt_-11",
+      "rejection": null,
+      "solver_calls": 3,
+      "status": "recovered"
+    },
+    {
+      "name": "complement_gt_-15",
+      "rejection": null,
+      "solver_calls": 4,
+      "status": "recovered"
+    },
+    {
+      "name": "complement_lt_24",
+      "rejection": "No surviving candidate in admitted grammar",
+      "solver_calls": 2,
+      "status": "rejected"
+    }
+  ],
+  "schema": "visuaml.cegis-stress-experiment.v58",
+  "summary": {
+    "attempts": 7,
+    "finite_roundtrip_inputs": 72,
+    "first_hypotheses_refuted": 7,
+    "recovered": 6,
+    "rejected": 1
+  }
+}
