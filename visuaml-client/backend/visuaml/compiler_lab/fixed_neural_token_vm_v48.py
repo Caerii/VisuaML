@@ -17,14 +17,12 @@ WASM i32 modular arithmetic. In particular, no all-i32 proof is claimed.
 from __future__ import annotations
 
 import hashlib
-import json
 from dataclasses import asdict, dataclass
 
 import numpy as np
 
 from .wasm_state_vm_v40 import (
     I32Program,
-    VMAdmissionError,
     VMOperation,
     VMState,
     encode_program,
@@ -421,6 +419,7 @@ def compare_typed_programs_smt(
     _admit_program(left)
     _admit_program(right)
     import z3
+
     from .neural_symbolic_recovery_v43 import _encode_wasm_in_z3
 
     x = z3.BitVec("input_i32", 32)
