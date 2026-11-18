@@ -279,14 +279,19 @@ def polynomial_identity(program: KANProgram, *, output: str,
             coefficients = tuple(Fraction(str(v)) for v in edge.coefficients)
             power = (Fraction(1),)
             result = (Fraction(0),)
-            for c in coefficients:
+            for index, c in enumerate(coefficients):
                 width = max(len(result), len(power))
                 result = tuple(
                     (result[i] if i < len(result) else 0)
                     + c * (power[i] if i < len(power) else 0)
                     for i in range(width)
                 )
-                power = mul(power, polys[edge.source])
+                # Do not form an unused next power after the last
+                # coefficient: under a bounded degree policy that
+                # would reject valid low-degree polynomials merely
+                # because an irrelevant intermediate is too large.
+                if index + 1 < len(coefficients):
+                    power = mul(power, polys[edge.source])
             pieces.append(result)
         if node.combine == "sum":
             width = max(map(len, pieces))
