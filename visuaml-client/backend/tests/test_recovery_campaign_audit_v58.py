@@ -7,7 +7,6 @@ require independent Z3/Wasmtime/v58 replay in the verifier.
 from __future__ import annotations
 
 import json
-from copy import deepcopy
 
 import pytest
 
