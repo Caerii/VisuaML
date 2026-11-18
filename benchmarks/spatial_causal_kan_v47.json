@@ -1,0 +1,4689 @@
+{
+  "all_pinned_model_checks_passed": true,
+  "cross_checkpoint_transfer_proved": false,
+  "cross_image_causal_witnesses": [
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "cross_donor_image_unseen",
+      "index": 0,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.03125
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "cross_donor_image_unseen",
+      "index": 1,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.09375
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "cross_donor_image_unseen",
+      "index": 2,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.15625
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "cross_donor_image_unseen",
+      "index": 3,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.21875
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "cross_donor_image_unseen",
+      "index": 4,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.28125
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "cross_donor_image_unseen",
+      "index": 5,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.34375
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "cross_donor_image_unseen",
+      "index": 6,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.40625
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "cross_donor_image_unseen",
+      "index": 7,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.46875
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "cross_donor_image_unseen",
+      "index": 8,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.53125
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.3893130421638489,
+        "mean_absolute_logit_delta": 0.16723895370960234,
+        "modified_sha256": "6f5fe997d667d7bb217b752573f99ba38a7c28810639d9afae99374cdaeccf6e",
+        "relative_l2_logit_delta": 0.38060150326554815,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "f0870c841d6df8ebd28c42e8cbf16a7eab8c433cbf024cbfb1446a4bc9d06bf5",
+      "group": "cross_donor_image_unseen",
+      "index": 9,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 3.731250762939453e-05,
+        "mean_absolute_logit_error": 1.537799835205078e-05,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "6f5fe997d667d7bb217b752573f99ba38a7c28810639d9afae99374cdaeccf6e",
+        "relative_l2_logit_error": 2.730439620388231e-05,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 3.421306610107422e-05,
+        "mean_absolute_logit_error": 1.2567639350891113e-05,
+        "predicted_logits_sha256": "5ff1f5f0b3fc3e1c1145349841a68002e8a49b6d41e430f0b3a416c33574f73f",
+        "reference_logits_sha256": "6f5fe997d667d7bb217b752573f99ba38a7c28810639d9afae99374cdaeccf6e",
+        "relative_l2_logit_error": 2.2791494769316777e-05,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 5.5789947509765625e-05,
+        "mean_absolute_logit_error": 2.478957176208496e-05,
+        "predicted_logits_sha256": "7b5182eb360031d4ab1931e4dc78c2ffc958a5873cbea4d231c85ffce21d0237",
+        "reference_logits_sha256": "6f5fe997d667d7bb217b752573f99ba38a7c28810639d9afae99374cdaeccf6e",
+        "relative_l2_logit_error": 4.246417187626644e-05,
+        "top1_agreement": true
+      },
+      "t": 0.59375
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.37212783098220825,
+        "mean_absolute_logit_delta": 0.1667373038828373,
+        "modified_sha256": "05f822b06cc71036f4f477ca7f9cc9820f64237495196c09830f53ecdfced91a",
+        "relative_l2_logit_delta": 0.3708797803674603,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "56a35e8cf2d33586ca6cb123b947c728fa3264d0cf3b5e9b4101594cf3429034",
+      "group": "cross_donor_image_unseen",
+      "index": 10,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.029827117919921875,
+        "mean_absolute_logit_error": 0.012284106761217117,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "05f822b06cc71036f4f477ca7f9cc9820f64237495196c09830f53ecdfced91a",
+        "relative_l2_logit_error": 0.02181048002286282,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.027426600456237793,
+        "mean_absolute_logit_error": 0.010050209611654282,
+        "predicted_logits_sha256": "20a60818838924be2141eb443028817b08c673383cbed11049ddaffac88c6f51",
+        "reference_logits_sha256": "05f822b06cc71036f4f477ca7f9cc9820f64237495196c09830f53ecdfced91a",
+        "relative_l2_logit_error": 0.018233938654723225,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.044601619243621826,
+        "mean_absolute_logit_error": 0.01979046277701855,
+        "predicted_logits_sha256": "c7d1cc3c1b21afd74673878c4fc470538635f9e5070433cc44af27d8a138b5c8",
+        "reference_logits_sha256": "05f822b06cc71036f4f477ca7f9cc9820f64237495196c09830f53ecdfced91a",
+        "relative_l2_logit_error": 0.03390077939679476,
+        "top1_agreement": true
+      },
+      "t": 0.65625
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.354017436504364,
+        "mean_absolute_logit_delta": 0.16620865799486637,
+        "modified_sha256": "8e399fbf8ce240695a9a39f7fd0907178da5cd0d4deb7ec5582a630588a0da6a",
+        "relative_l2_logit_delta": 0.36252690515716274,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "7934cf90f4c7117d0d43b62e552b7b811ba92ab1727948157c0316698fcfe2b1",
+      "group": "cross_donor_image_unseen",
+      "index": 11,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.061220526695251465,
+        "mean_absolute_logit_error": 0.025213314220309258,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "8e399fbf8ce240695a9a39f7fd0907178da5cd0d4deb7ec5582a630588a0da6a",
+        "relative_l2_logit_error": 0.04472527443449214,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.056293368339538574,
+        "mean_absolute_logit_error": 0.02062823735177517,
+        "predicted_logits_sha256": "cd1565b12dbda0128bf095459dd2aaaf38a98a1b856088c817051c7be20fb096",
+        "reference_logits_sha256": "8e399fbf8ce240695a9a39f7fd0907178da5cd0d4deb7ec5582a630588a0da6a",
+        "relative_l2_logit_error": 0.03739111159467422,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.09154552221298218,
+        "mean_absolute_logit_error": 0.04062021747231483,
+        "predicted_logits_sha256": "4578894a5dc76469af156d1a85269a559198ce439ffa5586d28125b4200829df",
+        "reference_logits_sha256": "8e399fbf8ce240695a9a39f7fd0907178da5cd0d4deb7ec5582a630588a0da6a",
+        "relative_l2_logit_error": 0.06951803885546788,
+        "top1_agreement": true
+      },
+      "t": 0.71875
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.33517754077911377,
+        "mean_absolute_logit_delta": 0.1656586978584528,
+        "modified_sha256": "acbade2ad8f5fd2c6bab4bc1d602565a9fce000810b4f08b7bd88c74c3f185d7",
+        "relative_l2_logit_delta": 0.3560419992945204,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "6bb61dfa66ac0c0b01a927f3273bea1f13b8f95f0673d8b8a947372fabdb8b11",
+      "group": "cross_donor_image_unseen",
+      "index": 12,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.09387850761413574,
+        "mean_absolute_logit_error": 0.03866333477199078,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "acbade2ad8f5fd2c6bab4bc1d602565a9fce000810b4f08b7bd88c74c3f185d7",
+        "relative_l2_logit_error": 0.06848049591871049,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.08632290363311768,
+        "mean_absolute_logit_error": 0.03163234852254391,
+        "predicted_logits_sha256": "6af92c0f94d2777e2cce7c1a842ee5703516da125ca3b1741b7675ea66662efe",
+        "reference_logits_sha256": "acbade2ad8f5fd2c6bab4bc1d602565a9fce000810b4f08b7bd88c74c3f185d7",
+        "relative_l2_logit_error": 0.05725086121256049,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.14038050174713135,
+        "mean_absolute_logit_error": 0.06228908784687519,
+        "predicted_logits_sha256": "cc96ad7111d6ee0eae994709e6f5ab3ccd18f9b2fb5dbca751cd144d261f192f",
+        "reference_logits_sha256": "acbade2ad8f5fd2c6bab4bc1d602565a9fce000810b4f08b7bd88c74c3f185d7",
+        "relative_l2_logit_error": 0.10644169077358323,
+        "top1_agreement": true
+      },
+      "t": 0.78125
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.3135210871696472,
+        "mean_absolute_logit_delta": 0.16452748514711857,
+        "modified_sha256": "bec5015259606d44f80291926442df93432de9318b5e641b0633ccf30e4641f6",
+        "relative_l2_logit_delta": 0.3493417685794178,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "83d861c0a8d58c4187ff5ed0d570640bc94bbdeecb47bbfad2e68e9ad78874e5",
+      "group": "cross_donor_image_unseen",
+      "index": 13,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.1301950216293335,
+        "mean_absolute_logit_error": 0.054445041343569756,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "bec5015259606d44f80291926442df93432de9318b5e641b0633ccf30e4641f6",
+        "relative_l2_logit_error": 0.09544877473250513,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.1195288896560669,
+        "mean_absolute_logit_error": 0.044068097695708276,
+        "predicted_logits_sha256": "9b6a1fc2705eba44106243f35708d9b87c58a1bbd6d2b6802eb05cac49158ee6",
+        "reference_logits_sha256": "bec5015259606d44f80291926442df93432de9318b5e641b0633ccf30e4641f6",
+        "relative_l2_logit_error": 0.07923174081560942,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.19196438789367676,
+        "mean_absolute_logit_error": 0.08342212960124015,
+        "predicted_logits_sha256": "b887578dd5103db65d490d6fcffd608555f301b977e8b4c8c2262faff71d9c77",
+        "reference_logits_sha256": "bec5015259606d44f80291926442df93432de9318b5e641b0633ccf30e4641f6",
+        "relative_l2_logit_error": 0.14212329592178272,
+        "top1_agreement": true
+      },
+      "t": 0.84375
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.2999982237815857,
+        "mean_absolute_logit_delta": 0.16239468343555927,
+        "modified_sha256": "a0b2ef4a84d9a19888440d39bf7fb9462d10ada6e8aebda378331f3216d68a59",
+        "relative_l2_logit_delta": 0.3411585663402247,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "883c901f4648f2fbd11057749af0bcae06b18c310e2e135e93486873f49e9121",
+      "group": "cross_donor_image_unseen",
+      "index": 14,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.1732867956161499,
+        "mean_absolute_logit_error": 0.07493244372308254,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "a0b2ef4a84d9a19888440d39bf7fb9462d10ada6e8aebda378331f3216d68a59",
+        "relative_l2_logit_error": 0.1296551177332008,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.15852880477905273,
+        "mean_absolute_logit_error": 0.05956999436020851,
+        "predicted_logits_sha256": "f0a8296affd1327679599f7094e33d113a0fa0d08a4be633c81637d6f6d08e04",
+        "reference_logits_sha256": "a0b2ef4a84d9a19888440d39bf7fb9462d10ada6e8aebda378331f3216d68a59",
+        "relative_l2_logit_error": 0.10620132873444105,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.2473607063293457,
+        "mean_absolute_logit_error": 0.10217044539749623,
+        "predicted_logits_sha256": "6d854dd926432d486ceac06eecd134c5b4d86412e95e80d2561a426e548ae203",
+        "reference_logits_sha256": "a0b2ef4a84d9a19888440d39bf7fb9462d10ada6e8aebda378331f3216d68a59",
+        "relative_l2_logit_error": 0.17550172035902548,
+        "top1_agreement": true
+      },
+      "t": 0.90625
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.3456307053565979,
+        "mean_absolute_logit_delta": 0.1602274913340807,
+        "modified_sha256": "74ac8e10e7a461893fa2430956d3b5043387d2f98e0e6f94b14d1603ccc0801f",
+        "relative_l2_logit_delta": 0.33876279013170213,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "5703606f785bc9644239985e15e7d221367eb894761f25ac9e67378e1943a2c3",
+      "group": "cross_donor_image_unseen",
+      "index": 15,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.2189192771911621,
+        "mean_absolute_logit_error": 0.09655733369290828,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "74ac8e10e7a461893fa2430956d3b5043387d2f98e0e6f94b14d1603ccc0801f",
+        "relative_l2_logit_error": 0.1663007241127796,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.19984424114227295,
+        "mean_absolute_logit_error": 0.0767010010778904,
+        "predicted_logits_sha256": "9a23724e1fc7b0d8578614fcd0abee210c7c502f06d1dca435d9022f7212c915",
+        "reference_logits_sha256": "74ac8e10e7a461893fa2430956d3b5043387d2f98e0e6f94b14d1603ccc0801f",
+        "relative_l2_logit_error": 0.1353848022845481,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.3062558174133301,
+        "mean_absolute_logit_error": 0.12227742224931717,
+        "predicted_logits_sha256": "8c377406b5ba0444188b2a3e093004d20b3b9aa11b22b2c5024c4801f55bdf52",
+        "reference_logits_sha256": "74ac8e10e7a461893fa2430956d3b5043387d2f98e0e6f94b14d1603ccc0801f",
+        "relative_l2_logit_error": 0.21320660534517663,
+        "top1_agreement": true
+      },
+      "t": 0.96875
+    }
+  ],
+  "fitted_basis_families": [
+    {
+      "basis": "linear",
+      "cross_image_cell_mae": 0.007623395009431988,
+      "data_fitted_curve_not_original_mechanism": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_0",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_1",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_2",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_3",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_4",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_5",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_6",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_7",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_8",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_9",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_10",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_11",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_12",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_13",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_14",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_15",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "5f90c7c9bb52e0d785ea3df875347465cbbe6972901e8133259f347a8a281c03",
+      "same_image_heldout_cell_mae": 0.0,
+      "selected_by_training_only": true,
+      "train_max_abs_cell_error": 0.0
+    },
+    {
+      "basis": "polynomial",
+      "cross_image_cell_mae": 0.007623395009431988,
+      "data_fitted_curve_not_original_mechanism": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_0",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_1",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_2",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_3",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_4",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_5",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_6",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_7",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_8",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_9",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_10",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_11",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_12",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_13",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_14",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_15",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "739fb7a2f3c902e0021e9c4cf87dbc0de656e14da0f3b4cbefca421813ac762c",
+      "same_image_heldout_cell_mae": 0.0,
+      "selected_by_training_only": false,
+      "train_max_abs_cell_error": 0.0
+    },
+    {
+      "basis": "linear_spline",
+      "cross_image_cell_mae": 0.007623395009431988,
+      "data_fitted_curve_not_original_mechanism": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_0",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_1",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_2",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_3",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_4",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_5",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_6",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_7",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_8",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_9",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_10",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_11",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_12",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_13",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_14",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_15",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "c716f0886b7a5cb73be2a38b3acd7d4a7ee2c28cb76746cd77d383c2da47e7ca",
+      "same_image_heldout_cell_mae": 0.0,
+      "selected_by_training_only": false,
+      "train_max_abs_cell_error": 0.0
+    },
+    {
+      "basis": "gaussian_rbf",
+      "cross_image_cell_mae": 0.007623395009431988,
+      "data_fitted_curve_not_original_mechanism": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_0",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_1",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_2",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_3",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_4",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_5",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_6",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_7",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_8",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_9",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_10",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_11",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_12",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_13",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_14",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_15",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "872da131f95db0fcd7cf5898a76963d45a8ede27b8d8d8fc7a56ed63e372b6f6",
+      "same_image_heldout_cell_mae": 0.0,
+      "selected_by_training_only": false,
+      "train_max_abs_cell_error": 0.0
+    },
+    {
+      "basis": "fourier",
+      "cross_image_cell_mae": 0.007623395009431988,
+      "data_fitted_curve_not_original_mechanism": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_0",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_1",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_2",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_3",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_4",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_5",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_6",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_7",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_8",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_9",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_10",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_11",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_12",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_13",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_14",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "name": "edge_15",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "d78b34ae3a21f7262ad38648eb57237f06b2fe7b9e289d9ce0273d4cc0f86a7d",
+      "same_image_heldout_cell_mae": 0.0,
+      "selected_by_training_only": false,
+      "train_max_abs_cell_error": 0.0
+    }
+  ],
+  "heldout_coordinates": [
+    0.03125,
+    0.09375,
+    0.15625,
+    0.21875,
+    0.28125,
+    0.34375,
+    0.40625,
+    0.46875,
+    0.53125,
+    0.59375,
+    0.65625,
+    0.71875,
+    0.78125,
+    0.84375,
+    0.90625,
+    0.96875
+  ],
+  "heldout_tile_values": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "independent_scalar_oracles": [
+    {
+      "case": "same_seed_t_0.53125",
+      "graft_sha256": "ce5934ece90565f41e3c35c466d04ec9ead99b4cd351d6cf5874adda00dbff41",
+      "logit_oracle": {
+        "max_abs_error": 4.76837158203125e-07,
+        "onnxruntime_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "passed": true,
+        "scalar_reference_sha256": "393b25ae9705471bad978a49daf15e923199cdd64776b6ea5754dd678569f7cf"
+      }
+    },
+    {
+      "case": "cross_seed_t_0.53125",
+      "graft_sha256": "ce5934ece90565f41e3c35c466d04ec9ead99b4cd351d6cf5874adda00dbff41",
+      "logit_oracle": {
+        "max_abs_error": 4.76837158203125e-07,
+        "onnxruntime_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "passed": true,
+        "scalar_reference_sha256": "393b25ae9705471bad978a49daf15e923199cdd64776b6ea5754dd678569f7cf"
+      }
+    }
+  ],
+  "limitations": "One exact pretrained CNN and one fixed recipient, two seeded donor images. Region and KAN basis selection use only discovery inputs, but the learned edge curves fit one scalar manifold. Spatial donor patching shows original-model causal effects; a KAN surrogate is not proven to be an internal network mechanism. No natural-image accuracy, general checkpoint transfer, all-input equivalence or performance speedup.",
+  "mask_sha256": "443597a4228eaafe3a1eb54b2b385517725ed7ab86fcb71cb60566025f8797d2",
+  "mean_kan_causal_prediction_mae_cross": 0.01888193453196436,
+  "mean_kan_causal_prediction_mae_same": 0.0,
+  "mean_mean_only_control_mae_cross": 0.015166403516195713,
+  "mean_mean_only_control_mae_same": 0.0,
+  "mean_permuted_control_mae_cross": 0.026912159682251514,
+  "mean_permuted_control_mae_same": 0.0,
+  "numpy_version": "2.2.6",
+  "onnxruntime_version": "1.22.1",
+  "original_bytes_modified": false,
+  "original_checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+  "original_v46_preselected_channel": 5,
+  "other_image_is_representative_of_natural_images": false,
+  "patch_contract": {
+    "embedded_donor_tensor": false,
+    "full_model_all_input_equivalence_proved": false,
+    "masked_patch_exact_binary_selection": true,
+    "modified_nodes": 16,
+    "original_nodes": 12,
+    "patched_sha256": "42282b35b7cc7caf3fa61d1a56e60a9f26b7c3d5a998563143e3e328f767f9eb",
+    "schema": "visuaml.spatial-activation-transplant.v47",
+    "source_ir_version": 3,
+    "source_opset_versions": [
+      {
+        "domain": "",
+        "version": 8
+      }
+    ],
+    "source_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+    "target_name": "ReLU114_Output_0",
+    "target_shape": [
+      1,
+      16,
+      14,
+      14
+    ]
+  },
+  "patchable_model_sha256": "42282b35b7cc7caf3fa61d1a56e60a9f26b7c3d5a998563143e3e328f767f9eb",
+  "pretrained_kan_internal_mechanism_certified": false,
+  "recipient_sha256": "b8509e7bb9c5228f707012873de2a1ebbb192e9e49797d7cbce3cdd8a56914d1",
+  "region_discovery_inputs": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "region_discovery_scores": [
+    {
+      "max_absolute_logit_effect": 0.0,
+      "mean_absolute_logit_effect": 0.0,
+      "region": [
+        0,
+        4,
+        0,
+        4
+      ]
+    },
+    {
+      "max_absolute_logit_effect": 0.009670773893594742,
+      "mean_absolute_logit_effect": 0.003223591297864914,
+      "region": [
+        0,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "max_absolute_logit_effect": 0.006391438096761704,
+      "mean_absolute_logit_effect": 0.0021304793655872348,
+      "region": [
+        5,
+        9,
+        0,
+        4
+      ]
+    },
+    {
+      "max_absolute_logit_effect": 0.16723957359790803,
+      "mean_absolute_logit_effect": 0.16723957359790806,
+      "region": [
+        5,
+        9,
+        5,
+        9
+      ]
+    },
+    {
+      "max_absolute_logit_effect": 0.0,
+      "mean_absolute_logit_effect": 0.0,
+      "region": [
+        10,
+        14,
+        10,
+        14
+      ]
+    }
+  ],
+  "reviewed_activation": {
+    "checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+    "original_output": "Plus214_Output_0",
+    "source_node_index": 7,
+    "source_node_op": "Relu",
+    "target_output": "ReLU114_Output_0",
+    "target_shape": [
+      1,
+      16,
+      14,
+      14
+    ]
+  },
+  "same_image_causal_witnesses": [
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 0,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.03125
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 1,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.09375
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 2,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.15625
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 3,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.21875
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 4,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.28125
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 5,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.34375
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 6,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.40625
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 7,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.46875
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 8,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.53125
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 9,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.59375
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 10,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.65625
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 11,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.71875
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 12,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.78125
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 13,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.84375
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 14,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.90625
+    },
+    {
+      "actual_causal_effect": {
+        "baseline_sha256": "562886ddd1b8642157204badddafea5e2c25b7e9b0dd777479f7cd65418a7a23",
+        "max_absolute_logit_delta": 0.38933461904525757,
+        "mean_absolute_logit_delta": 0.16723957359790803,
+        "modified_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_delta": 0.3806147121629518,
+        "top1_changed": false
+      },
+      "actual_donor_tile_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "group": "same_donor_image_heldout",
+      "index": 15,
+      "kan_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "kan_fitted_internal_mechanism_verified": false,
+      "mean_only_control_causal_prediction_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "spatial_permutation_control_error": {
+        "max_absolute_logit_error": 0.0,
+        "mean_absolute_logit_error": 0.0,
+        "predicted_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "reference_logits_sha256": "ad275be97be9e92c990eed1d647ac38021f8ca004f881fded2b198b781829b6d",
+        "relative_l2_logit_error": 0.0,
+        "top1_agreement": true
+      },
+      "t": 0.96875
+    }
+  ],
+  "schema": "visuaml.pretrained-spatial-causal-kan.v47",
+  "selected_basis_train_only": "linear",
+  "selected_from_discovery_only": true,
+  "selected_region": [
+    5,
+    9,
+    5,
+    9
+  ],
+  "source_commit": "4b241fa70bbfb50f2452e3bc2f90c4f323437ced",
+  "source_file_sha256": {
+    "scripts/probe_spatial_causal_kan_v47.py": "6240108a10ec11b37010310e95f3b378ec4c378daacc1b98b45d0e26cadb82e8",
+    "visuaml/compiler_lab/kan_teacher_slice_v45.py": "622a6606f827909321637107eea9d8e4d99ee03f9b0d9881570ed0f3b8a66ab6",
+    "visuaml/compiler_lab/spatial_activation_patching_v47.py": "e0830203a74e54cc10cfa74c62a048939372b8a4a12eeaed3d7bd174f9234eac"
+  },
+  "spatial_donor_patch_semantics_verified_finitely": true,
+  "train_coordinates": [
+    0.0,
+    0.0625,
+    0.125,
+    0.1875,
+    0.25,
+    0.3125,
+    0.375,
+    0.4375,
+    0.5,
+    0.5625,
+    0.625,
+    0.6875,
+    0.75,
+    0.8125,
+    0.875,
+    0.9375,
+    1.0
+  ],
+  "train_tile_values": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "training_donor_base_sha256": "afc8e4534cc66055bcea4be8b7b60f6a74a8fd1737d1066a4729c54dcd40c5ef",
+  "unseen_donor_base_sha256": "167c00cad47f500627cfcf0374e68e36dbcd9677ac1be5a127fe0462aa9ad97d",
+  "unseen_image_tile_values": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      9.874999523162842e-05,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0788893848657608,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.16192157566547394,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.24829868972301483,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.33585190773010254,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.01467074453830719,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.421588659286499,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.06340448558330536,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.5131070017814636,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.11375792324542999,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ]
+}
