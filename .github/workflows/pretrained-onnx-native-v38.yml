@@ -1,0 +1,77 @@
+name: v38 pretrained ONNX through shared Semantic IR native C++
+on:
+  push:
+    branches:
+      - research/v38-onnx-semantic-native
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/native_semantic_codegen_v32.py
+      - visuaml-client/backend/visuaml/compiler_lab/onnx_semantic_frontend_v38.py
+      - visuaml-client/backend/visuaml/compiler_lab/semantic_ir.py
+      - visuaml-client/backend/scripts/probe_pretrained_mnist8_native_v38.py
+      - visuaml-client/backend/tests/test_onnx_semantic_native_v38.py
+      - .github/workflows/pretrained-onnx-native-v38.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/native_semantic_codegen_v32.py
+      - visuaml-client/backend/visuaml/compiler_lab/onnx_semantic_frontend_v38.py
+      - visuaml-client/backend/visuaml/compiler_lab/semantic_ir.py
+      - visuaml-client/backend/scripts/probe_pretrained_mnist8_native_v38.py
+      - visuaml-client/backend/tests/test_onnx_semantic_native_v38.py
+      - .github/workflows/pretrained-onnx-native-v38.yml
+permissions:
+  contents: read
+jobs:
+  generated-native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned native, ONNX and numerical dependencies
+        run: |
+          python -m pip install torch==2.9.1+cpu torchvision==0.24.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r visuaml-client/backend/requirements.txt
+          python -m pip install onnx==1.18.0 onnxruntime==1.22.1 numpy==2.2.6 pytest==8.4.2 ruff==0.17.5
+      - name: Graph admission and native codegen regression
+        env:
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          cd visuaml-client
+          python -m pytest -q backend/tests/test_onnx_semantic_native_v38.py backend/tests/test_native_semantic_codegen_v32.py backend/tests/test_native_fx_frontend_v32.py
+          ruff check backend/visuaml/compiler_lab/native_semantic_codegen_v32.py backend/visuaml/compiler_lab/onnx_semantic_frontend_v38.py backend/scripts/probe_pretrained_mnist8_native_v38.py backend/tests/test_onnx_semantic_native_v38.py
+      - name: Fetch immutable pretrained MNIST-8 checkpoint
+        run: |
+          mkdir -p pretrained-v38
+          curl --fail --location --retry 3 --max-time 75 'https://huggingface.co/onnxmodelzoo/mnist-8/resolve/a19f9a8c2333de1df9b03f10f5739f468b699a1a/mnist-8.onnx' --output pretrained-v38/mnist-8.onnx
+          echo '2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf  pretrained-v38/mnist-8.onnx' | sha256sum --check
+          test "$(wc -c < pretrained-v38/mnist-8.onnx)" -eq 26454
+      - name: Execute all 12 pretrained nodes as graph-generated C++ and compare independent oracles
+        env:
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          PYTHONPATH: visuaml-client/backend
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python visuaml-client/backend/scripts/probe_pretrained_mnist8_native_v38.py --model pretrained-v38/mnist-8.onnx --output pretrained-v38/mnist-8-native-replay.json
+          python - <<'PY'
+          import json
+          d=json.load(open("pretrained-v38/mnist-8-native-replay.json"))
+          assert d["schema"]=="visuaml.pretrained-onnx-native-semantic.v38"
+          assert d["native_execution"] is True and d["all_passed"] is True
+          assert d["graph_operation_count"] == 12 and len(d["witnesses"]) == 5
+          print("Native source:", d["compiler"]["generated_cpp_sha256"])
+          print("Native binary:", d["compiler"]["native_binary_sha256"])
+          PY
+      - name: Upload complete verified native source, receipts and raw numerical witnesses
+        uses: actions/upload-artifact@v4
+        with:
+          name: pretrained-mnist8-semantic-native-v38
+          path: pretrained-v38/mnist-8-native-replay.json
+          if-no-files-found: error
+          retention-days: 30
