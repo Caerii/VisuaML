@@ -404,3 +404,55 @@ def run_neural(program: I32Program, argument: int,
         "all_i32_modular_arithmetic_verified": False,
         "arbitrary_pretrained_weight_decompilation": False,
     }
+
+
+
+def compare_typed_programs_smt(
+    left: I32Program, right: I32Program, *, timeout_ms: int = 15000
+) -> dict:
+    """Independent all-i32 bitvector equivalence of typed SOURCE programs.
+
+    This does not prove float64 neural execution outside its finite domain.
+    Importantly, UNSAT can demonstrate nonunique program representations of
+    the same behavior, *refuting* unique arbitrary decompilation from outputs.
+    """
+    if type(timeout_ms) is not int or not 1 <= timeout_ms <= 60000:
+        raise NeuralTokenVMError("Invalid bounded solver budget")
+    _admit_program(left)
+    _admit_program(right)
+    import z3
+    from .neural_symbolic_recovery_v43 import _encode_wasm_in_z3
+
+    x = z3.BitVec("input_i32", 32)
+    a = _encode_wasm_in_z3(left, x, z3)
+    b = _encode_wasm_in_z3(right, x, z3)
+    solver = z3.Solver()
+    solver.set(timeout=timeout_ms)
+    solver.add(a != b)
+    result = solver.check()
+    if result == z3.unknown:
+        raise NeuralTokenVMError(
+            "SMT equivalence inconclusive: " + solver.reason_unknown()
+        )
+    evidence = {
+        "schema": "visuaml.typed-program-equivalence-class.v48",
+        "left_wasm_sha256": hashlib.sha256(encode_program(left)).hexdigest(),
+        "right_wasm_sha256": hashlib.sha256(encode_program(right)).hexdigest(),
+        "solver": f"Z3 {z3.get_version_string()}",
+        "solver_result": str(result),
+        "all_i32_typed_programs_equivalent": result == z3.unsat,
+        "neural_all_i32_equivalence_proved": False,
+        "unique_source_recovered_from_behavior": False,
+        "machine_checked_proof_object": False,
+    }
+    if result == z3.sat:
+        model = solver.model()
+        u = int(model.eval(x, model_completion=True).as_long())
+        evidence["counterexample_i32"] = u if u < (1 << 31) else u - (1 << 32)
+        evidence["left_result_u32"] = int(
+            model.eval(a, model_completion=True).as_long()
+        )
+        evidence["right_result_u32"] = int(
+            model.eval(b, model_completion=True).as_long()
+        )
+    return evidence
