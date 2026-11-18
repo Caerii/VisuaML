@@ -10,7 +10,6 @@ from __future__ import annotations
 from dataclasses import replace
 
 import pytest
-
 from visuaml.compiler_lab.bit_neural_vm_v49 import (
     construct_bit_weights,
     run_bit_vm,
@@ -67,10 +66,10 @@ def test_blinded_recovery_from_actual_neural_vm_and_external_z3_source_oracle():
     for name, source, expected in source_programs():
         # This function contains the source but its internals are completely
         # opaque to the synthesizer: it receives only integer I/O results.
-        def neural_oracle(x):
-            return run_bit_vm(source, x, fixed=fixed)["result"]
-        def verifier(hypothesis):
-            return verify_against_typed_source(source, hypothesis)
+        def neural_oracle(x, original=source):
+            return run_bit_vm(original, x, fixed=fixed)["result"]
+        def verifier(hypothesis, original=source):
+            return verify_against_typed_source(original, hypothesis)
         result = synthesize_from_oracle(neural_oracle, verifier)
         assert result["accepted_candidate"] == expected.__dict__, name
         assert result["all_i32_source_vs_candidate_equivalent"]
