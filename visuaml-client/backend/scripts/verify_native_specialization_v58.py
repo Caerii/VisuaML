@@ -84,6 +84,12 @@ def proof(program: ControlProgram, cpp: str, *, timeout_ms: int):
         assignment = re.fullmatch(r"  const Word (v\d+) = (.+);", line)
         if assignment is None or assignment[1] in bindings:
             raise ValueError("Unrecognized native function body")
+        if not re.fullmatch(
+            r"input|[0-9]+u|v\d+ [*+\-] v\d+|"
+            r"\(v\d+ \^ sign\) [<>] \(v\d+ \^ sign\)|v\d+ == 0u",
+            assignment[2],
+        ):
+            raise ValueError("Unrecognized unsigned native expression")
         normalized = re.sub(r"(\d+)u\b", r"\1", assignment[2])
         bindings[assignment[1]] = _expression(ast.parse(normalized, mode="eval").body, bindings)
     returned = re.fullmatch(r"  return (v\d+);", lines[-4])
