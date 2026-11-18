@@ -30,6 +30,10 @@ def main() -> None:
                         help="Include 26 scaling source programs")
     parser.add_argument("--faults", action="store_true",
                         help="Run 10 activated fault-injection tests")
+    parser.add_argument("--recovery-campaign", action="store_true",
+                        help="Record every CEGIS success/failure, including cubic control")
+    parser.add_argument("--recovery-campaign-holdout", action="store_true",
+                        help="Add held-out source behaviors to recovery campaign")
     parser.add_argument("--roundtrip", action="store_true",
                         help="Execute blinded v50-to-v58 SMT-verified round trips")
     parser.add_argument("--representation-cost", action="store_true",
@@ -47,8 +51,10 @@ def main() -> None:
         parser.error("--roundtrip-holdout requires --roundtrip")
     if args.representation_cost and not args.roundtrip:
         parser.error("--representation-cost requires --roundtrip")
+    if args.recovery_campaign_holdout and not args.recovery_campaign:
+        parser.error("--recovery-campaign-holdout requires --recovery-campaign")
     packages = ["numpy", "pytest", "wasmtime", "ruff"]
-    if args.roundtrip:
+    if args.roundtrip or args.recovery_campaign:
         packages.append("z3")
     for package in packages:
         if importlib.util.find_spec(package) is None:
@@ -87,6 +93,8 @@ def main() -> None:
         "backend/scripts/list_system_benchmarks_v58.py",
         "backend/scripts/verify_offline_v58.py",
         "backend/scripts/benchmark_neural_symbolic_roundtrip_v58.py",
+        "backend/scripts/benchmark_recovery_failures_v58.py",
+        "backend/tests/test_recovery_failure_ledger_v58.py",
         "backend/scripts/verify_neural_roundtrip_evidence_v58.py",
         "backend/scripts/summarize_neural_roundtrips_v58.py",
         "backend/scripts/benchmark_representation_cost_v58.py",
@@ -142,6 +150,17 @@ def main() -> None:
         "--output-json", str(output_dir / "neural-v58-scorecard.json"),
         "--output-csv", str(output_dir / "neural-v58-scorecard.csv"),
     ), client=client, env=env)
+    if args.recovery_campaign:
+        invoke((
+            sys.executable, "-m", "pytest", "-q",
+            "backend/tests/test_recovery_failure_ledger_v58.py",
+        ), client=client, env=env)
+        invoke((
+            sys.executable,
+            "backend/scripts/benchmark_recovery_failures_v58.py",
+            "--output", str(output_dir / "neural-v58-recovery-campaign.json"),
+            *(("--holdout",) if args.recovery_campaign_holdout else ()),
+        ), client=client, env=env)
     if args.roundtrip:
         invoke((
             sys.executable, "-m", "pytest", "-q",
