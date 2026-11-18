@@ -16,15 +16,26 @@ import numpy as np
 
 from .bit_neural_vm_v49 import WIDTH, BitCircuitWeights, construct_bit_weights
 from .neural_alu_v56 import (
-    ALU_OPS, ALUWeights, construct_alu_weights, execute_alu, onehot_alu,
-)
-from .neural_operand_storage_v55 import (
-    ACTIONS, OperandState, OperandWeights, fixed_operand_weights,
-    onehot, step_operands, top_word, validate_operands,
+    ALU_OPS,
+    ALUWeights,
+    construct_alu_weights,
+    execute_alu,
 )
 from .neural_local_bank_v57 import (
-    LocalBankWeights, construct_local_bank_weights,
-    read_local, write_local,
+    LocalBankWeights,
+    construct_local_bank_weights,
+    read_local,
+    write_local,
+)
+from .neural_operand_storage_v55 import (
+    ACTIONS,
+    OperandState,
+    OperandWeights,
+    fixed_operand_weights,
+    onehot,
+    step_operands,
+    top_word,
+    validate_operands,
 )
 from .typed_microop_ir_v57 import (
     EFFECTS, LOCALS_WIDTH, LOCAL_MODES, OPCODES, MicroopAdmissionError,
