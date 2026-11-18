@@ -10,7 +10,6 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.kan_mechanism_ir_v45 import (
     EdgeFunction,
     KANAdmissionError,
