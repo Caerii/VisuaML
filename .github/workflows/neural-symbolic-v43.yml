@@ -1,0 +1,76 @@
+name: v43 manifest-free neural to symbolic and all-i32 SMT verification
+on:
+  push:
+    branches:
+      - research/v43-neural-symbolic-recovery
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/neural_symbolic_recovery_v43.py
+      - visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py
+      - visuaml-client/backend/scripts/probe_neural_symbolic_v43.py
+      - .github/workflows/neural-symbolic-v43.yml
+      - docs/V43_NEURAL_SYMBOLIC_VERIFICATION.md
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/neural_symbolic_recovery_v43.py
+      - visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py
+      - visuaml-client/backend/scripts/probe_neural_symbolic_v43.py
+      - .github/workflows/neural-symbolic-v43.yml
+      - docs/V43_NEURAL_SYMBOLIC_VERIFICATION.md
+permissions:
+  contents: read
+jobs:
+  symbolic-verified:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned numerical, WASM, SMT and testing dependencies
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==2.2.6 pytest==8.4.2 wasmtime==28.0.0 z3-solver==4.13.4.0 ruff==0.17.5
+      - name: Verify extraction and adversarial rejection against native/WASM/SMT
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py visuaml-client/backend/tests/test_analytic_neural_archive_v41.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_symbolic_recovery_v43.py visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py visuaml-client/backend/scripts/probe_neural_symbolic_v43.py
+      - name: Independently prove original versus reconstructed i32 and replay 326 cases
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p evidence-v43
+          python visuaml-client/backend/scripts/probe_neural_symbolic_v43.py --output evidence-v43/neural-symbolic-v43.json
+          python - <<'PY'
+          import json
+          record=json.load(open("evidence-v43/neural-symbolic-v43.json"))
+          assert record["schema"]=="visuaml.verified-neural-symbolic-roundtrip.v43"
+          assert record["polynomial"]["a"] == 1 and record["polynomial"]["b"] == -3 and record["polynomial"]["c"] == 7
+          assert record["all_i32_symbolic_vs_source_smt"]["solver_outcome"] == "unsat"
+          assert record["wrong_symbolic_hypothesis_smt"]["solver_outcome"] == "sat"
+          assert record["exact_bounded_neural_witness_count"] == 256
+          assert record["runtime_witness_count"] == 326
+          assert all(x["pass"] for x in record["observations"])
+          assert record["outside_domain_neural_counterexample"]["different"] is True
+          assert record["neural_all_i32_equivalent"] is False
+          assert record["arbitrary_learned_neural_program_decompiled"] is False
+          assert record["smt_result_is_machine_checked_proof_object"] is False
+          print("Bitvector proof unsat; all 326 runtime observations passed")
+          PY
+      - name: Retain complete original SMT, symbolic, WASM and C++17 witness
+        uses: actions/upload-artifact@v4
+        with:
+          name: neural-symbolic-i32-v43
+          path: evidence-v43/neural-symbolic-v43.json
+          if-no-files-found: error
+          retention-days: 30
