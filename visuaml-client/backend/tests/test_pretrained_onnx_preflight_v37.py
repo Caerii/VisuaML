@@ -75,7 +75,7 @@ def test_checksum_cannot_authorize_external_initializer_reference():
     tensor = model.graph.initializer[0]
     tensor.data_location = onnx.TensorProto.EXTERNAL
     tensor.external_data.add(key="location", value="../outside")
-    with pytest.raises((CheckpointPreflightError, onnx.checker.ValidationError)):
+    with pytest.raises(CheckpointPreflightError):
         _audit(model)
 
 
@@ -91,5 +91,5 @@ def test_valid_graph_with_unsupported_operator_is_inventory_not_compilation():
 def test_repeated_initializer_names_rejected_with_matching_checksum():
     model = _synthetic_model()
     model.graph.initializer.add().CopyFrom(model.graph.initializer[0])
-    with pytest.raises((CheckpointPreflightError, Exception)):
+    with pytest.raises(CheckpointPreflightError):
         _audit(model)
