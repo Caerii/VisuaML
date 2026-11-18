@@ -103,3 +103,28 @@ The fitted KAN parameters are **DATA-DERIVED**. This is not a weight-only recove
 The resulting evidence cannot establish that any KAN edge exists in the teacher's internal network, that a KAN generalizes to real handwritten digits, or that a KAN is faster/better than a matched MLP in production. It *can* identify where different explicit basis families succeed or fail at approximating a measured nonlinear teacher response, without passing the holdout samples into coefficient construction.
 
 This distinction is fundamental. An interpretable *surrogate* provides an inspectable approximation; mechanistic interpretability needs controlled interventions in the **original checkpoint** and tests across unobserved contexts. The v45 surrogate is a precursor to those experiments, not their conclusion.
+
+## Actual pinned pretrained model experiment — measured results
+
+The independently run KAN teacher-slice workflow used the exact pinned original MNIST-8 checkpoint and evaluated five candidate basis families on 33 train and **32 disjoint interleaved holdout** intensity coordinates of one frozen input pattern. Three points were separately interpreted through the v37 scalar NumPy interpreter, matching ONNX Runtime within 4.77×10⁻⁷ maximum absolute logit difference.
+
+| Fitted family | Heldout mean absolute logit error | Heldout relative L2 logit error | Teacher top-1 unchanged |
+| --- | ---: | ---: | ---: |
+| Linear | 0.08033 | 0.2329 | 26/32 |
+| Degree-4 polynomial | 0.00966 | 0.0284 | 32/32 |
+| Nine-knot linear spline | **0.00458** | 0.0145 | 32/32 |
+| Nine-center Gaussian RBF | 0.00478 | **0.0136** | 31/32 |
+| Four-harmonic Fourier | 0.03071 | 0.1443 | 29/32 |
+
+**Train-only selection** selected the Gaussian RBF family due to its lower training maximum error, while **holdout MAE** favored the linear spline. Importantly, these two choices disagree: we did not use heldout results to choose the selected model. The best result depends on whether we prioritize a relative-L2 logit metric, absolute mean error or top-1 agreement.
+
+This 1D scalar sweep is a **functional approximation benchmark**, not test-set digit recognition. It says nothing by itself about what nonlinear functions the CNN learned internally, whether the representation transfers to other image directions or checkpoints, or whether KAN training generally beats MLP training. Coefficients here were fitted by linear least squares—**not** constructed analytically from known source semantics, and **not** recovered from the teacher's weights.
+
+The complete raw original program graph and experimental records, including every fitted set of edge coefficients, are archived as:
+
+- [Constructed neural-to-symbolic-to-KAN graph and Wasmtime evidence](../benchmarks/kan_mechanism_replay_v45.json)
+- [Constructed KAN's CI-origin manifest](../benchmarks/kan_mechanism_replay_v45.origin.json)
+- [Pretrained CNN fitted KAN surrogate and holdout evidence](../benchmarks/pretrained_kan_surrogate_v45.json)
+- [Pretrained surrogate's CI-origin manifest](../benchmarks/pretrained_kan_surrogate_v45.origin.json)
+
+Archive integrity regression tests ensure the records' original byte content and negative scientific boundaries cannot silently drift.
