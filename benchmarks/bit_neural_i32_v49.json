@@ -1,0 +1,7670 @@
+{
+  "all_i32_neural_circuit_smt_proved": false,
+  "arbitrary_neural_decompilation_implemented": false,
+  "bit_gates_calculated_not_trained": true,
+  "every_witness_step_state_compared_to_v40": true,
+  "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+  "fixed_weights_reused_across_programs": true,
+  "general_wasm_supported": false,
+  "independent_original_wasmtime_executed": true,
+  "input_range_admitted": [
+    -2147483648,
+    2147483647
+  ],
+  "input_values_exhaustively_tested": false,
+  "inputs_per_program": 26,
+  "limitations": "32-bit modular arithmetic and signed comparisons constructed from fixed ReLU threshold gates/bilinear partial products, with data-supplied straight-line programs; no imports, memory, branches, loops, traps, alternate numeric types, standard transformer softmax layers, or unconstrained decompilation. Finite signed-i32 witnesses and exhaustive local gate truth tables, not an all-2**32-input verified theorem.",
+  "memory_or_control_flow_supported": false,
+  "modular_add_sub_mul_and_signed_comparisons": true,
+  "numpy_version": "2.2.6",
+  "program_count": 11,
+  "programs": [
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0601040020000b",
+      "canonical_source_wasm_sha256": "80011a28330846321bc01e9531317ec744945a96f7ecda10b55047011c233383",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "identity",
+      "program_tokens_sha256": "fe0b26acf264b077fe20ffdb96b9177e08fa42e4fa927340ffe9bc6ac34892f9",
+      "typed_program_sha256": "da032c709a9b3c5ab1da4f1480bf638a525c6eb310bbb3b759c283da1ee0459b"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a09010700200041016a0b",
+      "canonical_source_wasm_sha256": "0815ca7d6026206d0773fe10c6b9643862bfffe8ba361c9789369ef9668ee746",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": 1,
+          "opcode": "i32.const"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.add"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "overflow_add",
+      "program_tokens_sha256": "d6febe3801d787d6e3986d005b90fa8397657c1bb2911d9818fada6b9d986d22",
+      "typed_program_sha256": "a409f7bc0f7cdaa0a547c58a561860bc0163c4f8658dd5860219d70b4de30dd4"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a090107002000417f6b0b",
+      "canonical_source_wasm_sha256": "1de82eda3dbd5849d45079fe661b7e0285446500050e45282b5ce698cc1eb00a",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": -1,
+          "opcode": "i32.const"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.sub"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "borrow_sub",
+      "program_tokens_sha256": "73ea23b3c5dad6d16c6491b93c7a9a89dd3db1b9576f617893be1c86dd1a3448",
+      "typed_program_sha256": "082c98c428d4c5667fcd081f7ea4b087ed0e17a799ae07c83093677e61d6665e"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a09010700200020006c0b",
+      "canonical_source_wasm_sha256": "c2a346a1bd2f752fbca6896f07c814733d2e8a2782c4318158f88f9bea1ca027",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.mul"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "square",
+      "program_tokens_sha256": "7849108bc78cf9cd2f810355b92950f8047ea01e75c6581c5257f3b8805434c1",
+      "typed_program_sha256": "d18640b6f3ede299814822289d43afd8493fc7d534a70c146d781a22f8538152"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0d010b00200041ffffffff076c0b",
+      "canonical_source_wasm_sha256": "b0f28a880cf3d3045759355ae6b1bb3dceaf91a016de4bbf46dc0a9c57a6d490",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": 2147483647,
+          "opcode": "i32.const"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.mul"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "max_multiplier",
+      "program_tokens_sha256": "5763e9d5bf41f13c584af164098542d53ddb40d5f8775504e4a0ff1000ae0322",
+      "typed_program_sha256": "0bae0b4f29ef1aba5ececbe062cf46cf4ec3dd0f039926a40180f476965d509f"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0d010b0041808080807820006a0b",
+      "canonical_source_wasm_sha256": "d7d9a5cd7fd3f06fc35dbed7292231d566e3a25e01f6ba891aec5b19398f7a4e",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": -2147483648,
+          "opcode": "i32.const"
+        },
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.add"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "minimum_constant",
+      "program_tokens_sha256": "96265d0e9989aba2dd10f94f69b48e68ab03c475fe604c03e9a27e224d44affa",
+      "typed_program_sha256": "47fb88b9523ac6caa8beb870ee879e3acfb47ea1ac60ac3a6537990e1aab359f"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0901070020004100480b",
+      "canonical_source_wasm_sha256": "7904fe87877396b9ce90ef7fb53ed815709f6071fcfd04b25e871b09f179fdcb",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": 0,
+          "opcode": "i32.const"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.lt_s"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "signed_lt",
+      "program_tokens_sha256": "3113b90eb1bb259f3652e2caadbbd04ae9b3175198374fd84754dfad7a0b7139",
+      "typed_program_sha256": "ace3d648d71383264257347a0f4b50963984009a603ebe134a7a5ef86515e175"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a090107002000417e4a0b",
+      "canonical_source_wasm_sha256": "e4b2b15048f0d9449fa4eb9a86c711ca25565f9f71139cac3916319dd117c628",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": -2,
+          "opcode": "i32.const"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.gt_s"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "signed_gt",
+      "program_tokens_sha256": "83a9286474bcb48b4f681af1b55358648fb9748d375613ef68c406580165d9ad",
+      "typed_program_sha256": "e81a15b240431a51ab3943f4eb8e8375067208825d49e617956fbb80f68c32ca"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a070105002000450b",
+      "canonical_source_wasm_sha256": "6896a7c05f3fcd7ab75970defc5a3481b1e592e925845f5534b63681693ae186",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.eqz"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "zero",
+      "program_tokens_sha256": "5e044d83d0e170d3a63ff64a6832230f6806c47d91d60f11b311c347d14b3e58",
+      "typed_program_sha256": "b339dae7d3d6b9478cd19f1159f07495288390eb64b436165ba95f06bdc216f4"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a14011201027f20002101200141026c220220026a0b",
+      "canonical_source_wasm_sha256": "ae15d84c4442a2a78d9fe279c60e120bfbedbe8633e99c13211b5d81af9e170b",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": 1,
+          "opcode": "local.set"
+        },
+        {
+          "immediate": 1,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": 2,
+          "opcode": "i32.const"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.mul"
+        },
+        {
+          "immediate": 2,
+          "opcode": "local.tee"
+        },
+        {
+          "immediate": 2,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": null,
+          "opcode": "i32.add"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "local_tee",
+      "program_tokens_sha256": "e89e4fd855df8351fd973372016ddd3db94600a51463906937398bbba85f390f",
+      "typed_program_sha256": "2a939c7f8425ff20e9b44b0aa97d5d1890b8e093a67eadbc7c8218113a1c6983"
+    },
+    {
+      "canonical_source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a09010700200041131a0b",
+      "canonical_source_wasm_sha256": "378e331dac51b303cad34d1f60a8f5cfed7e92186425ca788a117751c4126196",
+      "fixed_interpreter_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+      "instructions": [
+        {
+          "immediate": 0,
+          "opcode": "local.get"
+        },
+        {
+          "immediate": 19,
+          "opcode": "i32.const"
+        },
+        {
+          "immediate": null,
+          "opcode": "drop"
+        },
+        {
+          "immediate": null,
+          "opcode": "end"
+        }
+      ],
+      "program": "drop",
+      "program_tokens_sha256": "b355d2385954ba931aaf8c0836da5267d791b70a89fa9e13399c7413f5dc7911",
+      "typed_program_sha256": "c62aad25b004a7c488ff87835d19680c4d7ec21a95bce2c53903d2eab38d59f8"
+    }
+  ],
+  "schema": "visuaml.full-width-i32-neural-circuit.v49",
+  "source_commit": "1b9a115d0f1b8032cc1d8498609464ab47b979ed",
+  "source_file_sha256": {
+    "scripts/probe_bit_neural_vm_v49.py": "58a5fdefec6d759285d4f8cca1312397b2aaa6ec4872c2499a46702b1aac4195",
+    "visuaml/compiler_lab/bit_neural_vm_v49.py": "b17dc58a4d378e722e4db501404d122fdbf5a795f0b1f61678a0c71a364ecb07",
+    "visuaml/compiler_lab/fixed_neural_token_vm_v48.py": "c0a140598738b4a87b49ec5fc3ab66c31004a075cb768b7cdd47ace83c58606c",
+    "visuaml/compiler_lab/wasm_state_vm_v40.py": "410375f7c5ae4e64c2863a8490cc7284eefc33b55eda0f6253bfac99e49b7577"
+  },
+  "standard_softmax_transformer_executed": false,
+  "total_output_witnesses": 286,
+  "total_stepwise_state_comparisons": 1196,
+  "wasmtime_version": "28.0.0",
+  "witnesses": [
+    {
+      "bit_neural_i32": -2147483648,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 1,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -2147483648,
+      "wasmtime_i32": -2147483648
+    },
+    {
+      "bit_neural_i32": -2147483647,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -2147483647,
+      "wasmtime_i32": -2147483647
+    },
+    {
+      "bit_neural_i32": -65536,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -65536,
+      "wasmtime_i32": -65536
+    },
+    {
+      "bit_neural_i32": -129,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -129,
+      "wasmtime_i32": -129
+    },
+    {
+      "bit_neural_i32": -128,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -128,
+      "wasmtime_i32": -128
+    },
+    {
+      "bit_neural_i32": -1,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -1,
+      "wasmtime_i32": -1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 1,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 2,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 2,
+      "wasmtime_i32": 2
+    },
+    {
+      "bit_neural_i32": 127,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 127,
+      "wasmtime_i32": 127
+    },
+    {
+      "bit_neural_i32": 128,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 128,
+      "wasmtime_i32": 128
+    },
+    {
+      "bit_neural_i32": 65535,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 65535,
+      "wasmtime_i32": 65535
+    },
+    {
+      "bit_neural_i32": 2147483646,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 2147483646,
+      "wasmtime_i32": 2147483646
+    },
+    {
+      "bit_neural_i32": 2147483647,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 1,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 2147483647,
+      "wasmtime_i32": 2147483647
+    },
+    {
+      "bit_neural_i32": -1964942320,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -1964942320,
+      "wasmtime_i32": -1964942320
+    },
+    {
+      "bit_neural_i32": -589036759,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -589036759,
+      "wasmtime_i32": -589036759
+    },
+    {
+      "bit_neural_i32": 1510642348,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 1510642348,
+      "wasmtime_i32": 1510642348
+    },
+    {
+      "bit_neural_i32": 400365083,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 400365083,
+      "wasmtime_i32": 400365083
+    },
+    {
+      "bit_neural_i32": -1947977056,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -1947977056,
+      "wasmtime_i32": -1947977056
+    },
+    {
+      "bit_neural_i32": -464070306,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -464070306,
+      "wasmtime_i32": -464070306
+    },
+    {
+      "bit_neural_i32": 84252032,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 84252032,
+      "wasmtime_i32": 84252032
+    },
+    {
+      "bit_neural_i32": 531284386,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 531284386,
+      "wasmtime_i32": 531284386
+    },
+    {
+      "bit_neural_i32": 1727054344,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 1727054344,
+      "wasmtime_i32": 1727054344
+    },
+    {
+      "bit_neural_i32": 669218937,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 669218937,
+      "wasmtime_i32": 669218937
+    },
+    {
+      "bit_neural_i32": 408341556,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": 408341556,
+      "wasmtime_i32": 408341556
+    },
+    {
+      "bit_neural_i32": -2089132817,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 2,
+      "pass": true,
+      "program": "identity",
+      "typed_reference_i32": -2089132817,
+      "wasmtime_i32": -2089132817
+    },
+    {
+      "bit_neural_i32": -2147483647,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": 1,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              1
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.add",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 3,
+            "stack": [
+              -2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.add",
+            "pc": 2,
+            "stack_after": [
+              -2147483647
+            ],
+            "stack_before": [
+              -2147483648,
+              1
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 4,
+            "stack": [
+              -2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              -2147483647
+            ],
+            "stack_before": [
+              -2147483647
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -2147483647,
+      "wasmtime_i32": -2147483647
+    },
+    {
+      "bit_neural_i32": -2147483646,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -2147483646,
+      "wasmtime_i32": -2147483646
+    },
+    {
+      "bit_neural_i32": -65535,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -65535,
+      "wasmtime_i32": -65535
+    },
+    {
+      "bit_neural_i32": -128,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -128,
+      "wasmtime_i32": -128
+    },
+    {
+      "bit_neural_i32": -127,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -127,
+      "wasmtime_i32": -127
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              0,
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": 1,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              0,
+              1
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.add",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.add",
+            "pc": 2,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              0,
+              1
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              1
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 2,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 2,
+      "wasmtime_i32": 2
+    },
+    {
+      "bit_neural_i32": 3,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 3,
+      "wasmtime_i32": 3
+    },
+    {
+      "bit_neural_i32": 128,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 128,
+      "wasmtime_i32": 128
+    },
+    {
+      "bit_neural_i32": 129,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 129,
+      "wasmtime_i32": 129
+    },
+    {
+      "bit_neural_i32": 65536,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 65536,
+      "wasmtime_i32": 65536
+    },
+    {
+      "bit_neural_i32": 2147483647,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 2147483647,
+      "wasmtime_i32": 2147483647
+    },
+    {
+      "bit_neural_i32": -2147483648,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              2147483647,
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": 1,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              2147483647,
+              1
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.add",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 3,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.add",
+            "pc": 2,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              2147483647,
+              1
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 4,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -2147483648,
+      "wasmtime_i32": -2147483648
+    },
+    {
+      "bit_neural_i32": -1964942319,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -1964942319,
+      "wasmtime_i32": -1964942319
+    },
+    {
+      "bit_neural_i32": -589036758,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -589036758,
+      "wasmtime_i32": -589036758
+    },
+    {
+      "bit_neural_i32": 1510642349,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 1510642349,
+      "wasmtime_i32": 1510642349
+    },
+    {
+      "bit_neural_i32": 400365084,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 400365084,
+      "wasmtime_i32": 400365084
+    },
+    {
+      "bit_neural_i32": -1947977055,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -1947977055,
+      "wasmtime_i32": -1947977055
+    },
+    {
+      "bit_neural_i32": -464070305,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -464070305,
+      "wasmtime_i32": -464070305
+    },
+    {
+      "bit_neural_i32": 84252033,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 84252033,
+      "wasmtime_i32": 84252033
+    },
+    {
+      "bit_neural_i32": 531284387,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 531284387,
+      "wasmtime_i32": 531284387
+    },
+    {
+      "bit_neural_i32": 1727054345,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 1727054345,
+      "wasmtime_i32": 1727054345
+    },
+    {
+      "bit_neural_i32": 669218938,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 669218938,
+      "wasmtime_i32": 669218938
+    },
+    {
+      "bit_neural_i32": 408341557,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": 408341557,
+      "wasmtime_i32": 408341557
+    },
+    {
+      "bit_neural_i32": -2089132816,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "overflow_add",
+      "typed_reference_i32": -2089132816,
+      "wasmtime_i32": -2089132816
+    },
+    {
+      "bit_neural_i32": -2147483647,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              -1
+            ]
+          },
+          "typed_transition": {
+            "immediate": -1,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              -1
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.sub",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 3,
+            "stack": [
+              -2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.sub",
+            "pc": 2,
+            "stack_after": [
+              -2147483647
+            ],
+            "stack_before": [
+              -2147483648,
+              -1
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 4,
+            "stack": [
+              -2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              -2147483647
+            ],
+            "stack_before": [
+              -2147483647
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -2147483647,
+      "wasmtime_i32": -2147483647
+    },
+    {
+      "bit_neural_i32": -2147483646,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -2147483646,
+      "wasmtime_i32": -2147483646
+    },
+    {
+      "bit_neural_i32": -65535,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -65535,
+      "wasmtime_i32": -65535
+    },
+    {
+      "bit_neural_i32": -128,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -128,
+      "wasmtime_i32": -128
+    },
+    {
+      "bit_neural_i32": -127,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -127,
+      "wasmtime_i32": -127
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              0,
+              -1
+            ]
+          },
+          "typed_transition": {
+            "immediate": -1,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              0,
+              -1
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.sub",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.sub",
+            "pc": 2,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              0,
+              -1
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              1
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 2,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 2,
+      "wasmtime_i32": 2
+    },
+    {
+      "bit_neural_i32": 3,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 3,
+      "wasmtime_i32": 3
+    },
+    {
+      "bit_neural_i32": 128,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 128,
+      "wasmtime_i32": 128
+    },
+    {
+      "bit_neural_i32": 129,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 129,
+      "wasmtime_i32": 129
+    },
+    {
+      "bit_neural_i32": 65536,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 65536,
+      "wasmtime_i32": 65536
+    },
+    {
+      "bit_neural_i32": 2147483647,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 2147483647,
+      "wasmtime_i32": 2147483647
+    },
+    {
+      "bit_neural_i32": -2147483648,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              2147483647,
+              -1
+            ]
+          },
+          "typed_transition": {
+            "immediate": -1,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              2147483647,
+              -1
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.sub",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 3,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.sub",
+            "pc": 2,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              2147483647,
+              -1
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 4,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -2147483648,
+      "wasmtime_i32": -2147483648
+    },
+    {
+      "bit_neural_i32": -1964942319,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -1964942319,
+      "wasmtime_i32": -1964942319
+    },
+    {
+      "bit_neural_i32": -589036758,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -589036758,
+      "wasmtime_i32": -589036758
+    },
+    {
+      "bit_neural_i32": 1510642349,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 1510642349,
+      "wasmtime_i32": 1510642349
+    },
+    {
+      "bit_neural_i32": 400365084,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 400365084,
+      "wasmtime_i32": 400365084
+    },
+    {
+      "bit_neural_i32": -1947977055,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -1947977055,
+      "wasmtime_i32": -1947977055
+    },
+    {
+      "bit_neural_i32": -464070305,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -464070305,
+      "wasmtime_i32": -464070305
+    },
+    {
+      "bit_neural_i32": 84252033,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 84252033,
+      "wasmtime_i32": 84252033
+    },
+    {
+      "bit_neural_i32": 531284387,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 531284387,
+      "wasmtime_i32": 531284387
+    },
+    {
+      "bit_neural_i32": 1727054345,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 1727054345,
+      "wasmtime_i32": 1727054345
+    },
+    {
+      "bit_neural_i32": 669218938,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 669218938,
+      "wasmtime_i32": 669218938
+    },
+    {
+      "bit_neural_i32": 408341557,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": 408341557,
+      "wasmtime_i32": 408341557
+    },
+    {
+      "bit_neural_i32": -2089132816,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "borrow_sub",
+      "typed_reference_i32": -2089132816,
+      "wasmtime_i32": -2089132816
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.mul",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.mul",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              -2147483648,
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 4,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 16641,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 16641,
+      "wasmtime_i32": 16641
+    },
+    {
+      "bit_neural_i32": 16384,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 16384,
+      "wasmtime_i32": 16384
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              0,
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 1,
+            "stack_after": [
+              0,
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.mul",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.mul",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0,
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 4,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 4,
+      "wasmtime_i32": 4
+    },
+    {
+      "bit_neural_i32": 16129,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 16129,
+      "wasmtime_i32": 16129
+    },
+    {
+      "bit_neural_i32": 16384,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 16384,
+      "wasmtime_i32": 16384
+    },
+    {
+      "bit_neural_i32": -131071,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": -131071,
+      "wasmtime_i32": -131071
+    },
+    {
+      "bit_neural_i32": 4,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 4,
+      "wasmtime_i32": 4
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              2147483647,
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 1,
+            "stack_after": [
+              2147483647,
+              2147483647
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.mul",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 3,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.mul",
+            "pc": 2,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              2147483647,
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 4,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              1
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 893092096,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 893092096,
+      "wasmtime_i32": 893092096
+    },
+    {
+      "bit_neural_i32": 420609169,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 420609169,
+      "wasmtime_i32": 420609169
+    },
+    {
+      "bit_neural_i32": -1183276144,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": -1183276144,
+      "wasmtime_i32": -1183276144
+    },
+    {
+      "bit_neural_i32": 109487833,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 109487833,
+      "wasmtime_i32": 109487833
+    },
+    {
+      "bit_neural_i32": 980214784,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 980214784,
+      "wasmtime_i32": 980214784
+    },
+    {
+      "bit_neural_i32": 867729028,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 867729028,
+      "wasmtime_i32": 867729028
+    },
+    {
+      "bit_neural_i32": 776880128,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 776880128,
+      "wasmtime_i32": 776880128
+    },
+    {
+      "bit_neural_i32": -107107708,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": -107107708,
+      "wasmtime_i32": -107107708
+    },
+    {
+      "bit_neural_i32": -1039130560,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": -1039130560,
+      "wasmtime_i32": -1039130560
+    },
+    {
+      "bit_neural_i32": -1119377103,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": -1119377103,
+      "wasmtime_i32": -1119377103
+    },
+    {
+      "bit_neural_i32": -1781339504,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": -1781339504,
+      "wasmtime_i32": -1781339504
+    },
+    {
+      "bit_neural_i32": 1334355745,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "square",
+      "typed_reference_i32": 1334355745,
+      "wasmtime_i32": 1334355745
+    },
+    {
+      "bit_neural_i32": -2147483648,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2147483647,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              2147483647
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.mul",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 3,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.mul",
+            "pc": 2,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648,
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 4,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -2147483648,
+      "wasmtime_i32": -2147483648
+    },
+    {
+      "bit_neural_i32": -1,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -1,
+      "wasmtime_i32": -1
+    },
+    {
+      "bit_neural_i32": 65536,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 65536,
+      "wasmtime_i32": 65536
+    },
+    {
+      "bit_neural_i32": -2147483519,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -2147483519,
+      "wasmtime_i32": -2147483519
+    },
+    {
+      "bit_neural_i32": 128,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 128,
+      "wasmtime_i32": 128
+    },
+    {
+      "bit_neural_i32": -2147483647,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -2147483647,
+      "wasmtime_i32": -2147483647
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              0,
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2147483647,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              0,
+              2147483647
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.mul",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.mul",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0,
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 2147483647,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 2147483647,
+      "wasmtime_i32": 2147483647
+    },
+    {
+      "bit_neural_i32": -2,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -2,
+      "wasmtime_i32": -2
+    },
+    {
+      "bit_neural_i32": 2147483521,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 2147483521,
+      "wasmtime_i32": 2147483521
+    },
+    {
+      "bit_neural_i32": -128,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -128,
+      "wasmtime_i32": -128
+    },
+    {
+      "bit_neural_i32": 2147418113,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 2147418113,
+      "wasmtime_i32": 2147418113
+    },
+    {
+      "bit_neural_i32": -2147483646,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -2147483646,
+      "wasmtime_i32": -2147483646
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              2147483647,
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2147483647,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              2147483647,
+              2147483647
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.mul",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 3,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.mul",
+            "pc": 2,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              2147483647,
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 4,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              1
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1964942320,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 1964942320,
+      "wasmtime_i32": 1964942320
+    },
+    {
+      "bit_neural_i32": -1558446889,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -1558446889,
+      "wasmtime_i32": -1558446889
+    },
+    {
+      "bit_neural_i32": -1510642348,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -1510642348,
+      "wasmtime_i32": -1510642348
+    },
+    {
+      "bit_neural_i32": 1747118565,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 1747118565,
+      "wasmtime_i32": 1747118565
+    },
+    {
+      "bit_neural_i32": 1947977056,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 1947977056,
+      "wasmtime_i32": 1947977056
+    },
+    {
+      "bit_neural_i32": 464070306,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 464070306,
+      "wasmtime_i32": 464070306
+    },
+    {
+      "bit_neural_i32": -84252032,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -84252032,
+      "wasmtime_i32": -84252032
+    },
+    {
+      "bit_neural_i32": -531284386,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -531284386,
+      "wasmtime_i32": -531284386
+    },
+    {
+      "bit_neural_i32": -1727054344,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -1727054344,
+      "wasmtime_i32": -1727054344
+    },
+    {
+      "bit_neural_i32": 1478264711,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": 1478264711,
+      "wasmtime_i32": 1478264711
+    },
+    {
+      "bit_neural_i32": -408341556,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -408341556,
+      "wasmtime_i32": -408341556
+    },
+    {
+      "bit_neural_i32": -58350831,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "max_multiplier",
+      "typed_reference_i32": -58350831,
+      "wasmtime_i32": -58350831
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": -2147483648,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.const",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.add",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.add",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              -2147483648,
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 4,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 2147418112,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 2147418112,
+      "wasmtime_i32": 2147418112
+    },
+    {
+      "bit_neural_i32": 2147483519,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 2147483519,
+      "wasmtime_i32": 2147483519
+    },
+    {
+      "bit_neural_i32": 2147483520,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 2147483520,
+      "wasmtime_i32": 2147483520
+    },
+    {
+      "bit_neural_i32": 2147483647,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 2147483647,
+      "wasmtime_i32": 2147483647
+    },
+    {
+      "bit_neural_i32": -2147483648,
+      "full_step_trace": [
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": -2147483648,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              0
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.add",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.add",
+            "pc": 2,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648,
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -2147483648,
+      "wasmtime_i32": -2147483648
+    },
+    {
+      "bit_neural_i32": -2147483647,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -2147483647,
+      "wasmtime_i32": -2147483647
+    },
+    {
+      "bit_neural_i32": -2147483646,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -2147483646,
+      "wasmtime_i32": -2147483646
+    },
+    {
+      "bit_neural_i32": -2147483521,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -2147483521,
+      "wasmtime_i32": -2147483521
+    },
+    {
+      "bit_neural_i32": -2147483520,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -2147483520,
+      "wasmtime_i32": -2147483520
+    },
+    {
+      "bit_neural_i32": -2147418113,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -2147418113,
+      "wasmtime_i32": -2147418113
+    },
+    {
+      "bit_neural_i32": -2,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -2,
+      "wasmtime_i32": -2
+    },
+    {
+      "bit_neural_i32": -1,
+      "full_step_trace": [
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": -2147483648,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.const",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              2147483647
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.add",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 3,
+            "stack": [
+              -1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.add",
+            "pc": 2,
+            "stack_after": [
+              -1
+            ],
+            "stack_before": [
+              -2147483648,
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 4,
+            "stack": [
+              -1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              -1
+            ],
+            "stack_before": [
+              -1
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -1,
+      "wasmtime_i32": -1
+    },
+    {
+      "bit_neural_i32": 182541328,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 182541328,
+      "wasmtime_i32": 182541328
+    },
+    {
+      "bit_neural_i32": 1558446889,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 1558446889,
+      "wasmtime_i32": 1558446889
+    },
+    {
+      "bit_neural_i32": -636841300,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -636841300,
+      "wasmtime_i32": -636841300
+    },
+    {
+      "bit_neural_i32": -1747118565,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -1747118565,
+      "wasmtime_i32": -1747118565
+    },
+    {
+      "bit_neural_i32": 199506592,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 199506592,
+      "wasmtime_i32": 199506592
+    },
+    {
+      "bit_neural_i32": 1683413342,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 1683413342,
+      "wasmtime_i32": 1683413342
+    },
+    {
+      "bit_neural_i32": -2063231616,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -2063231616,
+      "wasmtime_i32": -2063231616
+    },
+    {
+      "bit_neural_i32": -1616199262,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -1616199262,
+      "wasmtime_i32": -1616199262
+    },
+    {
+      "bit_neural_i32": -420429304,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -420429304,
+      "wasmtime_i32": -420429304
+    },
+    {
+      "bit_neural_i32": -1478264711,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -1478264711,
+      "wasmtime_i32": -1478264711
+    },
+    {
+      "bit_neural_i32": -1739142092,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": -1739142092,
+      "wasmtime_i32": -1739142092
+    },
+    {
+      "bit_neural_i32": 58350831,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "minimum_constant",
+      "typed_reference_i32": 58350831,
+      "wasmtime_i32": 58350831
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              0
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.lt_s",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 3,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.lt_s",
+            "pc": 2,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              -2147483648,
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 4,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              1
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              0,
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              0,
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.lt_s",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.lt_s",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0,
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              2147483647,
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              2147483647,
+              0
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.lt_s",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.lt_s",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              2147483647,
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 4,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_lt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              -2
+            ]
+          },
+          "typed_transition": {
+            "immediate": -2,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              -2
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.gt_s",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.gt_s",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              -2147483648,
+              -2
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 4,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              0,
+              -2
+            ]
+          },
+          "typed_transition": {
+            "immediate": -2,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              0,
+              -2
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.gt_s",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.gt_s",
+            "pc": 2,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              0,
+              -2
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              1
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              2147483647,
+              -2
+            ]
+          },
+          "typed_transition": {
+            "immediate": -2,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              2147483647,
+              -2
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.gt_s",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 3,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.gt_s",
+            "pc": 2,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              2147483647,
+              -2
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 4,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              1
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "signed_gt",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.eqz",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.eqz",
+            "pc": 1,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.eqz",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.eqz",
+            "pc": 1,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              1
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 2,
+            "stack_after": [
+              1
+            ],
+            "stack_before": [
+              1
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.eqz",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.eqz",
+            "pc": 1,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 3,
+      "pass": true,
+      "program": "zero",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648,
+              0,
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648,
+              0,
+              0
+            ],
+            "locals_before": [
+              -2147483648,
+              0,
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.set",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "pc": 2,
+            "stack": []
+          },
+          "typed_transition": {
+            "immediate": 1,
+            "locals_after": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "locals_before": [
+              -2147483648,
+              0,
+              0
+            ],
+            "opcode": "local.set",
+            "pc": 1,
+            "stack_after": [],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": 1
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 1,
+            "locals_after": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "locals_before": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 2,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              -2147483648,
+              2
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2,
+            "locals_after": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "locals_before": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 3,
+            "stack_after": [
+              -2147483648,
+              2
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.mul",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "pc": 5,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "locals_before": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "opcode": "i32.mul",
+            "pc": 4,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              -2147483648,
+              2
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.tee",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "pc": 6,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2,
+            "locals_after": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "locals_before": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "opcode": "local.tee",
+            "pc": 5,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": 2
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "pc": 7,
+            "stack": [
+              0,
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2,
+            "locals_after": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "locals_before": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 6,
+            "stack_after": [
+              0,
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.add",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "pc": 8,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "locals_before": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "opcode": "i32.add",
+            "pc": 7,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0,
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "pc": 9,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "locals_before": [
+              -2147483648,
+              -2147483648,
+              0
+            ],
+            "opcode": "end",
+            "pc": 8,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 4,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 4,
+      "wasmtime_i32": 4
+    },
+    {
+      "bit_neural_i32": -262144,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": -262144,
+      "wasmtime_i32": -262144
+    },
+    {
+      "bit_neural_i32": -516,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": -516,
+      "wasmtime_i32": -516
+    },
+    {
+      "bit_neural_i32": -512,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": -512,
+      "wasmtime_i32": -512
+    },
+    {
+      "bit_neural_i32": -4,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": -4,
+      "wasmtime_i32": -4
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0,
+              0,
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0,
+              0,
+              0
+            ],
+            "locals_before": [
+              0,
+              0,
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.set",
+          "state": {
+            "halted": false,
+            "locals": [
+              0,
+              0,
+              0
+            ],
+            "pc": 2,
+            "stack": []
+          },
+          "typed_transition": {
+            "immediate": 1,
+            "locals_after": [
+              0,
+              0,
+              0
+            ],
+            "locals_before": [
+              0,
+              0,
+              0
+            ],
+            "opcode": "local.set",
+            "pc": 1,
+            "stack_after": [],
+            "stack_before": [
+              0
+            ],
+            "writes_local": 1
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0,
+              0,
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 1,
+            "locals_after": [
+              0,
+              0,
+              0
+            ],
+            "locals_before": [
+              0,
+              0,
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              0,
+              0,
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              0,
+              2
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2,
+            "locals_after": [
+              0,
+              0,
+              0
+            ],
+            "locals_before": [
+              0,
+              0,
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 3,
+            "stack_after": [
+              0,
+              2
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.mul",
+          "state": {
+            "halted": false,
+            "locals": [
+              0,
+              0,
+              0
+            ],
+            "pc": 5,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0,
+              0,
+              0
+            ],
+            "locals_before": [
+              0,
+              0,
+              0
+            ],
+            "opcode": "i32.mul",
+            "pc": 4,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0,
+              2
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.tee",
+          "state": {
+            "halted": false,
+            "locals": [
+              0,
+              0,
+              0
+            ],
+            "pc": 6,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2,
+            "locals_after": [
+              0,
+              0,
+              0
+            ],
+            "locals_before": [
+              0,
+              0,
+              0
+            ],
+            "opcode": "local.tee",
+            "pc": 5,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": 2
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0,
+              0,
+              0
+            ],
+            "pc": 7,
+            "stack": [
+              0,
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2,
+            "locals_after": [
+              0,
+              0,
+              0
+            ],
+            "locals_before": [
+              0,
+              0,
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 6,
+            "stack_after": [
+              0,
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.add",
+          "state": {
+            "halted": false,
+            "locals": [
+              0,
+              0,
+              0
+            ],
+            "pc": 8,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0,
+              0,
+              0
+            ],
+            "locals_before": [
+              0,
+              0,
+              0
+            ],
+            "opcode": "i32.add",
+            "pc": 7,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0,
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0,
+              0,
+              0
+            ],
+            "pc": 9,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0,
+              0,
+              0
+            ],
+            "locals_before": [
+              0,
+              0,
+              0
+            ],
+            "opcode": "end",
+            "pc": 8,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 4,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 4,
+      "wasmtime_i32": 4
+    },
+    {
+      "bit_neural_i32": 8,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 8,
+      "wasmtime_i32": 8
+    },
+    {
+      "bit_neural_i32": 508,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 508,
+      "wasmtime_i32": 508
+    },
+    {
+      "bit_neural_i32": 512,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 512,
+      "wasmtime_i32": 512
+    },
+    {
+      "bit_neural_i32": 262140,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 262140,
+      "wasmtime_i32": 262140
+    },
+    {
+      "bit_neural_i32": -8,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": -8,
+      "wasmtime_i32": -8
+    },
+    {
+      "bit_neural_i32": -4,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647,
+              0,
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647,
+              0,
+              0
+            ],
+            "locals_before": [
+              2147483647,
+              0,
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.set",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "pc": 2,
+            "stack": []
+          },
+          "typed_transition": {
+            "immediate": 1,
+            "locals_after": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "locals_before": [
+              2147483647,
+              0,
+              0
+            ],
+            "opcode": "local.set",
+            "pc": 1,
+            "stack_after": [],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": 1
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 1,
+            "locals_after": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "locals_before": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 2,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              2147483647,
+              2
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2,
+            "locals_after": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "locals_before": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 3,
+            "stack_after": [
+              2147483647,
+              2
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.mul",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "pc": 5,
+            "stack": [
+              -2
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "locals_before": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "opcode": "i32.mul",
+            "pc": 4,
+            "stack_after": [
+              -2
+            ],
+            "stack_before": [
+              2147483647,
+              2
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "local.tee",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "pc": 6,
+            "stack": [
+              -2
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2,
+            "locals_after": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "locals_before": [
+              2147483647,
+              2147483647,
+              0
+            ],
+            "opcode": "local.tee",
+            "pc": 5,
+            "stack_after": [
+              -2
+            ],
+            "stack_before": [
+              -2
+            ],
+            "writes_local": 2
+          }
+        },
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "pc": 7,
+            "stack": [
+              -2,
+              -2
+            ]
+          },
+          "typed_transition": {
+            "immediate": 2,
+            "locals_after": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "locals_before": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "opcode": "local.get",
+            "pc": 6,
+            "stack_after": [
+              -2,
+              -2
+            ],
+            "stack_before": [
+              -2
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.add",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "pc": 8,
+            "stack": [
+              -4
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "locals_before": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "opcode": "i32.add",
+            "pc": 7,
+            "stack_after": [
+              -4
+            ],
+            "stack_before": [
+              -2,
+              -2
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "pc": 9,
+            "stack": [
+              -4
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "locals_before": [
+              2147483647,
+              2147483647,
+              -2
+            ],
+            "opcode": "end",
+            "pc": 8,
+            "stack_after": [
+              -4
+            ],
+            "stack_before": [
+              -4
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": -4,
+      "wasmtime_i32": -4
+    },
+    {
+      "bit_neural_i32": 730165312,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 730165312,
+      "wasmtime_i32": 730165312
+    },
+    {
+      "bit_neural_i32": 1938820260,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 1938820260,
+      "wasmtime_i32": 1938820260
+    },
+    {
+      "bit_neural_i32": 1747602096,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 1747602096,
+      "wasmtime_i32": 1747602096
+    },
+    {
+      "bit_neural_i32": 1601460332,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 1601460332,
+      "wasmtime_i32": 1601460332
+    },
+    {
+      "bit_neural_i32": 798026368,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 798026368,
+      "wasmtime_i32": 798026368
+    },
+    {
+      "bit_neural_i32": -1856281224,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": -1856281224,
+      "wasmtime_i32": -1856281224
+    },
+    {
+      "bit_neural_i32": 337008128,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 337008128,
+      "wasmtime_i32": 337008128
+    },
+    {
+      "bit_neural_i32": 2125137544,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 2125137544,
+      "wasmtime_i32": 2125137544
+    },
+    {
+      "bit_neural_i32": -1681717216,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": -1681717216,
+      "wasmtime_i32": -1681717216
+    },
+    {
+      "bit_neural_i32": -1618091548,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": -1618091548,
+      "wasmtime_i32": -1618091548
+    },
+    {
+      "bit_neural_i32": 1633366224,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 1633366224,
+      "wasmtime_i32": 1633366224
+    },
+    {
+      "bit_neural_i32": 233403324,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 9,
+      "pass": true,
+      "program": "local_tee",
+      "typed_reference_i32": 233403324,
+      "wasmtime_i32": 233403324
+    },
+    {
+      "bit_neural_i32": -2147483648,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 1,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 2,
+            "stack": [
+              -2147483648,
+              19
+            ]
+          },
+          "typed_transition": {
+            "immediate": 19,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              -2147483648,
+              19
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "drop",
+          "state": {
+            "halted": false,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 3,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "drop",
+            "pc": 2,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648,
+              19
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              -2147483648
+            ],
+            "pc": 4,
+            "stack": [
+              -2147483648
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              -2147483648
+            ],
+            "locals_before": [
+              -2147483648
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              -2147483648
+            ],
+            "stack_before": [
+              -2147483648
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": -2147483648,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -2147483648,
+      "wasmtime_i32": -2147483648
+    },
+    {
+      "bit_neural_i32": -2147483647,
+      "full_step_trace": [],
+      "input_i32": -2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -2147483647,
+      "wasmtime_i32": -2147483647
+    },
+    {
+      "bit_neural_i32": -65536,
+      "full_step_trace": [],
+      "input_i32": -65536,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -65536,
+      "wasmtime_i32": -65536
+    },
+    {
+      "bit_neural_i32": -129,
+      "full_step_trace": [],
+      "input_i32": -129,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -129,
+      "wasmtime_i32": -129
+    },
+    {
+      "bit_neural_i32": -128,
+      "full_step_trace": [],
+      "input_i32": -128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -128,
+      "wasmtime_i32": -128
+    },
+    {
+      "bit_neural_i32": -1,
+      "full_step_trace": [],
+      "input_i32": -1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -1,
+      "wasmtime_i32": -1
+    },
+    {
+      "bit_neural_i32": 0,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 1,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 2,
+            "stack": [
+              0,
+              19
+            ]
+          },
+          "typed_transition": {
+            "immediate": 19,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              0,
+              19
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "drop",
+          "state": {
+            "halted": false,
+            "locals": [
+              0
+            ],
+            "pc": 3,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "drop",
+            "pc": 2,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0,
+              19
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              0
+            ],
+            "pc": 4,
+            "stack": [
+              0
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              0
+            ],
+            "locals_before": [
+              0
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              0
+            ],
+            "stack_before": [
+              0
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 0,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 0,
+      "wasmtime_i32": 0
+    },
+    {
+      "bit_neural_i32": 1,
+      "full_step_trace": [],
+      "input_i32": 1,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 1,
+      "wasmtime_i32": 1
+    },
+    {
+      "bit_neural_i32": 2,
+      "full_step_trace": [],
+      "input_i32": 2,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 2,
+      "wasmtime_i32": 2
+    },
+    {
+      "bit_neural_i32": 127,
+      "full_step_trace": [],
+      "input_i32": 127,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 127,
+      "wasmtime_i32": 127
+    },
+    {
+      "bit_neural_i32": 128,
+      "full_step_trace": [],
+      "input_i32": 128,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 128,
+      "wasmtime_i32": 128
+    },
+    {
+      "bit_neural_i32": 65535,
+      "full_step_trace": [],
+      "input_i32": 65535,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 65535,
+      "wasmtime_i32": 65535
+    },
+    {
+      "bit_neural_i32": 2147483646,
+      "full_step_trace": [],
+      "input_i32": 2147483646,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 2147483646,
+      "wasmtime_i32": 2147483646
+    },
+    {
+      "bit_neural_i32": 2147483647,
+      "full_step_trace": [
+        {
+          "opcode": "local.get",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 1,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": 0,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "local.get",
+            "pc": 0,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "i32.const",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 2,
+            "stack": [
+              2147483647,
+              19
+            ]
+          },
+          "typed_transition": {
+            "immediate": 19,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "i32.const",
+            "pc": 1,
+            "stack_after": [
+              2147483647,
+              19
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "drop",
+          "state": {
+            "halted": false,
+            "locals": [
+              2147483647
+            ],
+            "pc": 3,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "drop",
+            "pc": 2,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [
+              2147483647,
+              19
+            ],
+            "writes_local": null
+          }
+        },
+        {
+          "opcode": "end",
+          "state": {
+            "halted": true,
+            "locals": [
+              2147483647
+            ],
+            "pc": 4,
+            "stack": [
+              2147483647
+            ]
+          },
+          "typed_transition": {
+            "immediate": null,
+            "locals_after": [
+              2147483647
+            ],
+            "locals_before": [
+              2147483647
+            ],
+            "opcode": "end",
+            "pc": 3,
+            "stack_after": [
+              2147483647
+            ],
+            "stack_before": [
+              2147483647
+            ],
+            "writes_local": null
+          }
+        }
+      ],
+      "input_i32": 2147483647,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 2147483647,
+      "wasmtime_i32": 2147483647
+    },
+    {
+      "bit_neural_i32": -1964942320,
+      "full_step_trace": [],
+      "input_i32": -1964942320,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -1964942320,
+      "wasmtime_i32": -1964942320
+    },
+    {
+      "bit_neural_i32": -589036759,
+      "full_step_trace": [],
+      "input_i32": -589036759,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -589036759,
+      "wasmtime_i32": -589036759
+    },
+    {
+      "bit_neural_i32": 1510642348,
+      "full_step_trace": [],
+      "input_i32": 1510642348,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 1510642348,
+      "wasmtime_i32": 1510642348
+    },
+    {
+      "bit_neural_i32": 400365083,
+      "full_step_trace": [],
+      "input_i32": 400365083,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 400365083,
+      "wasmtime_i32": 400365083
+    },
+    {
+      "bit_neural_i32": -1947977056,
+      "full_step_trace": [],
+      "input_i32": -1947977056,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -1947977056,
+      "wasmtime_i32": -1947977056
+    },
+    {
+      "bit_neural_i32": -464070306,
+      "full_step_trace": [],
+      "input_i32": -464070306,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -464070306,
+      "wasmtime_i32": -464070306
+    },
+    {
+      "bit_neural_i32": 84252032,
+      "full_step_trace": [],
+      "input_i32": 84252032,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 84252032,
+      "wasmtime_i32": 84252032
+    },
+    {
+      "bit_neural_i32": 531284386,
+      "full_step_trace": [],
+      "input_i32": 531284386,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 531284386,
+      "wasmtime_i32": 531284386
+    },
+    {
+      "bit_neural_i32": 1727054344,
+      "full_step_trace": [],
+      "input_i32": 1727054344,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 1727054344,
+      "wasmtime_i32": 1727054344
+    },
+    {
+      "bit_neural_i32": 669218937,
+      "full_step_trace": [],
+      "input_i32": 669218937,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 669218937,
+      "wasmtime_i32": 669218937
+    },
+    {
+      "bit_neural_i32": 408341556,
+      "full_step_trace": [],
+      "input_i32": 408341556,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": 408341556,
+      "wasmtime_i32": 408341556
+    },
+    {
+      "bit_neural_i32": -2089132817,
+      "full_step_trace": [],
+      "input_i32": -2089132817,
+      "original_operation_steps": 4,
+      "pass": true,
+      "program": "drop",
+      "typed_reference_i32": -2089132817,
+      "wasmtime_i32": -2089132817
+    }
+  ]
+}
