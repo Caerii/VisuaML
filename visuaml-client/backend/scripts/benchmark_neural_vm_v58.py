@@ -31,6 +31,9 @@ from visuaml.compiler_lab.neural_alu_executor_v56 import (
 from visuaml.compiler_lab.neural_microop_executor_v57 import (
     execute_microop_routed_control,
 )
+from visuaml.compiler_lab.neural_microstep_executor_v58 import (
+    execute_microstep_control,
+)
 from visuaml.compiler_lab.typed_microop_ir_v57 import (
     compile_microop_tokens,
     construct_microop_weights,
@@ -47,7 +50,10 @@ from visuaml.compiler_lab.wasm_research_corpus_v57 import (
 
 
 SCHEMA = "visuaml.neural-wasm-benchmark.v58"
-ENGINES = ("host_v51", "alu_v56", "microop_v57", "wasmtime")
+ENGINES = (
+    "host_v51", "alu_v56", "microop_v57", "microstep_v58",
+    "wasmtime",
+)
 DEFAULT_INPUTS = (-(1 << 31), -17, -1, 0, 1, 19, (1 << 31)-1)
 
 
@@ -202,7 +208,22 @@ def run(
                 workload.program, argument, fuel=fuel,
                 microop_tokens=tokens,
             )
+            eligible = all(
+                op.opcode not in (
+                    "block", "loop", "if", "else", "br", "br_if", "return"
+                ) for op in workload.program.operations[:-1]
+            )
+            v58 = (
+                execute_microstep_control(
+                    workload.program, argument, fuel=fuel,
+                    program_tokens=tokens,
+                ) if eligible else None
+            )
             native = wasm_function(store, argument)
+            if v58 is not None and v58.result_i32 != v57.result_i32:
+                raise AssertionError(
+                    (workload.name, argument, "v58 result disagreement")
+                )
             if not (v51.value == v56.result_i32 == v57.result_i32
                     == native):
                 raise AssertionError(
@@ -223,6 +244,20 @@ def run(
                         raise AssertionError(
                             (workload.name, argument, n, key)
                         )
+            if v58 is not None:
+                if v58.steps != v57.steps:
+                    raise AssertionError((workload.name, argument, "v58 steps"))
+                for i, (new, old) in enumerate(zip(
+                    v58.trace, v57.trace, strict=True
+                )):
+                    for key in (
+                        "pc", "next_pc", "opcode", "stack_i32",
+                        "locals_i32", "control_labels", "halted",
+                    ):
+                        if new[key] != old[key]:
+                            raise AssertionError(
+                                (workload.name, argument, i, key, "v58 mismatch")
+                            )
             actions = {
                 "host_v51": lambda: execute_control(
                     workload.program, argument, fuel=fuel,
@@ -236,6 +271,11 @@ def run(
                 ),
                 "wasmtime": lambda: wasm_function(store, argument),
             }
+            if eligible:
+                actions["microstep_v58"] = lambda: execute_microstep_control(
+                    workload.program, argument, fuel=fuel,
+                    program_tokens=tokens,
+                )
             measurements = {
                 name: measure(action, warmups=warmups, repeats=repeats)
                 for name, action in actions.items()
@@ -258,6 +298,11 @@ def run(
             "source_program_sha256": workload.program.digest(),
             "source_wasm_size_bytes": len(source),
             "source_instruction_count": len(workload.program.operations),
+            "microstep_v58_eligible": all(
+                op.opcode not in (
+                    "block", "loop", "if", "else", "br", "br_if", "return"
+                ) for op in workload.program.operations[:-1]
+            ),
             "opcode_histogram": {
                 key: sum(op.opcode == key for op in workload.program.operations)
                 for key in sorted({op.opcode for op in workload.program.operations})
@@ -282,6 +327,7 @@ def run(
             "same_hardware_comparisons_only": True,
             "performance_not_correctness_proof": True,
             "not_native_neural_hardware": True,
+            "v58_only_straightline_admitted": True,
         },
         "inventory": overall,
         "engines": list(ENGINES),
