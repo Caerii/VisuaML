@@ -1,7 +1,8 @@
 """v32 closed-world pure SemanticProgram -> generated C++17 CPU execution.
 
 This is the first *graph-generated* native path, unlike the fixed Llama decoder.
-Admits bounded static float32 SSA graphs with add/relu/matmul/conv2d only.
+Admits bounded static float32 SSA graphs, including v38's reshape,
+right-aligned broadcast addition, maxpool and explicit convolution geometry.
 Weights are explicit runtime inputs. No state effects, dynamic shapes, input
 alias mutation, user-supplied C++, arbitrary Python, or portable signed AOT.
 The native library is process-owned and is NOT an isolation sandbox.
@@ -34,7 +35,7 @@ _MAX_OPS = 64
 _MAX_ELEMENTS = 65_536
 _MAX_BYTES = 8 * 1024 * 1024
 _MAX_MULTIPLIES = 50_000_000
-_ALLOWED = frozenset({"matmul", "add", "relu", "conv2d"})
+_ALLOWED = frozenset({"matmul", "add", "relu", "conv2d", "reshape", "broadcast_add", "maxpool2d"})
 _PTRS = ctypes.POINTER(ctypes.c_void_p)
 
 
@@ -66,7 +67,7 @@ def _concrete(spec: ValueType) -> tuple[int, ...]:
         raise NativeIRCodegenError("Native v32 requires float32 ValueType")
     shape = spec.shape
     if not 1 <= len(shape) <= 4 or any(
-        type(d) is not int or not 1 <= d <= 128 for d in shape
+        type(d) is not int or not 1 <= d <= 512 for d in shape
     ):
         raise NativeIRCodegenError("Native v32 requires bounded concrete dimensions")
     elements = math.prod(shape)
@@ -79,6 +80,31 @@ def _concrete(spec: ValueType) -> tuple[int, ...]:
     return shape
 
 
+def _int_params(parameters: tuple) -> dict[str, int]:
+    if (not isinstance(parameters, tuple)
+            or any(not isinstance(p, tuple) or len(p) != 2
+                   or not isinstance(p[0], str) or type(p[1]) is not int
+                   for p in parameters)):
+        raise NativeIRCodegenError("Malformed integer operator parameters")
+    result = dict(parameters)
+    if len(result) != len(parameters):
+        raise NativeIRCodegenError("Duplicate operator parameter")
+    return result
+
+
+def _broadcast_index(shape: tuple[int, ...],
+                     out_shape: tuple[int, ...]) -> str:
+    aligned = (1,) * (len(out_shape) - len(shape)) + shape
+    terms = []
+    for axis, dim in enumerate(aligned):
+        if dim == 1:
+            continue
+        outer = math.prod(out_shape[axis + 1:])
+        src_stride = math.prod(aligned[axis + 1:])
+        terms.append(f"((i/{outer})%{out_shape[axis]})*{src_stride}")
+    return " + ".join(terms) if terms else "0"
+
+
 def _admit(program: SemanticProgram) -> _Plan:
     if not isinstance(program, SemanticProgram):
         raise NativeIRCodegenError("Expected SemanticProgram")
@@ -87,7 +113,7 @@ def _admit(program: SemanticProgram) -> _Plan:
     except ValueError as exc:
         raise NativeIRCodegenError("Invalid semantic envelope") from exc
     if (
-        program.origin != "torch-fx"
+        program.origin not in ("torch-fx", "onnx")
         or program.state_types
         or len(program.regions) != 1
         or program.regions[0].repetitions != 1
