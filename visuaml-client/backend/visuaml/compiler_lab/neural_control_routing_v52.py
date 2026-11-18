@@ -14,8 +14,7 @@ Program tables are data, not per-program trained interpreter weights.
 from __future__ import annotations
 
 import hashlib
-import json
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 
 import numpy as np
 
@@ -31,6 +30,8 @@ from .bit_neural_vm_v49 import (
     construct_bit_weights,
 )
 from .wasm_control_flow_v51 import (
+    _BINARY,
+    _BLOCKS,
     MAX_FUEL,
     MAX_OPERATIONS,
     MAX_STACK,
@@ -39,8 +40,6 @@ from .wasm_control_flow_v51 import (
     ControlFrame,
     ControlFuelExhausted,
     ControlProgram,
-    _BINARY,
-    _BLOCKS,
     _syntax,
     encode_control,
 )
