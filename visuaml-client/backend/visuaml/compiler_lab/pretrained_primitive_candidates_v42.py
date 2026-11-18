@@ -101,3 +101,42 @@ def intervention_metrics(base: np.ndarray, altered: np.ndarray) -> dict:
         "baseline_top1": [int(i) for i in np.argmax(base, axis=-1)],
         "modified_top1": [int(i) for i in np.argmax(altered, axis=-1)],
     }
+
+def select_compressed_rank(results: list[dict], *, full_rank: int,
+                           threshold: float = 0.05) -> dict:
+    """Predeclared selection: the unchanged full-rank control is not compression."""
+    if (type(full_rank) is not int or full_rank <= 1
+            or not 0 < threshold < 1):
+        raise PrimitiveCandidateError("Invalid rank-screening contract")
+    proposals = []
+    full_control = None
+    for result in results:
+        if result["construction"] != "truncated-svd":
+            continue
+        rank = result["rank"]
+        if type(rank) is not int or not 1 <= rank <= full_rank:
+            raise PrimitiveCandidateError("Invalid screened rank")
+        discovery = [w["numpy"] for w in result["witnesses"]
+                     if w["group"] == "discovery"]
+        heldout = [w["numpy"] for w in result["witnesses"]
+                   if w["group"] == "heldout"]
+        if len(discovery) != 5 or len(heldout) != 5:
+            raise PrimitiveCandidateError("Expected separate five-case sets")
+        passes = lambda cases: all(
+            x["top1_unchanged"]
+            and x["relative_l2_logit_change"] <= threshold
+            for x in cases
+        )
+        if rank == full_rank:
+            full_control = bool(passes(discovery) and passes(heldout))
+        elif passes(discovery):
+            proposals.append((rank, passes(heldout)))
+    if full_control is None:
+        raise PrimitiveCandidateError("Full-rank numerical control is required")
+    selected = min(proposals, key=lambda item: item[0]) if proposals else None
+    return {
+        "selected_rank": selected[0] if selected else None,
+        "heldout_pass": selected[1] if selected else False,
+        "compressed_candidate_accepted": bool(selected and selected[1]),
+        "full_rank_reconstruction_control_pass": full_control,
+    }
