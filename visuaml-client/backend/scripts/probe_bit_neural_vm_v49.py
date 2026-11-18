@@ -21,20 +21,22 @@ from pathlib import Path
 
 import numpy as np
 import wasmtime
-
 from visuaml.compiler_lab.bit_neural_vm_v49 import (
+    bit_step,
     construct_bit_weights,
     decode_state,
     decode_tokens,
     initial_state,
-    bit_step,
     tokenize,
 )
 from visuaml.compiler_lab.wasm_state_vm_v40 import (
-    I32Program, VMOperation, encode_program, execute_program,
-    initial_state as reference_initial,
-    step as reference_step,
+    I32Program,
+    VMOperation,
+    encode_program,
+    execute_program,
 )
+from visuaml.compiler_lab.wasm_state_vm_v40 import initial_state as reference_initial
+from visuaml.compiler_lab.wasm_state_vm_v40 import step as reference_step
 
 SCHEMA = "visuaml.full-width-i32-neural-circuit.v49"
 
