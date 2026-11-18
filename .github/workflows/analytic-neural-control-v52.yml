@@ -1,0 +1,152 @@
+name: v52 fixed analytic neural control routing original WASM differential
+on:
+  push:
+    branches:
+      - research/v52-analytic-neural-control-routing
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py
+      - visuaml-client/backend/tests/test_neural_control_routing_v52.py
+      - visuaml-client/backend/tests/test_neural_pc_archive_v52.py
+      - benchmarks/neural_pc_control_v52.json
+      - benchmarks/neural_pc_control_v52.origin.json
+      - visuaml-client/backend/scripts/probe_neural_control_router_v52.py
+      - .github/workflows/analytic-neural-control-v52.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py
+      - visuaml-client/backend/tests/test_neural_control_routing_v52.py
+      - visuaml-client/backend/tests/test_neural_pc_archive_v52.py
+      - benchmarks/neural_pc_control_v52.json
+      - benchmarks/neural_pc_control_v52.origin.json
+      - visuaml-client/backend/scripts/probe_neural_control_router_v52.py
+      - .github/workflows/analytic-neural-control-v52.yml
+permissions:
+  contents: write
+jobs:
+  routed-wasm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned original WASM and constructed-bit evidence dependencies
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==2.2.6 pytest==8.4.2 wasmtime==28.0.0 ruff==0.17.5
+      - name: Test actual feedback of constructed PC, corrupted gate weights and all host reference transitions
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_neural_control_routing_v52.py visuaml-client/backend/tests/test_neural_pc_archive_v52.py
+          python -m pytest -q visuaml-client/backend/tests/test_wasm_control_archive_v51.py visuaml-client/backend/tests/test_wasm_gcd_archive_v51_1.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py visuaml-client/backend/tests/test_neural_control_routing_v52.py visuaml-client/backend/scripts/probe_neural_control_router_v52.py visuaml-client/backend/tests/test_neural_pc_archive_v52.py
+      - name: Replay original source WASM in Wasmtime and independently compare all routed machine state
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p evidence-v52
+          python visuaml-client/backend/scripts/probe_neural_control_router_v52.py --output evidence-v52/neural-control-v52.json
+          python - <<'PY'
+          import json
+          record=json.load(open("evidence-v52/neural-control-v52.json"))
+          assert record["schema"]=="visuaml.original-wasm-neural-pc-router.v52"
+          assert record["program_count"]==6
+          assert record["witness_count"]==61
+          assert record["same_analytic_router_weights_for_all_programs"]
+          assert record["actual_onehot_pc_controls_next_instruction"]
+          assert record["neural_program_counter_selected_by_matrix_gates"]
+          assert record["separate_v51_host_interpreter_compared_every_step"]
+          assert record["wasmtime_original_source_validated"]
+          assert record["taken_jump_routing_events"]>0
+          assert record["conditional_instruction_events"]>0
+          assert all(w["passed"] for w in record["witnesses"])
+          assert not record["complete_neural_wasm_interpreter_constructed"]
+          assert not record["standard_transformer_softmax_executed"]
+          assert not record["all_input_semantics_formally_proved"]
+          assert record["runtime_lexical_control_frames_still_host_managed"]
+          assert record["bounded_nontermination_reference"]["bounded_resource_exhaustion_observed"]
+          print("Routed actual original WASM programs:",record["program_count"],"witnesses:",record["witness_count"])
+          PY
+      - name: Retain raw complete original PC gate and WASM comparison witness
+        uses: actions/upload-artifact@v4
+        with:
+          name: sourcebound-neural-pc-v52
+          path: evidence-v52/neural-control-v52.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Permanently archive first verified v52 real-WASM PC-gate transcript
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v52-analytic-neural-control-routing" ]; then
+            echo "Do not archive from PRs, forks, main or unrelated branches."
+            exit 0
+          fi
+          if [ -e benchmarks/neural_pc_control_v52.json ] || [ -e benchmarks/neural_pc_control_v52.origin.json ]; then
+            test -f benchmarks/neural_pc_control_v52.json
+            test -f benchmarks/neural_pc_control_v52.origin.json
+            echo "Historical v52 raw evidence already archived; refuse overwrite."
+            exit 0
+          fi
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,os
+          raw=Path("evidence-v52/neural-control-v52.json").read_bytes()
+          r=json.loads(raw)
+          assert r["schema"]=="visuaml.original-wasm-neural-pc-router.v52"
+          assert r["source_commit"]==os.environ["GITHUB_SHA"]
+          assert r["program_count"]==6 and r["witness_count"]==61
+          assert r["actual_onehot_pc_controls_next_instruction"]
+          assert r["same_analytic_router_weights_for_all_programs"]
+          assert r["neural_program_counter_selected_by_matrix_gates"]
+          assert r["wasmtime_original_source_validated"]
+          assert r["separate_v51_host_interpreter_compared_every_step"]
+          assert r["taken_jump_routing_events"]>0 and r["conditional_instruction_events"]>0
+          assert len(r["witnesses"])==61 and all(w["passed"] for w in r["witnesses"])
+          assert not r["complete_neural_wasm_interpreter_constructed"]
+          assert r["runtime_lexical_control_frames_still_host_managed"]
+          assert r["runtime_wasm_opcode_dispatch_still_host_managed"]
+          assert not r["standard_transformer_softmax_executed"]
+          assert not r["all_input_semantics_formally_proved"]
+          target=Path("benchmarks")
+          target.mkdir(exist_ok=True)
+          (target/"neural_pc_control_v52.json").write_bytes(raw)
+          origin={
+              "schema":"visuaml.neural-pc-routing-origin.v52",
+              "source_commit":os.environ["GITHUB_SHA"],
+              "workflow_url":"https://github.com/"+os.environ["GITHUB_REPOSITORY"]+"/actions/runs/"+os.environ["GITHUB_RUN_ID"],
+              "raw_sha256":hashlib.sha256(raw).hexdigest(),
+              "raw_bytes":len(raw),
+              "source_file_sha256":r["source_file_sha256"],
+              "fixed_router_weights_sha256":r["fixed_router_weights_sha256"],
+              "fixed_arithmetic_weights_sha256":r["fixed_i32_arithmetic_weights_sha256"],
+              "program_count":r["program_count"],
+              "input_witness_count":r["witness_count"],
+              "per_instruction_state_comparisons":r["total_per_instruction_comparisons"],
+              "real_source_wasmtime_executed":True,
+              "runtime_pc_routed_by_constructed_weights":True,
+              "runtime_control_stack_host_managed":True,
+              "all_WASM_supported":False,
+              "standard_transformer":False,
+              "all_inputs_formally_verified":False,
+              "external_signed_attestation":False,
+          }
+          (target/"neural_pc_control_v52.origin.json").write_text(
+              json.dumps(origin,indent=2,sort_keys=True,allow_nan=False)+"\n",
+              encoding="utf-8",
+          )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/neural_pc_control_v52.json benchmarks/neural_pc_control_v52.origin.json
+          git commit -m "v52: archive original actual neural PC and source-WASM control witnesses [skip ci]"
+          git push origin "HEAD:refs/heads/research/v52-analytic-neural-control-routing"
