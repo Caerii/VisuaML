@@ -30,6 +30,10 @@ def main() -> None:
                         help="Include 26 scaling source programs")
     parser.add_argument("--faults", action="store_true",
                         help="Run 10 activated fault-injection tests")
+    parser.add_argument("--roundtrip", action="store_true",
+                        help="Execute blinded v50-to-v58 SMT-verified round trips")
+    parser.add_argument("--roundtrip-holdout", action="store_true",
+                        help="Include eight additional round-trip source programs")
     parser.add_argument("--memory", action="store_true",
                         help="Measure traced Python allocations separately")
     parser.add_argument("--repeats", type=int, default=5)
@@ -37,7 +41,12 @@ def main() -> None:
     args = parser.parse_args()
     if args.scaling and not args.benchmark:
         parser.error("--scaling requires --benchmark")
-    for package in ("numpy", "pytest", "wasmtime", "ruff"):
+    if args.roundtrip_holdout and not args.roundtrip:
+        parser.error("--roundtrip-holdout requires --roundtrip")
+    packages = ["numpy", "pytest", "wasmtime", "ruff"]
+    if args.roundtrip:
+        packages.append("z3")
+    for package in packages:
         if importlib.util.find_spec(package) is None:
             parser.error(f"Missing local dependency: {package}")
 
@@ -66,6 +75,9 @@ def main() -> None:
         "backend/scripts/benchmark_faults_v58.py",
         "backend/scripts/list_system_benchmarks_v58.py",
         "backend/scripts/verify_offline_v58.py",
+        "backend/scripts/benchmark_neural_symbolic_roundtrip_v58.py",
+        "backend/visuaml/compiler_lab/neural_symbolic_roundtrip_v58.py",
+        "backend/tests/test_neural_symbolic_roundtrip_v58.py",
         "backend/tests/test_neural_microstep_v58.py",
         "backend/tests/test_neural_benchmarks_v58.py",
         "backend/tests/test_neural_scaling_faults_v58.py",
@@ -103,6 +115,17 @@ def main() -> None:
         "--output-json", str(output_dir / "neural-v58-scorecard.json"),
         "--output-csv", str(output_dir / "neural-v58-scorecard.csv"),
     ), client=client, env=env)
+    if args.roundtrip:
+        invoke((
+            sys.executable, "-m", "pytest", "-q",
+            "backend/tests/test_neural_symbolic_roundtrip_v58.py",
+        ), client=client, env=env)
+        invoke((
+            sys.executable,
+            "backend/scripts/benchmark_neural_symbolic_roundtrip_v58.py",
+            "--output", str(output_dir / "neural-v58-roundtrips.json"),
+            *(("--holdout",) if args.roundtrip_holdout else ()),
+        ), client=client, env=env)
     if args.faults:
         invoke((
             sys.executable, "backend/scripts/benchmark_faults_v58.py",
