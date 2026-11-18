@@ -89,7 +89,12 @@ def _admit_candidate(candidate: Candidate, limit: int) -> None:
             ))
             or any(abs(v) > limit for v in (
                 candidate.a, candidate.b, candidate.c, candidate.threshold
-            ))):
+            ))
+            or (candidate.kind == "poly" and candidate.threshold != 0)
+            or (candidate.kind != "poly" and any((
+                candidate.a, candidate.b, candidate.c
+            )))
+            or (candidate.kind == "eqz" and candidate.threshold != 0)):
         raise BehavioralSynthesisError("Unsupported bounded hypothesis")
 
 
@@ -167,6 +172,7 @@ def verify_against_typed_source(
 
     from .neural_symbolic_recovery_v43 import _encode_wasm_in_z3
 
+    _admit_candidate(candidate, 64)
     x = z3.BitVec("input_i32", 32)
     true_behavior = _encode_wasm_in_z3(source, x, z3)
     if candidate.kind == "poly":
@@ -242,6 +248,9 @@ def synthesize_from_oracle(
             raise BehavioralSynthesisError("No surviving candidate in admitted grammar")
         hypothesis = candidates[0]
         evidence = verifier(hypothesis)
+        if (not isinstance(evidence, dict)
+                or evidence.get("candidate_sha256") != hypothesis.digest()):
+            raise BehavioralSynthesisError("Unbound verifier claim for candidate")
         if evidence.get("solver_outcome") not in ("sat", "unsat"):
             raise BehavioralSynthesisError("Verifier did not return conclusive result")
         round_report = {
