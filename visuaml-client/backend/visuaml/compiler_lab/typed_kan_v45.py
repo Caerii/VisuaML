@@ -286,15 +286,15 @@ def recover_polynomial(program: KANProgram):
             for edge in node.edges:
                 variable = previous[edge.source]
                 if edge.family == "power":
-                    expr = sum(sp.Rational.from_float(float(c)) * variable**i
+                    expr = sum(sp.Rational(float(c)) * variable**i
                                for i, c in enumerate(edge.coefficients))
                 else:
-                    lo, hi = (sp.Rational.from_float(float(v)) for v in edge.domain)
+                    lo, hi = (sp.Rational(float(v)) for v in edge.domain)
                     u = (2 * variable - lo - hi) / (hi - lo)
-                    expr = sum(sp.Rational.from_float(float(c)) * sp.chebyshevt(i, u)
+                    expr = sum(sp.Rational(float(c)) * sp.chebyshevt(i, u)
                                for i, c in enumerate(edge.coefficients))
                 terms.append(expr)
-            bias = sp.Rational.from_float(float(node.bias))
+            bias = sp.Rational(float(node.bias))
             expr = bias + (sp.Add(*terms) if node.aggregation == "sum" else sp.Mul(*terms))
             expr = sp.expand(expr)
             if sp.count_ops(expr) > 2000 or any(sp.degree(expr, x) > 32 for x in inputs):
