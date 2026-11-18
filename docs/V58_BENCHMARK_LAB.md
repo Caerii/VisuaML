@@ -293,3 +293,45 @@ into a universal proof of the constructed weights.
 This is scientifically essential: **recovery rate, proof soundness,
 mechanistic fidelity and execution performance are independent metrics**.
 One successful CEGIS experiment proves none of the other three.
+
+
+## S11.1 — Paired recovery improvements and regressions
+
+A single successful source-bound archive does not tell us whether a newer
+synthesizer actually improved. The failure-complete benchmark now provides
+a source-matched comparison tool:
+
+```bash
+PYTHONPATH=visuaml-client/backend python \
+  visuaml-client/backend/scripts/compare_recovery_campaigns_v58.py \
+  --baseline /tmp/visuaml-v58-baseline/neural-v58-recovery-campaign.json \
+  --candidate /tmp/visuaml-v58-candidate/neural-v58-recovery-campaign.json \
+  --output /tmp/visuaml-v58-recovery-comparison.json
+```
+
+**First independently validate each campaign at its own exact Git revision**
+using `verify_recovery_campaign_v58.py`. The comparator cannot re-run two
+historical checkouts inside the same active worktree, so its comparison is
+metadata-based and *not* itself an equivalence proof.
+
+It requires identical source WASM bytes and SHA-256s, case names,
+public/held-out split, solver timeout and complete attempt inventory.
+It reports:
+
+- Newly verified source programs that were previously valid rejections
+- Programs that regressed from independently verified to rejected/invalid
+- Every `verified → verified`, `rejected → rejected`,
+  `invalid → invalid`, and cross-status transition count
+- Paired changes in recorded neural oracle query count when available
+- Both complete and scientifically valid recovery denominators, with
+  invalid runs never credited as successful synthesis improvements
+
+The comparator refuses missing cases, changed solver budgets, source
+mutations and unbound source hashes. It cannot prove that a syntactically
+different algorithm is mechanistically identical to a learned network:
+only the independent typed-WASM SMT verifier establishes its specified
+semantic claim.
+
+This makes a **recovery-engine change experimentally falsifiable** before
+it can be promoted to the verified library. Failed attempts are not
+invisible, and regressions cannot be averaged away by a few easy programs.
