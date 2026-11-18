@@ -1,0 +1,130 @@
+{
+  "schema": "visuaml.wasm-semantic-coverage-ledger.v51",
+  "scope": "Research support claims are specific to exact admitted feature subsets and independently verified fixtures. No percentages.",
+  "historical_layers": [
+    {
+      "version": 39,
+      "capability": "WASM custom section relocation",
+      "status": "verified_restricted",
+      "note": "preserves core section bytes; metadata consumers may care about custom sections"
+    },
+    {
+      "version": 40,
+      "capability": "straight-line one-function canonical WASM i32 typed state",
+      "status": "verified_restricted",
+      "note": "one run(i32)->i32 function; no full stack typing or memory"
+    },
+    {
+      "version": 48,
+      "capability": "fixed analytic neural token VM with multiple programs",
+      "status": "verified_restricted",
+      "note": "finite signed-8 exact domain; one-hot attention-like routing, no softmax"
+    },
+    {
+      "version": 49,
+      "capability": "bit-gated full-width i32 arithmetic",
+      "status": "verified_restricted",
+      "note": "full range of i32 values accepted; finite independent Wasmtime witnesses, not all-input neural SMT proof"
+    },
+    {
+      "version": 50,
+      "capability": "black-box neural behavior to candidate WASM with SMT",
+      "status": "verified_restricted",
+      "note": "small integer polynomial/predicate grammar; counterexample oracle has source; no learned-weight recovery"
+    },
+    {
+      "version": 51,
+      "capability": "real WASM structured block/loop/if/branch/return",
+      "status": "verified_restricted",
+      "note": "control PC and frames CPU host-dispatched; v49 neural arithmetic; independent Wasmtime final outputs"
+    }
+  ],
+  "feature_families": [
+    {
+      "name": "canonical module envelope",
+      "status": "bounded_supported",
+      "boundary": "one function run(i32)->i32, fixed typed import/export/function/code sections, no imports"
+    },
+    {
+      "name": "i32 modular add/sub/mul and signed comparison",
+      "status": "bounded_supported",
+      "boundary": "constructed bit-gated arithmetic, finite independent original Wasmtime and per-step tests"
+    },
+    {
+      "name": "structured control block/loop/if/else/br/br_if/return",
+      "status": "bounded_supported",
+      "boundary": "empty block signatures and host control routing only; fuel bounded; no neural attention branch routing"
+    },
+    {
+      "name": "full control-flow stack polymorphic validator",
+      "status": "unsupported",
+      "boundary": "Wasmtime independently validates each restricted original module"
+    },
+    {
+      "name": "br_table",
+      "status": "unsupported",
+      "boundary": "no implementation"
+    },
+    {
+      "name": "call and call_indirect",
+      "status": "unsupported",
+      "boundary": "no multi-function/call-stack contracts"
+    },
+    {
+      "name": "memory load/store/grow/copy/fill",
+      "status": "unsupported",
+      "boundary": "no memory pages, traps, data segments, or mutable memory effects"
+    },
+    {
+      "name": "globals and tables",
+      "status": "unsupported",
+      "boundary": "no index spaces or mutable global semantics"
+    },
+    {
+      "name": "i64/f32/f64",
+      "status": "unsupported",
+      "boundary": "no IEEE754/NaN/signed-zero, conversions or 64-bit bit gates"
+    },
+    {
+      "name": "SIMD, GC, references, threads, exceptions, tail calls, memory64",
+      "status": "unsupported",
+      "boundary": "all independently unverified"
+    },
+    {
+      "name": "WASI/host imports",
+      "status": "unsupported",
+      "boundary": "no import or embedding capabilities"
+    },
+    {
+      "name": "constructed standard softmax transformer VM",
+      "status": "unsupported",
+      "boundary": "fixed one-hot matrix selection and bit-gating only"
+    },
+    {
+      "name": "arbitrary learned-weight decompilation",
+      "status": "unsupported",
+      "boundary": "bounded source-blinded behavioral synthesis of five known functions; no unique program identification"
+    }
+  ],
+  "evidence_policy": {
+    "exact_origin_manifest_required": true,
+    "original_raw_artifacts_immutable": true,
+    "independently_validated_wasm_required": true,
+    "named_input_domains": true,
+    "max_execution_fuel_declared": true,
+    "explicit_nonclaims": true,
+    "aggregate_coverage_percent_present": false
+  },
+  "next_acceptance_gates": [
+    "neural rather than host-controlled conditional PC/label routing",
+    "core spec validator with stack polymorphism or trusted Wasmtime validation of all admitted inputs",
+    "bounded memory load/store and exact trap evidence",
+    "multi-function calls with typed stack frames",
+    "versioned official WebAssembly spec suite integration",
+    "representationally invariant blinded neural mechanism reconstruction"
+  ],
+  "reference_urls": [
+    "https://www.w3.org/TR/wasm-core/",
+    "https://github.com/WebAssembly/spec"
+  ]
+}
