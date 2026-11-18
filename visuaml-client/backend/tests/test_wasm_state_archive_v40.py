@@ -10,8 +10,6 @@ import json
 from pathlib import Path
 
 from visuaml.compiler_lab.wasm_state_vm_v40 import (
-    I32Program,
-    VMOperation,
     alpha_rename_locals,
     decode_module,
     encode_program,
