@@ -243,3 +243,53 @@ spec versions.
 
 For the scientific interpretation, see
 [V58 implications and benchmark thesis](V58_IMPLICATIONS_AND_BENCHMARK_THESIS.md).
+
+
+## S11 — Failure-complete recovery and audit
+
+A strict `all cases must pass` proof receipt is appropriate for accepting
+a transformation, but insufficient to measure *synthesis reliability*:
+one unsuccessful recovery can abort before any inventory appears. v58
+therefore includes a separate **failure-complete recovery campaign**.
+
+- Five original v50 source behaviors, eight held-out source graphs when
+  enabled, and a cubic negative control outside the admitted quadratic
+  grammar are each recorded as **attempted** cases.
+- A valid grammar rejection or exhausted synthesis/SMT budget is recorded
+  as `rejected`, not omitted. Candidate shape, source WASM bytes, immutable
+  source hash, elapsed time and partial neural-oracle/SMT query counts are
+  preserved even when no candidate is accepted.
+- An incorrect execution trace or invalid verifier protocol is marked
+  `invalid`, not mistakenly scored as a legitimate failure to recover a
+  symbolic algorithm. The reporting schema distinguishes *all attempts*
+  from *scientifically valid attempts*.
+- Valid recovery yields `verified` only when the strict v50→v58 bridge
+  returns a typed all-i32 source/candidate proof and independent finite
+  original-WASM/neural-microstep replay.
+- An independent archive auditor reconstructs each original source program,
+  checks every source digest and inventory entry, recomputes the
+  success/rejected/invalid denominator, requires that the cubic negative
+  control reject, and reruns Z3/Wasmtime/v58 evidence for each accepted
+  candidate. It will reject tampered or partial reports.
+
+The historical-plus-heldout campaign defines **14 planned attempts**:
+5 historical, 8 held-out, and 1 cubic negative. These are benchmark
+definitions, *not* 14 observed outcomes. The denominator is fixed before
+the CEGIS experiment begins.
+
+Run independently from the repository root with dependencies installed:
+
+```bash
+python visuaml-client/backend/scripts/verify_offline_v58.py \
+  --output-dir /tmp/visuaml-v58-recovery \
+  --recovery-campaign --recovery-campaign-holdout
+```
+
+The campaign JSON cannot be overwritten and must live outside the clean
+Git checkout. Its independent replay uses the same existing source-bound
+proof mechanism without promoting a finite neural execution witness
+into a universal proof of the constructed weights.
+
+This is scientifically essential: **recovery rate, proof soundness,
+mechanistic fidelity and execution performance are independent metrics**.
+One successful CEGIS experiment proves none of the other three.
