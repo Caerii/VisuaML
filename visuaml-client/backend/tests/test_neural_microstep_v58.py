@@ -142,3 +142,31 @@ def test_immediate_is_fetched_by_source_bound_microop_not_python_constant():
     assert result.consumed_count == 0
     assert result.produced_count == 1
     assert execute_microstep_control(program, 17).result_i32 == -(1 << 31)
+
+
+def test_no_host_opcode_switch_in_v58_data_execution_path():
+    """A structural guard; dynamic tests still establish actual authority."""
+    import inspect
+
+    from visuaml.compiler_lab.neural_microstep_v58 import step_data_microop
+    from visuaml.compiler_lab.neural_microstep_executor_v58 import (
+        execute_microstep_control,
+    )
+
+    engine = inspect.getsource(execute_microstep_control)
+    circuit = inspect.getsource(step_data_microop)
+    assert "step_data_microop(" in engine
+    assert "read_microop(" in engine
+    # The host still checks final `end`, but must not grow opcode-specific
+    # data dispatch branches while adding new microoperation families.
+    for forbidden in (
+        'elif kind == "i32.add"',
+        'elif kind == "local.get"',
+        'elif op.opcode == "local.set"',
+        'elif op.opcode == "i32.mul"',
+        "execute_alu_routed_control(",
+    ):
+        assert forbidden not in engine
+    assert "candidate_alu = execute_alu(" in circuit
+    assert "step_operands(" in circuit
+    assert "write_local(" in circuit
