@@ -10,7 +10,6 @@ from dataclasses import replace
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.bit_neural_vm_v49 import (
     BitVMAdmissionError,
     _add,
@@ -36,9 +35,9 @@ from visuaml.compiler_lab.wasm_state_vm_v40 import (
     VMOperation,
     encode_program,
     execute_program,
-    initial_state as original_state,
-    step as original_step,
 )
+from visuaml.compiler_lab.wasm_state_vm_v40 import initial_state as original_state
+from visuaml.compiler_lab.wasm_state_vm_v40 import step as original_step
 
 EDGE_VALUES = (-(1 << 31), -(1 << 31)+1, -65536, -129, -128, -1, 0, 1,
                2, 127, 128, 65535, (1 << 31)-2, (1 << 31)-1)
