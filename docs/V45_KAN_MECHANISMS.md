@@ -85,3 +85,21 @@ PYTHONPATH=visuaml-client/backend python \
 ```
 
 The dedicated workflow pins NumPy/Wasmtime/Z3/Pytest/Ruff and replays the original v41 source-bound weight archive. A green run proves only that the declared fixtures and evidence gates passed. Full repository regression, permanent original raw artifact archiving and independent integrity checks remain mandatory before the milestone is complete.
+
+## Pretrained teacher response and fitted KAN controls (second, distinct experiment)
+
+To connect the edge-function substrate to a *real trained network*, the v45 workflow also recovers and hashes the **same external pretrained MNIST-8 ONNX checkpoint** used by v37–v42, independently executing it with ONNX Runtime CPU. It evaluates 65 scalar perturbations of **one fixed, seeded 28×28 image**. The scalar parameter `t` scales the image from zero toward its full intensity over [0,1].
+
+Thirty-three coordinates are used for **least-squares coefficient fitting** and 32 strictly disjoint interleaved coordinates for **held-out evaluation**. The selected family is determined by training error only. Each family becomes an actual typed KAN program with ten independent output edges—one for each teacher logit—then is evaluated via the separate graph evaluator:
+
+- `linear`: degree-one monomial baseline
+- `polynomial`: degree-four monomial basis
+- `linear_spline`: nine fixed knots and linearly interpolated values
+- `gaussian_rbf`: nine Gaussian centers and positive fixed widths
+- `fourier`: four harmonics at fundamental period one
+
+The fitted KAN parameters are **DATA-DERIVED**. This is not a weight-only recovered neural mechanism or an analytically compiled teacher model. It is a controlled one-dimensional functional surrogate, useful for comparing representations under equal input access. Independent scalar NumPy ONNX interpretation checks three teacher coordinates against ONNX Runtime under the source-bound v37 tolerance, and the whole record carries original model/input hashes, actual KAN graphs, their coefficients, training and heldout errors, and the selected family.
+
+The resulting evidence cannot establish that any KAN edge exists in the teacher's internal network, that a KAN generalizes to real handwritten digits, or that a KAN is faster/better than a matched MLP in production. It *can* identify where different explicit basis families succeed or fail at approximating a measured nonlinear teacher response, without passing the holdout samples into coefficient construction.
+
+This distinction is fundamental. An interpretable *surrogate* provides an inspectable approximation; mechanistic interpretability needs controlled interventions in the **original checkpoint** and tests across unobserved contexts. The v45 surrogate is a precursor to those experiments, not their conclusion.
