@@ -114,7 +114,7 @@ def validate_kan(program: KANProgram) -> None:
             elif edge.basis == "gaussian_rbf":
                 # Coefficients per center. Parameters: centers followed by widths.
                 k = len(edge.coefficients)
-                if (not 1 <= k <= 8 or len(edge.parameters) != 2 * k
+                if (not 1 <= k <= 16 or len(edge.parameters) != 2 * k
                         or any(width <= 0 for width in edge.parameters[k:])):
                     raise KANAdmissionError("RBF requires paired centers/positive scales")
             elif edge.basis == "fourier":
