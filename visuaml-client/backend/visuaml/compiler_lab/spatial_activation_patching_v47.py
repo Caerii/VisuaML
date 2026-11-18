@@ -15,6 +15,13 @@ from __future__ import annotations
 import hashlib
 
 import numpy as np
+from scripts.probe_pretrained_mnist8_oracles_v37 import (
+    _attrs,
+    _padding,
+    _pairs,
+    _reshape_onnx,
+    maxpool2d_scalar,
+)
 
 from .onnx_activation_causality_v46 import (
     TARGET,
@@ -22,13 +29,6 @@ from .onnx_activation_causality_v46 import (
     _admitted,
     _sample,
     reference_trace,
-)
-from scripts.probe_pretrained_mnist8_oracles_v37 import (
-    _attrs,
-    _padding,
-    _pairs,
-    _reshape_onnx,
-    maxpool2d_scalar,
 )
 
 SCHEMA = "visuaml.spatial-activation-transplant.v47"
