@@ -144,6 +144,7 @@ def _stable_bytes(value: object) -> bytes:
 
 def verify_roundtrip(
     workload: RoundtripWorkload, *, timeout_ms: int = 15000,
+    audit: dict | None = None,
 ) -> dict:
     """Run the full blinded recovery cycle with separately scoped oracles."""
     import wasmtime
@@ -153,14 +154,27 @@ def verify_roundtrip(
     control_source = as_control(source)
     fixed = construct_bit_weights()
     oracle_query_count = 0
+    if audit is not None:
+        audit.update({
+            "neural_oracle_queries": 0,
+            "independent_verifier_invocations": 0,
+            "source_wasm_sha256": _sha256(raw_source),
+            "constructed_neural_weights_sha256": fixed.digest(),
+            "requested_solver_timeout_ms": timeout_ms,
+        })
 
     def neural_oracle(argument: int) -> int:
         nonlocal oracle_query_count
         oracle_query_count += 1
+        if audit is not None:
+            audit["neural_oracle_queries"] = oracle_query_count
         # This is the ONLY callable the synthesizer can invoke for behavior.
         return run_bit_vm(source, argument, fixed=fixed)["result"]
 
     def independent_verifier(candidate: Candidate) -> dict:
+        if audit is not None:
+            audit["independent_verifier_invocations"] += 1
+            audit["last_candidate_sha256"] = candidate.digest()
         # This closure is deliberately separate from the synthesizer.
         return verify_against_typed_source(
             source, candidate, timeout_ms=timeout_ms,
@@ -171,6 +185,11 @@ def verify_roundtrip(
         neural_oracle, independent_verifier,
     )
     recovery_ns = time.perf_counter_ns() - begin
+    if audit is not None:
+        audit["cegis_rounds"] = len(synthesis["rounds"])
+        audit["verified_candidate_sha256"] = synthesis[
+            "rounds"
+        ][-1]["selected_hypothesis_sha256"]
     candidate = Candidate(**synthesis["accepted_candidate"])
     recovered, raw_recovered = emit_canonical_wasm(candidate)
     if raw_recovered.hex() != synthesis["accepted_wasm_hex"]:
