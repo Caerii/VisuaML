@@ -109,3 +109,21 @@ v57: differential official WASM conformance corpus at specific spec version,
 reporting exact supported/unsupported subtests without an arbitrary coverage
 percentage. Beyond this, study unknown-weight mechanism identification
 separately from the analytically constructed executor.
+
+## Incremental implementation: live execution trace replay
+
+The `neural_frame_replay_v53.py` adapter now consumes **actual v52-routed**
+execution traces from six distinct original WASM source programs, evolves the
+bounded fixed-weight v53 frame circuit at each executed instruction, compares
+its frame-label stack against the live machine, and checks that the circuit's
+computed branch restoration height agrees with the recorded operand stack
+height. Tests also compare every recorded v52 transition against the
+independent v51 interpreter and the result against Wasmtime.
+
+**This remains an independent shadow replay:** v52 host frame dispatch is
+still responsible for producing the trace. The v53 circuit does not yet
+drive v52's next frame state or truncate its physical operand stack. Thus this
+new test is an important compositional compatibility gate, **not completion
+of the v53 milestone**. The next implementation must connect the constructed
+state output into execution and independently ensure host metadata is only
+validation/program data, not a branch selector.
