@@ -13,7 +13,6 @@ import os
 from pathlib import Path
 
 import numpy as np
-
 from scripts.audit_pretrained_onnx_v37 import audit_bytes
 from scripts.probe_pretrained_mnist8_oracles_v37 import (
     ATOL,
@@ -133,8 +132,8 @@ def run(raw: bytes) -> dict:
                   for t in changed.graph.initializer if t.data_type == onnx.TensorProto.FLOAT}
         if actual[TARGET] != candidate.proposed_weight_sha256:
             raise AssertionError("Candidate target weight not embedded exactly")
-        for key in actual:
-            if key != TARGET and actual[key] != approved[key]:
+        for key, value in actual.items():
+            if key != TARGET and value != approved[key]:
                 raise AssertionError("Unrelated model parameter modified")
         expected, observed, oracle_error = _outputs(
             changed, _session(emitted), cases,
