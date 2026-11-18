@@ -21,7 +21,7 @@ from visuaml.compiler_lab.semantic_ir import (
 
 
 def _fixture():
-    onnx = pytest.importorskip("onnx")
+    pytest.importorskip("onnx")
     from onnx import TensorProto, helper, numpy_helper
 
     weights = {
