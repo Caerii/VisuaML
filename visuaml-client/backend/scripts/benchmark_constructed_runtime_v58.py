@@ -72,8 +72,21 @@ def _profile_rows(profile):
     return sorted(rows, key=lambda row: row["inclusive_s"], reverse=True)
 
 
-def collect(root, baseline, repeats, profile_enabled):
+def collect(root, baseline, repeats, profile_enabled, use_compiled=False):
     identity = _identify(root, baseline)
+    compiled_metadata = None
+    if use_compiled:
+        from time import perf_counter_ns
+
+        from visuaml.compiler_lab.constructed_alu_v58 import compiled_alu
+
+        started = perf_counter_ns()
+        library = compiled_alu()
+        compiled_metadata = {
+            "setup_wall_ns": perf_counter_ns() - started,
+            "source_sha256": library.source_sha256, "binary_sha256": library.binary_sha256,
+            "compiler": library.compiler, "flags": library.flags,
+        }
     engine = wasmtime.Engine()
     profile = cProfile.Profile()
     to_profile = []
@@ -95,7 +108,12 @@ def collect(root, baseline, repeats, profile_enabled):
         for argument in work.arguments:
             actions = {"trace": partial(v58.execute_microstep_control, work.program, argument,
                                         program_tokens=tokens, fuel=1500)}
+            numpy_trace = actions["trace"]
+            if use_compiled:
+                actions["trace"] = partial(actions["trace"], use_compiled_alu=True)
             traced = actions["trace"]()
+            if use_compiled and numpy_trace() != traced:
+                raise AssertionError((work.name, argument, "compiled and NumPy gate traces differ"))
             result = wasm(store, argument)
             v51 = execute_control(work.program, argument, fuel=1500)
             v56 = execute_alu_routed_control(work.program, argument, fuel=1500)
@@ -109,6 +127,9 @@ def collect(root, baseline, repeats, profile_enabled):
                 actions["no_trace"] = partial(actions["trace"], capture_trace=False)
                 if actions["no_trace"]() != replace(traced, trace=()):
                     raise AssertionError((work.name, argument, "trace mode changes state evidence"))
+            if use_compiled:
+                actions["numpy_trace"] = numpy_trace
+                actions["numpy_no_trace"] = partial(numpy_trace, capture_trace=False)
             order = tuple(actions) if len(cases) % 2 == 0 else tuple(reversed(actions))
             cases.append({
                 "input": argument, "result": result, "steps": traced.steps,
@@ -118,7 +139,8 @@ def collect(root, baseline, repeats, profile_enabled):
                 "trace_serialization": measure(lambda: digest(traced.trace), warmups=1, repeats=repeats),
             })
             if profile_enabled:
-                to_profile.append((actions, len(cases) == 1))
+                to_profile.append(({name: action for name, action in actions.items()
+                                    if not name.startswith("numpy_")}, len(cases) == 1))
         def prepare_tokens():
             return (v58.compile_route_tokens(work.program), v58.compile_microop_tokens(work.program))
 
@@ -137,6 +159,7 @@ def collect(root, baseline, repeats, profile_enabled):
     return {
         "schema": "visuaml.constructed-runtime-profile.v58", "source": identity,
         "environment": environment(), "repeats": repeats, "fixed_weights": weight_ids,
+        "compiled_alu": compiled_metadata,
         "fixed_initialization": measure(_weights, warmups=1, repeats=repeats),
         "profile_traced_inclusive": _profile_rows(profile) if profile_enabled else [],
         "profiled_calls": len(to_profile), "python_allocations_per_first_input": allocations, "rows": rows,
@@ -180,7 +203,10 @@ def main():
     parser.add_argument("--profile", action="store_true")
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--compare", nargs=2, type=Path, metavar=("BASELINE", "CANDIDATE"))
+    parser.add_argument("--compiled-alu", action="store_true")
     args = parser.parse_args()
+    if args.baseline and args.compiled_alu:
+        parser.error("The archived baseline predates the compiled ALU")
     root = Path(__file__).resolve().parents[3]
     if args.output.exists() or args.output.resolve().is_relative_to(root) or args.repeats < 1:
         parser.error("Use a fresh output path outside the checkout and positive repeats")
@@ -188,7 +214,7 @@ def main():
         record = compare(*(json.loads(path.read_bytes()) for path in args.compare))
         print(json.dumps(record, sort_keys=True))
     else:
-        record = collect(root, args.baseline, args.repeats, args.profile)
+        record = collect(root, args.baseline, args.repeats, args.profile, args.compiled_alu)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as stream:
         json.dump(record, stream, sort_keys=True, separators=(",", ":"))

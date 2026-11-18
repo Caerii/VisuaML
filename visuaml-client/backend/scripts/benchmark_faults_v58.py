@@ -156,10 +156,11 @@ def mutate(attack: Attack, program) -> dict:
     raise ValueError("Unknown mutation")
 
 
-def run_attack(attack: Attack) -> dict:
+def run_attack(attack: Attack, *, use_compiled_alu: bool = False) -> dict:
     program = countdown() if attack.source == "countdown" else generated(2)
     argument = 4 if attack.source == "countdown" else -17
-    baseline = execute(attack.engine, program, argument)
+    options = {"use_compiled_alu": True} if use_compiled_alu and attack.engine == "v58" else {}
+    baseline = execute(attack.engine, program, argument, **options)
     if not any(
         row["opcode"] == attack.opcode_activated for row in baseline.trace
     ):
@@ -170,7 +171,7 @@ def run_attack(attack: Attack) -> dict:
     error = None
     try:
         changed = execute(
-            attack.engine, program, argument, **mutate(attack, program)
+            attack.engine, program, argument, **options, **mutate(attack, program)
         )
     except (ValueError, RuntimeError, TypeError, IndexError) as exc:
         error = {"type": type(exc).__name__, "message": str(exc)}
@@ -206,8 +207,8 @@ def run_attack(attack: Attack) -> dict:
     }
 
 
-def campaign() -> dict:
-    cases = [run_attack(attack) for attack in ATTACKS]
+def campaign(*, use_compiled_alu: bool = False) -> dict:
+    cases = [run_attack(attack, use_compiled_alu=use_compiled_alu) for attack in ATTACKS]
     return {
         "schema": SCHEMA,
         "injected_faults": len(cases),
@@ -229,6 +230,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--require-all-detected", action="store_true")
+    parser.add_argument("--compiled-alu", action="store_true")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
     def git(*arguments: str) -> str:
@@ -238,7 +240,9 @@ def main() -> None:
         ).strip()
     if git("status", "--porcelain", "--untracked-files=normal"):
         parser.error("Fault evidence requires a clean Git worktree")
-    report = campaign()
+    report = campaign(use_compiled_alu=args.compiled_alu)
+    if args.compiled_alu:
+        report["v58_compiled_alu"] = True
     report["source"] = {
         "commit": git("rev-parse", "HEAD"),
         "tree": git("rev-parse", "HEAD^{tree}"),

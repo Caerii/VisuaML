@@ -15,6 +15,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from .exact_binary import is_exact_binary
+from .constructed_alu_v58 import evaluate_candidates
 
 from .bit_neural_vm_v49 import (
     WIDTH,
@@ -78,6 +79,7 @@ def execute_alu(
     *,
     fixed: ALUWeights | None = None,
     bit_fixed: BitCircuitWeights | None = None,
+    use_compiled_candidates: bool = False,
 ) -> np.ndarray:
     """Compute all six exact bit-gate candidates then fixed-weight select.
 
@@ -94,18 +96,21 @@ def execute_alu(
         raise NeuralALUError("Unsupported ALU coefficient object")
     _admit_binary(fixed.output_gains, (OP_COUNT,))
     bit_fixed = construct_bit_weights() if bit_fixed is None else bit_fixed
-    lt = np.zeros(WIDTH, dtype=np.float64)
-    gt = np.zeros(WIDTH, dtype=np.float64)
-    eq = np.zeros(WIDTH, dtype=np.float64)
-    lt[0] = _signed_lt(left, right, bit_fixed)
-    gt[0] = _signed_lt(right, left, bit_fixed)
-    eq[0] = _eqz(left, bit_fixed)
-    candidates = np.stack((
-        _add(left, right, fixed=bit_fixed),
-        _sub(left, right, fixed=bit_fixed),
-        _mul(left, right, bit_fixed.carry_thresholds),
-        lt, gt, eq,
-    ))
+    if use_compiled_candidates:
+        candidates = evaluate_candidates(left, right, bit_fixed)
+    else:
+        lt = np.zeros(WIDTH, dtype=np.float64)
+        gt = np.zeros(WIDTH, dtype=np.float64)
+        eq = np.zeros(WIDTH, dtype=np.float64)
+        lt[0] = _signed_lt(left, right, bit_fixed)
+        gt[0] = _signed_lt(right, left, bit_fixed)
+        eq[0] = _eqz(left, bit_fixed)
+        candidates = np.stack((
+            _add(left, right, fixed=bit_fixed),
+            _sub(left, right, fixed=bit_fixed),
+            _mul(left, right, bit_fixed.carry_thresholds),
+            lt, gt, eq,
+        ))
     _admit_binary(candidates, (OP_COUNT, WIDTH))
     gate = opcode * fixed.output_gains
     result = gate @ candidates

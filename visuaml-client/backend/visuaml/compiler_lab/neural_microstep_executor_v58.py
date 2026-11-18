@@ -71,6 +71,7 @@ def _microstep_digest(weights: MicrostepWeights) -> str:
 
 def execute_microstep_control(
     program: ControlProgram, argument: int, *, fuel: int = 400, capture_trace: bool = True,
+    use_compiled_alu: bool = False,
     tokens: ControlRouteTokens | None = None,
     program_tokens: ProgramMicroopTokens | None = None,
     pc_fixed: ControlRouterWeights | None = None,
@@ -81,6 +82,8 @@ def execute_microstep_control(
     local_fixed: LocalBankWeights | None = None,
     operand_fixed: OperandWeights | None = None,
 ) -> MicrostepExecution:
+    if type(use_compiled_alu) is not bool:
+        raise MicrostepAdmissionError("use_compiled_alu must be a boolean")
     if type(capture_trace) is not bool:
         raise MicrostepAdmissionError("capture_trace must be a boolean")
     _syntax(program)
@@ -156,7 +159,7 @@ def execute_microstep_control(
                 operands, locals_, microop,
                 micro_fixed=microstep_fixed, operand_fixed=operand_fixed,
                 local_fixed=local_fixed, alu_fixed=alu_fixed,
-                bit_fixed=bit_fixed,
+                bit_fixed=bit_fixed, use_compiled_alu=use_compiled_alu,
             )
             operands, locals_ = result.operands, result.locals
 

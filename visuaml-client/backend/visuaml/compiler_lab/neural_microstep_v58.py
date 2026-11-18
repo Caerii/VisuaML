@@ -97,6 +97,7 @@ def step_data_microop(
     local_fixed: LocalBankWeights | None = None,
     alu_fixed: ALUWeights | None = None,
     bit_fixed: BitCircuitWeights | None = None,
+    use_compiled_alu: bool = False,
 ) -> MicrostepResult:
     """Execute a fixed-weight data microstep without Python opcode dispatch.
 
@@ -169,7 +170,7 @@ def step_data_microop(
     _hot(admitted_alu, (len(ALU_OPS),))
     candidate_alu = execute_alu(
         admitted_alu, alu_left, alu_right,
-        fixed=alu_fixed, bit_fixed=bit_fixed,
+        fixed=alu_fixed, bit_fixed=bit_fixed, use_compiled_candidates=use_compiled_alu,
     )
 
     # Read and candidate-write are always evaluated using valid one-hot
