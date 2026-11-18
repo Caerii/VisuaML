@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - visuaml-client/backend/scripts/audit_pretrained_onnx_v37.py
+      - visuaml-client/backend/scripts/probe_pretrained_mnist8_oracles_v37.py
+      - visuaml-client/backend/tests/test_pretrained_mnist8_oracles_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_preflight_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_archive_v37.py
       - benchmarks/pretrained_mnist8_onnx_preflight_v37.json
@@ -14,6 +16,8 @@ on:
       - main
     paths:
       - visuaml-client/backend/scripts/audit_pretrained_onnx_v37.py
+      - visuaml-client/backend/scripts/probe_pretrained_mnist8_oracles_v37.py
+      - visuaml-client/backend/tests/test_pretrained_mnist8_oracles_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_preflight_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_archive_v37.py
       - benchmarks/pretrained_mnist8_onnx_preflight_v37.json
@@ -65,12 +69,33 @@ jobs:
           PY
           cmp pretrained-v37/mnist-8-preflight.json benchmarks/pretrained_mnist8_onnx_preflight_v37.json
           printf '%s\n' "${GITHUB_SHA}" > pretrained-v37/source-commit.txt
+      - name: Install pinned ONNX Runtime for independent numerical replay
+        run: python -m pip install --disable-pip-version-check onnxruntime==1.22.1
+      - name: Execute actual pretrained CNN against separate scalar NumPy oracle
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python visuaml-client/backend/scripts/probe_pretrained_mnist8_oracles_v37.py \
+            --model pretrained-v37/mnist-8.onnx \
+            --sha256 2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf \
+            --revision a19f9a8c2333de1df9b03f10f5739f468b699a1a \
+            --output pretrained-v37/mnist-8-numerical-oracles.json
+          python - <<'PY'
+          import json
+          report=json.load(open('pretrained-v37/mnist-8-numerical-oracles.json'))
+          assert report['all_passed'] and len(report['witnesses']) == 5
+          assert report['executed_native_semantic_cpp'] is False
+          PY
       - name: Upload raw source-bound preflight (no numerical certification)
         uses: actions/upload-artifact@v4
         with:
-          name: pinned-mnist8-static-preflight-v37
+          name: pinned-mnist8-preflight-and-oracles-v37
           path: |
             pretrained-v37/mnist-8-preflight.json
+            pretrained-v37/mnist-8-numerical-oracles.json
             pretrained-v37/source-commit.txt
           if-no-files-found: error
           retention-days: 30
