@@ -94,10 +94,21 @@ class Workload:
     split: str
 
 
-def workloads(*, holdout: int = 8, scaling: bool = False) -> list[Workload]:
+def workloads(
+    *, holdout: int = 8, scaling: bool = False, smoke: bool = False,
+) -> list[Workload]:
     if type(holdout) is not int or not 0 <= holdout <= 64:
         raise ValueError("Holdout count must be 0..64")
     result = []
+    if smoke:
+        inventory = corpus()
+        return [
+            Workload(
+                name, "smoke", inventory[name][0],
+                tuple(inventory[name][1][:2]), "smoke",
+            )
+            for name in ("countdown", "generated_00")
+        ]
     for name, (program, args) in sorted(corpus().items()):
         result.append(Workload(
             name, "structured" if not name.startswith("generated_")
@@ -159,19 +170,36 @@ def environment() -> dict:
     }
 
 
-def measure(action, *, warmups: int, repeats: int) -> dict:
+def measure(
+    action, *, warmups: int, repeats: int, expected: int | None = None,
+) -> dict:
     if repeats < 1 or warmups < 0:
         raise ValueError("Expected nonnegative warmups and positive repeats")
+    def check(value):
+        if expected is None:
+            return
+        actual = (
+            value if type(value) is int else
+            getattr(value, "result_i32", getattr(value, "value", None))
+        )
+        if actual != expected:
+            raise AssertionError(
+                f"Timed engine diverged from independent oracle: {actual}"
+            )
+
     for _ in range(warmups):
-        action()
+        check(action())
     wall = []
     cpu = []
     for _ in range(repeats):
         before_wall = time.perf_counter_ns()
         before_cpu = time.process_time_ns()
-        action()
-        cpu.append(time.process_time_ns() - before_cpu)
-        wall.append(time.perf_counter_ns() - before_wall)
+        result = action()
+        elapsed_cpu = time.process_time_ns() - before_cpu
+        elapsed_wall = time.perf_counter_ns() - before_wall
+        check(result)
+        cpu.append(elapsed_cpu)
+        wall.append(elapsed_wall)
     return {"wall": summarize_ns(wall), "process_cpu": summarize_ns(cpu)}
 
 
@@ -203,6 +231,7 @@ def run(
     fuel: int,
     scaling: bool = False,
     memory: bool = False,
+    smoke: bool = False,
 ) -> dict:
     if type(repeats) is not int or not 1 <= repeats <= 10000:
         raise ValueError("Repeat count outside benchmark policy")
@@ -216,7 +245,9 @@ def run(
     wasmtime_engine = wasmtime.Engine()
     rows = []
     overall = {"programs": 0, "witnesses": 0, "instruction_transitions": 0}
-    for workload in workloads(holdout=holdout, scaling=scaling):
+    for workload in workloads(
+        holdout=holdout, scaling=scaling, smoke=smoke,
+    ):
         source = encode_control(workload.program)
         wasmtime.Module.validate(wasmtime_engine, source)
         # Setup/compile is explicitly excluded from warm execution time.
@@ -312,8 +343,10 @@ def run(
                     program_tokens=tokens,
                 )
             measurements = {
-                name: measure(action, warmups=warmups, repeats=repeats)
-                for name, action in actions.items()
+                name: measure(
+                    action, warmups=warmups, repeats=repeats,
+                    expected=native,
+                ) for name, action in actions.items()
             }
             allocations = (
                 {
@@ -365,6 +398,7 @@ def run(
             "holdout_programs": holdout,
             "scaling_suite_enabled": scaling,
             "isolated_python_allocation_profile": memory,
+            "smoke_mode_not_a_comprehensive_benchmark": smoke,
             "timing_scope": "Python/NumPy engine invocation including traces",
             "setup_excluded_from_warm": True,
             "wasmtime_calls_include_python_binding_overhead": True,
@@ -388,6 +422,8 @@ def main() -> None:
     parser.add_argument("--warmups", type=int, default=1)
     parser.add_argument("--holdout", type=int, default=8)
     parser.add_argument("--fuel", type=int, default=1500)
+    parser.add_argument("--smoke", action="store_true",
+                        help="Run four source/input pairs for harness preflight")
     parser.add_argument("--memory", action="store_true",
                         help="Opt-in separate traced Python-allocation profile")
     parser.add_argument("--scaling", action="store_true",
@@ -401,6 +437,7 @@ def main() -> None:
         root, repeats=args.repeats, warmups=args.warmups,
         holdout=args.holdout, fuel=args.fuel,
         scaling=args.scaling, memory=args.memory,
+        smoke=args.smoke,
     )
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(stable_bytes(record) + b"\n")
