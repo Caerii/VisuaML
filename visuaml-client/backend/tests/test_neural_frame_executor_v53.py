@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
+from visuaml.compiler_lab.neural_control_routing_v52 import execute_routed_control
 from visuaml.compiler_lab.neural_frame_circuit_v53 import (
     FrameCircuitError,
     FrameCircuitWeights,
@@ -11,7 +12,6 @@ from visuaml.compiler_lab.neural_frame_circuit_v53 import (
 from visuaml.compiler_lab.neural_frame_executor_v53 import (
     execute_frame_routed_control,
 )
-from visuaml.compiler_lab.neural_control_routing_v52 import execute_routed_control
 from visuaml.compiler_lab.wasm_control_flow_v51 import (
     ControlFuelExhausted,
     ControlOperation,
