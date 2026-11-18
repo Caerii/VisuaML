@@ -103,6 +103,23 @@ def test_missing_engine_not_padded_with_fake_zero():
         compare(a, b, engine="microstep_v58")
 
 
+def test_smoke_inventory_is_small_and_explicitly_nonrepresentative():
+    cases = workloads(holdout=8, scaling=True, smoke=True)
+    assert [item.name for item in cases] == ["countdown", "generated_00"]
+    assert sum(len(item.arguments) for item in cases) == 4
+    assert all(item.split == "smoke" for item in cases)
+
+
+def test_timed_measurement_checks_correctness_even_after_warmup():
+    from scripts.benchmark_neural_vm_v58 import measure
+
+    assert measure(lambda: 17, warmups=1, repeats=3, expected=17)[
+        "wall"
+    ]["count"] == 3
+    with pytest.raises(AssertionError, match="Timed engine diverged"):
+        measure(lambda: 18, warmups=1, repeats=1, expected=17)
+
+
 def test_workload_discovery_has_disjoint_holdout_source_programs():
     work = workloads(holdout=8)
     assert len(work) == 27
