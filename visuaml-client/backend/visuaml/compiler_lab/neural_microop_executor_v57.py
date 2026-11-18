@@ -55,8 +55,7 @@ from .neural_operand_storage_v55 import OperandWeights, fixed_operand_weights
 from .neural_local_bank_v57 import (
     LocalBankWeights,
     construct_local_bank_weights,
-    read_local,
-    write_local,
+    apply_local_microop,
 )
 from .typed_microop_ir_v57 import (
     MicroopWeights,
@@ -241,20 +240,22 @@ def execute_microop_routed_control(
         elif kind == "i32.const":
             stack.append(microop.immediate_bits.copy())
         elif kind == "local.get":
-            stack.append(read_local(
-                local_bank, microop.local_selector, fixed=local_fixed,
-            ))
+            local_bank, fetched = apply_local_microop(
+                local_bank, microop.local_selector, microop.local_mode,
+                np.zeros(32, dtype=np.float64), fixed=local_fixed,
+            )
+            stack.append(fetched)
         elif kind == "local.set":
-            local_bank = write_local(
-                local_bank, microop.local_selector, _pop(stack),
-                fixed=local_fixed,
+            local_bank, _ = apply_local_microop(
+                local_bank, microop.local_selector, microop.local_mode,
+                _pop(stack), fixed=local_fixed,
             )
         elif kind == "local.tee":
             if not stack:
                 raise ControlExecutionTrap("local.tee stack underflow")
-            local_bank = write_local(
-                local_bank, microop.local_selector, stack[-1],
-                fixed=local_fixed,
+            local_bank, _ = apply_local_microop(
+                local_bank, microop.local_selector, microop.local_mode,
+                stack[-1], fixed=local_fixed,
             )
         elif kind == "drop":
             _pop(stack)
