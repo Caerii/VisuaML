@@ -183,6 +183,47 @@ def _admit(program: SemanticProgram) -> _Plan:
             ):
                 raise NativeIRCodegenError("Unsupported elementwise shape/broadcast")
             params = ()
+        elif op.op == "reshape":
+            if (len(input_shapes) != 1 or op.parameters
+                    or math.prod(input_shapes[0]) != math.prod(out_shape)):
+                raise NativeIRCodegenError("Static reshape element-count mismatch")
+            params = ()
+        elif op.op == "broadcast_add":
+            if len(input_shapes) != 2 or op.parameters:
+                raise NativeIRCodegenError("Invalid broadcast-add operands")
+            r = max(map(len, input_shapes))
+            aligned = [((1,) * (r - len(sh)) + sh) for sh in input_shapes]
+            expected = tuple(
+                max(a, b) if a == 1 or b == 1 or a == b else 0
+                for a, b in zip(*aligned, strict=True)
+            )
+            if 0 in expected or out_shape != expected:
+                raise NativeIRCodegenError("Broadcast-add geometry mismatch")
+            params = ()
+        elif op.op == "maxpool2d":
+            if len(input_shapes) != 1 or len(input_shapes[0]) != 4:
+                raise NativeIRCodegenError("MaxPool requires NCHW input")
+            opts = _int_params(op.parameters)
+            if set(opts) != {"kernel", "stride", "pad_top", "pad_left", "pad_bottom", "pad_right"}:
+                raise NativeIRCodegenError("MaxPool requires explicit static geometry")
+            kernel, stride = opts["kernel"], opts["stride"]
+            pt, pl, pb, pr = (opts[k] for k in ("pad_top", "pad_left", "pad_bottom", "pad_right"))
+            if not 1 <= kernel <= 8 or not 1 <= stride <= 4 or not all(
+                0 <= p <= 4 for p in (pt, pl, pb, pr)
+            ):
+                raise NativeIRCodegenError("MaxPool kernel/stride/padding out of range")
+            batch, channels, height, width = input_shapes[0]
+            oh = (height + pt + pb - kernel) // stride + 1
+            ow = (width + pl + pr - kernel) // stride + 1
+            if oh <= 0 or ow <= 0 or out_shape != (batch, channels, oh, ow):
+                raise NativeIRCodegenError("MaxPool result geometry mismatch")
+            if any(max(0, y * stride - pt) >= min(height, y * stride - pt + kernel)
+                   for y in range(oh)) or any(
+                max(0, x * stride - pl) >= min(width, x * stride - pl + kernel)
+                for x in range(ow)
+            ):
+                raise NativeIRCodegenError("Empty MaxPool window")
+            params = (kernel, stride, pt, pl, pb, pr)
         else:
             if (
                 len(input_shapes) != 2
