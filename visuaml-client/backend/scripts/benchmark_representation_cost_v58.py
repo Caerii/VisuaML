@@ -17,7 +17,6 @@ import hashlib
 import json
 import math
 import statistics
-import subprocess
 import time
 from pathlib import Path
 
