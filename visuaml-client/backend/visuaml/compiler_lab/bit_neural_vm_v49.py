@@ -56,11 +56,13 @@ class BitCircuitWeights:
     and_kernel: np.ndarray
     xor_kernel: np.ndarray
     carry_thresholds: np.ndarray
+    adder_thresholds: np.ndarray
 
     def digest(self) -> str:
         h = hashlib.sha256(SCHEMA.encode())
         h.update(self.router.digest().encode())
-        for tensor in (self.and_kernel, self.xor_kernel, self.carry_thresholds):
+        for tensor in (self.and_kernel, self.xor_kernel, self.carry_thresholds,
+                       self.adder_thresholds):
             h.update(np.ascontiguousarray(tensor, dtype="<f8").tobytes())
         return h.hexdigest()
 
@@ -98,6 +100,7 @@ def construct_bit_weights() -> BitCircuitWeights:
         np.array([1., 1., -1.], dtype=np.float64),
         np.array([[1., -1.], [-1., 1.]], dtype=np.float64),
         CARRY_THRESHOLDS.copy(),
+        np.array([1., 2.], dtype=np.float64),
     )
 
 
@@ -206,33 +209,43 @@ def decode_tokens(tokens: BitProgramTokens) -> I32Program:
     return program
 
 
-def _and(a, b):
-    """ReLU(a+b-1), exact logical AND for 0/1 activations."""
-    return np.maximum(0., a + b - 1.)
+def _and(a, b, fixed: BitCircuitWeights | None = None):
+    """Actual fixed-weight ReLU(a+b-1) AND gate on binary activations."""
+    kernel = (fixed.and_kernel if fixed is not None else
+              np.array([1., 1., -1.], dtype=np.float64))
+    return np.maximum(0., kernel[0]*a + kernel[1]*b + kernel[2])
 
 
-def _xor(a, b):
-    """Two fixed ReLU gates represent logical XOR for binary activations."""
-    return np.maximum(0., a - b) + np.maximum(0., b - a)
+def _xor(a, b, fixed: BitCircuitWeights | None = None):
+    """Two constructed ReLU gates read their actual coefficient matrix."""
+    kernel = (fixed.xor_kernel if fixed is not None else
+              np.array([[1., -1.], [-1., 1.]], dtype=np.float64))
+    return (np.maximum(0., kernel[0, 0]*a + kernel[0, 1]*b)
+            + np.maximum(0., kernel[1, 0]*a + kernel[1, 1]*b))
 
 
-def _or(a, b):
-    return a + b - _and(a, b)
+def _or(a, b, fixed: BitCircuitWeights | None = None):
+    return a + b - _and(a, b, fixed)
 
 
-def _add(a: np.ndarray, b: np.ndarray, cin: float = 0.) -> np.ndarray:
+def _add(a: np.ndarray, b: np.ndarray, cin: float = 0.,
+         fixed: BitCircuitWeights | None = None) -> np.ndarray:
     """Ripple carry constructed from ReLU integer threshold cells."""
     out = np.empty(WIDTH, dtype=np.float64)
     carry = np.float64(cin)
+    thresholds = (fixed.adder_thresholds if fixed is not None else
+                  np.array([1., 2.], dtype=np.float64))
     for i in range(WIDTH):
         n = a[i] + b[i] + carry
-        carry = np.maximum(0., n - 1.) - np.maximum(0., n - 2.)
+        carry = (np.maximum(0., n - thresholds[0])
+                 - np.maximum(0., n - thresholds[1]))
         out[i] = n - 2. * carry
     return out
 
 
-def _sub(a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    return _add(a, 1. - b, 1.)
+def _sub(a: np.ndarray, b: np.ndarray,
+         fixed: BitCircuitWeights | None = None) -> np.ndarray:
+    return _add(a, 1. - b, 1., fixed)
 
 
 def _mul(a: np.ndarray, b: np.ndarray, thresholds: np.ndarray) -> np.ndarray:
@@ -256,28 +269,31 @@ def _mul(a: np.ndarray, b: np.ndarray, thresholds: np.ndarray) -> np.ndarray:
     return out
 
 
-def _eqz(a: np.ndarray):
+def _eqz(a: np.ndarray, fixed: BitCircuitWeights | None = None):
     """All bits zero, via a product of binary ReGLU/AND gates."""
     result = np.float64(1.)
     for i in range(WIDTH):
-        result = _and(result, 1. - a[i])
+        result = _and(result, 1. - a[i], fixed)
     return result
 
 
-def _unsigned_lt(a: np.ndarray, b: np.ndarray):
+def _unsigned_lt(a: np.ndarray, b: np.ndarray,
+                 fixed: BitCircuitWeights | None = None):
     same = np.float64(1.)
     less = np.float64(0.)
     for i in reversed(range(WIDTH)):
-        less = _or(less, _and(same, _and(1. - a[i], b[i])))
-        same = _and(same, 1. - _xor(a[i], b[i]))
+        less = _or(less, _and(same, _and(1. - a[i], b[i], fixed), fixed), fixed)
+        same = _and(same, 1. - _xor(a[i], b[i], fixed), fixed)
     return less
 
 
-def _signed_lt(a: np.ndarray, b: np.ndarray):
-    different_sign = _xor(a[31], b[31])
+def _signed_lt(a: np.ndarray, b: np.ndarray,
+               fixed: BitCircuitWeights | None = None):
+    different_sign = _xor(a[31], b[31], fixed)
     return _or(
-        _and(a[31], 1. - b[31]),
-        _and(1. - different_sign, _unsigned_lt(a, b)),
+        _and(a[31], 1. - b[31], fixed),
+        _and(1. - different_sign, _unsigned_lt(a, b, fixed), fixed),
+        fixed,
     )
 
 
@@ -332,12 +348,12 @@ def bit_step(
     candidate = np.zeros((len(OPCODES), WIDTH), dtype=np.float64)
     candidate[INDEX["i32.const"]] = immediate
     candidate[INDEX["local.get"]] = local_val
-    candidate[INDEX["i32.add"]] = _add(second, top)
-    candidate[INDEX["i32.sub"]] = _sub(second, top)
+    candidate[INDEX["i32.add"]] = _add(second, top, fixed=fixed)
+    candidate[INDEX["i32.sub"]] = _sub(second, top, fixed=fixed)
     candidate[INDEX["i32.mul"]] = _mul(second, top, fixed.carry_thresholds)
-    candidate[INDEX["i32.eqz"], 0] = _eqz(top)
-    candidate[INDEX["i32.lt_s"], 0] = _signed_lt(second, top)
-    candidate[INDEX["i32.gt_s"], 0] = _signed_lt(top, second)
+    candidate[INDEX["i32.eqz"], 0] = _eqz(top, fixed)
+    candidate[INDEX["i32.lt_s"], 0] = _signed_lt(second, top, fixed)
+    candidate[INDEX["i32.gt_s"], 0] = _signed_lt(top, second, fixed)
     write_bits = flags @ candidate
     write_sel = push * push_sel + binary * second_sel + unary * top_sel
     clear_sel = pop * top_sel
