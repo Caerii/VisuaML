@@ -7,12 +7,18 @@ on:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/bit_neural_vm_v49.py
       - visuaml-client/backend/tests/test_bit_neural_vm_v49.py
+      - visuaml-client/backend/tests/test_bit_neural_archive_v49.py
+      - benchmarks/bit_neural_i32_v49.json
+      - benchmarks/bit_neural_i32_v49.origin.json
       - visuaml-client/backend/scripts/probe_bit_neural_vm_v49.py
       - .github/workflows/bit-neural-vm-v49.yml
   pull_request:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/bit_neural_vm_v49.py
       - visuaml-client/backend/tests/test_bit_neural_vm_v49.py
+      - visuaml-client/backend/tests/test_bit_neural_archive_v49.py
+      - benchmarks/bit_neural_i32_v49.json
+      - benchmarks/bit_neural_i32_v49.origin.json
       - visuaml-client/backend/scripts/probe_bit_neural_vm_v49.py
       - .github/workflows/bit-neural-vm-v49.yml
 permissions:
@@ -37,9 +43,9 @@ jobs:
           OPENBLAS_NUM_THREADS: "1"
           OMP_NUM_THREADS: "1"
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_bit_neural_vm_v49.py
+          python -m pytest -q visuaml-client/backend/tests/test_bit_neural_vm_v49.py visuaml-client/backend/tests/test_bit_neural_archive_v49.py
           python -m pytest -q visuaml-client/backend/tests/test_fixed_neural_token_vm_v48.py -k 'not z3'
-          ruff check visuaml-client/backend/visuaml/compiler_lab/bit_neural_vm_v49.py visuaml-client/backend/tests/test_bit_neural_vm_v49.py visuaml-client/backend/scripts/probe_bit_neural_vm_v49.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/bit_neural_vm_v49.py visuaml-client/backend/tests/test_bit_neural_vm_v49.py visuaml-client/backend/scripts/probe_bit_neural_vm_v49.py visuaml-client/backend/tests/test_bit_neural_archive_v49.py
       - name: Generate complete 11-program real-Wasm original and neural transition evidence
         env:
           PYTHONPATH: visuaml-client/backend
