@@ -1,0 +1,847 @@
+{
+  "all_passed": true,
+  "atol": 0.0001,
+  "checkpoint_input": {
+    "dtype_id": 1,
+    "name": "Input3",
+    "shape": [
+      1,
+      1,
+      28,
+      28
+    ]
+  },
+  "checkpoint_output": {
+    "dtype_id": 1,
+    "name": "Plus214_Output_0",
+    "shape": [
+      1,
+      10
+    ]
+  },
+  "checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+  "compiler": {
+    "compilation_ms": 404.709527,
+    "compiler_flags": [
+      "-std=c++17",
+      "-O2",
+      "-fno-fast-math",
+      "-fPIC",
+      "-shared"
+    ],
+    "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "generated_cpp_sha256": "e395e04f14a9ef3c5ee0534da2fe81605f3fb2e9b2deefaf3f9bb96a207ba686",
+    "inputs": [
+      {
+        "dtype": "float32",
+        "name": "Input3",
+        "shape": [
+          1,
+          1,
+          28,
+          28
+        ]
+      },
+      {
+        "dtype": "float32",
+        "name": "Parameter193",
+        "shape": [
+          16,
+          4,
+          4,
+          10
+        ]
+      },
+      {
+        "dtype": "float32",
+        "name": "Parameter87",
+        "shape": [
+          16,
+          8,
+          5,
+          5
+        ]
+      },
+      {
+        "dtype": "float32",
+        "name": "Parameter5",
+        "shape": [
+          8,
+          1,
+          5,
+          5
+        ]
+      },
+      {
+        "dtype": "float32",
+        "name": "Parameter6",
+        "shape": [
+          8,
+          1,
+          1
+        ]
+      },
+      {
+        "dtype": "float32",
+        "name": "Parameter88",
+        "shape": [
+          16,
+          1,
+          1
+        ]
+      },
+      {
+        "dtype": "float32",
+        "name": "Parameter194",
+        "shape": [
+          1,
+          10
+        ]
+      }
+    ],
+    "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+    "native_binary_sha256": "b4870951b77e6b7d7973d86c6c7526cfd26d4e5fdfb6bb3e56602d7e4a5d4aff",
+    "op_sequence": [
+      "reshape",
+      "conv2d",
+      "broadcast_add",
+      "relu",
+      "maxpool2d",
+      "conv2d",
+      "broadcast_add",
+      "relu",
+      "maxpool2d",
+      "reshape",
+      "matmul",
+      "broadcast_add"
+    ],
+    "output_shape": [
+      1,
+      10
+    ],
+    "retained_bytes_upper_bound": 158648,
+    "scalar_multiply_upper_bound": 786560,
+    "schema": "visuaml.semantic-native-cpu.v32",
+    "semantic_sha256": "e3f4012380e4c1865495e0650842eb8dc9f435482e69dc2331dfa532b33c88ee",
+    "source_program_sha256": "0e64c3cf62123dec54cc72e28fb421fb98bbbf2edd138f69ef1d805f9a897a7c",
+    "target": "x86_64"
+  },
+  "generated_cpp": "// Deterministically generated v32 Semantic IR CPU source.\n#include <algorithm>\n#include <cmath>\n#include <cstddef>\n#include <limits>\n#include <vector>\nextern \"C\" int visuaml_semantic_run(const float* const* inputs, float* output) noexcept {\n  try {\n    if (!inputs || !output) return -1;\n    if (!inputs[0]) return -1;\n    const float* v0 = inputs[0];\n    if (!inputs[1]) return -1;\n    const float* v1 = inputs[1];\n    if (!inputs[2]) return -1;\n    const float* v2 = inputs[2];\n    if (!inputs[3]) return -1;\n    const float* v3 = inputs[3];\n    if (!inputs[4]) return -1;\n    const float* v4 = inputs[4];\n    if (!inputs[5]) return -1;\n    const float* v5 = inputs[5];\n    if (!inputs[6]) return -1;\n    const float* v6 = inputs[6];\n    std::vector<float> storage_7(2560);\n    float* v7 = storage_7.data();\n    std::copy(v1, v1+2560, v7);\n    for (size_t i=0; i<2560; ++i) if (!std::isfinite(v7[i])) return -3;\n    std::vector<float> storage_8(6272);\n    float* v8 = storage_8.data();\n    for (int n=0; n<1; ++n)\n      for (int o=0; o<8; ++o)\n        for (int y=0; y<28; ++y)\n          for (int x=0; x<28; ++x) {\n            float sum = 0.0f;\n            for (int c=0; c<1; ++c)\n              for (int ky=0; ky<5; ++ky)\n                for (int kx=0; kx<5; ++kx) {\n                  const int iy = y*1 + ky - 2;\n                  const int ix = x*1 + kx - 2;\n                  if (iy>=0 && iy<28 && ix>=0 && ix<28)\n                    sum += v0[((n*1+c)*28+iy)*28+ix]\n                           * v3[((o*1+c)*5+ky)*5+kx];\n                }\n            v8[((n*8+o)*28+y)*28+x] = sum;\n          }\n    for (size_t i=0; i<6272; ++i) if (!std::isfinite(v8[i])) return -3;\n    std::vector<float> storage_9(6272);\n    float* v9 = storage_9.data();\n    for (size_t i=0; i<6272; ++i) v9[i] = v8[((i/784)%8)*784 + ((i/28)%28)*28 + ((i/1)%28)*1] + v4[((i/784)%8)*1];\n    for (size_t i=0; i<6272; ++i) if (!std::isfinite(v9[i])) return -3;\n    std::vector<float> storage_10(6272);\n    float* v10 = storage_10.data();\n    for (size_t i=0; i<6272; ++i) v10[i] = std::max(0.0f, v9[i]);\n    for (size_t i=0; i<6272; ++i) if (!std::isfinite(v10[i])) return -3;\n    std::vector<float> storage_11(1568);\n    float* v11 = storage_11.data();\n    for (int n=0; n<1; ++n)\n      for (int c=0; c<8; ++c)\n        for (int y=0; y<14; ++y)\n          for (int x=0; x<14; ++x) {\n            float maximum = -std::numeric_limits<float>::infinity();\n            for (int ky=0; ky<2; ++ky)\n              for (int kx=0; kx<2; ++kx) {\n                const int iy=y*2+ky-0;\n                const int ix=x*2+kx-0;\n                if (iy>=0 && iy<28 && ix>=0 && ix<28)\n                  maximum=std::max(maximum, v10[((n*8+c)*28+iy)*28+ix]);\n              }\n            v11[((n*8+c)*14+y)*14+x]=maximum;\n          }\n    for (size_t i=0; i<1568; ++i) if (!std::isfinite(v11[i])) return -3;\n    std::vector<float> storage_12(3136);\n    float* v12 = storage_12.data();\n    for (int n=0; n<1; ++n)\n      for (int o=0; o<16; ++o)\n        for (int y=0; y<14; ++y)\n          for (int x=0; x<14; ++x) {\n            float sum = 0.0f;\n            for (int c=0; c<8; ++c)\n              for (int ky=0; ky<5; ++ky)\n                for (int kx=0; kx<5; ++kx) {\n                  const int iy = y*1 + ky - 2;\n                  const int ix = x*1 + kx - 2;\n                  if (iy>=0 && iy<14 && ix>=0 && ix<14)\n                    sum += v11[((n*8+c)*14+iy)*14+ix]\n                           * v2[((o*8+c)*5+ky)*5+kx];\n                }\n            v12[((n*16+o)*14+y)*14+x] = sum;\n          }\n    for (size_t i=0; i<3136; ++i) if (!std::isfinite(v12[i])) return -3;\n    std::vector<float> storage_13(3136);\n    float* v13 = storage_13.data();\n    for (size_t i=0; i<3136; ++i) v13[i] = v12[((i/196)%16)*196 + ((i/14)%14)*14 + ((i/1)%14)*1] + v5[((i/196)%16)*1];\n    for (size_t i=0; i<3136; ++i) if (!std::isfinite(v13[i])) return -3;\n    std::vector<float> storage_14(3136);\n    float* v14 = storage_14.data();\n    for (size_t i=0; i<3136; ++i) v14[i] = std::max(0.0f, v13[i]);\n    for (size_t i=0; i<3136; ++i) if (!std::isfinite(v14[i])) return -3;\n    std::vector<float> storage_15(256);\n    float* v15 = storage_15.data();\n    for (int n=0; n<1; ++n)\n      for (int c=0; c<16; ++c)\n        for (int y=0; y<4; ++y)\n          for (int x=0; x<4; ++x) {\n            float maximum = -std::numeric_limits<float>::infinity();\n            for (int ky=0; ky<3; ++ky)\n              for (int kx=0; kx<3; ++kx) {\n                const int iy=y*3+ky-0;\n                const int ix=x*3+kx-0;\n                if (iy>=0 && iy<14 && ix>=0 && ix<14)\n                  maximum=std::max(maximum, v14[((n*16+c)*14+iy)*14+ix]);\n              }\n            v15[((n*16+c)*4+y)*4+x]=maximum;\n          }\n    for (size_t i=0; i<256; ++i) if (!std::isfinite(v15[i])) return -3;\n    std::vector<float> storage_16(256);\n    float* v16 = storage_16.data();\n    std::copy(v15, v15+256, v16);\n    for (size_t i=0; i<256; ++i) if (!std::isfinite(v16[i])) return -3;\n    std::vector<float> storage_17(10);\n    float* v17 = storage_17.data();\n    for (int i=0; i<1; ++i) for (int j=0; j<10; ++j) {\n      float sum = 0.0f;\n      for (int k=0; k<256; ++k) sum += v16[i*256+k] * v7[k*10+j];\n      v17[i*10+j] = sum;\n    }\n    for (size_t i=0; i<10; ++i) if (!std::isfinite(v17[i])) return -3;\n    std::vector<float> storage_18(10);\n    float* v18 = storage_18.data();\n    for (size_t i=0; i<10; ++i) v18[i] = v17[((i/1)%10)*1] + v6[((i/1)%10)*1];\n    for (size_t i=0; i<10; ++i) if (!std::isfinite(v18[i])) return -3;\n    std::copy(v18, v18+10, output);\n    return 0;\n  } catch (...) { return -99; }\n}\n",
+  "graph_operation_count": 12,
+  "limitations": "One pinned trained small CNN, static float32, local C++17 and five finite input witnesses; no all-input proof, real-image accuracy, GPU, WebAssembly, program decompilation, energy measurements, or production throughput.",
+  "model_family": "ONNX Model Zoo trained MNIST-8 convolutional classifier",
+  "native_execution": true,
+  "numpy_version": "2.2.6",
+  "onnx_version": "1.18.0",
+  "onnxruntime_version": "1.22.1",
+  "platform": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+  "rtol": 0.0001,
+  "schema": "visuaml.pretrained-onnx-native-semantic.v38",
+  "source_commit": "ce03d412a86e32d2b9071ccc7f253b041629d7fa",
+  "source_file_sha256": {
+    "scripts/probe_pretrained_mnist8_native_v38.py": "ccfd015b9905d43a46ba033e7ef544776ea7df51082f013019fcfe77ad29a1b6",
+    "visuaml/compiler_lab/native_semantic_codegen_v32.py": "78639989924c00ba7bb39d9088e5436e1169c73451ad11cebb140e08116aeaba",
+    "visuaml/compiler_lab/onnx_semantic_frontend_v38.py": "c412025385368645f2914dba8ed8e3b75ec79db14e78f6225238267a575c3759",
+    "visuaml/compiler_lab/semantic_ir.py": "d960448c6121e0fefac62a7b2e6ae7ec2a3996cc88ce3c3d994740cc18c76dc1"
+  },
+  "source_revision": "a19f9a8c2333de1df9b03f10f5739f468b699a1a",
+  "tensor_sha256": {
+    "Parameter193": "418379b078799df7956f1bd51e1839a728002f001228aba5b81ac67ad6e26772",
+    "Parameter193_reshape1_shape": "e26a3f262edf725815e90291867a8afa1453d750f0ef60bb46437147e77b8b2d",
+    "Parameter194": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+    "Parameter5": "0b574bb7c806df5a9ae9e5a724b9374fae2f623ef4bd229da3b0c50bdceb050f",
+    "Parameter6": "3b01b3dc7fd60ff07764a77f74d3e01cb1d6617cb32416816feb03bdd642b680",
+    "Parameter87": "c05769cb4e565cb329e466cac5e51f3819b861c5fe72988a2941fa622819c1d9",
+    "Parameter88": "e345d59308978b6cc3a49eb1c2236aba153d6d8ead9ecdcdaad0d68cb8880809",
+    "Pooling160_Output_0_reshape0_shape": "89063da2926620b0bcd927a7ef76480cb4772b71306d614f79e016c826e8a0e8"
+  },
+  "warm_single_run_ms": [
+    1.129473,
+    1.07979,
+    1.091482,
+    1.058811,
+    1.065974
+  ],
+  "witnesses": [
+    {
+      "input_immutability": true,
+      "input_sha256": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271",
+      "name": "zero",
+      "native_logits_sha256": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+      "numerics": {
+        "onnxruntime": {
+          "max_abs_error": 0.0,
+          "max_allowed_error": 0.00011402187374187633,
+          "oracle_output_sha256": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+          "passed": true
+        },
+        "scalar_numpy": {
+          "max_abs_error": 0.0,
+          "max_allowed_error": 0.00011402187374187633,
+          "oracle_output_sha256": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+          "passed": true
+        }
+      },
+      "receipt": {
+        "compilation_ms": 404.709527,
+        "compiler_flags": [
+          "-std=c++17",
+          "-O2",
+          "-fno-fast-math",
+          "-fPIC",
+          "-shared"
+        ],
+        "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+        "generated_cpp_sha256": "e395e04f14a9ef3c5ee0534da2fe81605f3fb2e9b2deefaf3f9bb96a207ba686",
+        "input_sha256": {
+          "Input3": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271",
+          "Parameter193": "418379b078799df7956f1bd51e1839a728002f001228aba5b81ac67ad6e26772",
+          "Parameter194": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+          "Parameter5": "0b574bb7c806df5a9ae9e5a724b9374fae2f623ef4bd229da3b0c50bdceb050f",
+          "Parameter6": "3b01b3dc7fd60ff07764a77f74d3e01cb1d6617cb32416816feb03bdd642b680",
+          "Parameter87": "c05769cb4e565cb329e466cac5e51f3819b861c5fe72988a2941fa622819c1d9",
+          "Parameter88": "e345d59308978b6cc3a49eb1c2236aba153d6d8ead9ecdcdaad0d68cb8880809"
+        },
+        "inputs": [
+          {
+            "dtype": "float32",
+            "name": "Input3",
+            "shape": [
+              1,
+              1,
+              28,
+              28
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter193",
+            "shape": [
+              16,
+              4,
+              4,
+              10
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter87",
+            "shape": [
+              16,
+              8,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter5",
+            "shape": [
+              8,
+              1,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter6",
+            "shape": [
+              8,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter88",
+            "shape": [
+              16,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter194",
+            "shape": [
+              1,
+              10
+            ]
+          }
+        ],
+        "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+        "native_binary_sha256": "b4870951b77e6b7d7973d86c6c7526cfd26d4e5fdfb6bb3e56602d7e4a5d4aff",
+        "op_sequence": [
+          "reshape",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "reshape",
+          "matmul",
+          "broadcast_add"
+        ],
+        "output_sha256": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+        "output_shape": [
+          1,
+          10
+        ],
+        "retained_bytes_upper_bound": 158648,
+        "scalar_multiply_upper_bound": 786560,
+        "schema": "visuaml.semantic-native-cpu.v32",
+        "semantic_sha256": "e3f4012380e4c1865495e0650842eb8dc9f435482e69dc2331dfa532b33c88ee",
+        "source_program_sha256": "0e64c3cf62123dec54cc72e28fb421fb98bbbf2edd138f69ef1d805f9a897a7c",
+        "target": "x86_64"
+      }
+    },
+    {
+      "input_immutability": true,
+      "input_sha256": "c0acddaeb5e08ca7c6f0ab859e008b5ea5544cac1fe9eea8d644f87f071f9eab",
+      "name": "ones",
+      "native_logits_sha256": "fb1cb36ed0bb4008ab016c492e99fb48663db325321e885cc407a8efad709ca1",
+      "numerics": {
+        "onnxruntime": {
+          "max_abs_error": 5.960464477539062e-07,
+          "max_allowed_error": 0.00044099055230617523,
+          "oracle_output_sha256": "6f5b020c84e189d4859ba602d3b265a79a302863cd006a7342db5c14f7855674",
+          "passed": true
+        },
+        "scalar_numpy": {
+          "max_abs_error": 7.152557373046875e-07,
+          "max_allowed_error": 0.00044099061051383615,
+          "oracle_output_sha256": "5e84fd10e2f5ab3d2716723e388b62ec4904ef4f98c1db789c21b92dacde499f",
+          "passed": true
+        }
+      },
+      "receipt": {
+        "compilation_ms": 404.709527,
+        "compiler_flags": [
+          "-std=c++17",
+          "-O2",
+          "-fno-fast-math",
+          "-fPIC",
+          "-shared"
+        ],
+        "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+        "generated_cpp_sha256": "e395e04f14a9ef3c5ee0534da2fe81605f3fb2e9b2deefaf3f9bb96a207ba686",
+        "input_sha256": {
+          "Input3": "c0acddaeb5e08ca7c6f0ab859e008b5ea5544cac1fe9eea8d644f87f071f9eab",
+          "Parameter193": "418379b078799df7956f1bd51e1839a728002f001228aba5b81ac67ad6e26772",
+          "Parameter194": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+          "Parameter5": "0b574bb7c806df5a9ae9e5a724b9374fae2f623ef4bd229da3b0c50bdceb050f",
+          "Parameter6": "3b01b3dc7fd60ff07764a77f74d3e01cb1d6617cb32416816feb03bdd642b680",
+          "Parameter87": "c05769cb4e565cb329e466cac5e51f3819b861c5fe72988a2941fa622819c1d9",
+          "Parameter88": "e345d59308978b6cc3a49eb1c2236aba153d6d8ead9ecdcdaad0d68cb8880809"
+        },
+        "inputs": [
+          {
+            "dtype": "float32",
+            "name": "Input3",
+            "shape": [
+              1,
+              1,
+              28,
+              28
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter193",
+            "shape": [
+              16,
+              4,
+              4,
+              10
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter87",
+            "shape": [
+              16,
+              8,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter5",
+            "shape": [
+              8,
+              1,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter6",
+            "shape": [
+              8,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter88",
+            "shape": [
+              16,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter194",
+            "shape": [
+              1,
+              10
+            ]
+          }
+        ],
+        "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+        "native_binary_sha256": "b4870951b77e6b7d7973d86c6c7526cfd26d4e5fdfb6bb3e56602d7e4a5d4aff",
+        "op_sequence": [
+          "reshape",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "reshape",
+          "matmul",
+          "broadcast_add"
+        ],
+        "output_sha256": "fb1cb36ed0bb4008ab016c492e99fb48663db325321e885cc407a8efad709ca1",
+        "output_shape": [
+          1,
+          10
+        ],
+        "retained_bytes_upper_bound": 158648,
+        "scalar_multiply_upper_bound": 786560,
+        "schema": "visuaml.semantic-native-cpu.v32",
+        "semantic_sha256": "e3f4012380e4c1865495e0650842eb8dc9f435482e69dc2331dfa532b33c88ee",
+        "source_program_sha256": "0e64c3cf62123dec54cc72e28fb421fb98bbbf2edd138f69ef1d805f9a897a7c",
+        "target": "x86_64"
+      }
+    },
+    {
+      "input_immutability": true,
+      "input_sha256": "32103f0e4502624f9a3c903d5b054eba10a60e339c90c06320029b5b876b0040",
+      "name": "impulse",
+      "native_logits_sha256": "15ed490b70f2e62a5006d34fff8940335e49f81447412ce1a77fec49b541e241",
+      "numerics": {
+        "onnxruntime": {
+          "max_abs_error": 2.384185791015625e-07,
+          "max_allowed_error": 0.00020895444322377443,
+          "oracle_output_sha256": "1e9d6632f49fdd3e907ce8da0b1458579792ac78e69bca6ac0174f38a55330dd",
+          "passed": true
+        },
+        "scalar_numpy": {
+          "max_abs_error": 1.043081283569336e-07,
+          "max_allowed_error": 0.00020895444322377443,
+          "oracle_output_sha256": "24f56fe34086ece5ad938825a6396b4fb482daebfd102f7d2a7f3484df27f392",
+          "passed": true
+        }
+      },
+      "receipt": {
+        "compilation_ms": 404.709527,
+        "compiler_flags": [
+          "-std=c++17",
+          "-O2",
+          "-fno-fast-math",
+          "-fPIC",
+          "-shared"
+        ],
+        "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+        "generated_cpp_sha256": "e395e04f14a9ef3c5ee0534da2fe81605f3fb2e9b2deefaf3f9bb96a207ba686",
+        "input_sha256": {
+          "Input3": "32103f0e4502624f9a3c903d5b054eba10a60e339c90c06320029b5b876b0040",
+          "Parameter193": "418379b078799df7956f1bd51e1839a728002f001228aba5b81ac67ad6e26772",
+          "Parameter194": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+          "Parameter5": "0b574bb7c806df5a9ae9e5a724b9374fae2f623ef4bd229da3b0c50bdceb050f",
+          "Parameter6": "3b01b3dc7fd60ff07764a77f74d3e01cb1d6617cb32416816feb03bdd642b680",
+          "Parameter87": "c05769cb4e565cb329e466cac5e51f3819b861c5fe72988a2941fa622819c1d9",
+          "Parameter88": "e345d59308978b6cc3a49eb1c2236aba153d6d8ead9ecdcdaad0d68cb8880809"
+        },
+        "inputs": [
+          {
+            "dtype": "float32",
+            "name": "Input3",
+            "shape": [
+              1,
+              1,
+              28,
+              28
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter193",
+            "shape": [
+              16,
+              4,
+              4,
+              10
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter87",
+            "shape": [
+              16,
+              8,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter5",
+            "shape": [
+              8,
+              1,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter6",
+            "shape": [
+              8,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter88",
+            "shape": [
+              16,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter194",
+            "shape": [
+              1,
+              10
+            ]
+          }
+        ],
+        "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+        "native_binary_sha256": "b4870951b77e6b7d7973d86c6c7526cfd26d4e5fdfb6bb3e56602d7e4a5d4aff",
+        "op_sequence": [
+          "reshape",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "reshape",
+          "matmul",
+          "broadcast_add"
+        ],
+        "output_sha256": "15ed490b70f2e62a5006d34fff8940335e49f81447412ce1a77fec49b541e241",
+        "output_shape": [
+          1,
+          10
+        ],
+        "retained_bytes_upper_bound": 158648,
+        "scalar_multiply_upper_bound": 786560,
+        "schema": "visuaml.semantic-native-cpu.v32",
+        "semantic_sha256": "e3f4012380e4c1865495e0650842eb8dc9f435482e69dc2331dfa532b33c88ee",
+        "source_program_sha256": "0e64c3cf62123dec54cc72e28fb421fb98bbbf2edd138f69ef1d805f9a897a7c",
+        "target": "x86_64"
+      }
+    },
+    {
+      "input_immutability": true,
+      "input_sha256": "e51a26131006fdf17007855cbf9044dcdb3e1397246249e188cfa49684c21abc",
+      "name": "checkerboard",
+      "native_logits_sha256": "913253fc80301e05a7a8c06491183c3162fc75c4c1e4031a0a925b8a84462f66",
+      "numerics": {
+        "onnxruntime": {
+          "max_abs_error": 2.980232238769531e-07,
+          "max_allowed_error": 0.00023119445540942252,
+          "oracle_output_sha256": "1f0ad1faf09da2ba76959b017a4858a2d84da3cbe5fdbdad1bcbaa557a51f5b3",
+          "passed": true
+        },
+        "scalar_numpy": {
+          "max_abs_error": 1.7881393432617188e-07,
+          "max_allowed_error": 0.00023119445540942252,
+          "oracle_output_sha256": "4bc1b344c9f44c10ab85c00c5d28e0eaaa9044f99ef6e0dd76d66ed78fb19e54",
+          "passed": true
+        }
+      },
+      "receipt": {
+        "compilation_ms": 404.709527,
+        "compiler_flags": [
+          "-std=c++17",
+          "-O2",
+          "-fno-fast-math",
+          "-fPIC",
+          "-shared"
+        ],
+        "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+        "generated_cpp_sha256": "e395e04f14a9ef3c5ee0534da2fe81605f3fb2e9b2deefaf3f9bb96a207ba686",
+        "input_sha256": {
+          "Input3": "e51a26131006fdf17007855cbf9044dcdb3e1397246249e188cfa49684c21abc",
+          "Parameter193": "418379b078799df7956f1bd51e1839a728002f001228aba5b81ac67ad6e26772",
+          "Parameter194": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+          "Parameter5": "0b574bb7c806df5a9ae9e5a724b9374fae2f623ef4bd229da3b0c50bdceb050f",
+          "Parameter6": "3b01b3dc7fd60ff07764a77f74d3e01cb1d6617cb32416816feb03bdd642b680",
+          "Parameter87": "c05769cb4e565cb329e466cac5e51f3819b861c5fe72988a2941fa622819c1d9",
+          "Parameter88": "e345d59308978b6cc3a49eb1c2236aba153d6d8ead9ecdcdaad0d68cb8880809"
+        },
+        "inputs": [
+          {
+            "dtype": "float32",
+            "name": "Input3",
+            "shape": [
+              1,
+              1,
+              28,
+              28
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter193",
+            "shape": [
+              16,
+              4,
+              4,
+              10
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter87",
+            "shape": [
+              16,
+              8,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter5",
+            "shape": [
+              8,
+              1,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter6",
+            "shape": [
+              8,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter88",
+            "shape": [
+              16,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter194",
+            "shape": [
+              1,
+              10
+            ]
+          }
+        ],
+        "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+        "native_binary_sha256": "b4870951b77e6b7d7973d86c6c7526cfd26d4e5fdfb6bb3e56602d7e4a5d4aff",
+        "op_sequence": [
+          "reshape",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "reshape",
+          "matmul",
+          "broadcast_add"
+        ],
+        "output_sha256": "913253fc80301e05a7a8c06491183c3162fc75c4c1e4031a0a925b8a84462f66",
+        "output_shape": [
+          1,
+          10
+        ],
+        "retained_bytes_upper_bound": 158648,
+        "scalar_multiply_upper_bound": 786560,
+        "schema": "visuaml.semantic-native-cpu.v32",
+        "semantic_sha256": "e3f4012380e4c1865495e0650842eb8dc9f435482e69dc2331dfa532b33c88ee",
+        "source_program_sha256": "0e64c3cf62123dec54cc72e28fb421fb98bbbf2edd138f69ef1d805f9a897a7c",
+        "target": "x86_64"
+      }
+    },
+    {
+      "input_immutability": true,
+      "input_sha256": "e2486188057941c7f35c0731a98e83bda088639002b89a9b38e7bac9241849f0",
+      "name": "random_seed_37",
+      "native_logits_sha256": "ecacc0ac18cde5e3c00888ca619ea8d74457e19f6b23a09292b7834b77326152",
+      "numerics": {
+        "onnxruntime": {
+          "max_abs_error": 7.152557373046875e-07,
+          "max_allowed_error": 0.00028779692365787923,
+          "oracle_output_sha256": "7ccb13e905eadac28562f21df8cca3444678274a7f61bd4bcdd01a07cce96724",
+          "passed": true
+        },
+        "scalar_numpy": {
+          "max_abs_error": 4.76837158203125e-07,
+          "max_allowed_error": 0.00028779692365787923,
+          "oracle_output_sha256": "80cc64ee94ea99306aefb332e5ebe8b5fe9305585eb02cdfea943f1f2c8fcfea",
+          "passed": true
+        }
+      },
+      "receipt": {
+        "compilation_ms": 404.709527,
+        "compiler_flags": [
+          "-std=c++17",
+          "-O2",
+          "-fno-fast-math",
+          "-fPIC",
+          "-shared"
+        ],
+        "compiler_identity": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+        "generated_cpp_sha256": "e395e04f14a9ef3c5ee0534da2fe81605f3fb2e9b2deefaf3f9bb96a207ba686",
+        "input_sha256": {
+          "Input3": "e2486188057941c7f35c0731a98e83bda088639002b89a9b38e7bac9241849f0",
+          "Parameter193": "418379b078799df7956f1bd51e1839a728002f001228aba5b81ac67ad6e26772",
+          "Parameter194": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+          "Parameter5": "0b574bb7c806df5a9ae9e5a724b9374fae2f623ef4bd229da3b0c50bdceb050f",
+          "Parameter6": "3b01b3dc7fd60ff07764a77f74d3e01cb1d6617cb32416816feb03bdd642b680",
+          "Parameter87": "c05769cb4e565cb329e466cac5e51f3819b861c5fe72988a2941fa622819c1d9",
+          "Parameter88": "e345d59308978b6cc3a49eb1c2236aba153d6d8ead9ecdcdaad0d68cb8880809"
+        },
+        "inputs": [
+          {
+            "dtype": "float32",
+            "name": "Input3",
+            "shape": [
+              1,
+              1,
+              28,
+              28
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter193",
+            "shape": [
+              16,
+              4,
+              4,
+              10
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter87",
+            "shape": [
+              16,
+              8,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter5",
+            "shape": [
+              8,
+              1,
+              5,
+              5
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter6",
+            "shape": [
+              8,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter88",
+            "shape": [
+              16,
+              1,
+              1
+            ]
+          },
+          {
+            "dtype": "float32",
+            "name": "Parameter194",
+            "shape": [
+              1,
+              10
+            ]
+          }
+        ],
+        "limitations": "pure, static float32 graphs only; no external native sandbox, dynamic shape, state effect, GPU or portable AOT package",
+        "native_binary_sha256": "b4870951b77e6b7d7973d86c6c7526cfd26d4e5fdfb6bb3e56602d7e4a5d4aff",
+        "op_sequence": [
+          "reshape",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "conv2d",
+          "broadcast_add",
+          "relu",
+          "maxpool2d",
+          "reshape",
+          "matmul",
+          "broadcast_add"
+        ],
+        "output_sha256": "ecacc0ac18cde5e3c00888ca619ea8d74457e19f6b23a09292b7834b77326152",
+        "output_shape": [
+          1,
+          10
+        ],
+        "retained_bytes_upper_bound": 158648,
+        "scalar_multiply_upper_bound": 786560,
+        "schema": "visuaml.semantic-native-cpu.v32",
+        "semantic_sha256": "e3f4012380e4c1865495e0650842eb8dc9f435482e69dc2331dfa532b33c88ee",
+        "source_program_sha256": "0e64c3cf62123dec54cc72e28fb421fb98bbbf2edd138f69ef1d805f9a897a7c",
+        "target": "x86_64"
+      }
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 """v32 closed-world pure SemanticProgram -> generated C++17 CPU execution.
 
 This is the first *graph-generated* native path, unlike the fixed Llama decoder.
-Admits bounded static float32 SSA graphs with add/relu/matmul/conv2d only.
+Admits bounded static float32 SSA graphs, including v38's reshape,
+right-aligned broadcast addition, maxpool and explicit convolution geometry.
 Weights are explicit runtime inputs. No state effects, dynamic shapes, input
 alias mutation, user-supplied C++, arbitrary Python, or portable signed AOT.
 The native library is process-owned and is NOT an isolation sandbox.
@@ -34,7 +35,7 @@ _MAX_OPS = 64
 _MAX_ELEMENTS = 65_536
 _MAX_BYTES = 8 * 1024 * 1024
 _MAX_MULTIPLIES = 50_000_000
-_ALLOWED = frozenset({"matmul", "add", "relu", "conv2d"})
+_ALLOWED = frozenset({"matmul", "add", "relu", "conv2d", "reshape", "broadcast_add", "maxpool2d"})
 _PTRS = ctypes.POINTER(ctypes.c_void_p)
 
 
@@ -66,7 +67,7 @@ def _concrete(spec: ValueType) -> tuple[int, ...]:
         raise NativeIRCodegenError("Native v32 requires float32 ValueType")
     shape = spec.shape
     if not 1 <= len(shape) <= 4 or any(
-        type(d) is not int or not 1 <= d <= 128 for d in shape
+        type(d) is not int or not 1 <= d <= 512 for d in shape
     ):
         raise NativeIRCodegenError("Native v32 requires bounded concrete dimensions")
     elements = math.prod(shape)
@@ -79,6 +80,31 @@ def _concrete(spec: ValueType) -> tuple[int, ...]:
     return shape
 
 
+def _int_params(parameters: tuple) -> dict[str, int]:
+    if (not isinstance(parameters, tuple)
+            or any(not isinstance(p, tuple) or len(p) != 2
+                   or not isinstance(p[0], str) or type(p[1]) is not int
+                   for p in parameters)):
+        raise NativeIRCodegenError("Malformed integer operator parameters")
+    result = dict(parameters)
+    if len(result) != len(parameters):
+        raise NativeIRCodegenError("Duplicate operator parameter")
+    return result
+
+
+def _broadcast_index(shape: tuple[int, ...],
+                     out_shape: tuple[int, ...]) -> str:
+    aligned = (1,) * (len(out_shape) - len(shape)) + shape
+    terms = []
+    for axis, dim in enumerate(aligned):
+        if dim == 1:
+            continue
+        outer = math.prod(out_shape[axis + 1:])
+        src_stride = math.prod(aligned[axis + 1:])
+        terms.append(f"((i/{outer})%{out_shape[axis]})*{src_stride}")
+    return " + ".join(terms) if terms else "0"
+
+
 def _admit(program: SemanticProgram) -> _Plan:
     if not isinstance(program, SemanticProgram):
         raise NativeIRCodegenError("Expected SemanticProgram")
@@ -87,7 +113,7 @@ def _admit(program: SemanticProgram) -> _Plan:
     except ValueError as exc:
         raise NativeIRCodegenError("Invalid semantic envelope") from exc
     if (
-        program.origin != "torch-fx"
+        program.origin not in ("torch-fx", "onnx")
         or program.state_types
         or len(program.regions) != 1
         or program.regions[0].repetitions != 1
@@ -157,6 +183,47 @@ def _admit(program: SemanticProgram) -> _Plan:
             ):
                 raise NativeIRCodegenError("Unsupported elementwise shape/broadcast")
             params = ()
+        elif op.op == "reshape":
+            if (len(input_shapes) != 1 or op.parameters
+                    or math.prod(input_shapes[0]) != math.prod(out_shape)):
+                raise NativeIRCodegenError("Static reshape element-count mismatch")
+            params = ()
+        elif op.op == "broadcast_add":
+            if len(input_shapes) != 2 or op.parameters:
+                raise NativeIRCodegenError("Invalid broadcast-add operands")
+            r = max(map(len, input_shapes))
+            aligned = [((1,) * (r - len(sh)) + sh) for sh in input_shapes]
+            expected = tuple(
+                max(a, b) if a == 1 or b == 1 or a == b else 0
+                for a, b in zip(*aligned, strict=True)
+            )
+            if 0 in expected or out_shape != expected:
+                raise NativeIRCodegenError("Broadcast-add geometry mismatch")
+            params = ()
+        elif op.op == "maxpool2d":
+            if len(input_shapes) != 1 or len(input_shapes[0]) != 4:
+                raise NativeIRCodegenError("MaxPool requires NCHW input")
+            opts = _int_params(op.parameters)
+            if set(opts) != {"kernel", "stride", "pad_top", "pad_left", "pad_bottom", "pad_right"}:
+                raise NativeIRCodegenError("MaxPool requires explicit static geometry")
+            kernel, stride = opts["kernel"], opts["stride"]
+            pt, pl, pb, pr = (opts[k] for k in ("pad_top", "pad_left", "pad_bottom", "pad_right"))
+            if not 1 <= kernel <= 8 or not 1 <= stride <= 4 or not all(
+                0 <= p <= 4 for p in (pt, pl, pb, pr)
+            ):
+                raise NativeIRCodegenError("MaxPool kernel/stride/padding out of range")
+            batch, channels, height, width = input_shapes[0]
+            oh = (height + pt + pb - kernel) // stride + 1
+            ow = (width + pl + pr - kernel) // stride + 1
+            if oh <= 0 or ow <= 0 or out_shape != (batch, channels, oh, ow):
+                raise NativeIRCodegenError("MaxPool result geometry mismatch")
+            if any(max(0, y * stride - pt) >= min(height, y * stride - pt + kernel)
+                   for y in range(oh)) or any(
+                max(0, x * stride - pl) >= min(width, x * stride - pl + kernel)
+                for x in range(ow)
+            ):
+                raise NativeIRCodegenError("Empty MaxPool window")
+            params = (kernel, stride, pt, pl, pb, pr)
         else:
             if (
                 len(input_shapes) != 2
@@ -164,28 +231,22 @@ def _admit(program: SemanticProgram) -> _Plan:
                 or len(input_shapes[1]) != 4
             ):
                 raise NativeIRCodegenError("Convolution requires NCHW and OIHW")
-            if (
-                not isinstance(op.parameters, tuple)
-                or any(
-                    not isinstance(p, tuple) or len(p) != 2
-                    or not isinstance(p[0], str) or type(p[1]) is not int
-                    for p in op.parameters
-                )
-            ):
-                raise NativeIRCodegenError("Invalid convolution parameters")
-            opts = dict(op.parameters)
-            if (
-                len(op.parameters) != 2
-                or set(opts) != {"stride", "padding"}
-                or not 1 <= opts["stride"] <= 4
-                or not 0 <= opts["padding"] <= 3
+            opts = _int_params(op.parameters)
+            if set(opts) == {"stride", "padding"}:
+                pt = pl = pb = pr = opts["padding"]
+            elif set(opts) == {"stride", "pad_top", "pad_left", "pad_bottom", "pad_right"}:
+                pt, pl, pb, pr = (opts[k] for k in ("pad_top", "pad_left", "pad_bottom", "pad_right"))
+            else:
+                raise NativeIRCodegenError("Unsupported convolution parameters")
+            if not 1 <= opts["stride"] <= 4 or not all(
+                0 <= p <= 4 for p in (pt, pl, pb, pr)
             ):
                 raise NativeIRCodegenError("Unsupported convolution geometry")
             batch, in_channels, height, width = input_shapes[0]
             out_channels, weight_channels, kh, kw = input_shapes[1]
-            stride, padding = opts["stride"], opts["padding"]
-            oh = (height + 2 * padding - kh) // stride + 1
-            ow = (width + 2 * padding - kw) // stride + 1
+            stride = opts["stride"]
+            oh = (height + pt + pb - kh) // stride + 1
+            ow = (width + pl + pr - kw) // stride + 1
             if (
                 in_channels != weight_channels
                 or oh <= 0 or ow <= 0
@@ -193,7 +254,7 @@ def _admit(program: SemanticProgram) -> _Plan:
             ):
                 raise NativeIRCodegenError("Convolution result geometry mismatch")
             multiplied += batch * out_channels * oh * ow * in_channels * kh * kw
-            params = (stride, padding)
+            params = (stride, pt, pl, pb, pr)
         retained += 4 * math.prod(out_shape)
         if retained > _MAX_BYTES or multiplied > _MAX_MULTIPLIES:
             raise NativeIRCodegenError("Native retained memory/work budget exceeded")
@@ -223,6 +284,7 @@ def _source(plan: _Plan) -> str:
         "#include <algorithm>",
         "#include <cmath>",
         "#include <cstddef>",
+        "#include <limits>",
         "#include <vector>",
         'extern "C" int visuaml_semantic_run(const float* const* inputs, float* output) noexcept {',
         "  try {",
@@ -251,6 +313,36 @@ def _source(plan: _Plan) -> str:
             lines.append(
                 f"    for (size_t i=0; i<{elements}; ++i) v{slot}[i] = {a}[i] + {b}[i];"
             )
+        elif op.code == "reshape":
+            lines.append(f"    std::copy({a}, {a}+{elements}, v{slot});")
+        elif op.code == "broadcast_add":
+            b = f"v{op.sources[1]}"
+            ia = _broadcast_index(_shape_for(plan, op.sources[0]), op.result_shape)
+            ib = _broadcast_index(_shape_for(plan, op.sources[1]), op.result_shape)
+            lines.append(
+                f"    for (size_t i=0; i<{elements}; ++i) "
+                f"v{slot}[i] = {a}[{ia}] + {b}[{ib}];"
+            )
+        elif op.code == "maxpool2d":
+            batch, channels, height, width = _shape_for(plan, op.sources[0])
+            _, _, oh, ow = op.result_shape
+            kernel, stride, pt, pl, _, _ = op.parameters
+            lines += [
+                f"    for (int n=0; n<{batch}; ++n)",
+                f"      for (int c=0; c<{channels}; ++c)",
+                f"        for (int y=0; y<{oh}; ++y)",
+                f"          for (int x=0; x<{ow}; ++x) {{",
+                "            float maximum = -std::numeric_limits<float>::infinity();",
+                f"            for (int ky=0; ky<{kernel}; ++ky)",
+                f"              for (int kx=0; kx<{kernel}; ++kx) {{",
+                f"                const int iy=y*{stride}+ky-{pt};",
+                f"                const int ix=x*{stride}+kx-{pl};",
+                f"                if (iy>=0 && iy<{height} && ix>=0 && ix<{width})",
+                f"                  maximum=std::max(maximum, {a}[((n*{channels}+c)*{height}+iy)*{width}+ix]);",
+                "              }",
+                f"            v{slot}[((n*{channels}+c)*{oh}+y)*{ow}+x]=maximum;",
+                "          }",
+            ]
         elif op.code == "matmul":
             m, k = _shape_for(plan, op.sources[0])
             _, n = _shape_for(plan, op.sources[1])
@@ -266,7 +358,7 @@ def _source(plan: _Plan) -> str:
             batch, channels, height, width = _shape_for(plan, op.sources[0])
             out_channels, _, kh, kw = _shape_for(plan, op.sources[1])
             _, _, oh, ow = op.result_shape
-            stride, pad = op.parameters
+            stride, pt, pl, _, _ = op.parameters
             b = f"v{op.sources[1]}"
             lines += [
                 f"    for (int n=0; n<{batch}; ++n)",
@@ -277,8 +369,8 @@ def _source(plan: _Plan) -> str:
                 f"            for (int c=0; c<{channels}; ++c)",
                 f"              for (int ky=0; ky<{kh}; ++ky)",
                 f"                for (int kx=0; kx<{kw}; ++kx) {{",
-                f"                  const int iy = y*{stride} + ky - {pad};",
-                f"                  const int ix = x*{stride} + kx - {pad};",
+                f"                  const int iy = y*{stride} + ky - {pt};",
+                f"                  const int ix = x*{stride} + kx - {pl};",
                 f"                  if (iy>=0 && iy<{height} && ix>=0 && ix<{width})",
                 f"                    sum += {a}[((n*{channels}+c)*{height}+iy)*{width}+ix]",
                 f"                           * {b}[((o*{channels}+c)*{kh}+ky)*{kw}+kx];",
