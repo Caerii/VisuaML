@@ -15,11 +15,12 @@ pytestmark = pytest.mark.skipif(
 )
 
 
-def test_llvm_batch_matches_original_wasm_and_keeps_engines_independent():
+@pytest.mark.parametrize("level", (0, 1, 2))
+def test_llvm_batch_matches_original_wasm_and_keeps_engines_independent(level):
     wasmtime = pytest.importorskip("wasmtime")
     inputs = np.array([-(1 << 31), -1, 0, 1, (1 << 31) - 1] * 5, dtype=np.int32)
     programs = [encode_control(generated(seed)) for seed in range(4)]
-    candidates = [LlvmSpecialization(source) for source in programs]
+    candidates = [LlvmSpecialization(source, optimization_level=level) for source in programs]
     engine = wasmtime.Engine()
     for source, candidate in zip(programs, candidates, strict=True):
         store = wasmtime.Store(engine)
@@ -38,3 +39,11 @@ def test_llvm_batch_matches_original_wasm_and_keeps_engines_independent():
 
     with pytest.raises(MicrostepAdmissionError):
         LlvmSpecialization(encode_control(gcd12()))
+
+
+
+def test_llvm_rejects_unsupported_optimization_levels():
+    source = encode_control(generated(0))
+    for invalid in (False, "0", -1, 3):
+        with pytest.raises(ValueError, match="optimization level"):
+            LlvmSpecialization(source, optimization_level=invalid)

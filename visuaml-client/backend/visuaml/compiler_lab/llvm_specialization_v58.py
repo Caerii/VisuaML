@@ -87,7 +87,10 @@ end:
 class LlvmSpecialization(_BatchSpecialization):
     """Process-local JIT for scalar and batch result execution via llvmlite."""
 
-    def __init__(self, source: bytes):
+    def __init__(self, source: bytes, *, optimization_level: int = 2):
+        if type(optimization_level) is not int or optimization_level not in (0, 1, 2):
+            raise ValueError("LLVM optimization level must be 0, 1, or 2")
+        self.optimization_level = optimization_level
         program = decode_control(source)
         definitions, states = _lower_ssa(program)
         self._opcodes = tuple(op.opcode for op in program.operations)
@@ -95,13 +98,13 @@ class LlvmSpecialization(_BatchSpecialization):
         with _COMPILE_LOCK:
             llvm = _llvm()
             target = llvm.Target.from_default_triple()
-            machine = target.create_target_machine(opt=2)
+            machine = target.create_target_machine(opt=optimization_level)
             ir = _module(definitions, states[-1][0][0], target.triple, str(machine.target_data))
             self.ir_sha256 = hashlib.sha256(ir.encode()).hexdigest()
             self.llvm_version = llvm.llvm_version_info
             module = llvm.parse_assembly(ir)
             module.verify()
-            with llvm.PipelineTuningOptions(speed_level=2) as options:
+            with llvm.PipelineTuningOptions(speed_level=optimization_level) as options:
                 with llvm.create_pass_builder(machine, options) as passes:
                     with passes.getModulePassManager() as manager:
                         manager.run(module, passes)

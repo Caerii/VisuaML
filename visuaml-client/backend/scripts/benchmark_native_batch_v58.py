@@ -7,6 +7,7 @@ import math
 import statistics
 import tempfile
 import time
+from functools import partial
 from pathlib import Path
 
 import numpy as np
@@ -54,13 +55,22 @@ def _timed(action):
     return value, time.perf_counter_ns() - start
 
 
+def _trial_order(actions, trial):
+    names = tuple(actions)
+    rotation = trial % len(names)
+    return names[rotation:] + names[:rotation]
+
+
+def _native_copy(candidate, values):
+    result = values.copy()
+    candidate.run_batch_inplace(result)
+    return result
+
+
 def _sample(actions, inputs, expected, repeats):
     samples = {name: [] for name in actions}
     for trial in range(repeats + 1):
-        order = tuple(actions)
-        if trial % 2:
-            order = order[::-1]
-        for name in order:
+        for name in _trial_order(actions, trial):
             buffer, invoke = actions[name]
             buffer[:] = inputs
             _, elapsed = _timed(invoke)
@@ -73,7 +83,7 @@ def _sample(actions, inputs, expected, repeats):
 def _sample_copied(actions, inputs, expected, repeats):
     samples = {name: [] for name in actions}
     for trial in range(repeats + 1):
-        for name in (tuple(actions) if trial % 2 == 0 else tuple(reversed(actions))):
+        for name in _trial_order(actions, trial):
             output, elapsed = _timed(lambda: actions[name](inputs))
             np.testing.assert_array_equal(output, expected)
             if trial:
@@ -81,8 +91,15 @@ def _sample_copied(actions, inputs, expected, repeats):
     return {name: summarize_ns(times) for name, times in samples.items()}
 
 
-def run(root: Path, *, repeats: int, include_llvm: bool = False) -> dict:
-    if include_llvm:
+def run(root: Path, *, repeats: int, include_llvm: bool = False, llvm_tiers: bool = False) -> dict:
+    levels = {"llvm_o0": 0, "llvm_o1": 1, "llvm": 2} if llvm_tiers else (
+        {"llvm": 2} if include_llvm else {}
+    )
+    initialization = {}
+    if llvm_tiers:
+        from visuaml.compiler_lab.llvm_specialization_v58 import _llvm
+        _, initialization["llvm_runtime_initialization_ns"] = _timed(_llvm)
+    if levels:
         from visuaml.compiler_lab.llvm_specialization_v58 import LlvmSpecialization
     source = git_identity(root)
     engine = wasmtime.Engine()
@@ -99,12 +116,14 @@ def run(root: Path, *, repeats: int, include_llvm: bool = False) -> dict:
             if native.cache_hit or not warm.cache_hit or native.binary_sha256 != warm.binary_sha256:
                 raise AssertionError("Unexpected native cache outcome")
             jit_metadata = {}
-            if include_llvm:
-                jit, llvm_compile = _timed(lambda: LlvmSpecialization(raw))
-                jit_metadata = {
-                    "llvm_compile_ns": llvm_compile, "llvm_ir_sha256": jit.ir_sha256,
-                    "llvm_version": jit.llvm_version,
-                }
+            native_candidates = {"native": warm}
+            for name in _trial_order(levels, len(rows)) if levels else ():
+                jit, elapsed = _timed(lambda: LlvmSpecialization(raw, optimization_level=levels[name]))
+                native_candidates[name] = jit
+                jit_metadata.update({
+                    f"{name}_compile_ns": elapsed, f"{name}_ir_sha256": jit.ir_sha256,
+                    f"{name}_version": jit.llvm_version,
+                })
             wrapped, wrapper_ns = _timed(lambda: _wrapped_source(raw))
             module, wasm_compile = _timed(lambda: wasmtime.Module(engine, wrapped))
             cold_store = wasmtime.Store(engine)
@@ -138,38 +157,26 @@ def run(root: Path, *, repeats: int, include_llvm: bool = False) -> dict:
             batches = {}
             copied_batches = {}
 
-            def native_copy(values):
-                buffer = values.copy()
-                warm.run_batch_inplace(buffer)
-                return buffer
-
             def wasm_copy(values):
                 buffer = memory[:values.size]
                 buffer[:] = values
                 exports["batch"](store, values.size)
                 return buffer.copy()
 
-            copied_actions = {"native": native_copy, "wasmtime": wasm_copy}
-            if include_llvm:
-                def llvm_copy(values):
-                    result = values.copy()
-                    jit.run_batch_inplace(result)
-                    return result
-
-                copied_actions["llvm"] = llvm_copy
+            copied_actions = {
+                name: partial(_native_copy, candidate) for name, candidate in native_candidates.items()
+            }
+            copied_actions["wasmtime"] = wasm_copy
+            for name in levels:
                 for value in edge_inputs:
-                    if jit.run(int(value)) != original(original_store, int(value)):
-                        raise AssertionError("LLVM scalar output disagrees with original WASM")
+                    if native_candidates[name].run(int(value)) != original(original_store, int(value)):
+                        raise AssertionError(f"{name} scalar output disagrees with original WASM")
 
             for size in _SIZES:
-                buffer = np.empty(size, dtype=np.int32)
-                actions = {
-                    "native": (buffer, lambda: warm.run_batch_inplace(buffer)),
-                    "wasmtime": (memory[:size], lambda: exports["batch"](store, size)),
-                }
-                if include_llvm:
-                    llvm_buffer = np.empty(size, dtype=np.int32)
-                    actions["llvm"] = (llvm_buffer, lambda: jit.run_batch_inplace(llvm_buffer))
+                actions = {"wasmtime": (memory[:size], partial(exports["batch"], store, size))}
+                for name, candidate in native_candidates.items():
+                    buffer = np.empty(size, dtype=np.int32)
+                    actions[name] = (buffer, partial(candidate.run_batch_inplace, buffer))
                 batches[str(size)] = _sample(actions, inputs[:size], expected[:size], repeats)
                 copied_batches[str(size)] = _sample_copied(
                     copied_actions,
@@ -177,6 +184,7 @@ def run(root: Path, *, repeats: int, include_llvm: bool = False) -> dict:
                 )
             rows.append({
                 **jit_metadata,
+                "split": work.split, "family": work.family,
                 "name": work.name, "wasm_sha256": warm.source_sha256,
                 "native_binary_sha256": warm.binary_sha256, "compiler": warm.compiler,
                 "native_cold_ns": native_cold, "native_reload_ns": native_reload,
@@ -192,7 +200,7 @@ def run(root: Path, *, repeats: int, include_llvm: bool = False) -> dict:
             per_engine = {
                 engine_name: [
                     row[scope][str(size)][engine_name]["median_ns"] / size for row in rows
-                ] for engine_name in (("native", "wasmtime", "llvm") if include_llvm else ("native", "wasmtime"))
+                ] for engine_name in ("native", "wasmtime", *levels)
             }
             summary[scope][str(size)] = {
                 "median_ns_per_value": {name: statistics.median(values)
@@ -204,15 +212,16 @@ def run(root: Path, *, repeats: int, include_llvm: bool = False) -> dict:
                 "native_faster_programs": sum(native < wasm for wasm, native in
                                              zip(per_engine["wasmtime"], per_engine["native"], strict=True)),
             }
-            if include_llvm:
-                summary[scope][str(size)]["paired_geomean_llvm_speedup"] = math.exp(
+            for name in levels:
+                summary[scope][str(size)][f"paired_geomean_{name}_speedup"] = math.exp(
                     statistics.mean(math.log(wasm / jit) for wasm, jit in
-                                    zip(per_engine["wasmtime"], per_engine["llvm"], strict=True))
+                                    zip(per_engine["wasmtime"], per_engine[name], strict=True))
                 )
     return {
         "schema": "visuaml.native-batch-benchmark.v58",
         "source": source, "environment": environment(), "repeats": repeats,
         "summary": summary, "programs": len(rows), "rows": rows,
+        "llvm_optimization_levels": levels, **initialization,
         "scope": "Resident in-place and copied-input/owned-output trials, one engine call per batch. "
                  "Each result was checked against the original scalar Wasmtime module.",
     }
@@ -223,12 +232,13 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--repeats", type=int, default=15)
     parser.add_argument("--llvm", action="store_true", help="Include the optional LLVM JIT")
+    parser.add_argument("--llvm-tiers", action="store_true", help="Compare LLVM O0, O1 and O2")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
     output = args.output.resolve()
     if args.repeats < 1 or output.exists() or output.is_relative_to(root):
         parser.error("Use positive repeats and a fresh output path outside the checkout")
-    record = run(root, repeats=args.repeats, include_llvm=args.llvm)
+    record = run(root, repeats=args.repeats, include_llvm=args.llvm, llvm_tiers=args.llvm_tiers)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x") as stream:
         json.dump(record, stream, sort_keys=True)
