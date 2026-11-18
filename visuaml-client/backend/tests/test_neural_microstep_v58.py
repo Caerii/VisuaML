@@ -10,6 +10,7 @@ from visuaml.compiler_lab.bit_neural_vm_v49 import _bits
 from visuaml.compiler_lab.neural_alu_executor_v56 import (
     execute_alu_routed_control,
 )
+from visuaml.compiler_lab.neural_control_routing_v52 import SLOTS
 from visuaml.compiler_lab.neural_microstep_v58 import (
     MicrostepWeights,
     construct_microstep_weights,
@@ -26,7 +27,6 @@ from visuaml.compiler_lab.typed_microop_ir_v57 import (
     construct_microop_weights,
     read_microop,
 )
-from visuaml.compiler_lab.neural_control_routing_v52 import SLOTS
 from visuaml.compiler_lab.wasm_control_flow_v51 import (
     ControlOperation, ControlProgram, encode_control, execute_control,
 )
