@@ -215,3 +215,31 @@ def test_source_nonuniqueness_survives_full_i32_bit_gating():
     assert encode_program(identity) != encode_program(longer)
     for x in EDGE_VALUES:
         assert run_bit_vm(identity, x)["result"] == run_bit_vm(longer, x)["result"]
+
+
+
+def test_declared_analytic_gate_weights_are_real_execution_parameters():
+    fixed = construct_bit_weights()
+    assert _and(1., 1., fixed) == 1.
+    assert _xor(1., 0., fixed) == 1.
+    assert _int(_add(_bits(1), _bits(1), fixed=fixed)) == 2
+
+    # This catches "decorative weights" included in fingerprints but never
+    # consumed by a purported neural forward pass. Each mutation must affect
+    # the actual corresponding gate computation, not only its SHA digest.
+    changed_and = replace(fixed, and_kernel=np.array([0., 0., 0.]))
+    assert changed_and.digest() != fixed.digest()
+    assert _and(1., 1., changed_and) != _and(1., 1., fixed)
+
+    changed_xor = replace(fixed, xor_kernel=np.zeros((2, 2)))
+    assert changed_xor.digest() != fixed.digest()
+    assert _xor(1., 0., changed_xor) != _xor(1., 0., fixed)
+
+    changed_adder = replace(
+        fixed, adder_thresholds=np.array([2., 3.], dtype=np.float64)
+    )
+    assert changed_adder.digest() != fixed.digest()
+    assert not np.array_equal(
+        _add(_bits(1), _bits(1), fixed=fixed),
+        _add(_bits(1), _bits(1), fixed=changed_adder),
+    )
