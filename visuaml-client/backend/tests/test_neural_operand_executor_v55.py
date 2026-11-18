@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from dataclasses import replace
 
-import numpy as np
 import pytest
 from visuaml.compiler_lab.neural_event_executor_v54 import execute_event_routed_control
 from visuaml.compiler_lab.neural_operand_executor_v55 import (
