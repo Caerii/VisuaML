@@ -82,13 +82,18 @@ def attempt(workload: RoundtripWorkload, *,
     """Produce a per-source outcome; never suppress unexpected failures."""
     original = encode_program(workload.source)
     start = time.perf_counter_ns()
+    audit: dict = {}
     try:
-        result = verify_roundtrip(workload, timeout_ms=timeout_ms)
+        result = verify_roundtrip(
+            workload, timeout_ms=timeout_ms, audit=audit,
+        )
     except (BehavioralSynthesisError, AssertionError) as exc:
         return {
             "name": workload.name,
             "split": workload.split,
             "source_wasm_sha256": _digest(original),
+            "source_wasm_hex": original.hex(),
+            "audit": audit,
             "status": "rejected",
             "failure_class": classify_failure(exc),
             "exception_type": type(exc).__name__,
@@ -101,6 +106,8 @@ def attempt(workload: RoundtripWorkload, *,
         "name": workload.name,
         "split": workload.split,
         "source_wasm_sha256": _digest(original),
+        "source_wasm_hex": original.hex(),
+        "audit": audit,
         "status": "verified",
         "failure_class": None,
         "elapsed_ns": time.perf_counter_ns() - start,
