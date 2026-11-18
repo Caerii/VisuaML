@@ -20,7 +20,6 @@ from dataclasses import dataclass
 
 from .bit_neural_vm_v49 import construct_bit_weights, run_bit_vm
 from .blinded_behavioral_synthesis_v50 import (
-    BehavioralSynthesisError,
     Candidate,
     emit_canonical_wasm,
     synthesize_from_oracle,

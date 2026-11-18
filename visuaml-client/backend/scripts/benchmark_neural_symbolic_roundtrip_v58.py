@@ -49,8 +49,9 @@ def git_identity(root: Path) -> dict[str, str]:
 
 
 def produce(root: Path, *, holdout: bool, timeout_ms: int) -> dict:
-    import z3  # noqa: F401: require Z3 before producing benchmark artifacts
-    import wasmtime  # noqa: F401: require independent Wasmtime
+    # Require both independent engines before producing benchmark artifacts.
+    import z3  # noqa: F401
+    import wasmtime  # noqa: F401
 
     identity = git_identity(root)
     cases = []
