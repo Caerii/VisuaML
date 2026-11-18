@@ -68,6 +68,13 @@ def main() -> None:
     env["PYTHONPATH"] = os.pathsep.join((
         str(backend), env.get("PYTHONPATH", ""),
     ))
+    # Evidence producers require a clean Git tree. Prevent pytest, Python
+    # and Ruff from creating cache artifacts inside the source checkout.
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env["RUFF_NO_CACHE"] = "1"
+    env["PYTEST_ADDOPTS"] = (
+        env.get("PYTEST_ADDOPTS", "") + " -p no:cacheprovider"
+    ).strip()
 
     lint = (
         "backend/visuaml/compiler_lab/neural_microstep_v58.py",
@@ -90,6 +97,10 @@ def main() -> None:
         "backend/tests/test_neural_benchmarks_v58.py",
         "backend/tests/test_neural_scaling_faults_v58.py",
     )
+    invoke((sys.executable, "-m", "compileall", "-q",
+            str(backend / "visuaml" / "compiler_lab"),
+            str(backend / "scripts")),
+           client=client, env=env)
     invoke((sys.executable, "-m", "ruff", "check", *lint),
            client=client, env=env)
     focused = [
