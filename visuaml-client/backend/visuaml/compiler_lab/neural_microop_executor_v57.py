@@ -271,7 +271,7 @@ def execute_microop_routed_control(
             # The fixed ALU output gate, not Python opcode dispatch,
             # chooses the i32 result.
             result = execute_alu(
-                alu_tokens[pc], left, right, fixed=alu_fixed,
+                microop.alu_selector, left, right, fixed=alu_fixed,
                 bit_fixed=bit_fixed,
             )
             stack.append(result)
