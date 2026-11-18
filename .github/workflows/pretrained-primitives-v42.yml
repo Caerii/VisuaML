@@ -18,7 +18,7 @@ on:
       - docs/V42_PRETRAINED_PRIMITIVE_SCREENING.md
       - .github/workflows/pretrained-primitives-v42.yml
 permissions:
-  contents: read
+  contents: write
 jobs:
   primitive-screen:
     runs-on: ubuntu-latest
@@ -75,3 +75,59 @@ jobs:
           path: evidence-v42/pretrained-primitive-screening.json
           if-no-files-found: error
           retention-days: 30
+
+      - name: Preserve independent full-model intervention evidence on trusted research pushes
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v42-primitive-extraction-validation" ]; then
+            echo "No archive mutations on pull_request or unrelated branches."
+            exit 0
+          fi
+          if [ -e benchmarks/pretrained_primitive_screening_v42.json ] || [ -e benchmarks/pretrained_primitive_screening_v42.origin.json ]; then
+            test -f benchmarks/pretrained_primitive_screening_v42.json
+            test -f benchmarks/pretrained_primitive_screening_v42.origin.json
+            echo "Original v42 evidence already immutable; do not rewrite."
+            exit 0
+          fi
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          raw = Path("evidence-v42/pretrained-primitive-screening.json").read_bytes()
+          result = json.loads(raw)
+          assert result["schema"] == "visuaml.pretrained-primitive-screening.v42"
+          assert result["source_commit"] == os.environ["GITHUB_SHA"]
+          assert result["checkpoint_sha256"] == "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf"
+          assert result["pretrained_model_accuracy_evaluated"] is False
+          assert result["generalizable_mechanism_certified"] is False
+          assert result["discovery_input_count"] == result["heldout_input_count"] == 5
+          assert len(result["results"]) == 5
+          assert result["full_rank_reconstruction_control_pass"]
+          for candidate in result["results"]:
+            assert len(candidate["witnesses"]) == 10
+            assert candidate["independent_oracle_max_abs_error"] < 1e-4
+          output = Path("benchmarks/pretrained_primitive_screening_v42.json")
+          origin = Path("benchmarks/pretrained_primitive_screening_v42.origin.json")
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_bytes(raw)
+          meta = {
+              "schema": "visuaml.pretrained-primitive-screening-origin.v42",
+              "source_commit": os.environ["GITHUB_SHA"],
+              "workflow_url": "https://github.com/" + os.environ["GITHUB_REPOSITORY"] + "/actions/runs/" + os.environ["GITHUB_RUN_ID"],
+              "artifact_name": "pretrained-primitive-screening-v42",
+              "raw_sha256": hashlib.sha256(raw).hexdigest(),
+              "raw_bytes": len(raw),
+              "source_file_sha256": result["source_file_sha256"],
+              "checkpoint_sha256": result["checkpoint_sha256"],
+              "original_weight_sha256": result["source_weight_sha256"],
+              "selected_rank": result["selected_rank"],
+              "compressed_candidate_accepted": result["compressed_candidate_accepted"],
+              "independent_oracles": True,
+              "authentication": "CI origin and integrity hashes, not a signed external attestation",
+              "scientific_scope": "Causal intervention screen on ten synthetic inputs, not transfer certification",
+          }
+          origin.write_text(json.dumps(meta, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/pretrained_primitive_screening_v42.json benchmarks/pretrained_primitive_screening_v42.origin.json
+          git commit -m "v42: preserve raw pretrained causal candidate survey and honest negative results [skip ci]"
+          git push origin "HEAD:refs/heads/research/v42-primitive-extraction-validation"
