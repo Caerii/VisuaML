@@ -161,13 +161,15 @@ def compile_polynomial_cpp17(poly: RecoveredPolynomial) -> str:
 def _encode_wasm_in_z3(source: I32Program, x, z3):
     """Independent symbolic execution of the admitted stack-machine ISA."""
     validate_program(source)
-    values = [x, *[z3.BitVecVal(0, 32) for _ in range(source.local_count)]]
+    zero = z3.BitVecVal(0, 32, ctx=x.ctx)
+    one = z3.BitVecVal(1, 32, ctx=x.ctx)
+    values = [x, *([zero] * source.local_count)]
     stack = []
     for operation in source.operations:
         name = operation.opcode
         imm = operation.immediate
         if name == "i32.const":
-            stack.append(z3.BitVecVal(imm, 32))
+            stack.append(z3.BitVecVal(imm, 32, ctx=x.ctx))
         elif name == "local.get":
             stack.append(values[imm])
         elif name == "local.set":
@@ -183,13 +185,13 @@ def _encode_wasm_in_z3(source: I32Program, x, z3):
             elif name == "i32.mul":
                 stack.append(left * right)
             elif name == "i32.lt_s":
-                stack.append(z3.If(left < right, z3.BitVecVal(1, 32), z3.BitVecVal(0, 32)))
+                stack.append(z3.If(left < right, one, zero))
             else:
-                stack.append(z3.If(left > right, z3.BitVecVal(1, 32), z3.BitVecVal(0, 32)))
+                stack.append(z3.If(left > right, one, zero))
         elif name == "i32.eqz":
             stack.append(z3.If(
-                stack.pop() == z3.BitVecVal(0, 32),
-                z3.BitVecVal(1, 32), z3.BitVecVal(0, 32)
+                stack.pop() == zero,
+                one, zero
             ))
         elif name == "drop":
             stack.pop()

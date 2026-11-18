@@ -173,23 +173,27 @@ def verify_against_typed_source(
     from .neural_symbolic_recovery_v43 import _encode_wasm_in_z3
 
     _admit_candidate(candidate, 64)
-    x = z3.BitVec("input_i32", 32)
+    # Isolate SMT-LIB serialization from earlier CEGIS queries.
+    context = z3.Context()
+    x = z3.BitVec("input_i32", 32, ctx=context)
+    zero = z3.BitVecVal(0, 32, ctx=context)
+    one = z3.BitVecVal(1, 32, ctx=context)
     true_behavior = _encode_wasm_in_z3(source, x, z3)
     if candidate.kind == "poly":
         hypothesis = (
-            z3.BitVecVal(candidate.a, 32)*x*x
-            + z3.BitVecVal(candidate.b, 32)*x
-            + z3.BitVecVal(candidate.c, 32)
+            z3.BitVecVal(candidate.a, 32, ctx=context)*x*x
+            + z3.BitVecVal(candidate.b, 32, ctx=context)*x
+            + z3.BitVecVal(candidate.c, 32, ctx=context)
         )
     elif candidate.kind == "eqz":
         hypothesis = z3.If(
-            x == z3.BitVecVal(0, 32), z3.BitVecVal(1, 32), z3.BitVecVal(0, 32)
+            x == zero, one, zero
         )
     else:
-        threshold = z3.BitVecVal(candidate.threshold, 32)
+        threshold = z3.BitVecVal(candidate.threshold, 32, ctx=context)
         condition = x < threshold if candidate.kind == "lt_s" else x > threshold
-        hypothesis = z3.If(condition, z3.BitVecVal(1, 32), z3.BitVecVal(0, 32))
-    solver = z3.Solver()
+        hypothesis = z3.If(condition, one, zero)
+    solver = z3.Solver(ctx=context)
     solver.set(timeout=timeout_ms)
     solver.add(true_behavior != hypothesis)
     formula = solver.to_smt2().encode()
