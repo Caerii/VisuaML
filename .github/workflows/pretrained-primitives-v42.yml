@@ -1,0 +1,139 @@
+name: v42 pretrained mechanism-candidate screening
+on:
+  push:
+    branches:
+      - research/v42-primitive-extraction-validation
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/pretrained_primitive_candidates_v42.py
+      - visuaml-client/backend/scripts/probe_pretrained_primitives_v42.py
+      - visuaml-client/backend/tests/test_pretrained_primitive_candidates_v42.py
+      - visuaml-client/backend/tests/test_pretrained_primitive_archive_v42.py
+      - benchmarks/pretrained_primitive_screening_v42.json
+      - benchmarks/pretrained_primitive_screening_v42.origin.json
+      - docs/V42_PRETRAINED_PRIMITIVE_SCREENING.md
+      - .github/workflows/pretrained-primitives-v42.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/pretrained_primitive_candidates_v42.py
+      - visuaml-client/backend/scripts/probe_pretrained_primitives_v42.py
+      - visuaml-client/backend/tests/test_pretrained_primitive_candidates_v42.py
+      - visuaml-client/backend/tests/test_pretrained_primitive_archive_v42.py
+      - benchmarks/pretrained_primitive_screening_v42.json
+      - benchmarks/pretrained_primitive_screening_v42.origin.json
+      - docs/V42_PRETRAINED_PRIMITIVE_SCREENING.md
+      - .github/workflows/pretrained-primitives-v42.yml
+permissions:
+  contents: write
+jobs:
+  primitive-screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Python and independent ONNX runtime
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==2.2.6 onnx==1.18.0 onnxruntime==1.22.1 pytest==8.4.2 ruff==0.17.5
+      - name: Check candidate extraction, baseline comparisons, and adversarial guards
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_pretrained_primitive_candidates_v42.py visuaml-client/backend/tests/test_pretrained_primitive_archive_v42.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/pretrained_primitive_candidates_v42.py visuaml-client/backend/scripts/probe_pretrained_primitives_v42.py visuaml-client/backend/tests/test_pretrained_primitive_candidates_v42.py
+      - name: Recover pinned exact pretrained MNIST-8 checkpoint
+        run: |
+          mkdir -p evidence-v42
+          curl --fail --location --retry 3 --max-time 75 'https://huggingface.co/onnxmodelzoo/mnist-8/resolve/a19f9a8c2333de1df9b03f10f5739f468b699a1a/mnist-8.onnx' --output evidence-v42/mnist-8.onnx
+          echo '2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf  evidence-v42/mnist-8.onnx' | sha256sum --check
+          test "$(wc -c < evidence-v42/mnist-8.onnx)" -eq 26454
+      - name: Test tensor interventions against independent full-model oracles
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python visuaml-client/backend/scripts/probe_pretrained_primitives_v42.py \
+            --model evidence-v42/mnist-8.onnx \
+            --output evidence-v42/pretrained-primitive-screening.json
+          python - <<'PY'
+          import json
+          d=json.load(open("evidence-v42/pretrained-primitive-screening.json"))
+          assert d["schema"]=="visuaml.pretrained-primitive-screening.v42"
+          assert len(d["results"])==5 and d["discovery_input_count"]==5
+          assert d["heldout_input_count"]==5 and d["generalizable_mechanism_certified"] is False
+          assert all(len(x["witnesses"])==10 for x in d["results"])
+          assert all(x["independent_oracle_max_abs_error"] < 1e-4 for x in d["results"])
+          print("Held-out candidate result:",d["selected_rank"],d["heldout_pass"])
+          PY
+      - name: Publish complete raw candidate/intervention evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: pretrained-primitive-screening-v42
+          path: evidence-v42/pretrained-primitive-screening.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Preserve independent full-model intervention evidence on trusted research pushes
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v42-primitive-extraction-validation" ]; then
+            echo "No archive mutations on pull_request or unrelated branches."
+            exit 0
+          fi
+          if [ -e benchmarks/pretrained_primitive_screening_v42.json ] || [ -e benchmarks/pretrained_primitive_screening_v42.origin.json ]; then
+            test -f benchmarks/pretrained_primitive_screening_v42.json
+            test -f benchmarks/pretrained_primitive_screening_v42.origin.json
+            echo "Original v42 evidence already immutable; do not rewrite."
+            exit 0
+          fi
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          raw = Path("evidence-v42/pretrained-primitive-screening.json").read_bytes()
+          result = json.loads(raw)
+          assert result["schema"] == "visuaml.pretrained-primitive-screening.v42"
+          assert result["source_commit"] == os.environ["GITHUB_SHA"]
+          assert result["checkpoint_sha256"] == "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf"
+          assert result["pretrained_model_accuracy_evaluated"] is False
+          assert result["generalizable_mechanism_certified"] is False
+          assert result["discovery_input_count"] == result["heldout_input_count"] == 5
+          assert len(result["results"]) == 5
+          assert result["full_rank_reconstruction_control_pass"]
+          for candidate in result["results"]:
+            assert len(candidate["witnesses"]) == 10
+            assert candidate["independent_oracle_max_abs_error"] < 1e-4
+          output = Path("benchmarks/pretrained_primitive_screening_v42.json")
+          origin = Path("benchmarks/pretrained_primitive_screening_v42.origin.json")
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_bytes(raw)
+          meta = {
+              "schema": "visuaml.pretrained-primitive-screening-origin.v42",
+              "source_commit": os.environ["GITHUB_SHA"],
+              "workflow_url": "https://github.com/" + os.environ["GITHUB_REPOSITORY"] + "/actions/runs/" + os.environ["GITHUB_RUN_ID"],
+              "artifact_name": "pretrained-primitive-screening-v42",
+              "raw_sha256": hashlib.sha256(raw).hexdigest(),
+              "raw_bytes": len(raw),
+              "source_file_sha256": result["source_file_sha256"],
+              "checkpoint_sha256": result["checkpoint_sha256"],
+              "original_weight_sha256": result["source_weight_sha256"],
+              "selected_rank": result["selected_rank"],
+              "compressed_candidate_accepted": result["compressed_candidate_accepted"],
+              "independent_oracles": True,
+              "authentication": "CI origin and integrity hashes, not a signed external attestation",
+              "scientific_scope": "Causal intervention screen on ten synthetic inputs, not transfer certification",
+          }
+          origin.write_text(json.dumps(meta, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/pretrained_primitive_screening_v42.json benchmarks/pretrained_primitive_screening_v42.origin.json
+          git commit -m "v42: preserve raw pretrained causal candidate survey and honest negative results [skip ci]"
+          git push origin "HEAD:refs/heads/research/v42-primitive-extraction-validation"
