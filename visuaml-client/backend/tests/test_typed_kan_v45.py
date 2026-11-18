@@ -23,6 +23,8 @@ from visuaml.compiler_lab.typed_kan_v45 import (
     KANNode,
     KANProgram,
     evaluate_numpy,
+    ablate_kan_edge,
+    ablation_witness,
     evaluate_scalar,
     from_recovered_v43_polynomial,
     recover_polynomial,
@@ -261,3 +263,32 @@ def test_reject_out_of_domain_bases_topology_and_nonfinite_parameters():
     if shutil.which("g++") or shutil.which("clang++"):
         with pytest.raises(KANAdmissionError):
             run_kan_cpp17(base, data)
+
+
+def test_edge_intervention_preserves_typed_graph_and_measures_counterfactual():
+    graph = xy_multkan()
+    input_data = np.array([[0.25, 0.5], [-0.5, 0.75], [1.0, -1.0]], np.float64)
+    before = evaluate_numpy(graph, input_data)
+    assert np.any(before != 0)
+    changed, certificate = ablate_kan_edge(
+        graph, stage_index=1, node_index=0, edge_index=0
+    )
+    assert certificate["source_sha256"] == graph.fingerprint()
+    assert certificate["target_sha256"] == changed.fingerprint()
+    assert certificate["source_sha256"] != certificate["target_sha256"]
+    assert certificate["causal_in_this_graph_only"] is True
+    assert certificate["external_pretrained_mechanism_certified"] is False
+    np.testing.assert_array_equal(evaluate_numpy(changed, input_data), np.zeros((3, 1)))
+    result = ablation_witness(
+        graph, input_data, stage_index=1, node_index=0, edge_index=0
+    )
+    assert result["witness_inputs"] == 3
+    assert result["maximum_absolute_output_intervention"] == 1
+    assert result["full_pretrained_model_intervention_executed"] is False
+    assert result["counterfactual_executed"] is True
+    with pytest.raises(KANAdmissionError):
+        ablate_kan_edge(graph, 1, 0, 2)
+    with pytest.raises(KANAdmissionError):
+        ablate_kan_edge(graph, True, 0, 0)
+    with pytest.raises(KANAdmissionError):
+        ablate_kan_edge(changed, 1, 0, 0)
