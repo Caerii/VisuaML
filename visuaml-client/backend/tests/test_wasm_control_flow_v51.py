@@ -121,7 +121,7 @@ def test_wasmtime_independently_executes_canonical_control_flow():
     wasmtime = pytest.importorskip("wasmtime")
     engine=wasmtime.Engine()
     samples=(
-        (countdown(),range(0,9)),
+        (countdown(),range(9)),
         (conditional(),(-10,-1,0,1,10)),
         (break_block(),(-10,-1,0,1,10)),
         (early_return(),(-10,-1,0,1,10)),
