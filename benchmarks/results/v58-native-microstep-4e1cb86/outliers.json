@@ -1,0 +1,35 @@
+{
+  "repeats": 15,
+  "rows": [
+    {
+      "input": -17,
+      "mode": "trace",
+      "original_slowdown": 2.1398850505104363,
+      "program": "generated_15",
+      "replay": {
+        "native": {
+          "count": 15,
+          "max_ns": 2114772,
+          "mean_ns": 1548856.8666666667,
+          "median_ns": 1533022,
+          "min_ns": 1167292,
+          "p95_ns": 2114772
+        },
+        "python": {
+          "count": 15,
+          "max_ns": 6602007,
+          "mean_ns": 5460089.4,
+          "median_ns": 5174510,
+          "min_ns": 4441571,
+          "p95_ns": 6602007
+        }
+      },
+      "run": 2
+    }
+  ],
+  "source": {
+    "branch": "research/v58-native-microstep",
+    "commit": "4e1cb86b7769b3b3d446206017c39197f3772262",
+    "tree": "80e09332d666f0da625179a4da74de786a812d40"
+  }
+}

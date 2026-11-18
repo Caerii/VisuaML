@@ -1,0 +1,193 @@
+{
+  "artifacts": {
+    "backend.log.gz": {
+      "bytes": 977,
+      "sha256": "f69bd1858874db5cc9586267c407a668dcd4829470209f4a33c0d35ce730ea7b",
+      "uncompressed_sha256": "a62acbac5c1aa95e3ea3ea110852fdbf3873ef6f8d9f77b2d4aed78636740c97"
+    },
+    "check_coefficient_parity.py": {
+      "bytes": 3404,
+      "sha256": "c90039416363ceacb2a8a64237e795b555e999493cbab9a51fcf61938501794f"
+    },
+    "coefficients.json.gz": {
+      "bytes": 2520,
+      "sha256": "be7c55db510ed7e8a4d537836db184734707a2a2096cff96cc46b9c3cdc1e442",
+      "source": {
+        "branch": "research/v58-native-microstep",
+        "commit": "4e1cb86b7769b3b3d446206017c39197f3772262",
+        "tree": "80e09332d666f0da625179a4da74de786a812d40"
+      },
+      "uncompressed_sha256": "0dd7423be170e6c7359c9a9a5d101ba9c6a41e0d28914acfc4e69d7b17ebdaf0"
+    },
+    "faults.json": {
+      "bytes": 6879,
+      "sha256": "cfffc5ca882bc3e4ef79d8e9ad7acd60988433afe46d1c024b5bb997f32ae1e4",
+      "source": {
+        "commit": "4e1cb86b7769b3b3d446206017c39197f3772262",
+        "tree": "80e09332d666f0da625179a4da74de786a812d40"
+      }
+    },
+    "outliers.json": {
+      "bytes": 809,
+      "sha256": "3b2b149ef5a4723ca55caa6580a3d1beccd8d4fbbec7cce5076fcf032d86482d",
+      "source": {
+        "branch": "research/v58-native-microstep",
+        "commit": "4e1cb86b7769b3b3d446206017c39197f3772262",
+        "tree": "80e09332d666f0da625179a4da74de786a812d40"
+      }
+    },
+    "profile.json.gz": {
+      "bytes": 2471,
+      "sha256": "5bebe132d2e42108d14429169b0572aa432d953546719dcb0faf2fd9c7a6a76e",
+      "source": {
+        "branch": "research/v58-native-microstep",
+        "commit": "4e1cb86b7769b3b3d446206017c39197f3772262",
+        "tree": "80e09332d666f0da625179a4da74de786a812d40"
+      },
+      "uncompressed_sha256": "ec018358bfcb666441e03628b5e23ad438d9a37f7be490dedea4468e4eab5f2c"
+    },
+    "profile_native.py": {
+      "bytes": 1211,
+      "sha256": "3c78efcf41737dc6082ec336869c92f1f3dae003bd1310f18508886ef850d818"
+    },
+    "recheck_outliers.py": {
+      "bytes": 2354,
+      "sha256": "f2b6ae59c2db72dd5da920e3882f402abcfef41411774c3d2019c289c16133b6"
+    },
+    "runtime-1.json.gz": {
+      "bytes": 70137,
+      "sha256": "98c63053566e64e33432b6df82546bcefe722a96df059e0b4bd632de1e4e4849",
+      "source": {
+        "baseline": false,
+        "commit": "4e1cb86b7769b3b3d446206017c39197f3772262",
+        "tree": "80e09332d666f0da625179a4da74de786a812d40"
+      },
+      "uncompressed_sha256": "1424aa3f31ee7a46a227f39431f154bf10381f006035792c18f4eb1f6c37ff0d"
+    },
+    "runtime-2.json.gz": {
+      "bytes": 68499,
+      "sha256": "f41ffbe22fc494cb3efb0048af04a2f1cdba97668262179ce27a2a2a60954ac0",
+      "source": {
+        "baseline": false,
+        "commit": "4e1cb86b7769b3b3d446206017c39197f3772262",
+        "tree": "80e09332d666f0da625179a4da74de786a812d40"
+      },
+      "uncompressed_sha256": "d54c9833b04eed5ea35b6c832f1811e16e9974aa64d8fc7234c62fae32ae189a"
+    },
+    "summarize.py": {
+      "bytes": 2490,
+      "sha256": "997359178db72fa9cd26c1fb8783206dcc136ff7a0ad8237879a8f4912fedbb0"
+    }
+  },
+  "coefficient_outcomes": {
+    "changed": 6,
+    "same": 48,
+    "trapped": 258
+  },
+  "environment": {
+    "cpu_count": 5,
+    "machine": "x86_64",
+    "numpy": "2.1.3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "processor": "",
+    "python": "3.12.14",
+    "thread_controls": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null,
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "wasmtime": "36.0.0"
+  },
+  "prepared_reference": "v58-prepared-gates-b563bb4/runtime-1.json.gz",
+  "runs": {
+    "runtime-1.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "ebd336c0caa86cf33e198a803ec92b03ca6d7d8af71c8519c104a5651cb39371",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 1004645293,
+        "source_sha256": "a569ed993f453ee3a934aa6ced0847db0c2630935a67a850f331b717a795e9f5"
+      },
+      "median_preparation_ns": {
+        "native": 1494029,
+        "python": 1319030
+      },
+      "modes": {
+        "no_trace": {
+          "faster_cases": 197,
+          "paired_geomean_speedup": 7.94624787647413,
+          "prepared_native_median_ns": 513167,
+          "prepared_python_median_ns": 4235388,
+          "slowest_speedup": 1.682289667997213
+        },
+        "trace": {
+          "faster_cases": 197,
+          "paired_geomean_speedup": 4.065267302009064,
+          "prepared_native_median_ns": 1380133,
+          "prepared_python_median_ns": 5606882,
+          "slowest_speedup": 1.84177118704982
+        }
+      },
+      "programs": 35,
+      "states": 3387,
+      "witnesses": 197
+    },
+    "runtime-2.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "ebd336c0caa86cf33e198a803ec92b03ca6d7d8af71c8519c104a5651cb39371",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 627644907,
+        "source_sha256": "a569ed993f453ee3a934aa6ced0847db0c2630935a67a850f331b717a795e9f5"
+      },
+      "median_preparation_ns": {
+        "native": 1495792,
+        "python": 1326606
+      },
+      "modes": {
+        "no_trace": {
+          "faster_cases": 197,
+          "paired_geomean_speedup": 7.947110607203995,
+          "prepared_native_median_ns": 546706,
+          "prepared_python_median_ns": 4434483,
+          "slowest_speedup": 1.510494650595883
+        },
+        "trace": {
+          "faster_cases": 196,
+          "paired_geomean_speedup": 3.815695874893697,
+          "prepared_native_median_ns": 1436864,
+          "prepared_python_median_ns": 5772805,
+          "slowest_speedup": 0.46731482130849294
+        }
+      },
+      "programs": 35,
+      "states": 3387,
+      "witnesses": 197
+    }
+  },
+  "schema": "visuaml.v58-native-microstep-evidence.v1",
+  "source": {
+    "commit": "4e1cb86b7769b3b3d446206017c39197f3772262",
+    "tree": "80e09332d666f0da625179a4da74de786a812d40"
+  },
+  "tests": {
+    "passed": 1223,
+    "skipped": 20,
+    "wall_s": 91.34
+  }
+}

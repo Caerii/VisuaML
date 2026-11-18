@@ -228,3 +228,12 @@ slowdowns, crossover estimates, all 3,387 matched states, and the ten
 fault injections are recorded in the evidence. The warm profile directs
 the next experiment to the shared data microstep.
 [Prepared execution report](V58_PREPARED_GATES.md)
+
+## v58 native prepared data microstep
+
+One C++ call contracts the stack, local, ALU and result gates for a
+prepared data row. The paired warm speedups were 7.95–7.95× untraced
+and 3.82–4.07× traced across 197 inputs. The archive retains all
+3,387 matched states, the established fault campaign, and differential
+interventions on live gate coefficients.
+[Native data microstep report](V58_NATIVE_MICROSTEP.md)
