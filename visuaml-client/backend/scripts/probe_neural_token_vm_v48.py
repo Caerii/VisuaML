@@ -22,6 +22,7 @@ import wasmtime
 from visuaml.compiler_lab.fixed_neural_token_vm_v48 import (
     OPCODES,
     construct_fixed_weights,
+    compare_typed_programs_smt,
     decode_state,
     detokenize_program,
     initial_neural_state,
@@ -153,6 +154,16 @@ def run() -> dict:
         raise AssertionError("The fixed interpreter was incorrectly specialized by program")
     if len({r["structured_tokens_sha256"] for r in records}) != 7:
         raise AssertionError("Program token identities were conflated")
+    nonunique_source = I32Program(0, (
+        _op("local.get", 0), _op("i32.const", 0),
+        _op("i32.add"), _op("end"),
+    ))
+    nonunique = compare_typed_programs_smt(
+        programs()["identity"], nonunique_source
+    )
+    if (nonunique["solver_result"] != "unsat"
+            or nonunique["left_wasm_sha256"] == nonunique["right_wasm_sha256"]):
+        raise AssertionError("Cannot establish non-unique source code from behavior")
     backend = Path(__file__).resolve().parents[1]
     sources = (
         "visuaml/compiler_lab/fixed_neural_token_vm_v48.py",
@@ -173,6 +184,7 @@ def run() -> dict:
         "total_output_witnesses": len(full_witnesses),
         "total_per_instruction_comparisons": instruction_steps,
         "instruction_set": list(OPCODES),
+        "nonidentifiability_smt": nonunique,
         "programs": records,
         "witnesses": full_witnesses,
         "independent_wasmtime_executed": True,
