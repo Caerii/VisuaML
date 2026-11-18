@@ -262,6 +262,18 @@ def run(
             warmups=warmups, repeats=repeats,
         )
         source_hash = hashlib.sha256(source).hexdigest()
+        token_bytes = sum(
+            tensor.nbytes for tensor in (
+                tokens.opcode_rows, tokens.i32_immediates,
+                tokens.local_selectors, tokens.branch_depths,
+            )
+        )
+        fixed_microop = construct_microop_weights()
+        weight_bytes = sum(tensor.nbytes for tensor in (
+            fixed_microop.effects,
+            fixed_microop.local_modes,
+            fixed_microop.alu_selectors,
+        ))
         cases = []
         for argument in workload.arguments:
             # Correctness is independent of timing: fail *before* measurement.
@@ -372,6 +384,11 @@ def run(
             "source_wasm_sha256": source_hash,
             "source_program_sha256": workload.program.digest(),
             "source_wasm_size_bytes": len(source),
+            "source_bound_microop_token_bytes": token_bytes,
+            "fixed_microop_weight_bytes_not_per_program": weight_bytes,
+            "token_expansion_factor_vs_source_wasm": (
+                token_bytes / len(source)
+            ),
             "source_instruction_count": len(workload.program.operations),
             "microstep_v58_eligible": all(
                 op.opcode not in (
@@ -382,7 +399,7 @@ def run(
                 key: sum(op.opcode == key for op in workload.program.operations)
                 for key in sorted({op.opcode for op in workload.program.operations})
             },
-            "microop_weights_sha256": construct_microop_weights().digest(),
+            "microop_weights_sha256": fixed_microop.digest(),
             "microop_program_tokens_sha256": tokens.digest(),
             "tokenize_latency": load_metric,
             "cases": cases,
@@ -407,6 +424,7 @@ def run(
             "not_native_neural_hardware": True,
             "tracemalloc_is_not_total_memory": True,
             "v58_only_straightline_admitted": True,
+            "token_expansion_ratio_is_storage_not_runtime_speedup": True,
         },
         "inventory": overall,
         "engines": list(ENGINES),
