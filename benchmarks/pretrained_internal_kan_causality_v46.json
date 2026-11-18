@@ -1,0 +1,4448 @@
+{
+  "ablation_discovery_cases": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "actual_pretrained_internal_interventions_executed": true,
+  "all_channel_discovery_effects": [
+    {
+      "channel": 0,
+      "discovery_mean_abs_logit_effect": 0.018751459047198295,
+      "discovery_worst_abs_logit_effect": 0.05009177327156067,
+      "intervened_model_sha256": "9dfad29b76ce8bc43e421e1f94f4cdc2bb375fc69596554313c5e63a779b674d"
+    },
+    {
+      "channel": 1,
+      "discovery_mean_abs_logit_effect": 0.049158333912491796,
+      "discovery_worst_abs_logit_effect": 0.10632019639015197,
+      "intervened_model_sha256": "7e67331e59f39edb80e55f433742e48a45a91e6880179dc8e5d6b5b55e1d939f"
+    },
+    {
+      "channel": 2,
+      "discovery_mean_abs_logit_effect": 0.03438234627246857,
+      "discovery_worst_abs_logit_effect": 0.09753130078315735,
+      "intervened_model_sha256": "91462067e2640f40248830e4fc7dd520fd77ce5f37a16178559d40e1a31b5a0b"
+    },
+    {
+      "channel": 3,
+      "discovery_mean_abs_logit_effect": 0.0,
+      "discovery_worst_abs_logit_effect": 0.0,
+      "intervened_model_sha256": "811cf15b2109cfb8d39e3ad6a42a17b8506c916f434e996a44efed8a3628398c"
+    },
+    {
+      "channel": 4,
+      "discovery_mean_abs_logit_effect": 0.14730279453098777,
+      "discovery_worst_abs_logit_effect": 0.2777863943949342,
+      "intervened_model_sha256": "f9ffc89da5fee6b929aec8d2b65712b5792af237f5e190d63a5e8b83ff90fddd"
+    },
+    {
+      "channel": 5,
+      "discovery_mean_abs_logit_effect": 0.16384872585535049,
+      "discovery_worst_abs_logit_effect": 0.482231817394495,
+      "intervened_model_sha256": "d7a4c56063662ef1561204d646b2c2700fd4d1b18cba71f15be985d8b7d98b98"
+    },
+    {
+      "channel": 6,
+      "discovery_mean_abs_logit_effect": 0.0017468738555908203,
+      "discovery_worst_abs_logit_effect": 0.008734369277954101,
+      "intervened_model_sha256": "4ca601b32c3064ca3c8c7ad3105ad00b66d04495d918531c1faa37aaa3de9282"
+    },
+    {
+      "channel": 7,
+      "discovery_mean_abs_logit_effect": 0.05963528138585389,
+      "discovery_worst_abs_logit_effect": 0.13466073274612428,
+      "intervened_model_sha256": "2bccd1ba2935fd253a0e2a9ecdc195b6a8ab0c633909708f48df8c89097368ca"
+    },
+    {
+      "channel": 8,
+      "discovery_mean_abs_logit_effect": 0.13512755516916514,
+      "discovery_worst_abs_logit_effect": 0.3484622657299042,
+      "intervened_model_sha256": "c0036ff6c7c470c9dad41c6297a9fc5bc6dda7e6d51da956e0794d26bc0a51a7"
+    },
+    {
+      "channel": 9,
+      "discovery_mean_abs_logit_effect": 0.12555985951796175,
+      "discovery_worst_abs_logit_effect": 0.3225001916754991,
+      "intervened_model_sha256": "9e23bfe408f67a017dfe7621451e2d983287018f6598edb32151cf27f195f601"
+    },
+    {
+      "channel": 10,
+      "discovery_mean_abs_logit_effect": 0.10042295139282942,
+      "discovery_worst_abs_logit_effect": 0.23027691394090652,
+      "intervened_model_sha256": "6f711d6ef6ae6bd8b57a02a13de4943ebc64d5bafe6fa37c2a31bc7b0f5da8b9"
+    },
+    {
+      "channel": 11,
+      "discovery_mean_abs_logit_effect": 0.1103574949502945,
+      "discovery_worst_abs_logit_effect": 0.22894254550337792,
+      "intervened_model_sha256": "e6852bff3bbad311b4e0043bf2fa4abdafea0847a1b438fd0342265a4bc59886"
+    },
+    {
+      "channel": 12,
+      "discovery_mean_abs_logit_effect": 0.008687968850135803,
+      "discovery_worst_abs_logit_effect": 0.01600300967693329,
+      "intervened_model_sha256": "ecc2ec3afb24d394e65107ac26f5443c39bd66cfa71ab96ecbaea86bdbb24c5b"
+    },
+    {
+      "channel": 13,
+      "discovery_mean_abs_logit_effect": 0.1437945929169655,
+      "discovery_worst_abs_logit_effect": 0.4330798625946045,
+      "intervened_model_sha256": "eb73b266a73bec52efdeefcce511f3c2d4ef83bbe01cedf3d91e7026f9f8f073"
+    },
+    {
+      "channel": 14,
+      "discovery_mean_abs_logit_effect": 0.07418742351233959,
+      "discovery_worst_abs_logit_effect": 0.19770160615444182,
+      "intervened_model_sha256": "78847be6c5eb6e213bc1a0858e44dae3999c1ccdd5821c51f7f2315cdc8ebcd2"
+    },
+    {
+      "channel": 15,
+      "discovery_mean_abs_logit_effect": 0.054663955494761475,
+      "discovery_worst_abs_logit_effect": 0.12080442607402801,
+      "intervened_model_sha256": "948af884dc3f6572f9ccb47a48aa204848c3983e700fdcedc4cb14db9f4e114e"
+    }
+  ],
+  "all_passed": true,
+  "base_image_cross_sha256": "b829a39750cd45394e5801b1b212f1be1eb54e09bca04d87241767bc55c8d6a1",
+  "base_image_train_sha256": "df91803589d2aa7c79bd8fa641a3de5a42c1886865401e122caf2b343a937060",
+  "basis_families": [
+    {
+      "basis": "linear",
+      "cross_image_mean_abs_activation_mean_error": 0.008242536445016446,
+      "data_derived_coefficients": true,
+      "edge_graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.002472428641482898,
+                  0.025192534049399713
+                ],
+                "name": "edge_0",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0025280026861336903,
+                  0.1411032350066783
+                ],
+                "name": "edge_1",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.005764537175245982,
+                  0.10133095078167319
+                ],
+                "name": "edge_2",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.003359441917125775,
+                  0.022519585536736976
+                ],
+                "name": "edge_3",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.003123061366978532,
+                  0.05142142988589346
+                ],
+                "name": "edge_4",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.025590081107752377,
+                  0.12675853352658314
+                ],
+                "name": "edge_5",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0009772004205591918,
+                  0.003141207127821069
+                ],
+                "name": "edge_6",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0024047523897950704,
+                  0.017074667498701904
+                ],
+                "name": "edge_7",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0070984666170526385,
+                  0.038980752289319055
+                ],
+                "name": "edge_8",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0056482771901237155,
+                  0.038989465205179964
+                ],
+                "name": "edge_9",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.004732323421382244,
+                  0.03715134076192742
+                ],
+                "name": "edge_10",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.012503940708135495,
+                  0.039216786414115024
+                ],
+                "name": "edge_11",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0006534070903513613,
+                  0.003930079179680665
+                ],
+                "name": "edge_12",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.006595882073957095,
+                  0.028642363497475325
+                ],
+                "name": "edge_13",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0028330802473248195,
+                  0.015527192406317577
+                ],
+                "name": "edge_14",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0027265766506590584,
+                  0.03395989208686061
+                ],
+                "name": "edge_15",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "heldout_max_abs_activation_mean_error": 0.021628876935046653,
+      "heldout_mean_abs_activation_mean_error": 0.002297208962598208,
+      "internal_activation_surrogate_not_causal_mechanism": true,
+      "kan_graph_sha256": "31bcf8adf707f809c68e7123e2bc77e212b77a78aae785b2ac4a9782b36fcdd0",
+      "train_max_abs_activation_mean_error": 0.025590081107752377,
+      "train_only_selected": false
+    },
+    {
+      "basis": "polynomial",
+      "cross_image_mean_abs_activation_mean_error": 0.007367810933340874,
+      "data_derived_coefficients": true,
+      "edge_graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0003552876433424724,
+                  0.006220777602998474,
+                  0.03991226616069619,
+                  -0.03435381514992335,
+                  0.01267465454846954
+                ],
+                "name": "edge_0",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0030096759966113298,
+                  0.050990912150466194,
+                  0.6741028360174601,
+                  -1.116675529008012,
+                  0.5276503642411365
+                ],
+                "name": "edge_1",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0014685044201125479,
+                  0.04910638665480267,
+                  0.15336984477297863,
+                  -0.1749543318574197,
+                  0.07112652402378483
+                ],
+                "name": "edge_2",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -7.372506810049003e-06,
+                  -0.002509544376300082,
+                  0.03293166093405606,
+                  -0.0035077137314572238,
+                  -0.005601566422843071
+                ],
+                "name": "edge_3",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0006870402511247808,
+                  0.009593530790013086,
+                  0.15382260073897114,
+                  -0.20080101868199163,
+                  0.08653082135344298
+                ],
+                "name": "edge_4",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.00019148593746401305,
+                  0.0006336418741289471,
+                  -0.08828608192283074,
+                  0.4546169151699231,
+                  -0.24273722350307933
+                ],
+                "name": "edge_5",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.00023285885671993014,
+                  1.8553176922472478e-05,
+                  0.06389835474726717,
+                  -0.1298080587928956,
+                  0.0698425907124304
+                ],
+                "name": "edge_6",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.00015754816239941434,
+                  -0.00818490272614152,
+                  0.05608253007418286,
+                  -0.04512643201559832,
+                  0.012682400945022015
+                ],
+                "name": "edge_7",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.00036824447729157084,
+                  -0.014451559867585388,
+                  0.06022068884513537,
+                  0.012897104890667461,
+                  -0.022283383558383017
+                ],
+                "name": "edge_8",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0007301839183669777,
+                  0.020916375913317863,
+                  -0.04108840752987608,
+                  0.10890040056828496,
+                  -0.04881425676253263
+                ],
+                "name": "edge_9",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -7.400441756232637e-05,
+                  -0.0017034950906865617,
+                  0.06750470953677355,
+                  -0.03696555480929132,
+                  0.006320269705787907
+                ],
+                "name": "edge_10",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.01185389612204993,
+                  0.050407868705559675,
+                  -0.04112219247914839,
+                  0.05354917562518444,
+                  -0.02299856104610365
+                ],
+                "name": "edge_11",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0017066989319023311,
+                  -0.005453443375289233,
+                  0.01650236241411677,
+                  -0.0067380914684327725,
+                  -0.0011166892937378413
+                ],
+                "name": "edge_12",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -1.7107226937910176e-05,
+                  0.0058950020131011,
+                  -0.06299835042802851,
+                  0.15825773952922095,
+                  -0.07121339504575619
+                ],
+                "name": "edge_13",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0001871433437080196,
+                  -0.0067187970213774175,
+                  0.02569917898401825,
+                  0.006837672210086454,
+                  -0.011639577083126488
+                ],
+                "name": "edge_14",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -9.168142616463096e-05,
+                  -0.0005889851881334604,
+                  0.10306269708273225,
+                  -0.11273681377734132,
+                  0.041839314798571205
+                ],
+                "name": "edge_15",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "heldout_max_abs_activation_mean_error": 0.004819636703273564,
+      "heldout_mean_abs_activation_mean_error": 0.00034789584426805247,
+      "internal_activation_surrogate_not_causal_mechanism": true,
+      "kan_graph_sha256": "626826837d6a295b4f55a5dafe5dca3940e8d5aea996a2bec930ff592358c3ce",
+      "train_max_abs_activation_mean_error": 0.004225560065621124,
+      "train_only_selected": false
+    },
+    {
+      "basis": "linear_spline",
+      "cross_image_mean_abs_activation_mean_error": 0.007357668357207838,
+      "data_derived_coefficients": true,
+      "edge_graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -4.1617896506851196e-05,
+                  0.00020808948253422596,
+                  0.0036903713478753392,
+                  0.0061828250984657775,
+                  0.009043923307920311,
+                  0.012408727258967503,
+                  0.01635165656527794,
+                  0.02024167568822867,
+                  0.02394209457393941
+                ],
+                "name": "edge_0",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -0.0012602919982552753,
+                  0.0065523737262229535,
+                  0.03901261233060636,
+                  0.06502362797181777,
+                  0.08376373282807839,
+                  0.09816018548801812,
+                  0.11033324183238634,
+                  0.12092368958977331,
+                  0.13113670245641001
+                ],
+                "name": "edge_1",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -0.0008357029881354398,
+                  0.004790170202728894,
+                  0.019343533963901333,
+                  0.030987957718606088,
+                  0.043372942438925186,
+                  0.056844885519504645,
+                  0.07055188528313747,
+                  0.0837946795820522,
+                  0.09679826315302144
+                ],
+                "name": "edge_2",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -1.9529552851786756e-05,
+                  9.764776425892083e-05,
+                  0.0012384519963032942,
+                  0.003469249778366283,
+                  0.006063760628169429,
+                  0.009526808091654744,
+                  0.01341754722944334,
+                  0.017369068180677925,
+                  0.021313460975103955
+                ],
+                "name": "edge_3",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -0.00023856993439786743,
+                  0.001192849671989418,
+                  0.009085585877081415,
+                  0.016364890535330804,
+                  0.02243534560241808,
+                  0.02919041953556461,
+                  0.035690470973231574,
+                  0.04218356285266309,
+                  0.0480411437309989
+                ],
+                "name": "edge_4",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  3.232282389649333e-05,
+                  -0.00016161411948272948,
+                  0.0009373618929997139,
+                  0.006447567766486055,
+                  0.018897345443359848,
+                  0.04065954935972105,
+                  0.06593641445472599,
+                  0.09476879098857265,
+                  0.1249312268903712
+                ],
+                "name": "edge_5",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  7.133298153772775e-06,
+                  -3.566649076886947e-05,
+                  0.0021657873502165166,
+                  0.003811403317442757,
+                  0.003767886395740442,
+                  0.0034365486269535878,
+                  0.003017269441871191,
+                  0.002910960515130341,
+                  0.003435726317055168
+                ],
+                "name": "edge_6",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -3.620651084918743e-06,
+                  1.8103255424585087e-05,
+                  0.0009049511907188791,
+                  0.002540517372295534,
+                  0.005327572441834427,
+                  0.008040387005650023,
+                  0.010505752484270972,
+                  0.013012796980179007,
+                  0.01570610175222039
+                ],
+                "name": "edge_7",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  7.591032424563449e-06,
+                  -3.795516212284022e-05,
+                  0.00022013994031252774,
+                  0.0031099532076620355,
+                  0.008685225363560622,
+                  0.014764421269153076,
+                  0.021618440977759928,
+                  0.029289414396617964,
+                  0.03690119695652922
+                ],
+                "name": "edge_8",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  9.277126839561775e-06,
+                  -4.638563419785013e-05,
+                  0.004633347765235727,
+                  0.00637407880392251,
+                  0.009255755101265034,
+                  0.01507022246356836,
+                  0.0225595791808931,
+                  0.03059395237371665,
+                  0.038996484141906845
+                ],
+                "name": "edge_9",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -9.559267823876311e-05,
+                  0.0004779633911937617,
+                  0.0031175887409649015,
+                  0.007057723024285183,
+                  0.011531096155287458,
+                  0.01707834105113617,
+                  0.0231546611806066,
+                  0.02899982774982088,
+                  0.03509725649576886
+                ],
+                "name": "edge_10",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.01242589004386898,
+                  0.01612769858095883,
+                  0.024680487077708525,
+                  0.026753932923633376,
+                  0.031423433513732356,
+                  0.036945620059392344,
+                  0.04207852149918079,
+                  0.04692620018517457,
+                  0.05159936920861088
+                ],
+                "name": "edge_11",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.0015317113774276382,
+                  0.0015893344754282304,
+                  0.0009518069523033584,
+                  0.0015126671480265295,
+                  0.0022947087919615635,
+                  0.0030530259037004023,
+                  0.0036443311770531068,
+                  0.0043252130383771665,
+                  0.004982567682277761
+                ],
+                "name": "edge_12",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  1.105942845666125e-06,
+                  -5.529714228341465e-06,
+                  3.2072342524383186e-05,
+                  -0.00018690434091805417,
+                  0.002131987343506766,
+                  0.007142295292556302,
+                  0.013132603717168165,
+                  0.02085971400633291,
+                  0.03007730550874467
+                ],
+                "name": "edge_13",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -1.6631442444274084e-06,
+                  8.315721222136411e-06,
+                  -4.823118308837738e-05,
+                  0.0012457713365764808,
+                  0.003321251939207008,
+                  0.0061292230468395145,
+                  0.008803724823633511,
+                  0.011570271383918572,
+                  0.014507074552617658
+                ],
+                "name": "edge_14",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -0.00023433322827856427,
+                  0.0011716661413927933,
+                  0.004492032659355086,
+                  0.008938757696256565,
+                  0.014110684058830598,
+                  0.0185966628244374,
+                  0.023036865122533102,
+                  0.02741487891151893,
+                  0.031423789793920166
+                ],
+                "name": "edge_15",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "heldout_max_abs_activation_mean_error": 0.0026027425718764203,
+      "heldout_mean_abs_activation_mean_error": 0.00010698672181389356,
+      "internal_activation_surrogate_not_causal_mechanism": true,
+      "kan_graph_sha256": "8bab84e61b54a95488f7cd4d818e9d58555d40e1be7950f0c8c3d7a3e56eef67",
+      "train_max_abs_activation_mean_error": 0.0025365220654284936,
+      "train_only_selected": false
+    },
+    {
+      "basis": "gaussian_rbf",
+      "cross_image_mean_abs_activation_mean_error": 0.007370175119966446,
+      "data_derived_coefficients": true,
+      "edge_graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.008467126772971956,
+                  -0.021288537361891638,
+                  0.03100381739773911,
+                  -0.032987881882827544,
+                  0.04129851075076947,
+                  -0.037925208263651936,
+                  0.04769707491340192,
+                  -0.03292256383592024,
+                  0.03617498302159694
+                ],
+                "name": "edge_0",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.05110140743381877,
+                  -0.13318499493852828,
+                  0.1929344714054562,
+                  -0.1793420235955112,
+                  0.24308753319417953,
+                  -0.1938283702906746,
+                  0.2583326082492356,
+                  -0.16470933129356172,
+                  0.18658875244849726
+                ],
+                "name": "edge_1",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.026763924396733873,
+                  -0.07530339802827883,
+                  0.12150001022984695,
+                  -0.13099621068636766,
+                  0.17064191750319568,
+                  -0.1510916371801823,
+                  0.19369033185097617,
+                  -0.13149535188134903,
+                  0.14468881385479224
+                ],
+                "name": "edge_2",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.002515013370565243,
+                  -0.006754625429639338,
+                  0.011221699543012368,
+                  -0.015606662167769788,
+                  0.024634445391766072,
+                  -0.026336945035800786,
+                  0.037673916448454886,
+                  -0.027942507625145413,
+                  0.032207342985732745
+                ],
+                "name": "edge_3",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.012621492464922675,
+                  -0.031963833000535305,
+                  0.045209204251520994,
+                  -0.04291824147416706,
+                  0.06160120331694988,
+                  -0.0531544044555374,
+                  0.07919972888120147,
+                  -0.053863876740094976,
+                  0.06710448561111149
+                ],
+                "name": "edge_4",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.013515179220461004,
+                  -0.036176331895447944,
+                  0.06282567815102837,
+                  -0.09323895501842998,
+                  0.12840233443391103,
+                  -0.1470784705829976,
+                  0.20785705786381736,
+                  -0.16585714917868188,
+                  0.19362202548793225
+                ],
+                "name": "edge_5",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0023770920838515363,
+                  -0.004740346660398264,
+                  0.0037069091444937256,
+                  0.0009984935508100038,
+                  0.0015257822085974779,
+                  -0.0004549597865850454,
+                  0.0041419406289098975,
+                  -0.003770052251043773,
+                  0.00499792161877369
+                ],
+                "name": "edge_6",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.0032196955640633987,
+                  -0.008605544590285131,
+                  0.014273705531806196,
+                  -0.019207494089403268,
+                  0.02550353863273325,
+                  -0.02377447635399783,
+                  0.0308214215158617,
+                  -0.02203856595877315,
+                  0.024136424876563197
+                ],
+                "name": "edge_7",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.003921945096258836,
+                  -0.011276384970896116,
+                  0.021542781407325195,
+                  -0.035147595162837955,
+                  0.04996630049581072,
+                  -0.05157627714103766,
+                  0.06734901425471525,
+                  -0.05002442983268169,
+                  0.05665674196215942
+                ],
+                "name": "edge_8",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.013861180624661093,
+                  -0.03372438327418609,
+                  0.04727925893434261,
+                  -0.048153198010321564,
+                  0.0554295001458077,
+                  -0.054855075637561625,
+                  0.07120809383535338,
+                  -0.05356968014221557,
+                  0.06038037908607202
+                ],
+                "name": "edge_9",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.004967860817321135,
+                  -0.013345818726158951,
+                  0.021560826850721523,
+                  -0.02727913806160255,
+                  0.04232204943196937,
+                  -0.04352782244509329,
+                  0.06284387519128727,
+                  -0.046092521657364056,
+                  0.052853237430351786
+                ],
+                "name": "edge_10",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.046701472467608404,
+                  -0.09374041858309626,
+                  0.14897798568540102,
+                  -0.14906514726366352,
+                  0.1637946897172355,
+                  -0.13067437128714593,
+                  0.1383133899829057,
+                  -0.08629375521762843,
+                  0.08157134601601464
+                ],
+                "name": "edge_11",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  -0.0013165321285900306,
+                  0.00625007277289775,
+                  -0.007718029059262107,
+                  0.0074639206023233715,
+                  -0.0040622101395333,
+                  0.0029723631024972524,
+                  0.002154861900740648,
+                  -0.0021806059896430792,
+                  0.005741940379912887
+                ],
+                "name": "edge_12",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.005989656305355387,
+                  -0.01604526821639777,
+                  0.027079694746600064,
+                  -0.03643658591728344,
+                  0.04235185137398323,
+                  -0.047059303469445375,
+                  0.05859969171792508,
+                  -0.048860753666554096,
+                  0.05137289775948217
+                ],
+                "name": "edge_13",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.00015478534277851006,
+                  -0.0008102119851962449,
+                  0.002642407595024435,
+                  -0.006557748941802451,
+                  0.011958971068061921,
+                  -0.013707258139140251,
+                  0.02246776133142776,
+                  -0.01763496246505474,
+                  0.02158941629727387
+                ],
+                "name": "edge_14",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.00608873361885328,
+                  -0.01778066641214909,
+                  0.030413827239221237,
+                  -0.03700123946672078,
+                  0.05205605264817277,
+                  -0.046167183290400655,
+                  0.060201424295102154,
+                  -0.040389498614520666,
+                  0.04588775918263092
+                ],
+                "name": "edge_15",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "heldout_max_abs_activation_mean_error": 0.0016401520535248293,
+      "heldout_mean_abs_activation_mean_error": 0.00018403467349004414,
+      "internal_activation_surrogate_not_causal_mechanism": true,
+      "kan_graph_sha256": "32314fdc6d3cd3f726ea81458d33cce6ddd201d2f2ce3565b81a291d2e909f08",
+      "train_max_abs_activation_mean_error": 0.001671278183086336,
+      "train_only_selected": true
+    },
+    {
+      "basis": "fourier",
+      "cross_image_mean_abs_activation_mean_error": 0.0077887966091067,
+      "data_derived_coefficients": true,
+      "edge_graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.010018095820351366,
+                  0.0010322245117094495,
+                  -0.008083268673119289,
+                  0.00021390641018944126,
+                  -0.004010187866341297,
+                  0.0002853187741608906,
+                  -0.0024010655631383788,
+                  0.00026617387265542473,
+                  -0.001547714742850895
+                ],
+                "name": "edge_0",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.07359898247481764,
+                  -0.010605024823294045,
+                  -0.04540604940622002,
+                  -0.00019567391298647326,
+                  -0.02325378572307354,
+                  0.0010270027542401276,
+                  -0.01352181447549715,
+                  0.000944537131179591,
+                  -0.00859265003296339
+                ],
+                "name": "edge_1",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.04473180924864597,
+                  0.001271824785230322,
+                  -0.032483282476136625,
+                  0.0002971199397858351,
+                  -0.015684123732774332,
+                  0.0006554693203868215,
+                  -0.009729315769386881,
+                  0.0006507783926565836,
+                  -0.006411752083851982
+                ],
+                "name": "edge_2",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.007739515002126819,
+                  0.001885100156791043,
+                  -0.007406047967198685,
+                  0.0004575531802337075,
+                  -0.0033329799606029204,
+                  0.0002569069699313116,
+                  -0.001972350649370158,
+                  0.00013464912801416045,
+                  -0.001388472904052056
+                ],
+                "name": "edge_3",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.02251748162592121,
+                  1.3782854402362389e-06,
+                  -0.016707708644293384,
+                  0.000348914517076907,
+                  -0.00815934028058246,
+                  0.0005461492386489629,
+                  -0.004801948148058427,
+                  0.00029648110963298023,
+                  -0.0030530657980363004
+                ],
+                "name": "edge_4",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.03632571054231502,
+                  0.018726295920780164,
+                  -0.040581467758746846,
+                  0.003238869850770308,
+                  -0.01846678688596577,
+                  0.0019369623978949823,
+                  -0.01180141328784235,
+                  0.0009769487553661755,
+                  -0.007594945346366399
+                ],
+                "name": "edge_5",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.002600545715654498,
+                  -0.0012347560900125994,
+                  -0.0007237108350742772,
+                  7.19649134775292e-05,
+                  -0.0008633670629153439,
+                  0.00019535417779825197,
+                  -0.0003600104796606242,
+                  7.082756859573323e-05,
+                  -0.00021137027259992154
+                ],
+                "name": "edge_6",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.006032275352485178,
+                  0.0010381390449811932,
+                  -0.005830968677922004,
+                  0.00039690834813529453,
+                  -0.0022862912896314813,
+                  0.00013372033562016877,
+                  -0.0015038514197470826,
+                  0.00013643439146541624,
+                  -0.001018398118262389
+                ],
+                "name": "edge_7",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.012032923659770814,
+                  0.004324534169836419,
+                  -0.012999546068686984,
+                  0.0011810362571209384,
+                  -0.0053997645916071015,
+                  0.00032580468296960525,
+                  -0.003430416240801827,
+                  0.00027138464328653526,
+                  -0.0023178939460491692
+                ],
+                "name": "edge_8",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.013511560165147334,
+                  0.004052459258897183,
+                  -0.011932853556677565,
+                  0.00035913342549305044,
+                  -0.006410903059852476,
+                  0.0007494020275867375,
+                  -0.003975312262550756,
+                  0.0005322244924451398,
+                  -0.002354779907939391
+                ],
+                "name": "edge_9",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.013628967636937734,
+                  0.002371731333439064,
+                  -0.012216873754262461,
+                  0.0006119572999321264,
+                  -0.005514906006430267,
+                  0.00042104253206350046,
+                  -0.0032807505233592026,
+                  0.00023971731950895174,
+                  -0.0022076335593069736
+                ],
+                "name": "edge_10",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_10"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.03212801256789813,
+                  3.470593036895531e-05,
+                  -0.012090772326878232,
+                  -0.0007930406829441153,
+                  -0.006152945929159393,
+                  4.270089133457894e-05,
+                  -0.004500599642582869,
+                  0.00044909676525387753,
+                  -0.002909815888638058
+                ],
+                "name": "edge_11",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_11"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.002579555038345141,
+                  0.0004645035996503558,
+                  -0.0014575815306670805,
+                  0.00021586572617349165,
+                  -0.00040337276933594547,
+                  2.0267027348264713e-05,
+                  -0.00024206965508790794,
+                  -3.9478441780684826e-05,
+                  -0.00015474854088245852
+                ],
+                "name": "edge_12",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_12"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.007292560381565755,
+                  0.005518725524947376,
+                  -0.008664291038109354,
+                  0.0008827789636580871,
+                  -0.004206015547906748,
+                  0.000590517090442894,
+                  -0.0029311564508155063,
+                  0.0003645464056036308,
+                  -0.0017817472202741398
+                ],
+                "name": "edge_13",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_13"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.004793568276997143,
+                  0.0016774513159688795,
+                  -0.0052732269115499195,
+                  0.00040694868383035987,
+                  -0.002059168687018717,
+                  0.00018034845513372204,
+                  -0.001323428186660577,
+                  6.336208529317059e-05,
+                  -0.0009270417313946767
+                ],
+                "name": "edge_14",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_14"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.014177569061664102,
+                  0.0005486199803938852,
+                  -0.011323463961402987,
+                  0.00046677281091170623,
+                  -0.0049437915069507335,
+                  0.00011810056973247159,
+                  -0.0030543655428461776,
+                  0.00015511226778360654,
+                  -0.002053609920893703
+                ],
+                "name": "edge_15",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_15"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9",
+          "logit_10",
+          "logit_11",
+          "logit_12",
+          "logit_13",
+          "logit_14",
+          "logit_15"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "heldout_max_abs_activation_mean_error": 0.03319340323720782,
+      "heldout_mean_abs_activation_mean_error": 0.0023299341305091617,
+      "internal_activation_surrogate_not_causal_mechanism": true,
+      "kan_graph_sha256": "9b2b88565c88fc95b0a5ec0b05fda740c8c14b0493995034dfb629e8715c56c1",
+      "train_max_abs_activation_mean_error": 0.06640919702110198,
+      "train_only_selected": false
+    }
+  ],
+  "basis_selected_by_train_only": "gaussian_rbf",
+  "cross_activation_mean_sha256": "603bf5fd7dafe5788f1acc32ee18240079f5364283c0c0475ff4bf79fbcf458e",
+  "cross_activation_means": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.012439641875823085,
+      0.001517221790130193,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.00031160445389698965,
+      0.00042630180868567254,
+      0.0007008919302298098,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.015533818069807425,
+      0.001343976102807388,
+      0.0,
+      0.0,
+      0.0005596540108018992
+    ],
+    [
+      0.0017571885290802742,
+      0.007925133087805339,
+      0.005252123183133651,
+      0.00016413682273456028,
+      0.00015504164051036444,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0005916420902524676,
+      8.492905418483579e-05,
+      0.020986227755795936,
+      0.0010346769455022045,
+      0.0,
+      0.0,
+      0.0016890080949785759
+    ],
+    [
+      0.003448559845588645,
+      0.018018507835816364,
+      0.009625799801884865,
+      0.0008988031471262172,
+      0.0017641061270723538,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0022341294252142614,
+      0.0011189579203420756,
+      0.02609819935976851,
+      0.0009799335456016113,
+      0.0,
+      0.0,
+      0.0020238769107631276
+    ],
+    [
+      0.0050533411986365614,
+      0.027739043822702095,
+      0.0131870014783071,
+      0.001638754974214398,
+      0.004199222110363902,
+      0.00013793723619714076,
+      0.00011395115633400119,
+      0.00023307658883990072,
+      7.353388533300283e-05,
+      0.0036209964630555132,
+      0.0023451966746729246,
+      0.030033107633151267,
+      0.0011712583922305886,
+      0.0,
+      0.0,
+      0.0027779456874241636
+    ],
+    [
+      0.006596802372713478,
+      0.036302439792423834,
+      0.015968001010466595,
+      0.0032553174057785347,
+      0.006646486113266069,
+      0.0013317760764336099,
+      0.00028826744884860757,
+      0.0008330935118149738,
+      0.0003544198615210397,
+      0.005154477242304355,
+      0.0036556268757095144,
+      0.03338296113687814,
+      0.001335000714325175,
+      0.0,
+      0.0,
+      0.004422493735138251
+    ],
+    [
+      0.008207917973703268,
+      0.044198923649228346,
+      0.018725782480775093,
+      0.005273410024083391,
+      0.00890608983380454,
+      0.0038806823443393317,
+      0.00024356008792410092,
+      0.0016726726019869046,
+      0.0012471622654369899,
+      0.006847882757381517,
+      0.004936962977659946,
+      0.0367157004193916,
+      0.0015712435504573645,
+      0.0,
+      0.00024087225296059433,
+      0.006186779588460922
+    ],
+    [
+      0.00945131359051685,
+      0.05064496458793173,
+      0.021625441708126848,
+      0.007857149276806384,
+      0.011016230802146755,
+      0.007105772972715144,
+      0.00019843214932753115,
+      0.0026041247254731704,
+      0.0025770972881998333,
+      0.008688842003442804,
+      0.0061983291287811436,
+      0.040230154435207346,
+      0.0018534182893986605,
+      0.00042175927332469394,
+      0.0005699363442099824,
+      0.008266122422504182
+    ],
+    [
+      0.01058257454816176,
+      0.05573995061674897,
+      0.024834657277987927,
+      0.010957716451007493,
+      0.013415136203473928,
+      0.012071410916289506,
+      0.00028974813770274725,
+      0.0038026125759494547,
+      0.004138699143516774,
+      0.010832494923046656,
+      0.007605445932368843,
+      0.04337649847076712,
+      0.0021380102451966734,
+      0.0010416846798390758,
+      0.0008852359439645495,
+      0.010175735955791814
+    ],
+    [
+      0.011840159035458857,
+      0.05994690224832418,
+      0.028014701087864077,
+      0.014048166116889643,
+      0.015899372192061677,
+      0.01757774190330992,
+      0.0006581904480651934,
+      0.0050115211277591935,
+      0.005706241696464772,
+      0.013125191689754019,
+      0.00913550583075504,
+      0.046165123962017954,
+      0.002425740185497823,
+      0.0017324471656157046,
+      0.0011896523742043242,
+      0.011751414694804318
+    ],
+    [
+      0.01302059831059709,
+      0.06399657022284001,
+      0.03128693891423089,
+      0.01698469971211589,
+      0.018355034899954895,
+      0.02439977106999378,
+      0.001174741481639901,
+      0.006563714724414202,
+      0.007464146127506178,
+      0.015420377710644079,
+      0.010755771124849513,
+      0.04866983265882092,
+      0.0027707273102536493,
+      0.0027061726669875942,
+      0.0014602800413053862,
+      0.013210140624824835
+    ],
+    [
+      0.01421724343482329,
+      0.06806050879614693,
+      0.03466557772183905,
+      0.01994811066863488,
+      0.021022495262476862,
+      0.0319108603408142,
+      0.0017156844236412827,
+      0.008037752186765477,
+      0.009577616441006563,
+      0.01774230857892912,
+      0.012511353483613657,
+      0.051258656966062834,
+      0.0031179599463939667,
+      0.003809725295524208,
+      0.0020102288345901333,
+      0.014588282785701508
+    ],
+    [
+      0.015391547765050615,
+      0.07169823128045821,
+      0.038043227578912465,
+      0.023042372066755683,
+      0.0238422444280313,
+      0.04031376859971455,
+      0.0022292912614588836,
+      0.009460822279964174,
+      0.011703440577399974,
+      0.020403935897107026,
+      0.014289754309824534,
+      0.05373927760793238,
+      0.0034773395377762466,
+      0.005685147734320894,
+      0.0026907846331596375,
+      0.015944556333124638
+    ],
+    [
+      0.01655391862197798,
+      0.07529105056001216,
+      0.04139020932572229,
+      0.026152235512830774,
+      0.02661815711430141,
+      0.049076054169207205,
+      0.002690081997793548,
+      0.010862519774509936,
+      0.01406345562059052,
+      0.023133225434896897,
+      0.016177467545684502,
+      0.0562634801786697,
+      0.003837626275359368,
+      0.007685141447855502,
+      0.00339993735661312,
+      0.017296962002862473
+    ],
+    [
+      0.01772368319180547,
+      0.07857366727322948,
+      0.044840940787475934,
+      0.029290377333456158,
+      0.029252335125086258,
+      0.058405768278301975,
+      0.003146304311800976,
+      0.012233361601829529,
+      0.01644316726193136,
+      0.025899003202817877,
+      0.018111347619976317,
+      0.05882148110136694,
+      0.004170850299450816,
+      0.00998922407018895,
+      0.0041373598636413106,
+      0.018638648795990313
+    ],
+    [
+      0.018890701690498665,
+      0.08181465477967749,
+      0.048334679205198676,
+      0.03229943221929122,
+      0.031849326831953864,
+      0.06795251491118451,
+      0.003582207524046606,
+      0.01363175316732757,
+      0.018911445171249156,
+      0.028613294873918806,
+      0.02006365640126929,
+      0.061365553995176236,
+      0.004493640315224778,
+      0.012824034508393735,
+      0.004850465576259458,
+      0.019959198520043676
+    ]
+  ],
+  "cross_checkpoint_generalization_proved": false,
+  "cross_image_causal_witnesses": [
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "bde14e3ce21fc26d01c28ddad0155ef88981d73e07745b7f6bee9ae8d9607c61",
+        "passed": true,
+        "scalar_reference_sha256": "bde14e3ce21fc26d01c28ddad0155ef88981d73e07745b7f6bee9ae8d9607c61"
+      },
+      "index": 0,
+      "input_sha256": "325728227d1bede10745ecaecc4a092fb9fd614f9a2c9fcb449f2cecf3bfdf15",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "bde14e3ce21fc26d01c28ddad0155ef88981d73e07745b7f6bee9ae8d9607c61",
+        "baseline_output_sha256": "bde14e3ce21fc26d01c28ddad0155ef88981d73e07745b7f6bee9ae8d9607c61",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "bde14e3ce21fc26d01c28ddad0155ef88981d73e07745b7f6bee9ae8d9607c61",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "bde14e3ce21fc26d01c28ddad0155ef88981d73e07745b7f6bee9ae8d9607c61",
+        "baseline_output_sha256": "bde14e3ce21fc26d01c28ddad0155ef88981d73e07745b7f6bee9ae8d9607c61",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "4e86373aa900a4e84f45036b02a66e29bc4fab3e7a55c47176946eef7338ba20"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "7103327f112fcef3934dda4096900ee94e70dc30e089c270e70905fb24e4fdd4",
+        "passed": true,
+        "scalar_reference_sha256": "7103327f112fcef3934dda4096900ee94e70dc30e089c270e70905fb24e4fdd4"
+      },
+      "index": 1,
+      "input_sha256": "32f67c3b927d04e5b7e0e628a6a3c8800a99aac5e0c975276500ad4e5b77d091",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "7103327f112fcef3934dda4096900ee94e70dc30e089c270e70905fb24e4fdd4",
+        "baseline_output_sha256": "7103327f112fcef3934dda4096900ee94e70dc30e089c270e70905fb24e4fdd4",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "7103327f112fcef3934dda4096900ee94e70dc30e089c270e70905fb24e4fdd4",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "7103327f112fcef3934dda4096900ee94e70dc30e089c270e70905fb24e4fdd4",
+        "baseline_output_sha256": "7103327f112fcef3934dda4096900ee94e70dc30e089c270e70905fb24e4fdd4",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "5d023bb63a31824116fa42d6fe9b7f6a7d7d4403d753abaa726920756fc3a5d6"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "5bd0e102271d676f89b873937e0a354397a8836d0a8ebed7870ed5ce3033960e",
+        "passed": true,
+        "scalar_reference_sha256": "5bd0e102271d676f89b873937e0a354397a8836d0a8ebed7870ed5ce3033960e"
+      },
+      "index": 2,
+      "input_sha256": "4cfc6e8155d5a9cbe52479a7b1d431a5ba316180f2293997f7d2f66185eba9bc",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "5bd0e102271d676f89b873937e0a354397a8836d0a8ebed7870ed5ce3033960e",
+        "baseline_output_sha256": "5bd0e102271d676f89b873937e0a354397a8836d0a8ebed7870ed5ce3033960e",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "5bd0e102271d676f89b873937e0a354397a8836d0a8ebed7870ed5ce3033960e",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "5bd0e102271d676f89b873937e0a354397a8836d0a8ebed7870ed5ce3033960e",
+        "baseline_output_sha256": "5bd0e102271d676f89b873937e0a354397a8836d0a8ebed7870ed5ce3033960e",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "d396510b7f0cff73fabacbb67fc2c92aa8a16407a66a678a422ca59735cfcd34"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "61638e53362de44d7f91cb6fc26813d8a0b405a8db84e8b5d695b9dd39999cae",
+        "passed": true,
+        "scalar_reference_sha256": "61638e53362de44d7f91cb6fc26813d8a0b405a8db84e8b5d695b9dd39999cae"
+      },
+      "index": 3,
+      "input_sha256": "4c86a23d3e78e7a0ffeb69ec68d30c308182666ca5b34ce5cff6fb63dfd13fe8",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "61638e53362de44d7f91cb6fc26813d8a0b405a8db84e8b5d695b9dd39999cae",
+        "baseline_output_sha256": "61638e53362de44d7f91cb6fc26813d8a0b405a8db84e8b5d695b9dd39999cae",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "61638e53362de44d7f91cb6fc26813d8a0b405a8db84e8b5d695b9dd39999cae",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "61638e53362de44d7f91cb6fc26813d8a0b405a8db84e8b5d695b9dd39999cae",
+        "baseline_output_sha256": "61638e53362de44d7f91cb6fc26813d8a0b405a8db84e8b5d695b9dd39999cae",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "d7c2c73d49ee13884de5ec91ef21b06bb03414acf3655361a694de18eb4ba8f8"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "2a8d3400a99072d2461b5e351a2853c4528d292eb2acdf0a77b5aa4b5fc3ccc4",
+        "passed": true,
+        "scalar_reference_sha256": "2a8d3400a99072d2461b5e351a2853c4528d292eb2acdf0a77b5aa4b5fc3ccc4"
+      },
+      "index": 4,
+      "input_sha256": "f626e8b9826cb66710c6fb218584b0945b952a9845ced096a02137c66f3e0f9c",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "2a8d3400a99072d2461b5e351a2853c4528d292eb2acdf0a77b5aa4b5fc3ccc4",
+        "baseline_output_sha256": "2a8d3400a99072d2461b5e351a2853c4528d292eb2acdf0a77b5aa4b5fc3ccc4",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "2a8d3400a99072d2461b5e351a2853c4528d292eb2acdf0a77b5aa4b5fc3ccc4",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "2a8d3400a99072d2461b5e351a2853c4528d292eb2acdf0a77b5aa4b5fc3ccc4",
+        "baseline_output_sha256": "2a8d3400a99072d2461b5e351a2853c4528d292eb2acdf0a77b5aa4b5fc3ccc4",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "4e5156c95bc2352d50a5ab2328a07174860cde3c8449fad8d0c0fc69bf4a167e"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "0886b480df52ad26e88aadd946cbcc8e67f6184953bab70c440cd22bfeea1e4c",
+        "passed": true,
+        "scalar_reference_sha256": "0886b480df52ad26e88aadd946cbcc8e67f6184953bab70c440cd22bfeea1e4c"
+      },
+      "index": 5,
+      "input_sha256": "220b52300fda5ec5b6632931683339ad1920cc9ac068be67533a0d634685c047",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "0886b480df52ad26e88aadd946cbcc8e67f6184953bab70c440cd22bfeea1e4c",
+        "baseline_output_sha256": "0886b480df52ad26e88aadd946cbcc8e67f6184953bab70c440cd22bfeea1e4c",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "0886b480df52ad26e88aadd946cbcc8e67f6184953bab70c440cd22bfeea1e4c",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "56238f382fcd40714408dc1baa95de40768dd3424aff69780f7d09635f4ee46d",
+        "baseline_output_sha256": "0886b480df52ad26e88aadd946cbcc8e67f6184953bab70c440cd22bfeea1e4c",
+        "max_abs_logit_change": 0.002643406391143799,
+        "mean_abs_logit_change": 0.0013591080904006958,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "3e9c656885bf280ca3aee8bce11fc783e24ea485c1364606713344195497e0b7"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "e3e1e8b2c9c604edbe691d756cd8ced9081a084f56ae457fb809a25ed340bd88",
+        "passed": true,
+        "scalar_reference_sha256": "e3e1e8b2c9c604edbe691d756cd8ced9081a084f56ae457fb809a25ed340bd88"
+      },
+      "index": 6,
+      "input_sha256": "eda36c8e9436aaace3157348520fbe36f0e9d7124935f2d31167dc9644ae6303",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "7c8f9dbca43a7e4ec560ac4e7c8a99ab3beb12fa21c3e71538a36ba6e4cfb71d",
+        "baseline_output_sha256": "e3e1e8b2c9c604edbe691d756cd8ced9081a084f56ae457fb809a25ed340bd88",
+        "max_abs_logit_change": 0.0014072060585021973,
+        "mean_abs_logit_change": 0.0005467027425765991,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "e3e1e8b2c9c604edbe691d756cd8ced9081a084f56ae457fb809a25ed340bd88",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "74c234e94811a4a97e68d5ed681807b5180f2d452bab3b5cc6d1c9bad0688919",
+        "baseline_output_sha256": "e3e1e8b2c9c604edbe691d756cd8ced9081a084f56ae457fb809a25ed340bd88",
+        "max_abs_logit_change": 0.0349293053150177,
+        "mean_abs_logit_change": 0.017958985269069673,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "780485c56682c1042e7136a562e6b5452e51530ee0f7d47cc0ccf661065af20b"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "8191c7a3a73947552c883ba4fc04af1e4074e36bb045497409f0ecf08e980702",
+        "passed": true,
+        "scalar_reference_sha256": "8191c7a3a73947552c883ba4fc04af1e4074e36bb045497409f0ecf08e980702"
+      },
+      "index": 7,
+      "input_sha256": "6c8f2cebbf4adb986c376117522b4807295127d0eaa72ab11e3a71556e976286",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "3b3e4bca7a6894d6805fe8a14135ea0dda782f558ef01434d577f369a8cc564e",
+        "baseline_output_sha256": "8191c7a3a73947552c883ba4fc04af1e4074e36bb045497409f0ecf08e980702",
+        "max_abs_logit_change": 0.005564846098423004,
+        "mean_abs_logit_change": 0.002161919325590134,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "8191c7a3a73947552c883ba4fc04af1e4074e36bb045497409f0ecf08e980702",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "d562afa5e67e6db170e798461a265fa121c7fc8558f0f970f1d427be4a9f587d",
+        "baseline_output_sha256": "8191c7a3a73947552c883ba4fc04af1e4074e36bb045497409f0ecf08e980702",
+        "max_abs_logit_change": 0.07006233558058739,
+        "mean_abs_logit_change": 0.03602271489799023,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "62238b9a56ff02603d4d17b4062866f3f4164ad4a341fa80faa9ea29d8845c71"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "374f7cbb5755a240c15dca374acbb68eb21d17c3b7312093c5406bbcca99d873",
+        "passed": true,
+        "scalar_reference_sha256": "374f7cbb5755a240c15dca374acbb68eb21d17c3b7312093c5406bbcca99d873"
+      },
+      "index": 8,
+      "input_sha256": "92e6daf9ffa7fbb17367865d27dca976814cbbf3d431b7eddfce3307fbd1969b",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "f8666c9e3c055e847925aadfc30e0d862784b192de36da2b0ff167c39d86b79c",
+        "baseline_output_sha256": "374f7cbb5755a240c15dca374acbb68eb21d17c3b7312093c5406bbcca99d873",
+        "max_abs_logit_change": 0.008383244276046753,
+        "mean_abs_logit_change": 0.0032568447291851043,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "374f7cbb5755a240c15dca374acbb68eb21d17c3b7312093c5406bbcca99d873",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "332c72459ef9b3d5776790e7810f9886af30ce6996901ad43fd29e6fd104198b",
+        "baseline_output_sha256": "374f7cbb5755a240c15dca374acbb68eb21d17c3b7312093c5406bbcca99d873",
+        "max_abs_logit_change": 0.12368408590555191,
+        "mean_abs_logit_change": 0.06562098525464535,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "77fd54cf67ee501ab9d43b1719414e5462029cd765255990eef1d5e5ee406a07"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "4d0773c433d55ea5e8fbe7f792b4010c196b74f2f9a5decd4f297df63d518c09",
+        "passed": true,
+        "scalar_reference_sha256": "4d0773c433d55ea5e8fbe7f792b4010c196b74f2f9a5decd4f297df63d518c09"
+      },
+      "index": 9,
+      "input_sha256": "ce5b90810449ee430bc391f0e3b2e30c7efa0dfe71c6e94b8341cfae1074fcea",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "745a61205eba49b6568b15eb8f97d01d5a7d712a552cbfa5cc365af1893e38eb",
+        "baseline_output_sha256": "4d0773c433d55ea5e8fbe7f792b4010c196b74f2f9a5decd4f297df63d518c09",
+        "max_abs_logit_change": 0.013096138834953308,
+        "mean_abs_logit_change": 0.005087745189666748,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "4d0773c433d55ea5e8fbe7f792b4010c196b74f2f9a5decd4f297df63d518c09",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "b494041d7bd4e32c36d7615f90ac23456f19f2ee427b10f5ef06c5425f04bff0",
+        "baseline_output_sha256": "4d0773c433d55ea5e8fbe7f792b4010c196b74f2f9a5decd4f297df63d518c09",
+        "max_abs_logit_change": 0.172361858189106,
+        "mean_abs_logit_change": 0.09523565657436847,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "2db279ad1685913799985d04ae74c5308aeaae23d76aa0141b510dea4847b7bb"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "1cf3c5b7b6268672dcfa118fa66e032864eb0a9ec0da73e1f00f4bd9537ec17f",
+        "passed": true,
+        "scalar_reference_sha256": "1cf3c5b7b6268672dcfa118fa66e032864eb0a9ec0da73e1f00f4bd9537ec17f"
+      },
+      "index": 10,
+      "input_sha256": "c063f2ad8b78d3e2a3ea32def012cbd900acc6ebf66894f6c4b494201ca66454",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "726b20674461472dc2e685441e963b60f54b2a9ef634cad2c4f2d8e9cd4ddc7a",
+        "baseline_output_sha256": "1cf3c5b7b6268672dcfa118fa66e032864eb0a9ec0da73e1f00f4bd9537ec17f",
+        "max_abs_logit_change": 0.01682066870853305,
+        "mean_abs_logit_change": 0.006534722400829196,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "1cf3c5b7b6268672dcfa118fa66e032864eb0a9ec0da73e1f00f4bd9537ec17f",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "224e53dfa48289f35c64a6cb82fedc85c4722d38757f9da624a0dd0157feb900",
+        "baseline_output_sha256": "1cf3c5b7b6268672dcfa118fa66e032864eb0a9ec0da73e1f00f4bd9537ec17f",
+        "max_abs_logit_change": 0.20633552968502045,
+        "mean_abs_logit_change": 0.12901937547139825,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "a8e0eda1f72e62392521c78ffa520f46f26ac031dcffb9e2e4be02ee40e9020f"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "4d3dab5fee4ea78a3f51e5fbae3e3c38062dfcb7df0792013c5abafc7cfe08d3",
+        "passed": true,
+        "scalar_reference_sha256": "4d3dab5fee4ea78a3f51e5fbae3e3c38062dfcb7df0792013c5abafc7cfe08d3"
+      },
+      "index": 11,
+      "input_sha256": "1efaa7f4475b62a66158e664f210ab84134dd009134b96cc6d579c2393c7a543",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "e5b11fc4db20c5c16e26f6871046300c8c76c040240649e85e238381374ebdf3",
+        "baseline_output_sha256": "4d3dab5fee4ea78a3f51e5fbae3e3c38062dfcb7df0792013c5abafc7cfe08d3",
+        "max_abs_logit_change": 0.0208490788936615,
+        "mean_abs_logit_change": 0.00809973180294037,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "4d3dab5fee4ea78a3f51e5fbae3e3c38062dfcb7df0792013c5abafc7cfe08d3",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "8a7ccf278e20ab46d70277f29eea0c5a992020da8b47a91a718cb72f92b12f75",
+        "baseline_output_sha256": "4d3dab5fee4ea78a3f51e5fbae3e3c38062dfcb7df0792013c5abafc7cfe08d3",
+        "max_abs_logit_change": 0.23982008174061775,
+        "mean_abs_logit_change": 0.16189940869808198,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "0b83e6b661e64ca2ce918371235fae7a38b4a5416325084771a932a1c6896860"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "acf9fe6e350c027ef02fb5b1f38b1949ed68c420e369d8d4858f6fb475622286",
+        "passed": true,
+        "scalar_reference_sha256": "acf9fe6e350c027ef02fb5b1f38b1949ed68c420e369d8d4858f6fb475622286"
+      },
+      "index": 12,
+      "input_sha256": "8ae26103209a45401b46711524bdeca4dc2b1064dc31dff15c871d69710dba17",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "30003746e43f58cd6bbcb301c9e819b2d49befcc456aaa475baae32623610aae",
+        "baseline_output_sha256": "acf9fe6e350c027ef02fb5b1f38b1949ed68c420e369d8d4858f6fb475622286",
+        "max_abs_logit_change": 0.023338094353675842,
+        "mean_abs_logit_change": 0.009066718816757201,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "acf9fe6e350c027ef02fb5b1f38b1949ed68c420e369d8d4858f6fb475622286",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "9ad3cc873b438193bc77d864d1181a6dc4c40aba4e1a02befd5a4cc42719e892",
+        "baseline_output_sha256": "acf9fe6e350c027ef02fb5b1f38b1949ed68c420e369d8d4858f6fb475622286",
+        "max_abs_logit_change": 0.26860813796520233,
+        "mean_abs_logit_change": 0.19403111510910093,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "11710938b1fb201c526c1e0dd5001008729d2ebf244086695da7e7ce7bb2f17c"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "2881325da9b7393b5255cd26e25a1b40f60fbf072b3171d6d1d8431b0f6f9b59",
+        "passed": true,
+        "scalar_reference_sha256": "2881325da9b7393b5255cd26e25a1b40f60fbf072b3171d6d1d8431b0f6f9b59"
+      },
+      "index": 13,
+      "input_sha256": "d789f1eb89d5781c9d358497c69942b60a9d291cf9a6d9ff02519fadd642690f",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "a47102297abca343f27e23cc4c313dc838843c69dd3c79fe1d37bba6012a3ffa",
+        "baseline_output_sha256": "2881325da9b7393b5255cd26e25a1b40f60fbf072b3171d6d1d8431b0f6f9b59",
+        "max_abs_logit_change": 0.024964898824691772,
+        "mean_abs_logit_change": 0.009698697924613952,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "2881325da9b7393b5255cd26e25a1b40f60fbf072b3171d6d1d8431b0f6f9b59",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "a9b65abf9a5095bd689458b5e49b84b6cd4191104aa61e8b0819c3508ce159eb",
+        "baseline_output_sha256": "2881325da9b7393b5255cd26e25a1b40f60fbf072b3171d6d1d8431b0f6f9b59",
+        "max_abs_logit_change": 0.3069195970892906,
+        "mean_abs_logit_change": 0.22545863091945648,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "7d4b673c0c45bcb62e9213e286ae45a8a47a5e5d92b8a339b21c5adc9892bcf8"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "44e95cdfa24ea2173f6db7ff82c594814986acdf93c1ff440eee2c252c7d22ae",
+        "passed": true,
+        "scalar_reference_sha256": "44e95cdfa24ea2173f6db7ff82c594814986acdf93c1ff440eee2c252c7d22ae"
+      },
+      "index": 14,
+      "input_sha256": "791d7b320827b1f1c372303bcb5c6f9fbc92ae98c6233632724a77eb96573d9e",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "b3a44463d8c9e71622c81372b99ba88b3f1adf9e008f073f72d5ee9e7c65776c",
+        "baseline_output_sha256": "44e95cdfa24ea2173f6db7ff82c594814986acdf93c1ff440eee2c252c7d22ae",
+        "max_abs_logit_change": 0.026591718196868896,
+        "mean_abs_logit_change": 0.010330718755722047,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "44e95cdfa24ea2173f6db7ff82c594814986acdf93c1ff440eee2c252c7d22ae",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "7a45ea261c09172712c9245f0cce8bfccbcf51c0b1b6115ed4ed3c6925c92097",
+        "baseline_output_sha256": "44e95cdfa24ea2173f6db7ff82c594814986acdf93c1ff440eee2c252c7d22ae",
+        "max_abs_logit_change": 0.35217565298080444,
+        "mean_abs_logit_change": 0.25952393002808094,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "2321fb1c6ce970ed8a7bf5776afc9a4e5797bdf15151315040839ee62ee29fb4"
+    },
+    {
+      "group": "cross_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "67c0828459a105f57ec1a3e4c08d2ea30dcf06cdf545e65b9bffedd19a52dcb4",
+        "passed": true,
+        "scalar_reference_sha256": "67c0828459a105f57ec1a3e4c08d2ea30dcf06cdf545e65b9bffedd19a52dcb4"
+      },
+      "index": 15,
+      "input_sha256": "fdbcd67efbfe430e3eb23764d58b65dde70dffc127ba4c940156949c255b67c6",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "e407bf9bb2ebdb46cceff71882a87a04e458d02a4d47b3a8e89231dbfc5d4d11",
+        "baseline_output_sha256": "67c0828459a105f57ec1a3e4c08d2ea30dcf06cdf545e65b9bffedd19a52dcb4",
+        "max_abs_logit_change": 0.028218507766723633,
+        "mean_abs_logit_change": 0.010962694883346558,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "67c0828459a105f57ec1a3e4c08d2ea30dcf06cdf545e65b9bffedd19a52dcb4",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "79acfec12be8bbbe927e97a744ac8f1766cb7e7868656ff3d3db48c21b3252b5",
+        "baseline_output_sha256": "67c0828459a105f57ec1a3e4c08d2ea30dcf06cdf545e65b9bffedd19a52dcb4",
+        "max_abs_logit_change": 0.4274863004684448,
+        "mean_abs_logit_change": 0.29700595773756505,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "c0bf765a36ee659c610bd7d9e9abb31920775e93f757ca2bfd4f7693edf14d3b"
+    }
+  ],
+  "cross_image_input_count": 16,
+  "fitted_kan_edges_are_teacher_internal_mechanisms": false,
+  "heldout_activation_mean_sha256": "8fed793e983e56ae55e474a3e563d0e942c87ab8aa43392a9c25efc1d078a4b8",
+  "heldout_activation_means": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.012252739799322978,
+      0.0017429520399784859,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0019964647232269756,
+      0.00195135198989693,
+      0.0,
+      0.0003022304450979038,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.00032326259783336094,
+      0.01326530511795106,
+      0.001701513295803143,
+      0.0,
+      0.0,
+      0.0003173650831592326
+    ],
+    [
+      0.0011035429731923708,
+      0.015170215039837117,
+      0.00913703791341003,
+      0.00045350315619488153,
+      0.003084249338325189,
+      0.0,
+      0.00026798027814651024,
+      0.00015786594274092694,
+      0.0,
+      0.0008090399965947988,
+      0.0011144537402659046,
+      0.019918378435398395,
+      0.0012992562236720507,
+      0.0,
+      0.0,
+      0.0023429436343056814
+    ],
+    [
+      0.002891074181819449,
+      0.03107842730776388,
+      0.01603064321133555,
+      0.001047773932924076,
+      0.007106457361761405,
+      0.00038051620429875897,
+      0.0016283656717563163,
+      0.0007476802839308369,
+      0.00010564071791512626,
+      0.003471593923714696,
+      0.0023379910889328743,
+      0.022906046911922037,
+      0.0010627859951548126,
+      0.0,
+      0.0,
+      0.0036371619801740256
+    ],
+    [
+      0.004295010689874084,
+      0.04565193644743793,
+      0.02214188676099388,
+      0.0016973473283709312,
+      0.010958944124226667,
+      0.0023642378498096857,
+      0.002617162861386124,
+      0.0012002910430334052,
+      0.0008035796333332451,
+      0.005329396195557653,
+      0.004100548065438562,
+      0.024969476831088563,
+      0.0011132686037798316,
+      0.0,
+      0.00011953954793968979,
+      0.005416618203934358
+    ],
+    [
+      0.0055134808074454875,
+      0.05874706812354983,
+      0.028065583535603116,
+      0.0028159946051179146,
+      0.014608844734576285,
+      0.005317646173798308,
+      0.0034290009311267306,
+      0.001953728497028351,
+      0.002190408658008186,
+      0.0060770315479259105,
+      0.006073918421657718,
+      0.026253596166795005,
+      0.0013750032806883054,
+      0.0,
+      0.0009081900423886824,
+      0.007798215830508544
+    ],
+    [
+      0.0069068146071263724,
+      0.06999582006615035,
+      0.03409092196700524,
+      0.004168316265758203,
+      0.01792792915081491,
+      0.008882131503552807,
+      0.0038806880463142786,
+      0.0033021761598635694,
+      0.0044018645979920215,
+      0.006826476022905233,
+      0.008126272610863862,
+      0.02777728518680194,
+      0.0016910223176284712,
+      7.784685918263026e-05,
+      0.0017602321292672838,
+      0.010238800387905568
+    ],
+    [
+      0.008386482541658441,
+      0.07928623145028037,
+      0.04027867469252372,
+      0.0054131752374220864,
+      0.02090063713947121,
+      0.015234103008192413,
+      0.0038426919859282822,
+      0.004601252398320607,
+      0.0073141632031421275,
+      0.008392013305304001,
+      0.010407863108783352,
+      0.030138143927467113,
+      0.0020589571142075012,
+      0.0013720110362889816,
+      0.0027272928582162273,
+      0.012858718291533237
+    ],
+    [
+      0.009810347452151532,
+      0.08743039670647407,
+      0.04665090432580637,
+      0.006839692136462854,
+      0.024120538438461264,
+      0.024419946558013255,
+      0.0036800164653330433,
+      0.006010193605812228,
+      0.010184852292343062,
+      0.010649111045866596,
+      0.012890702379601342,
+      0.03288725334010562,
+      0.0025131602448468307,
+      0.0034776819603783743,
+      0.004037832119026963,
+      0.015276055726013621
+    ],
+    [
+      0.011496975333714972,
+      0.09471951850822993,
+      0.05346171565505923,
+      0.00860847532749176,
+      0.027517370803623785,
+      0.03507939452419476,
+      0.003520824927456525,
+      0.007372665161989173,
+      0.013244592869768337,
+      0.013466467206575433,
+      0.01565990216877996,
+      0.03556119325589769,
+      0.0028855692671269787,
+      0.005810584188724051,
+      0.005427745760095363,
+      0.01748060191772422
+    ],
+    [
+      0.013412263966640648,
+      0.10119794894542013,
+      0.06030255198782804,
+      0.010532075045060138,
+      0.030813474436195528,
+      0.04672062488234773,
+      0.0033324354765366534,
+      0.008656542216028486,
+      0.01642350670026273,
+      0.01697906304378899,
+      0.01861599604694211,
+      0.038249209632488845,
+      0.0031866657034474977,
+      0.008642715611019912,
+      0.006802929983455308,
+      0.019696779663161357
+    ],
+    [
+      0.01537242193459248,
+      0.10728463598964166,
+      0.06713707775485758,
+      0.012457541589226042,
+      0.0340659647267692,
+      0.05950170413267856,
+      0.0031378535287720816,
+      0.009897520651622695,
+      0.01987253965771928,
+      0.020665865163413847,
+      0.02164871648562198,
+      0.040823087775699644,
+      0.0034926977692818157,
+      0.011560582536823896,
+      0.008169200043289028,
+      0.021935384758577054
+    ],
+    [
+      0.017323625407048633,
+      0.1130633282722259,
+      0.07386857316810258,
+      0.014389796448605401,
+      0.03731107818228858,
+      0.07306834424332696,
+      0.0029688809751247875,
+      0.01112456376455268,
+      0.02355313012186362,
+      0.024553778372248824,
+      0.024625025917680895,
+      0.0432744797518743,
+      0.0038160035500721056,
+      0.015057357750376877,
+      0.0094520632101565,
+      0.024131320112822006
+    ],
+    [
+      0.01927842526715629,
+      0.11838242457229264,
+      0.08050311995404107,
+      0.016362228335774675,
+      0.04059524590871772,
+      0.08758308001014652,
+      0.0029121578043820907,
+      0.012374351979518423,
+      0.02736846023068136,
+      0.028524352427648038,
+      0.02754390376562975,
+      0.045719041926216106,
+      0.004156108337397478,
+      0.01897312852801109,
+      0.0108457905601482,
+      0.026324087297733948
+    ],
+    [
+      0.021177975270821124,
+      0.12339118651437517,
+      0.08704406828904639,
+      0.01836911300007178,
+      0.043686848285855076,
+      0.10220143708343409,
+      0.0030466406321039007,
+      0.013677198819968164,
+      0.03121502286925608,
+      0.032728263310023716,
+      0.03051031091991736,
+      0.0481199464019464,
+      0.0044908029388408275,
+      0.023033187553590656,
+      0.012331910659464039,
+      0.02846504078835857
+    ],
+    [
+      0.02302139138384741,
+      0.12855743274700884,
+      0.09355822380404083,
+      0.020329548540164014,
+      0.04659050459764442,
+      0.11729686714860858,
+      0.003304486372032944,
+      0.015036055400055282,
+      0.034955701353598614,
+      0.03684062708397301,
+      0.03356919285594201,
+      0.050440890600486676,
+      0.004822353547324939,
+      0.027700685116709495,
+      0.013783360090182752,
+      0.030429975053637613
+    ]
+  ],
+  "heldout_causal_witnesses": [
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "14c45d288205ce4ff47edec527ea97e7b5ec164bf6d9da2170fa04262ee072c9",
+        "passed": true,
+        "scalar_reference_sha256": "14c45d288205ce4ff47edec527ea97e7b5ec164bf6d9da2170fa04262ee072c9"
+      },
+      "index": 0,
+      "input_sha256": "5db5f226bedd15bdc1baa25e94bc378c3ef625fdd26700d5fb5bdc8338c2e64c",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "14c45d288205ce4ff47edec527ea97e7b5ec164bf6d9da2170fa04262ee072c9",
+        "baseline_output_sha256": "14c45d288205ce4ff47edec527ea97e7b5ec164bf6d9da2170fa04262ee072c9",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "14c45d288205ce4ff47edec527ea97e7b5ec164bf6d9da2170fa04262ee072c9",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "14c45d288205ce4ff47edec527ea97e7b5ec164bf6d9da2170fa04262ee072c9",
+        "baseline_output_sha256": "14c45d288205ce4ff47edec527ea97e7b5ec164bf6d9da2170fa04262ee072c9",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "5ae79f4b7da7e96931a7ed5f599ee581055a4b20cedcbbe9accac293263e5561"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "8b2f45dd9848c41f39a602e46668c83fa3672e73ef926f4cf3a976f1b8182ead",
+        "passed": true,
+        "scalar_reference_sha256": "8b2f45dd9848c41f39a602e46668c83fa3672e73ef926f4cf3a976f1b8182ead"
+      },
+      "index": 1,
+      "input_sha256": "a91200650a31f2467067aa188999a3bd866f96b9caf87fe3f63bdf310232dc10",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "8b2f45dd9848c41f39a602e46668c83fa3672e73ef926f4cf3a976f1b8182ead",
+        "baseline_output_sha256": "8b2f45dd9848c41f39a602e46668c83fa3672e73ef926f4cf3a976f1b8182ead",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "8b2f45dd9848c41f39a602e46668c83fa3672e73ef926f4cf3a976f1b8182ead",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "8b2f45dd9848c41f39a602e46668c83fa3672e73ef926f4cf3a976f1b8182ead",
+        "baseline_output_sha256": "8b2f45dd9848c41f39a602e46668c83fa3672e73ef926f4cf3a976f1b8182ead",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "64683f6451ef21b193512d642def5df48b10c1a01217a2b53d6c6300c0c8f066"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "e1d0d6b969ecaf77a5581530a1cc89d7ae100bd2476feb15550617750a79429a",
+        "passed": true,
+        "scalar_reference_sha256": "e1d0d6b969ecaf77a5581530a1cc89d7ae100bd2476feb15550617750a79429a"
+      },
+      "index": 2,
+      "input_sha256": "bd622da6653b8dd2133f8d93f6828f1b8056f27a9614f16a626dd64dac55019d",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "e1d0d6b969ecaf77a5581530a1cc89d7ae100bd2476feb15550617750a79429a",
+        "baseline_output_sha256": "e1d0d6b969ecaf77a5581530a1cc89d7ae100bd2476feb15550617750a79429a",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "e1d0d6b969ecaf77a5581530a1cc89d7ae100bd2476feb15550617750a79429a",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "e1d0d6b969ecaf77a5581530a1cc89d7ae100bd2476feb15550617750a79429a",
+        "baseline_output_sha256": "e1d0d6b969ecaf77a5581530a1cc89d7ae100bd2476feb15550617750a79429a",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "f7bdfc82c88ec6f1561d501a382881919013e11b67a3a66a62277d4319cd1af4"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "7ec4e3ec5191e63836131bffbfeaae3a6f2ef74f04b088f20e77597d7dff07c6",
+        "passed": true,
+        "scalar_reference_sha256": "7ec4e3ec5191e63836131bffbfeaae3a6f2ef74f04b088f20e77597d7dff07c6"
+      },
+      "index": 3,
+      "input_sha256": "8ff47e857687b12634bc6a2ae1d11040adfcca14cf7bf9c5da3b25c9240db4ba",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "7ec4e3ec5191e63836131bffbfeaae3a6f2ef74f04b088f20e77597d7dff07c6",
+        "baseline_output_sha256": "7ec4e3ec5191e63836131bffbfeaae3a6f2ef74f04b088f20e77597d7dff07c6",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "7ec4e3ec5191e63836131bffbfeaae3a6f2ef74f04b088f20e77597d7dff07c6",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "7ec4e3ec5191e63836131bffbfeaae3a6f2ef74f04b088f20e77597d7dff07c6",
+        "baseline_output_sha256": "7ec4e3ec5191e63836131bffbfeaae3a6f2ef74f04b088f20e77597d7dff07c6",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "2599dbf947bdccbe5ed267d37142fd7e288b9ba5bbb78c14b06d10ed7c01cf98"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "ffb660f93b667d6f04206f85a7d2beae986c5a59dda8820a1fa7553a73bd4ca3",
+        "passed": true,
+        "scalar_reference_sha256": "ffb660f93b667d6f04206f85a7d2beae986c5a59dda8820a1fa7553a73bd4ca3"
+      },
+      "index": 4,
+      "input_sha256": "36a05ef6736e62831593454d843b02c9d9598fcedefc1d5cc8df405cdb22a4af",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "ffb660f93b667d6f04206f85a7d2beae986c5a59dda8820a1fa7553a73bd4ca3",
+        "baseline_output_sha256": "ffb660f93b667d6f04206f85a7d2beae986c5a59dda8820a1fa7553a73bd4ca3",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "ffb660f93b667d6f04206f85a7d2beae986c5a59dda8820a1fa7553a73bd4ca3",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "ffb660f93b667d6f04206f85a7d2beae986c5a59dda8820a1fa7553a73bd4ca3",
+        "baseline_output_sha256": "ffb660f93b667d6f04206f85a7d2beae986c5a59dda8820a1fa7553a73bd4ca3",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "a7ec565f0735a72ea29e4a9fcffe1e10a1c61cf742b397b7a48b20de4b98ccb5"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "3d44aee647efba90addc3069d3b514325bef15dc91192f992bb561b8e2917642",
+        "passed": true,
+        "scalar_reference_sha256": "3d44aee647efba90addc3069d3b514325bef15dc91192f992bb561b8e2917642"
+      },
+      "index": 5,
+      "input_sha256": "8588f894e48194194a98f706bcaa44a67410aae4fec0ecf83e5ff7a6781bbe25",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "3d44aee647efba90addc3069d3b514325bef15dc91192f992bb561b8e2917642",
+        "baseline_output_sha256": "3d44aee647efba90addc3069d3b514325bef15dc91192f992bb561b8e2917642",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "3d44aee647efba90addc3069d3b514325bef15dc91192f992bb561b8e2917642",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "3d44aee647efba90addc3069d3b514325bef15dc91192f992bb561b8e2917642",
+        "baseline_output_sha256": "3d44aee647efba90addc3069d3b514325bef15dc91192f992bb561b8e2917642",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "1708e6e2b6593068ba72e9ec9ebb6aa8b9856dae67936a6f486fda516d4e0993"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "e4dda71d6335152c0bb651b9d1b26abc72afb75a97cee140a4ae1b68baad73f9",
+        "passed": true,
+        "scalar_reference_sha256": "e4dda71d6335152c0bb651b9d1b26abc72afb75a97cee140a4ae1b68baad73f9"
+      },
+      "index": 6,
+      "input_sha256": "5b907e1b4f5a1b2f3fd3dc3ce3368cf849fe899f17dfd3f8180946dabac7003a",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "e4dda71d6335152c0bb651b9d1b26abc72afb75a97cee140a4ae1b68baad73f9",
+        "baseline_output_sha256": "e4dda71d6335152c0bb651b9d1b26abc72afb75a97cee140a4ae1b68baad73f9",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "e4dda71d6335152c0bb651b9d1b26abc72afb75a97cee140a4ae1b68baad73f9",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "91b43a992bdfe24d0387c1b69cf01ecd17d62e7daa8d338f687f82bb13d0dd13",
+        "baseline_output_sha256": "e4dda71d6335152c0bb651b9d1b26abc72afb75a97cee140a4ae1b68baad73f9",
+        "max_abs_logit_change": 0.013131558895111084,
+        "mean_abs_logit_change": 0.007499144226312637,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "b8627ae2f86665a706f0795bdab57175cea76e0952cd17ee39d3a47723300599"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "7e29fcbc2ee88c6be6f5b69f384c5ad259fa377887c5bdf49d9286912c3b51f7",
+        "passed": true,
+        "scalar_reference_sha256": "7e29fcbc2ee88c6be6f5b69f384c5ad259fa377887c5bdf49d9286912c3b51f7"
+      },
+      "index": 7,
+      "input_sha256": "d1cbdad2590511eeb7e7777a2fc4d64b0d43b67eadf23a049cc637796e4fc495",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "7e29fcbc2ee88c6be6f5b69f384c5ad259fa377887c5bdf49d9286912c3b51f7",
+        "baseline_output_sha256": "7e29fcbc2ee88c6be6f5b69f384c5ad259fa377887c5bdf49d9286912c3b51f7",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "7e29fcbc2ee88c6be6f5b69f384c5ad259fa377887c5bdf49d9286912c3b51f7",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "e3f372f6532eef297bbfa9a3568b82daa8e689f3a5d562236e19b0dc9d071bb1",
+        "baseline_output_sha256": "7e29fcbc2ee88c6be6f5b69f384c5ad259fa377887c5bdf49d9286912c3b51f7",
+        "max_abs_logit_change": 0.07232652977108955,
+        "mean_abs_logit_change": 0.04089355655014515,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "c2646604250fb150530b892f5faff5b4c665581feaaf030d7dcf77c1bf150543"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "69df8a2cb1fee91a478b7792ab2374fe4d2d4def0bab20e94c7b7e394bc9d0f4",
+        "passed": true,
+        "scalar_reference_sha256": "69df8a2cb1fee91a478b7792ab2374fe4d2d4def0bab20e94c7b7e394bc9d0f4"
+      },
+      "index": 8,
+      "input_sha256": "b762595e57b53e5ec3c6e5df57b88c975ebe37fc09b009c3c2259e27a03e7e83",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "69df8a2cb1fee91a478b7792ab2374fe4d2d4def0bab20e94c7b7e394bc9d0f4",
+        "baseline_output_sha256": "69df8a2cb1fee91a478b7792ab2374fe4d2d4def0bab20e94c7b7e394bc9d0f4",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "69df8a2cb1fee91a478b7792ab2374fe4d2d4def0bab20e94c7b7e394bc9d0f4",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "c254efe95e1e0ad866000b3242f2ac391e8981f7ed1b54ec7183c2d3d8fca0af",
+        "baseline_output_sha256": "69df8a2cb1fee91a478b7792ab2374fe4d2d4def0bab20e94c7b7e394bc9d0f4",
+        "max_abs_logit_change": 0.16405260562896729,
+        "mean_abs_logit_change": 0.08624315038323402,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "66208a24e1a7c82778a56812ea26e92e85c0c522a21c92225ea3598a9e4f2788"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "5e8f4ad813939d6df1bb90160b46c31d7da161152b1561e86d82165bd610c226",
+        "passed": true,
+        "scalar_reference_sha256": "5e8f4ad813939d6df1bb90160b46c31d7da161152b1561e86d82165bd610c226"
+      },
+      "index": 9,
+      "input_sha256": "f48ddd36d9b4a3d84e695027013f783e59fadf9df2ec50c21e9791902af2c86d",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "5e8f4ad813939d6df1bb90160b46c31d7da161152b1561e86d82165bd610c226",
+        "baseline_output_sha256": "5e8f4ad813939d6df1bb90160b46c31d7da161152b1561e86d82165bd610c226",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "5e8f4ad813939d6df1bb90160b46c31d7da161152b1561e86d82165bd610c226",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "9e0508c0ab2514389e2e8daa3245af2e98724832a458d2876659d392b2a51d55",
+        "baseline_output_sha256": "5e8f4ad813939d6df1bb90160b46c31d7da161152b1561e86d82165bd610c226",
+        "max_abs_logit_change": 0.2846941351890564,
+        "mean_abs_logit_change": 0.1410288132727146,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "c8e60b82cc919a1ba60f4495b0e24c52a166ec1a9b69aeb7ae2eacdde17d755e"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "4f9802e5308a31a8fc7c0bc1ea350dc3bc1c3687c7d7cc3688104b8246140d8f",
+        "passed": true,
+        "scalar_reference_sha256": "4f9802e5308a31a8fc7c0bc1ea350dc3bc1c3687c7d7cc3688104b8246140d8f"
+      },
+      "index": 10,
+      "input_sha256": "ae526395981c4c16ab9f0eb881bbdda779622503aec6a5514f2e2efbc7a97fab",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "4f9802e5308a31a8fc7c0bc1ea350dc3bc1c3687c7d7cc3688104b8246140d8f",
+        "baseline_output_sha256": "4f9802e5308a31a8fc7c0bc1ea350dc3bc1c3687c7d7cc3688104b8246140d8f",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "4f9802e5308a31a8fc7c0bc1ea350dc3bc1c3687c7d7cc3688104b8246140d8f",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "b7c637fb798a9cd23add47e7d7e97d3b850415a7dd00a7d0ad6e319687707726",
+        "baseline_output_sha256": "4f9802e5308a31a8fc7c0bc1ea350dc3bc1c3687c7d7cc3688104b8246140d8f",
+        "max_abs_logit_change": 0.40810954570770264,
+        "mean_abs_logit_change": 0.1936560019850731,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "a88e52a02fac7074e84bf2490bb0bf3de1efa0e6f972a5103ab7426af63b088c"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "0ca3a89f528511b316861764aab9b4b8f53d419cd304b0ad596e798b68dea5f5",
+        "passed": true,
+        "scalar_reference_sha256": "0ca3a89f528511b316861764aab9b4b8f53d419cd304b0ad596e798b68dea5f5"
+      },
+      "index": 11,
+      "input_sha256": "0bf2197bc8131d0ac956005eebca35eefdeb288b221d98d903016a6cff958abe",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "0ca3a89f528511b316861764aab9b4b8f53d419cd304b0ad596e798b68dea5f5",
+        "baseline_output_sha256": "0ca3a89f528511b316861764aab9b4b8f53d419cd304b0ad596e798b68dea5f5",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "0ca3a89f528511b316861764aab9b4b8f53d419cd304b0ad596e798b68dea5f5",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "d3e1fef7de1e7d13f13ee05693484a452f6dd9861f2899c19790cab1b053541f",
+        "baseline_output_sha256": "0ca3a89f528511b316861764aab9b4b8f53d419cd304b0ad596e798b68dea5f5",
+        "max_abs_logit_change": 0.5191619396209717,
+        "mean_abs_logit_change": 0.24824236407876016,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "78790667d9946f6fc67792a2c4ac6ba7d7e9755ccc43e5de50bafb13cf3f4769"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "24ca5039914e916ed3f744a8f711b4dec32a7ba4e67f6029346a2317ba32fccf",
+        "passed": true,
+        "scalar_reference_sha256": "24ca5039914e916ed3f744a8f711b4dec32a7ba4e67f6029346a2317ba32fccf"
+      },
+      "index": 12,
+      "input_sha256": "337faeecd1db5f7474b946ab6e9fd392a4a9876137fdf06ac7c1777f64833c12",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "24ca5039914e916ed3f744a8f711b4dec32a7ba4e67f6029346a2317ba32fccf",
+        "baseline_output_sha256": "24ca5039914e916ed3f744a8f711b4dec32a7ba4e67f6029346a2317ba32fccf",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "24ca5039914e916ed3f744a8f711b4dec32a7ba4e67f6029346a2317ba32fccf",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "942b742a92b081a71dd555ba419155d911045027307e8740bac2509082fe3313",
+        "baseline_output_sha256": "24ca5039914e916ed3f744a8f711b4dec32a7ba4e67f6029346a2317ba32fccf",
+        "max_abs_logit_change": 0.6302720904350281,
+        "mean_abs_logit_change": 0.30243641436100005,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "96fddccf54cf211a321eeaf63388bbf8740222d8f3486c9eed68058e2e412651"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "05d14c3942f7079067a1d5126a82451bc8d672a81a6d46dbcf429c45e5c05bd8",
+        "passed": true,
+        "scalar_reference_sha256": "05d14c3942f7079067a1d5126a82451bc8d672a81a6d46dbcf429c45e5c05bd8"
+      },
+      "index": 13,
+      "input_sha256": "d0e6fc6b05dfd66ade59340381358fa5698c0462df21610da4e72a7a046270f8",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "05d14c3942f7079067a1d5126a82451bc8d672a81a6d46dbcf429c45e5c05bd8",
+        "baseline_output_sha256": "05d14c3942f7079067a1d5126a82451bc8d672a81a6d46dbcf429c45e5c05bd8",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "05d14c3942f7079067a1d5126a82451bc8d672a81a6d46dbcf429c45e5c05bd8",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "f6543236e3ff1fb22b59a69491f61fe5d2bc58de2e256f5a695526c60728c9a1",
+        "baseline_output_sha256": "05d14c3942f7079067a1d5126a82451bc8d672a81a6d46dbcf429c45e5c05bd8",
+        "max_abs_logit_change": 0.7351102828979492,
+        "mean_abs_logit_change": 0.35357206538319585,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "38ad88ad7ed3e19c77658347b64865103e02f8a3bb01f2ea95a9d5cb0e9b234e"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "a455f8a72e41e0cde676820ab0fb32a98af183cfb6135536b506f014da202b57",
+        "passed": true,
+        "scalar_reference_sha256": "a455f8a72e41e0cde676820ab0fb32a98af183cfb6135536b506f014da202b57"
+      },
+      "index": 14,
+      "input_sha256": "0e4057eddc6d267f7cdb4ddfcc199cdfd981c2cc89fe930c75158c831ed003f1",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "a455f8a72e41e0cde676820ab0fb32a98af183cfb6135536b506f014da202b57",
+        "baseline_output_sha256": "a455f8a72e41e0cde676820ab0fb32a98af183cfb6135536b506f014da202b57",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "a455f8a72e41e0cde676820ab0fb32a98af183cfb6135536b506f014da202b57",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "b9cc7f5f07c63489c5e67114ddb964d59ea5cb135bd9779a27ecf435b6104298",
+        "baseline_output_sha256": "a455f8a72e41e0cde676820ab0fb32a98af183cfb6135536b506f014da202b57",
+        "max_abs_logit_change": 0.8397901654243469,
+        "mean_abs_logit_change": 0.40485251918435095,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "66eb185dd8e387bf701e81d10b60469911664b56226da59b81b488dbcbb46975"
+    },
+    {
+      "group": "heldout_same_image",
+      "identity_mask_numerical_parity": {
+        "max_abs_error": 0.0,
+        "onnxruntime_sha256": "04a5920d0f2c7c4b0399a4f9031463eebbb6a6b48962ab7f4d5347e5db4a180f",
+        "passed": true,
+        "scalar_reference_sha256": "04a5920d0f2c7c4b0399a4f9031463eebbb6a6b48962ab7f4d5347e5db4a180f"
+      },
+      "index": 15,
+      "input_sha256": "7b95e5cb02d0beb15f581110d498d413b85be5165f1622511bf8529a7f5e65dc",
+      "negative_control_causal_effect": {
+        "altered_output_sha256": "04a5920d0f2c7c4b0399a4f9031463eebbb6a6b48962ab7f4d5347e5db4a180f",
+        "baseline_output_sha256": "04a5920d0f2c7c4b0399a4f9031463eebbb6a6b48962ab7f4d5347e5db4a180f",
+        "max_abs_logit_change": 0.0,
+        "mean_abs_logit_change": 0.0,
+        "top1_unchanged": true
+      },
+      "negative_control_channel": 3,
+      "original_logits_sha256": "04a5920d0f2c7c4b0399a4f9031463eebbb6a6b48962ab7f4d5347e5db4a180f",
+      "selected_channel": 5,
+      "selected_channel_causal_effect": {
+        "altered_output_sha256": "935baf7c13b30a2066da2abfd922841740e0e4f403feff2aea5030cd18dc4be8",
+        "baseline_output_sha256": "04a5920d0f2c7c4b0399a4f9031463eebbb6a6b48962ab7f4d5347e5db4a180f",
+        "max_abs_logit_change": 0.9437789916992188,
+        "mean_abs_logit_change": 0.45633800253272055,
+        "top1_unchanged": true
+      },
+      "stage_sha256": "8321247d8cfd6642b466c00dfd83426e4c98ca1702e8bc68ba9425f008168b0f"
+    }
+  ],
+  "heldout_coordinates": [
+    0.03125,
+    0.09375,
+    0.15625,
+    0.21875,
+    0.28125,
+    0.34375,
+    0.40625,
+    0.46875,
+    0.53125,
+    0.59375,
+    0.65625,
+    0.71875,
+    0.78125,
+    0.84375,
+    0.90625,
+    0.96875
+  ],
+  "heldout_same_image_input_count": 16,
+  "identity_model_sha256": "5234e934bfc3102da0883744f8defdde6b1624df820fe6703df69b9b8677e350",
+  "independent_scalar_replay_witnesses": [
+    {
+      "final_logits": {
+        "max_abs_error": 1.0728836059570312e-06,
+        "onnxruntime_sha256": "566aa9c1643aa61b021ab79c685fb9d1c7ca72c4ccd014a5fe506290e56798a8",
+        "passed": true,
+        "scalar_reference_sha256": "146b09a412b9af080a5003f4eb8c174f6751d898a7a1085c262ecc91f860a2a4"
+      },
+      "group": "train_one",
+      "input_sha256": "df91803589d2aa7c79bd8fa641a3de5a42c1886865401e122caf2b343a937060",
+      "selected_ablation_logits": {
+        "max_abs_error": 8.344650268554688e-07,
+        "onnxruntime_sha256": "af7f542dfea080ee65958ebb6f5c6d23f0999a49efb333d72fe899f42665ee2e",
+        "passed": true,
+        "scalar_reference_sha256": "dc67373c5e960d51a7f530214175ef259cf7571989e933079e68f05883fb2e06"
+      },
+      "stage": {
+        "max_abs_error": 7.748603820800781e-07,
+        "onnxruntime_sha256": "4102b47995b47671cbebeb948b17854c096c6e4917c0c9d21edeebb241e5c51c",
+        "passed": true,
+        "scalar_reference_sha256": "1b733c6a133bcd60a117c81797c8d365ad7521785bb4fcddf6e8b923424ad65a"
+      }
+    },
+    {
+      "final_logits": {
+        "max_abs_error": 7.450580596923828e-09,
+        "onnxruntime_sha256": "14c45d288205ce4ff47edec527ea97e7b5ec164bf6d9da2170fa04262ee072c9",
+        "passed": true,
+        "scalar_reference_sha256": "c9233ba6b7de9a545ed8f27a76a63b37aa1421324f313111981de2410d45ff8a"
+      },
+      "group": "heldout_first",
+      "input_sha256": "5db5f226bedd15bdc1baa25e94bc378c3ef625fdd26700d5fb5bdc8338c2e64c",
+      "selected_ablation_logits": {
+        "max_abs_error": 7.450580596923828e-09,
+        "onnxruntime_sha256": "14c45d288205ce4ff47edec527ea97e7b5ec164bf6d9da2170fa04262ee072c9",
+        "passed": true,
+        "scalar_reference_sha256": "c9233ba6b7de9a545ed8f27a76a63b37aa1421324f313111981de2410d45ff8a"
+      },
+      "stage": {
+        "max_abs_error": 2.2351741790771484e-08,
+        "onnxruntime_sha256": "5ae79f4b7da7e96931a7ed5f599ee581055a4b20cedcbbe9accac293263e5561",
+        "passed": true,
+        "scalar_reference_sha256": "1bba885f7d2f9a84476a4c3c5fc1da0e0b7e96103843800cde8c69d6af1ccb35"
+      }
+    },
+    {
+      "final_logits": {
+        "max_abs_error": 7.450580596923828e-09,
+        "onnxruntime_sha256": "bde14e3ce21fc26d01c28ddad0155ef88981d73e07745b7f6bee9ae8d9607c61",
+        "passed": true,
+        "scalar_reference_sha256": "285bbea357cd8e4ce1f1a86d8b7e4ddac6d35ff40d3986a1ebd58e106e370864"
+      },
+      "group": "cross_image_first",
+      "input_sha256": "325728227d1bede10745ecaecc4a092fb9fd614f9a2c9fcb449f2cecf3bfdf15",
+      "selected_ablation_logits": {
+        "max_abs_error": 7.450580596923828e-09,
+        "onnxruntime_sha256": "bde14e3ce21fc26d01c28ddad0155ef88981d73e07745b7f6bee9ae8d9607c61",
+        "passed": true,
+        "scalar_reference_sha256": "285bbea357cd8e4ce1f1a86d8b7e4ddac6d35ff40d3986a1ebd58e106e370864"
+      },
+      "stage": {
+        "max_abs_error": 1.862645149230957e-08,
+        "onnxruntime_sha256": "4e86373aa900a4e84f45036b02a66e29bc4fab3e7a55c47176946eef7338ba20",
+        "passed": true,
+        "scalar_reference_sha256": "ec162b4a40555200eb022dcff3dc56b7b34fc33610ff802d6cde520197324726"
+      }
+    }
+  ],
+  "instrumented_original_graph_sha256": "49e364d00f219f71b09f77263f60df046ee5934f06255bce266983ebb0ef1676",
+  "limitations": "One exact pretrained CNN, one internal ReLU activation tensor, mean-pooled channels, two synthetic seed-fixed intensity manifolds. KANs approximate measured activations from one image's train points; causal masking of an original CNN channel is a separate observation. No semantic feature labels, genuine image accuracy, cross-model replication, causal KAN-feature alignment, or universal invariance.",
+  "mechanistic_semantic_feature_identified": false,
+  "model_original_bytes_modified": false,
+  "negative_control_channel": 3,
+  "negative_control_model_sha256": "811cf15b2109cfb8d39e3ad6a42a17b8506c916f434e996a44efed8a3628398c",
+  "numpy_version": "2.2.6",
+  "onnxruntime_version": "1.22.1",
+  "reviewed_internal_stage": {
+    "checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+    "original_output": "Plus214_Output_0",
+    "source_node_index": 7,
+    "source_node_op": "Relu",
+    "target_output": "ReLU114_Output_0",
+    "target_shape": [
+      1,
+      16,
+      14,
+      14
+    ]
+  },
+  "schema": "visuaml.pretrained-internal-kan-causality.v46",
+  "selected_causal_channel": 5,
+  "selected_channel_chosen_without_heldout": true,
+  "selected_channel_model_sha256": "d7a4c56063662ef1561204d646b2c2700fd4d1b18cba71f15be985d8b7d98b98",
+  "source_checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+  "source_commit": "272deae161f1c780c652b419fff8133676abf2a6",
+  "source_file_sha256": {
+    "scripts/probe_pretrained_internal_kan_v46.py": "1f4a7664987c86de173c7494bb68aded1c4dd2174598637e67e65389a85c8dea",
+    "scripts/probe_pretrained_mnist8_oracles_v37.py": "11018ab9cd12b76a657bbaef1c35067da1dbc19396fe527e4101aa88b9a48f6d",
+    "visuaml/compiler_lab/kan_teacher_slice_v45.py": "622a6606f827909321637107eea9d8e4d99ee03f9b0d9881570ed0f3b8a66ab6",
+    "visuaml/compiler_lab/onnx_activation_causality_v46.py": "141bd93a6c23cd96d09b00c57d43fbdb8b65093095ec0e44b7f6f607be7f51ba"
+  },
+  "source_revision": "a19f9a8c2333de1df9b03f10f5739f468b699a1a",
+  "train_activation_mean_sha256": "598f8a8e1ec487c7044de36918b590ca0751f0892555d726fbf4efde9c6a457b",
+  "train_activation_means": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.01369415107658323,
+      0.0014089898382104477,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.00012545686747346605,
+      0.0003058276310258982,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.01174027224698541,
+      0.001805966004862317,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.00020832218685928655,
+      0.007619298766462171,
+      0.005319720476257558,
+      6.510568212489693e-05,
+      0.001519734762152847,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      6.241761908239248e-05,
+      0.000673760184828116,
+      0.016756658527848065,
+      0.001532634917399561,
+      0.0,
+      0.0,
+      0.0013403142707384362
+    ],
+    [
+      0.002032000799568332,
+      0.023169226944446564,
+      0.012679157512528556,
+      0.000772193150252712,
+      0.004962587463004249,
+      0.0,
+      0.000979460851878536,
+      0.0005049750360907341,
+      0.0,
+      0.002057320305279323,
+      0.001597367835288145,
+      0.02168269500098362,
+      0.0011385267514887514,
+      0.0,
+      0.0,
+      0.002963219598239782
+    ],
+    [
+      0.0036628523803487116,
+      0.038658110957060544,
+      0.019080404800419906,
+      0.001244384263242994,
+      0.009169654502552383,
+      0.0010922007566812088,
+      0.002183844544449631,
+      0.0009889078839701048,
+      0.0003756497587476458,
+      0.004631081405951053,
+      0.0032221571903447714,
+      0.024053265630476633,
+      0.0010097568132439439,
+      0.0,
+      0.0,
+      0.00445556532287476
+    ],
+    [
+      0.004908865773860289,
+      0.05234038898227166,
+      0.02507969873900316,
+      0.002237843083483832,
+      0.012733731266795372,
+      0.003770660989138545,
+      0.003038080523208696,
+      0.001511373081985785,
+      0.0014451193262119682,
+      0.0057444067633881865,
+      0.005078927214656558,
+      0.02569305072348489,
+      0.001248381290660829,
+      0.0,
+      0.00048234997963418765,
+      0.006656959652900696
+    ],
+    [
+      0.006174766857709203,
+      0.06469731386370804,
+      0.031033218819267894,
+      0.003516590260729498,
+      0.016382634487687325,
+      0.006888427828647652,
+      0.0037530258449972893,
+      0.0026367245127960127,
+      0.003211555128194848,
+      0.006438332704865202,
+      0.007093844441126804,
+      0.026869625361560255,
+      0.0015235826449126614,
+      0.0,
+      0.001337178507629706,
+      0.008993365934916906
+    ],
+    [
+      0.007657223134016504,
+      0.07472403978510779,
+      0.03717597497969258,
+      0.004787832042392419,
+      0.019356137103572185,
+      0.011712540321204126,
+      0.0038569146121034815,
+      0.003952991825585462,
+      0.005914312692321077,
+      0.007445715671899367,
+      0.009230895424071623,
+      0.028881457620015254,
+      0.0018657127357259089,
+      0.0005213168202614298,
+      0.002217117392895173,
+      0.0114739399251281
+    ],
+    [
+      0.009087663371952213,
+      0.08350831201794195,
+      0.04342606169532756,
+      0.0061025742669494785,
+      0.022448638416066462,
+      0.01945360149351918,
+      0.0037317359629942446,
+      0.005308330363156844,
+      0.008678621935601137,
+      0.00952098503404734,
+      0.011630365206879012,
+      0.03150811719194967,
+      0.0022908042051962446,
+      0.0023899266914445528,
+      0.0033468157813257102,
+      0.014115795550145666
+    ],
+    [
+      0.01059499622455665,
+      0.0911424413931613,
+      0.05000715056548313,
+      0.007696330243227433,
+      0.025830277906996862,
+      0.029625851584940542,
+      0.0036072486213275363,
+      0.006703516962576886,
+      0.011721306765566066,
+      0.012001730197546433,
+      0.01416969466574338,
+      0.03422238502879532,
+      0.0027196517556297537,
+      0.004572487303188869,
+      0.004740504053782443,
+      0.016394231411419352
+    ],
+    [
+      0.012466854206761536,
+      0.09803172968784157,
+      0.05688059839363001,
+      0.009562350733547794,
+      0.02917529703403006,
+      0.04085360710718194,
+      0.003430159572435885,
+      0.008025202824144947,
+      0.014787451953304057,
+      0.015149829947218602,
+      0.017140901058304066,
+      0.03689910087506382,
+      0.0030357192213437997,
+      0.007193170944038703,
+      0.006109551583625832,
+      0.018573490940794652
+    ],
+    [
+      0.01439526707542186,
+      0.10432314302544204,
+      0.06372872306680193,
+      0.011500046493447557,
+      0.03245329491946162,
+      0.053062462228901534,
+      0.0032346560334672735,
+      0.009283900869135954,
+      0.01814888630594526,
+      0.018816944439800417,
+      0.020126405039003918,
+      0.03956725090571052,
+      0.0033375074972911757,
+      0.010100352216740044,
+      0.007490550300904683,
+      0.02082254977098533
+    ],
+    [
+      0.016341629799227327,
+      0.1102030190582178,
+      0.0705193388370835,
+      0.013416205361789587,
+      0.03569132043999069,
+      0.06607540598025127,
+      0.003041509995046927,
+      0.010511044945035661,
+      0.021639091323833078,
+      0.02258132382923243,
+      0.02314438381973578,
+      0.042058775310727714,
+      0.0036487294246955793,
+      0.013131143031071643,
+      0.008820977138013256,
+      0.02303228892233907
+    ],
+    [
+      0.018301644495555332,
+      0.11581248189417684,
+      0.07720803765922177,
+      0.015368122607469559,
+      0.038922468314365466,
+      0.0803101393489205,
+      0.002907886873094403,
+      0.01173785868652013,
+      0.025455171812553794,
+      0.026531232863056416,
+      0.02608789526382271,
+      0.04448667309265964,
+      0.003987146655515749,
+      0.01703617752206569,
+      0.010128417109348337,
+      0.02522923861991386
+    ],
+    [
+      0.02023376235548331,
+      0.12087399968687369,
+      0.08377009979924377,
+      0.017377289278166636,
+      0.042177521604664474,
+      0.0948694210727604,
+      0.002939172925389543,
+      0.013024196712946405,
+      0.02928566993499289,
+      0.030616513624483227,
+      0.028997314751756435,
+      0.046920684071219694,
+      0.004322277420029348,
+      0.02095347277972163,
+      0.011588929715205212,
+      0.02739806290791959
+    ],
+    [
+      0.022102733427772716,
+      0.12594555964579388,
+      0.0903108757065267,
+      0.019350007480504562,
+      0.04513898438641003,
+      0.10969121214382503,
+      0.003173146700980712,
+      0.014358065946369755,
+      0.03310155047445881,
+      0.03479562867052701,
+      0.032042917320314716,
+      0.04928950467432032,
+      0.004657387049222479,
+      0.025240973550446178,
+      0.013059937300122514,
+      0.029449599757030303
+    ],
+    [
+      0.02393667042559507,
+      0.13117902064505887,
+      0.09679106098352647,
+      0.021309089523797134,
+      0.04802782818370936,
+      0.12501062528819454,
+      0.003435824674611189,
+      0.015706793462135354,
+      0.03689807455758659,
+      0.03899627893554921,
+      0.035100068897008896,
+      0.05158600921989703,
+      0.004980819337830252,
+      0.030191073612290984,
+      0.01449644238669045,
+      0.03140865709176477
+    ]
+  ],
+  "train_coordinates": [
+    0.0,
+    0.0625,
+    0.125,
+    0.1875,
+    0.25,
+    0.3125,
+    0.375,
+    0.4375,
+    0.5,
+    0.5625,
+    0.625,
+    0.6875,
+    0.75,
+    0.8125,
+    0.875,
+    0.9375,
+    1.0
+  ],
+  "train_input_count": 17,
+  "trained_model_classification_accuracy_measured": false
+}

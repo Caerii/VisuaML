@@ -1,0 +1,24 @@
+{
+  "artifact_name": "pretrained-internal-kan-v46",
+  "causal_intervention_scope": "one hidden channel of one pinned original CNN under synthetic probes",
+  "cross_checkpoint_transfer_claimed": false,
+  "external_signed_attestation": false,
+  "instrumented_graph_sha256": "49e364d00f219f71b09f77263f60df046ee5934f06255bce266983ebb0ef1676",
+  "kan_fit_scope": "descriptive mean-pooled hidden-activation intensity curves",
+  "negative_control_channel": 3,
+  "original_checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+  "pretrained_kan_internal_mechanism_identified": false,
+  "raw_bytes": 145852,
+  "raw_sha256": "180d50d2bc1d444848050a64437860479d657427dffd8dbc42694d9be6977d00",
+  "schema": "visuaml.pretrained-internal-kan-origin.v46",
+  "selected_causal_channel": 5,
+  "source_commit": "272deae161f1c780c652b419fff8133676abf2a6",
+  "source_file_sha256": {
+    "scripts/probe_pretrained_internal_kan_v46.py": "1f4a7664987c86de173c7494bb68aded1c4dd2174598637e67e65389a85c8dea",
+    "scripts/probe_pretrained_mnist8_oracles_v37.py": "11018ab9cd12b76a657bbaef1c35067da1dbc19396fe527e4101aa88b9a48f6d",
+    "visuaml/compiler_lab/kan_teacher_slice_v45.py": "622a6606f827909321637107eea9d8e4d99ee03f9b0d9881570ed0f3b8a66ab6",
+    "visuaml/compiler_lab/onnx_activation_causality_v46.py": "141bd93a6c23cd96d09b00c57d43fbdb8b65093095ec0e44b7f6f607be7f51ba"
+  },
+  "target_stage": "ReLU114_Output_0",
+  "workflow_url": "https://github.com/Caerii/VisuaML/actions/runs/44240406427"
+}
