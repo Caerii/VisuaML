@@ -24,6 +24,7 @@ _NAMES = ("and_kernel", "xor_kernel", "carry_thresholds", "adder_thresholds")
 class CompiledAlu:
     function: object
     route: object
+    indexed_route: object
     source_sha256: str
     binary_sha256: str
     compiler: str
@@ -48,7 +49,10 @@ def compiled_alu():
         route = library.visuaml_compact_route
         route.argtypes = (_P, ctypes.c_size_t, _P, _P, _P, _P, _P, _P, _P)
         route.restype = ctypes.c_int
-    return CompiledAlu(function, route, hashlib.sha256(source.read_bytes()).hexdigest(),
+        indexed_route = library.visuaml_indexed_route
+        indexed_route.argtypes = (ctypes.c_size_t, *route.argtypes[1:])
+        indexed_route.restype = ctypes.c_int
+    return CompiledAlu(function, route, indexed_route, hashlib.sha256(source.read_bytes()).hexdigest(),
                        binary_id, version, _FLAGS)
 
 

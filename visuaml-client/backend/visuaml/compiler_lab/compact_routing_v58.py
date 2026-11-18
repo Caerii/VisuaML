@@ -50,7 +50,9 @@ class CompactRouter:
         if not all(np.isfinite(value).all() for value in self._tensors[2:]):
             raise NeuralControlError("Invalid neural gate coefficients")
         self._pointers = tuple(value.ctypes.data for value in self._tensors)
-        self._route = compiled_alu().route
+        kernels = compiled_alu()
+        self._route = kernels.route
+        self._indexed_route = kernels.indexed_route
 
     def step(self, pc: np.ndarray, condition: np.ndarray, *, capture_trace: bool = True):
         # Copies isolate the read-only native inputs from external array writes.
@@ -60,12 +62,28 @@ class CompactRouter:
         status = self._route(
             pc.ctypes.data, SLOTS, condition.ctypes.data, *self._pointers, details.ctypes.data,
         )
+        next_pc, trace = self._read_route(status, details, capture_trace)
+        return _onehot(next_pc), trace
+
+    def step_index(self, pc: int, condition: np.ndarray, *, capture_trace: bool = True):
+        """Route from an admitted PC coordinate and return its next coordinate."""
+        if type(pc) is not int or not 0 <= pc < SLOTS:
+            raise NeuralControlError("Invalid active PC coordinate")
+        condition = _snapshot(condition, (WIDTH,))
+        details = np.empty(5)
+        status = self._indexed_route(
+            pc, SLOTS, condition.ctypes.data, *self._pointers, details.ctypes.data,
+        )
+        return self._read_route(status, details, capture_trace)
+
+    @staticmethod
+    def _read_route(status, details, capture_trace):
         if status == 1:
             raise NeuralControlError("Invalid binary condition or noncanonical active PC")
         if status:
             raise NeuralControlError("Constructed route lost unique next PC")
         next_pc = int(details[0])
-        return _onehot(next_pc), ({
+        return next_pc, ({
             "nonzero_condition_gate": int(details[1]),
             "branch_guard_gate": int(details[2]),
             "sequential_target": int(details[3]),

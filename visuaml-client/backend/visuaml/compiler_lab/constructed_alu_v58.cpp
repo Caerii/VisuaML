@@ -84,20 +84,12 @@ extern "C" void visuaml_alu_candidates(
     candidates[5 * width] = eqz;
 }
 
-extern "C" int visuaml_compact_route(
-        const double* pc, std::size_t slots, const double* condition,
+extern "C" int visuaml_indexed_route(
+        std::size_t active, std::size_t slots, const double* condition,
         const std::int32_t* targets, const double* guards,
         const double* guard_weights, const double* path_weights,
         const double* and_weight, double* details) {
-    std::size_t active = slots;
-    for (std::size_t i = 0; i < slots; ++i) {
-        if (pc[i] == 1.0 && active == slots) {
-            active = i;
-        } else if (pc[i] != 0.0) {
-            return 1;
-        }
-    }
-    if (active == slots || targets[2 * active] < 0) {
+    if (active >= slots || targets[2 * active] < 0) {
         return 1;
     }
 
@@ -140,4 +132,21 @@ extern "C" int visuaml_compact_route(
     details[3] = static_cast<double>(normal);
     details[4] = static_cast<double>(alternate);
     return 0;
+}
+
+extern "C" int visuaml_compact_route(
+        const double* pc, std::size_t slots, const double* condition,
+        const std::int32_t* targets, const double* guards,
+        const double* guard_weights, const double* path_weights,
+        const double* and_weight, double* details) {
+    std::size_t active = slots;
+    for (std::size_t i = 0; i < slots; ++i) {
+        if (pc[i] == 1.0 && active == slots) {
+            active = i;
+        } else if (pc[i] != 0.0) {
+            return 1;
+        }
+    }
+    return visuaml_indexed_route(active, slots, condition, targets, guards,
+                                  guard_weights, path_weights, and_weight, details);
 }

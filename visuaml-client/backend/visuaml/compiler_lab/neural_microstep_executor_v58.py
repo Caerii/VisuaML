@@ -32,7 +32,7 @@ from .neural_operand_storage_v55 import (
     OperandWeights, empty_operands, fixed_operand_weights, top_word,
 )
 from .typed_microop_ir_v57 import (
-    LOCALS_WIDTH, MicroopWeights, ProgramMicroopTokens,
+    LOCALS_WIDTH, IndexedMicroops, MicroopWeights, ProgramMicroopTokens,
     compile_microop_tokens, construct_microop_weights, read_microop,
     validate_microop_tokens,
 )
@@ -75,6 +75,7 @@ def execute_microstep_control(
     use_compiled_alu: bool = False,
     use_fused_state: bool = False,
     use_compact_routing: bool = False,
+    use_indexed_pc: bool = False,
     tokens: ControlRouteTokens | None = None,
     program_tokens: ProgramMicroopTokens | None = None,
     pc_fixed: ControlRouterWeights | None = None,
@@ -85,6 +86,8 @@ def execute_microstep_control(
     local_fixed: LocalBankWeights | None = None,
     operand_fixed: OperandWeights | None = None,
 ) -> MicrostepExecution:
+    if type(use_indexed_pc) is not bool or (use_indexed_pc and not use_compact_routing):
+        raise MicrostepAdmissionError("Indexed execution requires compact routing")
     if type(use_compact_routing) is not bool:
         raise MicrostepAdmissionError("use_compact_routing must be a boolean")
     if type(use_compiled_alu) is not bool:
@@ -111,7 +114,8 @@ def execute_microstep_control(
         compile_microop_tokens(program)
         if program_tokens is None else program_tokens
     )
-    validate_microop_tokens(program_tokens, program)
+    if not use_indexed_pc:
+        validate_microop_tokens(program_tokens, program)
     pc_fixed = construct_router_weights() if pc_fixed is None else pc_fixed
     bit_fixed = construct_bit_weights() if bit_fixed is None else bit_fixed
     compact = CompactRouter(program, tokens, pc_fixed, bit_fixed) if use_compact_routing else None
@@ -119,6 +123,7 @@ def execute_microstep_control(
         construct_microop_weights() if microop_fixed is None
         else microop_fixed
     )
+    indexed = IndexedMicroops(program, program_tokens, microop_fixed) if use_indexed_pc else None
     microstep_fixed = (
         construct_microstep_weights() if microstep_fixed is None
         else microstep_fixed
@@ -135,12 +140,14 @@ def execute_microstep_control(
     operands = empty_operands()
     locals_ = np.zeros((LOCALS_WIDTH, 32), dtype=np.float64)
     locals_[0] = _bits(argument)
-    pc_vector = _onehot(0)
+    pc_vector = None if use_indexed_pc else _onehot(0)
+    pc = 0
     count = len(program.operations)
     records = []
 
     for tick in range(fuel):
-        pc = int(np.argmax(pc_vector))
+        if indexed is None:
+            pc = int(np.argmax(pc_vector))
         if pc >= count or pc == TERMINAL:
             raise ControlExecutionTrap("Reached terminal before function end")
         op = program.operations[pc]
@@ -148,11 +155,14 @@ def execute_microstep_control(
             top_word(operands) if operands.height[0] == 0.
             else np.zeros(32, dtype=np.float64)
         )
-        if compact is None:
-            selected, route = neural_pc_step(pc_vector, condition, tokens, pc_fixed, bit_fixed)
+        if indexed is not None:
+            next_pc, route = compact.step_index(pc, condition, capture_trace=capture_trace)
         else:
-            selected, route = compact.step(pc_vector, condition, capture_trace=capture_trace)
-        next_pc = int(np.argmax(selected))
+            if compact is None:
+                selected, route = neural_pc_step(pc_vector, condition, tokens, pc_fixed, bit_fixed)
+            else:
+                selected, route = compact.step(pc_vector, condition, capture_trace=capture_trace)
+            next_pc = int(np.argmax(selected))
         halted = op.opcode == "end"
         if halted:
             if (pc != count - 1
@@ -162,9 +172,8 @@ def execute_microstep_control(
                     "Final source WASM end needs exactly one i32"
                 )
         else:
-            microop = read_microop(
-                pc_vector, program_tokens, microop_fixed,
-            )
+            microop = (indexed.read(pc) if indexed is not None
+                       else read_microop(pc_vector, program_tokens, microop_fixed))
             result = step_data_microop(
                 operands, locals_, microop,
                 micro_fixed=microstep_fixed, operand_fixed=operand_fixed,
@@ -188,14 +197,18 @@ def execute_microstep_control(
                 "halted": halted,
                 "neural_route": route,
             })
-        pc_vector = selected
+        if indexed is None:
+            pc_vector = selected
+        else:
+            pc = next_pc
         if halted:
             return MicrostepExecution(
                 _int(top_word(operands)), tuple(records), tick + 1,
                 hashlib.sha256(encode_control(program)).hexdigest(),
                 pc_fixed.digest(), alu_fixed.digest(),
-                microop_fixed.digest(), _microstep_digest(microstep_fixed),
-                program_tokens.digest(),
+                indexed.weight_digest if indexed is not None else microop_fixed.digest(),
+                _microstep_digest(microstep_fixed),
+                indexed.token_digest if indexed is not None else program_tokens.digest(),
             )
     raise ControlFuelExhausted(
         f"Explicit bounded fuel exhausted after {fuel} v58 microsteps"

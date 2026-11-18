@@ -13,7 +13,7 @@ required before runtime execution claims.
 from __future__ import annotations
 
 import hashlib
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 import numpy as np
 
@@ -183,14 +183,7 @@ def validate_microop_tokens(
         raise MicroopAdmissionError("Program tokens differ from canonical WASM")
 
 
-def read_microop(
-    pc: np.ndarray,
-    tokens: ProgramMicroopTokens,
-    fixed: MicroopWeights | None = None,
-) -> SelectedMicroop:
-    """Shared fixed-weight decoder, source-token addressing by one-hot PC."""
-    _onehot(pc, (SLOTS,))
-    fixed = construct_microop_weights() if fixed is None else fixed
+def _admit_weights(fixed: MicroopWeights) -> None:
     if not isinstance(fixed, MicroopWeights):
         raise MicroopAdmissionError("Unexpected microop weights")
     for value, shape in (
@@ -199,19 +192,86 @@ def read_microop(
         (fixed.alu_selectors, (len(OPCODES), len(ALU_OPS))),
     ):
         _binary(value, shape)
+
+
+_ALU_OPCODE_INDICES = tuple(OPCODES.index(name) for name in ALU_OPS)
+
+
+def _admit_selection(effect, mode, alu, opcode_is_alu):
+    _onehot(effect, (len(EFFECTS),))
+    _onehot(mode, (len(LOCAL_MODES),))
+    _onehot(alu, (len(ALU_OPS),), allow_zero=True)
+    if alu.sum() != opcode_is_alu:
+        raise MicroopAdmissionError("ALU selector presence disagrees with opcode")
+
+
+def read_microop(
+    pc: np.ndarray,
+    tokens: ProgramMicroopTokens,
+    fixed: MicroopWeights | None = None,
+) -> SelectedMicroop:
+    """Shared fixed-weight decoder, source-token addressing by one-hot PC."""
+    _onehot(pc, (SLOTS,))
+    fixed = construct_microop_weights() if fixed is None else fixed
+    _admit_weights(fixed)
     opcode = pc @ tokens.opcode_rows
     _onehot(opcode, (len(OPCODES),))
     effect = opcode @ fixed.effects
     mode = opcode @ fixed.local_modes
     alu = opcode @ fixed.alu_selectors
-    _onehot(effect, (len(EFFECTS),))
-    _onehot(mode, (len(LOCAL_MODES),))
-    _onehot(alu, (len(ALU_OPS),), allow_zero=True)
-    if alu.sum() != sum(opcode[OPCODES.index(name)] for name in ALU_OPS):
-        raise MicroopAdmissionError("ALU selector presence disagrees with opcode")
+    _admit_selection(effect, mode, alu, sum(opcode[i] for i in _ALU_OPCODE_INDICES))
     return SelectedMicroop(
         opcode, effect, mode, alu,
         pc @ tokens.i32_immediates,
         pc @ tokens.local_selectors,
         pc @ tokens.branch_depths,
     )
+
+
+def _immutable_tensor(value):
+    if type(value) is not np.ndarray or value.dtype != np.float64:
+        raise MicroopAdmissionError("Indexed microops require plain float64 tensors")
+    return np.frombuffer(value.tobytes(), dtype=np.float64).reshape(value.shape)
+
+
+class IndexedMicroops:
+    """Prepare source rows and fixed decoder coefficients for coordinate lookup."""
+
+    def __init__(self, program: ControlProgram, tokens: ProgramMicroopTokens, fixed: MicroopWeights):
+        if not isinstance(tokens, ProgramMicroopTokens):
+            raise MicroopAdmissionError("Unexpected token representation")
+        tokens = replace(
+            tokens, opcode_rows=_immutable_tensor(tokens.opcode_rows),
+            i32_immediates=_immutable_tensor(tokens.i32_immediates),
+            local_selectors=_immutable_tensor(tokens.local_selectors),
+            branch_depths=_immutable_tensor(tokens.branch_depths),
+        )
+        validate_microop_tokens(tokens, program)
+        if not isinstance(fixed, MicroopWeights):
+            raise MicroopAdmissionError("Unexpected microop weights")
+        fixed = MicroopWeights(*(_immutable_tensor(value) for value in (
+            fixed.effects, fixed.local_modes, fixed.alu_selectors,
+        )))
+        _admit_weights(fixed)
+        self.token_digest = tokens.digest()
+        self.weight_digest = fixed.digest()
+        self._fixed = fixed
+        self._tokens = tokens
+        self._opcodes = tuple(map(int, tokens.opcode_rows[:tokens.length].argmax(axis=1)))
+        self._checked: set[int] = set()
+
+    def read(self, pc: int) -> SelectedMicroop:
+        if type(pc) is not int or not 0 <= pc < len(self._opcodes):
+            raise MicroopAdmissionError("Inactive microop coordinate")
+        opcode = self._opcodes[pc]
+        effect, mode, alu = (
+            self._fixed.effects[opcode], self._fixed.local_modes[opcode],
+            self._fixed.alu_selectors[opcode],
+        )
+        if opcode not in self._checked:
+            _admit_selection(effect, mode, alu, opcode in _ALU_OPCODE_INDICES)
+            self._checked.add(opcode)
+        tokens = self._tokens
+        return SelectedMicroop(tokens.opcode_rows[pc], effect, mode, alu,
+                               tokens.i32_immediates[pc], tokens.local_selectors[pc],
+                               tokens.branch_depths[pc])

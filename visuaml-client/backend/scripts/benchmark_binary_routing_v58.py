@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from dataclasses import fields
 from functools import partial
 from pathlib import Path
 
@@ -15,6 +16,9 @@ from visuaml.compiler_lab.constructed_alu_v58 import compiled_alu
 from visuaml.compiler_lab.exact_binary import is_exact_binary
 from visuaml.compiler_lab.neural_control_routing_v52 import (
     TERMINAL, _onehot, compile_route_tokens, construct_router_weights, neural_pc_step,
+)
+from visuaml.compiler_lab.typed_microop_ir_v57 import (
+    IndexedMicroops, compile_microop_tokens, construct_microop_weights, read_microop,
 )
 from visuaml.compiler_lab.wasm_research_corpus_v57 import countdown, gcd12
 
@@ -73,11 +77,46 @@ def run(root):
             "compact_admission": measure(partial(CompactRouter, program, tokens, fixed, bit),
                                          warmups=1, repeats=9),
         }
+        def indexed_batch():
+            for i in (*range(len(program.operations)), TERMINAL):
+                for condition in index_conditions:
+                    candidate.step_index(i, condition)
+
+        index_conditions = (_bits(0), _bits(-(1 << 31)))
+        for pc, condition in samples:
+            vector, detail = candidate.step(pc, condition)
+            if candidate.step_index(int(np.argmax(pc)), condition) != (int(np.argmax(vector)), detail):
+                raise AssertionError("Indexed gate result differs from compact routing")
+        timings["indexed"] = measure(indexed_batch, warmups=1, repeats=9)
+
+        microops = compile_microop_tokens(program)
+        weights = construct_microop_weights()
+        prepared = IndexedMicroops(program, microops, weights)
+        positions = tuple((i, _onehot(i)) for i in range(microops.length))
+        for i, pc in positions:
+            reference = read_microop(pc, microops, weights)
+            selected = prepared.read(i)
+            if any(not np.array_equal(getattr(reference, f.name), getattr(selected, f.name))
+                   for f in fields(reference)):
+                raise AssertionError("Indexed microop differs from one-hot decoding")
+
+        def decode_batch(indexed):
+            for i, pc in positions:
+                if indexed:
+                    prepared.read(i)
+                else:
+                    read_microop(pc, microops, weights)
+
+        timings["dense_microops"] = measure(partial(decode_batch, False), warmups=1, repeats=9)
+        timings["warm_indexed_microops"] = measure(partial(decode_batch, True), warmups=1, repeats=9)
+        timings["indexed_microop_admission"] = measure(
+            partial(IndexedMicroops, program, microops, weights), warmups=1, repeats=9,
+        )
         router_rows.append({
             "program": name, "source_wasm_sha256": tokens.source_wasm_sha256,
             "tokens_sha256": tokens.digest(), "weights_sha256": fixed.digest(),
             "arithmetic_weights_sha256": bit.digest(), "routes_per_sample": len(samples),
-            "timing": timings,
+            "microops_per_sample": len(positions), "timing": timings,
         })
     return {"source": source, "environment": environment(), "binary": measures, "routing": router_rows}
 

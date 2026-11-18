@@ -72,7 +72,7 @@ def _profile_rows(profile):
     return sorted(rows, key=lambda row: row["inclusive_s"], reverse=True)
 
 
-def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fused=False, compact_routing=False):
+def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fused=False, compact_routing=False, indexed_pc=False):
     identity = _identify(root, baseline)
     compiled_metadata = None
     if use_compiled or compact_routing:
@@ -117,8 +117,13 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
             dense = actions["trace"]
             if compact_routing:
                 actions["trace"] = partial(dense, use_compact_routing=True)
+            compact = actions["trace"]
+            if indexed_pc:
+                actions["trace"] = partial(compact, use_indexed_pc=True)
             traced = actions["trace"]()
-            if compact_routing and dense() != traced:
+            if indexed_pc and compact() != traced:
+                raise AssertionError((work.name, argument, "indexed PC changed the trace"))
+            if compact_routing and not indexed_pc and dense() != traced:
                 raise AssertionError((work.name, argument, "compact routing changed the trace"))
             if use_fused and unfused() != traced:
                 raise AssertionError((work.name, argument, "fused state changed the trace"))
@@ -137,7 +142,10 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
                 actions["no_trace"] = partial(actions["trace"], capture_trace=False)
                 if actions["no_trace"]() != replace(traced, trace=()):
                     raise AssertionError((work.name, argument, "trace mode changes state evidence"))
-            if compact_routing:
+            if indexed_pc:
+                actions["compact_trace"] = compact
+                actions["compact_no_trace"] = partial(compact, capture_trace=False)
+            elif compact_routing:
                 actions["dense_trace"] = dense
                 actions["dense_no_trace"] = partial(dense, capture_trace=False)
             elif use_fused:
@@ -176,7 +184,7 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
         "schema": "visuaml.constructed-runtime-profile.v58", "source": identity,
         "environment": environment(), "repeats": repeats, "fixed_weights": weight_ids,
         "compiled_alu": compiled_metadata, "fused_state": use_fused,
-        "compact_routing": compact_routing,
+        "compact_routing": compact_routing, "indexed_pc": indexed_pc,
         "fixed_initialization": measure(_weights, warmups=1, repeats=repeats),
         "profile_traced_inclusive": _profile_rows(profile) if profile_enabled else [],
         "profiled_calls": len(to_profile), "python_allocations_per_first_input": allocations, "rows": rows,
@@ -223,7 +231,10 @@ def main():
     parser.add_argument("--compiled-alu", action="store_true")
     parser.add_argument("--fused-state", action="store_true")
     parser.add_argument("--compact-routing", action="store_true")
+    parser.add_argument("--indexed-pc", action="store_true")
     args = parser.parse_args()
+    if args.indexed_pc and not args.compact_routing:
+        parser.error("Indexed PC requires --compact-routing")
     if args.baseline and (args.compiled_alu or args.fused_state or args.compact_routing):
         parser.error("The archived baseline predates the optional acceleration modes")
     root = Path(__file__).resolve().parents[3]
@@ -233,7 +244,7 @@ def main():
         record = compare(*(json.loads(path.read_bytes()) for path in args.compare))
         print(json.dumps(record, sort_keys=True))
     else:
-        record = collect(root, args.baseline, args.repeats, args.profile, args.compiled_alu, args.fused_state, args.compact_routing)
+        record = collect(root, args.baseline, args.repeats, args.profile, args.compiled_alu, args.fused_state, args.compact_routing, args.indexed_pc)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as stream:
         json.dump(record, stream, sort_keys=True, separators=(",", ":"))
