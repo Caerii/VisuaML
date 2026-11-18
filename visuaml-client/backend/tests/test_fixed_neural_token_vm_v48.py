@@ -143,7 +143,7 @@ def test_malformed_token_bytecode_cannot_bypass_strict_isa_decoder():
         detokenize_program(replace(token, opcode_tokens=tampered))
     tampered = token.immediate_tokens.copy()
     tampered[0] = 9.
-    with pytest.raises(NeuralTokenVMError, match="Unexpected opcode"):
+    with pytest.raises(NeuralTokenVMError, match="Invalid one-hot local token"):
         detokenize_program(replace(token, immediate_tokens=tampered))
     tampered = token.local_tokens.copy()
     tampered[0, 0] = 1.
