@@ -10,7 +10,6 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.onnx_activation_causality_v46 import (
     CHECKPOINT_SHA256,
     TARGET,
