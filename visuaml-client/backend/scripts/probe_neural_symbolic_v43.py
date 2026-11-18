@@ -23,7 +23,6 @@ from pathlib import Path
 
 import numpy as np
 import wasmtime
-
 from visuaml.compiler_lab.analytic_relu_specialization_v41 import (
     AnalyticRelu,
     decompile_function_from_weights,
@@ -37,7 +36,6 @@ from visuaml.compiler_lab.neural_symbolic_recovery_v43 import (
 )
 from visuaml.compiler_lab.wasm_state_vm_v40 import (
     decode_module,
-    encode_program,
     execute_program,
 )
 
