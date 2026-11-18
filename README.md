@@ -6,11 +6,32 @@
 
 VisuaML is an open-source research platform combining interactive, collaborative PyTorch graph visualization with an experimental typed-intermediate-representation compiler and inference runtime. The web application helps researchers inspect model structures and tensor relationships. The Python Compiler Lab investigates how to represent, transform, execute, compare, and safely reuse neural computation across different execution strategies.
 
-**Research status (November 2026): v35 pretrained knowledge graph integrated; v36 reconstructed-source numerical replay independently passed.** VisuaML has a bounded graph-generated native C++17 compiler, guarded trusted static `torch.export`, an independently tested transformation witness and evidence-gated optimization research. Its source-bound library now links historical computation and a new finite pretrained Tiny Llama replay executed from three separately verified original source blobs. The original CI Git checkout remains unknown. This is **not** general model compilation, two pinned pretrained families, formal equivalence proof, authenticated signatures, production GPU/optical hardware or universal speedup. Package version 0.0.0 remains unchanged.
+**Research status (November 2026): v56 constructed neural WASM executor merged; v57 typed-microoperation research in progress.** The verified, bounded machine has full-width i32 bit-gate arithmetic, neural PC routing, constructed control-frame transitions, gate-selected frame events, tensor-backed operand storage, and fixed-weight six-operation ALU selection across multiple original WASM source programs. The v57 research branch is consolidating previously separate instruction tokens into one source-bound fixed-weight microoperation IR. That integration is **not yet independently replay-verified**. Earlier pretrained checkpoint replay and causal experiments remain separate evidence classes. Neither restricted constructed execution nor bounded behavior recovery establishes universal WebAssembly, a stock trained transformer interpreter, or arbitrary learned-weight decompilation. Package version 0.0.0 is unchanged.
 
-[v36 independent pretrained replay](docs/V36_PRETRAINED_REPLAY.md) · [v35 replayable knowledge graph](docs/V35_REPLAYABLE_KNOWLEDGE_GRAPH.md) · [v34 compounding evidence library](docs/V34_COMPOUNDING_EVIDENCE_LIBRARY.md) · [v33 exported compilation and evidence](docs/V33_EXPORT_AND_EVIDENCE.md) · [v32 graph-generated C++ research](docs/V32_NATIVE_SEMANTIC_CODEGEN.md) · [v31 online attention research](docs/V31_ONLINE_ATTENTION.md) · [v30 prefill research](docs/V30_NATIVE_PREFILL.md) · [v29 native performance research](docs/V29_NATIVE_CPU_PERFORMANCE.md) · [Public research roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
+[v57 typed microoperations — research](docs/V57_SOURCE_BOUND_TYPED_MICROOPERATIONS.md) · [v56 shared neural ALU](docs/V56_SHARED_NEURAL_ALU.md) · [v55 tensor operand storage](docs/V55_NEURAL_OPERAND_STORAGE.md) · [v54 neural frame events](docs/V54_NEURAL_EVENT_ROUTING.md) · [v53 control frames](docs/V53_NEURAL_CONTROL_FRAMES.md) · [v36 independent pretrained replay](docs/V36_PRETRAINED_REPLAY.md) · [v35 replayable knowledge graph](docs/V35_REPLAYABLE_KNOWLEDGE_GRAPH.md) · [v34 compounding evidence library](docs/V34_COMPOUNDING_EVIDENCE_LIBRARY.md) · [v33 exported compilation and evidence](docs/V33_EXPORT_AND_EVIDENCE.md) · [v32 graph-generated C++ research](docs/V32_NATIVE_SEMANTIC_CODEGEN.md) · [v31 online attention research](docs/V31_ONLINE_ATTENTION.md) · [v30 prefill research](docs/V30_NATIVE_PREFILL.md) · [v29 native performance research](docs/V29_NATIVE_CPU_PERFORMANCE.md) · [Public research roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
 
-[![CI](https://github.com/Caerii/VisuaML/actions/workflows/ci.yml/badge.svg)](https://github.com/Caerii/VisuaML/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](docs/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](docs/LICENSE)
+
+## Constructed neural WASM research and verification
+
+The **reviewed WASM subset** admits one canonical exported `run(i32)->i32` with restricted locals, structured control and exact bit-sliced arithmetic. It is deliberately not advertised as universal WASM support. Distinguish the independent claims:
+
+| Research milestone | Evidence boundary |
+| --- | --- |
+| v49–v50 | Exact analytic i32 gates and bounded blinded neural-to-symbolic synthesis |
+| v51–v52 | Real source-WASM loops/branches with independently checked execution; gate-selected next PC |
+| v53–v54 | Constructed frame-state transitions and fixed-weight event selection used by executing programs |
+| v55–v56 | Tensor operand storage and six-candidate constructed i32 ALU selection used in live execution; source-WASM differential tests |
+| v57 (research branch) | Source-bound typed microoperations, one-hot local-bank access, decoded stack effects, and offline evidence generator; final replay **pending** |
+
+**GitHub Actions are disabled** to avoid consuming hosted CI minutes. Historical passing runs are preserved, but new code must be verified offline before its claims can be promoted or merged. The dedicated v57 procedure is documented in [the research report](docs/V57_SOURCE_BOUND_TYPED_MICROOPERATIONS.md) and can be launched from a clean clone with:
+
+```bash
+python -m pip install pytest wasmtime
+python visuaml-client/backend/scripts/verify_offline_v57.py --output /tmp/visuaml-v57-evidence.json --full
+```
+
+The resulting JSON includes exact source bytes, per-instruction traces, SHA-256 digests, Git tree identity and the independent Wasmtime/v51/v56 comparison. A file is only evidence of a **passed run** after that command actually finishes successfully.
 
 ## What works today
 
