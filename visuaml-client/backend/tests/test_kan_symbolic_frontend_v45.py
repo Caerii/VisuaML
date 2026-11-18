@@ -6,7 +6,6 @@ from fractions import Fraction
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.analytic_relu_specialization_v41 import (
     AnalyticRelu,
     compile_bounded_program,
