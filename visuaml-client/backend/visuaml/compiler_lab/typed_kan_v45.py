@@ -15,7 +15,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from typing import Literal
 
 import numpy as np
@@ -327,3 +327,78 @@ def from_recovered_v43_polynomial(poly) -> KANProgram:
 
 
 LOW, HIGH = -128, 127
+
+
+def ablate_kan_edge(
+    program: KANProgram, stage_index: int, node_index: int, edge_index: int
+) -> tuple[KANProgram, dict]:
+    """Typed intervention on one entire univariate edge function.
+
+    This is causal *within the explicit KAN graph*. By itself it says nothing
+    about causes in an external pretrained model or real-world data.
+    """
+    validate_kan(program)
+    if (any(type(i) is not int for i in (stage_index, node_index, edge_index))
+            or not 0 <= stage_index < len(program.stages)
+            or not 0 <= node_index < len(program.stages[stage_index])
+            or not 0 <= edge_index < len(program.stages[stage_index][node_index].edges)):
+        raise KANAdmissionError("Invalid bounded edge intervention address")
+    stage = program.stages[stage_index]
+    node = stage[node_index]
+    selected = node.edges[edge_index]
+    if all(coefficient == 0 for coefficient in selected.coefficients):
+        raise KANAdmissionError("Selected edge already computes zero")
+    edge = replace(selected, coefficients=tuple(
+        0.0 for _ in selected.coefficients
+    ))
+    changed_edges = list(node.edges)
+    changed_edges[edge_index] = edge
+    changed_node = replace(node, edges=tuple(changed_edges))
+    changed_stage = list(stage)
+    changed_stage[node_index] = changed_node
+    changed_stages = list(program.stages)
+    changed_stages[stage_index] = tuple(changed_stage)
+    output = replace(program, stages=tuple(changed_stages))
+    validate_kan(output)
+    if output.fingerprint() == program.fingerprint():
+        raise KANAdmissionError("Edge intervention did not change the graph")
+    return output, {
+        "schema": "visuaml.kan-edge-ablation.v45",
+        "source_sha256": program.fingerprint(),
+        "target_sha256": output.fingerprint(),
+        "stage": stage_index,
+        "node": node_index,
+        "edge": edge_index,
+        "intervention": "zero entire univariate edge function",
+        "graph_family": selected.family,
+        "causal_in_this_graph_only": True,
+        "external_pretrained_mechanism_certified": False,
+        "all_inputs_equivalent": False,
+    }
+
+
+def ablation_witness(
+    program: KANProgram, inputs: np.ndarray, *,
+    stage_index: int, node_index: int, edge_index: int,
+) -> dict:
+    altered, receipt = ablate_kan_edge(
+        program, stage_index, node_index, edge_index
+    )
+    original = evaluate_numpy(program, inputs)
+    counterfactual = evaluate_numpy(altered, inputs)
+    delta = counterfactual - original
+    return {
+        **receipt,
+        "inputs_sha256": hashlib.sha256(
+            np.ascontiguousarray(inputs).tobytes()
+        ).hexdigest(),
+        "source_output_sha256": hashlib.sha256(original.tobytes()).hexdigest(),
+        "counterfactual_output_sha256": hashlib.sha256(
+            counterfactual.tobytes()
+        ).hexdigest(),
+        "witness_inputs": len(inputs),
+        "maximum_absolute_output_intervention": float(np.max(np.abs(delta))),
+        "mean_absolute_output_intervention": float(np.mean(np.abs(delta))),
+        "counterfactual_executed": True,
+        "full_pretrained_model_intervention_executed": False,
+    }
