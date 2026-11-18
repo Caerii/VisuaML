@@ -9,6 +9,7 @@ on:
       - 'visuaml-client/backend/visuaml/compiler_lab/neural_alu_executor_v56.py'
       - 'visuaml-client/backend/tests/test_neural_alu_v56.py'
       - 'visuaml-client/backend/tests/test_neural_alu_executor_v56.py'
+      - 'visuaml-client/backend/tests/test_generated_wasm_alu_v56.py'
       - '.github/workflows/neural-alu-v56.yml'
   pull_request:
     paths:
@@ -16,6 +17,7 @@ on:
       - 'visuaml-client/backend/visuaml/compiler_lab/neural_alu_executor_v56.py'
       - 'visuaml-client/backend/tests/test_neural_alu_v56.py'
       - 'visuaml-client/backend/tests/test_neural_alu_executor_v56.py'
+      - 'visuaml-client/backend/tests/test_generated_wasm_alu_v56.py'
       - '.github/workflows/neural-alu-v56.yml'
 jobs:
   differential:
@@ -33,5 +35,5 @@ jobs:
           python -m pip install pytest ruff 'wasmtime>=20,<50'
       - name: Lint constructed ALU and run independent source-WASM differential
         run: |
-          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_alu_v56.py visuaml-client/backend/visuaml/compiler_lab/neural_alu_executor_v56.py visuaml-client/backend/tests/test_neural_alu_v56.py visuaml-client/backend/tests/test_neural_alu_executor_v56.py
-          PYTHONPATH=visuaml-client/backend python -m pytest -q visuaml-client/backend/tests/test_neural_alu_v56.py visuaml-client/backend/tests/test_neural_alu_executor_v56.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_alu_v56.py visuaml-client/backend/visuaml/compiler_lab/neural_alu_executor_v56.py visuaml-client/backend/tests/test_neural_alu_v56.py visuaml-client/backend/tests/test_neural_alu_executor_v56.py visuaml-client/backend/tests/test_generated_wasm_alu_v56.py
+          PYTHONPATH=visuaml-client/backend python -m pytest -q visuaml-client/backend/tests/test_neural_alu_v56.py visuaml-client/backend/tests/test_neural_alu_executor_v56.py visuaml-client/backend/tests/test_generated_wasm_alu_v56.py
