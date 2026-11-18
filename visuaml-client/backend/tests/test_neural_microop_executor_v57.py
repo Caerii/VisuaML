@@ -125,3 +125,44 @@ def test_microop_local_write_gate_corruption_fail_closed():
             local_fixed=LocalBankWeights(default.read_gain, changed),
         )
     assert np.array_equal(default.write_gain, np.ones_like(default.write_gain))
+
+
+def test_wrong_but_binary_effect_gate_is_rejected_not_host_repaired():
+    from visuaml.compiler_lab.typed_microop_ir_v57 import (
+        EFFECTS,
+        OPCODES,
+    )
+    from visuaml.compiler_lab.wasm_control_flow_v51 import ControlExecutionTrap
+
+    program, _ = programs()["countdown"]
+    fixed = construct_microop_weights()
+    effect = fixed.effects.copy()
+    effect[OPCODES.index("i32.add"), :] = 0.
+    effect[OPCODES.index("i32.add"), EFFECTS.index("retain")] = 1.
+    with pytest.raises(ControlExecutionTrap, match="stack effect"):
+        execute_microop_routed_control(
+            program, 3,
+            microop_fixed=replace(fixed, effects=effect),
+        )
+
+
+def test_wrong_but_binary_local_mode_changes_runtime_not_just_digest():
+    from visuaml.compiler_lab.typed_microop_ir_v57 import (
+        LOCAL_MODES,
+        OPCODES,
+    )
+
+    program, _ = programs()["ifelse"]
+    baseline = execute_microop_routed_control(program, -3)
+    fixed = construct_microop_weights()
+    modes = fixed.local_modes.copy()
+    modes[OPCODES.index("local.get"), :] = 0.
+    modes[
+        OPCODES.index("local.get"),
+        LOCAL_MODES.index("set"),
+    ] = 1.
+    changed = execute_microop_routed_control(
+        program, -3,
+        microop_fixed=replace(fixed, local_modes=modes),
+    )
+    assert changed.result_i32 != baseline.result_i32
