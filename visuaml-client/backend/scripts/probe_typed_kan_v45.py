@@ -156,8 +156,12 @@ def run() -> dict:
             }
         if label == "v43_archived_neural_symbol":
             expected = inputs[:, 0] ** 2 - 3 * inputs[:, 0] + 7
-            if not np.array_equal(scalar[:, 0], expected):
-                raise AssertionError("KAN failed exact archived quadratic")
+            np.testing.assert_allclose(scalar[:, 0], expected, rtol=1e-12, atol=1e-10)
+            # Exact integer-algebra witnesses are checked separately from
+            # noninteger floating-point operation-order drift.
+            integers = np.arange(-128, 128, dtype=np.float64)[:, None]
+            exact = integers[:, 0] ** 2 - 3 * integers[:, 0] + 7
+            np.testing.assert_array_equal(evaluate_numpy(program, integers)[:, 0], exact)
         results.append({
             "name": label,
             "typed_program": asdict(program),
