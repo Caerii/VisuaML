@@ -1,0 +1,77 @@
+name: v49 exact i32 bit-gated neural VM original WASM differential
+on:
+  push:
+    branches:
+      - research/v49-exact-i32-bit-neural-vm
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/bit_neural_vm_v49.py
+      - visuaml-client/backend/tests/test_bit_neural_vm_v49.py
+      - visuaml-client/backend/scripts/probe_bit_neural_vm_v49.py
+      - .github/workflows/bit-neural-vm-v49.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/bit_neural_vm_v49.py
+      - visuaml-client/backend/tests/test_bit_neural_vm_v49.py
+      - visuaml-client/backend/scripts/probe_bit_neural_vm_v49.py
+      - .github/workflows/bit-neural-vm-v49.yml
+permissions:
+  contents: read
+jobs:
+  bit-neural:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Wasmtime, numeric and test runner prerequisites
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==2.2.6 pytest==8.4.2 wasmtime==28.0.0 ruff==0.17.5
+      - name: Execute original i32 WASM vs exact bit-neural gate tests
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_bit_neural_vm_v49.py
+          python -m pytest -q visuaml-client/backend/tests/test_fixed_neural_token_vm_v48.py -k 'not z3'
+          ruff check visuaml-client/backend/visuaml/compiler_lab/bit_neural_vm_v49.py visuaml-client/backend/tests/test_bit_neural_vm_v49.py visuaml-client/backend/scripts/probe_bit_neural_vm_v49.py
+      - name: Generate complete 11-program real-Wasm original and neural transition evidence
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p evidence-v49
+          python visuaml-client/backend/scripts/probe_bit_neural_vm_v49.py --output evidence-v49/bit-neural-i32.json
+          python - <<'PY'
+          import json
+          d=json.load(open("evidence-v49/bit-neural-i32.json"))
+          assert d["schema"]=="visuaml.full-width-i32-neural-circuit.v49"
+          assert d["program_count"]==11 and d["inputs_per_program"]==26
+          assert d["total_output_witnesses"]==286
+          assert d["fixed_weights_reused_across_programs"]
+          assert len({p["fixed_interpreter_weights_sha256"] for p in d["programs"]})==1
+          assert all(w["pass"] for w in d["witnesses"])
+          assert d["independent_original_wasmtime_executed"]
+          assert d["every_witness_step_state_compared_to_v40"]
+          assert d["modular_add_sub_mul_and_signed_comparisons"]
+          assert not d["standard_softmax_transformer_executed"]
+          assert not d["general_wasm_supported"]
+          assert not d["all_i32_neural_circuit_smt_proved"]
+          assert not d["arbitrary_neural_decompilation_implemented"]
+          print("Original WASM vs fixed full-width bit-neural interpreter",d["total_output_witnesses"],"inputs")
+          PY
+      - name: Upload original raw full-width i32 neural WASM execution evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: bit-neural-original-wasm-v49
+          path: evidence-v49/bit-neural-i32.json
+          if-no-files-found: error
+          retention-days: 30
