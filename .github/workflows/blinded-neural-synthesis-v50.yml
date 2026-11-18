@@ -8,12 +8,18 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/blinded_behavioral_synthesis_v50.py
       - visuaml-client/backend/scripts/probe_blinded_neural_synthesis_v50.py
       - visuaml-client/backend/tests/test_blinded_behavioral_synthesis_v50.py
+      - visuaml-client/backend/tests/test_blinded_cegis_archive_v50.py
+      - benchmarks/blinded_neural_cegis_v50.json
+      - benchmarks/blinded_neural_cegis_v50.origin.json
       - .github/workflows/blinded-neural-synthesis-v50.yml
   pull_request:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/blinded_behavioral_synthesis_v50.py
       - visuaml-client/backend/scripts/probe_blinded_neural_synthesis_v50.py
       - visuaml-client/backend/tests/test_blinded_behavioral_synthesis_v50.py
+      - visuaml-client/backend/tests/test_blinded_cegis_archive_v50.py
+      - benchmarks/blinded_neural_cegis_v50.json
+      - benchmarks/blinded_neural_cegis_v50.origin.json
       - .github/workflows/blinded-neural-synthesis-v50.yml
 permissions:
   contents: write
@@ -37,9 +43,9 @@ jobs:
           OPENBLAS_NUM_THREADS: "1"
           OMP_NUM_THREADS: "1"
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_blinded_behavioral_synthesis_v50.py
+          python -m pytest -q visuaml-client/backend/tests/test_blinded_behavioral_synthesis_v50.py visuaml-client/backend/tests/test_blinded_cegis_archive_v50.py
           python -m pytest -q visuaml-client/backend/tests/test_bit_neural_archive_v49.py
-          ruff check visuaml-client/backend/visuaml/compiler_lab/blinded_behavioral_synthesis_v50.py visuaml-client/backend/tests/test_blinded_behavioral_synthesis_v50.py visuaml-client/backend/scripts/probe_blinded_neural_synthesis_v50.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/blinded_behavioral_synthesis_v50.py visuaml-client/backend/tests/test_blinded_behavioral_synthesis_v50.py visuaml-client/backend/scripts/probe_blinded_neural_synthesis_v50.py visuaml-client/backend/tests/test_blinded_cegis_archive_v50.py
       - name: Synthesize five blinded neural behaviors and prove source-vs-symbolic i32 equivalence
         env:
           PYTHONPATH: visuaml-client/backend
