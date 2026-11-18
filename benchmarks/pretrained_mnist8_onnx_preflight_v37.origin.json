@@ -1,0 +1,29 @@
+{
+  "checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+  "github_actions_artifact_id": 14384208267,
+  "github_actions_artifact_name": "pinned-mnist8-static-preflight-v37",
+  "github_actions_artifact_reported_digest": "sha256:f0445cadedd4dce70ff146e914649cf28b73f9050e43046fb832f1ee5c9fe294",
+  "github_actions_checkout_merge_commit": "b5a9396636d7e011434d81dd15fbb11d7299eaf3",
+  "github_actions_pr_base_commit": "6fb0371c098eda33eb51afca690612142fd4377d",
+  "github_actions_pr_head_commit": "d4b90100133249ec0c86b8ef56e87eb7cb8c2142",
+  "github_actions_run": "https://github.com/Caerii/VisuaML/actions/runs/44207675149",
+  "note": "Origin manifest authored after the successful run; underlying recorded preflight bytes preserved verbatim.",
+  "observed_nonv32_ops": [
+    "MaxPool",
+    "Reshape"
+  ],
+  "observed_operator_histogram": {
+    "Add": 3,
+    "Conv": 2,
+    "MatMul": 1,
+    "MaxPool": 2,
+    "Relu": 2,
+    "Reshape": 2
+  },
+  "record_bytes": 8044,
+  "record_path": "benchmarks/pretrained_mnist8_onnx_preflight_v37.json",
+  "record_sha256": "0c0c51912b4ffa1f72638a785d0ddb9fc2981a1c6961aaab9220da740bc6b2b9",
+  "schema": "visuaml.pretrained-onnx-preflight-origin.v37",
+  "scope": "Trusted CI source-bound ONNX static audit; not native numerical execution, model accuracy or compiler-family certification",
+  "source_commit": "b5a9396636d7e011434d81dd15fbb11d7299eaf3"
+}
