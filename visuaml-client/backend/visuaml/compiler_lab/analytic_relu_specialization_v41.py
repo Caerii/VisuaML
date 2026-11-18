@@ -62,7 +62,7 @@ def _tensor_sha(value: np.ndarray) -> str:
 
 def _expected_biases() -> tuple[int, ...]:
     # Channel 0 spans the full domain, others are hinges at every interior knot.
-    return tuple([-LOW, *(-x for x in range(LOW + 1, HIGH))])
+    return (-LOW, *(-x for x in range(LOW + 1, HIGH)))
 
 
 def _guard_weights(net: AnalyticRelu) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
