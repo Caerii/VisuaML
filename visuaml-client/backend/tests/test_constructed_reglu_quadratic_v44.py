@@ -9,14 +9,12 @@ from dataclasses import replace
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.analytic_relu_specialization_v41 import (
     AnalyticRelu,
     compile_bounded_program,
     evaluate_bounded,
 )
 from visuaml.compiler_lab.constructed_reglu_quadratic_v44 import (
-    ConstructedGatedQuadratic,
     GatedConstructionError,
     bundle_fingerprint,
     check_real_algebraic_identity,
