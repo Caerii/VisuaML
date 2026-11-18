@@ -1,0 +1,134 @@
+{
+  "artifacts": {
+    "backend.log.gz": {
+      "bytes": 984,
+      "sha256": "1001f90a531e50dbe2d8b0d6d81639ade8d01dfdbd63bd1b831034b12b8913c2",
+      "uncompressed_sha256": "23434c572ac747cdd07bbb19650de0f9541fa2ce3a47612af2614c210e312ab5"
+    },
+    "exploratory-all-sizes-count.json": {
+      "bytes": 15440,
+      "sha256": "3261ab7ad1c127f24698ca4103d964eb72ea35e6d19a3fbbac326ca781700682",
+      "source": {
+        "branch": "research/v58-compact-routing",
+        "commit": "f48dbfc7e720b590cfe87a07ab42c2c988fa3b5b",
+        "tree": "3eded39e8414b10c5b5bbecb72568e5490eb7538"
+      }
+    },
+    "faults.json": {
+      "bytes": 6809,
+      "sha256": "f10493730cfd4ae5d8f963f3cd31d89cf1321c23c9dd03a344b6515d9c2fd082",
+      "source": {
+        "commit": "0e843aded1539cc557aeeefe5201387e279f74d2",
+        "tree": "2a76f5e63d8587f4d4cf2634bc455af3944a3f17"
+      }
+    },
+    "micro.json": {
+      "bytes": 15330,
+      "sha256": "0434081e5b5b0c01d49fdb2253941049a2af67f8afcf1723e33ea03a58009096",
+      "source": {
+        "branch": "research/v58-compact-routing",
+        "commit": "0e843aded1539cc557aeeefe5201387e279f74d2",
+        "tree": "2a76f5e63d8587f4d4cf2634bc455af3944a3f17"
+      }
+    },
+    "runtime-repeat.json.gz": {
+      "bytes": 66356,
+      "sha256": "b9c1cb13ab782ff26c1c8add3ab1915b165f4344c45f3edccbe90b6645a2852f",
+      "source": {
+        "baseline": false,
+        "commit": "0e843aded1539cc557aeeefe5201387e279f74d2",
+        "tree": "2a76f5e63d8587f4d4cf2634bc455af3944a3f17"
+      },
+      "uncompressed_sha256": "208e9bf290936a08ee316a52a9cedf200fb6ecf678702d9a2a0879e77954e47d"
+    },
+    "runtime.json.gz": {
+      "bytes": 70574,
+      "sha256": "a74bbfa80abf105e4b7f948e1472b29a462a3f5837066fdec08b6c3e2dff98b6",
+      "source": {
+        "baseline": false,
+        "commit": "0e843aded1539cc557aeeefe5201387e279f74d2",
+        "tree": "2a76f5e63d8587f4d4cf2634bc455af3944a3f17"
+      },
+      "uncompressed_sha256": "e5c6d9899c2ee0dcecc4329c1b2670df79224eec7edce665856cdf695aca2d62"
+    }
+  },
+  "runs": {
+    "runtime-repeat.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "60f37e16ad36f2d85ca98d6c32ee38e77d43aba13906f1849cfd20d692ad1209",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 471331771,
+        "source_sha256": "5af29c2f427504cc6255d8cdb131f4bd7c07598be142c94bda5d95f44751f7a8"
+      },
+      "modes": {
+        "no_trace": {
+          "faster_cases": 161,
+          "medians_ns": [
+            7614572,
+            6394150
+          ],
+          "paired_geomean": 1.1887403796386773,
+          "worst_regression": 1.6868016365758933
+        },
+        "trace": {
+          "faster_cases": 157,
+          "medians_ns": [
+            8730633,
+            7591029
+          ],
+          "paired_geomean": 1.1597670259709556,
+          "worst_regression": 1.478697000592363
+        }
+      },
+      "states": 3387,
+      "witnesses": 197
+    },
+    "runtime.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "60f37e16ad36f2d85ca98d6c32ee38e77d43aba13906f1849cfd20d692ad1209",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 421752724,
+        "source_sha256": "5af29c2f427504cc6255d8cdb131f4bd7c07598be142c94bda5d95f44751f7a8"
+      },
+      "modes": {
+        "no_trace": {
+          "faster_cases": 150,
+          "medians_ns": [
+            7322921,
+            6348310
+          ],
+          "paired_geomean": 1.1616979011915363,
+          "worst_regression": 1.480131513094138
+        },
+        "trace": {
+          "faster_cases": 149,
+          "medians_ns": [
+            8507241,
+            7431975
+          ],
+          "paired_geomean": 1.1554164841211678,
+          "worst_regression": 1.6210528429605735
+        }
+      },
+      "states": 3387,
+      "witnesses": 197
+    }
+  },
+  "schema": "visuaml.compact-routing-experiment.v58"
+}

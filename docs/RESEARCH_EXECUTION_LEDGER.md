@@ -200,3 +200,11 @@ and a successful solver refutation. Six recovered after two to five
 refinements. The out-of-grammar control was rejected and retained in
 the same archive. A second run matched the semantic evidence.
 [Counterexample stress report](V58_CEGIS_COUNTEREXAMPLES.md)
+
+## v58 compact PC routing and binary admission
+
+The native router evaluated the same live zero-test, guard and path gates
+with compact source-bound target coordinates. Isolated countdown and GCD
+routes were 10–15× faster. Two matched executor runs preserved full
+traces for 3,387 states. Exact match counting is scoped to small tensors.
+[Compact routing and binary admission report](V58_COMPACT_ROUTING.md)
