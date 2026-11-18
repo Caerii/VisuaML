@@ -89,7 +89,7 @@ def test_invalid_source_token_ownership_rejected_before_execution():
     program, _ = programs()["ifelse"]
     tokens = compile_microop_tokens(program)
     bad = tokens.local_selectors.copy()
-    bad[0, 0] = 1.
+    bad[0, 0] = 1. - bad[0, 0]
     with pytest.raises(MicroopAdmissionError):
         execute_microop_routed_control(
             program, 3,

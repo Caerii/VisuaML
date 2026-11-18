@@ -206,6 +206,8 @@ def read_microop(
     _onehot(effect, (len(EFFECTS),))
     _onehot(mode, (len(LOCAL_MODES),))
     _onehot(alu, (len(ALU_OPS),), allow_zero=True)
+    if alu.sum() != sum(opcode[OPCODES.index(name)] for name in ALU_OPS):
+        raise MicroopAdmissionError("ALU selector presence disagrees with opcode")
     return SelectedMicroop(
         opcode, effect, mode, alu,
         pc @ tokens.i32_immediates,
