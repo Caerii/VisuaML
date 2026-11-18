@@ -1,0 +1,3394 @@
+{
+  "all_i32_inputs_proved": false,
+  "analytic_neural_weights_executed": true,
+  "checked_inputs": 256,
+  "compiler": {
+    "all_i32_inputs_proved": false,
+    "hidden_relu_units": 255,
+    "input_domain": [
+      -128,
+      127
+    ],
+    "integer_domain_exactly_verified": true,
+    "limitations": "One finite-domain static i32 program specialized by exhaustive tabulation to analytic ReLU hinges; float64 exact-integer sum budget; not arbitrary i32, long-running VM, transformer attention, arbitrary learned-network program recovery or all-input proof.",
+    "manifest_free_function_extraction": true,
+    "program_sha256": "ab69b9ecb82dbed1080677c5ef76c4681a56d99d030deab3d2012d68d5502325",
+    "recovered_function_sha256": "80ee7e2bbf735e84fbba667355e5d727ce03e247715240498f8f64ce1498ba7e",
+    "schema": "visuaml.analytic-relu-specialization.v41",
+    "source_program_decompiled": false,
+    "tensor_sha256": {
+      "b_in": "3be9c7cd1c60cd47e6ec3e5ee0192405c92cee3be33c35d6c39bafd60d085a2e",
+      "b_out": "c378be86142661e7249eb8bfbf84ec6146441f6675baab3eea150fc1a4322b63",
+      "w_in": "1c6181f9178904d742cba0fc1bceaccdf830171eddf18c0c26f81e72acdf4c74",
+      "w_out": "ae0ff9619dae9c4c624febb2769f52574f4e1dcfb0cb84d3d1275541b122a881"
+    },
+    "universal_neural_interpreter": false,
+    "wasmtime_executed_by_this_function": false
+  },
+  "complete": true,
+  "domain": [
+    -128,
+    127
+  ],
+  "function_sha256": "80ee7e2bbf735e84fbba667355e5d727ce03e247715240498f8f64ce1498ba7e",
+  "github_checkout_sha": "0dd2dee201eff7cbc8fc953f4e3e01a68e110b7c",
+  "limitations": "Finite 256-input i8-domain tabulation compiled into analytic float64 ReLU hinges; behavioral function extracted under a known template. Not a programmable attention VM, neural i32 execution outside the interval, original program recovery, or all-input proof.",
+  "manifest_free_function_recovered": true,
+  "network": {
+    "b_in": [
+      128.0,
+      127.0,
+      126.0,
+      125.0,
+      124.0,
+      123.0,
+      122.0,
+      121.0,
+      120.0,
+      119.0,
+      118.0,
+      117.0,
+      116.0,
+      115.0,
+      114.0,
+      113.0,
+      112.0,
+      111.0,
+      110.0,
+      109.0,
+      108.0,
+      107.0,
+      106.0,
+      105.0,
+      104.0,
+      103.0,
+      102.0,
+      101.0,
+      100.0,
+      99.0,
+      98.0,
+      97.0,
+      96.0,
+      95.0,
+      94.0,
+      93.0,
+      92.0,
+      91.0,
+      90.0,
+      89.0,
+      88.0,
+      87.0,
+      86.0,
+      85.0,
+      84.0,
+      83.0,
+      82.0,
+      81.0,
+      80.0,
+      79.0,
+      78.0,
+      77.0,
+      76.0,
+      75.0,
+      74.0,
+      73.0,
+      72.0,
+      71.0,
+      70.0,
+      69.0,
+      68.0,
+      67.0,
+      66.0,
+      65.0,
+      64.0,
+      63.0,
+      62.0,
+      61.0,
+      60.0,
+      59.0,
+      58.0,
+      57.0,
+      56.0,
+      55.0,
+      54.0,
+      53.0,
+      52.0,
+      51.0,
+      50.0,
+      49.0,
+      48.0,
+      47.0,
+      46.0,
+      45.0,
+      44.0,
+      43.0,
+      42.0,
+      41.0,
+      40.0,
+      39.0,
+      38.0,
+      37.0,
+      36.0,
+      35.0,
+      34.0,
+      33.0,
+      32.0,
+      31.0,
+      30.0,
+      29.0,
+      28.0,
+      27.0,
+      26.0,
+      25.0,
+      24.0,
+      23.0,
+      22.0,
+      21.0,
+      20.0,
+      19.0,
+      18.0,
+      17.0,
+      16.0,
+      15.0,
+      14.0,
+      13.0,
+      12.0,
+      11.0,
+      10.0,
+      9.0,
+      8.0,
+      7.0,
+      6.0,
+      5.0,
+      4.0,
+      3.0,
+      2.0,
+      1.0,
+      0.0,
+      -1.0,
+      -2.0,
+      -3.0,
+      -4.0,
+      -5.0,
+      -6.0,
+      -7.0,
+      -8.0,
+      -9.0,
+      -10.0,
+      -11.0,
+      -12.0,
+      -13.0,
+      -14.0,
+      -15.0,
+      -16.0,
+      -17.0,
+      -18.0,
+      -19.0,
+      -20.0,
+      -21.0,
+      -22.0,
+      -23.0,
+      -24.0,
+      -25.0,
+      -26.0,
+      -27.0,
+      -28.0,
+      -29.0,
+      -30.0,
+      -31.0,
+      -32.0,
+      -33.0,
+      -34.0,
+      -35.0,
+      -36.0,
+      -37.0,
+      -38.0,
+      -39.0,
+      -40.0,
+      -41.0,
+      -42.0,
+      -43.0,
+      -44.0,
+      -45.0,
+      -46.0,
+      -47.0,
+      -48.0,
+      -49.0,
+      -50.0,
+      -51.0,
+      -52.0,
+      -53.0,
+      -54.0,
+      -55.0,
+      -56.0,
+      -57.0,
+      -58.0,
+      -59.0,
+      -60.0,
+      -61.0,
+      -62.0,
+      -63.0,
+      -64.0,
+      -65.0,
+      -66.0,
+      -67.0,
+      -68.0,
+      -69.0,
+      -70.0,
+      -71.0,
+      -72.0,
+      -73.0,
+      -74.0,
+      -75.0,
+      -76.0,
+      -77.0,
+      -78.0,
+      -79.0,
+      -80.0,
+      -81.0,
+      -82.0,
+      -83.0,
+      -84.0,
+      -85.0,
+      -86.0,
+      -87.0,
+      -88.0,
+      -89.0,
+      -90.0,
+      -91.0,
+      -92.0,
+      -93.0,
+      -94.0,
+      -95.0,
+      -96.0,
+      -97.0,
+      -98.0,
+      -99.0,
+      -100.0,
+      -101.0,
+      -102.0,
+      -103.0,
+      -104.0,
+      -105.0,
+      -106.0,
+      -107.0,
+      -108.0,
+      -109.0,
+      -110.0,
+      -111.0,
+      -112.0,
+      -113.0,
+      -114.0,
+      -115.0,
+      -116.0,
+      -117.0,
+      -118.0,
+      -119.0,
+      -120.0,
+      -121.0,
+      -122.0,
+      -123.0,
+      -124.0,
+      -125.0,
+      -126.0
+    ],
+    "b_out": [
+      16775.0
+    ],
+    "w_in": [
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ],
+      [
+        1.0
+      ]
+    ],
+    "w_out": [
+      [
+        -258.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ]
+    ]
+  },
+  "numpy_version": "2.2.6",
+  "outside_domain_counterexample": {
+    "disagree": true,
+    "input": 128,
+    "neural_extrapolation": 16005,
+    "wasmtime_result": 16007
+  },
+  "real_wasm_executed": true,
+  "schema": "visuaml.wasm-neural-specialization.v41",
+  "source_file_sha256": {
+    "scripts/probe_analytic_neural_wasm_v41.py": "b46d4d1187e606040c1a2cbe2a3efab7e8febb8745c7e737da3dc89d36671012",
+    "visuaml/compiler_lab/analytic_relu_specialization_v41.py": "5a34858601d31d12089b439c63962733225af733325f78eef37930087363cf11",
+    "visuaml/compiler_lab/wasm_state_vm_v40.py": "410375f7c5ae4e64c2863a8490cc7284eefc33b55eda0f6253bfac99e49b7577"
+  },
+  "source_program_recovered": false,
+  "source_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a12011000200020006c200041036c6b41076a0b",
+  "source_wasm_sha256": "9078c1b6b8f3edc0030e3017b9bae5c965752546a4582437236746f5f3611481",
+  "universal_neural_vm": false,
+  "wasmtime_version": "28.0.0",
+  "witnesses": [
+    {
+      "extracted_from_weights": 16775,
+      "input_i32": -128,
+      "pass": true,
+      "relu": 16775,
+      "typed": 16775,
+      "wasmtime": 16775
+    },
+    {
+      "extracted_from_weights": 16517,
+      "input_i32": -127,
+      "pass": true,
+      "relu": 16517,
+      "typed": 16517,
+      "wasmtime": 16517
+    },
+    {
+      "extracted_from_weights": 16261,
+      "input_i32": -126,
+      "pass": true,
+      "relu": 16261,
+      "typed": 16261,
+      "wasmtime": 16261
+    },
+    {
+      "extracted_from_weights": 16007,
+      "input_i32": -125,
+      "pass": true,
+      "relu": 16007,
+      "typed": 16007,
+      "wasmtime": 16007
+    },
+    {
+      "extracted_from_weights": 15755,
+      "input_i32": -124,
+      "pass": true,
+      "relu": 15755,
+      "typed": 15755,
+      "wasmtime": 15755
+    },
+    {
+      "extracted_from_weights": 15505,
+      "input_i32": -123,
+      "pass": true,
+      "relu": 15505,
+      "typed": 15505,
+      "wasmtime": 15505
+    },
+    {
+      "extracted_from_weights": 15257,
+      "input_i32": -122,
+      "pass": true,
+      "relu": 15257,
+      "typed": 15257,
+      "wasmtime": 15257
+    },
+    {
+      "extracted_from_weights": 15011,
+      "input_i32": -121,
+      "pass": true,
+      "relu": 15011,
+      "typed": 15011,
+      "wasmtime": 15011
+    },
+    {
+      "extracted_from_weights": 14767,
+      "input_i32": -120,
+      "pass": true,
+      "relu": 14767,
+      "typed": 14767,
+      "wasmtime": 14767
+    },
+    {
+      "extracted_from_weights": 14525,
+      "input_i32": -119,
+      "pass": true,
+      "relu": 14525,
+      "typed": 14525,
+      "wasmtime": 14525
+    },
+    {
+      "extracted_from_weights": 14285,
+      "input_i32": -118,
+      "pass": true,
+      "relu": 14285,
+      "typed": 14285,
+      "wasmtime": 14285
+    },
+    {
+      "extracted_from_weights": 14047,
+      "input_i32": -117,
+      "pass": true,
+      "relu": 14047,
+      "typed": 14047,
+      "wasmtime": 14047
+    },
+    {
+      "extracted_from_weights": 13811,
+      "input_i32": -116,
+      "pass": true,
+      "relu": 13811,
+      "typed": 13811,
+      "wasmtime": 13811
+    },
+    {
+      "extracted_from_weights": 13577,
+      "input_i32": -115,
+      "pass": true,
+      "relu": 13577,
+      "typed": 13577,
+      "wasmtime": 13577
+    },
+    {
+      "extracted_from_weights": 13345,
+      "input_i32": -114,
+      "pass": true,
+      "relu": 13345,
+      "typed": 13345,
+      "wasmtime": 13345
+    },
+    {
+      "extracted_from_weights": 13115,
+      "input_i32": -113,
+      "pass": true,
+      "relu": 13115,
+      "typed": 13115,
+      "wasmtime": 13115
+    },
+    {
+      "extracted_from_weights": 12887,
+      "input_i32": -112,
+      "pass": true,
+      "relu": 12887,
+      "typed": 12887,
+      "wasmtime": 12887
+    },
+    {
+      "extracted_from_weights": 12661,
+      "input_i32": -111,
+      "pass": true,
+      "relu": 12661,
+      "typed": 12661,
+      "wasmtime": 12661
+    },
+    {
+      "extracted_from_weights": 12437,
+      "input_i32": -110,
+      "pass": true,
+      "relu": 12437,
+      "typed": 12437,
+      "wasmtime": 12437
+    },
+    {
+      "extracted_from_weights": 12215,
+      "input_i32": -109,
+      "pass": true,
+      "relu": 12215,
+      "typed": 12215,
+      "wasmtime": 12215
+    },
+    {
+      "extracted_from_weights": 11995,
+      "input_i32": -108,
+      "pass": true,
+      "relu": 11995,
+      "typed": 11995,
+      "wasmtime": 11995
+    },
+    {
+      "extracted_from_weights": 11777,
+      "input_i32": -107,
+      "pass": true,
+      "relu": 11777,
+      "typed": 11777,
+      "wasmtime": 11777
+    },
+    {
+      "extracted_from_weights": 11561,
+      "input_i32": -106,
+      "pass": true,
+      "relu": 11561,
+      "typed": 11561,
+      "wasmtime": 11561
+    },
+    {
+      "extracted_from_weights": 11347,
+      "input_i32": -105,
+      "pass": true,
+      "relu": 11347,
+      "typed": 11347,
+      "wasmtime": 11347
+    },
+    {
+      "extracted_from_weights": 11135,
+      "input_i32": -104,
+      "pass": true,
+      "relu": 11135,
+      "typed": 11135,
+      "wasmtime": 11135
+    },
+    {
+      "extracted_from_weights": 10925,
+      "input_i32": -103,
+      "pass": true,
+      "relu": 10925,
+      "typed": 10925,
+      "wasmtime": 10925
+    },
+    {
+      "extracted_from_weights": 10717,
+      "input_i32": -102,
+      "pass": true,
+      "relu": 10717,
+      "typed": 10717,
+      "wasmtime": 10717
+    },
+    {
+      "extracted_from_weights": 10511,
+      "input_i32": -101,
+      "pass": true,
+      "relu": 10511,
+      "typed": 10511,
+      "wasmtime": 10511
+    },
+    {
+      "extracted_from_weights": 10307,
+      "input_i32": -100,
+      "pass": true,
+      "relu": 10307,
+      "typed": 10307,
+      "wasmtime": 10307
+    },
+    {
+      "extracted_from_weights": 10105,
+      "input_i32": -99,
+      "pass": true,
+      "relu": 10105,
+      "typed": 10105,
+      "wasmtime": 10105
+    },
+    {
+      "extracted_from_weights": 9905,
+      "input_i32": -98,
+      "pass": true,
+      "relu": 9905,
+      "typed": 9905,
+      "wasmtime": 9905
+    },
+    {
+      "extracted_from_weights": 9707,
+      "input_i32": -97,
+      "pass": true,
+      "relu": 9707,
+      "typed": 9707,
+      "wasmtime": 9707
+    },
+    {
+      "extracted_from_weights": 9511,
+      "input_i32": -96,
+      "pass": true,
+      "relu": 9511,
+      "typed": 9511,
+      "wasmtime": 9511
+    },
+    {
+      "extracted_from_weights": 9317,
+      "input_i32": -95,
+      "pass": true,
+      "relu": 9317,
+      "typed": 9317,
+      "wasmtime": 9317
+    },
+    {
+      "extracted_from_weights": 9125,
+      "input_i32": -94,
+      "pass": true,
+      "relu": 9125,
+      "typed": 9125,
+      "wasmtime": 9125
+    },
+    {
+      "extracted_from_weights": 8935,
+      "input_i32": -93,
+      "pass": true,
+      "relu": 8935,
+      "typed": 8935,
+      "wasmtime": 8935
+    },
+    {
+      "extracted_from_weights": 8747,
+      "input_i32": -92,
+      "pass": true,
+      "relu": 8747,
+      "typed": 8747,
+      "wasmtime": 8747
+    },
+    {
+      "extracted_from_weights": 8561,
+      "input_i32": -91,
+      "pass": true,
+      "relu": 8561,
+      "typed": 8561,
+      "wasmtime": 8561
+    },
+    {
+      "extracted_from_weights": 8377,
+      "input_i32": -90,
+      "pass": true,
+      "relu": 8377,
+      "typed": 8377,
+      "wasmtime": 8377
+    },
+    {
+      "extracted_from_weights": 8195,
+      "input_i32": -89,
+      "pass": true,
+      "relu": 8195,
+      "typed": 8195,
+      "wasmtime": 8195
+    },
+    {
+      "extracted_from_weights": 8015,
+      "input_i32": -88,
+      "pass": true,
+      "relu": 8015,
+      "typed": 8015,
+      "wasmtime": 8015
+    },
+    {
+      "extracted_from_weights": 7837,
+      "input_i32": -87,
+      "pass": true,
+      "relu": 7837,
+      "typed": 7837,
+      "wasmtime": 7837
+    },
+    {
+      "extracted_from_weights": 7661,
+      "input_i32": -86,
+      "pass": true,
+      "relu": 7661,
+      "typed": 7661,
+      "wasmtime": 7661
+    },
+    {
+      "extracted_from_weights": 7487,
+      "input_i32": -85,
+      "pass": true,
+      "relu": 7487,
+      "typed": 7487,
+      "wasmtime": 7487
+    },
+    {
+      "extracted_from_weights": 7315,
+      "input_i32": -84,
+      "pass": true,
+      "relu": 7315,
+      "typed": 7315,
+      "wasmtime": 7315
+    },
+    {
+      "extracted_from_weights": 7145,
+      "input_i32": -83,
+      "pass": true,
+      "relu": 7145,
+      "typed": 7145,
+      "wasmtime": 7145
+    },
+    {
+      "extracted_from_weights": 6977,
+      "input_i32": -82,
+      "pass": true,
+      "relu": 6977,
+      "typed": 6977,
+      "wasmtime": 6977
+    },
+    {
+      "extracted_from_weights": 6811,
+      "input_i32": -81,
+      "pass": true,
+      "relu": 6811,
+      "typed": 6811,
+      "wasmtime": 6811
+    },
+    {
+      "extracted_from_weights": 6647,
+      "input_i32": -80,
+      "pass": true,
+      "relu": 6647,
+      "typed": 6647,
+      "wasmtime": 6647
+    },
+    {
+      "extracted_from_weights": 6485,
+      "input_i32": -79,
+      "pass": true,
+      "relu": 6485,
+      "typed": 6485,
+      "wasmtime": 6485
+    },
+    {
+      "extracted_from_weights": 6325,
+      "input_i32": -78,
+      "pass": true,
+      "relu": 6325,
+      "typed": 6325,
+      "wasmtime": 6325
+    },
+    {
+      "extracted_from_weights": 6167,
+      "input_i32": -77,
+      "pass": true,
+      "relu": 6167,
+      "typed": 6167,
+      "wasmtime": 6167
+    },
+    {
+      "extracted_from_weights": 6011,
+      "input_i32": -76,
+      "pass": true,
+      "relu": 6011,
+      "typed": 6011,
+      "wasmtime": 6011
+    },
+    {
+      "extracted_from_weights": 5857,
+      "input_i32": -75,
+      "pass": true,
+      "relu": 5857,
+      "typed": 5857,
+      "wasmtime": 5857
+    },
+    {
+      "extracted_from_weights": 5705,
+      "input_i32": -74,
+      "pass": true,
+      "relu": 5705,
+      "typed": 5705,
+      "wasmtime": 5705
+    },
+    {
+      "extracted_from_weights": 5555,
+      "input_i32": -73,
+      "pass": true,
+      "relu": 5555,
+      "typed": 5555,
+      "wasmtime": 5555
+    },
+    {
+      "extracted_from_weights": 5407,
+      "input_i32": -72,
+      "pass": true,
+      "relu": 5407,
+      "typed": 5407,
+      "wasmtime": 5407
+    },
+    {
+      "extracted_from_weights": 5261,
+      "input_i32": -71,
+      "pass": true,
+      "relu": 5261,
+      "typed": 5261,
+      "wasmtime": 5261
+    },
+    {
+      "extracted_from_weights": 5117,
+      "input_i32": -70,
+      "pass": true,
+      "relu": 5117,
+      "typed": 5117,
+      "wasmtime": 5117
+    },
+    {
+      "extracted_from_weights": 4975,
+      "input_i32": -69,
+      "pass": true,
+      "relu": 4975,
+      "typed": 4975,
+      "wasmtime": 4975
+    },
+    {
+      "extracted_from_weights": 4835,
+      "input_i32": -68,
+      "pass": true,
+      "relu": 4835,
+      "typed": 4835,
+      "wasmtime": 4835
+    },
+    {
+      "extracted_from_weights": 4697,
+      "input_i32": -67,
+      "pass": true,
+      "relu": 4697,
+      "typed": 4697,
+      "wasmtime": 4697
+    },
+    {
+      "extracted_from_weights": 4561,
+      "input_i32": -66,
+      "pass": true,
+      "relu": 4561,
+      "typed": 4561,
+      "wasmtime": 4561
+    },
+    {
+      "extracted_from_weights": 4427,
+      "input_i32": -65,
+      "pass": true,
+      "relu": 4427,
+      "typed": 4427,
+      "wasmtime": 4427
+    },
+    {
+      "extracted_from_weights": 4295,
+      "input_i32": -64,
+      "pass": true,
+      "relu": 4295,
+      "typed": 4295,
+      "wasmtime": 4295
+    },
+    {
+      "extracted_from_weights": 4165,
+      "input_i32": -63,
+      "pass": true,
+      "relu": 4165,
+      "typed": 4165,
+      "wasmtime": 4165
+    },
+    {
+      "extracted_from_weights": 4037,
+      "input_i32": -62,
+      "pass": true,
+      "relu": 4037,
+      "typed": 4037,
+      "wasmtime": 4037
+    },
+    {
+      "extracted_from_weights": 3911,
+      "input_i32": -61,
+      "pass": true,
+      "relu": 3911,
+      "typed": 3911,
+      "wasmtime": 3911
+    },
+    {
+      "extracted_from_weights": 3787,
+      "input_i32": -60,
+      "pass": true,
+      "relu": 3787,
+      "typed": 3787,
+      "wasmtime": 3787
+    },
+    {
+      "extracted_from_weights": 3665,
+      "input_i32": -59,
+      "pass": true,
+      "relu": 3665,
+      "typed": 3665,
+      "wasmtime": 3665
+    },
+    {
+      "extracted_from_weights": 3545,
+      "input_i32": -58,
+      "pass": true,
+      "relu": 3545,
+      "typed": 3545,
+      "wasmtime": 3545
+    },
+    {
+      "extracted_from_weights": 3427,
+      "input_i32": -57,
+      "pass": true,
+      "relu": 3427,
+      "typed": 3427,
+      "wasmtime": 3427
+    },
+    {
+      "extracted_from_weights": 3311,
+      "input_i32": -56,
+      "pass": true,
+      "relu": 3311,
+      "typed": 3311,
+      "wasmtime": 3311
+    },
+    {
+      "extracted_from_weights": 3197,
+      "input_i32": -55,
+      "pass": true,
+      "relu": 3197,
+      "typed": 3197,
+      "wasmtime": 3197
+    },
+    {
+      "extracted_from_weights": 3085,
+      "input_i32": -54,
+      "pass": true,
+      "relu": 3085,
+      "typed": 3085,
+      "wasmtime": 3085
+    },
+    {
+      "extracted_from_weights": 2975,
+      "input_i32": -53,
+      "pass": true,
+      "relu": 2975,
+      "typed": 2975,
+      "wasmtime": 2975
+    },
+    {
+      "extracted_from_weights": 2867,
+      "input_i32": -52,
+      "pass": true,
+      "relu": 2867,
+      "typed": 2867,
+      "wasmtime": 2867
+    },
+    {
+      "extracted_from_weights": 2761,
+      "input_i32": -51,
+      "pass": true,
+      "relu": 2761,
+      "typed": 2761,
+      "wasmtime": 2761
+    },
+    {
+      "extracted_from_weights": 2657,
+      "input_i32": -50,
+      "pass": true,
+      "relu": 2657,
+      "typed": 2657,
+      "wasmtime": 2657
+    },
+    {
+      "extracted_from_weights": 2555,
+      "input_i32": -49,
+      "pass": true,
+      "relu": 2555,
+      "typed": 2555,
+      "wasmtime": 2555
+    },
+    {
+      "extracted_from_weights": 2455,
+      "input_i32": -48,
+      "pass": true,
+      "relu": 2455,
+      "typed": 2455,
+      "wasmtime": 2455
+    },
+    {
+      "extracted_from_weights": 2357,
+      "input_i32": -47,
+      "pass": true,
+      "relu": 2357,
+      "typed": 2357,
+      "wasmtime": 2357
+    },
+    {
+      "extracted_from_weights": 2261,
+      "input_i32": -46,
+      "pass": true,
+      "relu": 2261,
+      "typed": 2261,
+      "wasmtime": 2261
+    },
+    {
+      "extracted_from_weights": 2167,
+      "input_i32": -45,
+      "pass": true,
+      "relu": 2167,
+      "typed": 2167,
+      "wasmtime": 2167
+    },
+    {
+      "extracted_from_weights": 2075,
+      "input_i32": -44,
+      "pass": true,
+      "relu": 2075,
+      "typed": 2075,
+      "wasmtime": 2075
+    },
+    {
+      "extracted_from_weights": 1985,
+      "input_i32": -43,
+      "pass": true,
+      "relu": 1985,
+      "typed": 1985,
+      "wasmtime": 1985
+    },
+    {
+      "extracted_from_weights": 1897,
+      "input_i32": -42,
+      "pass": true,
+      "relu": 1897,
+      "typed": 1897,
+      "wasmtime": 1897
+    },
+    {
+      "extracted_from_weights": 1811,
+      "input_i32": -41,
+      "pass": true,
+      "relu": 1811,
+      "typed": 1811,
+      "wasmtime": 1811
+    },
+    {
+      "extracted_from_weights": 1727,
+      "input_i32": -40,
+      "pass": true,
+      "relu": 1727,
+      "typed": 1727,
+      "wasmtime": 1727
+    },
+    {
+      "extracted_from_weights": 1645,
+      "input_i32": -39,
+      "pass": true,
+      "relu": 1645,
+      "typed": 1645,
+      "wasmtime": 1645
+    },
+    {
+      "extracted_from_weights": 1565,
+      "input_i32": -38,
+      "pass": true,
+      "relu": 1565,
+      "typed": 1565,
+      "wasmtime": 1565
+    },
+    {
+      "extracted_from_weights": 1487,
+      "input_i32": -37,
+      "pass": true,
+      "relu": 1487,
+      "typed": 1487,
+      "wasmtime": 1487
+    },
+    {
+      "extracted_from_weights": 1411,
+      "input_i32": -36,
+      "pass": true,
+      "relu": 1411,
+      "typed": 1411,
+      "wasmtime": 1411
+    },
+    {
+      "extracted_from_weights": 1337,
+      "input_i32": -35,
+      "pass": true,
+      "relu": 1337,
+      "typed": 1337,
+      "wasmtime": 1337
+    },
+    {
+      "extracted_from_weights": 1265,
+      "input_i32": -34,
+      "pass": true,
+      "relu": 1265,
+      "typed": 1265,
+      "wasmtime": 1265
+    },
+    {
+      "extracted_from_weights": 1195,
+      "input_i32": -33,
+      "pass": true,
+      "relu": 1195,
+      "typed": 1195,
+      "wasmtime": 1195
+    },
+    {
+      "extracted_from_weights": 1127,
+      "input_i32": -32,
+      "pass": true,
+      "relu": 1127,
+      "typed": 1127,
+      "wasmtime": 1127
+    },
+    {
+      "extracted_from_weights": 1061,
+      "input_i32": -31,
+      "pass": true,
+      "relu": 1061,
+      "typed": 1061,
+      "wasmtime": 1061
+    },
+    {
+      "extracted_from_weights": 997,
+      "input_i32": -30,
+      "pass": true,
+      "relu": 997,
+      "typed": 997,
+      "wasmtime": 997
+    },
+    {
+      "extracted_from_weights": 935,
+      "input_i32": -29,
+      "pass": true,
+      "relu": 935,
+      "typed": 935,
+      "wasmtime": 935
+    },
+    {
+      "extracted_from_weights": 875,
+      "input_i32": -28,
+      "pass": true,
+      "relu": 875,
+      "typed": 875,
+      "wasmtime": 875
+    },
+    {
+      "extracted_from_weights": 817,
+      "input_i32": -27,
+      "pass": true,
+      "relu": 817,
+      "typed": 817,
+      "wasmtime": 817
+    },
+    {
+      "extracted_from_weights": 761,
+      "input_i32": -26,
+      "pass": true,
+      "relu": 761,
+      "typed": 761,
+      "wasmtime": 761
+    },
+    {
+      "extracted_from_weights": 707,
+      "input_i32": -25,
+      "pass": true,
+      "relu": 707,
+      "typed": 707,
+      "wasmtime": 707
+    },
+    {
+      "extracted_from_weights": 655,
+      "input_i32": -24,
+      "pass": true,
+      "relu": 655,
+      "typed": 655,
+      "wasmtime": 655
+    },
+    {
+      "extracted_from_weights": 605,
+      "input_i32": -23,
+      "pass": true,
+      "relu": 605,
+      "typed": 605,
+      "wasmtime": 605
+    },
+    {
+      "extracted_from_weights": 557,
+      "input_i32": -22,
+      "pass": true,
+      "relu": 557,
+      "typed": 557,
+      "wasmtime": 557
+    },
+    {
+      "extracted_from_weights": 511,
+      "input_i32": -21,
+      "pass": true,
+      "relu": 511,
+      "typed": 511,
+      "wasmtime": 511
+    },
+    {
+      "extracted_from_weights": 467,
+      "input_i32": -20,
+      "pass": true,
+      "relu": 467,
+      "typed": 467,
+      "wasmtime": 467
+    },
+    {
+      "extracted_from_weights": 425,
+      "input_i32": -19,
+      "pass": true,
+      "relu": 425,
+      "typed": 425,
+      "wasmtime": 425
+    },
+    {
+      "extracted_from_weights": 385,
+      "input_i32": -18,
+      "pass": true,
+      "relu": 385,
+      "typed": 385,
+      "wasmtime": 385
+    },
+    {
+      "extracted_from_weights": 347,
+      "input_i32": -17,
+      "pass": true,
+      "relu": 347,
+      "typed": 347,
+      "wasmtime": 347
+    },
+    {
+      "extracted_from_weights": 311,
+      "input_i32": -16,
+      "pass": true,
+      "relu": 311,
+      "typed": 311,
+      "wasmtime": 311
+    },
+    {
+      "extracted_from_weights": 277,
+      "input_i32": -15,
+      "pass": true,
+      "relu": 277,
+      "typed": 277,
+      "wasmtime": 277
+    },
+    {
+      "extracted_from_weights": 245,
+      "input_i32": -14,
+      "pass": true,
+      "relu": 245,
+      "typed": 245,
+      "wasmtime": 245
+    },
+    {
+      "extracted_from_weights": 215,
+      "input_i32": -13,
+      "pass": true,
+      "relu": 215,
+      "typed": 215,
+      "wasmtime": 215
+    },
+    {
+      "extracted_from_weights": 187,
+      "input_i32": -12,
+      "pass": true,
+      "relu": 187,
+      "typed": 187,
+      "wasmtime": 187
+    },
+    {
+      "extracted_from_weights": 161,
+      "input_i32": -11,
+      "pass": true,
+      "relu": 161,
+      "typed": 161,
+      "wasmtime": 161
+    },
+    {
+      "extracted_from_weights": 137,
+      "input_i32": -10,
+      "pass": true,
+      "relu": 137,
+      "typed": 137,
+      "wasmtime": 137
+    },
+    {
+      "extracted_from_weights": 115,
+      "input_i32": -9,
+      "pass": true,
+      "relu": 115,
+      "typed": 115,
+      "wasmtime": 115
+    },
+    {
+      "extracted_from_weights": 95,
+      "input_i32": -8,
+      "pass": true,
+      "relu": 95,
+      "typed": 95,
+      "wasmtime": 95
+    },
+    {
+      "extracted_from_weights": 77,
+      "input_i32": -7,
+      "pass": true,
+      "relu": 77,
+      "typed": 77,
+      "wasmtime": 77
+    },
+    {
+      "extracted_from_weights": 61,
+      "input_i32": -6,
+      "pass": true,
+      "relu": 61,
+      "typed": 61,
+      "wasmtime": 61
+    },
+    {
+      "extracted_from_weights": 47,
+      "input_i32": -5,
+      "pass": true,
+      "relu": 47,
+      "typed": 47,
+      "wasmtime": 47
+    },
+    {
+      "extracted_from_weights": 35,
+      "input_i32": -4,
+      "pass": true,
+      "relu": 35,
+      "typed": 35,
+      "wasmtime": 35
+    },
+    {
+      "extracted_from_weights": 25,
+      "input_i32": -3,
+      "pass": true,
+      "relu": 25,
+      "typed": 25,
+      "wasmtime": 25
+    },
+    {
+      "extracted_from_weights": 17,
+      "input_i32": -2,
+      "pass": true,
+      "relu": 17,
+      "typed": 17,
+      "wasmtime": 17
+    },
+    {
+      "extracted_from_weights": 11,
+      "input_i32": -1,
+      "pass": true,
+      "relu": 11,
+      "typed": 11,
+      "wasmtime": 11
+    },
+    {
+      "extracted_from_weights": 7,
+      "input_i32": 0,
+      "pass": true,
+      "relu": 7,
+      "typed": 7,
+      "wasmtime": 7
+    },
+    {
+      "extracted_from_weights": 5,
+      "input_i32": 1,
+      "pass": true,
+      "relu": 5,
+      "typed": 5,
+      "wasmtime": 5
+    },
+    {
+      "extracted_from_weights": 5,
+      "input_i32": 2,
+      "pass": true,
+      "relu": 5,
+      "typed": 5,
+      "wasmtime": 5
+    },
+    {
+      "extracted_from_weights": 7,
+      "input_i32": 3,
+      "pass": true,
+      "relu": 7,
+      "typed": 7,
+      "wasmtime": 7
+    },
+    {
+      "extracted_from_weights": 11,
+      "input_i32": 4,
+      "pass": true,
+      "relu": 11,
+      "typed": 11,
+      "wasmtime": 11
+    },
+    {
+      "extracted_from_weights": 17,
+      "input_i32": 5,
+      "pass": true,
+      "relu": 17,
+      "typed": 17,
+      "wasmtime": 17
+    },
+    {
+      "extracted_from_weights": 25,
+      "input_i32": 6,
+      "pass": true,
+      "relu": 25,
+      "typed": 25,
+      "wasmtime": 25
+    },
+    {
+      "extracted_from_weights": 35,
+      "input_i32": 7,
+      "pass": true,
+      "relu": 35,
+      "typed": 35,
+      "wasmtime": 35
+    },
+    {
+      "extracted_from_weights": 47,
+      "input_i32": 8,
+      "pass": true,
+      "relu": 47,
+      "typed": 47,
+      "wasmtime": 47
+    },
+    {
+      "extracted_from_weights": 61,
+      "input_i32": 9,
+      "pass": true,
+      "relu": 61,
+      "typed": 61,
+      "wasmtime": 61
+    },
+    {
+      "extracted_from_weights": 77,
+      "input_i32": 10,
+      "pass": true,
+      "relu": 77,
+      "typed": 77,
+      "wasmtime": 77
+    },
+    {
+      "extracted_from_weights": 95,
+      "input_i32": 11,
+      "pass": true,
+      "relu": 95,
+      "typed": 95,
+      "wasmtime": 95
+    },
+    {
+      "extracted_from_weights": 115,
+      "input_i32": 12,
+      "pass": true,
+      "relu": 115,
+      "typed": 115,
+      "wasmtime": 115
+    },
+    {
+      "extracted_from_weights": 137,
+      "input_i32": 13,
+      "pass": true,
+      "relu": 137,
+      "typed": 137,
+      "wasmtime": 137
+    },
+    {
+      "extracted_from_weights": 161,
+      "input_i32": 14,
+      "pass": true,
+      "relu": 161,
+      "typed": 161,
+      "wasmtime": 161
+    },
+    {
+      "extracted_from_weights": 187,
+      "input_i32": 15,
+      "pass": true,
+      "relu": 187,
+      "typed": 187,
+      "wasmtime": 187
+    },
+    {
+      "extracted_from_weights": 215,
+      "input_i32": 16,
+      "pass": true,
+      "relu": 215,
+      "typed": 215,
+      "wasmtime": 215
+    },
+    {
+      "extracted_from_weights": 245,
+      "input_i32": 17,
+      "pass": true,
+      "relu": 245,
+      "typed": 245,
+      "wasmtime": 245
+    },
+    {
+      "extracted_from_weights": 277,
+      "input_i32": 18,
+      "pass": true,
+      "relu": 277,
+      "typed": 277,
+      "wasmtime": 277
+    },
+    {
+      "extracted_from_weights": 311,
+      "input_i32": 19,
+      "pass": true,
+      "relu": 311,
+      "typed": 311,
+      "wasmtime": 311
+    },
+    {
+      "extracted_from_weights": 347,
+      "input_i32": 20,
+      "pass": true,
+      "relu": 347,
+      "typed": 347,
+      "wasmtime": 347
+    },
+    {
+      "extracted_from_weights": 385,
+      "input_i32": 21,
+      "pass": true,
+      "relu": 385,
+      "typed": 385,
+      "wasmtime": 385
+    },
+    {
+      "extracted_from_weights": 425,
+      "input_i32": 22,
+      "pass": true,
+      "relu": 425,
+      "typed": 425,
+      "wasmtime": 425
+    },
+    {
+      "extracted_from_weights": 467,
+      "input_i32": 23,
+      "pass": true,
+      "relu": 467,
+      "typed": 467,
+      "wasmtime": 467
+    },
+    {
+      "extracted_from_weights": 511,
+      "input_i32": 24,
+      "pass": true,
+      "relu": 511,
+      "typed": 511,
+      "wasmtime": 511
+    },
+    {
+      "extracted_from_weights": 557,
+      "input_i32": 25,
+      "pass": true,
+      "relu": 557,
+      "typed": 557,
+      "wasmtime": 557
+    },
+    {
+      "extracted_from_weights": 605,
+      "input_i32": 26,
+      "pass": true,
+      "relu": 605,
+      "typed": 605,
+      "wasmtime": 605
+    },
+    {
+      "extracted_from_weights": 655,
+      "input_i32": 27,
+      "pass": true,
+      "relu": 655,
+      "typed": 655,
+      "wasmtime": 655
+    },
+    {
+      "extracted_from_weights": 707,
+      "input_i32": 28,
+      "pass": true,
+      "relu": 707,
+      "typed": 707,
+      "wasmtime": 707
+    },
+    {
+      "extracted_from_weights": 761,
+      "input_i32": 29,
+      "pass": true,
+      "relu": 761,
+      "typed": 761,
+      "wasmtime": 761
+    },
+    {
+      "extracted_from_weights": 817,
+      "input_i32": 30,
+      "pass": true,
+      "relu": 817,
+      "typed": 817,
+      "wasmtime": 817
+    },
+    {
+      "extracted_from_weights": 875,
+      "input_i32": 31,
+      "pass": true,
+      "relu": 875,
+      "typed": 875,
+      "wasmtime": 875
+    },
+    {
+      "extracted_from_weights": 935,
+      "input_i32": 32,
+      "pass": true,
+      "relu": 935,
+      "typed": 935,
+      "wasmtime": 935
+    },
+    {
+      "extracted_from_weights": 997,
+      "input_i32": 33,
+      "pass": true,
+      "relu": 997,
+      "typed": 997,
+      "wasmtime": 997
+    },
+    {
+      "extracted_from_weights": 1061,
+      "input_i32": 34,
+      "pass": true,
+      "relu": 1061,
+      "typed": 1061,
+      "wasmtime": 1061
+    },
+    {
+      "extracted_from_weights": 1127,
+      "input_i32": 35,
+      "pass": true,
+      "relu": 1127,
+      "typed": 1127,
+      "wasmtime": 1127
+    },
+    {
+      "extracted_from_weights": 1195,
+      "input_i32": 36,
+      "pass": true,
+      "relu": 1195,
+      "typed": 1195,
+      "wasmtime": 1195
+    },
+    {
+      "extracted_from_weights": 1265,
+      "input_i32": 37,
+      "pass": true,
+      "relu": 1265,
+      "typed": 1265,
+      "wasmtime": 1265
+    },
+    {
+      "extracted_from_weights": 1337,
+      "input_i32": 38,
+      "pass": true,
+      "relu": 1337,
+      "typed": 1337,
+      "wasmtime": 1337
+    },
+    {
+      "extracted_from_weights": 1411,
+      "input_i32": 39,
+      "pass": true,
+      "relu": 1411,
+      "typed": 1411,
+      "wasmtime": 1411
+    },
+    {
+      "extracted_from_weights": 1487,
+      "input_i32": 40,
+      "pass": true,
+      "relu": 1487,
+      "typed": 1487,
+      "wasmtime": 1487
+    },
+    {
+      "extracted_from_weights": 1565,
+      "input_i32": 41,
+      "pass": true,
+      "relu": 1565,
+      "typed": 1565,
+      "wasmtime": 1565
+    },
+    {
+      "extracted_from_weights": 1645,
+      "input_i32": 42,
+      "pass": true,
+      "relu": 1645,
+      "typed": 1645,
+      "wasmtime": 1645
+    },
+    {
+      "extracted_from_weights": 1727,
+      "input_i32": 43,
+      "pass": true,
+      "relu": 1727,
+      "typed": 1727,
+      "wasmtime": 1727
+    },
+    {
+      "extracted_from_weights": 1811,
+      "input_i32": 44,
+      "pass": true,
+      "relu": 1811,
+      "typed": 1811,
+      "wasmtime": 1811
+    },
+    {
+      "extracted_from_weights": 1897,
+      "input_i32": 45,
+      "pass": true,
+      "relu": 1897,
+      "typed": 1897,
+      "wasmtime": 1897
+    },
+    {
+      "extracted_from_weights": 1985,
+      "input_i32": 46,
+      "pass": true,
+      "relu": 1985,
+      "typed": 1985,
+      "wasmtime": 1985
+    },
+    {
+      "extracted_from_weights": 2075,
+      "input_i32": 47,
+      "pass": true,
+      "relu": 2075,
+      "typed": 2075,
+      "wasmtime": 2075
+    },
+    {
+      "extracted_from_weights": 2167,
+      "input_i32": 48,
+      "pass": true,
+      "relu": 2167,
+      "typed": 2167,
+      "wasmtime": 2167
+    },
+    {
+      "extracted_from_weights": 2261,
+      "input_i32": 49,
+      "pass": true,
+      "relu": 2261,
+      "typed": 2261,
+      "wasmtime": 2261
+    },
+    {
+      "extracted_from_weights": 2357,
+      "input_i32": 50,
+      "pass": true,
+      "relu": 2357,
+      "typed": 2357,
+      "wasmtime": 2357
+    },
+    {
+      "extracted_from_weights": 2455,
+      "input_i32": 51,
+      "pass": true,
+      "relu": 2455,
+      "typed": 2455,
+      "wasmtime": 2455
+    },
+    {
+      "extracted_from_weights": 2555,
+      "input_i32": 52,
+      "pass": true,
+      "relu": 2555,
+      "typed": 2555,
+      "wasmtime": 2555
+    },
+    {
+      "extracted_from_weights": 2657,
+      "input_i32": 53,
+      "pass": true,
+      "relu": 2657,
+      "typed": 2657,
+      "wasmtime": 2657
+    },
+    {
+      "extracted_from_weights": 2761,
+      "input_i32": 54,
+      "pass": true,
+      "relu": 2761,
+      "typed": 2761,
+      "wasmtime": 2761
+    },
+    {
+      "extracted_from_weights": 2867,
+      "input_i32": 55,
+      "pass": true,
+      "relu": 2867,
+      "typed": 2867,
+      "wasmtime": 2867
+    },
+    {
+      "extracted_from_weights": 2975,
+      "input_i32": 56,
+      "pass": true,
+      "relu": 2975,
+      "typed": 2975,
+      "wasmtime": 2975
+    },
+    {
+      "extracted_from_weights": 3085,
+      "input_i32": 57,
+      "pass": true,
+      "relu": 3085,
+      "typed": 3085,
+      "wasmtime": 3085
+    },
+    {
+      "extracted_from_weights": 3197,
+      "input_i32": 58,
+      "pass": true,
+      "relu": 3197,
+      "typed": 3197,
+      "wasmtime": 3197
+    },
+    {
+      "extracted_from_weights": 3311,
+      "input_i32": 59,
+      "pass": true,
+      "relu": 3311,
+      "typed": 3311,
+      "wasmtime": 3311
+    },
+    {
+      "extracted_from_weights": 3427,
+      "input_i32": 60,
+      "pass": true,
+      "relu": 3427,
+      "typed": 3427,
+      "wasmtime": 3427
+    },
+    {
+      "extracted_from_weights": 3545,
+      "input_i32": 61,
+      "pass": true,
+      "relu": 3545,
+      "typed": 3545,
+      "wasmtime": 3545
+    },
+    {
+      "extracted_from_weights": 3665,
+      "input_i32": 62,
+      "pass": true,
+      "relu": 3665,
+      "typed": 3665,
+      "wasmtime": 3665
+    },
+    {
+      "extracted_from_weights": 3787,
+      "input_i32": 63,
+      "pass": true,
+      "relu": 3787,
+      "typed": 3787,
+      "wasmtime": 3787
+    },
+    {
+      "extracted_from_weights": 3911,
+      "input_i32": 64,
+      "pass": true,
+      "relu": 3911,
+      "typed": 3911,
+      "wasmtime": 3911
+    },
+    {
+      "extracted_from_weights": 4037,
+      "input_i32": 65,
+      "pass": true,
+      "relu": 4037,
+      "typed": 4037,
+      "wasmtime": 4037
+    },
+    {
+      "extracted_from_weights": 4165,
+      "input_i32": 66,
+      "pass": true,
+      "relu": 4165,
+      "typed": 4165,
+      "wasmtime": 4165
+    },
+    {
+      "extracted_from_weights": 4295,
+      "input_i32": 67,
+      "pass": true,
+      "relu": 4295,
+      "typed": 4295,
+      "wasmtime": 4295
+    },
+    {
+      "extracted_from_weights": 4427,
+      "input_i32": 68,
+      "pass": true,
+      "relu": 4427,
+      "typed": 4427,
+      "wasmtime": 4427
+    },
+    {
+      "extracted_from_weights": 4561,
+      "input_i32": 69,
+      "pass": true,
+      "relu": 4561,
+      "typed": 4561,
+      "wasmtime": 4561
+    },
+    {
+      "extracted_from_weights": 4697,
+      "input_i32": 70,
+      "pass": true,
+      "relu": 4697,
+      "typed": 4697,
+      "wasmtime": 4697
+    },
+    {
+      "extracted_from_weights": 4835,
+      "input_i32": 71,
+      "pass": true,
+      "relu": 4835,
+      "typed": 4835,
+      "wasmtime": 4835
+    },
+    {
+      "extracted_from_weights": 4975,
+      "input_i32": 72,
+      "pass": true,
+      "relu": 4975,
+      "typed": 4975,
+      "wasmtime": 4975
+    },
+    {
+      "extracted_from_weights": 5117,
+      "input_i32": 73,
+      "pass": true,
+      "relu": 5117,
+      "typed": 5117,
+      "wasmtime": 5117
+    },
+    {
+      "extracted_from_weights": 5261,
+      "input_i32": 74,
+      "pass": true,
+      "relu": 5261,
+      "typed": 5261,
+      "wasmtime": 5261
+    },
+    {
+      "extracted_from_weights": 5407,
+      "input_i32": 75,
+      "pass": true,
+      "relu": 5407,
+      "typed": 5407,
+      "wasmtime": 5407
+    },
+    {
+      "extracted_from_weights": 5555,
+      "input_i32": 76,
+      "pass": true,
+      "relu": 5555,
+      "typed": 5555,
+      "wasmtime": 5555
+    },
+    {
+      "extracted_from_weights": 5705,
+      "input_i32": 77,
+      "pass": true,
+      "relu": 5705,
+      "typed": 5705,
+      "wasmtime": 5705
+    },
+    {
+      "extracted_from_weights": 5857,
+      "input_i32": 78,
+      "pass": true,
+      "relu": 5857,
+      "typed": 5857,
+      "wasmtime": 5857
+    },
+    {
+      "extracted_from_weights": 6011,
+      "input_i32": 79,
+      "pass": true,
+      "relu": 6011,
+      "typed": 6011,
+      "wasmtime": 6011
+    },
+    {
+      "extracted_from_weights": 6167,
+      "input_i32": 80,
+      "pass": true,
+      "relu": 6167,
+      "typed": 6167,
+      "wasmtime": 6167
+    },
+    {
+      "extracted_from_weights": 6325,
+      "input_i32": 81,
+      "pass": true,
+      "relu": 6325,
+      "typed": 6325,
+      "wasmtime": 6325
+    },
+    {
+      "extracted_from_weights": 6485,
+      "input_i32": 82,
+      "pass": true,
+      "relu": 6485,
+      "typed": 6485,
+      "wasmtime": 6485
+    },
+    {
+      "extracted_from_weights": 6647,
+      "input_i32": 83,
+      "pass": true,
+      "relu": 6647,
+      "typed": 6647,
+      "wasmtime": 6647
+    },
+    {
+      "extracted_from_weights": 6811,
+      "input_i32": 84,
+      "pass": true,
+      "relu": 6811,
+      "typed": 6811,
+      "wasmtime": 6811
+    },
+    {
+      "extracted_from_weights": 6977,
+      "input_i32": 85,
+      "pass": true,
+      "relu": 6977,
+      "typed": 6977,
+      "wasmtime": 6977
+    },
+    {
+      "extracted_from_weights": 7145,
+      "input_i32": 86,
+      "pass": true,
+      "relu": 7145,
+      "typed": 7145,
+      "wasmtime": 7145
+    },
+    {
+      "extracted_from_weights": 7315,
+      "input_i32": 87,
+      "pass": true,
+      "relu": 7315,
+      "typed": 7315,
+      "wasmtime": 7315
+    },
+    {
+      "extracted_from_weights": 7487,
+      "input_i32": 88,
+      "pass": true,
+      "relu": 7487,
+      "typed": 7487,
+      "wasmtime": 7487
+    },
+    {
+      "extracted_from_weights": 7661,
+      "input_i32": 89,
+      "pass": true,
+      "relu": 7661,
+      "typed": 7661,
+      "wasmtime": 7661
+    },
+    {
+      "extracted_from_weights": 7837,
+      "input_i32": 90,
+      "pass": true,
+      "relu": 7837,
+      "typed": 7837,
+      "wasmtime": 7837
+    },
+    {
+      "extracted_from_weights": 8015,
+      "input_i32": 91,
+      "pass": true,
+      "relu": 8015,
+      "typed": 8015,
+      "wasmtime": 8015
+    },
+    {
+      "extracted_from_weights": 8195,
+      "input_i32": 92,
+      "pass": true,
+      "relu": 8195,
+      "typed": 8195,
+      "wasmtime": 8195
+    },
+    {
+      "extracted_from_weights": 8377,
+      "input_i32": 93,
+      "pass": true,
+      "relu": 8377,
+      "typed": 8377,
+      "wasmtime": 8377
+    },
+    {
+      "extracted_from_weights": 8561,
+      "input_i32": 94,
+      "pass": true,
+      "relu": 8561,
+      "typed": 8561,
+      "wasmtime": 8561
+    },
+    {
+      "extracted_from_weights": 8747,
+      "input_i32": 95,
+      "pass": true,
+      "relu": 8747,
+      "typed": 8747,
+      "wasmtime": 8747
+    },
+    {
+      "extracted_from_weights": 8935,
+      "input_i32": 96,
+      "pass": true,
+      "relu": 8935,
+      "typed": 8935,
+      "wasmtime": 8935
+    },
+    {
+      "extracted_from_weights": 9125,
+      "input_i32": 97,
+      "pass": true,
+      "relu": 9125,
+      "typed": 9125,
+      "wasmtime": 9125
+    },
+    {
+      "extracted_from_weights": 9317,
+      "input_i32": 98,
+      "pass": true,
+      "relu": 9317,
+      "typed": 9317,
+      "wasmtime": 9317
+    },
+    {
+      "extracted_from_weights": 9511,
+      "input_i32": 99,
+      "pass": true,
+      "relu": 9511,
+      "typed": 9511,
+      "wasmtime": 9511
+    },
+    {
+      "extracted_from_weights": 9707,
+      "input_i32": 100,
+      "pass": true,
+      "relu": 9707,
+      "typed": 9707,
+      "wasmtime": 9707
+    },
+    {
+      "extracted_from_weights": 9905,
+      "input_i32": 101,
+      "pass": true,
+      "relu": 9905,
+      "typed": 9905,
+      "wasmtime": 9905
+    },
+    {
+      "extracted_from_weights": 10105,
+      "input_i32": 102,
+      "pass": true,
+      "relu": 10105,
+      "typed": 10105,
+      "wasmtime": 10105
+    },
+    {
+      "extracted_from_weights": 10307,
+      "input_i32": 103,
+      "pass": true,
+      "relu": 10307,
+      "typed": 10307,
+      "wasmtime": 10307
+    },
+    {
+      "extracted_from_weights": 10511,
+      "input_i32": 104,
+      "pass": true,
+      "relu": 10511,
+      "typed": 10511,
+      "wasmtime": 10511
+    },
+    {
+      "extracted_from_weights": 10717,
+      "input_i32": 105,
+      "pass": true,
+      "relu": 10717,
+      "typed": 10717,
+      "wasmtime": 10717
+    },
+    {
+      "extracted_from_weights": 10925,
+      "input_i32": 106,
+      "pass": true,
+      "relu": 10925,
+      "typed": 10925,
+      "wasmtime": 10925
+    },
+    {
+      "extracted_from_weights": 11135,
+      "input_i32": 107,
+      "pass": true,
+      "relu": 11135,
+      "typed": 11135,
+      "wasmtime": 11135
+    },
+    {
+      "extracted_from_weights": 11347,
+      "input_i32": 108,
+      "pass": true,
+      "relu": 11347,
+      "typed": 11347,
+      "wasmtime": 11347
+    },
+    {
+      "extracted_from_weights": 11561,
+      "input_i32": 109,
+      "pass": true,
+      "relu": 11561,
+      "typed": 11561,
+      "wasmtime": 11561
+    },
+    {
+      "extracted_from_weights": 11777,
+      "input_i32": 110,
+      "pass": true,
+      "relu": 11777,
+      "typed": 11777,
+      "wasmtime": 11777
+    },
+    {
+      "extracted_from_weights": 11995,
+      "input_i32": 111,
+      "pass": true,
+      "relu": 11995,
+      "typed": 11995,
+      "wasmtime": 11995
+    },
+    {
+      "extracted_from_weights": 12215,
+      "input_i32": 112,
+      "pass": true,
+      "relu": 12215,
+      "typed": 12215,
+      "wasmtime": 12215
+    },
+    {
+      "extracted_from_weights": 12437,
+      "input_i32": 113,
+      "pass": true,
+      "relu": 12437,
+      "typed": 12437,
+      "wasmtime": 12437
+    },
+    {
+      "extracted_from_weights": 12661,
+      "input_i32": 114,
+      "pass": true,
+      "relu": 12661,
+      "typed": 12661,
+      "wasmtime": 12661
+    },
+    {
+      "extracted_from_weights": 12887,
+      "input_i32": 115,
+      "pass": true,
+      "relu": 12887,
+      "typed": 12887,
+      "wasmtime": 12887
+    },
+    {
+      "extracted_from_weights": 13115,
+      "input_i32": 116,
+      "pass": true,
+      "relu": 13115,
+      "typed": 13115,
+      "wasmtime": 13115
+    },
+    {
+      "extracted_from_weights": 13345,
+      "input_i32": 117,
+      "pass": true,
+      "relu": 13345,
+      "typed": 13345,
+      "wasmtime": 13345
+    },
+    {
+      "extracted_from_weights": 13577,
+      "input_i32": 118,
+      "pass": true,
+      "relu": 13577,
+      "typed": 13577,
+      "wasmtime": 13577
+    },
+    {
+      "extracted_from_weights": 13811,
+      "input_i32": 119,
+      "pass": true,
+      "relu": 13811,
+      "typed": 13811,
+      "wasmtime": 13811
+    },
+    {
+      "extracted_from_weights": 14047,
+      "input_i32": 120,
+      "pass": true,
+      "relu": 14047,
+      "typed": 14047,
+      "wasmtime": 14047
+    },
+    {
+      "extracted_from_weights": 14285,
+      "input_i32": 121,
+      "pass": true,
+      "relu": 14285,
+      "typed": 14285,
+      "wasmtime": 14285
+    },
+    {
+      "extracted_from_weights": 14525,
+      "input_i32": 122,
+      "pass": true,
+      "relu": 14525,
+      "typed": 14525,
+      "wasmtime": 14525
+    },
+    {
+      "extracted_from_weights": 14767,
+      "input_i32": 123,
+      "pass": true,
+      "relu": 14767,
+      "typed": 14767,
+      "wasmtime": 14767
+    },
+    {
+      "extracted_from_weights": 15011,
+      "input_i32": 124,
+      "pass": true,
+      "relu": 15011,
+      "typed": 15011,
+      "wasmtime": 15011
+    },
+    {
+      "extracted_from_weights": 15257,
+      "input_i32": 125,
+      "pass": true,
+      "relu": 15257,
+      "typed": 15257,
+      "wasmtime": 15257
+    },
+    {
+      "extracted_from_weights": 15505,
+      "input_i32": 126,
+      "pass": true,
+      "relu": 15505,
+      "typed": 15505,
+      "wasmtime": 15505
+    },
+    {
+      "extracted_from_weights": 15755,
+      "input_i32": 127,
+      "pass": true,
+      "relu": 15755,
+      "typed": 15755,
+      "wasmtime": 15755
+    }
+  ]
+}
