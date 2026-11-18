@@ -15,6 +15,7 @@ import pytest
 from visuaml.compiler_lab.fixed_neural_token_vm_v48 import (
     NeuralTokenVMError,
     construct_fixed_weights,
+    compare_typed_programs_smt,
     decode_state,
     detokenize_program,
     initial_neural_state,
@@ -207,3 +208,26 @@ def test_wrong_interpreter_state_and_unadmitted_immediates_fail_closed():
     ))
     with pytest.raises(NeuralTokenVMError, match="immediate"):
         tokenize_program(oversize)
+
+
+
+def test_all_i32_source_equivalence_exposes_program_non_identifiability():
+    pytest.importorskip("z3")
+    identity = programs()[0][1]
+    identity_plus_zero = I32Program(0, (
+        op("local.get", 0), op("i32.const", 0),
+        op("i32.add"), op("end"),
+    ))
+    evidence = compare_typed_programs_smt(identity, identity_plus_zero)
+    assert evidence["solver_result"] == "unsat"
+    assert evidence["all_i32_typed_programs_equivalent"]
+    assert evidence["left_wasm_sha256"] != evidence["right_wasm_sha256"]
+    assert not evidence["unique_source_recovered_from_behavior"]
+    assert not evidence["neural_all_i32_equivalence_proved"]
+    different = I32Program(0, (
+        op("i32.const", 0), op("end"),
+    ))
+    counterexample = compare_typed_programs_smt(identity, different)
+    assert counterexample["solver_result"] == "sat"
+    assert not counterexample["all_i32_typed_programs_equivalent"]
+    assert counterexample["left_result_u32"] != counterexample["right_result_u32"]
