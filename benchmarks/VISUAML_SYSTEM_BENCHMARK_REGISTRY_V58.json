@@ -64,6 +64,38 @@
       "admission": "all target opcodes activated; report every undetected case"
     },
     {
+      "id": "neural-symbolic-roundtrip",
+      "title": "Blinded neural behavior → independently proved symbolic WASM → neural microstep",
+      "status": "implemented_unmeasured",
+      "runner": "visuaml-client/backend/scripts/benchmark_neural_symbolic_roundtrip_v58.py",
+      "units": [
+        "distinct source programs",
+        "blinded neural oracle queries",
+        "CEGIS refinements",
+        "SMT proof outcomes",
+        "Z3 wall ns",
+        "recovered WASM bytes",
+        "finite V58 instruction transitions"
+      ],
+      "dimensions": [
+        "bidirectional compilation",
+        "symbolic synthesis",
+        "all-i32 typed-source proof",
+        "finite neural reexecution",
+        "representation size"
+      ],
+      "baselines": [
+        "original typed v40 source semantics",
+        "v49 constructed bit-neural oracle",
+        "independent Z3 SMT oracle",
+        "v51 independent host execution",
+        "Wasmtime original and recovered binaries",
+        "v58 unified microstep"
+      ],
+      "source_binding": "original and recovered canonical WASM SHA-256 and bytes, Z3 formula digest, fixed v49 weight digest, Git commit/tree",
+      "admission": "synthesizer sees oracle I/O but no original source, weights, manifests or traces; solver proves typed source-to-symbolic candidate across full i32 domain; original and recovered Wasmtime and V58 finite traces agree; do not infer neural all-input proof or unknown-model decompilation"
+    },
+    {
       "id": "compiler-ir-roundtrip",
       "title": "Typed Semantic IR decode/reencode fidelity",
       "status": "planned",
@@ -294,6 +326,7 @@
     }
   ],
   "priority": [
+    "Run the v50-to-v58 blinded neural-symbolic roundtrip with independent full-i32 Z3 proof and finite Wasmtime/v58 replay; record all failed attempts and grammar limitations.",
     "Keep correctness and research-integrity failures as hard gates, not weighted score dimensions.",
     "Complete local measured v58 neural VM regression and export immutable evidence.",
     "Add typed Semantic IR roundtrip and native replay adapters to the same benchmark artifact schema.",
