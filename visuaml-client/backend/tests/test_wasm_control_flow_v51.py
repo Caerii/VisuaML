@@ -11,8 +11,8 @@ import hashlib
 import pytest
 from visuaml.compiler_lab.wasm_control_flow_v51 import (
     ControlAdmissionError,
-    ControlFuelExhausted,
     ControlExecutionTrap,
+    ControlFuelExhausted,
     ControlOperation,
     ControlProgram,
     decode_control,
