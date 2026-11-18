@@ -205,7 +205,7 @@ python -m pytest -q \
   backend/tests/test_active_models_v27.py
 ~~~
 
-The separate [pinned pretrained-model workflow](.github/workflows/v19-pretrained-probe.yml) checks a named Tiny Llama source revision, hashes, tokenizer equivalence for specified prompts, PyTorch logits, streaming state and session ownership. Passing finite model witnesses does not imply correctness on arbitrary inputs.
+The historical [pinned pretrained-model workflow](https://github.com/Caerii/VisuaML/blob/f942299fc2655e4190e962bc8731ac6bbf0226e3/.github/workflows/v19-pretrained-probe.yml) checked a named Tiny Llama source revision, hashes, tokenizer equivalence for specified prompts, PyTorch logits, streaming state and session ownership. Passing finite model witnesses does not imply correctness on arbitrary inputs.
 
 ## An open research ledger
 

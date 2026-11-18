@@ -54,7 +54,7 @@ python -m pytest -q \
   backend/tests/test_active_models_v27.py
 ~~~
 
-The [pretrained integration workflow](../.github/workflows/v19-pretrained-probe.yml) independently downloads a pinned real Tiny Llama revision, checks hashes and finite tokenizer/logit/state witnesses against Hugging Face and PyTorch, and exercises the model/session lifecycle.
+The historical [pretrained integration workflow](https://github.com/Caerii/VisuaML/blob/f942299fc2655e4190e962bc8731ac6bbf0226e3/.github/workflows/v19-pretrained-probe.yml) independently downloaded a pinned real Tiny Llama revision, checked hashes and finite tokenizer/logit/state witnesses against Hugging Face and PyTorch, and exercised the model/session lifecycle.
 
 ## Example: verified local model with leased inference
 

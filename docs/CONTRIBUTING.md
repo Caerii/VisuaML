@@ -42,7 +42,7 @@ cd ..
 ruff check visuaml-client/backend
 ~~~
 
-The [CI workflow](../.github/workflows/ci.yml) runs these categories on pushes and PRs. The [pinned pretrained-model workflow](../.github/workflows/v19-pretrained-probe.yml) adds an external verification gate when approved real-model compiler source files change.
+The historical [CI workflow](https://github.com/Caerii/VisuaML/blob/f942299fc2655e4190e962bc8731ac6bbf0226e3/.github/workflows/ci.yml) ran these categories on pushes and PRs. The [pinned pretrained-model workflow](https://github.com/Caerii/VisuaML/blob/f942299fc2655e4190e962bc8731ac6bbf0226e3/.github/workflows/v19-pretrained-probe.yml) added an external verification gate for approved real-model changes. GitHub Actions are disabled. Run the checks above locally before opening a PR.
 
 ### Required for a new architecture or backend claim
 

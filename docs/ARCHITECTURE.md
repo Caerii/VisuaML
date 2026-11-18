@@ -96,7 +96,7 @@ A verified template can be shared across client sessions. Session K/V storage re
 
 ## Verification and deployment
 
-The [main CI workflow](../.github/workflows/ci.yml) runs Python pytest and Ruff plus frontend lint, tests, typecheck, build and Prettier. The [pinned-model workflow](../.github/workflows/v19-pretrained-probe.yml) independently verifies trained Tiny Llama weights and tokenizer against Hugging Face. Evidence lives in [benchmarks](../benchmarks/).
+The historical [main CI workflow](https://github.com/Caerii/VisuaML/blob/f942299fc2655e4190e962bc8731ac6bbf0226e3/.github/workflows/ci.yml) ran Python pytest and Ruff plus frontend lint, tests, typecheck, build and Prettier. The [pinned-model workflow](https://github.com/Caerii/VisuaML/blob/f942299fc2655e4190e962bc8731ac6bbf0226e3/.github/workflows/v19-pretrained-probe.yml) independently verified trained Tiny Llama weights and tokenizer against Hugging Face. Evidence lives in [benchmarks](../benchmarks/).
 
 This is an experimental CPU inference runtime, not a public multi-tenant model-hosting service, a general native IR code generator, a signed portable AOT deployment system, or a physical optical processor. Deploying arbitrary models requires hardened OS-level isolation, resource limits, and separate threat modeling.
 

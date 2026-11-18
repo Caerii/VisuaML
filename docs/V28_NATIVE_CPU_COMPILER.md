@@ -15,7 +15,7 @@ Source:
 - [Python native compiler, ABI and session](../visuaml-client/backend/visuaml/compiler_lab/native_cpu_v28.py)
 - [Differential tests](../visuaml-client/backend/tests/test_native_cpu_v28.py)
 - [Pinned trained-model probe](../visuaml-client/backend/scripts/probe_native_llama_v28.py)
-- [Native verification workflow](../.github/workflows/native-cpu-v28.yml)
+- [Historical native verification workflow](https://github.com/Caerii/VisuaML/blob/f942299fc2655e4190e962bc8731ac6bbf0226e3/.github/workflows/native-cpu-v28.yml)
 - [Pinned trained-model evidence](../benchmarks/pretrained_llama_native_cpu_v28.json)
 
 ## The execution boundary
@@ -72,7 +72,7 @@ python -m pytest -q backend/tests/test_native_cpu_v28.py
 python -m pytest -q backend/tests/test_native_cpu_bench_v28.py
 ~~~
 
-The online pinned-model verification is in [native-cpu-v28.yml](../.github/workflows/native-cpu-v28.yml). The compiler does not fetch native toolchains or arbitrary model code.
+The historical online pinned-model procedure is in [native-cpu-v28.yml](https://github.com/Caerii/VisuaML/blob/f942299fc2655e4190e962bc8731ac6bbf0226e3/.github/workflows/native-cpu-v28.yml). The compiler does not fetch native toolchains or arbitrary model code.
 
 ## How to measure the implementation
 
