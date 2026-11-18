@@ -1,0 +1,109 @@
+{
+  "artifacts": {
+    "arithmetic-chain-16-x86-64.s": {
+      "bytes": 115,
+      "sha256": "fd0020307f9fa14b5f9ab308d1a4078502f972173d5e12222bb3f09ac92b8bdb"
+    },
+    "full-1.json.gz": {
+      "bytes": 40940,
+      "sha256": "44548c83c3c3acdc990954a5f1ece34a9919d79bcf99320f056f105e1b156e4d",
+      "uncompressed_sha256": "994f29646f972fcecbde126508c54dbf172d694ad6777da3c615deb3cc62e640"
+    },
+    "full-2.json.gz": {
+      "bytes": 40769,
+      "sha256": "f907c576a1f17d4a41ef1c11d61538487dda494899d70e314a75c336ad48995c",
+      "uncompressed_sha256": "026bf62b9c9870ccadf50a8239586ed0d641f2abae39d002db8c2e5ebf1ce79d"
+    },
+    "reference-faults.json": {
+      "bytes": 6735,
+      "sha256": "0c9cce5f3658c2c7665dcb519f198b92c5241271581a5594e5835f8d3ae7d279"
+    },
+    "translation-validation.json": {
+      "bytes": 9266,
+      "sha256": "548df1eefab29a2453e3fb60a07509cc3e9eaec1cb06482ddbdfe87a5987ee09"
+    }
+  },
+  "runs": [
+    {
+      "artifact": "full-1.json.gz",
+      "estimated_break_even_vs_wasmtime": {
+        "max_calls": 13053,
+        "median_calls": 5260,
+        "min_calls": 3799,
+        "programs": 35
+      },
+      "source": {
+        "branch": "research/v58-native-specialization",
+        "commit": "1d4236646d7d1b40c94a1813a32ee4faeb21d8e6",
+        "tree": "e7ee00b5959d76241f05266bffcf2273f4b56a82"
+      },
+      "summary": {
+        "excluded_witnesses": 41,
+        "geomean_speedup_native_over": {
+          "native_trace": 11.574862089018357,
+          "neural_v58_trace": 30592.057957128996,
+          "wasmtime_warm": 12.766908371296452
+        },
+        "median_case_latency_ns": {
+          "native_trace": 17559,
+          "native_warm": 1628,
+          "neural_v58_trace": 44602942,
+          "wasmtime_warm": 20253
+        },
+        "median_native_setup_ns": 100585562,
+        "median_wasmtime_setup_ns": 2089689,
+        "neural_over_native_trace_geomean": 2642.9738619653344,
+        "programs": 35,
+        "transitions": 3387,
+        "witnesses": 197
+      }
+    },
+    {
+      "artifact": "full-2.json.gz",
+      "estimated_break_even_vs_wasmtime": {
+        "max_calls": 17560,
+        "median_calls": 4039,
+        "min_calls": 3268,
+        "programs": 35
+      },
+      "source": {
+        "branch": "research/v58-native-specialization",
+        "commit": "1d4236646d7d1b40c94a1813a32ee4faeb21d8e6",
+        "tree": "e7ee00b5959d76241f05266bffcf2273f4b56a82"
+      },
+      "summary": {
+        "excluded_witnesses": 41,
+        "geomean_speedup_native_over": {
+          "native_trace": 11.567867726532596,
+          "neural_v58_trace": 27151.072325452482,
+          "wasmtime_warm": 12.66880527481481
+        },
+        "median_case_latency_ns": {
+          "native_trace": 17813,
+          "native_warm": 1648,
+          "neural_v58_trace": 41383897,
+          "wasmtime_warm": 20230
+        },
+        "median_native_setup_ns": 77718179,
+        "median_wasmtime_setup_ns": 1769254,
+        "neural_over_native_trace_geomean": 2347.1112366869083,
+        "programs": 35,
+        "transitions": 3387,
+        "witnesses": 197
+      }
+    }
+  ],
+  "schema": "visuaml.native-specialization-experiment.v58",
+  "translation_validation": {
+    "source": {
+      "branch": "research/v58-native-specialization",
+      "commit": "fba35d7013bdcbd1e22eee60017d021514116016",
+      "tree": "6b58505ffd959baf7936f3af16a730e85f50bfff"
+    },
+    "summary": {
+      "unknown": 0,
+      "unsat": 33,
+      "unsupported_source_solver_length": 2
+    }
+  }
+}

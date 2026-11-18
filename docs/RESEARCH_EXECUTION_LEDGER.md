@@ -168,3 +168,13 @@ per-pair timings, binary sizes, and conditional recovery amortization
 are recorded in the representation-cost artifact. The tested change
 was the symbolic WASM representation. Execution weights were held
 fixed.
+
+## v58 direct native specialization
+
+The new opt-in CPU path lowers admitted straight-line WASM into a direct
+native function. The original fixed-weight neural executor remains the
+reference for gate experiments. On two scaling runs, native state-traced
+execution was 2,347–2,643× faster than traced v58 across 197 paired witnesses.
+Cold C++ compilation changes the tradeoff against Wasmtime. The
+[experiment report](V58_NATIVE_SPECIALIZATION.md) pins the code, replays,
+proof coverage, warm results, and estimated crossover for future work.
