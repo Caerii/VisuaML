@@ -75,3 +75,71 @@ jobs:
           path: pretrained-v38/mnist-8-native-replay.json
           if-no-files-found: error
           retention-days: 30
+
+  archive-verified-result:
+    needs: generated-native
+    if: github.event_name == 'push' && github.ref == 'refs/heads/research/v38-onnx-semantic-native'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/v38-onnx-semantic-native
+          persist-credentials: true
+      - name: Require the original source commit, not a newer moving branch
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - uses: actions/download-artifact@v4
+        with:
+          name: pretrained-mnist8-semantic-native-v38
+          path: recovered-native-v38
+      - name: Append-only archival of exact original JSON and separate origin manifest
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          raw = Path("recovered-native-v38/mnist-8-native-replay.json").read_bytes()
+          record = json.loads(raw)
+          sha = hashlib.sha256(raw).hexdigest()
+          assert record["source_commit"] == os.environ["GITHUB_SHA"]
+          assert record["native_execution"] is True and record["all_passed"] is True
+          assert record["graph_operation_count"] == 12 and len(record["witnesses"]) == 5
+          assert record["checkpoint_sha256"] == "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf"
+          assert hashlib.sha256(record["generated_cpp"].encode()).hexdigest() == record["compiler"]["generated_cpp_sha256"]
+          assert all(all(y["passed"] for y in w["numerics"].values()) and w["input_immutability"] for w in record["witnesses"])
+          root = Path("benchmarks")
+          evidence = root / "pretrained_mnist8_native_semantic_v38.json"
+          origin = root / "pretrained_mnist8_native_semantic_v38.origin.json"
+          if evidence.exists() or origin.exists():
+              raise SystemExit("Refuse to replace existing source-bound numerical archive")
+          evidence.write_bytes(raw)
+          ledger = {
+              "schema": "visuaml.pretrained-native-archive-origin.v38",
+              "evidence_path": evidence.as_posix(),
+              "evidence_sha256": sha,
+              "evidence_bytes": len(raw),
+              "source_commit": os.environ["GITHUB_SHA"],
+              "workflow_run_url": (
+                  "https://github.com/" + os.environ["GITHUB_REPOSITORY"]
+                  + "/actions/runs/" + os.environ["GITHUB_RUN_ID"]
+              ),
+              "checkpoint_sha256": record["checkpoint_sha256"],
+              "semantic_sha256": record["compiler"]["semantic_sha256"],
+              "generated_cpp_sha256": record["compiler"]["generated_cpp_sha256"],
+              "native_binary_sha256": record["compiler"]["native_binary_sha256"],
+              "verification_scope": "Finite five-case, source-bound, graph-derived native pretrained CNN against ONNX Runtime and independent scalar NumPy. Not all-input equivalence.",
+          }
+          origin.write_text(json.dumps(ledger, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          print("Permanent source-bound archive bytes:", len(raw), "SHA-256:", sha)
+          PY
+          git config user.name 'visuaml-evidence-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add benchmarks/pretrained_mnist8_native_semantic_v38.json benchmarks/pretrained_mnist8_native_semantic_v38.origin.json
+          git diff --cached --exit-code --quiet && exit 0
+          git commit -m 'v38: archive exact successful native pretrained experiment and CI origin'
+          git push origin HEAD:research/v38-onnx-semantic-native
