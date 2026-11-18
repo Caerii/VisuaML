@@ -76,6 +76,7 @@ def main() -> None:
         "backend/scripts/list_system_benchmarks_v58.py",
         "backend/scripts/verify_offline_v58.py",
         "backend/scripts/benchmark_neural_symbolic_roundtrip_v58.py",
+        "backend/scripts/verify_neural_roundtrip_evidence_v58.py",
         "backend/visuaml/compiler_lab/neural_symbolic_roundtrip_v58.py",
         "backend/tests/test_neural_symbolic_roundtrip_v58.py",
         "backend/tests/test_neural_microstep_v58.py",
@@ -120,11 +121,17 @@ def main() -> None:
             sys.executable, "-m", "pytest", "-q",
             "backend/tests/test_neural_symbolic_roundtrip_v58.py",
         ), client=client, env=env)
+        roundtrip_file = output_dir / "neural-v58-roundtrips.json"
         invoke((
             sys.executable,
             "backend/scripts/benchmark_neural_symbolic_roundtrip_v58.py",
-            "--output", str(output_dir / "neural-v58-roundtrips.json"),
+            "--output", str(roundtrip_file),
             *(("--holdout",) if args.roundtrip_holdout else ()),
+        ), client=client, env=env)
+        invoke((
+            sys.executable,
+            "backend/scripts/verify_neural_roundtrip_evidence_v58.py",
+            "--input", str(roundtrip_file),
         ), client=client, env=env)
     if args.faults:
         invoke((
