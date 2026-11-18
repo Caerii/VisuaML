@@ -7,11 +7,15 @@ on:
     paths:
       - 'visuaml-client/backend/visuaml/compiler_lab/neural_frame_circuit_v53.py'
       - 'visuaml-client/backend/tests/test_neural_frame_circuit_v53.py'
+      - 'visuaml-client/backend/tests/test_neural_frame_replay_v53.py'
+      - 'visuaml-client/backend/visuaml/compiler_lab/neural_frame_replay_v53.py'
       - '.github/workflows/neural-frame-circuit-v53.yml'
   pull_request:
     paths:
       - 'visuaml-client/backend/visuaml/compiler_lab/neural_frame_circuit_v53.py'
       - 'visuaml-client/backend/tests/test_neural_frame_circuit_v53.py'
+      - 'visuaml-client/backend/tests/test_neural_frame_replay_v53.py'
+      - 'visuaml-client/backend/visuaml/compiler_lab/neural_frame_replay_v53.py'
       - '.github/workflows/neural-frame-circuit-v53.yml'
 jobs:
   frame-circuit:
@@ -29,5 +33,5 @@ jobs:
           python -m pip install pytest ruff
       - name: Check circuit and focused tests
         run: |
-          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_frame_circuit_v53.py visuaml-client/backend/tests/test_neural_frame_circuit_v53.py
-          PYTHONPATH=visuaml-client/backend python -m pytest -q visuaml-client/backend/tests/test_neural_frame_circuit_v53.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_frame_circuit_v53.py visuaml-client/backend/tests/test_neural_frame_circuit_v53.py visuaml-client/backend/visuaml/compiler_lab/neural_frame_replay_v53.py visuaml-client/backend/tests/test_neural_frame_replay_v53.py
+          PYTHONPATH=visuaml-client/backend python -m pytest -q visuaml-client/backend/tests/test_neural_frame_circuit_v53.py visuaml-client/backend/tests/test_neural_frame_replay_v53.py
