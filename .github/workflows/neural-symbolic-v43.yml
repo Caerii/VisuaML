@@ -7,6 +7,9 @@ on:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/neural_symbolic_recovery_v43.py
       - visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py
+      - visuaml-client/backend/tests/test_neural_symbolic_archive_v43.py
+      - benchmarks/neural_symbolic_roundtrip_v43.json
+      - benchmarks/neural_symbolic_roundtrip_v43.origin.json
       - visuaml-client/backend/scripts/probe_neural_symbolic_v43.py
       - .github/workflows/neural-symbolic-v43.yml
       - docs/V43_NEURAL_SYMBOLIC_VERIFICATION.md
@@ -14,6 +17,9 @@ on:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/neural_symbolic_recovery_v43.py
       - visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py
+      - visuaml-client/backend/tests/test_neural_symbolic_archive_v43.py
+      - benchmarks/neural_symbolic_roundtrip_v43.json
+      - benchmarks/neural_symbolic_roundtrip_v43.origin.json
       - visuaml-client/backend/scripts/probe_neural_symbolic_v43.py
       - .github/workflows/neural-symbolic-v43.yml
       - docs/V43_NEURAL_SYMBOLIC_VERIFICATION.md
@@ -39,8 +45,8 @@ jobs:
           OPENBLAS_NUM_THREADS: "1"
           OMP_NUM_THREADS: "1"
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py visuaml-client/backend/tests/test_analytic_neural_archive_v41.py
-          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_symbolic_recovery_v43.py visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py visuaml-client/backend/scripts/probe_neural_symbolic_v43.py
+          python -m pytest -q visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py visuaml-client/backend/tests/test_analytic_neural_archive_v41.py visuaml-client/backend/tests/test_neural_symbolic_archive_v43.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_symbolic_recovery_v43.py visuaml-client/backend/tests/test_neural_symbolic_recovery_v43.py visuaml-client/backend/scripts/probe_neural_symbolic_v43.py visuaml-client/backend/tests/test_neural_symbolic_archive_v43.py
       - name: Independently prove original versus reconstructed i32 and replay 326 cases
         env:
           PYTHONPATH: visuaml-client/backend
