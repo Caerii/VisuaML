@@ -1,0 +1,2751 @@
+{
+  "actual_speedup_benchmarked": false,
+  "constructed_network_all_i32_proved": false,
+  "different_activation_families": true,
+  "estimated_speedup": null,
+  "exact_neural_domain_witnesses": 256,
+  "float64_all_real_bitwise_proved": false,
+  "gated_construction": {
+    "all_i32_gated_network_proved": false,
+    "construction_type": "two independent ReGLU multiplication gates plus linear skip",
+    "different_activation_family": true,
+    "full_domain_signed_i8_evaluated": true,
+    "hidden_gated_units": 2,
+    "limitations": "Two bilinear ReGLU gates, not equivalent cost to 255 ordinary ReLU gates; not a general neural net optimizer, universal transformer VM, WASM i32 wraparound gate or proof of numerical exactness at unsafe magnitudes.",
+    "numeric_contract": "exact integer float64 on explicitly budgeted inputs",
+    "polynomial_digest": "46fd49be1625fb63d26e888a50bd711134b4e4eb0339fabe8ca9f0951c2bff9a",
+    "real_arithmetic_identity": "relu(x)*x + relu(-x)*(-x) = x*x",
+    "schema": "visuaml.constructed-reglu-quadratic.v44",
+    "serialized_scalar_parameter_count": 10,
+    "source_program_consulted_for_construction": false,
+    "speedup_measured": false,
+    "v41_reference_relu_units": 255,
+    "v41_reference_scalar_parameters": 766,
+    "weight_sha256": {
+      "gate": "b74fce6cd8bcafd014a1ce8c6585beac59c5f4098a6d499f5d1d42d464146633",
+      "gate_bias": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "output": "5f07eef034c5a21fedede8ef2f970fefbcc8ea44c02fd970117dacbee5483005",
+      "value": "b74fce6cd8bcafd014a1ce8c6585beac59c5f4098a6d499f5d1d42d464146633"
+    }
+  },
+  "gated_network_bundle_fingerprint": "acc40e0f7f182a21976b4ad2de23871b67567c1f3b5182c9628fefa417d42d4e",
+  "gated_network_raw_weights": {
+    "bias": 7,
+    "gate_bias": [
+      0.0,
+      0.0
+    ],
+    "gate_weights": [
+      1.0,
+      -1.0
+    ],
+    "output_weights": [
+      1.0,
+      1.0
+    ],
+    "skip": -3,
+    "value_weights": [
+      1.0,
+      -1.0
+    ]
+  },
+  "limitations": "Analytic two-ReGLU-gate construction of one known quadratic, with fixed input signs and a separate linear skip. Exact-real algebraic identity solver-checked by sign cases; exact float64 integers only under an explicit bound. Unlike original ReLU network, not a full i32 modular neural implementation. Not a trained architecture discovery, GPU performance claim, or universal neural interpreter.",
+  "new_gated_reglu_units": 2,
+  "new_scalar_parameter_count": 10,
+  "numpy_version": "2.2.6",
+  "old_neural_extrapolation_counterexample": {
+    "constructed_v44_reglu_output": 16007,
+    "input": 128,
+    "original_v41_relu_output": 16005,
+    "v41_and_v44_differ": true,
+    "wasmtime_source_i32_output": 16007
+  },
+  "original_ordinary_relu_units": 255,
+  "original_scalar_parameter_count": 766,
+  "original_v41_domain": [
+    -128,
+    127
+  ],
+  "original_v41_wasm_sha256": "9078c1b6b8f3edc0030e3017b9bae5c965752546a4582437236746f5f3611481",
+  "original_v41_weights_archive_sha256": "035a85ab65c9ed395e3dcb0824899609a14e20563113f0c6370731efe0a0675e",
+  "out_of_original_domain_numeric_witnesses": 7,
+  "permutation_invariant_symbolic_recovery": true,
+  "permuted_bundle_fingerprint": "913c2bd28cc4335ed9c33e46a58d88331b0b0a77b2c0fb04d60655c020072286",
+  "polynomial_expression": "(1)*x*x + (-3)*x + (7)",
+  "real_algebraic_identity_smt": {
+    "all_real_algebraic_identity_smt_checked": true,
+    "float64_all_real_bitwise_proved": false,
+    "identity": "relu(x)*x + relu(-x)*(-x) == x*x",
+    "machine_checked_proof_object": false,
+    "negative_control": "sat",
+    "negative_domain_solver": "unsat",
+    "nonnegative_domain_solver": "unsat",
+    "schema": "visuaml.reglu-exact-real-case-check.v44",
+    "solver": "Z3 4.13.4",
+    "wasm_i32_wrap_equivalence_proved": false
+  },
+  "schema": "visuaml.constructive-gated-resynthesis.v44",
+  "source_commit": "b363df464eb5645659dd9165635efc1e1d2ae2d4",
+  "source_file_sha256": {
+    "scripts/probe_constructed_reglu_v44.py": "33d3f981f054619ebbf3088cdef53d1b7ce1a2032438c084297f7de5a87fbee5",
+    "visuaml/compiler_lab/constructed_reglu_quadratic_v44.py": "d7c788331ef4ca4b5f6cb4ee5c201595c783d3c12af0d75f98bf1a25ec85947d",
+    "visuaml/compiler_lab/neural_symbolic_recovery_v43.py": "f9075acc3f4f8aef597088758e647215cbe98973de250adc3fcab45422c493e0"
+  },
+  "source_vs_recovered_symbolic_all_i32_smt": {
+    "all_i32_source_vs_symbolic_equivalent": true,
+    "machine_checked_proof_object": false,
+    "neural_all_i32_equivalent": false,
+    "query": "exists input_i32: source(input) != polynomial(input), bitvector32",
+    "schema": "visuaml.smt-i32-bitvector-equivalence.v43",
+    "smtlib_sha256": "540aa22b2430d7979d7cbc73b106c9007a58e9163bc654e402b0f089f440b92e",
+    "solver": "Z3 4.13.4",
+    "solver_outcome": "unsat",
+    "symbolic_candidate_sha256": "46fd49be1625fb63d26e888a50bd711134b4e4eb0339fabe8ca9f0951c2bff9a",
+    "symbolic_source_sha256": "ab69b9ecb82dbed1080677c5ef76c4681a56d99d030deab3d2012d68d5502325"
+  },
+  "symbolic": {
+    "a": 1,
+    "b": -3,
+    "c": 7,
+    "degree": 2,
+    "domain": [
+      -128,
+      127
+    ],
+    "inference_points": [
+      -128,
+      -127,
+      -126
+    ],
+    "recovered_function_sha256": "80ee7e2bbf735e84fbba667355e5d727ce03e247715240498f8f64ce1498ba7e",
+    "schema": "visuaml.neural-to-symbolic-polynomial.v43",
+    "source_program_read": false
+  },
+  "symbolic_source_program_extraction_uses_manifests": false,
+  "wasmtime_version": "28.0.0",
+  "witnesses": [
+    {
+      "constructed_relu_gate_float64": 16775,
+      "in_original_v41_domain": true,
+      "input_integer": -128,
+      "original_relu_float64": 16775,
+      "pass": true,
+      "permuted_relu_gate_float64": 16775,
+      "source_wasmtime_i32": 16775,
+      "typed_source_i32": 16775
+    },
+    {
+      "constructed_relu_gate_float64": 16517,
+      "in_original_v41_domain": true,
+      "input_integer": -127,
+      "original_relu_float64": 16517,
+      "pass": true,
+      "permuted_relu_gate_float64": 16517,
+      "source_wasmtime_i32": 16517,
+      "typed_source_i32": 16517
+    },
+    {
+      "constructed_relu_gate_float64": 16261,
+      "in_original_v41_domain": true,
+      "input_integer": -126,
+      "original_relu_float64": 16261,
+      "pass": true,
+      "permuted_relu_gate_float64": 16261,
+      "source_wasmtime_i32": 16261,
+      "typed_source_i32": 16261
+    },
+    {
+      "constructed_relu_gate_float64": 16007,
+      "in_original_v41_domain": true,
+      "input_integer": -125,
+      "original_relu_float64": 16007,
+      "pass": true,
+      "permuted_relu_gate_float64": 16007,
+      "source_wasmtime_i32": 16007,
+      "typed_source_i32": 16007
+    },
+    {
+      "constructed_relu_gate_float64": 15755,
+      "in_original_v41_domain": true,
+      "input_integer": -124,
+      "original_relu_float64": 15755,
+      "pass": true,
+      "permuted_relu_gate_float64": 15755,
+      "source_wasmtime_i32": 15755,
+      "typed_source_i32": 15755
+    },
+    {
+      "constructed_relu_gate_float64": 15505,
+      "in_original_v41_domain": true,
+      "input_integer": -123,
+      "original_relu_float64": 15505,
+      "pass": true,
+      "permuted_relu_gate_float64": 15505,
+      "source_wasmtime_i32": 15505,
+      "typed_source_i32": 15505
+    },
+    {
+      "constructed_relu_gate_float64": 15257,
+      "in_original_v41_domain": true,
+      "input_integer": -122,
+      "original_relu_float64": 15257,
+      "pass": true,
+      "permuted_relu_gate_float64": 15257,
+      "source_wasmtime_i32": 15257,
+      "typed_source_i32": 15257
+    },
+    {
+      "constructed_relu_gate_float64": 15011,
+      "in_original_v41_domain": true,
+      "input_integer": -121,
+      "original_relu_float64": 15011,
+      "pass": true,
+      "permuted_relu_gate_float64": 15011,
+      "source_wasmtime_i32": 15011,
+      "typed_source_i32": 15011
+    },
+    {
+      "constructed_relu_gate_float64": 14767,
+      "in_original_v41_domain": true,
+      "input_integer": -120,
+      "original_relu_float64": 14767,
+      "pass": true,
+      "permuted_relu_gate_float64": 14767,
+      "source_wasmtime_i32": 14767,
+      "typed_source_i32": 14767
+    },
+    {
+      "constructed_relu_gate_float64": 14525,
+      "in_original_v41_domain": true,
+      "input_integer": -119,
+      "original_relu_float64": 14525,
+      "pass": true,
+      "permuted_relu_gate_float64": 14525,
+      "source_wasmtime_i32": 14525,
+      "typed_source_i32": 14525
+    },
+    {
+      "constructed_relu_gate_float64": 14285,
+      "in_original_v41_domain": true,
+      "input_integer": -118,
+      "original_relu_float64": 14285,
+      "pass": true,
+      "permuted_relu_gate_float64": 14285,
+      "source_wasmtime_i32": 14285,
+      "typed_source_i32": 14285
+    },
+    {
+      "constructed_relu_gate_float64": 14047,
+      "in_original_v41_domain": true,
+      "input_integer": -117,
+      "original_relu_float64": 14047,
+      "pass": true,
+      "permuted_relu_gate_float64": 14047,
+      "source_wasmtime_i32": 14047,
+      "typed_source_i32": 14047
+    },
+    {
+      "constructed_relu_gate_float64": 13811,
+      "in_original_v41_domain": true,
+      "input_integer": -116,
+      "original_relu_float64": 13811,
+      "pass": true,
+      "permuted_relu_gate_float64": 13811,
+      "source_wasmtime_i32": 13811,
+      "typed_source_i32": 13811
+    },
+    {
+      "constructed_relu_gate_float64": 13577,
+      "in_original_v41_domain": true,
+      "input_integer": -115,
+      "original_relu_float64": 13577,
+      "pass": true,
+      "permuted_relu_gate_float64": 13577,
+      "source_wasmtime_i32": 13577,
+      "typed_source_i32": 13577
+    },
+    {
+      "constructed_relu_gate_float64": 13345,
+      "in_original_v41_domain": true,
+      "input_integer": -114,
+      "original_relu_float64": 13345,
+      "pass": true,
+      "permuted_relu_gate_float64": 13345,
+      "source_wasmtime_i32": 13345,
+      "typed_source_i32": 13345
+    },
+    {
+      "constructed_relu_gate_float64": 13115,
+      "in_original_v41_domain": true,
+      "input_integer": -113,
+      "original_relu_float64": 13115,
+      "pass": true,
+      "permuted_relu_gate_float64": 13115,
+      "source_wasmtime_i32": 13115,
+      "typed_source_i32": 13115
+    },
+    {
+      "constructed_relu_gate_float64": 12887,
+      "in_original_v41_domain": true,
+      "input_integer": -112,
+      "original_relu_float64": 12887,
+      "pass": true,
+      "permuted_relu_gate_float64": 12887,
+      "source_wasmtime_i32": 12887,
+      "typed_source_i32": 12887
+    },
+    {
+      "constructed_relu_gate_float64": 12661,
+      "in_original_v41_domain": true,
+      "input_integer": -111,
+      "original_relu_float64": 12661,
+      "pass": true,
+      "permuted_relu_gate_float64": 12661,
+      "source_wasmtime_i32": 12661,
+      "typed_source_i32": 12661
+    },
+    {
+      "constructed_relu_gate_float64": 12437,
+      "in_original_v41_domain": true,
+      "input_integer": -110,
+      "original_relu_float64": 12437,
+      "pass": true,
+      "permuted_relu_gate_float64": 12437,
+      "source_wasmtime_i32": 12437,
+      "typed_source_i32": 12437
+    },
+    {
+      "constructed_relu_gate_float64": 12215,
+      "in_original_v41_domain": true,
+      "input_integer": -109,
+      "original_relu_float64": 12215,
+      "pass": true,
+      "permuted_relu_gate_float64": 12215,
+      "source_wasmtime_i32": 12215,
+      "typed_source_i32": 12215
+    },
+    {
+      "constructed_relu_gate_float64": 11995,
+      "in_original_v41_domain": true,
+      "input_integer": -108,
+      "original_relu_float64": 11995,
+      "pass": true,
+      "permuted_relu_gate_float64": 11995,
+      "source_wasmtime_i32": 11995,
+      "typed_source_i32": 11995
+    },
+    {
+      "constructed_relu_gate_float64": 11777,
+      "in_original_v41_domain": true,
+      "input_integer": -107,
+      "original_relu_float64": 11777,
+      "pass": true,
+      "permuted_relu_gate_float64": 11777,
+      "source_wasmtime_i32": 11777,
+      "typed_source_i32": 11777
+    },
+    {
+      "constructed_relu_gate_float64": 11561,
+      "in_original_v41_domain": true,
+      "input_integer": -106,
+      "original_relu_float64": 11561,
+      "pass": true,
+      "permuted_relu_gate_float64": 11561,
+      "source_wasmtime_i32": 11561,
+      "typed_source_i32": 11561
+    },
+    {
+      "constructed_relu_gate_float64": 11347,
+      "in_original_v41_domain": true,
+      "input_integer": -105,
+      "original_relu_float64": 11347,
+      "pass": true,
+      "permuted_relu_gate_float64": 11347,
+      "source_wasmtime_i32": 11347,
+      "typed_source_i32": 11347
+    },
+    {
+      "constructed_relu_gate_float64": 11135,
+      "in_original_v41_domain": true,
+      "input_integer": -104,
+      "original_relu_float64": 11135,
+      "pass": true,
+      "permuted_relu_gate_float64": 11135,
+      "source_wasmtime_i32": 11135,
+      "typed_source_i32": 11135
+    },
+    {
+      "constructed_relu_gate_float64": 10925,
+      "in_original_v41_domain": true,
+      "input_integer": -103,
+      "original_relu_float64": 10925,
+      "pass": true,
+      "permuted_relu_gate_float64": 10925,
+      "source_wasmtime_i32": 10925,
+      "typed_source_i32": 10925
+    },
+    {
+      "constructed_relu_gate_float64": 10717,
+      "in_original_v41_domain": true,
+      "input_integer": -102,
+      "original_relu_float64": 10717,
+      "pass": true,
+      "permuted_relu_gate_float64": 10717,
+      "source_wasmtime_i32": 10717,
+      "typed_source_i32": 10717
+    },
+    {
+      "constructed_relu_gate_float64": 10511,
+      "in_original_v41_domain": true,
+      "input_integer": -101,
+      "original_relu_float64": 10511,
+      "pass": true,
+      "permuted_relu_gate_float64": 10511,
+      "source_wasmtime_i32": 10511,
+      "typed_source_i32": 10511
+    },
+    {
+      "constructed_relu_gate_float64": 10307,
+      "in_original_v41_domain": true,
+      "input_integer": -100,
+      "original_relu_float64": 10307,
+      "pass": true,
+      "permuted_relu_gate_float64": 10307,
+      "source_wasmtime_i32": 10307,
+      "typed_source_i32": 10307
+    },
+    {
+      "constructed_relu_gate_float64": 10105,
+      "in_original_v41_domain": true,
+      "input_integer": -99,
+      "original_relu_float64": 10105,
+      "pass": true,
+      "permuted_relu_gate_float64": 10105,
+      "source_wasmtime_i32": 10105,
+      "typed_source_i32": 10105
+    },
+    {
+      "constructed_relu_gate_float64": 9905,
+      "in_original_v41_domain": true,
+      "input_integer": -98,
+      "original_relu_float64": 9905,
+      "pass": true,
+      "permuted_relu_gate_float64": 9905,
+      "source_wasmtime_i32": 9905,
+      "typed_source_i32": 9905
+    },
+    {
+      "constructed_relu_gate_float64": 9707,
+      "in_original_v41_domain": true,
+      "input_integer": -97,
+      "original_relu_float64": 9707,
+      "pass": true,
+      "permuted_relu_gate_float64": 9707,
+      "source_wasmtime_i32": 9707,
+      "typed_source_i32": 9707
+    },
+    {
+      "constructed_relu_gate_float64": 9511,
+      "in_original_v41_domain": true,
+      "input_integer": -96,
+      "original_relu_float64": 9511,
+      "pass": true,
+      "permuted_relu_gate_float64": 9511,
+      "source_wasmtime_i32": 9511,
+      "typed_source_i32": 9511
+    },
+    {
+      "constructed_relu_gate_float64": 9317,
+      "in_original_v41_domain": true,
+      "input_integer": -95,
+      "original_relu_float64": 9317,
+      "pass": true,
+      "permuted_relu_gate_float64": 9317,
+      "source_wasmtime_i32": 9317,
+      "typed_source_i32": 9317
+    },
+    {
+      "constructed_relu_gate_float64": 9125,
+      "in_original_v41_domain": true,
+      "input_integer": -94,
+      "original_relu_float64": 9125,
+      "pass": true,
+      "permuted_relu_gate_float64": 9125,
+      "source_wasmtime_i32": 9125,
+      "typed_source_i32": 9125
+    },
+    {
+      "constructed_relu_gate_float64": 8935,
+      "in_original_v41_domain": true,
+      "input_integer": -93,
+      "original_relu_float64": 8935,
+      "pass": true,
+      "permuted_relu_gate_float64": 8935,
+      "source_wasmtime_i32": 8935,
+      "typed_source_i32": 8935
+    },
+    {
+      "constructed_relu_gate_float64": 8747,
+      "in_original_v41_domain": true,
+      "input_integer": -92,
+      "original_relu_float64": 8747,
+      "pass": true,
+      "permuted_relu_gate_float64": 8747,
+      "source_wasmtime_i32": 8747,
+      "typed_source_i32": 8747
+    },
+    {
+      "constructed_relu_gate_float64": 8561,
+      "in_original_v41_domain": true,
+      "input_integer": -91,
+      "original_relu_float64": 8561,
+      "pass": true,
+      "permuted_relu_gate_float64": 8561,
+      "source_wasmtime_i32": 8561,
+      "typed_source_i32": 8561
+    },
+    {
+      "constructed_relu_gate_float64": 8377,
+      "in_original_v41_domain": true,
+      "input_integer": -90,
+      "original_relu_float64": 8377,
+      "pass": true,
+      "permuted_relu_gate_float64": 8377,
+      "source_wasmtime_i32": 8377,
+      "typed_source_i32": 8377
+    },
+    {
+      "constructed_relu_gate_float64": 8195,
+      "in_original_v41_domain": true,
+      "input_integer": -89,
+      "original_relu_float64": 8195,
+      "pass": true,
+      "permuted_relu_gate_float64": 8195,
+      "source_wasmtime_i32": 8195,
+      "typed_source_i32": 8195
+    },
+    {
+      "constructed_relu_gate_float64": 8015,
+      "in_original_v41_domain": true,
+      "input_integer": -88,
+      "original_relu_float64": 8015,
+      "pass": true,
+      "permuted_relu_gate_float64": 8015,
+      "source_wasmtime_i32": 8015,
+      "typed_source_i32": 8015
+    },
+    {
+      "constructed_relu_gate_float64": 7837,
+      "in_original_v41_domain": true,
+      "input_integer": -87,
+      "original_relu_float64": 7837,
+      "pass": true,
+      "permuted_relu_gate_float64": 7837,
+      "source_wasmtime_i32": 7837,
+      "typed_source_i32": 7837
+    },
+    {
+      "constructed_relu_gate_float64": 7661,
+      "in_original_v41_domain": true,
+      "input_integer": -86,
+      "original_relu_float64": 7661,
+      "pass": true,
+      "permuted_relu_gate_float64": 7661,
+      "source_wasmtime_i32": 7661,
+      "typed_source_i32": 7661
+    },
+    {
+      "constructed_relu_gate_float64": 7487,
+      "in_original_v41_domain": true,
+      "input_integer": -85,
+      "original_relu_float64": 7487,
+      "pass": true,
+      "permuted_relu_gate_float64": 7487,
+      "source_wasmtime_i32": 7487,
+      "typed_source_i32": 7487
+    },
+    {
+      "constructed_relu_gate_float64": 7315,
+      "in_original_v41_domain": true,
+      "input_integer": -84,
+      "original_relu_float64": 7315,
+      "pass": true,
+      "permuted_relu_gate_float64": 7315,
+      "source_wasmtime_i32": 7315,
+      "typed_source_i32": 7315
+    },
+    {
+      "constructed_relu_gate_float64": 7145,
+      "in_original_v41_domain": true,
+      "input_integer": -83,
+      "original_relu_float64": 7145,
+      "pass": true,
+      "permuted_relu_gate_float64": 7145,
+      "source_wasmtime_i32": 7145,
+      "typed_source_i32": 7145
+    },
+    {
+      "constructed_relu_gate_float64": 6977,
+      "in_original_v41_domain": true,
+      "input_integer": -82,
+      "original_relu_float64": 6977,
+      "pass": true,
+      "permuted_relu_gate_float64": 6977,
+      "source_wasmtime_i32": 6977,
+      "typed_source_i32": 6977
+    },
+    {
+      "constructed_relu_gate_float64": 6811,
+      "in_original_v41_domain": true,
+      "input_integer": -81,
+      "original_relu_float64": 6811,
+      "pass": true,
+      "permuted_relu_gate_float64": 6811,
+      "source_wasmtime_i32": 6811,
+      "typed_source_i32": 6811
+    },
+    {
+      "constructed_relu_gate_float64": 6647,
+      "in_original_v41_domain": true,
+      "input_integer": -80,
+      "original_relu_float64": 6647,
+      "pass": true,
+      "permuted_relu_gate_float64": 6647,
+      "source_wasmtime_i32": 6647,
+      "typed_source_i32": 6647
+    },
+    {
+      "constructed_relu_gate_float64": 6485,
+      "in_original_v41_domain": true,
+      "input_integer": -79,
+      "original_relu_float64": 6485,
+      "pass": true,
+      "permuted_relu_gate_float64": 6485,
+      "source_wasmtime_i32": 6485,
+      "typed_source_i32": 6485
+    },
+    {
+      "constructed_relu_gate_float64": 6325,
+      "in_original_v41_domain": true,
+      "input_integer": -78,
+      "original_relu_float64": 6325,
+      "pass": true,
+      "permuted_relu_gate_float64": 6325,
+      "source_wasmtime_i32": 6325,
+      "typed_source_i32": 6325
+    },
+    {
+      "constructed_relu_gate_float64": 6167,
+      "in_original_v41_domain": true,
+      "input_integer": -77,
+      "original_relu_float64": 6167,
+      "pass": true,
+      "permuted_relu_gate_float64": 6167,
+      "source_wasmtime_i32": 6167,
+      "typed_source_i32": 6167
+    },
+    {
+      "constructed_relu_gate_float64": 6011,
+      "in_original_v41_domain": true,
+      "input_integer": -76,
+      "original_relu_float64": 6011,
+      "pass": true,
+      "permuted_relu_gate_float64": 6011,
+      "source_wasmtime_i32": 6011,
+      "typed_source_i32": 6011
+    },
+    {
+      "constructed_relu_gate_float64": 5857,
+      "in_original_v41_domain": true,
+      "input_integer": -75,
+      "original_relu_float64": 5857,
+      "pass": true,
+      "permuted_relu_gate_float64": 5857,
+      "source_wasmtime_i32": 5857,
+      "typed_source_i32": 5857
+    },
+    {
+      "constructed_relu_gate_float64": 5705,
+      "in_original_v41_domain": true,
+      "input_integer": -74,
+      "original_relu_float64": 5705,
+      "pass": true,
+      "permuted_relu_gate_float64": 5705,
+      "source_wasmtime_i32": 5705,
+      "typed_source_i32": 5705
+    },
+    {
+      "constructed_relu_gate_float64": 5555,
+      "in_original_v41_domain": true,
+      "input_integer": -73,
+      "original_relu_float64": 5555,
+      "pass": true,
+      "permuted_relu_gate_float64": 5555,
+      "source_wasmtime_i32": 5555,
+      "typed_source_i32": 5555
+    },
+    {
+      "constructed_relu_gate_float64": 5407,
+      "in_original_v41_domain": true,
+      "input_integer": -72,
+      "original_relu_float64": 5407,
+      "pass": true,
+      "permuted_relu_gate_float64": 5407,
+      "source_wasmtime_i32": 5407,
+      "typed_source_i32": 5407
+    },
+    {
+      "constructed_relu_gate_float64": 5261,
+      "in_original_v41_domain": true,
+      "input_integer": -71,
+      "original_relu_float64": 5261,
+      "pass": true,
+      "permuted_relu_gate_float64": 5261,
+      "source_wasmtime_i32": 5261,
+      "typed_source_i32": 5261
+    },
+    {
+      "constructed_relu_gate_float64": 5117,
+      "in_original_v41_domain": true,
+      "input_integer": -70,
+      "original_relu_float64": 5117,
+      "pass": true,
+      "permuted_relu_gate_float64": 5117,
+      "source_wasmtime_i32": 5117,
+      "typed_source_i32": 5117
+    },
+    {
+      "constructed_relu_gate_float64": 4975,
+      "in_original_v41_domain": true,
+      "input_integer": -69,
+      "original_relu_float64": 4975,
+      "pass": true,
+      "permuted_relu_gate_float64": 4975,
+      "source_wasmtime_i32": 4975,
+      "typed_source_i32": 4975
+    },
+    {
+      "constructed_relu_gate_float64": 4835,
+      "in_original_v41_domain": true,
+      "input_integer": -68,
+      "original_relu_float64": 4835,
+      "pass": true,
+      "permuted_relu_gate_float64": 4835,
+      "source_wasmtime_i32": 4835,
+      "typed_source_i32": 4835
+    },
+    {
+      "constructed_relu_gate_float64": 4697,
+      "in_original_v41_domain": true,
+      "input_integer": -67,
+      "original_relu_float64": 4697,
+      "pass": true,
+      "permuted_relu_gate_float64": 4697,
+      "source_wasmtime_i32": 4697,
+      "typed_source_i32": 4697
+    },
+    {
+      "constructed_relu_gate_float64": 4561,
+      "in_original_v41_domain": true,
+      "input_integer": -66,
+      "original_relu_float64": 4561,
+      "pass": true,
+      "permuted_relu_gate_float64": 4561,
+      "source_wasmtime_i32": 4561,
+      "typed_source_i32": 4561
+    },
+    {
+      "constructed_relu_gate_float64": 4427,
+      "in_original_v41_domain": true,
+      "input_integer": -65,
+      "original_relu_float64": 4427,
+      "pass": true,
+      "permuted_relu_gate_float64": 4427,
+      "source_wasmtime_i32": 4427,
+      "typed_source_i32": 4427
+    },
+    {
+      "constructed_relu_gate_float64": 4295,
+      "in_original_v41_domain": true,
+      "input_integer": -64,
+      "original_relu_float64": 4295,
+      "pass": true,
+      "permuted_relu_gate_float64": 4295,
+      "source_wasmtime_i32": 4295,
+      "typed_source_i32": 4295
+    },
+    {
+      "constructed_relu_gate_float64": 4165,
+      "in_original_v41_domain": true,
+      "input_integer": -63,
+      "original_relu_float64": 4165,
+      "pass": true,
+      "permuted_relu_gate_float64": 4165,
+      "source_wasmtime_i32": 4165,
+      "typed_source_i32": 4165
+    },
+    {
+      "constructed_relu_gate_float64": 4037,
+      "in_original_v41_domain": true,
+      "input_integer": -62,
+      "original_relu_float64": 4037,
+      "pass": true,
+      "permuted_relu_gate_float64": 4037,
+      "source_wasmtime_i32": 4037,
+      "typed_source_i32": 4037
+    },
+    {
+      "constructed_relu_gate_float64": 3911,
+      "in_original_v41_domain": true,
+      "input_integer": -61,
+      "original_relu_float64": 3911,
+      "pass": true,
+      "permuted_relu_gate_float64": 3911,
+      "source_wasmtime_i32": 3911,
+      "typed_source_i32": 3911
+    },
+    {
+      "constructed_relu_gate_float64": 3787,
+      "in_original_v41_domain": true,
+      "input_integer": -60,
+      "original_relu_float64": 3787,
+      "pass": true,
+      "permuted_relu_gate_float64": 3787,
+      "source_wasmtime_i32": 3787,
+      "typed_source_i32": 3787
+    },
+    {
+      "constructed_relu_gate_float64": 3665,
+      "in_original_v41_domain": true,
+      "input_integer": -59,
+      "original_relu_float64": 3665,
+      "pass": true,
+      "permuted_relu_gate_float64": 3665,
+      "source_wasmtime_i32": 3665,
+      "typed_source_i32": 3665
+    },
+    {
+      "constructed_relu_gate_float64": 3545,
+      "in_original_v41_domain": true,
+      "input_integer": -58,
+      "original_relu_float64": 3545,
+      "pass": true,
+      "permuted_relu_gate_float64": 3545,
+      "source_wasmtime_i32": 3545,
+      "typed_source_i32": 3545
+    },
+    {
+      "constructed_relu_gate_float64": 3427,
+      "in_original_v41_domain": true,
+      "input_integer": -57,
+      "original_relu_float64": 3427,
+      "pass": true,
+      "permuted_relu_gate_float64": 3427,
+      "source_wasmtime_i32": 3427,
+      "typed_source_i32": 3427
+    },
+    {
+      "constructed_relu_gate_float64": 3311,
+      "in_original_v41_domain": true,
+      "input_integer": -56,
+      "original_relu_float64": 3311,
+      "pass": true,
+      "permuted_relu_gate_float64": 3311,
+      "source_wasmtime_i32": 3311,
+      "typed_source_i32": 3311
+    },
+    {
+      "constructed_relu_gate_float64": 3197,
+      "in_original_v41_domain": true,
+      "input_integer": -55,
+      "original_relu_float64": 3197,
+      "pass": true,
+      "permuted_relu_gate_float64": 3197,
+      "source_wasmtime_i32": 3197,
+      "typed_source_i32": 3197
+    },
+    {
+      "constructed_relu_gate_float64": 3085,
+      "in_original_v41_domain": true,
+      "input_integer": -54,
+      "original_relu_float64": 3085,
+      "pass": true,
+      "permuted_relu_gate_float64": 3085,
+      "source_wasmtime_i32": 3085,
+      "typed_source_i32": 3085
+    },
+    {
+      "constructed_relu_gate_float64": 2975,
+      "in_original_v41_domain": true,
+      "input_integer": -53,
+      "original_relu_float64": 2975,
+      "pass": true,
+      "permuted_relu_gate_float64": 2975,
+      "source_wasmtime_i32": 2975,
+      "typed_source_i32": 2975
+    },
+    {
+      "constructed_relu_gate_float64": 2867,
+      "in_original_v41_domain": true,
+      "input_integer": -52,
+      "original_relu_float64": 2867,
+      "pass": true,
+      "permuted_relu_gate_float64": 2867,
+      "source_wasmtime_i32": 2867,
+      "typed_source_i32": 2867
+    },
+    {
+      "constructed_relu_gate_float64": 2761,
+      "in_original_v41_domain": true,
+      "input_integer": -51,
+      "original_relu_float64": 2761,
+      "pass": true,
+      "permuted_relu_gate_float64": 2761,
+      "source_wasmtime_i32": 2761,
+      "typed_source_i32": 2761
+    },
+    {
+      "constructed_relu_gate_float64": 2657,
+      "in_original_v41_domain": true,
+      "input_integer": -50,
+      "original_relu_float64": 2657,
+      "pass": true,
+      "permuted_relu_gate_float64": 2657,
+      "source_wasmtime_i32": 2657,
+      "typed_source_i32": 2657
+    },
+    {
+      "constructed_relu_gate_float64": 2555,
+      "in_original_v41_domain": true,
+      "input_integer": -49,
+      "original_relu_float64": 2555,
+      "pass": true,
+      "permuted_relu_gate_float64": 2555,
+      "source_wasmtime_i32": 2555,
+      "typed_source_i32": 2555
+    },
+    {
+      "constructed_relu_gate_float64": 2455,
+      "in_original_v41_domain": true,
+      "input_integer": -48,
+      "original_relu_float64": 2455,
+      "pass": true,
+      "permuted_relu_gate_float64": 2455,
+      "source_wasmtime_i32": 2455,
+      "typed_source_i32": 2455
+    },
+    {
+      "constructed_relu_gate_float64": 2357,
+      "in_original_v41_domain": true,
+      "input_integer": -47,
+      "original_relu_float64": 2357,
+      "pass": true,
+      "permuted_relu_gate_float64": 2357,
+      "source_wasmtime_i32": 2357,
+      "typed_source_i32": 2357
+    },
+    {
+      "constructed_relu_gate_float64": 2261,
+      "in_original_v41_domain": true,
+      "input_integer": -46,
+      "original_relu_float64": 2261,
+      "pass": true,
+      "permuted_relu_gate_float64": 2261,
+      "source_wasmtime_i32": 2261,
+      "typed_source_i32": 2261
+    },
+    {
+      "constructed_relu_gate_float64": 2167,
+      "in_original_v41_domain": true,
+      "input_integer": -45,
+      "original_relu_float64": 2167,
+      "pass": true,
+      "permuted_relu_gate_float64": 2167,
+      "source_wasmtime_i32": 2167,
+      "typed_source_i32": 2167
+    },
+    {
+      "constructed_relu_gate_float64": 2075,
+      "in_original_v41_domain": true,
+      "input_integer": -44,
+      "original_relu_float64": 2075,
+      "pass": true,
+      "permuted_relu_gate_float64": 2075,
+      "source_wasmtime_i32": 2075,
+      "typed_source_i32": 2075
+    },
+    {
+      "constructed_relu_gate_float64": 1985,
+      "in_original_v41_domain": true,
+      "input_integer": -43,
+      "original_relu_float64": 1985,
+      "pass": true,
+      "permuted_relu_gate_float64": 1985,
+      "source_wasmtime_i32": 1985,
+      "typed_source_i32": 1985
+    },
+    {
+      "constructed_relu_gate_float64": 1897,
+      "in_original_v41_domain": true,
+      "input_integer": -42,
+      "original_relu_float64": 1897,
+      "pass": true,
+      "permuted_relu_gate_float64": 1897,
+      "source_wasmtime_i32": 1897,
+      "typed_source_i32": 1897
+    },
+    {
+      "constructed_relu_gate_float64": 1811,
+      "in_original_v41_domain": true,
+      "input_integer": -41,
+      "original_relu_float64": 1811,
+      "pass": true,
+      "permuted_relu_gate_float64": 1811,
+      "source_wasmtime_i32": 1811,
+      "typed_source_i32": 1811
+    },
+    {
+      "constructed_relu_gate_float64": 1727,
+      "in_original_v41_domain": true,
+      "input_integer": -40,
+      "original_relu_float64": 1727,
+      "pass": true,
+      "permuted_relu_gate_float64": 1727,
+      "source_wasmtime_i32": 1727,
+      "typed_source_i32": 1727
+    },
+    {
+      "constructed_relu_gate_float64": 1645,
+      "in_original_v41_domain": true,
+      "input_integer": -39,
+      "original_relu_float64": 1645,
+      "pass": true,
+      "permuted_relu_gate_float64": 1645,
+      "source_wasmtime_i32": 1645,
+      "typed_source_i32": 1645
+    },
+    {
+      "constructed_relu_gate_float64": 1565,
+      "in_original_v41_domain": true,
+      "input_integer": -38,
+      "original_relu_float64": 1565,
+      "pass": true,
+      "permuted_relu_gate_float64": 1565,
+      "source_wasmtime_i32": 1565,
+      "typed_source_i32": 1565
+    },
+    {
+      "constructed_relu_gate_float64": 1487,
+      "in_original_v41_domain": true,
+      "input_integer": -37,
+      "original_relu_float64": 1487,
+      "pass": true,
+      "permuted_relu_gate_float64": 1487,
+      "source_wasmtime_i32": 1487,
+      "typed_source_i32": 1487
+    },
+    {
+      "constructed_relu_gate_float64": 1411,
+      "in_original_v41_domain": true,
+      "input_integer": -36,
+      "original_relu_float64": 1411,
+      "pass": true,
+      "permuted_relu_gate_float64": 1411,
+      "source_wasmtime_i32": 1411,
+      "typed_source_i32": 1411
+    },
+    {
+      "constructed_relu_gate_float64": 1337,
+      "in_original_v41_domain": true,
+      "input_integer": -35,
+      "original_relu_float64": 1337,
+      "pass": true,
+      "permuted_relu_gate_float64": 1337,
+      "source_wasmtime_i32": 1337,
+      "typed_source_i32": 1337
+    },
+    {
+      "constructed_relu_gate_float64": 1265,
+      "in_original_v41_domain": true,
+      "input_integer": -34,
+      "original_relu_float64": 1265,
+      "pass": true,
+      "permuted_relu_gate_float64": 1265,
+      "source_wasmtime_i32": 1265,
+      "typed_source_i32": 1265
+    },
+    {
+      "constructed_relu_gate_float64": 1195,
+      "in_original_v41_domain": true,
+      "input_integer": -33,
+      "original_relu_float64": 1195,
+      "pass": true,
+      "permuted_relu_gate_float64": 1195,
+      "source_wasmtime_i32": 1195,
+      "typed_source_i32": 1195
+    },
+    {
+      "constructed_relu_gate_float64": 1127,
+      "in_original_v41_domain": true,
+      "input_integer": -32,
+      "original_relu_float64": 1127,
+      "pass": true,
+      "permuted_relu_gate_float64": 1127,
+      "source_wasmtime_i32": 1127,
+      "typed_source_i32": 1127
+    },
+    {
+      "constructed_relu_gate_float64": 1061,
+      "in_original_v41_domain": true,
+      "input_integer": -31,
+      "original_relu_float64": 1061,
+      "pass": true,
+      "permuted_relu_gate_float64": 1061,
+      "source_wasmtime_i32": 1061,
+      "typed_source_i32": 1061
+    },
+    {
+      "constructed_relu_gate_float64": 997,
+      "in_original_v41_domain": true,
+      "input_integer": -30,
+      "original_relu_float64": 997,
+      "pass": true,
+      "permuted_relu_gate_float64": 997,
+      "source_wasmtime_i32": 997,
+      "typed_source_i32": 997
+    },
+    {
+      "constructed_relu_gate_float64": 935,
+      "in_original_v41_domain": true,
+      "input_integer": -29,
+      "original_relu_float64": 935,
+      "pass": true,
+      "permuted_relu_gate_float64": 935,
+      "source_wasmtime_i32": 935,
+      "typed_source_i32": 935
+    },
+    {
+      "constructed_relu_gate_float64": 875,
+      "in_original_v41_domain": true,
+      "input_integer": -28,
+      "original_relu_float64": 875,
+      "pass": true,
+      "permuted_relu_gate_float64": 875,
+      "source_wasmtime_i32": 875,
+      "typed_source_i32": 875
+    },
+    {
+      "constructed_relu_gate_float64": 817,
+      "in_original_v41_domain": true,
+      "input_integer": -27,
+      "original_relu_float64": 817,
+      "pass": true,
+      "permuted_relu_gate_float64": 817,
+      "source_wasmtime_i32": 817,
+      "typed_source_i32": 817
+    },
+    {
+      "constructed_relu_gate_float64": 761,
+      "in_original_v41_domain": true,
+      "input_integer": -26,
+      "original_relu_float64": 761,
+      "pass": true,
+      "permuted_relu_gate_float64": 761,
+      "source_wasmtime_i32": 761,
+      "typed_source_i32": 761
+    },
+    {
+      "constructed_relu_gate_float64": 707,
+      "in_original_v41_domain": true,
+      "input_integer": -25,
+      "original_relu_float64": 707,
+      "pass": true,
+      "permuted_relu_gate_float64": 707,
+      "source_wasmtime_i32": 707,
+      "typed_source_i32": 707
+    },
+    {
+      "constructed_relu_gate_float64": 655,
+      "in_original_v41_domain": true,
+      "input_integer": -24,
+      "original_relu_float64": 655,
+      "pass": true,
+      "permuted_relu_gate_float64": 655,
+      "source_wasmtime_i32": 655,
+      "typed_source_i32": 655
+    },
+    {
+      "constructed_relu_gate_float64": 605,
+      "in_original_v41_domain": true,
+      "input_integer": -23,
+      "original_relu_float64": 605,
+      "pass": true,
+      "permuted_relu_gate_float64": 605,
+      "source_wasmtime_i32": 605,
+      "typed_source_i32": 605
+    },
+    {
+      "constructed_relu_gate_float64": 557,
+      "in_original_v41_domain": true,
+      "input_integer": -22,
+      "original_relu_float64": 557,
+      "pass": true,
+      "permuted_relu_gate_float64": 557,
+      "source_wasmtime_i32": 557,
+      "typed_source_i32": 557
+    },
+    {
+      "constructed_relu_gate_float64": 511,
+      "in_original_v41_domain": true,
+      "input_integer": -21,
+      "original_relu_float64": 511,
+      "pass": true,
+      "permuted_relu_gate_float64": 511,
+      "source_wasmtime_i32": 511,
+      "typed_source_i32": 511
+    },
+    {
+      "constructed_relu_gate_float64": 467,
+      "in_original_v41_domain": true,
+      "input_integer": -20,
+      "original_relu_float64": 467,
+      "pass": true,
+      "permuted_relu_gate_float64": 467,
+      "source_wasmtime_i32": 467,
+      "typed_source_i32": 467
+    },
+    {
+      "constructed_relu_gate_float64": 425,
+      "in_original_v41_domain": true,
+      "input_integer": -19,
+      "original_relu_float64": 425,
+      "pass": true,
+      "permuted_relu_gate_float64": 425,
+      "source_wasmtime_i32": 425,
+      "typed_source_i32": 425
+    },
+    {
+      "constructed_relu_gate_float64": 385,
+      "in_original_v41_domain": true,
+      "input_integer": -18,
+      "original_relu_float64": 385,
+      "pass": true,
+      "permuted_relu_gate_float64": 385,
+      "source_wasmtime_i32": 385,
+      "typed_source_i32": 385
+    },
+    {
+      "constructed_relu_gate_float64": 347,
+      "in_original_v41_domain": true,
+      "input_integer": -17,
+      "original_relu_float64": 347,
+      "pass": true,
+      "permuted_relu_gate_float64": 347,
+      "source_wasmtime_i32": 347,
+      "typed_source_i32": 347
+    },
+    {
+      "constructed_relu_gate_float64": 311,
+      "in_original_v41_domain": true,
+      "input_integer": -16,
+      "original_relu_float64": 311,
+      "pass": true,
+      "permuted_relu_gate_float64": 311,
+      "source_wasmtime_i32": 311,
+      "typed_source_i32": 311
+    },
+    {
+      "constructed_relu_gate_float64": 277,
+      "in_original_v41_domain": true,
+      "input_integer": -15,
+      "original_relu_float64": 277,
+      "pass": true,
+      "permuted_relu_gate_float64": 277,
+      "source_wasmtime_i32": 277,
+      "typed_source_i32": 277
+    },
+    {
+      "constructed_relu_gate_float64": 245,
+      "in_original_v41_domain": true,
+      "input_integer": -14,
+      "original_relu_float64": 245,
+      "pass": true,
+      "permuted_relu_gate_float64": 245,
+      "source_wasmtime_i32": 245,
+      "typed_source_i32": 245
+    },
+    {
+      "constructed_relu_gate_float64": 215,
+      "in_original_v41_domain": true,
+      "input_integer": -13,
+      "original_relu_float64": 215,
+      "pass": true,
+      "permuted_relu_gate_float64": 215,
+      "source_wasmtime_i32": 215,
+      "typed_source_i32": 215
+    },
+    {
+      "constructed_relu_gate_float64": 187,
+      "in_original_v41_domain": true,
+      "input_integer": -12,
+      "original_relu_float64": 187,
+      "pass": true,
+      "permuted_relu_gate_float64": 187,
+      "source_wasmtime_i32": 187,
+      "typed_source_i32": 187
+    },
+    {
+      "constructed_relu_gate_float64": 161,
+      "in_original_v41_domain": true,
+      "input_integer": -11,
+      "original_relu_float64": 161,
+      "pass": true,
+      "permuted_relu_gate_float64": 161,
+      "source_wasmtime_i32": 161,
+      "typed_source_i32": 161
+    },
+    {
+      "constructed_relu_gate_float64": 137,
+      "in_original_v41_domain": true,
+      "input_integer": -10,
+      "original_relu_float64": 137,
+      "pass": true,
+      "permuted_relu_gate_float64": 137,
+      "source_wasmtime_i32": 137,
+      "typed_source_i32": 137
+    },
+    {
+      "constructed_relu_gate_float64": 115,
+      "in_original_v41_domain": true,
+      "input_integer": -9,
+      "original_relu_float64": 115,
+      "pass": true,
+      "permuted_relu_gate_float64": 115,
+      "source_wasmtime_i32": 115,
+      "typed_source_i32": 115
+    },
+    {
+      "constructed_relu_gate_float64": 95,
+      "in_original_v41_domain": true,
+      "input_integer": -8,
+      "original_relu_float64": 95,
+      "pass": true,
+      "permuted_relu_gate_float64": 95,
+      "source_wasmtime_i32": 95,
+      "typed_source_i32": 95
+    },
+    {
+      "constructed_relu_gate_float64": 77,
+      "in_original_v41_domain": true,
+      "input_integer": -7,
+      "original_relu_float64": 77,
+      "pass": true,
+      "permuted_relu_gate_float64": 77,
+      "source_wasmtime_i32": 77,
+      "typed_source_i32": 77
+    },
+    {
+      "constructed_relu_gate_float64": 61,
+      "in_original_v41_domain": true,
+      "input_integer": -6,
+      "original_relu_float64": 61,
+      "pass": true,
+      "permuted_relu_gate_float64": 61,
+      "source_wasmtime_i32": 61,
+      "typed_source_i32": 61
+    },
+    {
+      "constructed_relu_gate_float64": 47,
+      "in_original_v41_domain": true,
+      "input_integer": -5,
+      "original_relu_float64": 47,
+      "pass": true,
+      "permuted_relu_gate_float64": 47,
+      "source_wasmtime_i32": 47,
+      "typed_source_i32": 47
+    },
+    {
+      "constructed_relu_gate_float64": 35,
+      "in_original_v41_domain": true,
+      "input_integer": -4,
+      "original_relu_float64": 35,
+      "pass": true,
+      "permuted_relu_gate_float64": 35,
+      "source_wasmtime_i32": 35,
+      "typed_source_i32": 35
+    },
+    {
+      "constructed_relu_gate_float64": 25,
+      "in_original_v41_domain": true,
+      "input_integer": -3,
+      "original_relu_float64": 25,
+      "pass": true,
+      "permuted_relu_gate_float64": 25,
+      "source_wasmtime_i32": 25,
+      "typed_source_i32": 25
+    },
+    {
+      "constructed_relu_gate_float64": 17,
+      "in_original_v41_domain": true,
+      "input_integer": -2,
+      "original_relu_float64": 17,
+      "pass": true,
+      "permuted_relu_gate_float64": 17,
+      "source_wasmtime_i32": 17,
+      "typed_source_i32": 17
+    },
+    {
+      "constructed_relu_gate_float64": 11,
+      "in_original_v41_domain": true,
+      "input_integer": -1,
+      "original_relu_float64": 11,
+      "pass": true,
+      "permuted_relu_gate_float64": 11,
+      "source_wasmtime_i32": 11,
+      "typed_source_i32": 11
+    },
+    {
+      "constructed_relu_gate_float64": 7,
+      "in_original_v41_domain": true,
+      "input_integer": 0,
+      "original_relu_float64": 7,
+      "pass": true,
+      "permuted_relu_gate_float64": 7,
+      "source_wasmtime_i32": 7,
+      "typed_source_i32": 7
+    },
+    {
+      "constructed_relu_gate_float64": 5,
+      "in_original_v41_domain": true,
+      "input_integer": 1,
+      "original_relu_float64": 5,
+      "pass": true,
+      "permuted_relu_gate_float64": 5,
+      "source_wasmtime_i32": 5,
+      "typed_source_i32": 5
+    },
+    {
+      "constructed_relu_gate_float64": 5,
+      "in_original_v41_domain": true,
+      "input_integer": 2,
+      "original_relu_float64": 5,
+      "pass": true,
+      "permuted_relu_gate_float64": 5,
+      "source_wasmtime_i32": 5,
+      "typed_source_i32": 5
+    },
+    {
+      "constructed_relu_gate_float64": 7,
+      "in_original_v41_domain": true,
+      "input_integer": 3,
+      "original_relu_float64": 7,
+      "pass": true,
+      "permuted_relu_gate_float64": 7,
+      "source_wasmtime_i32": 7,
+      "typed_source_i32": 7
+    },
+    {
+      "constructed_relu_gate_float64": 11,
+      "in_original_v41_domain": true,
+      "input_integer": 4,
+      "original_relu_float64": 11,
+      "pass": true,
+      "permuted_relu_gate_float64": 11,
+      "source_wasmtime_i32": 11,
+      "typed_source_i32": 11
+    },
+    {
+      "constructed_relu_gate_float64": 17,
+      "in_original_v41_domain": true,
+      "input_integer": 5,
+      "original_relu_float64": 17,
+      "pass": true,
+      "permuted_relu_gate_float64": 17,
+      "source_wasmtime_i32": 17,
+      "typed_source_i32": 17
+    },
+    {
+      "constructed_relu_gate_float64": 25,
+      "in_original_v41_domain": true,
+      "input_integer": 6,
+      "original_relu_float64": 25,
+      "pass": true,
+      "permuted_relu_gate_float64": 25,
+      "source_wasmtime_i32": 25,
+      "typed_source_i32": 25
+    },
+    {
+      "constructed_relu_gate_float64": 35,
+      "in_original_v41_domain": true,
+      "input_integer": 7,
+      "original_relu_float64": 35,
+      "pass": true,
+      "permuted_relu_gate_float64": 35,
+      "source_wasmtime_i32": 35,
+      "typed_source_i32": 35
+    },
+    {
+      "constructed_relu_gate_float64": 47,
+      "in_original_v41_domain": true,
+      "input_integer": 8,
+      "original_relu_float64": 47,
+      "pass": true,
+      "permuted_relu_gate_float64": 47,
+      "source_wasmtime_i32": 47,
+      "typed_source_i32": 47
+    },
+    {
+      "constructed_relu_gate_float64": 61,
+      "in_original_v41_domain": true,
+      "input_integer": 9,
+      "original_relu_float64": 61,
+      "pass": true,
+      "permuted_relu_gate_float64": 61,
+      "source_wasmtime_i32": 61,
+      "typed_source_i32": 61
+    },
+    {
+      "constructed_relu_gate_float64": 77,
+      "in_original_v41_domain": true,
+      "input_integer": 10,
+      "original_relu_float64": 77,
+      "pass": true,
+      "permuted_relu_gate_float64": 77,
+      "source_wasmtime_i32": 77,
+      "typed_source_i32": 77
+    },
+    {
+      "constructed_relu_gate_float64": 95,
+      "in_original_v41_domain": true,
+      "input_integer": 11,
+      "original_relu_float64": 95,
+      "pass": true,
+      "permuted_relu_gate_float64": 95,
+      "source_wasmtime_i32": 95,
+      "typed_source_i32": 95
+    },
+    {
+      "constructed_relu_gate_float64": 115,
+      "in_original_v41_domain": true,
+      "input_integer": 12,
+      "original_relu_float64": 115,
+      "pass": true,
+      "permuted_relu_gate_float64": 115,
+      "source_wasmtime_i32": 115,
+      "typed_source_i32": 115
+    },
+    {
+      "constructed_relu_gate_float64": 137,
+      "in_original_v41_domain": true,
+      "input_integer": 13,
+      "original_relu_float64": 137,
+      "pass": true,
+      "permuted_relu_gate_float64": 137,
+      "source_wasmtime_i32": 137,
+      "typed_source_i32": 137
+    },
+    {
+      "constructed_relu_gate_float64": 161,
+      "in_original_v41_domain": true,
+      "input_integer": 14,
+      "original_relu_float64": 161,
+      "pass": true,
+      "permuted_relu_gate_float64": 161,
+      "source_wasmtime_i32": 161,
+      "typed_source_i32": 161
+    },
+    {
+      "constructed_relu_gate_float64": 187,
+      "in_original_v41_domain": true,
+      "input_integer": 15,
+      "original_relu_float64": 187,
+      "pass": true,
+      "permuted_relu_gate_float64": 187,
+      "source_wasmtime_i32": 187,
+      "typed_source_i32": 187
+    },
+    {
+      "constructed_relu_gate_float64": 215,
+      "in_original_v41_domain": true,
+      "input_integer": 16,
+      "original_relu_float64": 215,
+      "pass": true,
+      "permuted_relu_gate_float64": 215,
+      "source_wasmtime_i32": 215,
+      "typed_source_i32": 215
+    },
+    {
+      "constructed_relu_gate_float64": 245,
+      "in_original_v41_domain": true,
+      "input_integer": 17,
+      "original_relu_float64": 245,
+      "pass": true,
+      "permuted_relu_gate_float64": 245,
+      "source_wasmtime_i32": 245,
+      "typed_source_i32": 245
+    },
+    {
+      "constructed_relu_gate_float64": 277,
+      "in_original_v41_domain": true,
+      "input_integer": 18,
+      "original_relu_float64": 277,
+      "pass": true,
+      "permuted_relu_gate_float64": 277,
+      "source_wasmtime_i32": 277,
+      "typed_source_i32": 277
+    },
+    {
+      "constructed_relu_gate_float64": 311,
+      "in_original_v41_domain": true,
+      "input_integer": 19,
+      "original_relu_float64": 311,
+      "pass": true,
+      "permuted_relu_gate_float64": 311,
+      "source_wasmtime_i32": 311,
+      "typed_source_i32": 311
+    },
+    {
+      "constructed_relu_gate_float64": 347,
+      "in_original_v41_domain": true,
+      "input_integer": 20,
+      "original_relu_float64": 347,
+      "pass": true,
+      "permuted_relu_gate_float64": 347,
+      "source_wasmtime_i32": 347,
+      "typed_source_i32": 347
+    },
+    {
+      "constructed_relu_gate_float64": 385,
+      "in_original_v41_domain": true,
+      "input_integer": 21,
+      "original_relu_float64": 385,
+      "pass": true,
+      "permuted_relu_gate_float64": 385,
+      "source_wasmtime_i32": 385,
+      "typed_source_i32": 385
+    },
+    {
+      "constructed_relu_gate_float64": 425,
+      "in_original_v41_domain": true,
+      "input_integer": 22,
+      "original_relu_float64": 425,
+      "pass": true,
+      "permuted_relu_gate_float64": 425,
+      "source_wasmtime_i32": 425,
+      "typed_source_i32": 425
+    },
+    {
+      "constructed_relu_gate_float64": 467,
+      "in_original_v41_domain": true,
+      "input_integer": 23,
+      "original_relu_float64": 467,
+      "pass": true,
+      "permuted_relu_gate_float64": 467,
+      "source_wasmtime_i32": 467,
+      "typed_source_i32": 467
+    },
+    {
+      "constructed_relu_gate_float64": 511,
+      "in_original_v41_domain": true,
+      "input_integer": 24,
+      "original_relu_float64": 511,
+      "pass": true,
+      "permuted_relu_gate_float64": 511,
+      "source_wasmtime_i32": 511,
+      "typed_source_i32": 511
+    },
+    {
+      "constructed_relu_gate_float64": 557,
+      "in_original_v41_domain": true,
+      "input_integer": 25,
+      "original_relu_float64": 557,
+      "pass": true,
+      "permuted_relu_gate_float64": 557,
+      "source_wasmtime_i32": 557,
+      "typed_source_i32": 557
+    },
+    {
+      "constructed_relu_gate_float64": 605,
+      "in_original_v41_domain": true,
+      "input_integer": 26,
+      "original_relu_float64": 605,
+      "pass": true,
+      "permuted_relu_gate_float64": 605,
+      "source_wasmtime_i32": 605,
+      "typed_source_i32": 605
+    },
+    {
+      "constructed_relu_gate_float64": 655,
+      "in_original_v41_domain": true,
+      "input_integer": 27,
+      "original_relu_float64": 655,
+      "pass": true,
+      "permuted_relu_gate_float64": 655,
+      "source_wasmtime_i32": 655,
+      "typed_source_i32": 655
+    },
+    {
+      "constructed_relu_gate_float64": 707,
+      "in_original_v41_domain": true,
+      "input_integer": 28,
+      "original_relu_float64": 707,
+      "pass": true,
+      "permuted_relu_gate_float64": 707,
+      "source_wasmtime_i32": 707,
+      "typed_source_i32": 707
+    },
+    {
+      "constructed_relu_gate_float64": 761,
+      "in_original_v41_domain": true,
+      "input_integer": 29,
+      "original_relu_float64": 761,
+      "pass": true,
+      "permuted_relu_gate_float64": 761,
+      "source_wasmtime_i32": 761,
+      "typed_source_i32": 761
+    },
+    {
+      "constructed_relu_gate_float64": 817,
+      "in_original_v41_domain": true,
+      "input_integer": 30,
+      "original_relu_float64": 817,
+      "pass": true,
+      "permuted_relu_gate_float64": 817,
+      "source_wasmtime_i32": 817,
+      "typed_source_i32": 817
+    },
+    {
+      "constructed_relu_gate_float64": 875,
+      "in_original_v41_domain": true,
+      "input_integer": 31,
+      "original_relu_float64": 875,
+      "pass": true,
+      "permuted_relu_gate_float64": 875,
+      "source_wasmtime_i32": 875,
+      "typed_source_i32": 875
+    },
+    {
+      "constructed_relu_gate_float64": 935,
+      "in_original_v41_domain": true,
+      "input_integer": 32,
+      "original_relu_float64": 935,
+      "pass": true,
+      "permuted_relu_gate_float64": 935,
+      "source_wasmtime_i32": 935,
+      "typed_source_i32": 935
+    },
+    {
+      "constructed_relu_gate_float64": 997,
+      "in_original_v41_domain": true,
+      "input_integer": 33,
+      "original_relu_float64": 997,
+      "pass": true,
+      "permuted_relu_gate_float64": 997,
+      "source_wasmtime_i32": 997,
+      "typed_source_i32": 997
+    },
+    {
+      "constructed_relu_gate_float64": 1061,
+      "in_original_v41_domain": true,
+      "input_integer": 34,
+      "original_relu_float64": 1061,
+      "pass": true,
+      "permuted_relu_gate_float64": 1061,
+      "source_wasmtime_i32": 1061,
+      "typed_source_i32": 1061
+    },
+    {
+      "constructed_relu_gate_float64": 1127,
+      "in_original_v41_domain": true,
+      "input_integer": 35,
+      "original_relu_float64": 1127,
+      "pass": true,
+      "permuted_relu_gate_float64": 1127,
+      "source_wasmtime_i32": 1127,
+      "typed_source_i32": 1127
+    },
+    {
+      "constructed_relu_gate_float64": 1195,
+      "in_original_v41_domain": true,
+      "input_integer": 36,
+      "original_relu_float64": 1195,
+      "pass": true,
+      "permuted_relu_gate_float64": 1195,
+      "source_wasmtime_i32": 1195,
+      "typed_source_i32": 1195
+    },
+    {
+      "constructed_relu_gate_float64": 1265,
+      "in_original_v41_domain": true,
+      "input_integer": 37,
+      "original_relu_float64": 1265,
+      "pass": true,
+      "permuted_relu_gate_float64": 1265,
+      "source_wasmtime_i32": 1265,
+      "typed_source_i32": 1265
+    },
+    {
+      "constructed_relu_gate_float64": 1337,
+      "in_original_v41_domain": true,
+      "input_integer": 38,
+      "original_relu_float64": 1337,
+      "pass": true,
+      "permuted_relu_gate_float64": 1337,
+      "source_wasmtime_i32": 1337,
+      "typed_source_i32": 1337
+    },
+    {
+      "constructed_relu_gate_float64": 1411,
+      "in_original_v41_domain": true,
+      "input_integer": 39,
+      "original_relu_float64": 1411,
+      "pass": true,
+      "permuted_relu_gate_float64": 1411,
+      "source_wasmtime_i32": 1411,
+      "typed_source_i32": 1411
+    },
+    {
+      "constructed_relu_gate_float64": 1487,
+      "in_original_v41_domain": true,
+      "input_integer": 40,
+      "original_relu_float64": 1487,
+      "pass": true,
+      "permuted_relu_gate_float64": 1487,
+      "source_wasmtime_i32": 1487,
+      "typed_source_i32": 1487
+    },
+    {
+      "constructed_relu_gate_float64": 1565,
+      "in_original_v41_domain": true,
+      "input_integer": 41,
+      "original_relu_float64": 1565,
+      "pass": true,
+      "permuted_relu_gate_float64": 1565,
+      "source_wasmtime_i32": 1565,
+      "typed_source_i32": 1565
+    },
+    {
+      "constructed_relu_gate_float64": 1645,
+      "in_original_v41_domain": true,
+      "input_integer": 42,
+      "original_relu_float64": 1645,
+      "pass": true,
+      "permuted_relu_gate_float64": 1645,
+      "source_wasmtime_i32": 1645,
+      "typed_source_i32": 1645
+    },
+    {
+      "constructed_relu_gate_float64": 1727,
+      "in_original_v41_domain": true,
+      "input_integer": 43,
+      "original_relu_float64": 1727,
+      "pass": true,
+      "permuted_relu_gate_float64": 1727,
+      "source_wasmtime_i32": 1727,
+      "typed_source_i32": 1727
+    },
+    {
+      "constructed_relu_gate_float64": 1811,
+      "in_original_v41_domain": true,
+      "input_integer": 44,
+      "original_relu_float64": 1811,
+      "pass": true,
+      "permuted_relu_gate_float64": 1811,
+      "source_wasmtime_i32": 1811,
+      "typed_source_i32": 1811
+    },
+    {
+      "constructed_relu_gate_float64": 1897,
+      "in_original_v41_domain": true,
+      "input_integer": 45,
+      "original_relu_float64": 1897,
+      "pass": true,
+      "permuted_relu_gate_float64": 1897,
+      "source_wasmtime_i32": 1897,
+      "typed_source_i32": 1897
+    },
+    {
+      "constructed_relu_gate_float64": 1985,
+      "in_original_v41_domain": true,
+      "input_integer": 46,
+      "original_relu_float64": 1985,
+      "pass": true,
+      "permuted_relu_gate_float64": 1985,
+      "source_wasmtime_i32": 1985,
+      "typed_source_i32": 1985
+    },
+    {
+      "constructed_relu_gate_float64": 2075,
+      "in_original_v41_domain": true,
+      "input_integer": 47,
+      "original_relu_float64": 2075,
+      "pass": true,
+      "permuted_relu_gate_float64": 2075,
+      "source_wasmtime_i32": 2075,
+      "typed_source_i32": 2075
+    },
+    {
+      "constructed_relu_gate_float64": 2167,
+      "in_original_v41_domain": true,
+      "input_integer": 48,
+      "original_relu_float64": 2167,
+      "pass": true,
+      "permuted_relu_gate_float64": 2167,
+      "source_wasmtime_i32": 2167,
+      "typed_source_i32": 2167
+    },
+    {
+      "constructed_relu_gate_float64": 2261,
+      "in_original_v41_domain": true,
+      "input_integer": 49,
+      "original_relu_float64": 2261,
+      "pass": true,
+      "permuted_relu_gate_float64": 2261,
+      "source_wasmtime_i32": 2261,
+      "typed_source_i32": 2261
+    },
+    {
+      "constructed_relu_gate_float64": 2357,
+      "in_original_v41_domain": true,
+      "input_integer": 50,
+      "original_relu_float64": 2357,
+      "pass": true,
+      "permuted_relu_gate_float64": 2357,
+      "source_wasmtime_i32": 2357,
+      "typed_source_i32": 2357
+    },
+    {
+      "constructed_relu_gate_float64": 2455,
+      "in_original_v41_domain": true,
+      "input_integer": 51,
+      "original_relu_float64": 2455,
+      "pass": true,
+      "permuted_relu_gate_float64": 2455,
+      "source_wasmtime_i32": 2455,
+      "typed_source_i32": 2455
+    },
+    {
+      "constructed_relu_gate_float64": 2555,
+      "in_original_v41_domain": true,
+      "input_integer": 52,
+      "original_relu_float64": 2555,
+      "pass": true,
+      "permuted_relu_gate_float64": 2555,
+      "source_wasmtime_i32": 2555,
+      "typed_source_i32": 2555
+    },
+    {
+      "constructed_relu_gate_float64": 2657,
+      "in_original_v41_domain": true,
+      "input_integer": 53,
+      "original_relu_float64": 2657,
+      "pass": true,
+      "permuted_relu_gate_float64": 2657,
+      "source_wasmtime_i32": 2657,
+      "typed_source_i32": 2657
+    },
+    {
+      "constructed_relu_gate_float64": 2761,
+      "in_original_v41_domain": true,
+      "input_integer": 54,
+      "original_relu_float64": 2761,
+      "pass": true,
+      "permuted_relu_gate_float64": 2761,
+      "source_wasmtime_i32": 2761,
+      "typed_source_i32": 2761
+    },
+    {
+      "constructed_relu_gate_float64": 2867,
+      "in_original_v41_domain": true,
+      "input_integer": 55,
+      "original_relu_float64": 2867,
+      "pass": true,
+      "permuted_relu_gate_float64": 2867,
+      "source_wasmtime_i32": 2867,
+      "typed_source_i32": 2867
+    },
+    {
+      "constructed_relu_gate_float64": 2975,
+      "in_original_v41_domain": true,
+      "input_integer": 56,
+      "original_relu_float64": 2975,
+      "pass": true,
+      "permuted_relu_gate_float64": 2975,
+      "source_wasmtime_i32": 2975,
+      "typed_source_i32": 2975
+    },
+    {
+      "constructed_relu_gate_float64": 3085,
+      "in_original_v41_domain": true,
+      "input_integer": 57,
+      "original_relu_float64": 3085,
+      "pass": true,
+      "permuted_relu_gate_float64": 3085,
+      "source_wasmtime_i32": 3085,
+      "typed_source_i32": 3085
+    },
+    {
+      "constructed_relu_gate_float64": 3197,
+      "in_original_v41_domain": true,
+      "input_integer": 58,
+      "original_relu_float64": 3197,
+      "pass": true,
+      "permuted_relu_gate_float64": 3197,
+      "source_wasmtime_i32": 3197,
+      "typed_source_i32": 3197
+    },
+    {
+      "constructed_relu_gate_float64": 3311,
+      "in_original_v41_domain": true,
+      "input_integer": 59,
+      "original_relu_float64": 3311,
+      "pass": true,
+      "permuted_relu_gate_float64": 3311,
+      "source_wasmtime_i32": 3311,
+      "typed_source_i32": 3311
+    },
+    {
+      "constructed_relu_gate_float64": 3427,
+      "in_original_v41_domain": true,
+      "input_integer": 60,
+      "original_relu_float64": 3427,
+      "pass": true,
+      "permuted_relu_gate_float64": 3427,
+      "source_wasmtime_i32": 3427,
+      "typed_source_i32": 3427
+    },
+    {
+      "constructed_relu_gate_float64": 3545,
+      "in_original_v41_domain": true,
+      "input_integer": 61,
+      "original_relu_float64": 3545,
+      "pass": true,
+      "permuted_relu_gate_float64": 3545,
+      "source_wasmtime_i32": 3545,
+      "typed_source_i32": 3545
+    },
+    {
+      "constructed_relu_gate_float64": 3665,
+      "in_original_v41_domain": true,
+      "input_integer": 62,
+      "original_relu_float64": 3665,
+      "pass": true,
+      "permuted_relu_gate_float64": 3665,
+      "source_wasmtime_i32": 3665,
+      "typed_source_i32": 3665
+    },
+    {
+      "constructed_relu_gate_float64": 3787,
+      "in_original_v41_domain": true,
+      "input_integer": 63,
+      "original_relu_float64": 3787,
+      "pass": true,
+      "permuted_relu_gate_float64": 3787,
+      "source_wasmtime_i32": 3787,
+      "typed_source_i32": 3787
+    },
+    {
+      "constructed_relu_gate_float64": 3911,
+      "in_original_v41_domain": true,
+      "input_integer": 64,
+      "original_relu_float64": 3911,
+      "pass": true,
+      "permuted_relu_gate_float64": 3911,
+      "source_wasmtime_i32": 3911,
+      "typed_source_i32": 3911
+    },
+    {
+      "constructed_relu_gate_float64": 4037,
+      "in_original_v41_domain": true,
+      "input_integer": 65,
+      "original_relu_float64": 4037,
+      "pass": true,
+      "permuted_relu_gate_float64": 4037,
+      "source_wasmtime_i32": 4037,
+      "typed_source_i32": 4037
+    },
+    {
+      "constructed_relu_gate_float64": 4165,
+      "in_original_v41_domain": true,
+      "input_integer": 66,
+      "original_relu_float64": 4165,
+      "pass": true,
+      "permuted_relu_gate_float64": 4165,
+      "source_wasmtime_i32": 4165,
+      "typed_source_i32": 4165
+    },
+    {
+      "constructed_relu_gate_float64": 4295,
+      "in_original_v41_domain": true,
+      "input_integer": 67,
+      "original_relu_float64": 4295,
+      "pass": true,
+      "permuted_relu_gate_float64": 4295,
+      "source_wasmtime_i32": 4295,
+      "typed_source_i32": 4295
+    },
+    {
+      "constructed_relu_gate_float64": 4427,
+      "in_original_v41_domain": true,
+      "input_integer": 68,
+      "original_relu_float64": 4427,
+      "pass": true,
+      "permuted_relu_gate_float64": 4427,
+      "source_wasmtime_i32": 4427,
+      "typed_source_i32": 4427
+    },
+    {
+      "constructed_relu_gate_float64": 4561,
+      "in_original_v41_domain": true,
+      "input_integer": 69,
+      "original_relu_float64": 4561,
+      "pass": true,
+      "permuted_relu_gate_float64": 4561,
+      "source_wasmtime_i32": 4561,
+      "typed_source_i32": 4561
+    },
+    {
+      "constructed_relu_gate_float64": 4697,
+      "in_original_v41_domain": true,
+      "input_integer": 70,
+      "original_relu_float64": 4697,
+      "pass": true,
+      "permuted_relu_gate_float64": 4697,
+      "source_wasmtime_i32": 4697,
+      "typed_source_i32": 4697
+    },
+    {
+      "constructed_relu_gate_float64": 4835,
+      "in_original_v41_domain": true,
+      "input_integer": 71,
+      "original_relu_float64": 4835,
+      "pass": true,
+      "permuted_relu_gate_float64": 4835,
+      "source_wasmtime_i32": 4835,
+      "typed_source_i32": 4835
+    },
+    {
+      "constructed_relu_gate_float64": 4975,
+      "in_original_v41_domain": true,
+      "input_integer": 72,
+      "original_relu_float64": 4975,
+      "pass": true,
+      "permuted_relu_gate_float64": 4975,
+      "source_wasmtime_i32": 4975,
+      "typed_source_i32": 4975
+    },
+    {
+      "constructed_relu_gate_float64": 5117,
+      "in_original_v41_domain": true,
+      "input_integer": 73,
+      "original_relu_float64": 5117,
+      "pass": true,
+      "permuted_relu_gate_float64": 5117,
+      "source_wasmtime_i32": 5117,
+      "typed_source_i32": 5117
+    },
+    {
+      "constructed_relu_gate_float64": 5261,
+      "in_original_v41_domain": true,
+      "input_integer": 74,
+      "original_relu_float64": 5261,
+      "pass": true,
+      "permuted_relu_gate_float64": 5261,
+      "source_wasmtime_i32": 5261,
+      "typed_source_i32": 5261
+    },
+    {
+      "constructed_relu_gate_float64": 5407,
+      "in_original_v41_domain": true,
+      "input_integer": 75,
+      "original_relu_float64": 5407,
+      "pass": true,
+      "permuted_relu_gate_float64": 5407,
+      "source_wasmtime_i32": 5407,
+      "typed_source_i32": 5407
+    },
+    {
+      "constructed_relu_gate_float64": 5555,
+      "in_original_v41_domain": true,
+      "input_integer": 76,
+      "original_relu_float64": 5555,
+      "pass": true,
+      "permuted_relu_gate_float64": 5555,
+      "source_wasmtime_i32": 5555,
+      "typed_source_i32": 5555
+    },
+    {
+      "constructed_relu_gate_float64": 5705,
+      "in_original_v41_domain": true,
+      "input_integer": 77,
+      "original_relu_float64": 5705,
+      "pass": true,
+      "permuted_relu_gate_float64": 5705,
+      "source_wasmtime_i32": 5705,
+      "typed_source_i32": 5705
+    },
+    {
+      "constructed_relu_gate_float64": 5857,
+      "in_original_v41_domain": true,
+      "input_integer": 78,
+      "original_relu_float64": 5857,
+      "pass": true,
+      "permuted_relu_gate_float64": 5857,
+      "source_wasmtime_i32": 5857,
+      "typed_source_i32": 5857
+    },
+    {
+      "constructed_relu_gate_float64": 6011,
+      "in_original_v41_domain": true,
+      "input_integer": 79,
+      "original_relu_float64": 6011,
+      "pass": true,
+      "permuted_relu_gate_float64": 6011,
+      "source_wasmtime_i32": 6011,
+      "typed_source_i32": 6011
+    },
+    {
+      "constructed_relu_gate_float64": 6167,
+      "in_original_v41_domain": true,
+      "input_integer": 80,
+      "original_relu_float64": 6167,
+      "pass": true,
+      "permuted_relu_gate_float64": 6167,
+      "source_wasmtime_i32": 6167,
+      "typed_source_i32": 6167
+    },
+    {
+      "constructed_relu_gate_float64": 6325,
+      "in_original_v41_domain": true,
+      "input_integer": 81,
+      "original_relu_float64": 6325,
+      "pass": true,
+      "permuted_relu_gate_float64": 6325,
+      "source_wasmtime_i32": 6325,
+      "typed_source_i32": 6325
+    },
+    {
+      "constructed_relu_gate_float64": 6485,
+      "in_original_v41_domain": true,
+      "input_integer": 82,
+      "original_relu_float64": 6485,
+      "pass": true,
+      "permuted_relu_gate_float64": 6485,
+      "source_wasmtime_i32": 6485,
+      "typed_source_i32": 6485
+    },
+    {
+      "constructed_relu_gate_float64": 6647,
+      "in_original_v41_domain": true,
+      "input_integer": 83,
+      "original_relu_float64": 6647,
+      "pass": true,
+      "permuted_relu_gate_float64": 6647,
+      "source_wasmtime_i32": 6647,
+      "typed_source_i32": 6647
+    },
+    {
+      "constructed_relu_gate_float64": 6811,
+      "in_original_v41_domain": true,
+      "input_integer": 84,
+      "original_relu_float64": 6811,
+      "pass": true,
+      "permuted_relu_gate_float64": 6811,
+      "source_wasmtime_i32": 6811,
+      "typed_source_i32": 6811
+    },
+    {
+      "constructed_relu_gate_float64": 6977,
+      "in_original_v41_domain": true,
+      "input_integer": 85,
+      "original_relu_float64": 6977,
+      "pass": true,
+      "permuted_relu_gate_float64": 6977,
+      "source_wasmtime_i32": 6977,
+      "typed_source_i32": 6977
+    },
+    {
+      "constructed_relu_gate_float64": 7145,
+      "in_original_v41_domain": true,
+      "input_integer": 86,
+      "original_relu_float64": 7145,
+      "pass": true,
+      "permuted_relu_gate_float64": 7145,
+      "source_wasmtime_i32": 7145,
+      "typed_source_i32": 7145
+    },
+    {
+      "constructed_relu_gate_float64": 7315,
+      "in_original_v41_domain": true,
+      "input_integer": 87,
+      "original_relu_float64": 7315,
+      "pass": true,
+      "permuted_relu_gate_float64": 7315,
+      "source_wasmtime_i32": 7315,
+      "typed_source_i32": 7315
+    },
+    {
+      "constructed_relu_gate_float64": 7487,
+      "in_original_v41_domain": true,
+      "input_integer": 88,
+      "original_relu_float64": 7487,
+      "pass": true,
+      "permuted_relu_gate_float64": 7487,
+      "source_wasmtime_i32": 7487,
+      "typed_source_i32": 7487
+    },
+    {
+      "constructed_relu_gate_float64": 7661,
+      "in_original_v41_domain": true,
+      "input_integer": 89,
+      "original_relu_float64": 7661,
+      "pass": true,
+      "permuted_relu_gate_float64": 7661,
+      "source_wasmtime_i32": 7661,
+      "typed_source_i32": 7661
+    },
+    {
+      "constructed_relu_gate_float64": 7837,
+      "in_original_v41_domain": true,
+      "input_integer": 90,
+      "original_relu_float64": 7837,
+      "pass": true,
+      "permuted_relu_gate_float64": 7837,
+      "source_wasmtime_i32": 7837,
+      "typed_source_i32": 7837
+    },
+    {
+      "constructed_relu_gate_float64": 8015,
+      "in_original_v41_domain": true,
+      "input_integer": 91,
+      "original_relu_float64": 8015,
+      "pass": true,
+      "permuted_relu_gate_float64": 8015,
+      "source_wasmtime_i32": 8015,
+      "typed_source_i32": 8015
+    },
+    {
+      "constructed_relu_gate_float64": 8195,
+      "in_original_v41_domain": true,
+      "input_integer": 92,
+      "original_relu_float64": 8195,
+      "pass": true,
+      "permuted_relu_gate_float64": 8195,
+      "source_wasmtime_i32": 8195,
+      "typed_source_i32": 8195
+    },
+    {
+      "constructed_relu_gate_float64": 8377,
+      "in_original_v41_domain": true,
+      "input_integer": 93,
+      "original_relu_float64": 8377,
+      "pass": true,
+      "permuted_relu_gate_float64": 8377,
+      "source_wasmtime_i32": 8377,
+      "typed_source_i32": 8377
+    },
+    {
+      "constructed_relu_gate_float64": 8561,
+      "in_original_v41_domain": true,
+      "input_integer": 94,
+      "original_relu_float64": 8561,
+      "pass": true,
+      "permuted_relu_gate_float64": 8561,
+      "source_wasmtime_i32": 8561,
+      "typed_source_i32": 8561
+    },
+    {
+      "constructed_relu_gate_float64": 8747,
+      "in_original_v41_domain": true,
+      "input_integer": 95,
+      "original_relu_float64": 8747,
+      "pass": true,
+      "permuted_relu_gate_float64": 8747,
+      "source_wasmtime_i32": 8747,
+      "typed_source_i32": 8747
+    },
+    {
+      "constructed_relu_gate_float64": 8935,
+      "in_original_v41_domain": true,
+      "input_integer": 96,
+      "original_relu_float64": 8935,
+      "pass": true,
+      "permuted_relu_gate_float64": 8935,
+      "source_wasmtime_i32": 8935,
+      "typed_source_i32": 8935
+    },
+    {
+      "constructed_relu_gate_float64": 9125,
+      "in_original_v41_domain": true,
+      "input_integer": 97,
+      "original_relu_float64": 9125,
+      "pass": true,
+      "permuted_relu_gate_float64": 9125,
+      "source_wasmtime_i32": 9125,
+      "typed_source_i32": 9125
+    },
+    {
+      "constructed_relu_gate_float64": 9317,
+      "in_original_v41_domain": true,
+      "input_integer": 98,
+      "original_relu_float64": 9317,
+      "pass": true,
+      "permuted_relu_gate_float64": 9317,
+      "source_wasmtime_i32": 9317,
+      "typed_source_i32": 9317
+    },
+    {
+      "constructed_relu_gate_float64": 9511,
+      "in_original_v41_domain": true,
+      "input_integer": 99,
+      "original_relu_float64": 9511,
+      "pass": true,
+      "permuted_relu_gate_float64": 9511,
+      "source_wasmtime_i32": 9511,
+      "typed_source_i32": 9511
+    },
+    {
+      "constructed_relu_gate_float64": 9707,
+      "in_original_v41_domain": true,
+      "input_integer": 100,
+      "original_relu_float64": 9707,
+      "pass": true,
+      "permuted_relu_gate_float64": 9707,
+      "source_wasmtime_i32": 9707,
+      "typed_source_i32": 9707
+    },
+    {
+      "constructed_relu_gate_float64": 9905,
+      "in_original_v41_domain": true,
+      "input_integer": 101,
+      "original_relu_float64": 9905,
+      "pass": true,
+      "permuted_relu_gate_float64": 9905,
+      "source_wasmtime_i32": 9905,
+      "typed_source_i32": 9905
+    },
+    {
+      "constructed_relu_gate_float64": 10105,
+      "in_original_v41_domain": true,
+      "input_integer": 102,
+      "original_relu_float64": 10105,
+      "pass": true,
+      "permuted_relu_gate_float64": 10105,
+      "source_wasmtime_i32": 10105,
+      "typed_source_i32": 10105
+    },
+    {
+      "constructed_relu_gate_float64": 10307,
+      "in_original_v41_domain": true,
+      "input_integer": 103,
+      "original_relu_float64": 10307,
+      "pass": true,
+      "permuted_relu_gate_float64": 10307,
+      "source_wasmtime_i32": 10307,
+      "typed_source_i32": 10307
+    },
+    {
+      "constructed_relu_gate_float64": 10511,
+      "in_original_v41_domain": true,
+      "input_integer": 104,
+      "original_relu_float64": 10511,
+      "pass": true,
+      "permuted_relu_gate_float64": 10511,
+      "source_wasmtime_i32": 10511,
+      "typed_source_i32": 10511
+    },
+    {
+      "constructed_relu_gate_float64": 10717,
+      "in_original_v41_domain": true,
+      "input_integer": 105,
+      "original_relu_float64": 10717,
+      "pass": true,
+      "permuted_relu_gate_float64": 10717,
+      "source_wasmtime_i32": 10717,
+      "typed_source_i32": 10717
+    },
+    {
+      "constructed_relu_gate_float64": 10925,
+      "in_original_v41_domain": true,
+      "input_integer": 106,
+      "original_relu_float64": 10925,
+      "pass": true,
+      "permuted_relu_gate_float64": 10925,
+      "source_wasmtime_i32": 10925,
+      "typed_source_i32": 10925
+    },
+    {
+      "constructed_relu_gate_float64": 11135,
+      "in_original_v41_domain": true,
+      "input_integer": 107,
+      "original_relu_float64": 11135,
+      "pass": true,
+      "permuted_relu_gate_float64": 11135,
+      "source_wasmtime_i32": 11135,
+      "typed_source_i32": 11135
+    },
+    {
+      "constructed_relu_gate_float64": 11347,
+      "in_original_v41_domain": true,
+      "input_integer": 108,
+      "original_relu_float64": 11347,
+      "pass": true,
+      "permuted_relu_gate_float64": 11347,
+      "source_wasmtime_i32": 11347,
+      "typed_source_i32": 11347
+    },
+    {
+      "constructed_relu_gate_float64": 11561,
+      "in_original_v41_domain": true,
+      "input_integer": 109,
+      "original_relu_float64": 11561,
+      "pass": true,
+      "permuted_relu_gate_float64": 11561,
+      "source_wasmtime_i32": 11561,
+      "typed_source_i32": 11561
+    },
+    {
+      "constructed_relu_gate_float64": 11777,
+      "in_original_v41_domain": true,
+      "input_integer": 110,
+      "original_relu_float64": 11777,
+      "pass": true,
+      "permuted_relu_gate_float64": 11777,
+      "source_wasmtime_i32": 11777,
+      "typed_source_i32": 11777
+    },
+    {
+      "constructed_relu_gate_float64": 11995,
+      "in_original_v41_domain": true,
+      "input_integer": 111,
+      "original_relu_float64": 11995,
+      "pass": true,
+      "permuted_relu_gate_float64": 11995,
+      "source_wasmtime_i32": 11995,
+      "typed_source_i32": 11995
+    },
+    {
+      "constructed_relu_gate_float64": 12215,
+      "in_original_v41_domain": true,
+      "input_integer": 112,
+      "original_relu_float64": 12215,
+      "pass": true,
+      "permuted_relu_gate_float64": 12215,
+      "source_wasmtime_i32": 12215,
+      "typed_source_i32": 12215
+    },
+    {
+      "constructed_relu_gate_float64": 12437,
+      "in_original_v41_domain": true,
+      "input_integer": 113,
+      "original_relu_float64": 12437,
+      "pass": true,
+      "permuted_relu_gate_float64": 12437,
+      "source_wasmtime_i32": 12437,
+      "typed_source_i32": 12437
+    },
+    {
+      "constructed_relu_gate_float64": 12661,
+      "in_original_v41_domain": true,
+      "input_integer": 114,
+      "original_relu_float64": 12661,
+      "pass": true,
+      "permuted_relu_gate_float64": 12661,
+      "source_wasmtime_i32": 12661,
+      "typed_source_i32": 12661
+    },
+    {
+      "constructed_relu_gate_float64": 12887,
+      "in_original_v41_domain": true,
+      "input_integer": 115,
+      "original_relu_float64": 12887,
+      "pass": true,
+      "permuted_relu_gate_float64": 12887,
+      "source_wasmtime_i32": 12887,
+      "typed_source_i32": 12887
+    },
+    {
+      "constructed_relu_gate_float64": 13115,
+      "in_original_v41_domain": true,
+      "input_integer": 116,
+      "original_relu_float64": 13115,
+      "pass": true,
+      "permuted_relu_gate_float64": 13115,
+      "source_wasmtime_i32": 13115,
+      "typed_source_i32": 13115
+    },
+    {
+      "constructed_relu_gate_float64": 13345,
+      "in_original_v41_domain": true,
+      "input_integer": 117,
+      "original_relu_float64": 13345,
+      "pass": true,
+      "permuted_relu_gate_float64": 13345,
+      "source_wasmtime_i32": 13345,
+      "typed_source_i32": 13345
+    },
+    {
+      "constructed_relu_gate_float64": 13577,
+      "in_original_v41_domain": true,
+      "input_integer": 118,
+      "original_relu_float64": 13577,
+      "pass": true,
+      "permuted_relu_gate_float64": 13577,
+      "source_wasmtime_i32": 13577,
+      "typed_source_i32": 13577
+    },
+    {
+      "constructed_relu_gate_float64": 13811,
+      "in_original_v41_domain": true,
+      "input_integer": 119,
+      "original_relu_float64": 13811,
+      "pass": true,
+      "permuted_relu_gate_float64": 13811,
+      "source_wasmtime_i32": 13811,
+      "typed_source_i32": 13811
+    },
+    {
+      "constructed_relu_gate_float64": 14047,
+      "in_original_v41_domain": true,
+      "input_integer": 120,
+      "original_relu_float64": 14047,
+      "pass": true,
+      "permuted_relu_gate_float64": 14047,
+      "source_wasmtime_i32": 14047,
+      "typed_source_i32": 14047
+    },
+    {
+      "constructed_relu_gate_float64": 14285,
+      "in_original_v41_domain": true,
+      "input_integer": 121,
+      "original_relu_float64": 14285,
+      "pass": true,
+      "permuted_relu_gate_float64": 14285,
+      "source_wasmtime_i32": 14285,
+      "typed_source_i32": 14285
+    },
+    {
+      "constructed_relu_gate_float64": 14525,
+      "in_original_v41_domain": true,
+      "input_integer": 122,
+      "original_relu_float64": 14525,
+      "pass": true,
+      "permuted_relu_gate_float64": 14525,
+      "source_wasmtime_i32": 14525,
+      "typed_source_i32": 14525
+    },
+    {
+      "constructed_relu_gate_float64": 14767,
+      "in_original_v41_domain": true,
+      "input_integer": 123,
+      "original_relu_float64": 14767,
+      "pass": true,
+      "permuted_relu_gate_float64": 14767,
+      "source_wasmtime_i32": 14767,
+      "typed_source_i32": 14767
+    },
+    {
+      "constructed_relu_gate_float64": 15011,
+      "in_original_v41_domain": true,
+      "input_integer": 124,
+      "original_relu_float64": 15011,
+      "pass": true,
+      "permuted_relu_gate_float64": 15011,
+      "source_wasmtime_i32": 15011,
+      "typed_source_i32": 15011
+    },
+    {
+      "constructed_relu_gate_float64": 15257,
+      "in_original_v41_domain": true,
+      "input_integer": 125,
+      "original_relu_float64": 15257,
+      "pass": true,
+      "permuted_relu_gate_float64": 15257,
+      "source_wasmtime_i32": 15257,
+      "typed_source_i32": 15257
+    },
+    {
+      "constructed_relu_gate_float64": 15505,
+      "in_original_v41_domain": true,
+      "input_integer": 126,
+      "original_relu_float64": 15505,
+      "pass": true,
+      "permuted_relu_gate_float64": 15505,
+      "source_wasmtime_i32": 15505,
+      "typed_source_i32": 15505
+    },
+    {
+      "constructed_relu_gate_float64": 15755,
+      "in_original_v41_domain": true,
+      "input_integer": 127,
+      "original_relu_float64": 15755,
+      "pass": true,
+      "permuted_relu_gate_float64": 15755,
+      "source_wasmtime_i32": 15755,
+      "typed_source_i32": 15755
+    },
+    {
+      "constructed_relu_gate_float64": 100030007,
+      "in_original_v41_domain": false,
+      "input_integer": -10000,
+      "pass": true,
+      "permuted_relu_gate_float64": 100030007,
+      "source_wasmtime_i32": 100030007,
+      "typed_source_i32": 100030007
+    },
+    {
+      "constructed_relu_gate_float64": 1003007,
+      "in_original_v41_domain": false,
+      "input_integer": -1000,
+      "pass": true,
+      "permuted_relu_gate_float64": 1003007,
+      "source_wasmtime_i32": 1003007,
+      "typed_source_i32": 1003007
+    },
+    {
+      "constructed_relu_gate_float64": 17035,
+      "in_original_v41_domain": false,
+      "input_integer": -129,
+      "pass": true,
+      "permuted_relu_gate_float64": 17035,
+      "source_wasmtime_i32": 17035,
+      "typed_source_i32": 17035
+    },
+    {
+      "constructed_relu_gate_float64": 16007,
+      "in_original_v41_domain": false,
+      "input_integer": 128,
+      "pass": true,
+      "permuted_relu_gate_float64": 16007,
+      "source_wasmtime_i32": 16007,
+      "typed_source_i32": 16007
+    },
+    {
+      "constructed_relu_gate_float64": 16261,
+      "in_original_v41_domain": false,
+      "input_integer": 129,
+      "pass": true,
+      "permuted_relu_gate_float64": 16261,
+      "source_wasmtime_i32": 16261,
+      "typed_source_i32": 16261
+    },
+    {
+      "constructed_relu_gate_float64": 997007,
+      "in_original_v41_domain": false,
+      "input_integer": 1000,
+      "pass": true,
+      "permuted_relu_gate_float64": 997007,
+      "source_wasmtime_i32": 997007,
+      "typed_source_i32": 997007
+    },
+    {
+      "constructed_relu_gate_float64": 99970007,
+      "in_original_v41_domain": false,
+      "input_integer": 10000,
+      "pass": true,
+      "permuted_relu_gate_float64": 99970007,
+      "source_wasmtime_i32": 99970007,
+      "typed_source_i32": 99970007
+    }
+  ]
+}
