@@ -66,3 +66,37 @@ The experimental JSON includes exact training/heldout coordinates, activation me
 ## Next experiments
 
 The most consequential next stages are spatially resolved activation subspaces, activation patching between counterfactual image pairs, KAN edge interactions between channels rather than isolated pooled means, direct activation→output mechanistic surrogates with heldout causal intervention validation, and transfer studies across genuinely distinct trained checkpoints. This is how the KAN compiler can support **mechanistic** research rather than collecting attractive but potentially misleading mathematical plots.
+
+## Observed results and immutable evidence (the original v46 experiment)
+
+The original trusted-branch [independent CI run 44240406427](https://github.com/Caerii/VisuaML/actions/runs/44240406427) checked the exact model's hidden tensor `ReLU114_Output_0`, whose reviewed static shape is **[1, 16, 14, 14]**. Its full **145,852-byte original report** is checked in as [the permanent intervention/curve record](../benchmarks/pretrained_internal_kan_causality_v46.json), SHA-256 `180d50d2bc1d444848050a64437860479d657427dffd8dbc42694d9be6977d00`, with a [separate source-commit/CI origin manifest](../benchmarks/pretrained_internal_kan_causality_v46.origin.json). The raw original experiment was sourced at commit `272deae161f1c780c652b419fff8133676abf2a6`, not retroactively attributed to the later documentation commit.
+
+### Hidden-activation KAN fitting
+
+Each basis fitted the 16 per-channel spatial-mean activation curves from **17 training coordinates**, evaluated against **16 disjoint within-image heldout coordinates**, then on the same 16 coordinates of an independently seeded second image. All errors below are mean absolute errors across channels and probe coordinates.
+
+| Basis | Training max absolute activation error | Same-image heldout MAE | Different-image MAE |
+| --- | ---: | ---: | ---: |
+| Linear | 0.02559 | 0.002297 | 0.008243 |
+| Degree-4 polynomial | 0.004226 | 0.000348 | 0.007368 |
+| Nine-knot linear spline | 0.002537 | **0.000107** | **0.007358** |
+| Nine-center Gaussian RBF | **0.001671** | 0.000184 | 0.007370 |
+| Four-harmonic Fourier | 0.06641 | 0.002330 | 0.007789 |
+
+The RBF model was selected based only on training error; the spline achieved the best same-image heldout error. The spline's different-image error is approximately **69 times** its within-image heldout error. This is direct negative evidence against treating a fitted one-dimensional activation curve as an image-invariant mechanism.
+
+### Actual hidden-channel causal intervention
+
+All **16** channels were masked one at a time inside the original model under five preregistered discovery input intensities. Channel **5** had the largest measured mean logit effect; channel **3** had the smallest, with zero measured effect in those discovery probes. Both were selected before consulting heldout inputs.
+
+| Mean absolute change across final logits | Channel 5 (selected) | Channel 3 (control) |
+| --- | ---: | ---: |
+| Five discovery intensity probes | 0.16385 | 0 |
+| 16 heldout intensities, original image | 0.13967 | 0 |
+| 16 heldout intensities, different image | 0.09270 | 0.00411 |
+
+**Neither intervention changed the top predicted class on any of the 32 heldout probes.** This illustrates another critical distinction: a channel can be causally consequential for output logits without changing the final argmax decision on a given sample.
+
+The identity-mask control preserved original logits on all heldout inputs. The independent scalar oracle matched both the traced internal tensor and the perturbed final logits on three separately named probes; the maximum absolute difference in the original same-image full-scale case was below 1.1×10⁻⁶. The archived report includes both implementations' output hashes, modified-model digests and exact input hashes.
+
+The evidence establishes a **real, tested causal activation-channel effect** in the original pretrained network. It does not establish that the KAN-fitted channel-mean curves *caused* those output changes, represent equivalent internal teacher modules, generalize to other checkpoints, or capture named semantic features.
