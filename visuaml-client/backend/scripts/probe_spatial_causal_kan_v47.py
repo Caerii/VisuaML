@@ -77,8 +77,6 @@ def _metrics(ref, other):
 
 
 def run(model_bytes: bytes) -> dict:
-    import onnxruntime as ort
-
     if _sha(model_bytes) != CHECKPOINT_SHA256:
         raise AssertionError("Original pretrained checkpoint source bytes differ")
     root = Path(__file__).resolve().parents[3]
@@ -170,7 +168,7 @@ def run(model_bytes: bytes) -> dict:
         cases = [donor_at(base, float(t)) for t in coords]
         return cases, np.stack([tile(activation) for _, activation in cases])
 
-    train_cases, train_cells = measurements(donor_base, train)
+    _, train_cells = measurements(donor_base, train)
     same_cases, same_cells = measurements(donor_base, heldout)
     cross_cases, cross_cells = measurements(cross_base, heldout)
 
@@ -222,8 +220,8 @@ def run(model_bytes: bytes) -> dict:
     # Concrete independent scalar replay of the two nontrivial grafts.
     scalar_witnesses = []
     for label, donor in (
-        ("same_seed_t_0.5", same_cases[8][1]),
-        ("cross_seed_t_0.5", cross_cases[8][1]),
+        ("same_seed_t_0.53125", same_cases[8][1]),
+        ("cross_seed_t_0.53125", cross_cases[8][1]),
     ):
         graft, expected = downstream_reference(
             model_bytes, recipient, donor, mask
