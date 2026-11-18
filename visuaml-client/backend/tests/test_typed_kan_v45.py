@@ -168,7 +168,6 @@ def test_multkan_product_is_a_genuinely_compositional_mechanism():
 
 def test_import_v43_symbolic_polynomial_as_constructed_kan_edge():
     import sympy as sp
-
     from visuaml.compiler_lab.analytic_relu_specialization_v41 import (
         AnalyticRelu,
         compile_bounded_program,
