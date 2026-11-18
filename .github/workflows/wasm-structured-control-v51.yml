@@ -59,7 +59,7 @@ jobs:
           assert r["nonterminating_case_rejected_with_bounded_fuel"]
           assert not r["neural_pc_routing_implemented"]
           assert not r["general_wasm_supported"]
-          assert all(x["pass"] for x in r["witnesses"])
+          assert all(x["passed"] for x in r["witnesses"])
           print("Original structured WASM witness count",len(r["witnesses"]))
           PY
       - name: Upload complete source-bound structured-control transition evidence
