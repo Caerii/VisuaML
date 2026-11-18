@@ -128,6 +128,101 @@ transition contract before an all-control-plus-datapath claim.
 each tensor may make v58 slower than v56 or Wasmtime. That is not a
 failure of the benchmark; it is precisely why the suite is necessary.
 
+
+## S9 — Blinded neural-to-symbolic-to-neural round trips
+
+This experiment directly connects the formerly separate v50 and v58
+research results, rather than treating construction and recovery as
+unrelated achievements.
+
+1. Construct a bounded typed WASM source program and execute it using
+   v49's **fixed, analytically constructed 32-bit neural bit gates**.
+2. Give v50's synthesizer only a callable integer-input/output oracle.
+   Its closure cannot inspect source instructions, neural weights, program
+   token matrices, construction metadata or execution traces.
+3. Pass each proposed symbolic candidate to an **independent Z3 source
+   verifier**, which checks inequivalence over the full typed i32 domain
+   and returns a counterexample on `sat`, or equivalence on `unsat`.
+4. Re-encode the accepted symbolic candidate as canonical original WASM.
+   Execute the original and recovered binaries in independent Wasmtime
+   and the recovered program in the v58 fixed-weight microstep executor.
+5. Check final outputs plus **every recovered v58 instruction-state
+   transition** against the independent v51 reference. Record exact
+   source and candidate byte strings, SHA-256 hashes, solver formula
+   digest, candidate digest, fixed v49 weight hash, query counts, CEGIS
+   refinements and finite trace digests.
+
+The current benchmark declares 13 distinct source programs: the five
+historical v50 examples and eight distinct held-out source variants.
+Each has 12 adversarial finite execution replay inputs. Therefore
+**156 source/input replays are planned**, not yet reported as executed.
+
+Two proof scopes must never be conflated:
+
+- `Z3 unsat` establishes equivalence of **typed original WASM and
+  accepted candidate semantics** over all signed i32 inputs.
+- The constructed neural v49 interpreter and v58 microstep execution
+  are checked with **finite execution witnesses only**. This does not
+  prove all-input equivalence of a neural circuit or recover the unique
+  historical source of an arbitrary learned network.
+
+The benchmark fails rather than silently accepting a source/candidate
+SMT mismatch or any incorrect finite neural execution.
+
+### Run the round-trip benchmark locally
+
+After installing the repository's pinned Python dependencies, plus
+`pytest`, `ruff`, `wasmtime` and `z3-solver`, run a new output
+directory outside your Git worktree:
+
+```bash
+python -m pip install -r visuaml-client/backend/requirements.txt pytest ruff wasmtime z3-solver
+python visuaml-client/backend/scripts/verify_offline_v58.py \
+  --output-dir /tmp/visuaml-v58-roundtrip \
+  --roundtrip --roundtrip-holdout
+```
+
+The workflow executes focused tests, smoke benchmarking, the blinded
+CEGIS+SMT round trip and **an independent replay of the resulting proof
+archive**. It then emits a separate measured-only recovery scorecard.
+It uses no GitHub Actions or remote API.
+
+### S10 — Proof-gated representation profitability
+
+Only after the round-trip proof archive independently replays can we
+compare the *original* and *recovered* WASM binary representations.
+
+A dedicated benchmark compares original/recovered binaries on identical
+inputs within **the same Wasmtime runtime**, then within **the same
+unchanged v58 neural microstep interpreter**, alternating AB/BA invocation
+order. It measures source-byte size, warm median time, differences and
+the recovery-plus-proof cost required to amortize an improvement. It
+reports regressions and does not infer a speedup if none was measured.
+
+This is **symbolic representation change**, *not* partial evaluation
+of the neural interpreter into specialized weights. The lower-bound
+amortization estimate also excludes compilation and deployment overhead
+and must not be interpreted as a realized deployment payback.
+
+```bash
+python visuaml-client/backend/scripts/verify_offline_v58.py \
+  --output-dir /tmp/visuaml-v58-representation \
+  --roundtrip --roundtrip-holdout --representation-cost \
+  --warmups 2 --repeats 7
+```
+
+The independent receipt verifier is also callable directly:
+
+```bash
+PYTHONPATH=visuaml-client/backend python \
+  visuaml-client/backend/scripts/verify_neural_roundtrip_evidence_v58.py \
+  --input /tmp/visuaml-v58-roundtrip/neural-v58-roundtrips.json
+```
+
+**No numerical outcome from S9 or S10 should be displayed as verified
+until these local runs finish and their source-bound artifacts are
+reviewed.**
+
 ## Next compounding research priorities
 
 **v58.1:** finish offline smoke, full regression and source-bound
