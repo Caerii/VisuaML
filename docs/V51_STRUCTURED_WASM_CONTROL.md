@@ -81,3 +81,19 @@ PYTHONPATH=visuaml-client/backend python \
 ```
 
 CI workflow `.github/workflows/wasm-structured-control-v51.yml`. Archive original complete evidence and a separate CI-origin manifest after all checks pass.
+
+## v51.1 — Euclid's GCD through actual branch/loop structure
+
+The follow-on research fixture is **a real WASM implementation of Euclid's repeated-subtraction algorithm**, computing `gcd(n,12)` for nonnegative `n`. For negative inputs, the fixture deliberately returns a documented sentinel 0 rather than claiming a mathematical GCD contract. Input zero returns 12.
+
+This program adds the following stressors simultaneously: two guarded early returns, an outer block with a nested loop, signed comparisons, an `if/else` body that chooses which mutable local to decrement, a `br 0` back-edge, and a `br_if 1` escape when the two local variables become equal.
+
+The dedicated regression independently validates the exact canonical WASM binary in Wasmtime and compares each execution with v51's host-controlled bit-neural arithmetic. A separate **mathematical `math.gcd` oracle** supplies expected answers for each reviewed nonnegative test. The extended evidence script `scripts/probe_wasm_gcd_v51_1.py` records source WASM bytes and SHA-256, numeric witnesses, source identities and detailed control traces for selected inputs. Its results are archived separately as `benchmarks/wasm_control_gcd_v51_1.json` and `.origin.json`; the original v51 transcript is never overwritten.
+
+An adversarial very-large-positive input can exhaust bounded execution fuel even though the subtraction algorithm is **mathematically terminating**. This is deliberately recorded as *resource exhaustion*, not a claim that the input constitutes a nonterminating WASM program. It is important to distinguish termination of the mathematical function from practical execution under an explicit cost policy.
+
+The machine's arithmetic continues to use the same fixed v49 bit circuits, while control routing remains Python-host dispatch. This is not neural execution of loops by softmax attention layers; that remains a separate future milestone.
+
+## Conformance ledger
+
+The machine-readable [WASM semantic capability ledger](WASM_CONFORMANCE_LEDGER_V51.json) explicitly distinguishes restricted supported features from unsupported instruction, effect and runtime families. It deliberately contains **no universal-WASM percentage**, since opcode counts alone cannot measure validation, traps, module instantiation, memory, calls, numerical corner cases or host-interface support.
