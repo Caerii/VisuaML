@@ -22,7 +22,6 @@ from pathlib import Path
 
 import numpy as np
 import wasmtime
-
 from visuaml.compiler_lab.bit_neural_vm_v49 import (
     construct_bit_weights,
     run_bit_vm,
@@ -102,11 +101,11 @@ def run() -> dict:
 
         # The synthesizer is passed two callable oracles, not the source,
         # its tokenization, its construction manifest, or any neural weights.
-        def opaque_neural_oracle(x: int) -> int:
-            return run_bit_vm(original_source, x, fixed=fixed)["result"]
+        def opaque_neural_oracle(x: int, original=original_source) -> int:
+            return run_bit_vm(original, x, fixed=fixed)["result"]
 
-        def opaque_smt_verifier(candidate: Candidate) -> dict:
-            return verify_against_typed_source(original_source, candidate)
+        def opaque_smt_verifier(candidate: Candidate, original=original_source) -> dict:
+            return verify_against_typed_source(original, candidate)
 
         recovered = synthesize_from_oracle(
             opaque_neural_oracle, opaque_smt_verifier,
