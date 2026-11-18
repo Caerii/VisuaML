@@ -16,7 +16,7 @@ on:
       - visuaml-client/backend/scripts/probe_wasm_state_vm_v40.py
       - .github/workflows/typed-wasm-state-v40.yml
 permissions:
-  contents: read
+  contents: write
 jobs:
   typed-wasm:
     runs-on: ubuntu-latest
@@ -63,3 +63,56 @@ jobs:
           path: evidence-v40/typed-wasm-v40.json
           if-no-files-found: error
           retention-days: 30
+
+      - name: Archive full passing transcript permanently on trusted research-branch pushes
+        env:
+          PYTHONNOUSERSITE: "1"
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v40-typed-wasm-transitions" ]; then
+            echo "Archival writes are prohibited for PR/fork events."
+            exit 0
+          fi
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os
+          src = Path("evidence-v40/typed-wasm-v40.json")
+          original = src.read_bytes()
+          observation = json.loads(original)
+          assert observation["complete"] and observation["independent_wasmtime"]
+          assert observation["checked_inputs"] == 260
+          assert observation["github_checkout_sha"] == os.environ["GITHUB_SHA"]
+          assert observation["source_sha256"] != observation["target_sha256"]
+          assert all(item["pass"] for item in observation["witnesses"])
+          output = Path("benchmarks/typed_wasm_state_differential_v40.json")
+          origin_path = Path("benchmarks/typed_wasm_state_differential_v40.origin.json")
+          if output.exists() or origin_path.exists():
+            raise SystemExit("The canonical v40 evidence archive already exists; never overwrite it.")
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_bytes(original)
+          provenance = {
+              "schema": "visuaml.wasm-state-differential-origin.v40",
+              "source_commit": os.environ["GITHUB_SHA"],
+              "workflow_run_url": (
+                  "https://github.com/" + os.environ["GITHUB_REPOSITORY"]
+                  + "/actions/runs/" + os.environ["GITHUB_RUN_ID"]
+              ),
+              "artifact_name": "typed-wasm-state-differential-v40",
+              "archived_raw_sha256": hashlib.sha256(original).hexdigest(),
+              "archived_raw_bytes": len(original),
+              "source_module_sha256": observation["source_sha256"],
+              "target_module_sha256": observation["target_sha256"],
+              "source_file_sha256": observation["source_file_sha256"],
+              "independent_wasmtime": True,
+              "checks": "260 finite i32 inputs in two Wasmtime modules and independent typed interpreter",
+              "authentication": "CI-origin metadata and digest, not a signer-authenticated attestation",
+          }
+          origin_path.write_text(
+              json.dumps(provenance, indent=2, sort_keys=True, allow_nan=False) + "\n",
+              encoding="utf-8"
+          )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/typed_wasm_state_differential_v40.json benchmarks/typed_wasm_state_differential_v40.origin.json
+          git commit -m "v40: archive raw independent Wasmtime transcript with CI origin [skip ci]"
+          git push origin "HEAD:refs/heads/research/v40-typed-wasm-transitions"
