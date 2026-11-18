@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <cmath>
 #include <cstddef>
+#include <type_traits>
 
 namespace {
 constexpr int width = 32;
@@ -84,22 +85,11 @@ extern "C" void visuaml_alu_candidates(
     candidates[5 * width] = eqz;
 }
 
-extern "C" int visuaml_indexed_route(
-        std::size_t active, std::size_t slots, const double* condition,
-        const std::int32_t* targets, const double* guards,
-        const double* guard_weights, const double* path_weights,
-        const double* and_weight, double* details) {
-    if (active >= slots || targets[2 * active] < 0) {
-        return 1;
-    }
-
-    double zero = 1.0;
-    for (int i = 0; i < width; ++i) {
-        if (condition[i] != 0.0 && condition[i] != 1.0) {
-            return 1;
-        }
-        zero = and_gate(zero, 1.0 - condition[i], and_weight);
-    }
+namespace {
+int route_from_zero(
+        std::size_t active, double zero, const std::int32_t* targets,
+        const double* guards, const double* guard_weights, const double* path_weights,
+        double* details) {
     const double nonzero = 1.0 - zero;
     const double* flags = guards + 3 * active;
     const double take = guard_weights[0] * flags[0]
@@ -132,6 +122,27 @@ extern "C" int visuaml_indexed_route(
     details[3] = static_cast<double>(normal);
     details[4] = static_cast<double>(alternate);
     return 0;
+}
+
+} // namespace
+
+extern "C" int visuaml_indexed_route(
+        std::size_t active, std::size_t slots, const double* condition,
+        const std::int32_t* targets, const double* guards,
+        const double* guard_weights, const double* path_weights,
+        const double* and_weight, double* details) {
+    if (active >= slots || targets[2 * active] < 0) {
+        return 1;
+    }
+
+    double zero = 1.0;
+    for (int i = 0; i < width; ++i) {
+        if (condition[i] != 0.0 && condition[i] != 1.0) {
+            return 1;
+        }
+        zero = and_gate(zero, 1.0 - condition[i], and_weight);
+    }
+    return route_from_zero(active, zero, targets, guards, guard_weights, path_weights, details);
 }
 
 extern "C" int visuaml_compact_route(
@@ -184,12 +195,41 @@ double sum(const double* values, std::size_t count) {
     }
     return value;
 }
+// Canonical carry reduction gives arithmetic modulo 2^32. Flipping the
+// sign bit maps signed two's-complement ordering to unsigned ordering.
+void packed_candidates(std::uint32_t left, std::uint32_t right, std::uint32_t* values) {
+    constexpr std::uint32_t sign = std::uint32_t{1} << 31;
+    values[0] = left + right;
+    values[1] = left - right;
+    values[2] = left * right;
+    values[3] = (left ^ sign) < (right ^ sign);
+    values[4] = (left ^ sign) > (right ^ sign);
+    values[5] = left == 0;
+}
+
+std::uint32_t masked_word(std::uint32_t word, double bit) {
+    return word & (std::uint32_t{0} - static_cast<std::uint32_t>(bit));
+}
+
+template <typename Word>
+constexpr bool is_packed = std::is_same_v<Word, std::uint32_t>;
+
+template <typename Word>
+constexpr std::size_t word_stride = is_packed<Word> ? 1 : width;
+
 // The caller supplies an admitted active prefix and its depth. The
 // transition preserves that invariant on every successful microstep.
+template <typename Word>
 int data_microstep_at_depth(
         std::size_t pc, std::size_t stack_size, std::size_t locals_size,
-        const double* rows, const double* fixed, std::size_t& depth, double* cells, double* locals) {
-    if (!binary_tensor(locals, locals_size * width) || !binary_tensor(fixed, actions)) {
+        const double* rows, const double* fixed, std::size_t& depth, Word* cells, Word* locals) {
+    constexpr auto stride = word_stride<Word>;
+    if constexpr (!is_packed<Word>) {
+        if (!binary_tensor(locals, locals_size * stride)) {
+            return micro_binary;
+        }
+    }
+    if (!binary_tensor(fixed, actions)) {
         return micro_binary;
     }
     const double* action = fixed + actions;
@@ -197,8 +237,8 @@ int data_microstep_at_depth(
         return operand_binary;
     }
 
-    const double* row = rows + pc * (immediate + width + locals_size + 1);
-    const double* local_selector = row + immediate + width;
+    const double* row = rows + pc * (immediate + stride + locals_size + 1);
+    const double* local_selector = row + immediate + stride;
     const double const_mask = local_selector[locals_size];
     const double first = (row[pop] + row[unary] + row[binary]) * fixed[pop_first];
     const double second = row[binary] * fixed[pop_second];
@@ -216,29 +256,37 @@ int data_microstep_at_depth(
         return operand_onehot;
     }
     const auto after_second = after_first - static_cast<std::size_t>(second);
-    const double zero[width] = {};
-    const double* top = depth ? cells + (depth - 1) * width : zero;
-    const double* previous = after_first ? cells + (after_first - 1) * width : zero;
+    const Word zero[stride] = {};
+    const Word* top = depth ? cells + (depth - 1) * stride : zero;
+    const Word* previous = after_first ? cells + (after_first - 1) * stride : zero;
 
-    double left[width], right[width];
-    for (int i = 0; i < width; ++i) {
-        left[i] = row[unary] * first * top[i] + row[binary] * second * previous[i];
-        right[i] = row[binary] * first * top[i];
-    }
-    if (!binary_tensor(left, width) || !binary_tensor(right, width)) {
-        return micro_binary;
-    }
-    if (!binary_tensor(fixed + output, alu_count)) {
-        return alu_binary;
-    }
-
-    // Even for non-ALU rows, evaluate the same six bit-gate candidates
-    // and the default add selector used by the Python reference.
-    double candidates[alu_count * width] = {};
-    visuaml_alu_candidates(left, right, fixed + and_kernel, fixed + xor_kernel,
-                           fixed + carry, carry_count, fixed + adder, candidates);
-    if (!binary_tensor(candidates, alu_count * width)) {
-        return alu_binary;
+    // Non-ALU rows also evaluate the six candidates and default add gate.
+    Word candidates[alu_count * stride] = {};
+    if constexpr (is_packed<Word>) {
+        if (!binary_tensor(fixed + output, alu_count)) {
+            return alu_binary;
+        }
+        const auto left = masked_word(*top, row[unary] * first)
+            | masked_word(*previous, row[binary] * second);
+        const auto right = masked_word(*top, row[binary] * first);
+        packed_candidates(left, right, candidates);
+    } else {
+        double left[width], right[width];
+        for (int i = 0; i < width; ++i) {
+            left[i] = row[unary] * first * top[i] + row[binary] * second * previous[i];
+            right[i] = row[binary] * first * top[i];
+        }
+        if (!binary_tensor(left, width) || !binary_tensor(right, width)) {
+            return micro_binary;
+        }
+        if (!binary_tensor(fixed + output, alu_count)) {
+            return alu_binary;
+        }
+        visuaml_alu_candidates(left, right, fixed + and_kernel, fixed + xor_kernel,
+                               fixed + carry, carry_count, fixed + adder, candidates);
+        if (!binary_tensor(candidates, alu_count * width)) {
+            return alu_binary;
+        }
     }
     const double is_alu = sum(row + alu, alu_count);
     double alu_gate[alu_count];
@@ -278,27 +326,41 @@ int data_microstep_at_depth(
         return local_write;
     }
     const double local_mask = (row[set] + row[tee]) * fixed[write_local];
-    double bank_word[width];
-    double* local = locals + slot * width;
-    for (int i = 0; i < width; ++i) {
-        const double value = row[set] * first * top[i] + row[tee] * top[i];
-        bank_word[i] = (1.0 - local_mask) * local[i] + local_mask * value;
-    }
-
+    Word bank_word[stride], value[stride];
+    Word* local = locals + slot * stride;
     const double sources[] = {
         const_mask * fixed[produce_const], row[get] * fixed[produce_local],
         is_alu * fixed[produce_alu],
     };
-    double value[width];
-    for (int i = 0; i < width; ++i) {
-        double alu_value = 0.0;
+    if constexpr (is_packed<Word>) {
+        const auto write_value = masked_word(*top, row[set] * first + row[tee]);
+        bank_word[0] = masked_word(*local, 1.0 - local_mask) | masked_word(write_value, local_mask);
+        std::uint32_t alu_value = 0;
         for (int j = 0; j < alu_count; ++j) {
-            alu_value += alu_gate[j] * candidates[j * width + i];
+            alu_value |= masked_word(candidates[j], alu_gate[j]);
         }
-        value[i] = sources[0] * row[immediate + i] + sources[1] * local[i] + sources[2] * alu_value;
-    }
-    if (!binary_tensor(value, width) || !binary_tensor(bank_word, width)) {
-        return micro_binary;
+        const auto literal = masked_word(static_cast<std::uint32_t>(row[immediate]), sources[0]);
+        const auto read = masked_word(*local, sources[1]);
+        const auto computed = masked_word(alu_value, sources[2]);
+        // Independent source gates may overlap under an altered decoder.
+        // Preserve the float path's binary-output trap before its arity check.
+        if (((literal & read) | ((literal | read) & computed)) != 0) {
+            return micro_binary;
+        }
+        value[0] = literal | read | computed;
+    } else {
+        for (int i = 0; i < width; ++i) {
+            const double write_value = row[set] * first * top[i] + row[tee] * top[i];
+            bank_word[i] = (1.0 - local_mask) * local[i] + local_mask * write_value;
+            double alu_value = 0.0;
+            for (int j = 0; j < alu_count; ++j) {
+                alu_value += alu_gate[j] * candidates[j * width + i];
+            }
+            value[i] = sources[0] * row[immediate + i] + sources[1] * local[i] + sources[2] * alu_value;
+        }
+        if (!binary_tensor(value, width) || !binary_tensor(bank_word, width)) {
+            return micro_binary;
+        }
     }
     const double push_expected = row[push] + row[unary] + row[binary];
     if (sum(sources, 3) != push_expected || first + second != row[pop] + row[unary] + 2.0 * row[binary]) {
@@ -314,15 +376,15 @@ int data_microstep_at_depth(
     // All validation precedes state updates. The contracted retain/pop
     // gates clear precisely the slots that left the active prefix.
     const auto next_depth = after_second + static_cast<std::size_t>(push_expected);
-    for (std::size_t i = next_depth * width; i < depth * width; ++i) {
+    for (std::size_t i = next_depth * stride; i < depth * stride; ++i) {
         cells[i] = 0.0;
     }
     if (push_expected) {
-        for (int i = 0; i < width; ++i) {
-            cells[after_second * width + i] = value[i];
+        for (std::size_t i = 0; i < stride; ++i) {
+            cells[after_second * stride + i] = value[i];
         }
     }
-    for (int i = 0; i < width; ++i) {
+    for (std::size_t i = 0; i < stride; ++i) {
         local[i] = bank_word[i];
     }
     depth = next_depth;
@@ -332,14 +394,19 @@ int data_microstep_at_depth(
 
 // Keep the signed i32 representation independent of implementation-defined
 // signed conversions when the high bit is set.
+std::int32_t decode_word(const std::uint32_t* value) {
+    const auto word = *value;
+    const auto signed_word = static_cast<std::int64_t>(word)
+        - (static_cast<std::int64_t>(word >> 31) << 32);
+    return static_cast<std::int32_t>(signed_word);
+}
+
 std::int32_t decode_word(const double* bits) {
     std::uint32_t word = 0;
     for (int i = 0; i < width; ++i) {
         word |= static_cast<std::uint32_t>(bits[i]) << i;
     }
-    const auto signed_word = static_cast<std::int64_t>(word)
-        - (static_cast<std::int64_t>(word >> 31) << 32);
-    return static_cast<std::int32_t>(signed_word);
+    return decode_word(&word);
 }
 
 } // namespace
@@ -380,6 +447,7 @@ namespace {
 constexpr std::size_t prepared_stack_size = 24;
 constexpr std::size_t prepared_locals_size = 5;
 
+template <typename Word>
 int prepared_loop(
         std::int32_t argument, std::size_t fuel, std::size_t count, std::size_t terminal,
         std::size_t visible_locals, const double* rows, const double* fixed,
@@ -388,12 +456,17 @@ int prepared_loop(
         std::int32_t* trace_states, double* trace_routes) {
     constexpr auto stack_size = prepared_stack_size;
     constexpr auto locals_size = prepared_locals_size;
-    double cells[stack_size * width] = {};
-    double locals[locals_size * width] = {};
-    const double zero[width] = {};
+    constexpr auto stride = word_stride<Word>;
+    Word cells[stack_size * stride] = {};
+    Word locals[locals_size * stride] = {};
+    const Word zero[stride] = {};
     const auto input = static_cast<std::uint32_t>(argument);
-    for (int i = 0; i < width; ++i) {
-        locals[i] = (input >> i) & 1U;
+    if constexpr (is_packed<Word>) {
+        locals[0] = input;
+    } else {
+        for (int i = 0; i < width; ++i) {
+            locals[i] = (input >> i) & 1U;
+        }
     }
     std::size_t pc = 0;
     std::size_t depth = 0;
@@ -401,10 +474,16 @@ int prepared_loop(
         if (pc >= count || pc == terminal) {
             return early_terminal;
         }
-        const double* top = depth ? cells + (depth - 1) * width : zero;
+        const Word* top = depth ? cells + (depth - 1) * stride : zero;
         double route[5];
-        const auto route_status = visuaml_indexed_route(
-            pc, terminal + 1, top, targets, guards, guard_weights, path_weights, and_weight, route);
+        int route_status;
+        if constexpr (is_packed<Word>) {
+            route_status = targets[2 * pc] < 0 ? 1 : route_from_zero(
+                pc, *top == 0, targets, guards, guard_weights, path_weights, route);
+        } else {
+            route_status = visuaml_indexed_route(
+                pc, terminal + 1, top, targets, guards, guard_weights, path_weights, and_weight, route);
+        }
         if (route_status) {
             return route_status == 1 ? route_binary : route_selection;
         }
@@ -430,10 +509,10 @@ int prepared_loop(
             state[0] = static_cast<std::int32_t>(pc);
             state[1] = static_cast<std::int32_t>(depth);
             for (std::size_t slot = 0; slot < depth; ++slot) {
-                state[2 + slot] = decode_word(cells + slot * width);
+                state[2 + slot] = decode_word(cells + slot * stride);
             }
             for (std::size_t slot = 0; slot < visible_locals; ++slot) {
-                state[2 + stack_size + slot] = decode_word(locals + slot * width);
+                state[2 + stack_size + slot] = decode_word(locals + slot * stride);
             }
             for (int field = 0; field < 5; ++field) {
                 trace_routes[tick * 5 + field] = route[field];
@@ -456,8 +535,9 @@ extern "C" int visuaml_prepared_loop(
         std::size_t visible_locals, const double* rows, const double* fixed,
         const std::int32_t* targets, const double* guards, const double* guard_weights,
         const double* path_weights, const double* and_weight, std::int32_t* result,
-        std::int32_t* trace_states, double* trace_routes) {
-    return prepared_loop(argument, fuel, count, terminal, visible_locals, rows, fixed,
+        std::int32_t* trace_states, double* trace_routes, bool packed) {
+    auto loop = packed ? prepared_loop<std::uint32_t> : prepared_loop<double>;
+    return loop(argument, fuel, count, terminal, visible_locals, rows, fixed,
                          targets, guards, guard_weights, path_weights, and_weight,
                          result, trace_states, trace_routes);
 }
@@ -467,12 +547,13 @@ extern "C" void visuaml_prepared_batch(
         std::size_t count, std::size_t terminal, std::size_t visible_locals, std::size_t trace_stride,
         const double* rows, const double* fixed, const std::int32_t* targets, const double* guards,
         const double* guard_weights, const double* path_weights, const double* and_weight,
-        std::int32_t* results, std::int32_t* statuses, std::int32_t* trace_states, double* trace_routes) {
+        std::int32_t* results, std::int32_t* statuses, std::int32_t* trace_states, double* trace_routes, bool packed) {
+    auto loop = packed ? prepared_loop<std::uint32_t> : prepared_loop<double>;
     const auto state_stride = trace_stride * (2 + prepared_stack_size + visible_locals);
     const auto route_stride = trace_stride * 5;
     for (std::size_t i = 0; i < size; ++i) {
         // Loop state is invocation-local, including when a neighboring input traps.
-        statuses[i] = prepared_loop(
+        statuses[i] = loop(
             arguments[i], fuels[i], count, terminal, visible_locals, rows, fixed,
             targets, guards, guard_weights, path_weights, and_weight, results + 2 * i,
             trace_states ? trace_states + i * state_stride : nullptr,

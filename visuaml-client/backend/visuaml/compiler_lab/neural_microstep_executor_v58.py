@@ -258,6 +258,7 @@ class PreparedMicrostepProgram:
     coefficients, including supported fault-injection overrides. The opt-in
     native microstep binds these same rows and coefficients to one C++ call.
     The native loop also runs live PC routing in that call for the full program.
+    The packed scalar mode uses uint32 words for the native loop's binary state.
     """
 
     def __init__(
@@ -266,6 +267,7 @@ class PreparedMicrostepProgram:
         use_fused_state: bool = True,
         use_native_microstep: bool = False,
         use_native_loop: bool = False,
+        use_packed_scalar: bool = False,
         tokens: ControlRouteTokens | None = None,
         program_tokens: ProgramMicroopTokens | None = None,
         pc_fixed: ControlRouterWeights | None = None,
@@ -276,6 +278,10 @@ class PreparedMicrostepProgram:
         local_fixed: LocalBankWeights | None = None,
         operand_fixed: OperandWeights | None = None,
     ):
+        if type(use_packed_scalar) is not bool:
+            raise MicrostepAdmissionError("use_packed_scalar must be a boolean")
+        if use_packed_scalar and not use_native_loop:
+            raise MicrostepAdmissionError("Packed scalar execution requires use_native_loop=True")
         if type(use_native_loop) is not bool:
             raise MicrostepAdmissionError("use_native_loop must be a boolean")
         if type(use_native_microstep) is not bool:
@@ -293,7 +299,7 @@ class PreparedMicrostepProgram:
         if use_native_microstep or use_native_loop:
             native = _NativeMicrostep(
                 inputs.rows, inputs.microstep_fixed, inputs.operand_fixed,
-                inputs.alu_fixed, inputs.bit_fixed, inputs.local_fixed,
+                inputs.alu_fixed, inputs.bit_fixed, inputs.local_fixed, packed=use_packed_scalar,
             )
             if use_native_loop:
                 native.bind_loop(inputs.program, inputs.compact)

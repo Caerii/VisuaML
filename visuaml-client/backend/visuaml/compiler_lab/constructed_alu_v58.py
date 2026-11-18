@@ -59,10 +59,10 @@ def compiled_alu():
         data_microstep.argtypes = (ctypes.c_size_t, ctypes.c_size_t, ctypes.c_size_t, _P, _P, _P, _P, _P)
         data_microstep.restype = ctypes.c_int
         prepared_loop = library.visuaml_prepared_loop
-        prepared_loop.argtypes = (ctypes.c_int32, *((ctypes.c_size_t,) * 4), *((_P,) * 10))
+        prepared_loop.argtypes = (ctypes.c_int32, *((ctypes.c_size_t,) * 4), *((_P,) * 10), ctypes.c_bool)
         prepared_loop.restype = ctypes.c_int
         prepared_batch = library.visuaml_prepared_batch
-        prepared_batch.argtypes = (_P, _P, *((ctypes.c_size_t,) * 5), *((_P,) * 11))
+        prepared_batch.argtypes = (_P, _P, *((ctypes.c_size_t,) * 5), *((_P,) * 11), ctypes.c_bool)
         prepared_batch.restype = None
     return CompiledAlu(function, route, indexed_route, data_microstep, prepared_loop, prepared_batch,
                        hashlib.sha256(source.read_bytes()).hexdigest(),

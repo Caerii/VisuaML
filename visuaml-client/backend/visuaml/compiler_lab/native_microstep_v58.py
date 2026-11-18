@@ -60,7 +60,7 @@ def _tensors(weights, layout, error, message):
 class _NativeMicrostep:
     """Internal gate for owned operand and local buffers from the prepared executor."""
 
-    def __init__(self, rows, micro, operand, alu, bits, local):
+    def __init__(self, rows, micro, operand, alu, bits, local, *, packed=False):
         if (EFFECTS, LOCAL_MODES, ALU_OPS, ACTIONS, WIDTH) != _LAYOUT:
             raise RuntimeError("Incompatible v58 native data gate layout")
         if not isinstance(micro, MicrostepWeights):
@@ -91,12 +91,15 @@ class _NativeMicrostep:
                                     dtype=np.float64)
         const = OPCODES.index("i32.const")
         data = np.array([name in DATA_OPS for name in OPCODES], dtype=np.float64)
+        self._packed = packed
+        powers = np.ldexp(np.ones(WIDTH), np.arange(WIDTH)) if packed else None
         table = []
         for row in rows:
             if row.opcode @ data != 1.:
                 raise MicroopAdmissionError("Control opcode outside v58 data microstep")
+            literal = (row.immediate_bits @ powers,) if packed else row.immediate_bits
             table.append(np.concatenate((
-                row.effect, row.local_mode, row.alu_selector, row.immediate_bits,
+                row.effect, row.local_mode, row.alu_selector, literal,
                 row.local_selector, row.opcode[const:const + 1],
             )))
         self._row_count = len(table)
@@ -139,7 +142,7 @@ class _NativeMicrostep:
             state_pointer = route_pointer = None
         status = self._loop(
             argument, fuel, count, TERMINAL, visible_locals,
-            *self._pointers, *self._router._pointers, result, state_pointer, route_pointer,
+            *self._pointers, *self._router._pointers, result, state_pointer, route_pointer, self._packed,
         )
         if status:
             raise _loop_error(status, fuel)
@@ -190,7 +193,7 @@ class _NativeMicrostep:
             arguments.ctypes.data, limits.ctypes.data, size,
             count, TERMINAL, self._visible_locals, stride,
             *self._pointers, *self._router._pointers,
-            results.ctypes.data, statuses.ctypes.data, state_pointer, route_pointer,
+            results.ctypes.data, statuses.ctypes.data, state_pointer, route_pointer, self._packed,
         )
         for i, (status, (value, steps)) in enumerate(zip(statuses.tolist(), results.tolist(), strict=True)):
             if status:
