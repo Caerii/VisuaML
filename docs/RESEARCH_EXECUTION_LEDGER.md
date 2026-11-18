@@ -208,3 +208,13 @@ with compact source-bound target coordinates. Isolated countdown and GCD
 routes were 10–15× faster. Two matched executor runs preserved full
 traces for 3,387 states. Exact match counting is scoped to small tensors.
 [Compact routing and binary admission report](V58_COMPACT_ROUTING.md)
+
+## v58 indexed PC and microoperation reads
+
+The optional indexed path carries the validated live gate coordinate
+into the next source-bound row and reuses admission of immutable
+decoder weights within execution. Warm row reads fell from about
+39–40 μs to 1.5 μs in component tests. Two executor runs measured
+1.11–1.12× paired untraced speedups and preserved all 3,387 archived
+states. Setup cost and per-input slowdowns remain in the evidence.
+[Indexed execution report](V58_INDEXED_GATES.md)

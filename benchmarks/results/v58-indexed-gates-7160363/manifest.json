@@ -1,0 +1,133 @@
+{
+  "artifacts": {
+    "backend.log.gz": {
+      "bytes": 955,
+      "sha256": "c0369e2d5693d998d9545e927a70082ec04ad1c6ed856a49782e621d1d74a1ee",
+      "uncompressed_sha256": "cea7215d357719c448c0d29e66142dac66eda18fba0aacacd2460a42eee1ae48"
+    },
+    "faults.json": {
+      "bytes": 6831,
+      "sha256": "389e2f7c88decf26ea6c464dd1facf3fd843e52da3ceb118c0a51ed03ebb9095",
+      "source": {
+        "commit": "716036347e8b84c07ab1783d8be6a4e113744bb6",
+        "tree": "34159b18c1287f99cc6d9da291b6374f5bd54a0e"
+      }
+    },
+    "micro.json": {
+      "bytes": 19288,
+      "sha256": "7f3f0d9d725ac15e5627edb9a725b7301c8ea77e38fe86efaecbbfa1cf9fdb47",
+      "source": {
+        "branch": "research/v58-indexed-gate-execution",
+        "commit": "716036347e8b84c07ab1783d8be6a4e113744bb6",
+        "tree": "34159b18c1287f99cc6d9da291b6374f5bd54a0e"
+      }
+    },
+    "outliers.json": {
+      "bytes": 1470,
+      "sha256": "d62d3c2040fa1bccfe86418485ac70395bf97d78fb516d0e76853dd52bc3b628"
+    },
+    "recheck_outliers.py": {
+      "bytes": 2316,
+      "sha256": "929ec4c689d60269fda664fa405e536725a1db49a10dd4f76c4ec7153922ba1d"
+    },
+    "runtime-1.json.gz": {
+      "bytes": 70444,
+      "sha256": "b8edbf3530a98eeebbf6e48c939399affb218b4a4ae40a1a9cb15aef2c25be13",
+      "source": {
+        "baseline": false,
+        "commit": "716036347e8b84c07ab1783d8be6a4e113744bb6",
+        "tree": "34159b18c1287f99cc6d9da291b6374f5bd54a0e"
+      },
+      "uncompressed_sha256": "97e551682540535cedd279f6cee434d8bd01a7c1ac2428e77709bf95e760481f"
+    },
+    "runtime-2.json.gz": {
+      "bytes": 65979,
+      "sha256": "4117f010bff01b65b3f0ae00046f8d36ab5a8796d6d96d1326752646494ae209",
+      "source": {
+        "baseline": false,
+        "commit": "716036347e8b84c07ab1783d8be6a4e113744bb6",
+        "tree": "34159b18c1287f99cc6d9da291b6374f5bd54a0e"
+      },
+      "uncompressed_sha256": "f235e8b7318bda0cb7cdcca54842e14a5267ae542e67b56cb77f7ca0562e67bd"
+    }
+  },
+  "runs": {
+    "runtime-1.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "ca0e4ffd821cf5df9e44473aeb2d83b8c33d1af889fb28baabf9610d9e9ca260",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 474798990,
+        "source_sha256": "68b7b011f11072eae3105e30e59ad54584ea38128b2bca47cca73f4212ffa784"
+      },
+      "modes": {
+        "no_trace": {
+          "faster_cases": 147,
+          "medians_ns": [
+            5975705,
+            5427624
+          ],
+          "paired_geomean": 1.1175476330828564,
+          "worst_regression": 1.6564974671412365
+        },
+        "trace": {
+          "faster_cases": 140,
+          "medians_ns": [
+            7140394,
+            6572472
+          ],
+          "paired_geomean": 1.0795969051799217,
+          "worst_regression": 2.2096084416719592
+        }
+      },
+      "states": 3387,
+      "witnesses": 197
+    },
+    "runtime-2.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "ca0e4ffd821cf5df9e44473aeb2d83b8c33d1af889fb28baabf9610d9e9ca260",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 425148676,
+        "source_sha256": "68b7b011f11072eae3105e30e59ad54584ea38128b2bca47cca73f4212ffa784"
+      },
+      "modes": {
+        "no_trace": {
+          "faster_cases": 143,
+          "medians_ns": [
+            5942159,
+            5315195
+          ],
+          "paired_geomean": 1.1133558382505466,
+          "worst_regression": 1.823000545312115
+        },
+        "trace": {
+          "faster_cases": 147,
+          "medians_ns": [
+            7172894,
+            6591262
+          ],
+          "paired_geomean": 1.093434776930726,
+          "worst_regression": 1.8115371195655463
+        }
+      },
+      "states": 3387,
+      "witnesses": 197
+    }
+  },
+  "schema": "visuaml.indexed-gates-experiment.v58"
+}
