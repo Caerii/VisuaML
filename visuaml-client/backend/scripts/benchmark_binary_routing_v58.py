@@ -41,7 +41,7 @@ def run(root):
                 raise AssertionError("Binary admission changed")
             samples = {
                 name: measure(partial(_repeat, partial(predicate, vec), 2048), warmups=1, repeats=9)
-                for name, predicate in (("all", _old_binary), ("count_nonzero", is_exact_binary))
+                for name, predicate in (("all", _old_binary), ("candidate", is_exact_binary))
             }
             measures.append({"size": size, "case": label, "checks_per_sample": 2048, "timing": samples})
 

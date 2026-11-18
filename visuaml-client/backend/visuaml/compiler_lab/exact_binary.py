@@ -9,4 +9,9 @@ def is_exact_binary(value: np.ndarray) -> bool:
     if type(value) is not np.ndarray:
         # Preserve NumPy dispatch and masks for legacy array subclasses.
         return bool(np.isfinite(value).all() and np.isin(value, (0., 1.)).all())
-    return bool(np.count_nonzero((value == 0.) | (value == 1.)) == value.size)
+    matches = (value == 0.) | (value == 1.)
+    # Counting reduces small-tensor overhead. The boolean reduction remains
+    # faster on the larger admission tables measured by the routing suite.
+    if value.size <= 128:
+        return bool(np.count_nonzero(matches) == value.size)
+    return bool(matches.all())

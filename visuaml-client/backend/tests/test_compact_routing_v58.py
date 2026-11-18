@@ -19,6 +19,9 @@ requires_compiler = pytest.mark.skipif(shutil.which("c++") is None, reason="requ
 
 def test_binary_count_keeps_exact_admission():
     for value in (
+        np.ones(128),
+        np.ones(129),
+        np.concatenate((np.ones(128), [0.5])),
         np.array([-0., 1., 0.]),
         np.array([0., -0., 1., 1.])[::-2],
         np.array([np.nan, 0.]),
