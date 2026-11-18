@@ -189,7 +189,7 @@ def test_fixed_bit_tokens_reject_tampering_and_wrong_program_hash():
         decode_tokens(replace(t, opcodes=first))
     bad_immediate = t.immediates.copy()
     bad_immediate[0, 0] = 1.
-    with pytest.raises(BitVMAdmissionError, match="Spurious"):
+    with pytest.raises(BitVMAdmissionError, match="Noncanonical local selector"):
         decode_tokens(replace(t, immediates=bad_immediate))
     bad_local = t.local_selectors.copy()
     bad_local[0, 0] = 1.
