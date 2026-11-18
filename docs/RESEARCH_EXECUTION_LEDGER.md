@@ -246,3 +246,11 @@ and 18.46–18.50× traced over per-instruction native execution. The
 evidence includes a direct comparison with prepared Python, matched
 traces and fault outcomes, and a corpus-wide fuel boundary sweep.
 [Native execution loop report](V58_NATIVE_LOOP.md)
+
+## v58 serial native batches
+
+Prepared programs now run independent inputs in one native call and
+return ordered results and traps. The evidence compares warm and
+preparation-inclusive throughput at five batch sizes, preserves all
+3,387 trace states, and samples the remaining native ALU cost.
+[Serial native batch report](V58_NATIVE_BATCH_LOOP.md)
