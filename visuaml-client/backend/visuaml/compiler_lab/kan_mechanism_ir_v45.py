@@ -72,7 +72,7 @@ def validate_kan(program: KANProgram) -> None:
             or not isinstance(program.nodes, tuple)
             or not 1 <= len(program.nodes) <= MAX_NODES
             or not isinstance(program.outputs, tuple)
-            or not 1 <= len(program.outputs) <= 8):
+            or not 1 <= len(program.outputs) <= 16):
         raise KANAdmissionError("Invalid bounded KAN program")
     lo, hi = program.domain
     if (type(lo) not in (float, int) or type(hi) not in (float, int)
