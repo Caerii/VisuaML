@@ -176,6 +176,11 @@ def validate_program(program: I32Program) -> None:
                 raise VMAdmissionError("Invalid signed i32 constant")
         elif immediate is not None:
             raise VMAdmissionError("Spurious opcode immediate")
+        requires = (2 if name in _BINARY_OPS else 1 if name in (
+            "local.set", "local.tee", "drop", "i32.eqz"
+        ) else 0)
+        if depth < requires:
+            raise VMAdmissionError("Typed operand stack underflow")
         if name == "end":
             if position != len(program.operations) - 1 or depth != 1:
                 raise VMAdmissionError("Function end must return exactly one i32")
