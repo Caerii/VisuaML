@@ -18,6 +18,12 @@ from .bit_neural_vm_v49 import (
     _int,
     construct_bit_weights,
 )
+from .neural_alu_v56 import (
+    ALUWeights,
+    construct_alu_weights,
+    execute_alu,
+    onehot_alu,
+)
 from .neural_control_routing_v52 import (
     TERMINAL,
     ControlRouterWeights,
@@ -44,12 +50,6 @@ from .neural_frame_events_v54 import (
     decode_opcode_token,
     fixed_event_weights,
     select_frame_action,
-)
-from .neural_alu_v56 import (
-    ALUWeights,
-    construct_alu_weights,
-    execute_alu,
-    onehot_alu,
 )
 from .neural_operand_adapter_v55 import TensorOperandStack
 from .neural_operand_storage_v55 import OperandWeights, fixed_operand_weights
