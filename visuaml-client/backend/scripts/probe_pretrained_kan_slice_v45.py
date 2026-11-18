@@ -16,7 +16,6 @@ from dataclasses import asdict
 from pathlib import Path
 
 import numpy as np
-
 from scripts.audit_pretrained_onnx_v37 import audit_bytes
 from scripts.probe_pretrained_mnist8_oracles_v37 import (
     ATOL,
