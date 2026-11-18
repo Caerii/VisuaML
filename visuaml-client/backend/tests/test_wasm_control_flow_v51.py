@@ -12,6 +12,7 @@ import pytest
 from visuaml.compiler_lab.wasm_control_flow_v51 import (
     ControlAdmissionError,
     ControlFuelExhausted,
+    ControlExecutionTrap,
     ControlOperation,
     ControlProgram,
     decode_control,
@@ -220,3 +221,20 @@ def test_host_control_arithmetic_uses_modular_i32_gates():
         op("local.get",0),op("i32.const",1),op("i32.add"),op("end"),
     ))
     assert execute_control(p,(1<<31)-1).value==-(1<<31)
+
+
+
+def test_structural_decoder_is_not_misrepresented_as_full_wasm_type_validator():
+    wasmtime = pytest.importorskip("wasmtime")
+    # Structurally well-nested, but the i32.add has no operands. The
+    # standalone v51 parser intentionally checks the closed-world binary
+    # envelope and lexical labels; independent Wasmtime enforces stack types.
+    bad = ControlProgram(0, (
+        op("i32.add"), op("i32.const", 0), op("end"),
+    ))
+    raw = encode_control(bad)
+    assert decode_control(raw) == bad
+    with pytest.raises(wasmtime.WasmtimeError):
+        wasmtime.Module.validate(wasmtime.Engine(), raw)
+    with pytest.raises(ControlExecutionTrap, match="underflow"):
+        execute_control(bad, 0, fuel=20)
