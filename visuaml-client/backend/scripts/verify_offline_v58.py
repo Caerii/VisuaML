@@ -77,7 +77,7 @@ def main() -> None:
     # Evidence producers require a clean Git tree. Prevent pytest, Python
     # and Ruff from creating cache artifacts inside the source checkout.
     env["PYTHONDONTWRITEBYTECODE"] = "1"
-    env["RUFF_NO_CACHE"] = "1"
+    env["RUFF_NO_CACHE"] = "true"
     env["PYTEST_ADDOPTS"] = (
         env.get("PYTEST_ADDOPTS", "") + " -p no:cacheprovider"
     ).strip()
