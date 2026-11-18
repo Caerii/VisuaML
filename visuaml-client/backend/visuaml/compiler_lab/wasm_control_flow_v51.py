@@ -33,13 +33,18 @@ from .bit_neural_vm_v49 import (
     _sub,
     construct_bit_weights,
 )
-from .wasm_bitstream_v39 import MAGIC, WasmBinaryError, _read_u32, _u32, parse_section_envelope
+from .wasm_bitstream_v39 import (
+    MAGIC,
+    WasmBinaryError,
+    _read_u32,
+    _u32,
+    parse_section_envelope,
+)
 from .wasm_state_vm_v40 import (
-    I32Program,
-    VMOperation,
     _EXPORT_PAYLOAD,
     _FUNCTION_PAYLOAD,
     _TYPE_PAYLOAD,
+    I32Program,
     _read_s32,
     _s32,
 )
