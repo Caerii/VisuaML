@@ -168,3 +168,10 @@ per-pair timings, binary sizes, and conditional recovery amortization
 are recorded in the representation-cost artifact. The tested change
 was the symbolic WASM representation. Execution weights were held
 fixed.
+
+## v58 constructed runtime profiling and validation
+
+The original traced baseline was rerun from the offline evidence
+revision. Exact binary comparisons improved traced v58 by 1.26–1.30×
+across 197 paired witnesses. Trace omission uses the same live gates.
+[Profile and verification report](V58_CONSTRUCTED_VALIDATION.md)
