@@ -11,7 +11,6 @@ from dataclasses import replace
 
 import numpy as np
 import pytest
-
 from scripts.probe_wasm_gcd_v51_1 import gcd_program
 from visuaml.compiler_lab.neural_control_routing_v52 import (
     NeuralControlError,
@@ -147,7 +146,6 @@ def test_all_state_transitions_match_original_v51_host_control(name):
 
 def test_mutating_gate_weights_changes_route_not_only_its_fingerprint():
     program = branch_block()
-    tokens = compile_route_tokens(program)
     fixed = construct_router_weights()
     before = execute_routed_control(program, 4, fuel=100, fixed=fixed)
     assert before.result_i32 == 0
