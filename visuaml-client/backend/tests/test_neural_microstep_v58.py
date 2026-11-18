@@ -150,10 +150,15 @@ def test_no_host_opcode_switch_in_v58_data_execution_path():
 
     from visuaml.compiler_lab.neural_microstep_v58 import step_data_microop
     from visuaml.compiler_lab.neural_microstep_executor_v58 import (
-        execute_microstep_control,
+        PreparedMicrostepProgram, _run, execute_microstep_control,
     )
 
-    engine = inspect.getsource(execute_microstep_control)
+    entry_points = [
+        inspect.getsource(entry)
+        for entry in (execute_microstep_control, PreparedMicrostepProgram.run)
+    ]
+    assert all("return _run(" in entry for entry in entry_points)
+    engine = inspect.getsource(_run)
     circuit = inspect.getsource(step_data_microop)
     assert "step_data_microop(" in engine
     assert "read_microop(" in engine
@@ -166,7 +171,7 @@ def test_no_host_opcode_switch_in_v58_data_execution_path():
         'elif op.opcode == "i32.mul"',
         "execute_alu_routed_control(",
     ):
-        assert forbidden not in engine
+        assert all(forbidden not in source for source in (engine, *entry_points))
     assert "candidate_alu = execute_alu(" in circuit
     assert "step_operands(" in circuit
     assert "write_local(" in circuit
