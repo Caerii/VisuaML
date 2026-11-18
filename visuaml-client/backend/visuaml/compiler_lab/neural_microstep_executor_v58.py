@@ -15,6 +15,7 @@ import numpy as np
 from .bit_neural_vm_v49 import (
     _bits, _int, BitCircuitWeights, construct_bit_weights,
 )
+from .compact_routing_v58 import CompactRouter
 from .neural_alu_v56 import ALUWeights, construct_alu_weights
 from .neural_control_routing_v52 import (
     TERMINAL, ControlRouteTokens, ControlRouterWeights, _onehot,
@@ -73,6 +74,7 @@ def execute_microstep_control(
     program: ControlProgram, argument: int, *, fuel: int = 400, capture_trace: bool = True,
     use_compiled_alu: bool = False,
     use_fused_state: bool = False,
+    use_compact_routing: bool = False,
     tokens: ControlRouteTokens | None = None,
     program_tokens: ProgramMicroopTokens | None = None,
     pc_fixed: ControlRouterWeights | None = None,
@@ -83,6 +85,8 @@ def execute_microstep_control(
     local_fixed: LocalBankWeights | None = None,
     operand_fixed: OperandWeights | None = None,
 ) -> MicrostepExecution:
+    if type(use_compact_routing) is not bool:
+        raise MicrostepAdmissionError("use_compact_routing must be a boolean")
     if type(use_compiled_alu) is not bool:
         raise MicrostepAdmissionError("use_compiled_alu must be a boolean")
     if type(use_fused_state) is not bool:
@@ -101,7 +105,8 @@ def execute_microstep_control(
         )
 
     tokens = compile_route_tokens(program) if tokens is None else tokens
-    validate_route_tokens(tokens, program)
+    if not use_compact_routing:
+        validate_route_tokens(tokens, program)
     program_tokens = (
         compile_microop_tokens(program)
         if program_tokens is None else program_tokens
@@ -109,6 +114,7 @@ def execute_microstep_control(
     validate_microop_tokens(program_tokens, program)
     pc_fixed = construct_router_weights() if pc_fixed is None else pc_fixed
     bit_fixed = construct_bit_weights() if bit_fixed is None else bit_fixed
+    compact = CompactRouter(program, tokens, pc_fixed, bit_fixed) if use_compact_routing else None
     microop_fixed = (
         construct_microop_weights() if microop_fixed is None
         else microop_fixed
@@ -142,9 +148,10 @@ def execute_microstep_control(
             top_word(operands) if operands.height[0] == 0.
             else np.zeros(32, dtype=np.float64)
         )
-        selected, route = neural_pc_step(
-            pc_vector, condition, tokens, pc_fixed, bit_fixed,
-        )
+        if compact is None:
+            selected, route = neural_pc_step(pc_vector, condition, tokens, pc_fixed, bit_fixed)
+        else:
+            selected, route = compact.step(pc_vector, condition, capture_trace=capture_trace)
         next_pc = int(np.argmax(selected))
         halted = op.opcode == "end"
         if halted:

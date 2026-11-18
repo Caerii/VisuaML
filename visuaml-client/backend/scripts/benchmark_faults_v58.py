@@ -156,12 +156,14 @@ def mutate(attack: Attack, program) -> dict:
     raise ValueError("Unknown mutation")
 
 
-def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_state: bool = False) -> dict:
+def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False) -> dict:
     program = countdown() if attack.source == "countdown" else generated(2)
     argument = 4 if attack.source == "countdown" else -17
     options = {"use_compiled_alu": True} if use_compiled_alu and attack.engine == "v58" else {}
     if use_fused_state and attack.engine == "v58":
         options["use_fused_state"] = True
+    if use_compact_routing and attack.engine == "v58":
+        options["use_compact_routing"] = True
     baseline = execute(attack.engine, program, argument, **options)
     if not any(
         row["opcode"] == attack.opcode_activated for row in baseline.trace
@@ -209,8 +211,9 @@ def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_stat
     }
 
 
-def campaign(*, use_compiled_alu: bool = False, use_fused_state: bool = False) -> dict:
-    cases = [run_attack(attack, use_compiled_alu=use_compiled_alu, use_fused_state=use_fused_state) for attack in ATTACKS]
+def campaign(*, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False) -> dict:
+    cases = [run_attack(attack, use_compiled_alu=use_compiled_alu, use_fused_state=use_fused_state,
+                        use_compact_routing=use_compact_routing) for attack in ATTACKS]
     return {
         "schema": SCHEMA,
         "injected_faults": len(cases),
@@ -234,6 +237,7 @@ def main() -> None:
     parser.add_argument("--require-all-detected", action="store_true")
     parser.add_argument("--compiled-alu", action="store_true")
     parser.add_argument("--fused-state", action="store_true")
+    parser.add_argument("--compact-routing", action="store_true")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
     def git(*arguments: str) -> str:
@@ -243,7 +247,10 @@ def main() -> None:
         ).strip()
     if git("status", "--porcelain", "--untracked-files=normal"):
         parser.error("Fault evidence requires a clean Git worktree")
-    report = campaign(use_compiled_alu=args.compiled_alu, use_fused_state=args.fused_state)
+    report = campaign(use_compiled_alu=args.compiled_alu, use_fused_state=args.fused_state,
+                      use_compact_routing=args.compact_routing)
+    if args.compact_routing:
+        report["v58_compact_routing"] = True
     if args.fused_state:
         report["v58_fused_state"] = True
     if args.compiled_alu:

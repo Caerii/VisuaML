@@ -23,6 +23,7 @@ _NAMES = ("and_kernel", "xor_kernel", "carry_thresholds", "adder_thresholds")
 @dataclass(frozen=True)
 class CompiledAlu:
     function: object
+    route: object
     source_sha256: str
     binary_sha256: str
     compiler: str
@@ -40,10 +41,14 @@ def compiled_alu():
         binary = Path(directory) / "alu.so"
         subprocess.run([compiler, *_FLAGS, str(source), "-o", str(binary)], check=True, timeout=30)
         binary_id = hashlib.sha256(binary.read_bytes()).hexdigest()
-        function = ctypes.CDLL(str(binary)).visuaml_alu_candidates
+        library = ctypes.CDLL(str(binary))
+        function = library.visuaml_alu_candidates
         function.argtypes = (_P, _P, _P, _P, _P, ctypes.c_size_t, _P, _P)
         function.restype = None
-    return CompiledAlu(function, hashlib.sha256(source.read_bytes()).hexdigest(),
+        route = library.visuaml_compact_route
+        route.argtypes = (_P, ctypes.c_size_t, _P, _P, _P, _P, _P, _P, _P)
+        route.restype = ctypes.c_int
+    return CompiledAlu(function, route, hashlib.sha256(source.read_bytes()).hexdigest(),
                        binary_id, version, _FLAGS)
 
 

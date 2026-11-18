@@ -9,4 +9,4 @@ def is_exact_binary(value: np.ndarray) -> bool:
     if type(value) is not np.ndarray:
         # Preserve NumPy dispatch and masks for legacy array subclasses.
         return bool(np.isfinite(value).all() and np.isin(value, (0., 1.)).all())
-    return bool(((value == 0.) | (value == 1.)).all())
+    return bool(np.count_nonzero((value == 0.) | (value == 1.)) == value.size)

@@ -1,3 +1,5 @@
+#include <cstdint>
+#include <cmath>
 #include <cstddef>
 
 namespace {
@@ -80,4 +82,62 @@ extern "C" void visuaml_alu_candidates(
         eqz = and_gate(eqz, 1.0 - a[i], and_weight);
     }
     candidates[5 * width] = eqz;
+}
+
+extern "C" int visuaml_compact_route(
+        const double* pc, std::size_t slots, const double* condition,
+        const std::int32_t* targets, const double* guards,
+        const double* guard_weights, const double* path_weights,
+        const double* and_weight, double* details) {
+    std::size_t active = slots;
+    for (std::size_t i = 0; i < slots; ++i) {
+        if (pc[i] == 1.0 && active == slots) {
+            active = i;
+        } else if (pc[i] != 0.0) {
+            return 1;
+        }
+    }
+    if (active == slots || targets[2 * active] < 0) {
+        return 1;
+    }
+
+    double zero = 1.0;
+    for (int i = 0; i < width; ++i) {
+        if (condition[i] != 0.0 && condition[i] != 1.0) {
+            return 1;
+        }
+        zero = and_gate(zero, 1.0 - condition[i], and_weight);
+    }
+    const double nonzero = 1.0 - zero;
+    const double* flags = guards + 3 * active;
+    const double take = guard_weights[0] * flags[0]
+                      + guard_weights[1] * flags[1] * nonzero
+                      + guard_weights[2] * flags[2] * zero;
+    const double normal_gain = path_weights[0] * (1.0 - take);
+    const double branch_gain = path_weights[1] * take;
+    if (!std::isfinite(normal_gain) || !std::isfinite(branch_gain)) {
+        return 2;
+    }
+
+    const auto normal = targets[2 * active];
+    const auto alternate = targets[2 * active + 1];
+    auto next = normal;
+    // Two nonzero coordinates may coincide. Combine their gains before
+    // admitting the output, exactly as in the dense bilinear contraction.
+    if (normal == alternate) {
+        if (normal_gain + branch_gain != 1.0) {
+            return 2;
+        }
+    } else if (normal_gain == 0.0 && branch_gain == 1.0) {
+        next = alternate;
+    } else if (normal_gain != 1.0 || branch_gain != 0.0) {
+        return 2;
+    }
+
+    details[0] = static_cast<double>(next);
+    details[1] = nonzero;
+    details[2] = take;
+    details[3] = static_cast<double>(normal);
+    details[4] = static_cast<double>(alternate);
+    return 0;
 }
