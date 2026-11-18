@@ -14,7 +14,6 @@ import math
 from pathlib import Path
 
 import numpy as np
-
 from scripts.audit_pretrained_onnx_v37 import audit_bytes
 
 SCHEMA = "visuaml.pretrained-cnn-onnx-vs-numpy.v37"
