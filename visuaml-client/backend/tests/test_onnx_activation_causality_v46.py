@@ -50,6 +50,7 @@ def test_numeric_oracle_requires_finite_matching_dtype_shape():
 
 
 def test_reject_wrong_checkpoint_identity_before_onnx_decode():
+    pytest.importorskip("onnx")
     with pytest.raises(ActivationTraceError, match="preflight"):
         original_review(b"corrupt or unpinned")
     with pytest.raises(ActivationTraceError, match="preflight"):
@@ -59,9 +60,8 @@ def test_reject_wrong_checkpoint_identity_before_onnx_decode():
 
 
 def test_real_original_cnn_trace_and_exact_internal_mask_semantics():
-    import onnxruntime as ort
-
     raw = _checkpoint()
+    ort = pytest.importorskip("onnxruntime")
     info = original_review(raw)
     assert info.target_output == TARGET
     assert info.source_node_op == "Relu"
