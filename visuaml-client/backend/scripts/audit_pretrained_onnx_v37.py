@@ -112,7 +112,7 @@ def audit_bytes(data: bytes, *, expected_sha256: str, source_revision: str) -> d
         # load_model_from_string does not chase external files or URLs.
         model = onnx.load_model_from_string(data)
         onnx.checker.check_model(model, full_check=True)
-    except (ImportError, ValueError, RuntimeError) as exc:
+    except Exception as exc:
         raise CheckpointPreflightError("ONNX parser/checker rejected checkpoint") from exc
     # ONNX checker may raise ValidationError (not ValueError).
     graph = model.graph
@@ -120,16 +120,21 @@ def audit_bytes(data: bytes, *, expected_sha256: str, source_revision: str) -> d
         raise CheckpointPreflightError("Unexpected ONNX IR version or graph size")
     if model.functions or model.training_info:
         raise CheckpointPreflightError("Model functions or training graphs unsupported")
-    if len(graph.input) != 1 or len(graph.output) != 1:
-        raise CheckpointPreflightError("Preflight expects a single input and output")
+    # Older ONNX graphs (including opset-8) may list initializers in graph.input.
+    # They are constants, not runtime input slots; require exactly one other input.
+    initializer_names = {tensor.name for tensor in graph.initializer}
+    runtime_inputs = [value for value in graph.input if value.name not in initializer_names]
+    if len(runtime_inputs) != 1 or len(graph.output) != 1:
+        raise CheckpointPreflightError("Preflight expects one runtime input and output")
+    runtime_input = runtime_inputs[0]
     if not model.opset_import or any(imp.domain not in ("", "ai.onnx") for imp in model.opset_import):
         raise CheckpointPreflightError("Custom ONNX operator domain unsupported")
     if any(node.domain not in ("", "ai.onnx") or len(node.output) != 1 for node in graph.node):
         raise CheckpointPreflightError("Custom-domain or multi-output node unsupported")
     if graph.sparse_initializer:
         raise CheckpointPreflightError("Sparse initializers unsupported")
-    if graph.input[0].name in {x.name for x in graph.initializer}:
-        raise CheckpointPreflightError("Runtime input may not alias an initializer")
+    if len({value.name for value in graph.input}) != len(graph.input):
+        raise CheckpointPreflightError("Repeated graph input declaration")
 
     initializers = []
     total_bytes = 0
@@ -161,10 +166,10 @@ def audit_bytes(data: bytes, *, expected_sha256: str, source_revision: str) -> d
             "tensor_proto_sha256": _digest(tensor.SerializeToString(deterministic=True)),
             "canonical_array_sha256": _digest(serialized), "bytes": len(serialized),
         })
-    if not graph.input[0].name or not graph.output[0].name:
+    if not runtime_input.name or not graph.output[0].name:
         raise CheckpointPreflightError("Missing input/output names")
     nodes = []
-    names = {graph.input[0].name, *seen_names}
+    names = {runtime_input.name, *seen_names}
     for idx, node in enumerate(graph.node):
         if not node.op_type or not node.output[0] or node.output[0] in names:
             raise CheckpointPreflightError("Invalid or repeated ONNX SSA definition")
@@ -188,8 +193,8 @@ def audit_bytes(data: bytes, *, expected_sha256: str, source_revision: str) -> d
         "source_revision": source_revision, "checkpoint_sha256": actual,
         "checkpoint_bytes": len(data), "onnx_ir_version": model.ir_version,
         "onnx_opsets": [{"domain": x.domain, "version": x.version} for x in model.opset_import],
-        "input": {"name": graph.input[0].name, "shape": _shape(graph.input[0]),
-                  "dtype_id": graph.input[0].type.tensor_type.elem_type},
+        "input": {"name": runtime_input.name, "shape": _shape(runtime_input),
+                  "dtype_id": runtime_input.type.tensor_type.elem_type},
         "output": {"name": graph.output[0].name, "shape": _shape(graph.output[0]),
                    "dtype_id": graph.output[0].type.tensor_type.elem_type},
         "initializer_bytes": total_bytes, "initializers": initializers,
