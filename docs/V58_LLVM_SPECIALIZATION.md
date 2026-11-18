@@ -60,7 +60,8 @@ machine-code coverage from both timed runs. The proof concerns the
 emitted scalar IR before LLVM optimization. Actual scalar and batch
 machine code were checked against original Wasmtime execution. The
 existing C++ scalar expressions were byte-identical to their previous
-receipts, and the neural reference retained all ten fault detections.
+receipts, and the neural reference retained all ten fault detections. The full backend suite
+finished with 1,186 passed and 20 skipped.
 
 ## Reproduce
 
