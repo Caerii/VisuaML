@@ -56,3 +56,38 @@ full WASM execution.
 This circuit is not a learned transformer or a proof of universal WASM
 conformance. It is an analytically constructed conditional router for a
 strict, bounded instruction subset.
+
+## Live v54 integration: gate-selected events now drive execution
+
+The new `neural_event_executor_v54.py` is a separate, executable branch of
+the v53 VM. For every executed instruction:
+
+1. The v52 fixed-weight PC circuit chooses the next instruction from the
+   source-bound target tables and the live 32-bit condition.
+2. The v54 fixed-weight event circuit consumes an opcode one-hot data token,
+   live branch guard, frame-active bit from the v53 state, and a lexical
+   else-presence bit. **Its output one-hot is passed unmodified as the
+   v53 frame-transition action.** No Python opcode conditional assigns
+   retain/push/pop/branch/return.
+3. The v53 frame circuit computes the next live frame depth, kind/base masks
+   and branch operand restoration height. The actual Python operand-array
+   trim uses that resulting height.
+
+This mechanism is now exercised by
+`tests/test_neural_event_executor_v54.py`: on each admitted sample of all
+six canonical source WASM families, compare every executed PC/next-PC,
+stack, local, label and halt against the original v51 host interpreter,
+v52 PC machine and v53 frame machine; also compare original WASM results
+to Wasmtime, check altered event-gate weights and bounded fuel.
+
+**The remaining host boundary is substantial:** the host still fetches and
+decodes original opcode data, executes arithmetic/stack/local instructions,
+performs lexical source validation, supplies the immediate branch depth,
+stores frame source metadata, and manages the physical stack data array.
+The gate-based event pathway is not a stock softmax transformer, not
+unknown-weight model extraction, and not complete WASM compatibility.
+
+**Claim promotion rule:** the implementation is a candidate until
+both mandatory Wasmtime dedicated CI and full repository CI have passed on
+the exact source head, and then on `main` if merged. Never cite the earlier
+144-case unit truth table as proof of full execution.
