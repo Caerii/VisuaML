@@ -188,9 +188,7 @@ def validate_program(program: I32Program) -> None:
             raise VMAdmissionError("Missing final end opcode")
         elif name in ("i32.const", "local.get"):
             depth += 1
-        elif name in ("local.set", "drop"):
-            depth -= 1
-        elif name in _BINARY_OPS:
+        elif name in ("local.set", "drop") or name in _BINARY_OPS:
             depth -= 1
         elif name in ("local.tee", "i32.eqz"):
             pass
