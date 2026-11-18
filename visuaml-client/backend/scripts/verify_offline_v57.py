@@ -39,6 +39,7 @@ def main() -> None:
         "test_neural_alu_executor_v56.py",
         "test_generated_wasm_alu_v56.py",
         "test_typed_microop_ir_v57.py",
+        "test_neural_local_corpus_v57.py",
         "test_neural_microop_executor_v57.py",
         "test_generated_wasm_microop_v57.py",
     )
