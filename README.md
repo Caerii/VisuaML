@@ -21,11 +21,13 @@ capacity scaling, negative-control fault injection and local allocation
 profiling. Benchmark numbers are **not yet measured** and the v57/v58
 research PRs remain unmerged.
 
-The benchmark registry documents twelve independent VisuaML evaluation
-areas—from native compilers and pretrained-model causal interventions
+The benchmark registry now documents fifteen independent VisuaML evaluation
+suites—from native compilers and pretrained-model causal interventions
 to the visual graph client, collaboration and evidence integrity.
-Only the constructed neural-WASM harnesses are currently executable;
-the rest are explicit specifications, not performance claims.
+Five offline benchmark runners are implemented but unmeasured, including
+blinded neural-to-symbolic round trips, failure-complete recovery, and
+proof-gated representation costs. The other ten remain explicit specifications,
+not measured performance claims.
 
 To preflight a clean local checkout without any GitHub Actions:
 
@@ -53,6 +55,11 @@ replayable proof/evidence receipt.
 A separate **proof-gated representation-cost experiment** compares the
 original versus recovered WASM on the same engine and inputs, accounting
 for the recovery/SMT cost before interpreting any measured speedup.
+
+A **failure-complete recovery campaign** also preserves every attempted
+program, rejected grammar hypothesis, and invalid experiment. It prevents
+successful-only proof archives from being mistaken for unbiased recovery
+rates, and independently audits all accepted proof receipts.
 This is not specialization of neural interpreter weights or arbitrary
 learned-network decompilation.
 
