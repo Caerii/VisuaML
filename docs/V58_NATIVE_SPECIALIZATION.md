@@ -83,7 +83,9 @@ five samples. The benchmark code revision was `1d42366`. The translation
 validator at `fba35d7` proved the emitted result expression for 33
 programs. Two long arithmetic chains exceeded the independent encoder's
 64-operation limit and have finite checks from both runs. The deliberately
-incorrect specialization produced a Z3 counterexample.
+incorrect specialization produced a Z3 counterexample. The full backend
+suite finished with 1,184 passed and 20 skipped. The original v58
+fault campaign detected all ten injected faults.
 
 | Median of per-case warm medians | First run | Second run |
 | --- | ---: | ---: |
