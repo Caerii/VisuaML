@@ -37,7 +37,7 @@ def main() -> None:
     args = parser.parse_args()
     if args.scaling and not args.benchmark:
         parser.error("--scaling requires --benchmark")
-    for package in ("numpy", "pytest", "wasmtime"):
+    for package in ("numpy", "pytest", "wasmtime", "ruff"):
         if importlib.util.find_spec(package) is None:
             parser.error(f"Missing local dependency: {package}")
 
@@ -56,6 +56,22 @@ def main() -> None:
         str(backend), env.get("PYTHONPATH", ""),
     ))
 
+    lint = (
+        "backend/visuaml/compiler_lab/neural_microstep_v58.py",
+        "backend/visuaml/compiler_lab/neural_microstep_executor_v58.py",
+        "backend/visuaml/compiler_lab/wasm_scale_corpus_v58.py",
+        "backend/scripts/benchmark_neural_vm_v58.py",
+        "backend/scripts/compare_neural_benchmarks_v58.py",
+        "backend/scripts/summarize_neural_benchmarks_v58.py",
+        "backend/scripts/benchmark_faults_v58.py",
+        "backend/scripts/list_system_benchmarks_v58.py",
+        "backend/scripts/verify_offline_v58.py",
+        "backend/tests/test_neural_microstep_v58.py",
+        "backend/tests/test_neural_benchmarks_v58.py",
+        "backend/tests/test_neural_scaling_faults_v58.py",
+    )
+    invoke((sys.executable, "-m", "ruff", "check", *lint),
+           client=client, env=env)
     focused = [
         "test_neural_microstep_v58.py",
         "test_neural_benchmarks_v58.py",
