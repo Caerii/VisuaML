@@ -56,7 +56,10 @@ These are CPU API timings, with a Python call per batch.
 Native was faster for all 35 programs in each batch-size and buffer-mode
 comparison. Native cold setup took a median 93–97 ms, and cache reload
 took 1.18–1.38 ms. Wasmtime reload took 0.19–0.21 ms after serialization,
-with the engine already created. The median estimated crossover at
+with the engine already created. Reload measurements reused an existing
+Python process and compiler identity lookup. A fresh-process smoke test
+also hit the native cache and reproduced the signed-edge outputs.
+The median estimated crossover at
 16,384 copied values was 19–22 batches if both artifacts were cached and
 1,782–1,812 batches from cold setup. The estimates use per-program setup
 and warm latency differences.
@@ -64,7 +67,9 @@ and warm latency differences.
 The scalar translation validator again covered 33 result expressions
 over all i32 inputs and detected its deliberately altered expression.
 Two long programs retain finite replay coverage. Batch-loop correctness
-is covered by comparisons against the original WASM. The measurements
+is covered by comparisons against the original WASM. The full backend suite
+finished with 1,185 passed and 20 skipped. The neural reference detected
+all ten injected faults. The measurements
 exclude the structured-control programs outside the specialization
 contract.
 
@@ -77,7 +82,7 @@ held-out workload mix.
 ## Reproduce
 
 From the producing code revision `6226288`, use the pinned research
-environment and a C++17 compiler:
+environment and a C++17 compiler.
 
 ```bash
 export PYTHONPATH=visuaml-client/backend PYTHONDONTWRITEBYTECODE=1
