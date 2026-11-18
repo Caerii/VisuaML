@@ -20,8 +20,10 @@ import wasmtime
 from visuaml.compiler_lab.neural_alu_executor_v56 import (
     execute_alu_routed_control,
 )
+from visuaml.compiler_lab.bit_neural_vm_v49 import construct_bit_weights
 from visuaml.compiler_lab.neural_alu_v56 import construct_alu_weights
 from visuaml.compiler_lab.neural_control_routing_v52 import (
+    compile_route_tokens,
     construct_router_weights,
 )
 from visuaml.compiler_lab.neural_frame_circuit_v53 import (
@@ -97,6 +99,7 @@ def produce(root: Path) -> dict:
     engine = wasmtime.Engine()
     versions = {
         "python": platform.python_version(),
+        "platform": platform.platform(),
         "numpy": np.__version__,
         "wasmtime": importlib.metadata.version("wasmtime"),
     }
@@ -106,6 +109,7 @@ def produce(root: Path) -> dict:
     local = construct_local_bank_weights()
     fixed_weights = {
         "alu": construct_alu_weights().digest(),
+        "bit_arithmetic": construct_bit_weights().digest(),
         "microop": construct_microop_weights().digest(),
         "pc": construct_router_weights().digest(),
         "frame_event": tensors_digest(
@@ -132,6 +136,9 @@ def produce(root: Path) -> dict:
             "source_wasm_sha256": hashlib.sha256(source).hexdigest(),
             "source_program_sha256": program.digest(),
             "program_microop_tokens_sha256": tokens.digest(),
+            "program_pc_route_tokens_sha256": compile_route_tokens(
+                program
+            ).digest(),
             "witnesses": [],
         }
         for argument in arguments:
