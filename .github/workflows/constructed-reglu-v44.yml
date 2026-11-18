@@ -18,7 +18,7 @@ on:
       - docs/V44_GATED_CONSTRUCTIVE_COMPILATION.md
       - .github/workflows/constructed-reglu-v44.yml
 permissions:
-  contents: read
+  contents: write
 jobs:
   gated-constructive:
     runs-on: ubuntu-latest
@@ -76,3 +76,58 @@ jobs:
           path: evidence-v44/constructed-gated-v44.json
           if-no-files-found: error
           retention-days: 30
+
+      - name: Archive original successful ReGLU construction evidence on trusted branch only
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v44-constructed-reglu-circuits" ]; then
+            echo "No archival writes for pull requests or unrelated branches."
+            exit 0
+          fi
+          if [ -e benchmarks/constructed_reglu_v44.json ] || [ -e benchmarks/constructed_reglu_v44.origin.json ]; then
+            test -f benchmarks/constructed_reglu_v44.json
+            test -f benchmarks/constructed_reglu_v44.origin.json
+            echo "Immutable original v44 archive already exists."
+            exit 0
+          fi
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          raw=Path("evidence-v44/constructed-gated-v44.json").read_bytes()
+          p=json.loads(raw)
+          assert p["schema"]=="visuaml.constructive-gated-resynthesis.v44"
+          assert p["source_commit"]==os.environ["GITHUB_SHA"]
+          assert p["original_ordinary_relu_units"]==255 and p["new_gated_reglu_units"]==2
+          assert not p["actual_speedup_benchmarked"] and p["estimated_speedup"] is None
+          assert not p["constructed_network_all_i32_proved"]
+          assert p["real_algebraic_identity_smt"]["nonnegative_domain_solver"]=="unsat"
+          assert p["real_algebraic_identity_smt"]["negative_domain_solver"]=="unsat"
+          assert p["source_vs_recovered_symbolic_all_i32_smt"]["solver_outcome"]=="unsat"
+          assert len(p["witnesses"])==263 and all(w["pass"] for w in p["witnesses"])
+          assert p["old_neural_extrapolation_counterexample"]["v41_and_v44_differ"]
+          out=Path("benchmarks/constructed_reglu_v44.json")
+          origin=Path("benchmarks/constructed_reglu_v44.origin.json")
+          out.parent.mkdir(parents=True,exist_ok=True)
+          out.write_bytes(raw)
+          meta={
+            "schema":"visuaml.reglu-origin.v44",
+            "source_commit":os.environ["GITHUB_SHA"],
+            "workflow_run_url":"https://github.com/"+os.environ["GITHUB_REPOSITORY"]+"/actions/runs/"+os.environ["GITHUB_RUN_ID"],
+            "raw_bytes":len(raw),
+            "raw_sha256":hashlib.sha256(raw).hexdigest(),
+            "source_file_sha256":p["source_file_sha256"],
+            "original_v41_weights_archive_sha256":p["original_v41_weights_archive_sha256"],
+            "original_v41_wasm_sha256":p["original_v41_wasm_sha256"],
+            "constructed_gated_weights_sha256":p["gated_network_bundle_fingerprint"],
+            "algebraic_real_cases":["unsat","unsat"],
+            "distinct_gating_operation":True,
+            "speedup_measured":False,
+            "all_i32_neural_equivalence_proved":False,
+            "authentication":"GitHub Actions CI-origin metadata and hashes; not signed external proof",
+          }
+          origin.write_text(json.dumps(meta,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/constructed_reglu_v44.json benchmarks/constructed_reglu_v44.origin.json
+          git commit -m "v44: preserve exact gated construction and independent proofs [skip ci]"
+          git push origin "HEAD:refs/heads/research/v44-constructed-reglu-circuits"
