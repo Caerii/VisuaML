@@ -17,6 +17,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from .exact_binary import is_exact_binary
+
 from .bit_neural_vm_v49 import _bits
 from .neural_alu_v56 import ALU_OPS
 from .neural_control_routing_v52 import SLOTS
@@ -105,8 +107,7 @@ class SelectedMicroop:
 
 def _binary(value: np.ndarray, shape: tuple[int, ...]) -> None:
     if (not isinstance(value, np.ndarray) or value.dtype != np.float64
-            or value.shape != shape or not np.isfinite(value).all()
-            or not np.isin(value, (0., 1.)).all()):
+            or value.shape != shape or not is_exact_binary(value)):
         raise MicroopAdmissionError("Noncanonical binary microop tensor")
 
 

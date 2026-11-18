@@ -70,7 +70,7 @@ def _microstep_digest(weights: MicrostepWeights) -> str:
 
 
 def execute_microstep_control(
-    program: ControlProgram, argument: int, *, fuel: int = 400,
+    program: ControlProgram, argument: int, *, fuel: int = 400, capture_trace: bool = True,
     tokens: ControlRouteTokens | None = None,
     program_tokens: ProgramMicroopTokens | None = None,
     pc_fixed: ControlRouterWeights | None = None,
@@ -81,6 +81,8 @@ def execute_microstep_control(
     local_fixed: LocalBankWeights | None = None,
     operand_fixed: OperandWeights | None = None,
 ) -> MicrostepExecution:
+    if type(capture_trace) is not bool:
+        raise MicrostepAdmissionError("capture_trace must be a boolean")
     _syntax(program)
     if type(fuel) is not int or not 1 <= fuel <= MAX_FUEL:
         raise MicrostepAdmissionError("Invalid v58 execution fuel")
@@ -158,24 +160,25 @@ def execute_microstep_control(
             )
             operands, locals_ = result.operands, result.locals
 
-        depth = int(np.argmax(operands.height))
-        records.append({
-            "step": tick,
-            "pc": pc,
-            "opcode": op.opcode,
-            "next_pc": count if next_pc == TERMINAL else next_pc,
-            "stack_i32": [_int(operands.cells[i]) for i in range(depth)],
-            "locals_i32": [
-                _int(value) for value in locals_[:program.local_count + 1]
-            ],
-            "control_labels": [],
-            "halted": halted,
-            "neural_route": route,
-        })
+        if capture_trace:
+            depth = int(np.argmax(operands.height))
+            records.append({
+                "step": tick,
+                "pc": pc,
+                "opcode": op.opcode,
+                "next_pc": count if next_pc == TERMINAL else next_pc,
+                "stack_i32": [_int(operands.cells[i]) for i in range(depth)],
+                "locals_i32": [
+                    _int(value) for value in locals_[:program.local_count + 1]
+                ],
+                "control_labels": [],
+                "halted": halted,
+                "neural_route": route,
+            })
         pc_vector = selected
         if halted:
             return MicrostepExecution(
-                _int(top_word(operands)), tuple(records), len(records),
+                _int(top_word(operands)), tuple(records), tick + 1,
                 hashlib.sha256(encode_control(program)).hexdigest(),
                 pc_fixed.digest(), alu_fixed.digest(),
                 microop_fixed.digest(), _microstep_digest(microstep_fixed),

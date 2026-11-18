@@ -14,6 +14,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from .exact_binary import is_exact_binary
+
 from .bit_neural_vm_v49 import WIDTH, BitCircuitWeights, construct_bit_weights
 from .neural_alu_v56 import (
     ALU_OPS,
@@ -75,8 +77,7 @@ def construct_microstep_weights() -> MicrostepWeights:
 
 def _binary(a: np.ndarray, shape: tuple[int, ...]) -> None:
     if (not isinstance(a, np.ndarray) or a.dtype != np.float64
-            or a.shape != shape or not np.isfinite(a).all()
-            or not np.isin(a, (0., 1.)).all()):
+            or a.shape != shape or not is_exact_binary(a)):
         raise MicroopAdmissionError("Noncanonical v58 microstep tensor")
 
 

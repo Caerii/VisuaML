@@ -11,6 +11,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from .exact_binary import is_exact_binary
+
 from .wasm_control_flow_v51 import MAX_STACK
 
 WIDTH = 32
@@ -66,8 +68,7 @@ for depth in range(HEIGHTS):
 
 def _binary(value: np.ndarray, shape: tuple[int, ...]) -> None:
     if (not isinstance(value, np.ndarray) or value.dtype != np.float64
-            or value.shape != shape or not np.isfinite(value).all()
-            or not np.isin(value, (0., 1.)).all()):
+            or value.shape != shape or not is_exact_binary(value)):
         raise OperandCircuitError("Noncanonical binary operand tensor")
 
 

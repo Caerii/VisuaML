@@ -14,6 +14,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from .exact_binary import is_exact_binary
+
 from .bit_neural_vm_v49 import (
     WIDTH,
     BitCircuitWeights,
@@ -57,8 +59,7 @@ def construct_alu_weights() -> ALUWeights:
 
 def _admit_binary(a: np.ndarray, shape: tuple[int, ...]) -> None:
     if (not isinstance(a, np.ndarray) or a.dtype != np.float64
-            or a.shape != shape or not np.isfinite(a).all()
-            or not np.isin(a, (0., 1.)).all()):
+            or a.shape != shape or not is_exact_binary(a)):
         raise NeuralALUError("ALU input/output must be exact binary tensor")
 
 

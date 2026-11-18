@@ -18,6 +18,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from .exact_binary import is_exact_binary
+
 from .bit_neural_vm_v49 import (
     BitCircuitWeights,
     _add,
@@ -115,8 +117,7 @@ def _onehot(position: int) -> np.ndarray:
 
 def _admit_onehot(array: np.ndarray, shape: tuple[int, ...]) -> None:
     if (not isinstance(array, np.ndarray) or array.dtype != np.float64
-            or array.shape != shape or not np.isfinite(array).all()
-            or not np.isin(array, [0., 1.]).all()):
+            or array.shape != shape or not is_exact_binary(array)):
         raise NeuralControlError("Noncanonical one-hot routing tensor")
 
 
