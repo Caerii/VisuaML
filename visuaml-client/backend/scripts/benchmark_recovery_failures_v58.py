@@ -17,18 +17,10 @@ import json
 import platform
 import subprocess
 import time
-from dataclasses import asdict
 from pathlib import Path
 
 from visuaml.compiler_lab.blinded_behavioral_synthesis_v50 import (
     BehavioralSynthesisError,
-    Candidate,
-    synthesize_from_oracle,
-    verify_against_typed_source,
-)
-from visuaml.compiler_lab.bit_neural_vm_v49 import (
-    construct_bit_weights,
-    run_bit_vm,
 )
 from visuaml.compiler_lab.neural_symbolic_roundtrip_v58 import (
     RoundtripWorkload,
@@ -42,7 +34,6 @@ from visuaml.compiler_lab.wasm_state_vm_v40 import (
 )
 
 SCHEMA = "visuaml.failure-complete-blinded-recovery.v58"
-BOUNDS = (-(1 << 31), -17, -1, 0, 1, 17, (1 << 31) - 1)
 
 
 def _digest(raw: bytes) -> str:
