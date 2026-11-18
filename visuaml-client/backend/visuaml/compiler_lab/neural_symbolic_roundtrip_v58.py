@@ -240,7 +240,9 @@ def verify_roundtrip(
         "name": workload.name,
         "split": workload.split,
         "original_wasm_sha256": _sha256(raw_source),
+        "original_wasm_hex": raw_source.hex(),
         "recovered_wasm_sha256": _sha256(raw_recovered),
+        "recovered_wasm_hex": raw_recovered.hex(),
         "original_wasm_bytes": len(raw_source),
         "recovered_wasm_bytes": len(raw_recovered),
         "same_source_binary": raw_source == raw_recovered,
@@ -250,6 +252,14 @@ def verify_roundtrip(
         "cegis_refinements": len(synthesis["rounds"]) - 1,
         "cegis_recovery_and_smt_wall_ns": recovery_ns,
         "candidate_expression": synthesis["accepted_expression"],
+        "candidate": synthesis["accepted_candidate"],
+        "blinded_synthesis_claims": {
+            "source_received": synthesis["source_program_received_by_synthesizer"],
+            "weights_received": synthesis["neural_weights_received_by_synthesizer"],
+            "manifest_received": synthesis[
+                "construction_manifest_received_by_synthesizer"
+            ],
+        },
         "candidate_sha256": candidate.digest(),
         "smt_formula_sha256": last["smt_formula_sha256"],
         "z3_version": last["z3_version"],
