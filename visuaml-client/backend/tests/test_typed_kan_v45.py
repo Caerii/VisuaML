@@ -11,7 +11,6 @@ import shutil
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.native_kan_codegen_v45 import (
     emit_kan_cpp17,
     run_kan_cpp17,
@@ -22,9 +21,9 @@ from visuaml.compiler_lab.typed_kan_v45 import (
     KANEdge,
     KANNode,
     KANProgram,
-    evaluate_numpy,
     ablate_kan_edge,
     ablation_witness,
+    evaluate_numpy,
     evaluate_scalar,
     from_recovered_v43_polynomial,
     recover_polynomial,
@@ -170,12 +169,12 @@ def test_multkan_product_is_a_genuinely_compositional_mechanism():
 def test_import_v43_symbolic_polynomial_as_constructed_kan_edge():
     import sympy as sp
 
-    from visuaml.compiler_lab.neural_symbolic_recovery_v43 import (
-        recover_quadratic_from_weights,
-    )
     from visuaml.compiler_lab.analytic_relu_specialization_v41 import (
         AnalyticRelu,
         compile_bounded_program,
+    )
+    from visuaml.compiler_lab.neural_symbolic_recovery_v43 import (
+        recover_quadratic_from_weights,
     )
     from visuaml.compiler_lab.wasm_state_vm_v40 import I32Program, VMOperation
 
