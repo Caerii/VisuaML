@@ -18,7 +18,6 @@ from pathlib import Path
 
 import numpy as np
 import wasmtime
-
 from visuaml.compiler_lab.fixed_neural_token_vm_v48 import (
     OPCODES,
     construct_fixed_weights,
