@@ -21,7 +21,6 @@ from .neural_control_routing_v52 import (
     compile_route_tokens, construct_router_weights, neural_pc_step,
     validate_route_tokens,
 )
-from .neural_frame_circuit_v53 import FrameCircuitWeights
 from .neural_local_bank_v57 import (
     LocalBankWeights, construct_local_bank_weights,
 )
