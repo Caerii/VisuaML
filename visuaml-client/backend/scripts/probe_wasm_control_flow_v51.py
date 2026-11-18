@@ -11,13 +11,11 @@ import argparse
 import hashlib
 import json
 import os
-from dataclasses import asdict
 from importlib.metadata import version
 from pathlib import Path
 
 import numpy as np
 import wasmtime
-
 from visuaml.compiler_lab.wasm_control_flow_v51 import (
     ControlFuelExhausted,
     ControlOperation,
@@ -55,7 +53,7 @@ def fixtures() -> dict[str, tuple[ControlProgram, tuple[int, ...]]]:
                 i("end"), i("end"), i("local.get", 1), i("end"),
                 locals_=1,
             ),
-            tuple(range(0, 13)),
+            tuple(range(13)),
         ),
         "if_else_negative": (
             p(
