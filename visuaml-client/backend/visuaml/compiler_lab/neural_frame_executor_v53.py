@@ -26,8 +26,8 @@ from .bit_neural_vm_v49 import (
 )
 from .neural_control_routing_v52 import (
     TERMINAL,
-    ControlRouteTokens,
     ControlRouterWeights,
+    ControlRouteTokens,
     _onehot,
     compile_route_tokens,
     construct_router_weights,
@@ -43,9 +43,9 @@ from .neural_frame_circuit_v53 import (
     FrameTokens,
     empty_frames,
     fixed_frame_weights,
-    onehot as frame_onehot,
     step_frames,
 )
+from .neural_frame_circuit_v53 import onehot as frame_onehot
 from .wasm_control_flow_v51 import (
     _BINARY,
     MAX_FUEL,
