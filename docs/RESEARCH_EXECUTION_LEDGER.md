@@ -237,3 +237,12 @@ and 3.82–4.07× traced across 197 inputs. The archive retains all
 3,387 matched states, the established fault campaign, and differential
 interventions on live gate coefficients.
 [Native data microstep report](V58_NATIVE_MICROSTEP.md)
+
+## v58 native prepared execution loop
+
+A single native call now runs the compact router and live data gates
+for a prepared program. Warm execution improved 11.30–11.34× untraced
+and 18.46–18.50× traced over per-instruction native execution. The
+evidence includes a direct comparison with prepared Python, matched
+traces and fault outcomes, and a corpus-wide fuel boundary sweep.
+[Native execution loop report](V58_NATIVE_LOOP.md)

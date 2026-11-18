@@ -1,0 +1,216 @@
+{
+  "artifacts": {
+    "backend.log.gz": {
+      "bytes": 930,
+      "sha256": "7723dd37f337f01676cfdb54a4a00102fee8e4040d772ef060871bcde53b9d5b",
+      "uncompressed_sha256": "6f18b9f9e448117f949a25d619d94547536a8245e3e0b5d77a3e090fda6d30c3"
+    },
+    "check_coefficient_parity.py": {
+      "bytes": 3447,
+      "sha256": "fa579fd54605d417048a06fd0088d2165262c26d6fea6801b3280ae446f03176"
+    },
+    "check_fuel_boundaries.py": {
+      "bytes": 1937,
+      "sha256": "f531401d4e5c8fc5cd910fb9c6b67ac27409ba11df70c13d241fb20a3a132bb8"
+    },
+    "coefficients.json.gz": {
+      "bytes": 2520,
+      "sha256": "1ef40246b47b42a8f62f7920bad219902da1831a347e4e74a2ea3327411c4eed",
+      "source": {
+        "branch": "research/v58-native-loop",
+        "commit": "16c2814dd4dbd0b69f080b98a274999dc3f0a80b",
+        "tree": "cff15c4d046d7ac5016587cb760720d6d0a56ef4"
+      },
+      "uncompressed_sha256": "aa1fa6f5a1612d9c71b0af20eb88ebbf34c1cc9edd85fec5215998e554486f8f"
+    },
+    "compare_prepared_python.py": {
+      "bytes": 2008,
+      "sha256": "a2c1606bdb0b19e176861ef15a0777bd04aeaec754fe378ad8cb55c62570becc"
+    },
+    "faults.json": {
+      "bytes": 6902,
+      "sha256": "b3a3d0549ad6d3b0cdaca678fd4206dec20bc11e37a95a3636f4356ca6bc2163",
+      "source": {
+        "commit": "16c2814dd4dbd0b69f080b98a274999dc3f0a80b",
+        "tree": "cff15c4d046d7ac5016587cb760720d6d0a56ef4"
+      }
+    },
+    "fuel.json.gz": {
+      "bytes": 14556,
+      "sha256": "fbaf49ceaaa7b248482fcc50ba2b3f4558abd6b3e179c9da3b2135b74edb36d8",
+      "source": {
+        "branch": "research/v58-native-loop",
+        "commit": "16c2814dd4dbd0b69f080b98a274999dc3f0a80b",
+        "tree": "cff15c4d046d7ac5016587cb760720d6d0a56ef4"
+      },
+      "uncompressed_sha256": "b66fa4adb6e283386e17e5721409bc2743af19d61cd25500d907e98477385ba3"
+    },
+    "profile.json.gz": {
+      "bytes": 828,
+      "sha256": "9621330a382ed69786e2b1069320f07be1ce46a6c40b7bd54340aef8e948a3d3",
+      "source": {
+        "branch": "research/v58-native-loop",
+        "commit": "16c2814dd4dbd0b69f080b98a274999dc3f0a80b",
+        "tree": "cff15c4d046d7ac5016587cb760720d6d0a56ef4"
+      },
+      "uncompressed_sha256": "8420fa3dc455f7389990e9eb24b97a6203d9a72c1b54ef9f2110bb6cfbdd6a6e"
+    },
+    "profile_native.py": {
+      "bytes": 1202,
+      "sha256": "396add4264e786c4402819f4cdd462af958bdf069256656bc9d7af0945b5bd6e"
+    },
+    "python-pair.json.gz": {
+      "bytes": 39288,
+      "sha256": "99304b9b1b23e345911bbe587c1735d334914c1c0083d625bd2426563d56c149",
+      "source": {
+        "branch": "research/v58-native-loop",
+        "commit": "16c2814dd4dbd0b69f080b98a274999dc3f0a80b",
+        "tree": "cff15c4d046d7ac5016587cb760720d6d0a56ef4"
+      },
+      "uncompressed_sha256": "1c3217b38c4526a194016da68b76f57d72db24c2ffd0bf02db2ec5c2b2c73f34"
+    },
+    "runtime-1.json.gz": {
+      "bytes": 66039,
+      "sha256": "c04f084f8b4cfdad711057d22ecf076b616a86844fc3af28aa0454dcf25c7f67",
+      "source": {
+        "baseline": false,
+        "commit": "16c2814dd4dbd0b69f080b98a274999dc3f0a80b",
+        "tree": "cff15c4d046d7ac5016587cb760720d6d0a56ef4"
+      },
+      "uncompressed_sha256": "6a5cdfb7fe51bd89bf884d8af80ae4078fbce6898c24a5dbb6db2ce4837b470e"
+    },
+    "runtime-2.json.gz": {
+      "bytes": 66057,
+      "sha256": "876d80a1f9ddc55c833765cbaf6ca35db7179b7cc119a56a7891bd5120cbd8c5",
+      "source": {
+        "baseline": false,
+        "commit": "16c2814dd4dbd0b69f080b98a274999dc3f0a80b",
+        "tree": "cff15c4d046d7ac5016587cb760720d6d0a56ef4"
+      },
+      "uncompressed_sha256": "31482472f8a1e4d650b791055c556ae75747f040233707883e826a54054dc8ed"
+    },
+    "summarize.py": {
+      "bytes": 2491,
+      "sha256": "adc4503d8562b59c9e0c405cb0633f3ec492c0297d3e105407e362c4ccd241ae"
+    }
+  },
+  "coefficient_outcomes": {
+    "changed": 6,
+    "same": 48,
+    "trapped": 258
+  },
+  "environment": {
+    "cpu_count": 5,
+    "machine": "x86_64",
+    "numpy": "2.1.3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "processor": "",
+    "python": "3.12.14",
+    "thread_controls": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null,
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "wasmtime": "36.0.0"
+  },
+  "fuel_outcomes": {
+    "completed": 788,
+    "exhausted": 788
+  },
+  "microstep_reference": "v58-native-microstep-4e1cb86/runtime-1.json.gz",
+  "prepared_python_pair": {
+    "no_trace": 87.35298021232097,
+    "trace": 70.99897956064727
+  },
+  "runs": {
+    "runtime-1.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "715c5694aa4d12bd465140ec962aa3e959e5e44440dd901510968f0009d47f13",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 768939777,
+        "source_sha256": "c5e0081146640a2a281ef16e152371074ab87f50c72fa757f9bf36cc8429296d"
+      },
+      "median_preparation_ns": {
+        "loop": 1384588,
+        "microstep": 1429317
+      },
+      "modes": {
+        "no_trace": {
+          "faster_cases": 197,
+          "loop_median_ns": 46607,
+          "microstep_median_ns": 509170,
+          "paired_geomean_speedup": 11.338783145988053,
+          "slowest_speedup": 4.433086468824344
+        },
+        "trace": {
+          "faster_cases": 197,
+          "loop_median_ns": 70862,
+          "microstep_median_ns": 1345068,
+          "paired_geomean_speedup": 18.46384931053096,
+          "slowest_speedup": 5.957625096245199
+        }
+      },
+      "programs": 35,
+      "states": 3387,
+      "witnesses": 197
+    },
+    "runtime-2.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "715c5694aa4d12bd465140ec962aa3e959e5e44440dd901510968f0009d47f13",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 721594256,
+        "source_sha256": "c5e0081146640a2a281ef16e152371074ab87f50c72fa757f9bf36cc8429296d"
+      },
+      "median_preparation_ns": {
+        "loop": 1424380,
+        "microstep": 1441564
+      },
+      "modes": {
+        "no_trace": {
+          "faster_cases": 197,
+          "loop_median_ns": 46520,
+          "microstep_median_ns": 504748,
+          "paired_geomean_speedup": 11.30314572191014,
+          "slowest_speedup": 2.656796224657201
+        },
+        "trace": {
+          "faster_cases": 197,
+          "loop_median_ns": 71438,
+          "microstep_median_ns": 1350665,
+          "paired_geomean_speedup": 18.501309468778654,
+          "slowest_speedup": 8.062992035818777
+        }
+      },
+      "programs": 35,
+      "states": 3387,
+      "witnesses": 197
+    }
+  },
+  "schema": "visuaml.v58-native-loop-evidence.v1",
+  "source": {
+    "commit": "16c2814dd4dbd0b69f080b98a274999dc3f0a80b",
+    "tree": "cff15c4d046d7ac5016587cb760720d6d0a56ef4"
+  },
+  "tests": {
+    "passed": 1231,
+    "skipped": 20,
+    "wall_s": 80.76
+  }
+}
