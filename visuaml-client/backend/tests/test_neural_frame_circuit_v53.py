@@ -6,9 +6,18 @@ import numpy as np
 import pytest
 
 from visuaml.compiler_lab.neural_frame_circuit_v53 import (
-    ACTIONS, HEIGHTS, KINDS, MAX_NESTING, FrameCircuitError,
-    FrameCircuitWeights, FrameTokens, empty_frames, fixed_frame_weights,
-    onehot, step_frames, validate_state,
+    ACTIONS,
+    HEIGHTS,
+    KINDS,
+    MAX_NESTING,
+    FrameCircuitError,
+    FrameCircuitWeights,
+    FrameTokens,
+    empty_frames,
+    fixed_frame_weights,
+    onehot,
+    step_frames,
+    validate_state,
 )
 
 
