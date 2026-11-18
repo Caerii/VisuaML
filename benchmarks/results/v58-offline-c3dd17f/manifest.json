@@ -1,0 +1,86 @@
+{
+  "artifacts": {
+    "python-packages.txt": {
+      "bytes": 1074,
+      "sha256": "2fa97b76dcf283c59c66ad83ca5ffcf686d03f0c4231db3db52321e1c85f1d9d"
+    },
+    "replay_v57_reference.py": {
+      "bytes": 4046,
+      "sha256": "8e45d4fc2e864b1ff36f14bfb607bc8cc7b360abb9f198dda9cafd87a206a8dc"
+    },
+    "v57-evidence.json.gz": {
+      "bytes": 44693,
+      "sha256": "1b5af60c0151ddbb863d00f12d3099a7ed2f46fb18f6b330aacab4f98c31017b",
+      "uncompressed_sha256": "d6495eb0f729a78f2b1605d01db7397dcd2c491e1331e242af672e4181f1ba69"
+    },
+    "v57-independent-audit.json": {
+      "bytes": 325,
+      "sha256": "22c09f9c7da3801c10c8eda67ddc399aeda87edfc80f950c9a10437e920c9399"
+    },
+    "v58-faults.json": {
+      "bytes": 6735,
+      "sha256": "36fa687dc8ad3143473137622763f6bab8f867883d15d31f503de0c21f6c1808"
+    },
+    "v58-fixed-weights.json": {
+      "bytes": 575,
+      "sha256": "28f9845132a3a1fbac6c7341344d3b2f41c82641e5eacc0c8687f24d05d96992"
+    },
+    "v58-independent-audits.json": {
+      "bytes": 2777,
+      "sha256": "dd1cd93e31da15234546c8deda822e9e1bf46c615c17a56ac071051f2f8db4c5"
+    },
+    "v58-profile.txt": {
+      "bytes": 1990,
+      "sha256": "183397f26881c5a3f260740d48962817d892fb49a6d593729e24fbc30166bf0d"
+    },
+    "v58-recovery-campaign.json": {
+      "bytes": 63358,
+      "sha256": "5c5bca3c3950228f401433d84cfd88ede907d319f51e49e7a4ea9d8f5b429363"
+    },
+    "v58-representation-cost.json.gz": {
+      "bytes": 7246,
+      "sha256": "b5791323eecc2b4649f686d570ce8ac629486b97ad286f5f5d03a8b4880469c1",
+      "uncompressed_sha256": "ad967c360c43a5ff40a0202a484094598650eed9f4c0b7602b4d834f415724cd"
+    },
+    "v58-roundtrip-scorecard.json": {
+      "bytes": 1475,
+      "sha256": "94eff0e31efcbf8a8a4fb5eb8d906a81ffbdd6d40bb5dcc9853c83b6be14fe5b"
+    },
+    "v58-roundtrips.json": {
+      "bytes": 50293,
+      "sha256": "883938991721d5824af65598ae6d8871f01ab32c8941ebcef174b548e4b58ca7"
+    },
+    "v58-scaling-benchmark.json.gz": {
+      "bytes": 83855,
+      "sha256": "f987e1ee5bd95426694be777de982bb8c580979c9ee1ad81c9bd00a255493682",
+      "uncompressed_sha256": "0708b26c1080969a4abd07115a7fcbbd0ddc2a30c8dbc5a6ab8c30ac25cea813"
+    },
+    "v58-scaling-scorecard.json": {
+      "bytes": 6927,
+      "sha256": "a9bba0e9c3fa5e0963bd7e9dbde3dee4c0df132a1445dc05bcc0e34efcf5e4fd"
+    },
+    "v58-smoke-benchmark.json": {
+      "bytes": 8375,
+      "sha256": "e14e20e5a38908c3b60b05fa064779397279f56b3b5ce86243bf7a02dd631e28"
+    }
+  },
+  "dependencies": {
+    "numpy": "2.1.3",
+    "pytest": "8.3.4",
+    "python": "3.12.14",
+    "ruff": "0.11.13",
+    "torch": "2.9.1+cpu",
+    "wasmtime": "36.0.0",
+    "z3-solver": "4.15.3.0"
+  },
+  "producing_source": {
+    "branch": "research/v58-offline-verification",
+    "commit": "c3dd17fde2e996d29c1270136b543b6fee1011fc",
+    "tree": "1cfc0fe02893796ed8ae227de136f121e9d25b81"
+  },
+  "regression": {
+    "failed": 0,
+    "passed": 1182,
+    "skipped": 20
+  }
+}

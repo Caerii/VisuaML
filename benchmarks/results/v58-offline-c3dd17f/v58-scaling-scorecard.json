@@ -1,0 +1,204 @@
+{
+  "baseline": "alu_v56",
+  "environment": {
+    "cpu_count": 5,
+    "machine": "x86_64",
+    "numpy": "2.1.3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "processor": "",
+    "python": "3.12.14",
+    "thread_controls": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null,
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "wasmtime": "36.0.0"
+  },
+  "interpretation": "Paired local Python/NumPy versus Wasmtime binding timings. Missing/unadmitted cases are counted, never converted to zeros; no hardware or all-WASM performance claim.",
+  "inventory": {
+    "instruction_transitions": 4983,
+    "programs": 53,
+    "witnesses": 238
+  },
+  "policy": {
+    "cpu_frequency_or_turbo_not_controlled": true,
+    "fuel": 1500,
+    "holdout_programs": 8,
+    "isolated_python_allocation_profile": true,
+    "not_native_neural_hardware": true,
+    "performance_not_correctness_proof": true,
+    "repeats": 5,
+    "same_hardware_comparisons_only": true,
+    "scaling_suite_enabled": true,
+    "setup_excluded_from_warm": true,
+    "smoke_mode_not_a_comprehensive_benchmark": false,
+    "timing_scope": "Python/NumPy engine invocation including traces",
+    "token_expansion_ratio_is_storage_not_runtime_speedup": true,
+    "tracemalloc_is_not_total_memory": true,
+    "v58_only_straightline_admitted": true,
+    "warmups": 1,
+    "wasmtime_calls_include_python_binding_overhead": true
+  },
+  "results": {
+    "host_v51": {
+      "by_family": {
+        "alu_length": {
+          "geometric_mean_speedup": 24.73889805826838,
+          "paired_witnesses": 24
+        },
+        "branch_unwind": {
+          "geometric_mean_speedup": 22.850811732923553,
+          "paired_witnesses": 5
+        },
+        "frame_depth": {
+          "geometric_mean_speedup": 31.492593246854337,
+          "paired_witnesses": 5
+        },
+        "generated_in_sample": {
+          "geometric_mean_speedup": 12.956145931176843,
+          "paired_witnesses": 112
+        },
+        "generated_out_of_sample": {
+          "geometric_mean_speedup": 13.14657835390218,
+          "paired_witnesses": 56
+        },
+        "loop_frame_depth": {
+          "geometric_mean_speedup": 31.579208152923655,
+          "paired_witnesses": 5
+        },
+        "operand_depth": {
+          "geometric_mean_speedup": 15.137595791244294,
+          "paired_witnesses": 5
+        },
+        "structured": {
+          "geometric_mean_speedup": 20.608102550609072,
+          "paired_witnesses": 26
+        }
+      },
+      "fraction_slower_than_baseline": 0.0,
+      "geometric_mean_speedup_vs_baseline": 15.386571687226807,
+      "median_speedup_vs_baseline": 14.332054127176587,
+      "median_wall_ns_per_instruction": 140435.3,
+      "missing_engine_witnesses": 0,
+      "paired_witnesses": 238,
+      "worst_slowdown_factor_vs_baseline": 0.2267618981521054
+    },
+    "microop_v57": {
+      "by_family": {
+        "alu_length": {
+          "geometric_mean_speedup": 0.9957804450266557,
+          "paired_witnesses": 24
+        },
+        "branch_unwind": {
+          "geometric_mean_speedup": 0.8016600304010041,
+          "paired_witnesses": 5
+        },
+        "frame_depth": {
+          "geometric_mean_speedup": 0.9664105035885063,
+          "paired_witnesses": 5
+        },
+        "generated_in_sample": {
+          "geometric_mean_speedup": 0.9002950750919534,
+          "paired_witnesses": 112
+        },
+        "generated_out_of_sample": {
+          "geometric_mean_speedup": 0.8980256904558778,
+          "paired_witnesses": 56
+        },
+        "loop_frame_depth": {
+          "geometric_mean_speedup": 0.7373576379489808,
+          "paired_witnesses": 5
+        },
+        "operand_depth": {
+          "geometric_mean_speedup": 0.8517702229377745,
+          "paired_witnesses": 5
+        },
+        "structured": {
+          "geometric_mean_speedup": 0.8570483951697987,
+          "paired_witnesses": 26
+        }
+      },
+      "fraction_slower_than_baseline": 0.8697478991596639,
+      "geometric_mean_speedup_vs_baseline": 0.8983939630765572,
+      "median_speedup_vs_baseline": 0.9014610365364435,
+      "median_wall_ns_per_instruction": 2206342.395238095,
+      "missing_engine_witnesses": 0,
+      "paired_witnesses": 238,
+      "worst_slowdown_factor_vs_baseline": 1.8287636514132048
+    },
+    "microstep_v58": {
+      "by_family": {
+        "alu_length": {
+          "geometric_mean_speedup": 0.7491770003257651,
+          "paired_witnesses": 24
+        },
+        "generated_in_sample": {
+          "geometric_mean_speedup": 0.7029251627511655,
+          "paired_witnesses": 112
+        },
+        "generated_out_of_sample": {
+          "geometric_mean_speedup": 0.7155342006153707,
+          "paired_witnesses": 56
+        },
+        "operand_depth": {
+          "geometric_mean_speedup": 0.6982435329912632,
+          "paired_witnesses": 5
+        }
+      },
+      "fraction_slower_than_baseline": 0.9898477157360406,
+      "geometric_mean_speedup_vs_baseline": 0.7118720405874279,
+      "median_speedup_vs_baseline": 0.7079873687816337,
+      "median_wall_ns_per_instruction": 2865926.214285714,
+      "missing_engine_witnesses": 41,
+      "paired_witnesses": 197,
+      "worst_slowdown_factor_vs_baseline": 1.9892591135204356
+    },
+    "wasmtime": {
+      "by_family": {
+        "alu_length": {
+          "geometric_mean_speedup": 2754.320823487865,
+          "paired_witnesses": 24
+        },
+        "branch_unwind": {
+          "geometric_mean_speedup": 404.94605996930073,
+          "paired_witnesses": 5
+        },
+        "frame_depth": {
+          "geometric_mean_speedup": 629.639778332814,
+          "paired_witnesses": 5
+        },
+        "generated_in_sample": {
+          "geometric_mean_speedup": 1368.3303795101037,
+          "paired_witnesses": 112
+        },
+        "generated_out_of_sample": {
+          "geometric_mean_speedup": 1349.772623094854,
+          "paired_witnesses": 56
+        },
+        "loop_frame_depth": {
+          "geometric_mean_speedup": 448.32471747077295,
+          "paired_witnesses": 5
+        },
+        "operand_depth": {
+          "geometric_mean_speedup": 1510.0454327285242,
+          "paired_witnesses": 5
+        },
+        "structured": {
+          "geometric_mean_speedup": 2641.905232549653,
+          "paired_witnesses": 26
+        }
+      },
+      "fraction_slower_than_baseline": 0.0,
+      "geometric_mean_speedup_vs_baseline": 1476.2997199634106,
+      "median_speedup_vs_baseline": 1371.3616438265994,
+      "median_wall_ns_per_instruction": 1439.6785714285713,
+      "missing_engine_witnesses": 0,
+      "paired_witnesses": 238,
+      "worst_slowdown_factor_vs_baseline": 0.006891904375264368
+    }
+  },
+  "schema": "visuaml.neural-wasm-benchmark-scorecard.v58",
+  "source_benchmark_sha256": "0708b26c1080969a4abd07115a7fcbbd0ddc2a30c8dbc5a6ab8c30ac25cea813",
+  "source_git_commit": "c3dd17fde2e996d29c1270136b543b6fee1011fc"
+}

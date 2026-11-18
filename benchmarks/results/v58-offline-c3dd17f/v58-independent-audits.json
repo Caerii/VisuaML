@@ -1,0 +1,74 @@
+{
+  "failure_complete": {
+    "artifact_sha256": "5c5bca3c3950228f401433d84cfd88ede907d319f51e49e7a4ea9d8f5b429363",
+    "full_denominator_verified": true,
+    "independent_success_receipt_replay": {
+      "artifact_sha256": "4a177014507507386c8324da654ed1f056f0043a26c96d5b1eb0c2259e54328f",
+      "finite_execution_replays": 156,
+      "neural_weight_all_i32_proved": false,
+      "original_programs_checked": 13,
+      "original_source_unique_recovered": false,
+      "source_commit": "c3dd17fde2e996d29c1270136b543b6fee1011fc",
+      "source_tree": "1cfc0fe02893796ed8ae227de136f121e9d25b81",
+      "typed_source_vs_candidate_all_i32_z3_rechecked": true
+    },
+    "invalid_attempts_preserved": 0,
+    "rejected_attempts_preserved": 1,
+    "schema": "visuaml.failure-complete-recovery-audit.v58",
+    "source_bytes_verified": true,
+    "source_commit": "c3dd17fde2e996d29c1270136b543b6fee1011fc",
+    "source_tree": "1cfc0fe02893796ed8ae227de136f121e9d25b81",
+    "summary": {
+      "by_split": {
+        "heldout": {
+          "attempted": 8,
+          "failure_classes": {},
+          "invalid": 0,
+          "rejected": 0,
+          "valid_scientific_attempts": 8,
+          "verified": 8,
+          "verified_fraction_of_all_attempts": 1.0,
+          "verified_fraction_of_valid_attempts": 1.0
+        },
+        "historical": {
+          "attempted": 5,
+          "failure_classes": {},
+          "invalid": 0,
+          "rejected": 0,
+          "valid_scientific_attempts": 5,
+          "verified": 5,
+          "verified_fraction_of_all_attempts": 1.0,
+          "verified_fraction_of_valid_attempts": 1.0
+        },
+        "negative_control": {
+          "attempted": 1,
+          "failure_classes": {
+            "grammar_rejection": 1
+          },
+          "invalid": 0,
+          "rejected": 1,
+          "valid_scientific_attempts": 1,
+          "verified": 0,
+          "verified_fraction_of_all_attempts": 0.0,
+          "verified_fraction_of_valid_attempts": 0.0
+        }
+      },
+      "definition": "Finite attempted source programs within an explicit bounded synthesis grammar, not a universal neural decompilation rate",
+      "total_attempted": 14,
+      "total_invalid": 0,
+      "total_rejected": 1,
+      "total_verified": 13
+    },
+    "verified_attempts_replayed": 13
+  },
+  "strict_roundtrip": {
+    "artifact_sha256": "883938991721d5824af65598ae6d8871f01ab32c8941ebcef174b548e4b58ca7",
+    "finite_execution_replays": 156,
+    "neural_weight_all_i32_proved": false,
+    "original_programs_checked": 13,
+    "original_source_unique_recovered": false,
+    "source_commit": "c3dd17fde2e996d29c1270136b543b6fee1011fc",
+    "source_tree": "1cfc0fe02893796ed8ae227de136f121e9d25b81",
+    "typed_source_vs_candidate_all_i32_z3_rechecked": true
+  }
+}

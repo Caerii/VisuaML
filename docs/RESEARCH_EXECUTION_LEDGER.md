@@ -1,0 +1,170 @@
+# Research execution ledger
+
+## v57/v58 offline audit
+
+The audit started at PR #46, `f7326d4f709ff997f822849e4bd650c88a30f2d1`.
+It contains PR #45, `1be8614b8b8adc1de6e5aab3af1ff989c902dc40`, which
+descends from `main` at `f0b883f5ed99cddd5999843c93b82bdb7d8fa2fd`.
+There were 13 changed files from main to PR #45 and 30 more changed paths
+from PR #45 to PR #46. The checkout contains no active Actions workflows.
+
+The recorded evidence was produced at
+`c3dd17fde2e996d29c1270136b543b6fee1011fc`, tree
+`1cfc0fe02893796ed8ae227de136f121e9d25b81`. The runtime was Linux x86-64
+with Python 3.12.14, NumPy 2.1.3, PyTorch 2.9.1+cpu, Wasmtime 36.0.0,
+Z3 4.15.3, pytest 8.3.4, and Ruff 0.11.13.
+
+| Gate | Status | Observation |
+| --- | --- | --- |
+| v57 state parity | Verified | 78 focused tests. Across 19 source programs and 138 witnesses, v57 agreed with v56 and v51 on 3,026 instruction states and with original Wasmtime on outputs. A separate replay validated archived WASM and recomputed the v51 states from its bytes. |
+| v58 straight-line parity | Verified | 67 focused tests covered state parity, original Wasmtime, scaling workloads and fault handling. The smoke runner recorded four witnesses across two programs and 56 transitions. v58 covered two witnesses because one program uses structured control. |
+| Fault campaign | Verified | All ten activated injections were detected or rejected. |
+| Strict recovery | Verified | 13 source programs, including eight held-out programs, received typed-source Z3 equivalence results. Independent replay checked 156 finite executions and the recorded v58 traces. |
+| Failure-complete recovery | Verified | 14 attempts, 13 verified, one cubic grammar rejection, and zero invalid attempts. A separate archive audit verified the denominator and rechecked all successful receipts. |
+| Frontend | Verified | The production build passed under Node 20.20.2 and pnpm 10.34.9. All 20 frontend tests passed. |
+
+### Diagnosed failures
+
+- On the PR #46 source, the offline v58 preflight stopped before tests
+  because Ruff rejected `RUFF_NO_CACHE=1`. After using the supported
+  boolean it reported three lint errors. The corrected entrypoint now
+  passes syntax and the v58 lint target.
+- The first v57 focused run reported 76 passes and two failures. A
+  missing ALU selector reached the v56 ALU error path before being rejected.
+  The fixed decoder checks selector presence against the admitted opcode.
+  A separate negative test assigned the value already in the token. It
+  now changes the bit before exercising canonical admission.
+- Six documentation link checks referenced workflow files removed from
+  main. The docs now reference the exact historical Git revision and all
+  11 link checks passed.
+- The first round-trip producer emitted 13 solver receipts, but the
+  separate verifier rejected the archive. All hypotheses rechecked as
+  UNSAT, but SMT-LIB serialization hashes depended on earlier solver
+  queries. Each source proof now gets its own Z3 context and the strict
+  and failure-complete archives replayed in separate processes.
+- Extra Ruff coverage on the changed v50 module flagged an existing
+  `E731` assignment in `emit_canonical_wasm`. The offline v58 lint target
+  passed.
+
+### v58 execution ownership
+
+| Mechanism | Constructed control | Host responsibilities |
+| --- | --- | --- |
+| Instruction selection | The v52 one-hot PC gate emits the live next PC. The v57 token table supplies the selected data opcode fields. | The host admits canonical tokens, tracks fuel, fetches source opcode metadata for traces and final-end validation, and proposes the top word or a zero vector for routing. |
+| Stack and locals | Fixed effect and value masks select pops, pushes, and register updates. The returned operand and local tensors become the next live state. | NumPy allocates intermediate arrays and evaluates the candidate paths. The host initializes input local 0, validates outputs, and materializes trace fields. |
+| ALU | The constructed selector chooses among six exact bit-circuit candidates. | The implementation evaluates all candidates and checks tensor shape and binary membership. |
+| Control and termination | Live PC selection applies to admitted straight-line execution. | The host admits and validates the final `end`, converts the result to a signed integer, and rejects non-admitted structured control. Control frames remain in the older engines. |
+
+The finite trace evidence applies to the declared corpus. The Z3
+checks apply to typed source and recovered candidate semantics. The
+next architecture milestone is a unified data-and-control transition,
+with structured control, linear memory, and calls still outside v58's
+admitted datapath.
+
+### Reproduce and replay
+
+Run from the repository root on Linux with the pinned runtime above.
+Copy the evidence directory to an external location before checking out the
+producing commit so the archived inputs remain available. Keep the producing
+checkout clean. For example, from the commit that contains this ledger:
+
+```bash
+records=$(mktemp -d)
+cp -r benchmarks/results/v58-offline-c3dd17f/. "$records"
+git switch --detach c3dd17fde2e996d29c1270136b543b6fee1011fc
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+export PYTHONDONTWRITEBYTECODE=1 PYTEST_ADDOPTS='-p no:cacheprovider'
+export PYTHONPATH="$PWD/visuaml-client/backend"
+python "$records/replay_v57_reference.py" "$records/v57-evidence.json.gz"
+python visuaml-client/backend/scripts/verify_neural_roundtrip_evidence_v58.py \
+  --input "$records/v58-roundtrips.json"
+python visuaml-client/backend/scripts/verify_recovery_campaign_v58.py \
+  --input "$records/v58-recovery-campaign.json"
+```
+
+To generate fresh records outside the checkout:
+
+```bash
+out=$(mktemp -d)
+python visuaml-client/backend/scripts/verify_offline_v57.py \
+  --output "$out/v57.json"
+python visuaml-client/backend/scripts/verify_offline_v58.py \
+  --output-dir "$out/v58" --repeats 2 --faults \
+  --roundtrip --roundtrip-holdout --recovery-campaign --recovery-campaign-holdout
+(cd visuaml-client && python -m pytest -q --tb=short backend/tests)
+```
+
+The v57 producer compares v57 with v56, v51, and Wasmtime. The
+separate archived-byte verifier checks the recorded state against v51
+and the output against Wasmtime. It rejected a copy with a corrupted
+WASM header. The archive includes v57 fixed-weight and token hashes.
+The supplementary v58 identity record compares the fixed decoder,
+ALU, PC, and microstep digests returned for 16 generated programs.
+
+The [manifest](../benchmarks/results/v58-offline-c3dd17f/manifest.json)
+records both compressed and raw checksums where applicable. Independent
+replay checks target the original producing source. Rerun timings to
+characterize a new machine or source revision.
+
+## Backend regression
+
+The corrected-source run passed **1,182 tests**, skipped **20**, and
+reported zero failures. An earlier full run at `d7588de` started before
+the documentation and selector corrections and reported 1,174 passes
+and eight failures. Its failures were the six missing workflow links
+and the two v57 tests described above.
+
+## Scaling baseline and optimization target
+
+The completed scaling run used one warmup and five measured calls per
+engine and input, with explicit one-thread settings. It covered 53
+programs (19 public, eight held-out, and 26 scaling workloads), 238
+witnesses, and 4,983 reference transitions. v58 ran on 197 witnesses.
+For the 41 structured-control witnesses the v58 entry is absent. A
+separate `tracemalloc` pass recorded Python allocation peaks for one
+input per program. These values do not measure total process memory.
+
+The table uses only the same 197 admitted witnesses for all engines.
+Each column shows the median across witnesses of the individual
+five-call statistic.
+
+| Engine | Wall median (ms) | Wall p95 (ms) | Process CPU median (ms) |
+| --- | ---: | ---: | ---: |
+| v51 interpreter | 2.198 | 2.671 | 2.196 |
+| v56 ALU executor | 29.230 | 34.602 | 29.226 |
+| v57 microops | 32.097 | 38.014 | 32.011 |
+| v58 microsteps | 40.994 | 47.536 | 40.993 |
+| Wasmtime via Python | 0.021 | 0.031 | 0.020 |
+
+On paired v56/v58 inputs, v58 took **1.40×** as long by geometric mean,
+with a worst observed slowdown of **1.99×**. v58 was slower on 195 of
+197 paired witnesses. These are measurements of the local traced
+Python/NumPy implementation and the warm Wasmtime Python binding.
+The Python executor timings include trace work. Wasmtime timings exclude
+module setup, and CPU frequency was not controlled.
+
+Reproduce the timed baseline separately from other heavy workloads:
+
+```bash
+python visuaml-client/backend/scripts/benchmark_neural_vm_v58.py \
+  --output "$out/scaling.json" --repeats 5 --warmups 1 --scaling --memory
+python visuaml-client/backend/scripts/summarize_neural_benchmarks_v58.py \
+  --input "$out/scaling.json" --output-json "$out/scaling-scorecard.json" \
+  --output-csv "$out/scaling-scorecard.csv"
+```
+
+A five-call profile of `arithmetic_chain(32)` at input `-17` showed
+0.670 s cumulative in ALU candidate execution and 0.399 s cumulative in
+NumPy membership checks. These are inclusive profiler costs from one
+workload. The next benchmarkable change is to reduce repeated binary
+membership validation while preserving tensor admission, full state
+parity, and the same corruption controls. Runtime optimizations and a
+unified structured-control datapath are untested.
+
+The representation-cost study independently rechecked its strict proof
+archive, then measured 78 original-versus-recovered pairs across 13
+programs. It alternated call order within each engine. Coverage,
+per-pair timings, binary sizes, and conditional recovery amortization
+are recorded in the representation-cost artifact. The tested change
+was the symbolic WASM representation. Execution weights were held
+fixed.

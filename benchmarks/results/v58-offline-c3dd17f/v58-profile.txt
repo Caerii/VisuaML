@@ -1,0 +1,27 @@
+5 runs of arithmetic_chain(32), input -17, 66 transitions per run
+         1147070 function calls (1141040 primitive calls) in 1.663 seconds
+
+   Ordered by: cumulative time
+   List reduced from 136 to 20 due to restriction <20>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        5    0.009    0.002    1.667    0.333 neural_microstep_executor_v58.py:72(execute_microstep_control)
+      325    0.029    0.000    1.402    0.004 neural_microstep_v58.py:89(step_data_microop)
+      325    0.009    0.000    0.670    0.002 neural_alu_v56.py:73(execute_alu)
+      975    0.060    0.000    0.401    0.000 neural_operand_storage_v55.py:96(step_operands)
+    26560    0.038    0.000    0.399    0.000 _arraysetops_impl.py:1018(isin)
+    26560    0.240    0.000    0.340    0.000 _arraysetops_impl.py:865(_in1d)
+    10735    0.041    0.000    0.276    0.000 neural_operand_storage_v55.py:67(_binary)
+      650    0.002    0.000    0.276    0.000 bit_neural_vm_v49.py:290(_signed_lt)
+      650    0.045    0.000    0.264    0.000 bit_neural_vm_v49.py:280(_unsigned_lt)
+     2930    0.044    0.000    0.245    0.000 neural_operand_storage_v55.py:80(validate_operands)
+      325    0.113    0.000    0.236    0.001 bit_neural_vm_v49.py:251(_mul)
+    89810    0.183    0.000    0.183    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+   106110    0.181    0.000    0.181    0.000 bit_neural_vm_v49.py:212(_and)
+    52990    0.029    0.000    0.149    0.000 {method 'all' of 'numpy.ndarray' objects}
+     6500    0.021    0.000    0.148    0.000 neural_microstep_v58.py:76(_binary)
+     4880    0.005    0.000    0.146    0.000 neural_operand_storage_v55.py:74(_hot)
+    21475    0.025    0.000    0.126    0.000 fromnumeric.py:2349(sum)
+    52990    0.024    0.000    0.120    0.000 _methods.py:68(_all)
+    21475    0.032    0.000    0.097    0.000 fromnumeric.py:69(_wrapreduction)
+      325    0.009    0.000    0.082    0.000 typed_microop_ir_v57.py:185(read_microop)

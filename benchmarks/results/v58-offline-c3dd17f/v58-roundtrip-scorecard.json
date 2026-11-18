@@ -1,0 +1,37 @@
+{
+  "attempted_failed_recoveries_not_scored_by_this_strict_archive": true,
+  "claimed_full_domain_constructed_neural_weight_proofs": 0,
+  "claimed_unknown_learned_weight_decompilations": 0,
+  "finite_execution_replays": 156,
+  "input_evidence_sha256": "883938991721d5824af65598ae6d8871f01ab32c8941ebcef174b548e4b58ca7",
+  "measured_among_completed_strict_runs_only": true,
+  "schema": "visuaml.cross-representation-scorecard.v58",
+  "source_commit": "c3dd17fde2e996d29c1270136b543b6fee1011fc",
+  "source_programs": 13,
+  "source_tree": "1cfc0fe02893796ed8ae227de136f121e9d25b81",
+  "splits": {
+    "heldout": {
+      "finite_execution_replays": 96,
+      "median_cegis_observations": 7.0,
+      "median_cegis_refinements": 0.0,
+      "median_original_wasm_bytes": 55.0,
+      "median_recovered_to_original_size_ratio": 0.9454545454545454,
+      "median_recovered_wasm_bytes": 52.0,
+      "median_recovery_and_smt_ns": 184870857.5,
+      "structurally_distinct_recovered_binaries": 8,
+      "verified_programs": 8
+    },
+    "historical": {
+      "finite_execution_replays": 60,
+      "median_cegis_observations": 7,
+      "median_cegis_refinements": 0,
+      "median_original_wasm_bytes": 40,
+      "median_recovered_to_original_size_ratio": 1.0,
+      "median_recovered_wasm_bytes": 40,
+      "median_recovery_and_smt_ns": 81585359,
+      "structurally_distinct_recovered_binaries": 2,
+      "verified_programs": 5
+    }
+  },
+  "verified_typed_source_to_candidate_z3": 13
+}
