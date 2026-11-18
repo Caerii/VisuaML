@@ -19,9 +19,9 @@ from pathlib import Path
 import numpy as np
 
 from .typed_kan_v45 import (
+    MAX_ROWS,
     KANAdmissionError,
     KANProgram,
-    MAX_ROWS,
     validate_kan,
 )
 
