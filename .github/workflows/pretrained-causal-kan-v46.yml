@@ -8,12 +8,18 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/onnx_activation_causality_v46.py
       - visuaml-client/backend/scripts/probe_pretrained_internal_kan_v46.py
       - visuaml-client/backend/tests/test_onnx_activation_causality_v46.py
+      - visuaml-client/backend/tests/test_pretrained_internal_kan_archive_v46.py
+      - benchmarks/pretrained_internal_kan_causality_v46.json
+      - benchmarks/pretrained_internal_kan_causality_v46.origin.json
       - .github/workflows/pretrained-causal-kan-v46.yml
   pull_request:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/onnx_activation_causality_v46.py
       - visuaml-client/backend/scripts/probe_pretrained_internal_kan_v46.py
       - visuaml-client/backend/tests/test_onnx_activation_causality_v46.py
+      - visuaml-client/backend/tests/test_pretrained_internal_kan_archive_v46.py
+      - benchmarks/pretrained_internal_kan_causality_v46.json
+      - benchmarks/pretrained_internal_kan_causality_v46.origin.json
       - .github/workflows/pretrained-causal-kan-v46.yml
 permissions:
   contents: write
@@ -44,8 +50,8 @@ jobs:
           OMP_NUM_THREADS: "1"
           VISUAML_PINNED_MODEL: evidence-v46/mnist-8.onnx
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_onnx_activation_causality_v46.py
-          ruff check visuaml-client/backend/visuaml/compiler_lab/onnx_activation_causality_v46.py visuaml-client/backend/scripts/probe_pretrained_internal_kan_v46.py visuaml-client/backend/tests/test_onnx_activation_causality_v46.py
+          python -m pytest -q visuaml-client/backend/tests/test_onnx_activation_causality_v46.py visuaml-client/backend/tests/test_pretrained_internal_kan_archive_v46.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/onnx_activation_causality_v46.py visuaml-client/backend/scripts/probe_pretrained_internal_kan_v46.py visuaml-client/backend/tests/test_onnx_activation_causality_v46.py visuaml-client/backend/tests/test_pretrained_internal_kan_archive_v46.py
       - name: Measure complete pretrained CNN internal causal interventions, KAN fitting, and second-image transfer
         env:
           PYTHONPATH: visuaml-client/backend
