@@ -1,0 +1,233 @@
+{
+  "artifacts": {
+    "backend-initial.log.gz": {
+      "bytes": 1422,
+      "sha256": "ab3d4824aa0391bee9ac8df7deab8350a41408a71f2c3c72a65959a516a0727c",
+      "uncompressed_sha256": "3d90aca49f7361660d9bbe89fc9c480ea1031cc561d73c2268d06a8621050265"
+    },
+    "backend.log.gz": {
+      "bytes": 934,
+      "sha256": "80ddbc511ea4a12dade17cc2e4d6474f524877455d7f0e78d2b1f7b610823df6",
+      "uncompressed_sha256": "ee6989a8f288a3e01e23fbb76043a8fe2db50279ddeae36aacf321fb7f478389"
+    },
+    "faults.json": {
+      "bytes": 6851,
+      "sha256": "22d2d1088dd7867c3c9ec7182fcb6189b665111e81b52919b7e5806488f3b63f",
+      "source": {
+        "commit": "b563bb460d636e1e22fa1db543f701789ef5e5b8",
+        "tree": "cdb8b8b5e3f77b51283fab1490d778cf05d00b62"
+      }
+    },
+    "outliers.json": {
+      "bytes": 1482,
+      "sha256": "a5c59f513ef404008b30804dcad7da0d7188b7d3aeca2f64e1c8e5e3624ef80c",
+      "source": {
+        "branch": "research/v58-prepared-gate-execution",
+        "commit": "eb3a87bccef4753d9f7559def971706cfe80f430",
+        "tree": "2927bb80994f648ab5c81dc2534ff784448c677f"
+      }
+    },
+    "profile.json.gz": {
+      "bytes": 3542,
+      "sha256": "d7b1624921b960f2989571f5081231724eeff79eaf735236b1ac7d8c88bd6d51",
+      "source": {
+        "branch": "research/v58-prepared-gate-execution",
+        "commit": "eb3a87bccef4753d9f7559def971706cfe80f430",
+        "tree": "2927bb80994f648ab5c81dc2534ff784448c677f"
+      },
+      "uncompressed_sha256": "2116534c2bd07009dd7d4dc3aaddfb26ae597444a193ac3f716d03dbb3460dfe"
+    },
+    "profile_warm.py": {
+      "bytes": 1200,
+      "sha256": "ded0c295318590662e84431b836ea84e7080ba9b94000e957618615082ae0db0"
+    },
+    "recheck_outliers.py": {
+      "bytes": 2429,
+      "sha256": "029ba9d8725e96c94dad09eb6221917f08a77a9de261cdea5404a7f1359d3882"
+    },
+    "runtime-1.json.gz": {
+      "bytes": 67527,
+      "sha256": "372084607f8f5235ded4f79c67cbbd48263a1e4b5761f1c7a1b1e9fbc6373047",
+      "source": {
+        "baseline": false,
+        "commit": "b563bb460d636e1e22fa1db543f701789ef5e5b8",
+        "tree": "cdb8b8b5e3f77b51283fab1490d778cf05d00b62"
+      },
+      "uncompressed_sha256": "6d0155c33d60f3b9d1822e13b36fd8c3961d645dd99ec0dc767ef5a4d3dbd60f"
+    },
+    "runtime-2.json.gz": {
+      "bytes": 67463,
+      "sha256": "a8b095149dd427dab14129cd82bce32ff0bc3a0243b714363937cefbbca223cc",
+      "source": {
+        "baseline": false,
+        "commit": "b563bb460d636e1e22fa1db543f701789ef5e5b8",
+        "tree": "cdb8b8b5e3f77b51283fab1490d778cf05d00b62"
+      },
+      "uncompressed_sha256": "511856362dbab77fe15117d959e8d73437e363f9856e0f52534958036c6f053c"
+    },
+    "summarize.py": {
+      "bytes": 3404,
+      "sha256": "b4b55f119afdb20ebaeea599a2ea98a4092a9f66b7838fcf0670e63cbe3c91b5"
+    }
+  },
+  "environment": {
+    "cpu_count": 5,
+    "machine": "x86_64",
+    "numpy": "2.1.3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "processor": "",
+    "python": "3.12.14",
+    "thread_controls": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null,
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "wasmtime": "36.0.0"
+  },
+  "indexed_reference": "v58-indexed-gates-7160363/runtime-1.json.gz",
+  "runs": {
+    "runtime-1.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "ca0e4ffd821cf5df9e44473aeb2d83b8c33d1af889fb28baabf9610d9e9ca260",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 468795822,
+        "source_sha256": "68b7b011f11072eae3105e30e59ad54584ea38128b2bca47cca73f4212ffa784"
+      },
+      "modes": {
+        "no_trace": {
+          "case_medians_ns": [
+            5699219,
+            4162127
+          ],
+          "faster_warm_cases": 185,
+          "modeled_break_even_by_calls": {
+            "1": 111,
+            "16": 184,
+            "2": 163,
+            "4": 176,
+            "8": 179
+          },
+          "modeled_break_even_calls_median_among_faster_cases": 1,
+          "modeled_first_call_geomean_speedup": 1.0292563325577422,
+          "paired_geomean_speedup": 1.352958568775958,
+          "worst_warm_slowdown": 1.9642892874738662
+        },
+        "trace": {
+          "case_medians_ns": [
+            6886462,
+            5218798
+          ],
+          "faster_warm_cases": 180,
+          "modeled_break_even_by_calls": {
+            "1": 123,
+            "16": 179,
+            "2": 164,
+            "4": 173,
+            "8": 176
+          },
+          "modeled_break_even_calls_median_among_faster_cases": 1.0,
+          "modeled_first_call_geomean_speedup": 1.058091473550913,
+          "paired_geomean_speedup": 1.3267813828403061,
+          "worst_warm_slowdown": 1.4403949544293089
+        }
+      },
+      "preparation_ns_min_median_max": [
+        775906,
+        1339681,
+        2700314
+      ],
+      "programs": 35,
+      "states": 3387,
+      "witnesses": 197
+    },
+    "runtime-2.json.gz": {
+      "compiled_kernels": {
+        "binary_sha256": "ca0e4ffd821cf5df9e44473aeb2d83b8c33d1af889fb28baabf9610d9e9ca260",
+        "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+        "flags": [
+          "-std=c++17",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-shared",
+          "-fPIC"
+        ],
+        "setup_wall_ns": 688339717,
+        "source_sha256": "68b7b011f11072eae3105e30e59ad54584ea38128b2bca47cca73f4212ffa784"
+      },
+      "modes": {
+        "no_trace": {
+          "case_medians_ns": [
+            5593158,
+            4082357
+          ],
+          "faster_warm_cases": 189,
+          "modeled_break_even_by_calls": {
+            "1": 114,
+            "16": 189,
+            "2": 172,
+            "4": 185,
+            "8": 189
+          },
+          "modeled_break_even_calls_median_among_faster_cases": 1,
+          "modeled_first_call_geomean_speedup": 1.0442351083781416,
+          "paired_geomean_speedup": 1.3557688414955984,
+          "worst_warm_slowdown": 1.3692857591657324
+        },
+        "trace": {
+          "case_medians_ns": [
+            6631829,
+            5086832
+          ],
+          "faster_warm_cases": 187,
+          "modeled_break_even_by_calls": {
+            "1": 117,
+            "16": 186,
+            "2": 164,
+            "4": 182,
+            "8": 185
+          },
+          "modeled_break_even_calls_median_among_faster_cases": 1,
+          "modeled_first_call_geomean_speedup": 1.045214864628094,
+          "paired_geomean_speedup": 1.2943446854133647,
+          "worst_warm_slowdown": 1.5578821967081435
+        }
+      },
+      "preparation_ns_min_median_max": [
+        830536,
+        1263128,
+        2425786
+      ],
+      "programs": 35,
+      "states": 3387,
+      "witnesses": 197
+    }
+  },
+  "schema": "visuaml.v58-prepared-gates-evidence.v1",
+  "source": {
+    "commit": "b563bb460d636e1e22fa1db543f701789ef5e5b8",
+    "tree": "cdb8b8b5e3f77b51283fab1490d778cf05d00b62"
+  },
+  "tests": {
+    "initial_source": {
+      "commit": "b563bb460d636e1e22fa1db543f701789ef5e5b8",
+      "tree": "cdb8b8b5e3f77b51283fab1490d778cf05d00b62"
+    },
+    "passed": 1215,
+    "skipped": 20,
+    "source": {
+      "commit": "eb3a87bccef4753d9f7559def971706cfe80f430",
+      "tree": "2927bb80994f648ab5c81dc2534ff784448c677f"
+    },
+    "wall_s": 93.44
+  }
+}

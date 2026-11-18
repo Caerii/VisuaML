@@ -218,3 +218,13 @@ decoder weights within execution. Warm row reads fell from about
 1.11–1.12× paired untraced speedups and preserved all 3,387 archived
 states. Setup cost and per-input slowdowns remain in the evidence.
 [Indexed execution report](V58_INDEXED_GATES.md)
+
+## v58 reusable constructed execution
+
+The prepared executor admits routing, decoded rows, and fixed coefficients
+once per source program. Warm untraced execution was 1.35–1.36× faster
+across 197 paired inputs over two runs. Preparation cost, per-input
+slowdowns, crossover estimates, all 3,387 matched states, and the ten
+fault injections are recorded in the evidence. The warm profile directs
+the next experiment to the shared data microstep.
+[Prepared execution report](V58_PREPARED_GATES.md)
