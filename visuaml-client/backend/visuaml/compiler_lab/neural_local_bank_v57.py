@@ -85,3 +85,33 @@ def write_local(
     )
     _binary(result, (LOCALS_WIDTH, WIDTH))
     return result
+
+
+def apply_local_microop(
+    registers: np.ndarray,
+    selector: np.ndarray,
+    mode: np.ndarray,
+    value: np.ndarray,
+    *,
+    fixed: LocalBankWeights | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Fixed one-hot mode gates own the local-bank transition and read output.
+
+    The host may still choose how to change the WASM operand stack, but
+    it cannot select whether the local bank is read or written. This is
+    decided by the decoded v57 mode (none/get/set/tee) in the circuit.
+    """
+    _binary(mode, (len(MODES),))
+    if mode.sum() != 1. or mode[0]:
+        raise MicroopAdmissionError("Local effect requires get/set/tee mode")
+    _binary(value, (WIDTH,))
+    current = read_local(registers, selector, fixed=fixed)
+    written = write_local(registers, selector, value, fixed=fixed)
+    write_gate = mode[2] + mode[3]
+    result_bank = (
+        (1. - write_gate) * registers + write_gate * written
+    )
+    read_result = mode[1] * current
+    _binary(result_bank, (LOCALS_WIDTH, WIDTH))
+    _binary(read_result, (WIDTH,))
+    return result_bank, read_result
