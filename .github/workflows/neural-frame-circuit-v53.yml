@@ -1,0 +1,30 @@
+name: v53 bounded neural frame circuit prototype
+on:
+  push:
+    branches:
+      - research/v53-neural-control-frame-circuits
+      - main
+    paths:
+      - 'visuaml-client/backend/visuaml/compiler_lab/neural_frame_circuit_v53.py'
+      - 'visuaml-client/backend/tests/test_neural_frame_circuit_v53.py'
+      - '.github/workflows/neural-frame-circuit-v53.yml'
+  pull_request:
+    paths:
+      - 'visuaml-client/backend/visuaml/compiler_lab/neural_frame_circuit_v53.py'
+      - 'visuaml-client/backend/tests/test_neural_frame_circuit_v53.py'
+      - '.github/workflows/neural-frame-circuit-v53.yml'
+jobs:
+  frame-circuit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated test dependencies
+        run: python -m pip install 'numpy>=1.26,<3' pytest ruff
+      - name: Check circuit and focused tests
+        run: |
+          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_frame_circuit_v53.py visuaml-client/backend/tests/test_neural_frame_circuit_v53.py
+          PYTHONPATH=visuaml-client/backend python -m pytest -q visuaml-client/backend/tests/test_neural_frame_circuit_v53.py
