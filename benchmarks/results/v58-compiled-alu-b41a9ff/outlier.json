@@ -1,0 +1,48 @@
+{
+  "input": -1,
+  "paired": {
+    "no_trace": {
+      "compiled": {
+        "count": 15,
+        "max_ns": 18935404,
+        "mean_ns": 14707038.733333332,
+        "median_ns": 14725755,
+        "min_ns": 11656637,
+        "p95_ns": 18935404
+      },
+      "numpy": {
+        "count": 15,
+        "max_ns": 89616859,
+        "mean_ns": 34704036.13333333,
+        "median_ns": 30456100,
+        "min_ns": 25955843,
+        "p95_ns": 89616859
+      }
+    },
+    "trace": {
+      "compiled": {
+        "count": 15,
+        "max_ns": 18122831,
+        "mean_ns": 15123658,
+        "median_ns": 14946405,
+        "min_ns": 13737333,
+        "p95_ns": 18122831
+      },
+      "numpy": {
+        "count": 15,
+        "max_ns": 44273973,
+        "mean_ns": 32378352.666666668,
+        "median_ns": 31432138,
+        "min_ns": 25687839,
+        "p95_ns": 44273973
+      }
+    }
+  },
+  "program": "generated_07",
+  "purpose": "Focused reproduction of the largest same-mode no-trace regression",
+  "repeats": 15,
+  "source": {
+    "commit": "b41a9ff88af03ab3fa7e609db12aadd500bc505c",
+    "tree": "46d15800c46b6360f97a567ec9711d2bd53a43a3"
+  }
+}

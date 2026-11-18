@@ -1,0 +1,77 @@
+{
+  "artifacts": {
+    "backend-serial.log.gz": {
+      "sha256": "b74701fb4d2693900fe75fc0c97caf6fc01f8ac14d5fb86b265a1ceabe1b241b",
+      "size_bytes": 1558,
+      "uncompressed_sha256": "424b201e1c6ba47ab537e876b2e463fcda7a893c7e06a4cb0a23babf6ffdc148"
+    },
+    "backend-workers4.log.gz": {
+      "sha256": "91917a38d9112fffc0098ac3dfc2aff9a2416889e4aa8a91075767ad07a256bd",
+      "size_bytes": 1569,
+      "uncompressed_sha256": "8bb08ac6ecf1bdd6b4138eaf79cfce8e5592e67938135c23a0cf87edccc075f2"
+    },
+    "compiled-comparison.json": {
+      "sha256": "5510160f5617bd5514b03b884adc807f582ec01e3b307655dca630186d9b2b54",
+      "size_bytes": 350
+    },
+    "compiled-faults.json": {
+      "sha256": "ae07c111f170c079e23a4beade575368ff106ada5e9357cd0a4db811e75bd7c2",
+      "size_bytes": 6759,
+      "source": {
+        "commit": "b41a9ff88af03ab3fa7e609db12aadd500bc505c",
+        "tree": "46d15800c46b6360f97a567ec9711d2bd53a43a3"
+      }
+    },
+    "compiled.json.gz": {
+      "sha256": "2523c5affd4591dc6434c72f4235d85cb49e5b86faf8d6cb1e012a3f469e3b8b",
+      "size_bytes": 72433,
+      "source": {
+        "baseline": false,
+        "commit": "b41a9ff88af03ab3fa7e609db12aadd500bc505c",
+        "tree": "46d15800c46b6360f97a567ec9711d2bd53a43a3"
+      },
+      "uncompressed_sha256": "7369a437c4f0479ee3219b25b76a6c751d097b763a9e4529dd9b1bedf82a69ec"
+    },
+    "outlier.json": {
+      "sha256": "2e8580639dfa5e254ee373f3249715b7af2985278ed9ab53c710ad3ad6ab1740",
+      "size_bytes": 1136
+    },
+    "recheck_outlier.py": {
+      "sha256": "27dc1d50c727791b2d4d4057e6f508dae4e36dafc7f099d2de8ba1c8d1c4a309",
+      "size_bytes": 1672
+    },
+    "test-timings.json": {
+      "sha256": "ad5dd7e2ae23bbccf5762373e3e46ff4be2c04bd1643629c6a074366394fde3b",
+      "size_bytes": 6327
+    }
+  },
+  "compiled_alu": {
+    "binary_sha256": "ee03968c30bdfa4a10883b52f7086975e22110729430a81c9c751337e8028d42",
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "flags": [
+      "-std=c++17",
+      "-O3",
+      "-fno-fast-math",
+      "-ffp-contract=off",
+      "-shared",
+      "-fPIC"
+    ],
+    "setup_wall_ns": 218919348,
+    "source_sha256": "5a1aafbe0df235410147523e2796b569fd8752834b56c11f5315ed91ef4a2c0f"
+  },
+  "compiled_over_numpy": {
+    "no_trace": {
+      "faster_cases": 196,
+      "paired_geomean_speedup": 2.297929966075909,
+      "worst_ratio": 0.4361586947393666
+    },
+    "trace": {
+      "faster_cases": 196,
+      "paired_geomean_speedup": 2.182537143420672,
+      "worst_ratio": 0.9853525506862526
+    }
+  },
+  "schema": "visuaml.constructed-runtime-experiment.v58",
+  "stage": "compiled",
+  "test_suite_speedup": 2.7934129063352873
+}

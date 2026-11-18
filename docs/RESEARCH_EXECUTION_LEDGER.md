@@ -175,3 +175,12 @@ The original traced baseline was rerun from the offline evidence
 revision. Exact binary comparisons improved traced v58 by 1.26–1.30×
 across 197 paired witnesses. Trace omission uses the same live gates.
 [Profile and verification report](V58_CONSTRUCTED_VALIDATION.md)
+
+## v58 compiled constructed ALU and suite throughput
+
+The optional compiled gate equations improved traced execution 2.18×
+over the same-mode optimized NumPy path and moved the leading profiled
+cost to operand transitions. All 3,387 states and 197 witness results
+matched the reference. Four pytest workers reduced complete-suite wall
+time from 239 s to 86 s with the same 1,198 passes and 20 skips.
+[Compiled ALU and test throughput report](V58_COMPILED_ALU.md)
