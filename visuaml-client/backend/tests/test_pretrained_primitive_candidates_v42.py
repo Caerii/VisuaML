@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+from itertools import pairwise
 
 import numpy as np
 import pytest
@@ -26,9 +27,9 @@ def test_svd_candidates_are_finite_rank_bounded_and_best_frobenius_approximation
     )
     assert all(x.construction == "truncated-svd" for x in candidates)
     assert all(a.relative_frobenius_error >= b.relative_frobenius_error
-               for a, b in zip(candidates, candidates[1:], strict=False))
+               for a, b in pairwise(candidates))
     assert all(a.retained_spectral_energy <= b.retained_spectral_energy
-               for a, b in zip(candidates, candidates[1:], strict=False))
+               for a, b in pairwise(candidates))
     np.testing.assert_allclose(candidates[-1].proposed_weight, w, rtol=1e-5, atol=1e-5)
 
 
