@@ -1,0 +1,80 @@
+name: v52 fixed analytic neural control routing original WASM differential
+on:
+  push:
+    branches:
+      - research/v52-analytic-neural-control-routing
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py
+      - visuaml-client/backend/tests/test_neural_control_routing_v52.py
+      - visuaml-client/backend/scripts/probe_neural_control_router_v52.py
+      - .github/workflows/analytic-neural-control-v52.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py
+      - visuaml-client/backend/tests/test_neural_control_routing_v52.py
+      - visuaml-client/backend/scripts/probe_neural_control_router_v52.py
+      - .github/workflows/analytic-neural-control-v52.yml
+permissions:
+  contents: read
+jobs:
+  routed-wasm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned original WASM and constructed-bit evidence dependencies
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==2.2.6 pytest==8.4.2 wasmtime==28.0.0 ruff==0.17.5
+      - name: Test actual feedback of constructed PC, corrupted gate weights and all host reference transitions
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_neural_control_routing_v52.py
+          python -m pytest -q visuaml-client/backend/tests/test_wasm_control_archive_v51.py visuaml-client/backend/tests/test_wasm_gcd_archive_v51_1.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py visuaml-client/backend/tests/test_neural_control_routing_v52.py visuaml-client/backend/scripts/probe_neural_control_router_v52.py
+      - name: Replay original source WASM in Wasmtime and independently compare all routed machine state
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p evidence-v52
+          python visuaml-client/backend/scripts/probe_neural_control_router_v52.py --output evidence-v52/neural-control-v52.json
+          python - <<'PY'
+          import json
+          record=json.load(open("evidence-v52/neural-control-v52.json"))
+          assert record["schema"]=="visuaml.original-wasm-neural-pc-router.v52"
+          assert record["program_count"]==6
+          assert record["witness_count"]==61
+          assert record["same_analytic_router_weights_for_all_programs"]
+          assert record["actual_onehot_pc_controls_next_instruction"]
+          assert record["neural_program_counter_selected_by_matrix_gates"]
+          assert record["separate_v51_host_interpreter_compared_every_step"]
+          assert record["wasmtime_original_source_validated"]
+          assert record["taken_jump_routing_events"]>0
+          assert record["conditional_instruction_events"]>0
+          assert all(w["passed"] for w in record["witnesses"])
+          assert not record["complete_neural_wasm_interpreter_constructed"]
+          assert not record["standard_transformer_softmax_executed"]
+          assert not record["all_input_semantics_formally_proved"]
+          assert record["runtime_lexical_control_frames_still_host_managed"]
+          assert record["bounded_nontermination_reference"]["bounded_resource_exhaustion_observed"]
+          print("Routed actual original WASM programs:",record["program_count"],"witnesses:",record["witness_count"])
+          PY
+      - name: Retain raw complete original PC gate and WASM comparison witness
+        uses: actions/upload-artifact@v4
+        with:
+          name: sourcebound-neural-pc-v52
+          path: evidence-v52/neural-control-v52.json
+          if-no-files-found: error
+          retention-days: 30
