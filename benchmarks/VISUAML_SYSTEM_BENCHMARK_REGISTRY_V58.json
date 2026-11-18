@@ -96,6 +96,32 @@
       "admission": "synthesizer sees oracle I/O but no original source, weights, manifests or traces; solver proves typed source-to-symbolic candidate across full i32 domain; original and recovered Wasmtime and V58 finite traces agree; do not infer neural all-input proof or unknown-model decompilation"
     },
     {
+      "id": "representation-cost",
+      "title": "Proof-gated original-versus-recovered WASM cost and specialization amortization",
+      "status": "implemented_unmeasured",
+      "runner": "visuaml-client/backend/scripts/benchmark_representation_cost_v58.py",
+      "units": [
+        "original/recovered source WASM bytes",
+        "paired warm invocation ns",
+        "break-even call count lower bound",
+        "recovery-and-proof ns"
+      ],
+      "dimensions": [
+        "cross-representation optimization",
+        "code size",
+        "execution performance",
+        "specialization amortization"
+      ],
+      "baselines": [
+        "original WASM in Wasmtime",
+        "recovered WASM in Wasmtime",
+        "original WASM in v58 microstep",
+        "recovered WASM in v58 microstep"
+      ],
+      "source_binding": "independently replayed v50-v58 original/recovered WASM receipt with exact Git tree and Z3 proof hash",
+      "admission": "independently reverify archive typed i32 proof and finite execution traces before any timing; pair within same engine/input; never call these experiments neural-weight specialization; no optimization speedups without actual measurements"
+    },
+    {
       "id": "compiler-ir-roundtrip",
       "title": "Typed Semantic IR decode/reencode fidelity",
       "status": "planned",
@@ -326,6 +352,7 @@
     }
   ],
   "priority": [
+    "Only after verified v50-to-v58 roundtrip receipts exist, compare original/recovered canonical WASM costs within Wasmtime and fixed-weight v58 execution and report source-size tradeoffs, regressions and recovery amortization.",
     "Run the v50-to-v58 blinded neural-symbolic roundtrip with independent full-i32 Z3 proof and finite Wasmtime/v58 replay; record all failed attempts and grammar limitations.",
     "Keep correctness and research-integrity failures as hard gates, not weighted score dimensions.",
     "Complete local measured v58 neural VM regression and export immutable evidence.",
