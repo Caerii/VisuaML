@@ -23,6 +23,7 @@ from scripts.probe_pretrained_mnist8_oracles_v37 import (
 from visuaml.compiler_lab.pretrained_primitive_candidates_v42 import (
     intervention_metrics,
     propose_low_rank,
+    select_compressed_rank,
     tensor_sha256,
 )
 
@@ -164,22 +165,9 @@ def run(raw: bytes) -> dict:
             "independent_oracle_max_abs_error": oracle_error,
             "witnesses": metrics,
         })
-    proposals = [result for result in results
-                 if result["construction"] == "truncated-svd"]
-    eligible = [entry for entry in proposals if all(
-        obs["numpy"]["top1_unchanged"]
-        and obs["numpy"]["relative_l2_logit_change"] <= ERROR_THRESHOLD
-        for obs in entry["witnesses"] if obs["group"] == "discovery"
-    )]
-    selected = min(eligible, key=lambda entry: entry["rank"]) if eligible else None
-    heldout = [
-        x for x in selected["witnesses"] if x["group"] == "heldout"
-    ] if selected else []
-    heldout_pass = bool(selected is not None and all(
-        item["numpy"]["top1_unchanged"]
-        and item["numpy"]["relative_l2_logit_change"] <= ERROR_THRESHOLD
-        for item in heldout
-    ))
+    screening = select_compressed_rank(
+        results, full_rank=min(matrix.shape), threshold=ERROR_THRESHOLD
+    )
     backend = Path(__file__).resolve().parents[1]
     files = (
         "scripts/probe_pretrained_primitives_v42.py",
@@ -201,8 +189,7 @@ def run(raw: bytes) -> dict:
         "threshold_relative_l2": ERROR_THRESHOLD,
         "discovery_input_count": 5, "heldout_input_count": 5,
         "independent_baseline_max_abs_error": ref_error,
-        "results": results, "selected_rank": selected["rank"] if selected else None,
-        "heldout_pass": heldout_pass,
+        "results": results, **screening,
         "source_checkpoint_modified": False,
         "pretrained_model_accuracy_evaluated": False,
         "generalizable_mechanism_certified": False,
