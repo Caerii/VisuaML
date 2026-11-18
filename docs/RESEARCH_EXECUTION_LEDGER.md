@@ -254,3 +254,11 @@ return ordered results and traps. The evidence compares warm and
 preparation-inclusive throughput at five batch sizes, preserves all
 3,387 trace states, and samples the remaining native ALU cost.
 [Serial native batch report](V58_NATIVE_BATCH_LOOP.md)
+
+## v58 packed scalar execution
+
+The prepared native loop stores binary i32 state in machine words and
+uses an exact canonical ALU lowering. The two-run archive compares single
+calls and batches, checks traces, coefficient effects and fuel behavior,
+and records the arithmetic proof and direct prepared-Python timings.
+[Packed scalar execution report](V58_PACKED_SCALAR.md)

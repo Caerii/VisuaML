@@ -1,0 +1,21 @@
+{
+  "checks": [
+    "add",
+    "subtract",
+    "signed less",
+    "signed greater",
+    "zero",
+    "multiply column invariant"
+  ],
+  "finite_carry_tables": {
+    "add": 4,
+    "multiply": 64
+  },
+  "multiply_retained_monomials": 528,
+  "solver": "4.15.3",
+  "source": {
+    "branch": "research/v58-packed-scalar",
+    "commit": "2777c3521b4dc2ff3199bd22f57ecd682b16d495",
+    "tree": "03dc4a931431802d0c65572a91f1f3a607a2183a"
+  }
+}
