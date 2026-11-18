@@ -11,6 +11,7 @@ import json
 import math
 from pathlib import Path
 
+import pytest
 from visuaml.compiler_lab.wasm_control_flow_v51 import (
     ControlFuelExhausted,
     decode_control,
@@ -93,5 +94,5 @@ def test_all_gcd_witnesses_and_original_host_control_traces_replay():
     assert {x["input_i32"] for x in report["sampled_complete_control_traces"]} == (
         {0,1,12,17}
     )
-    with __import__("pytest").raises(ControlFuelExhausted):
+    with pytest.raises(ControlFuelExhausted):
         execute_control(program, (1 << 31)-1, fuel=60)
