@@ -30,7 +30,7 @@ from visuaml.compiler_lab.neural_microstep_v58 import (
     construct_microstep_weights,
 )
 from visuaml.compiler_lab.neural_microstep_executor_v58 import (
-    execute_microstep_control,
+    PreparedMicrostepProgram, execute_microstep_control,
 )
 from visuaml.compiler_lab.neural_operand_storage_v55 import (
     fixed_operand_weights,
@@ -93,6 +93,8 @@ def execute(engine: str, program, x: int, **kwargs):
             program, x, fuel=1500, **kwargs,
         )
     if engine == "v58":
+        if kwargs.pop("prepared", False):
+            return PreparedMicrostepProgram(program, **kwargs).run(x, fuel=500)
         return execute_microstep_control(
             program, x, fuel=500, **kwargs,
         )
@@ -156,7 +158,7 @@ def mutate(attack: Attack, program) -> dict:
     raise ValueError("Unknown mutation")
 
 
-def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False, use_indexed_pc: bool = False) -> dict:
+def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False, use_indexed_pc: bool = False, prepared: bool = False) -> dict:
     program = countdown() if attack.source == "countdown" else generated(2)
     argument = 4 if attack.source == "countdown" else -17
     options = {"use_compiled_alu": True} if use_compiled_alu and attack.engine == "v58" else {}
@@ -166,6 +168,11 @@ def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_stat
         options["use_compact_routing"] = True
     if use_indexed_pc and attack.engine == "v58":
         options["use_indexed_pc"] = True
+    if prepared and attack.engine == "v58":
+        options = {
+            "prepared": True, "use_compiled_alu": use_compiled_alu,
+            "use_fused_state": use_fused_state,
+        }
     baseline = execute(attack.engine, program, argument, **options)
     if not any(
         row["opcode"] == attack.opcode_activated for row in baseline.trace
@@ -213,9 +220,10 @@ def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_stat
     }
 
 
-def campaign(*, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False, use_indexed_pc: bool = False) -> dict:
+def campaign(*, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False, use_indexed_pc: bool = False, prepared: bool = False) -> dict:
     cases = [run_attack(attack, use_compiled_alu=use_compiled_alu, use_fused_state=use_fused_state,
-                        use_compact_routing=use_compact_routing, use_indexed_pc=use_indexed_pc) for attack in ATTACKS]
+                        use_compact_routing=use_compact_routing, use_indexed_pc=use_indexed_pc,
+                        prepared=prepared) for attack in ATTACKS]
     return {
         "schema": SCHEMA,
         "injected_faults": len(cases),
@@ -241,7 +249,10 @@ def main() -> None:
     parser.add_argument("--fused-state", action="store_true")
     parser.add_argument("--compact-routing", action="store_true")
     parser.add_argument("--indexed-pc", action="store_true")
+    parser.add_argument("--prepared", action="store_true")
     args = parser.parse_args()
+    if args.prepared and not args.indexed_pc:
+        parser.error("--prepared requires --indexed-pc")
     if args.indexed_pc and not args.compact_routing:
         parser.error("Indexed PC requires --compact-routing")
     root = Path(__file__).resolve().parents[3]
@@ -253,7 +264,10 @@ def main() -> None:
     if git("status", "--porcelain", "--untracked-files=normal"):
         parser.error("Fault evidence requires a clean Git worktree")
     report = campaign(use_compiled_alu=args.compiled_alu, use_fused_state=args.fused_state,
-                      use_compact_routing=args.compact_routing, use_indexed_pc=args.indexed_pc)
+                      use_compact_routing=args.compact_routing, use_indexed_pc=args.indexed_pc,
+                      prepared=args.prepared)
+    if args.prepared:
+        report["v58_prepared"] = True
     if args.indexed_pc:
         report["v58_indexed_pc"] = True
     if args.compact_routing:
