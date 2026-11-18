@@ -184,3 +184,11 @@ cost to operand transitions. All 3,387 states and 197 witness results
 matched the reference. Four pytest workers reduced complete-suite wall
 time from 239 s to 86 s with the same 1,198 passes and 20 skips.
 [Compiled ALU and test throughput report](V58_COMPILED_ALU.md)
+
+## v58 fused state contractions
+
+Factoring the stack and local equations reached 1.59× traced and 1.67×
+untraced paired speedups against the compiled-ALU path. Full trace
+hashes matched all 3,387 archived states, and the original ten fault
+interventions remained effective.
+[Fused state benchmark](V58_FUSED_STATE.md)

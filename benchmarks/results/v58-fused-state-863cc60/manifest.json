@@ -1,0 +1,51 @@
+{
+  "artifacts": {
+    "backend.log.gz": {
+      "bytes": 1329,
+      "sha256": "b7955935a4c0df94780a1937b78a73ced26d22441054bfb3bddb0ec36e335baf",
+      "uncompressed_sha256": "bb86efbee3f907b2243faed32745940642914b2bafbb8052d442ad71757a04c7"
+    },
+    "faults.json": {
+      "bytes": 6782,
+      "sha256": "3812fdd8530033fc29844339166bf06921561cfe394117a3b300bd11a143541c"
+    },
+    "fused.json.gz": {
+      "bytes": 71691,
+      "sha256": "16015277a7234f62d7c8b59405cea29707da8e9c6284affcedabf0e6b2696d25",
+      "uncompressed_sha256": "07c66fab38b9aaf187b61d9a1a502f3a892ee8ab1f934ecea795825cf0bfb97b"
+    }
+  },
+  "compared_states": 3387,
+  "paired_modes": {
+    "no_trace": {
+      "faster_cases": 187,
+      "geomean_speedup": 1.6682193853552019,
+      "medians_ns": [
+        13695586,
+        8170723
+      ],
+      "worst_regression": 1.6438135020880058
+    },
+    "trace": {
+      "faster_cases": 191,
+      "geomean_speedup": 1.5854707442142832,
+      "medians_ns": [
+        14962249,
+        9285914
+      ],
+      "worst_regression": 1.730466781063032
+    }
+  },
+  "reference": {
+    "baseline": false,
+    "commit": "b41a9ff88af03ab3fa7e609db12aadd500bc505c",
+    "tree": "46d15800c46b6360f97a567ec9711d2bd53a43a3"
+  },
+  "schema": "visuaml.fused-state-experiment.v58",
+  "source": {
+    "baseline": false,
+    "commit": "863cc6050753699af51365b8a7ad9ba4003ebbdb",
+    "tree": "b3f4ddd8ab3a874c72448bd1303c7847acfe1da9"
+  },
+  "witnesses": 197
+}
