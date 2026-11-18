@@ -3,6 +3,14 @@
 #include <cstddef>
 #include <type_traits>
 
+#if defined(__x86_64__) && (defined(__GNUC__) || defined(__clang__))
+#define VISUAML_AVX2 1
+#define VISUAML_INLINE inline __attribute__((always_inline))
+#else
+#define VISUAML_AVX2 0
+#define VISUAML_INLINE inline
+#endif
+
 namespace {
 constexpr int width = 32;
 
@@ -197,7 +205,7 @@ double sum(const double* values, std::size_t count) {
 }
 // Canonical carry reduction gives arithmetic modulo 2^32. Flipping the
 // sign bit maps signed two's-complement ordering to unsigned ordering.
-void packed_candidates(std::uint32_t left, std::uint32_t right, std::uint32_t* values) {
+VISUAML_INLINE void packed_candidates(std::uint32_t left, std::uint32_t right, std::uint32_t* values) {
     constexpr std::uint32_t sign = std::uint32_t{1} << 31;
     values[0] = left + right;
     values[1] = left - right;
@@ -211,8 +219,68 @@ std::uint32_t masked_word(std::uint32_t word, double bit) {
     return word & (std::uint32_t{0} - static_cast<std::uint32_t>(bit));
 }
 
+bool any_word(std::uint32_t word) {
+    return word != 0;
+}
+
+#if VISUAML_AVX2
+constexpr std::size_t lane_count = 8;
+struct LaneWord {
+    std::uint32_t values[lane_count]{};
+
+    LaneWord() = default;
+    explicit LaneWord(std::uint32_t value) {
+        for (auto& lane : values) {
+            lane = value;
+        }
+    }
+};
+
+VISUAML_INLINE LaneWord operator|(const LaneWord& left, const LaneWord& right) {
+    LaneWord result;
+    for (std::size_t i = 0; i < lane_count; ++i) {
+        result.values[i] = left.values[i] | right.values[i];
+    }
+    return result;
+}
+
+VISUAML_INLINE LaneWord& operator|=(LaneWord& left, const LaneWord& right) {
+    return left = left | right;
+}
+
+VISUAML_INLINE LaneWord operator&(const LaneWord& left, const LaneWord& right) {
+    LaneWord result;
+    for (std::size_t i = 0; i < lane_count; ++i) {
+        result.values[i] = left.values[i] & right.values[i];
+    }
+    return result;
+}
+
+VISUAML_INLINE LaneWord masked_word(const LaneWord& word, double bit) {
+    return word & LaneWord(std::uint32_t{0} - static_cast<std::uint32_t>(bit));
+}
+
+VISUAML_INLINE bool any_word(const LaneWord& word) {
+    std::uint32_t combined = 0;
+    for (auto lane : word.values) {
+        combined |= lane;
+    }
+    return combined != 0;
+}
+
+VISUAML_INLINE void packed_candidates(const LaneWord& left, const LaneWord& right, LaneWord* out) {
+    for (std::size_t i = 0; i < lane_count; ++i) {
+        std::uint32_t candidates[alu_count];
+        packed_candidates(left.values[i], right.values[i], candidates);
+        for (int candidate = 0; candidate < alu_count; ++candidate) {
+            out[candidate].values[i] = candidates[candidate];
+        }
+    }
+}
+#endif
+
 template <typename Word>
-constexpr bool is_packed = std::is_same_v<Word, std::uint32_t>;
+constexpr bool is_packed = !std::is_same_v<Word, double>;
 
 template <typename Word>
 constexpr std::size_t word_stride = is_packed<Word> ? 1 : width;
@@ -220,7 +288,7 @@ constexpr std::size_t word_stride = is_packed<Word> ? 1 : width;
 // The caller supplies an admitted active prefix and its depth. The
 // transition preserves that invariant on every successful microstep.
 template <typename Word>
-int data_microstep_at_depth(
+VISUAML_INLINE int data_microstep_at_depth(
         std::size_t pc, std::size_t stack_size, std::size_t locals_size,
         const double* rows, const double* fixed, std::size_t& depth, Word* cells, Word* locals) {
     constexpr auto stride = word_stride<Word>;
@@ -335,16 +403,16 @@ int data_microstep_at_depth(
     if constexpr (is_packed<Word>) {
         const auto write_value = masked_word(*top, row[set] * first + row[tee]);
         bank_word[0] = masked_word(*local, 1.0 - local_mask) | masked_word(write_value, local_mask);
-        std::uint32_t alu_value = 0;
+        Word alu_value{};
         for (int j = 0; j < alu_count; ++j) {
             alu_value |= masked_word(candidates[j], alu_gate[j]);
         }
-        const auto literal = masked_word(static_cast<std::uint32_t>(row[immediate]), sources[0]);
+        const auto literal = masked_word(static_cast<Word>(static_cast<std::uint32_t>(row[immediate])), sources[0]);
         const auto read = masked_word(*local, sources[1]);
         const auto computed = masked_word(alu_value, sources[2]);
         // Independent source gates may overlap under an altered decoder.
         // Preserve the float path's binary-output trap before its arity check.
-        if (((literal & read) | ((literal | read) & computed)) != 0) {
+        if (any_word((literal & read) | ((literal | read) & computed))) {
             return micro_binary;
         }
         value[0] = literal | read | computed;
@@ -377,7 +445,7 @@ int data_microstep_at_depth(
     // gates clear precisely the slots that left the active prefix.
     const auto next_depth = after_second + static_cast<std::size_t>(push_expected);
     for (std::size_t i = next_depth * stride; i < depth * stride; ++i) {
-        cells[i] = 0.0;
+        cells[i] = Word{};
     }
     if (push_expected) {
         for (std::size_t i = 0; i < stride; ++i) {
@@ -394,11 +462,14 @@ int data_microstep_at_depth(
 
 // Keep the signed i32 representation independent of implementation-defined
 // signed conversions when the high bit is set.
-std::int32_t decode_word(const std::uint32_t* value) {
-    const auto word = *value;
-    const auto signed_word = static_cast<std::int64_t>(word)
+std::int32_t signed_word(std::uint32_t word) {
+    const auto converted = static_cast<std::int64_t>(word)
         - (static_cast<std::int64_t>(word >> 31) << 32);
-    return static_cast<std::int32_t>(signed_word);
+    return static_cast<std::int32_t>(converted);
+}
+
+std::int32_t decode_word(const std::uint32_t* value) {
+    return signed_word(*value);
 }
 
 std::int32_t decode_word(const double* bits) {
@@ -406,7 +477,7 @@ std::int32_t decode_word(const double* bits) {
     for (int i = 0; i < width; ++i) {
         word |= static_cast<std::uint32_t>(bits[i]) << i;
     }
-    return decode_word(&word);
+    return signed_word(word);
 }
 
 } // namespace
@@ -528,6 +599,59 @@ int prepared_loop(
     return fuel_exhausted;
 }
 
+#if VISUAML_AVX2
+__attribute__((target("avx2")))
+bool prepared_avx2(
+        const std::int32_t* arguments, const std::int32_t* fuels,
+        std::size_t count, std::size_t terminal, const double* rows, const double* fixed,
+        const std::int32_t* targets, const double* guards, const double* guard_weights,
+        const double* path_weights, std::int32_t* result, std::int32_t* statuses) {
+    for (std::size_t i = 0; i < lane_count; ++i) {
+        if (static_cast<std::size_t>(fuels[i]) < count) {
+            return false;
+        }
+    }
+    LaneWord cells[prepared_stack_size], locals[prepared_locals_size];
+    for (std::size_t i = 0; i < lane_count; ++i) {
+        locals[0].values[i] = static_cast<std::uint32_t>(arguments[i]);
+    }
+    std::size_t depth = 0, pc = 0;
+    for (std::size_t tick = 0; tick < count; ++tick) {
+        if (pc >= count || pc == terminal || targets[2 * pc] < 0) {
+            return false;
+        }
+        const auto flags = guards + 3 * pc;
+        // Straight-line rows are independent of the input condition. Keep
+        // live route-gain evaluation, and replay unsupported rows scalar.
+        if (flags[1] != 0.0 || flags[2] != 0.0) {
+            return false;
+        }
+        double route[5];
+        if (route_from_zero(pc, 0.0, targets, guards, guard_weights, path_weights, route)) {
+            return false;
+        }
+        const auto next = static_cast<std::size_t>(route[0]);
+        if (pc == count - 1) {
+            if (depth != 1 || next != terminal) {
+                return false;
+            }
+            for (std::size_t i = 0; i < lane_count; ++i) {
+                result[2 * i] = signed_word(cells[0].values[i]);
+                result[2 * i + 1] = static_cast<std::int32_t>(tick + 1);
+                statuses[i] = ok;
+            }
+            return true;
+        }
+        if (data_microstep_at_depth(pc, prepared_stack_size, prepared_locals_size,
+                                    rows, fixed, depth, cells, locals)) {
+            return false;
+        }
+        pc = next;
+    }
+    return false;
+}
+#endif
+
 } // namespace
 
 extern "C" int visuaml_prepared_loop(
@@ -542,21 +666,48 @@ extern "C" int visuaml_prepared_loop(
                          result, trace_states, trace_routes);
 }
 
+extern "C" bool visuaml_prepared_simd_available() {
+#if VISUAML_AVX2
+    return __builtin_cpu_supports("avx2") != 0;
+#else
+    return false;
+#endif
+}
+
 extern "C" void visuaml_prepared_batch(
         const std::int32_t* arguments, const std::int32_t* fuels, std::size_t size,
         std::size_t count, std::size_t terminal, std::size_t visible_locals, std::size_t trace_stride,
         const double* rows, const double* fixed, const std::int32_t* targets, const double* guards,
         const double* guard_weights, const double* path_weights, const double* and_weight,
-        std::int32_t* results, std::int32_t* statuses, std::int32_t* trace_states, double* trace_routes, bool packed) {
+        std::int32_t* results, std::int32_t* statuses, std::int32_t* trace_states, double* trace_routes, bool packed, bool simd) {
     auto loop = packed ? prepared_loop<std::uint32_t> : prepared_loop<double>;
     const auto state_stride = trace_stride * (2 + prepared_stack_size + visible_locals);
     const auto route_stride = trace_stride * 5;
-    for (std::size_t i = 0; i < size; ++i) {
+    std::size_t i = 0;
+    const auto scalar = [&](std::size_t i) {
         // Loop state is invocation-local, including when a neighboring input traps.
         statuses[i] = loop(
             arguments[i], fuels[i], count, terminal, visible_locals, rows, fixed,
             targets, guards, guard_weights, path_weights, and_weight, results + 2 * i,
             trace_states ? trace_states + i * state_stride : nullptr,
             trace_routes ? trace_routes + i * route_stride : nullptr);
+    };
+#if VISUAML_AVX2
+    if (simd && packed && !trace_states && visuaml_prepared_simd_available()) {
+        for (; size - i >= lane_count; i += lane_count) {
+            if (!prepared_avx2(arguments + i, fuels + i, count, terminal, rows, fixed,
+                               targets, guards, guard_weights, path_weights,
+                               results + 2 * i, statuses + i)) {
+                for (std::size_t lane = 0; lane < lane_count; ++lane) {
+                    scalar(i + lane);
+                }
+            }
+        }
+    }
+#else
+    (void)simd;
+#endif
+    for (; i < size; ++i) {
+        scalar(i);
     }
 }

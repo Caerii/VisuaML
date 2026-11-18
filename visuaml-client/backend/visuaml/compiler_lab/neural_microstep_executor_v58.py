@@ -259,6 +259,7 @@ class PreparedMicrostepProgram:
     native microstep binds these same rows and coefficients to one C++ call.
     The native loop also runs live PC routing in that call for the full program.
     The packed scalar mode uses uint32 words for the native loop's binary state.
+    Optional AVX2 SIMD processes groups of eight eligible untraced inputs.
     """
 
     def __init__(
@@ -268,6 +269,7 @@ class PreparedMicrostepProgram:
         use_native_microstep: bool = False,
         use_native_loop: bool = False,
         use_packed_scalar: bool = False,
+        use_packed_simd: bool = False,
         tokens: ControlRouteTokens | None = None,
         program_tokens: ProgramMicroopTokens | None = None,
         pc_fixed: ControlRouterWeights | None = None,
@@ -278,6 +280,10 @@ class PreparedMicrostepProgram:
         local_fixed: LocalBankWeights | None = None,
         operand_fixed: OperandWeights | None = None,
     ):
+        if type(use_packed_simd) is not bool:
+            raise MicrostepAdmissionError("use_packed_simd must be a boolean")
+        if use_packed_simd and not use_packed_scalar:
+            raise MicrostepAdmissionError("Packed SIMD requires use_packed_scalar=True")
         if type(use_packed_scalar) is not bool:
             raise MicrostepAdmissionError("use_packed_scalar must be a boolean")
         if use_packed_scalar and not use_native_loop:
@@ -299,7 +305,8 @@ class PreparedMicrostepProgram:
         if use_native_microstep or use_native_loop:
             native = _NativeMicrostep(
                 inputs.rows, inputs.microstep_fixed, inputs.operand_fixed,
-                inputs.alu_fixed, inputs.bit_fixed, inputs.local_fixed, packed=use_packed_scalar,
+                inputs.alu_fixed, inputs.bit_fixed, inputs.local_fixed,
+                packed=use_packed_scalar, simd=use_packed_simd,
             )
             if use_native_loop:
                 native.bind_loop(inputs.program, inputs.compact)

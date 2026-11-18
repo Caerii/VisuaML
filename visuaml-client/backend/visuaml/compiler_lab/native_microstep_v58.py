@@ -60,7 +60,7 @@ def _tensors(weights, layout, error, message):
 class _NativeMicrostep:
     """Internal gate for owned operand and local buffers from the prepared executor."""
 
-    def __init__(self, rows, micro, operand, alu, bits, local, *, packed=False):
+    def __init__(self, rows, micro, operand, alu, bits, local, *, packed=False, simd=False):
         if (EFFECTS, LOCAL_MODES, ALU_OPS, ACTIONS, WIDTH) != _LAYOUT:
             raise RuntimeError("Incompatible v58 native data gate layout")
         if not isinstance(micro, MicrostepWeights):
@@ -92,6 +92,7 @@ class _NativeMicrostep:
         const = OPCODES.index("i32.const")
         data = np.array([name in DATA_OPS for name in OPCODES], dtype=np.float64)
         self._packed = packed
+        self._simd = simd
         powers = np.ldexp(np.ones(WIDTH), np.arange(WIDTH)) if packed else None
         table = []
         for row in rows:
@@ -193,7 +194,7 @@ class _NativeMicrostep:
             arguments.ctypes.data, limits.ctypes.data, size,
             count, TERMINAL, self._visible_locals, stride,
             *self._pointers, *self._router._pointers,
-            results.ctypes.data, statuses.ctypes.data, state_pointer, route_pointer, self._packed,
+            results.ctypes.data, statuses.ctypes.data, state_pointer, route_pointer, self._packed, self._simd,
         )
         for i, (status, (value, steps)) in enumerate(zip(statuses.tolist(), results.tolist(), strict=True)):
             if status:

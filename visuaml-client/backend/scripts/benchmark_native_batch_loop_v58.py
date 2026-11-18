@@ -19,9 +19,11 @@ PRIOR = "benchmarks/results/v58-native-loop-16c2814/runtime-1.json.gz"
 CONTROL = {"block", "loop", "if", "else", "br", "br_if", "return"}
 
 
-def collect(root, repeats, compare_packed=False):
+def collect(root, repeats, compare_packed=False, compare_simd=False):
     identity = git_identity(root)
     kernel = compiled_alu()
+    if compare_simd and not kernel.prepared_simd_available():
+        raise RuntimeError("SIMD benchmarking requires AVX2 support")
     prior = json.loads(gzip.decompress((root / PRIOR).read_bytes()))
     reference = {(row["program"], case["input"]): case
                  for row in prior["rows"] for case in row["cases"]}
@@ -30,18 +32,24 @@ def collect(root, repeats, compare_packed=False):
     engine = wasmtime.Engine()
     witnesses, oracles = {}, {}
     for work in corpus:
-        session = PreparedMicrostepProgram(work.program, use_native_loop=True)
+        session = PreparedMicrostepProgram(work.program, use_native_loop=True, use_packed_scalar=compare_simd)
         store = wasmtime.Store(engine)
         module = wasmtime.Module(engine, encode_control(work.program))
         wasm = wasmtime.Instance(store, module, []).exports(store)["run"]
         candidate = (
-            PreparedMicrostepProgram(work.program, use_native_loop=True, use_packed_scalar=True)
-            if compare_packed else session
+            PreparedMicrostepProgram(work.program, use_native_loop=True, use_packed_scalar=True,
+                                     use_packed_simd=compare_simd)
+            if compare_packed or compare_simd else session
         )
         batch = candidate.run_many(work.arguments)
+        if compare_simd:
+            # Force full AVX2 groups even for fixtures with few witnesses.
+            inputs = work.arguments * 8
+            if candidate.run_many(inputs, capture_trace=False) != session.run_many(inputs, capture_trace=False):
+                raise AssertionError((work.name, "SIMD group differs from scalar"))
         oracles[work.name] = store, wasm
         for argument, result in zip(work.arguments, batch, strict=True):
-            if compare_packed and result != candidate.run(argument):
+            if (compare_packed or compare_simd) and result != candidate.run(argument):
                 raise AssertionError((work.name, argument, "packed single and batch disagree"))
             old = reference[work.name, argument]
             if not (result == session.run(argument) and result.result_i32 == wasm(store, argument)
@@ -56,11 +64,16 @@ def collect(root, repeats, compare_packed=False):
     selected = ordered[0], ordered[len(ordered) // 2], ordered[-1]
     rows = []
     for work in selected:
-        def prepare(packed=False):
-            return PreparedMicrostepProgram(work.program, use_native_loop=True, use_packed_scalar=packed)
+        def prepare(packed=False, simd=False):
+            return PreparedMicrostepProgram(work.program, use_native_loop=True, use_packed_scalar=packed,
+                                            use_packed_simd=simd)
 
-        factories = ({"float64": prepare, "packed": partial(prepare, True)} if compare_packed
-                     else {"individual": prepare, "batch": prepare})
+        if compare_simd:
+            factories = {"packed": partial(prepare, True), "simd": partial(prepare, True, True)}
+        elif compare_packed:
+            factories = {"float64": prepare, "packed": partial(prepare, True)}
+        else:
+            factories = {"individual": prepare, "batch": prepare}
         sessions = {name: factory() for name, factory in factories.items()}
         for size in ((1, 32, 1024) if compare_packed else SIZES):
             arguments = tuple(work.arguments[i % len(work.arguments)] for i in range(size))
@@ -71,13 +84,13 @@ def collect(root, repeats, compare_packed=False):
                 def batch(prepared):
                     return prepared.run_many(arguments, capture_trace=capture)
 
-                if compare_packed:
+                if compare_packed or compare_simd:
                     def execute(prepared):
                         if size == 1:
                             return prepared.run(arguments[0], capture_trace=capture)
                         return batch(prepared)
 
-                    actions = {"float64": execute, "packed": execute}
+                    actions = dict.fromkeys(factories, execute)
                 else:
                     actions = {"individual": individual, "batch": batch}
                 reference_result, candidate_result = (action(sessions[name]) for name, action in actions.items())
@@ -108,6 +121,7 @@ def collect(root, repeats, compare_packed=False):
         "source": identity, "environment": environment(), "kernel_sha256": kernel.binary_sha256,
         "kernel_source_sha256": kernel.source_sha256, "repeats": repeats,
         **({"compare_packed": True} if compare_packed else {}),
+        **({"compare_simd": True, "avx2_available": True} if compare_simd else {}),
         "reference": PRIOR, "witnesses": len(witnesses), "states": sum(witnesses.values()),
         "rows": rows,
     }
@@ -117,12 +131,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--repeats", type=int, default=5)
-    parser.add_argument("--compare-packed", action="store_true")
+    comparison = parser.add_mutually_exclusive_group()
+    comparison.add_argument("--compare-packed", action="store_true")
+    comparison.add_argument("--compare-simd", action="store_true")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
     if args.output.exists() or args.output.resolve().is_relative_to(root) or args.repeats < 1:
         parser.error("Use a fresh output path outside the checkout and positive repeats")
-    report = collect(root, args.repeats, args.compare_packed)
+    report = collect(root, args.repeats, args.compare_packed, args.compare_simd)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as stream:
         json.dump(report, stream, sort_keys=True, separators=(",", ":"))
