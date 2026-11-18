@@ -141,8 +141,14 @@ def test_same_image_patch_is_identity_and_spatial_effect_is_not_universal():
     output = run.run(["Plus214_Output_0"], {
         "Input3": image, DONOR: stage, MASK: mask,
     })[0]
+    # The independent scalar interpreter and the real ONNX Runtime may
+    # differ in final accumulation roundoff. Preserve numerical parity
+    # without asserting inter-backend bitwise identity.
     assert numerical_parity(baseline, output)["passed"]
-    np.testing.assert_array_equal(baseline, output)
+    original_ort = _session(raw).run(
+        ["Plus214_Output_0"], {"Input3": image}
+    )[0]
+    np.testing.assert_array_equal(original_ort, output)
 
 
 def test_bad_original_bytes_rejected_before_instrumenting_graph():
