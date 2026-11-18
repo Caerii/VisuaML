@@ -1,0 +1,136 @@
+name: v41 analytic neural specialization and manifest-free function extraction
+on:
+  push:
+    branches:
+      - research/v41-analytic-neural-specialization
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/analytic_relu_specialization_v41.py
+      - visuaml-client/backend/scripts/probe_analytic_neural_wasm_v41.py
+      - visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py
+      - visuaml-client/backend/tests/test_analytic_neural_archive_v41.py
+      - benchmarks/analytic_neural_wasm_v41.json
+      - benchmarks/analytic_neural_wasm_v41.origin.json
+      - .github/workflows/analytic-neural-wasm-v41.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/analytic_relu_specialization_v41.py
+      - visuaml-client/backend/scripts/probe_analytic_neural_wasm_v41.py
+      - visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py
+      - visuaml-client/backend/tests/test_analytic_neural_archive_v41.py
+      - benchmarks/analytic_neural_wasm_v41.json
+      - benchmarks/analytic_neural_wasm_v41.origin.json
+      - .github/workflows/analytic-neural-wasm-v41.yml
+permissions:
+  contents: write
+jobs:
+  analytic-neural:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned NumPy, independent WebAssembly engine and package prerequisites
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==2.2.6 pytest==8.4.2 wasmtime==28.0.0 ruff==0.17.5
+      - name: Test analytic neural circuits, manifest-free recovery and adversarial failure modes
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py visuaml-client/backend/tests/test_wasm_state_vm_v40.py visuaml-client/backend/tests/test_wasm_state_archive_v40.py visuaml-client/backend/tests/test_analytic_neural_archive_v41.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/analytic_relu_specialization_v41.py visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py visuaml-client/backend/scripts/probe_analytic_neural_wasm_v41.py
+      - name: Execute real WASM, analytic ReLU circuit, and function recovery over 256 inputs
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          mkdir -p evidence-v41
+          python visuaml-client/backend/scripts/probe_analytic_neural_wasm_v41.py --output evidence-v41/neural-wasm-v41.json
+          python - <<'PY'
+          import json
+          p=json.load(open("evidence-v41/neural-wasm-v41.json"))
+          assert p["complete"] and p["real_wasm_executed"] and p["analytic_neural_weights_executed"]
+          assert p["manifest_free_function_recovered"] and p["checked_inputs"] == 256
+          assert p["outside_domain_counterexample"]["disagree"]
+          assert p["source_program_recovered"] is False
+          assert p["universal_neural_vm"] is False
+          print("Exact bounded neural witnesses", p["checked_inputs"])
+          PY
+      - name: Upload source-bound neural circuit weights and full independent witnesses
+        uses: actions/upload-artifact@v4
+        with:
+          name: analytic-neural-wasm-v41
+          path: evidence-v41/neural-wasm-v41.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Permanently archive passing weight tensors and full WASM/NN transcript on trusted pushes
+        env:
+          PYTHONNOUSERSITE: "1"
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v41-analytic-neural-specialization" ]; then
+            echo "Archive mutation disabled on PR/fork and unrelated branches."
+            exit 0
+          fi
+          if [ -e benchmarks/analytic_neural_wasm_v41.json ] || [ -e benchmarks/analytic_neural_wasm_v41.origin.json ]; then
+            test -f benchmarks/analytic_neural_wasm_v41.json
+            test -f benchmarks/analytic_neural_wasm_v41.origin.json
+            echo "Immutable v41 record already archived; new observations require a new version."
+            exit 0
+          fi
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          original = Path("evidence-v41/neural-wasm-v41.json").read_bytes()
+          record = json.loads(original)
+          assert record["complete"] and record["checked_inputs"] == 256
+          assert record["real_wasm_executed"] and record["analytic_neural_weights_executed"]
+          assert record["manifest_free_function_recovered"]
+          assert not record["source_program_recovered"] and not record["universal_neural_vm"]
+          assert record["outside_domain_counterexample"]["disagree"]
+          assert record["github_checkout_sha"] == os.environ["GITHUB_SHA"]
+          assert all(w["pass"] for w in record["witnesses"])
+          output = Path("benchmarks/analytic_neural_wasm_v41.json")
+          origin = Path("benchmarks/analytic_neural_wasm_v41.origin.json")
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_bytes(original)
+          details = {
+              "schema": "visuaml.analytic-neural-wasm-origin.v41",
+              "source_commit": os.environ["GITHUB_SHA"],
+              "workflow_run_url": (
+                  "https://github.com/" + os.environ["GITHUB_REPOSITORY"]
+                  + "/actions/runs/" + os.environ["GITHUB_RUN_ID"]
+              ),
+              "artifact_name": "analytic-neural-wasm-v41",
+              "raw_sha256": hashlib.sha256(original).hexdigest(),
+              "raw_bytes": len(original),
+              "source_file_sha256": record["source_file_sha256"],
+              "source_wasm_sha256": record["source_wasm_sha256"],
+              "recovered_function_sha256": record["function_sha256"],
+              "independent_wasmtime": True,
+              "domain": record["domain"],
+              "false_claims": {
+                  "source_program_decompiled": False,
+                  "universal_neural_vm": False,
+                  "all_i32_inputs_proved": False
+              },
+              "authentication": "CI-origin metadata and hashes, not a cryptographic signature",
+          }
+          origin.write_text(
+              json.dumps(details, indent=2, sort_keys=True, allow_nan=False) + "\n",
+              encoding="utf-8"
+          )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/analytic_neural_wasm_v41.json benchmarks/analytic_neural_wasm_v41.origin.json
+          git commit -m "v41: preserve independent exact neural/WASM witness and original weights [skip ci]"
+          git push origin "HEAD:refs/heads/research/v41-analytic-neural-specialization"
