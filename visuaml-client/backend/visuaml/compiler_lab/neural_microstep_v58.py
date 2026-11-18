@@ -19,7 +19,7 @@ from .neural_alu_v56 import (
     ALU_OPS, ALUWeights, construct_alu_weights, execute_alu, onehot_alu,
 )
 from .neural_operand_storage_v55 import (
-    ACTIONS, HEIGHTS, OperandState, OperandWeights, fixed_operand_weights,
+    ACTIONS, OperandState, OperandWeights, fixed_operand_weights,
     onehot, step_operands, top_word, validate_operands,
 )
 from .neural_local_bank_v57 import (
