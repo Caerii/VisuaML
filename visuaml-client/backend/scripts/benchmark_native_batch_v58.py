@@ -38,7 +38,7 @@ def _wrapped_source(source: bytes) -> bytes:
     original = parse_section_envelope(source)[-1].payload
     _, first_body = _read_u32(original, 0)
     result = bytearray(MAGIC)
-    for section in parse_section_envelope(wasmtime.wat2wasm(_WRAPPER)):
+    for section in parse_section_envelope(bytes(wasmtime.wat2wasm(_WRAPPER))):
         payload = section.payload
         if section.section_id == 10:
             count, first = _read_u32(payload, 0)
@@ -70,6 +70,17 @@ def _sample(actions, inputs, expected, repeats):
     return {name: summarize_ns(times) for name, times in samples.items()}
 
 
+def _sample_copied(actions, inputs, expected, repeats):
+    samples = {name: [] for name in actions}
+    for trial in range(repeats + 1):
+        for name in (tuple(actions) if trial % 2 == 0 else tuple(reversed(actions))):
+            output, elapsed = _timed(lambda: actions[name](inputs))
+            np.testing.assert_array_equal(output, expected)
+            if trial:
+                samples[name].append(elapsed)
+    return {name: summarize_ns(times) for name, times in samples.items()}
+
+
 def run(root: Path, *, repeats: int) -> dict:
     source = git_identity(root)
     engine = wasmtime.Engine()
@@ -87,6 +98,8 @@ def run(root: Path, *, repeats: int) -> dict:
                 raise AssertionError("Unexpected native cache outcome")
             wrapped, wrapper_ns = _timed(lambda: _wrapped_source(raw))
             module, wasm_compile = _timed(lambda: wasmtime.Module(engine, wrapped))
+            cold_store = wasmtime.Store(engine)
+            _, wasm_instantiate = _timed(lambda: wasmtime.Instance(cold_store, module, []))
             _, wasm_save = _timed(lambda: serialized.write_bytes(module.serialize()))
             store = wasmtime.Store(engine)
             exports, wasm_reload = _timed(
@@ -114,42 +127,62 @@ def run(root: Path, *, repeats: int) -> dict:
                 dtype=np.int32,
             )
             batches = {}
+            copied_batches = {}
+
+            def native_copy(values):
+                buffer = values.copy()
+                warm.run_batch_inplace(buffer)
+                return buffer
+
+            def wasm_copy(values):
+                buffer = memory[:values.size]
+                buffer[:] = values
+                exports["batch"](store, values.size)
+                return buffer.copy()
+
             for size in _SIZES:
                 buffer = np.empty(size, dtype=np.int32)
                 batches[str(size)] = _sample({
                     "native": (buffer, lambda: warm.run_batch_inplace(buffer)),
                     "wasmtime": (memory[:size], lambda: exports["batch"](store, size)),
                 }, inputs[:size], expected[:size], repeats)
+                copied_batches[str(size)] = _sample_copied(
+                    {"native": native_copy, "wasmtime": wasm_copy},
+                    inputs[:size], expected[:size], repeats,
+                )
             rows.append({
                 "name": work.name, "wasm_sha256": warm.source_sha256,
                 "native_binary_sha256": warm.binary_sha256, "compiler": warm.compiler,
                 "native_cold_ns": native_cold, "native_reload_ns": native_reload,
                 "wasmtime_wrapper_ns": wrapper_ns, "wasmtime_compile_ns": wasm_compile,
+                "wasmtime_instantiate_ns": wasm_instantiate,
                 "wasmtime_serialize_ns": wasm_save, "wasmtime_reload_ns": wasm_reload,
-                "batches": batches,
+                "batches": batches, "copied_batches": copied_batches,
             })
     summary = {}
-    for size in _SIZES:
-        per_engine = {
-            engine_name: [
-                row["batches"][str(size)][engine_name]["median_ns"] / size for row in rows
-            ] for engine_name in ("native", "wasmtime")
-        }
-        summary[str(size)] = {
-            "median_ns_per_value": {name: statistics.median(values)
-                                    for name, values in per_engine.items()},
-            "paired_geomean_native_speedup": math.exp(statistics.mean(
-                math.log(wasm / native) for wasm, native in
-                zip(per_engine["wasmtime"], per_engine["native"], strict=True)
-            )),
-            "native_faster_programs": sum(native < wasm for wasm, native in
-                                         zip(per_engine["wasmtime"], per_engine["native"], strict=True)),
-        }
+    for scope in ("batches", "copied_batches"):
+        summary[scope] = {}
+        for size in _SIZES:
+            per_engine = {
+                engine_name: [
+                    row[scope][str(size)][engine_name]["median_ns"] / size for row in rows
+                ] for engine_name in ("native", "wasmtime")
+            }
+            summary[scope][str(size)] = {
+                "median_ns_per_value": {name: statistics.median(values)
+                                        for name, values in per_engine.items()},
+                "paired_geomean_native_speedup": math.exp(statistics.mean(
+                    math.log(wasm / native) for wasm, native in
+                    zip(per_engine["wasmtime"], per_engine["native"], strict=True)
+                )),
+                "native_faster_programs": sum(native < wasm for wasm, native in
+                                             zip(per_engine["wasmtime"], per_engine["native"], strict=True)),
+            }
     return {
         "schema": "visuaml.native-batch-benchmark.v58",
         "source": source, "environment": environment(), "repeats": repeats,
         "summary": summary, "programs": len(rows), "rows": rows,
-        "scope": "Resident in-place buffers, one Python call per batch, reset outside timings. "
+        "scope": "Resident in-place and copied-input/owned-output trials, one engine call per batch. "
                  "Each result was checked against the original scalar Wasmtime module.",
     }
 
