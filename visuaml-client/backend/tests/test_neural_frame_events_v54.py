@@ -72,15 +72,19 @@ def test_corrupted_weights_are_rejected_without_host_fallback():
         )
     broken_gains = fixed.conditional_gains.copy()
     broken_gains[0] = 0.
-    with pytest.raises(EventCircuitError):
-        select_frame_action(
-            decode_opcode_token("if"),
-            conditional_sequential=bit(1),
-            has_else=bit(0),
-            frame_active=bit(0),
-            branch_taken=bit(0),
-            weights=replace(fixed, conditional_gains=broken_gains),
-        )
+    changed = select_frame_action(
+        decode_opcode_token("if"),
+        conditional_sequential=bit(1),
+        has_else=bit(0),
+        frame_active=bit(0),
+        branch_taken=bit(0),
+        weights=replace(fixed, conditional_gains=broken_gains),
+    )
+    assert np.argmax(changed) == ACTIONS.index("retain")
+    assert np.argmax(select_frame_action(
+        decode_opcode_token("if"), conditional_sequential=bit(1),
+        has_else=bit(0), frame_active=bit(0), branch_taken=bit(0),
+    )) == ACTIONS.index("push")
 
 
 def test_malformed_nonbinary_tokens_fail_closed():
