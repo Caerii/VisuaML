@@ -42,9 +42,9 @@ _BINARY_EXPRESSIONS = {
 }
 
 
-def _lower(program: ControlProgram):
+def _lower_ssa(program: ControlProgram):
     """Resolve operand stack and local-register flow into SSA references."""
-    definitions = ["input", "0u"]
+    definitions = [("input", ()), ("i32.const", (0,))]
     locals_ = [0] + [1] * program.local_count
     stack = []
     states = []
@@ -67,21 +67,37 @@ def _lower(program: ControlProgram):
             stack.pop()
         elif kind == "i32.const":
             stack.append(len(definitions))
-            definitions.append(f"{op.immediate & _MASK}u")
+            definitions.append((kind, (op.immediate,)))
         elif kind == "i32.eqz":
             operand = stack.pop()
             stack.append(len(definitions))
-            definitions.append(f"v{operand} == 0u")
+            definitions.append((kind, (operand,)))
         elif kind in _BINARY_EXPRESSIONS:
             right, left = stack.pop(), stack.pop()
             stack.append(len(definitions))
-            definitions.append(_BINARY_EXPRESSIONS[kind].format(left=left, right=right))
+            definitions.append((kind, (left, right)))
         if len(stack) > MAX_STACK:
             raise ControlExecutionTrap("Native specialization found stack overflow")
         states.append((tuple(stack), tuple(locals_)))
     if len(stack) != 1:
         raise ControlExecutionTrap("Final source WASM end needs exactly one i32")
     return definitions, states
+
+
+def _lower(program: ControlProgram):
+    definitions, states = _lower_ssa(program)
+    cpp = []
+    for opcode, operands in definitions:
+        if opcode == "input":
+            expression = "input"
+        elif opcode == "i32.const":
+            expression = f"{operands[0] & _MASK}u"
+        elif opcode == "i32.eqz":
+            expression = f"v{operands[0]} == 0u"
+        else:
+            expression = _BINARY_EXPRESSIONS[opcode].format(left=operands[0], right=operands[1])
+        cpp.append(expression)
+    return cpp, states
 
 
 def _emit(definitions, states):
@@ -154,7 +170,31 @@ def _signed(word):
     return ctypes.c_int32(word).value
 
 
-class NativeSpecialization:
+class _BatchSpecialization:
+    def _validate_call(self, argument, fuel):
+        if type(fuel) is not int or not 1 <= fuel <= MAX_FUEL:
+            raise MicrostepAdmissionError("Invalid v58 execution fuel")
+        if type(argument) is not int or not -(1 << 31) <= argument < (1 << 31):
+            raise BitVMAdmissionError("Expected signed i32 external value")
+        if fuel < len(self._opcodes):
+            raise ControlFuelExhausted("Insufficient fuel for the straight-line program")
+
+    def run(self, argument: int, *, fuel: int = 400) -> int:
+        self._validate_call(argument, fuel)
+        return _signed(self._run(argument & _MASK))
+
+    def run_batch_inplace(self, values: np.ndarray, *, fuel: int = 400) -> None:
+        """Transform a writable, contiguous native-endian i32 vector in place."""
+        self._validate_call(0, fuel)
+        if (not isinstance(values, np.ndarray) or values.dtype != np.int32
+                or values.ndim != 1 or not values.flags.c_contiguous
+                or not values.flags.aligned or not values.flags.writeable
+                or values.size > _MASK):
+            raise BitVMAdmissionError("Expected a writable contiguous i32 vector")
+        self._batch(values.ctypes.data_as(_WORD_POINTER), values.size)
+
+
+class NativeSpecialization(_BatchSpecialization):
     """Process-local compiled program. Cold construction requires a C++17 compiler."""
 
     def __init__(self, source: bytes, *, cache_dir: Path | None = None):
@@ -228,28 +268,6 @@ class NativeSpecialization:
         self._buffer_type = ctypes.c_uint32 * (
             sum(self._stack_sizes) + len(self._opcodes) * self._local_size
         )
-
-    def _validate_call(self, argument, fuel):
-        if type(fuel) is not int or not 1 <= fuel <= MAX_FUEL:
-            raise MicrostepAdmissionError("Invalid v58 execution fuel")
-        if type(argument) is not int or not -(1 << 31) <= argument < (1 << 31):
-            raise BitVMAdmissionError("Expected signed i32 external value")
-        if fuel < len(self._opcodes):
-            raise ControlFuelExhausted("Insufficient fuel for the straight-line program")
-
-    def run(self, argument: int, *, fuel: int = 400) -> int:
-        self._validate_call(argument, fuel)
-        return _signed(self._run(argument & _MASK))
-
-    def run_batch_inplace(self, values: np.ndarray, *, fuel: int = 400) -> None:
-        """Transform a writable, contiguous native-endian i32 vector in place."""
-        self._validate_call(0, fuel)
-        if (not isinstance(values, np.ndarray) or values.dtype != np.int32
-                or values.ndim != 1 or not values.flags.c_contiguous
-                or not values.flags.aligned or not values.flags.writeable
-                or values.size > _MASK):
-            raise BitVMAdmissionError("Expected a writable contiguous i32 vector")
-        self._batch(values.ctypes.data_as(_WORD_POINTER), values.size)
 
     def trace(self, argument: int, *, fuel: int = 400) -> tuple[dict, ...]:
         self._validate_call(argument, fuel)

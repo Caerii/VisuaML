@@ -81,7 +81,9 @@ def _sample_copied(actions, inputs, expected, repeats):
     return {name: summarize_ns(times) for name, times in samples.items()}
 
 
-def run(root: Path, *, repeats: int) -> dict:
+def run(root: Path, *, repeats: int, include_llvm: bool = False) -> dict:
+    if include_llvm:
+        from visuaml.compiler_lab.llvm_specialization_v58 import LlvmSpecialization
     source = git_identity(root)
     engine = wasmtime.Engine()
     rows = []
@@ -96,6 +98,13 @@ def run(root: Path, *, repeats: int) -> dict:
             warm, native_reload = _timed(lambda: NativeSpecialization(raw, cache_dir=cache))
             if native.cache_hit or not warm.cache_hit or native.binary_sha256 != warm.binary_sha256:
                 raise AssertionError("Unexpected native cache outcome")
+            jit_metadata = {}
+            if include_llvm:
+                jit, llvm_compile = _timed(lambda: LlvmSpecialization(raw))
+                jit_metadata = {
+                    "llvm_compile_ns": llvm_compile, "llvm_ir_sha256": jit.ir_sha256,
+                    "llvm_version": jit.llvm_version,
+                }
             wrapped, wrapper_ns = _timed(lambda: _wrapped_source(raw))
             module, wasm_compile = _timed(lambda: wasmtime.Module(engine, wrapped))
             cold_store = wasmtime.Store(engine)
@@ -140,17 +149,34 @@ def run(root: Path, *, repeats: int) -> dict:
                 exports["batch"](store, values.size)
                 return buffer.copy()
 
+            copied_actions = {"native": native_copy, "wasmtime": wasm_copy}
+            if include_llvm:
+                def llvm_copy(values):
+                    result = values.copy()
+                    jit.run_batch_inplace(result)
+                    return result
+
+                copied_actions["llvm"] = llvm_copy
+                for value in edge_inputs:
+                    if jit.run(int(value)) != original(original_store, int(value)):
+                        raise AssertionError("LLVM scalar output disagrees with original WASM")
+
             for size in _SIZES:
                 buffer = np.empty(size, dtype=np.int32)
-                batches[str(size)] = _sample({
+                actions = {
                     "native": (buffer, lambda: warm.run_batch_inplace(buffer)),
                     "wasmtime": (memory[:size], lambda: exports["batch"](store, size)),
-                }, inputs[:size], expected[:size], repeats)
+                }
+                if include_llvm:
+                    llvm_buffer = np.empty(size, dtype=np.int32)
+                    actions["llvm"] = (llvm_buffer, lambda: jit.run_batch_inplace(llvm_buffer))
+                batches[str(size)] = _sample(actions, inputs[:size], expected[:size], repeats)
                 copied_batches[str(size)] = _sample_copied(
-                    {"native": native_copy, "wasmtime": wasm_copy},
+                    copied_actions,
                     inputs[:size], expected[:size], repeats,
                 )
             rows.append({
+                **jit_metadata,
                 "name": work.name, "wasm_sha256": warm.source_sha256,
                 "native_binary_sha256": warm.binary_sha256, "compiler": warm.compiler,
                 "native_cold_ns": native_cold, "native_reload_ns": native_reload,
@@ -166,7 +192,7 @@ def run(root: Path, *, repeats: int) -> dict:
             per_engine = {
                 engine_name: [
                     row[scope][str(size)][engine_name]["median_ns"] / size for row in rows
-                ] for engine_name in ("native", "wasmtime")
+                ] for engine_name in (("native", "wasmtime", "llvm") if include_llvm else ("native", "wasmtime"))
             }
             summary[scope][str(size)] = {
                 "median_ns_per_value": {name: statistics.median(values)
@@ -178,6 +204,11 @@ def run(root: Path, *, repeats: int) -> dict:
                 "native_faster_programs": sum(native < wasm for wasm, native in
                                              zip(per_engine["wasmtime"], per_engine["native"], strict=True)),
             }
+            if include_llvm:
+                summary[scope][str(size)]["paired_geomean_llvm_speedup"] = math.exp(
+                    statistics.mean(math.log(wasm / jit) for wasm, jit in
+                                    zip(per_engine["wasmtime"], per_engine["llvm"], strict=True))
+                )
     return {
         "schema": "visuaml.native-batch-benchmark.v58",
         "source": source, "environment": environment(), "repeats": repeats,
@@ -191,12 +222,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--repeats", type=int, default=15)
+    parser.add_argument("--llvm", action="store_true", help="Include the optional LLVM JIT")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
     output = args.output.resolve()
     if args.repeats < 1 or output.exists() or output.is_relative_to(root):
         parser.error("Use positive repeats and a fresh output path outside the checkout")
-    record = run(root, repeats=args.repeats)
+    record = run(root, repeats=args.repeats, include_llvm=args.llvm)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x") as stream:
         json.dump(record, stream, sort_keys=True)
