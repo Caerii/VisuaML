@@ -205,6 +205,16 @@ def execute_microop_routed_control(
         # how many physical operands the execution path consumes.
         effect = microop.effect
         pop_count = int(effect[2] + effect[3] + 2. * effect[4])
+        # Source semantics are a fail-closed admission oracle only:
+        # they never choose the runtime pop count. A mutated one-hot
+        # decoder cannot silently consume the wrong number of operands.
+        expected_pops = (
+            2 if kind in _BINARY else
+            1 if kind in ("if", "br_if", "drop", "local.set", "i32.eqz")
+            else 0
+        )
+        if pop_count != expected_pops:
+            raise ControlExecutionTrap("Decoded stack effect violates source WASM")
         consumed = tuple(_pop(stack) for _ in range(pop_count))
         produced = None
         depth_before = int(np.argmax(frame_state.depth))
