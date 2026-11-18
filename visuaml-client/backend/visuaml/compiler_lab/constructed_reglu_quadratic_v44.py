@@ -203,3 +203,48 @@ def bundle_fingerprint(net: ConstructedGatedQuadratic) -> str:
     return hashlib.sha256(json.dumps(
         record, sort_keys=True, separators=(",", ":")
     ).encode("utf-8")).hexdigest()
+
+
+def check_real_algebraic_identity() -> dict:
+    """Independently SMT-check two exact-real sign cases of the gated square.
+
+    UNSAT for x>=0 and x<0 proves there is no *real-valued* x violating
+    the ReGLU quadratic identity under the encoded z3.Real semantics.
+    This is not a certificate for floating-point evaluation or i32 overflow.
+    """
+    import z3
+
+    x = z3.Real("gated_input_real")
+    zero = z3.RealVal(0)
+    pos = z3.If(x >= zero, x, zero)
+    neg = z3.If(-x >= zero, -x, zero)
+    square = pos * x + neg * (-x)
+    outcomes = {}
+    for name, condition in (("nonnegative", x >= zero), ("negative", x < zero)):
+        solver = z3.Solver()
+        solver.set(timeout=15000)
+        solver.add(condition, square != x * x)
+        outcome = solver.check()
+        if outcome != z3.unsat:
+            raise GatedConstructionError(
+                f"Exact-real gated square identity not established: {name} {outcome}"
+            )
+        outcomes[name] = str(outcome)
+    negative_control = z3.Solver()
+    negative_control.set(timeout=15000)
+    wrong = pos * x + neg * x
+    negative_control.add(x == -1, wrong != x * x)
+    if negative_control.check() != z3.sat:
+        raise GatedConstructionError("Wrong-sign gated negative control undetected")
+    return {
+        "schema": "visuaml.reglu-exact-real-case-check.v44",
+        "nonnegative_domain_solver": outcomes["nonnegative"],
+        "negative_domain_solver": outcomes["negative"],
+        "negative_control": "sat",
+        "solver": f"Z3 {z3.get_version_string()}",
+        "identity": "relu(x)*x + relu(-x)*(-x) == x*x",
+        "all_real_algebraic_identity_smt_checked": True,
+        "float64_all_real_bitwise_proved": False,
+        "wasm_i32_wrap_equivalence_proved": False,
+        "machine_checked_proof_object": False,
+    }
