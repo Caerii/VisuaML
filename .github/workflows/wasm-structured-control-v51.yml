@@ -7,12 +7,20 @@ on:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/wasm_control_flow_v51.py
       - visuaml-client/backend/tests/test_wasm_control_flow_v51.py
+      - visuaml-client/backend/tests/test_wasm_control_archive_v51.py
+      - benchmarks/wasm_structured_control_v51.json
+      - benchmarks/wasm_structured_control_v51.origin.json
+      - docs/WASM_CONFORMANCE_LEDGER_V51.json
       - visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py
       - .github/workflows/wasm-structured-control-v51.yml
   pull_request:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/wasm_control_flow_v51.py
       - visuaml-client/backend/tests/test_wasm_control_flow_v51.py
+      - visuaml-client/backend/tests/test_wasm_control_archive_v51.py
+      - benchmarks/wasm_structured_control_v51.json
+      - benchmarks/wasm_structured_control_v51.origin.json
+      - docs/WASM_CONFORMANCE_LEDGER_V51.json
       - visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py
       - .github/workflows/wasm-structured-control-v51.yml
 permissions:
@@ -37,8 +45,8 @@ jobs:
           OPENBLAS_NUM_THREADS: "1"
           OMP_NUM_THREADS: "1"
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_wasm_control_flow_v51.py
-          ruff check visuaml-client/backend/visuaml/compiler_lab/wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_flow_v51.py visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py
+          python -m pytest -q visuaml-client/backend/tests/test_wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_archive_v51.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_flow_v51.py visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_archive_v51.py
       - name: Record original source WASM, control traces and independent oracle results
         env:
           PYTHONPATH: visuaml-client/backend
