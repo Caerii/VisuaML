@@ -10,6 +10,7 @@ from visuaml.compiler_lab.pretrained_primitive_candidates_v42 import (
     PrimitiveCandidateError,
     intervention_metrics,
     propose_low_rank,
+    select_compressed_rank,
     tensor_sha256,
 )
 
@@ -85,3 +86,40 @@ def test_full_rank_is_a_numerical_baseline_not_exact_bitwise_certificate():
     assert candidate.retained_spectral_energy > 1 - 1e-12
     assert np.isfinite(candidate.proposed_weight).all()
     np.testing.assert_allclose(candidate.proposed_weight, w, atol=1e-6, rtol=1e-6)
+
+
+def test_full_rank_identity_does_not_count_as_compression():
+    def candidate(rank, *, top1=True, error=0.0):
+        cases = [
+            {
+                "group": group,
+                "numpy": {
+                    "top1_unchanged": top1,
+                    "relative_l2_logit_change": error,
+                },
+            }
+            for group in ("discovery", "heldout")
+            for _ in range(5)
+        ]
+        return {
+            "construction": "truncated-svd",
+            "rank": rank,
+            "witnesses": cases,
+        }
+
+    only_baseline = select_compressed_rank(
+        [candidate(4, top1=False), candidate(10)], full_rank=10
+    )
+    assert only_baseline == {
+        "selected_rank": None,
+        "heldout_pass": False,
+        "compressed_candidate_accepted": False,
+        "full_rank_reconstruction_control_pass": True,
+    }
+    reduced = select_compressed_rank(
+        [candidate(8), candidate(10)], full_rank=10
+    )
+    assert reduced["selected_rank"] == 8
+    assert reduced["compressed_candidate_accepted"] is True
+    with pytest.raises(PrimitiveCandidateError, match="Full-rank"):
+        select_compressed_rank([candidate(8)], full_rank=10)
