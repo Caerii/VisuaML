@@ -1,0 +1,365 @@
+{
+  "artifacts": {
+    "faults.json": {
+      "sha256": "2a1adcbd880fd74af01ea992ccd1e44a49abbb1535f1965cdf3f5cdb3c59ed76",
+      "size_bytes": 6735
+    },
+    "llvm-proof.json": {
+      "sha256": "9e817573144d8b5916778f2688e5d41116353a18083ae23e213c1a4109e2aabf",
+      "size_bytes": 6090
+    },
+    "model.json.gz": {
+      "sha256": "ec3f07331e2aaef697fae623192207e53e2355ace126d32f83417f158974902d",
+      "size_bytes": 4440,
+      "uncompressed_sha256": "73faf2d68b75dbe97c7e6e781f697f26664124ff1dde4a4690b2921404577eae"
+    },
+    "replay.json.gz": {
+      "sha256": "09deaa29767d5a9a41b976c44393e12333f25596ff40f455650a1068663811f2",
+      "size_bytes": 8430,
+      "uncompressed_sha256": "7565317e4786a2458fd5896f5cf30c2182458c18799d78b4b4e850f35c029922"
+    },
+    "run-1.json.gz": {
+      "sha256": "6af16c68ee5c28b32604256cef7aed3249a1cfe3008af56986c0ed713fff4d20",
+      "size_bytes": 38494,
+      "uncompressed_sha256": "046597aa4fd2ffc37d68a7ea81bad68fcdb85c06ecf5a658ca5b66565d88182a"
+    },
+    "run-2.json.gz": {
+      "sha256": "65bfe695d2871de650d3c995adf54cb058d0571a6d916ec2e39bae4db57ce685",
+      "size_bytes": 38588,
+      "uncompressed_sha256": "80b117121be2995ac4922be3718be4eac17ff248f8d2b51798f9f24f2fdd277d"
+    }
+  },
+  "replay": {
+    "programs": 8,
+    "repeats": 3,
+    "source": {
+      "branch": "research/v58-llvm-tiers",
+      "commit": "1b9937d48a6c22453079593f3b0b1a9057a1eb54",
+      "tree": "3f8098a54115c72f3058e20763b6dc363d531577"
+    },
+    "summary": {
+      "cached_bulk": {
+        "median_regret": 1.0,
+        "selected_backend": "native",
+        "selected_wins": 8,
+        "worst_regret": 1.0
+      },
+      "cached_interactive": {
+        "median_regret": 1.0535742242901782,
+        "selected_backend": "wasmtime",
+        "selected_wins": 4,
+        "worst_regret": 2.4435491118377026
+      },
+      "cached_moderate": {
+        "median_regret": 1.0,
+        "selected_backend": "native",
+        "selected_wins": 8,
+        "worst_regret": 1.0
+      },
+      "cold_bulk": {
+        "median_regret": 1.0362130545941546,
+        "selected_backend": "llvm_o1",
+        "selected_wins": 4,
+        "worst_regret": 1.157614355196951
+      },
+      "cold_interactive": {
+        "median_regret": 1.0,
+        "selected_backend": "llvm_o0",
+        "selected_wins": 5,
+        "worst_regret": 1.403841191027285
+      },
+      "cold_moderate": {
+        "median_regret": 1.0408007072111998,
+        "selected_backend": "llvm_o0",
+        "selected_wins": 4,
+        "worst_regret": 2.273295701101645
+      }
+    },
+    "timing_source": {
+      "branch": "research/v58-llvm-tiers",
+      "commit": "c99f6963e95b2182a50e2ecc6dc330c17f19d73f",
+      "tree": "720d6134efc110c7b1d32cdb664cdb90b46842a0"
+    }
+  },
+  "runs": [
+    {
+      "artifact": "run-1.json.gz",
+      "llvm_runtime_initialization_ns": 56160065,
+      "setup_median_ns": {
+        "llvm_compile_ns": 11709892,
+        "llvm_o0_compile_ns": 2336896,
+        "llvm_o1_compile_ns": 11136512,
+        "native_cold_ns": 83189910,
+        "native_reload_ns": 1179431,
+        "wasmtime_compile_ns": 1383545,
+        "wasmtime_instantiate_ns": 84611,
+        "wasmtime_reload_ns": 263914,
+        "wasmtime_serialize_ns": 248054,
+        "wasmtime_wrapper_ns": 289656
+      },
+      "source": {
+        "branch": "research/v58-llvm-tiers",
+        "commit": "c99f6963e95b2182a50e2ecc6dc330c17f19d73f",
+        "tree": "720d6134efc110c7b1d32cdb664cdb90b46842a0"
+      },
+      "summary": {
+        "batches": {
+          "1": {
+            "median_ns_per_value": {
+              "llvm": 4121.0,
+              "llvm_o0": 4032.0,
+              "llvm_o1": 4072.0,
+              "native": 5345.0,
+              "wasmtime": 26825.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 6.499241508930139,
+            "paired_geomean_llvm_o1_speedup": 6.5907383468105785,
+            "paired_geomean_llvm_speedup": 6.474878200739655,
+            "paired_geomean_native_speedup": 4.8964137417460645
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "llvm": 4.13671875,
+              "llvm_o0": 6.4638671875,
+              "llvm_o1": 4.1376953125,
+              "native": 5.302734375,
+              "wasmtime": 25.986328125
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 3.779789603943727,
+            "paired_geomean_llvm_o1_speedup": 6.344693560201282,
+            "paired_geomean_llvm_speedup": 6.350667784115038,
+            "paired_geomean_native_speedup": 4.926600227184139
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "llvm": 0.38653564453125,
+              "llvm_o0": 2.087158203125,
+              "llvm_o1": 0.381103515625,
+              "native": 0.53948974609375,
+              "wasmtime": 3.96697998046875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 1.4713226923227327,
+            "paired_geomean_llvm_o1_speedup": 10.181625859177249,
+            "paired_geomean_llvm_speedup": 10.119080537346822,
+            "paired_geomean_native_speedup": 7.484554042603053
+          },
+          "32": {
+            "median_ns_per_value": {
+              "llvm": 120.125,
+              "llvm_o0": 124.03125,
+              "llvm_o1": 124.375,
+              "native": 162.96875,
+              "wasmtime": 747.09375
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 5.931874175256413,
+            "paired_geomean_llvm_o1_speedup": 6.063011532803098,
+            "paired_geomean_llvm_speedup": 6.087466895396871,
+            "paired_geomean_native_speedup": 4.645098241889298
+          }
+        },
+        "copied_batches": {
+          "1": {
+            "median_ns_per_value": {
+              "llvm": 4460.0,
+              "llvm_o0": 4555.0,
+              "llvm_o1": 4508.0,
+              "native": 5888.0,
+              "wasmtime": 26319.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 5.808213613234521,
+            "paired_geomean_llvm_o1_speedup": 5.9103892169233445,
+            "paired_geomean_llvm_speedup": 5.9884797640651275,
+            "paired_geomean_native_speedup": 4.483498724290147
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "llvm": 4.7216796875,
+              "llvm_o0": 7.0390625,
+              "llvm_o1": 4.76953125,
+              "native": 6.2666015625,
+              "wasmtime": 28.9541015625
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 3.6932339953124096,
+            "paired_geomean_llvm_o1_speedup": 5.941323855454271,
+            "paired_geomean_llvm_speedup": 5.999127678287397,
+            "paired_geomean_native_speedup": 4.653520698513166
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "llvm": 0.52288818359375,
+              "llvm_o0": 2.2191162109375,
+              "llvm_o1": 0.5311279296875,
+              "native": 0.65740966796875,
+              "wasmtime": 4.43096923828125
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 1.549930760553441,
+            "paired_geomean_llvm_o1_speedup": 8.056792157019268,
+            "paired_geomean_llvm_speedup": 8.240349803713588,
+            "paired_geomean_native_speedup": 6.467859649003642
+          },
+          "32": {
+            "median_ns_per_value": {
+              "llvm": 135.90625,
+              "llvm_o0": 141.59375,
+              "llvm_o1": 140.25,
+              "native": 184.3125,
+              "wasmtime": 798.65625
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 5.663938553328744,
+            "paired_geomean_llvm_o1_speedup": 5.809636663524584,
+            "paired_geomean_llvm_speedup": 6.0301730115413354,
+            "paired_geomean_native_speedup": 4.532615522107331
+          }
+        }
+      }
+    },
+    {
+      "artifact": "run-2.json.gz",
+      "llvm_runtime_initialization_ns": 29616370,
+      "setup_median_ns": {
+        "llvm_compile_ns": 11994248,
+        "llvm_o0_compile_ns": 2316058,
+        "llvm_o1_compile_ns": 11744996,
+        "native_cold_ns": 83908747,
+        "native_reload_ns": 1120930,
+        "wasmtime_compile_ns": 1396439,
+        "wasmtime_instantiate_ns": 83039,
+        "wasmtime_reload_ns": 170788,
+        "wasmtime_serialize_ns": 213249,
+        "wasmtime_wrapper_ns": 319892
+      },
+      "source": {
+        "branch": "research/v58-llvm-tiers",
+        "commit": "c99f6963e95b2182a50e2ecc6dc330c17f19d73f",
+        "tree": "720d6134efc110c7b1d32cdb664cdb90b46842a0"
+      },
+      "summary": {
+        "batches": {
+          "1": {
+            "median_ns_per_value": {
+              "llvm": 4144.0,
+              "llvm_o0": 4056.0,
+              "llvm_o1": 4014.0,
+              "native": 5416.0,
+              "wasmtime": 26379.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 6.52676079086562,
+            "paired_geomean_llvm_o1_speedup": 6.527208657269671,
+            "paired_geomean_llvm_speedup": 6.492039991532091,
+            "paired_geomean_native_speedup": 4.8427163305793055
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "llvm": 4.263671875,
+              "llvm_o0": 6.54296875,
+              "llvm_o1": 4.369140625,
+              "native": 5.6279296875,
+              "wasmtime": 26.8798828125
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 4.029705471370191,
+            "paired_geomean_llvm_o1_speedup": 6.503117740687519,
+            "paired_geomean_llvm_speedup": 6.767571642840784,
+            "paired_geomean_native_speedup": 5.006586411855263
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "llvm": 0.39520263671875,
+              "llvm_o0": 2.07098388671875,
+              "llvm_o1": 0.40972900390625,
+              "native": 0.54052734375,
+              "wasmtime": 4.12847900390625
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 1.5308054805649747,
+            "paired_geomean_llvm_o1_speedup": 9.747282381291836,
+            "paired_geomean_llvm_speedup": 10.126288633373141,
+            "paired_geomean_native_speedup": 7.347761482176103
+          },
+          "32": {
+            "median_ns_per_value": {
+              "llvm": 123.71875,
+              "llvm_o0": 126.15625,
+              "llvm_o1": 122.5,
+              "native": 165.6875,
+              "wasmtime": 785.28125
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 6.126106331015995,
+            "paired_geomean_llvm_o1_speedup": 6.307422089805533,
+            "paired_geomean_llvm_speedup": 6.288912067358302,
+            "paired_geomean_native_speedup": 4.649839560816138
+          }
+        },
+        "copied_batches": {
+          "1": {
+            "median_ns_per_value": {
+              "llvm": 4516.0,
+              "llvm_o0": 4549.0,
+              "llvm_o1": 4592.0,
+              "native": 5913.0,
+              "wasmtime": 26637.0
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 6.076529617413428,
+            "paired_geomean_llvm_o1_speedup": 6.114051999511041,
+            "paired_geomean_llvm_speedup": 6.128283266737608,
+            "paired_geomean_native_speedup": 4.601719010090622
+          },
+          "1024": {
+            "median_ns_per_value": {
+              "llvm": 4.853515625,
+              "llvm_o0": 7.1181640625,
+              "llvm_o1": 4.921875,
+              "native": 6.2529296875,
+              "wasmtime": 29.2529296875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 3.849900806302274,
+            "paired_geomean_llvm_o1_speedup": 5.995135964400199,
+            "paired_geomean_llvm_speedup": 6.148294358970705,
+            "paired_geomean_native_speedup": 4.716180042630357
+          },
+          "16384": {
+            "median_ns_per_value": {
+              "llvm": 0.51593017578125,
+              "llvm_o0": 2.24139404296875,
+              "llvm_o1": 0.53173828125,
+              "native": 0.66351318359375,
+              "wasmtime": 4.20281982421875
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 1.539973364382592,
+            "paired_geomean_llvm_o1_speedup": 8.16065007773626,
+            "paired_geomean_llvm_speedup": 8.288670576431482,
+            "paired_geomean_native_speedup": 6.286471058504484
+          },
+          "32": {
+            "median_ns_per_value": {
+              "llvm": 135.03125,
+              "llvm_o0": 143.96875,
+              "llvm_o1": 138.8125,
+              "native": 184.03125,
+              "wasmtime": 832.34375
+            },
+            "native_faster_programs": 35,
+            "paired_geomean_llvm_o0_speedup": 5.8131830241478974,
+            "paired_geomean_llvm_o1_speedup": 5.982678152398131,
+            "paired_geomean_llvm_speedup": 6.060807989950944,
+            "paired_geomean_native_speedup": 4.571580381610331
+          }
+        }
+      }
+    }
+  ],
+  "schema": "visuaml.llvm-tier-experiment.v58"
+}

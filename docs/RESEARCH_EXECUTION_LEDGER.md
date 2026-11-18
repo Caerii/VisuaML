@@ -194,3 +194,11 @@ The optional LLVM path reduced median per-program compilation to
 13–15 ms versus 87–95 ms for C++, with similar large-batch throughput.
 The [LLVM report](V58_LLVM_SPECIALIZATION.md) records first-use setup,
 break-even estimates, scalar proof coverage, and batch replays.
+
+## v58 LLVM tier comparison
+
+O0 reduced initialized compile time to about 2.3 ms at lower warm
+throughput. O1 and O2 remained close. The selection model and direct
+held-out replay recorded both quick wins and cases where the model
+picked a backend more than twice as slow as the measured fastest.
+[LLVM tier report](V58_LLVM_TIERS.md)
