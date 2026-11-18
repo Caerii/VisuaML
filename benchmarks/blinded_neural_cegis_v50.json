@@ -1,0 +1,1225 @@
+{
+  "all_i32_source_candidate_smt_checked": true,
+  "arbitrary_neural_model_decompilation_claimed": false,
+  "black_box_oracle_was_fixed_neural_bit_vm": true,
+  "cubic_outside_grammar_rejected": true,
+  "fixed_bit_weights_sha256": "b852a802e7cdffcdae50a3435b21e228b067fd7a813ab4576431a933aa65f961",
+  "heldout_values_per_program": 16,
+  "limitations": "Black-box behavior and opaque equivalence oracle. Only a small, predeclared polynomial/predicate grammar. Z3 proves source typed i32 semantics against the recovered candidate; finite independent original-Wasm and constructed neural execution witnesses do not formally prove the neural circuit for all 2^32 inputs. No unique historical source, learned transformer decompilation, memory/flow or arbitrary WASM.",
+  "multiple_source_programs_same_behavior_possible": true,
+  "neural_gate_all_i32_equivalence_proved": false,
+  "no_source_passed_into_synthesizer": true,
+  "no_weights_passed_into_synthesizer": true,
+  "numpy_version": "2.2.6",
+  "program_count": 5,
+  "results": [
+    {
+      "candidate": {
+        "a": 1,
+        "b": -3,
+        "c": 7,
+        "kind": "poly",
+        "threshold": 0
+      },
+      "candidate_expression": "(1)*x*x+(-3)*x+(7) mod 2^32",
+      "fixed_weights_not_passed_into_synthesizer": true,
+      "heldout_witnesses": [
+        {
+          "fixed_neural_bit_gate_output": -2147483641,
+          "input_i32": -2147483648,
+          "original_typed_i32": -2147483641,
+          "pass": true,
+          "recompiled_wasmtime": -2147483641,
+          "source_wasmtime": -2147483641
+        },
+        {
+          "fixed_neural_bit_gate_output": -2147483637,
+          "input_i32": 2147483647,
+          "original_typed_i32": -2147483637,
+          "pass": true,
+          "recompiled_wasmtime": -2147483637,
+          "source_wasmtime": -2147483637
+        },
+        {
+          "fixed_neural_bit_gate_output": -2147483643,
+          "input_i32": -2147483647,
+          "original_typed_i32": -2147483643,
+          "pass": true,
+          "recompiled_wasmtime": -2147483643,
+          "source_wasmtime": -2147483643
+        },
+        {
+          "fixed_neural_bit_gate_output": -2147483631,
+          "input_i32": 2147483646,
+          "original_typed_i32": -2147483631,
+          "pass": true,
+          "recompiled_wasmtime": -2147483631,
+          "source_wasmtime": -2147483631
+        },
+        {
+          "fixed_neural_bit_gate_output": 1051655,
+          "input_i32": -1024,
+          "original_typed_i32": 1051655,
+          "pass": true,
+          "recompiled_wasmtime": 1051655,
+          "source_wasmtime": 1051655
+        },
+        {
+          "fixed_neural_bit_gate_output": 1195,
+          "input_i32": -33,
+          "original_typed_i32": 1195,
+          "pass": true,
+          "recompiled_wasmtime": 1195,
+          "source_wasmtime": 1195
+        },
+        {
+          "fixed_neural_bit_gate_output": 997,
+          "input_i32": 33,
+          "original_typed_i32": 997,
+          "pass": true,
+          "recompiled_wasmtime": 997,
+          "source_wasmtime": 997
+        },
+        {
+          "fixed_neural_bit_gate_output": 1045511,
+          "input_i32": 1024,
+          "original_typed_i32": 1045511,
+          "pass": true,
+          "recompiled_wasmtime": 1045511,
+          "source_wasmtime": 1045511
+        },
+        {
+          "fixed_neural_bit_gate_output": 981579785,
+          "input_i32": 1208317069,
+          "original_typed_i32": 981579785,
+          "pass": true,
+          "recompiled_wasmtime": 981579785,
+          "source_wasmtime": 981579785
+        },
+        {
+          "fixed_neural_bit_gate_output": 1382616321,
+          "input_i32": 1234471061,
+          "original_typed_i32": 1382616321,
+          "pass": true,
+          "recompiled_wasmtime": 1382616321,
+          "source_wasmtime": 1382616321
+        },
+        {
+          "fixed_neural_bit_gate_output": -934419799,
+          "input_i32": 921565462,
+          "original_typed_i32": -934419799,
+          "pass": true,
+          "recompiled_wasmtime": -934419799,
+          "source_wasmtime": -934419799
+        },
+        {
+          "fixed_neural_bit_gate_output": 468024203,
+          "input_i32": 1433098879,
+          "original_typed_i32": 468024203,
+          "pass": true,
+          "recompiled_wasmtime": 468024203,
+          "source_wasmtime": 468024203
+        },
+        {
+          "fixed_neural_bit_gate_output": -1011958351,
+          "input_i32": 1390628510,
+          "original_typed_i32": -1011958351,
+          "pass": true,
+          "recompiled_wasmtime": -1011958351,
+          "source_wasmtime": -1011958351
+        },
+        {
+          "fixed_neural_bit_gate_output": -196259635,
+          "input_i32": 205748089,
+          "original_typed_i32": -196259635,
+          "pass": true,
+          "recompiled_wasmtime": -196259635,
+          "source_wasmtime": -196259635
+        },
+        {
+          "fixed_neural_bit_gate_output": 1812883239,
+          "input_i32": -1105761888,
+          "original_typed_i32": 1812883239,
+          "pass": true,
+          "recompiled_wasmtime": 1812883239,
+          "source_wasmtime": 1812883239
+        },
+        {
+          "fixed_neural_bit_gate_output": -355651897,
+          "input_i32": 2033448384,
+          "original_typed_i32": -355651897,
+          "pass": true,
+          "recompiled_wasmtime": -355651897,
+          "source_wasmtime": -355651897
+        }
+      ],
+      "name": "quadratic",
+      "original_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a12011000200020006c200041036c6b41076a0b",
+      "original_wasm_sha256": "9078c1b6b8f3edc0030e3017b9bae5c965752546a4582437236746f5f3611481",
+      "recovered_typed_program_sha256": "691a83a87e0b1edd19c533445b4bc42c8297cd1960086055bc902562e5b2920d",
+      "recovered_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a15011300200020006c41016c2000417d6c6a41076a0b",
+      "recovered_wasm_sha256": "b4060174a074929c2710b731f1d2be8df0fdf3b7f05ae95ff3cc9734cfd5a264",
+      "source_program_not_passed_into_synthesizer": true,
+      "synthesis_report": {
+        "accepted_candidate": {
+          "a": 1,
+          "b": -3,
+          "c": 7,
+          "kind": "poly",
+          "threshold": 0
+        },
+        "accepted_expression": "(1)*x*x+(-3)*x+(7) mod 2^32",
+        "accepted_typed_program_sha256": "691a83a87e0b1edd19c533445b4bc42c8297cd1960086055bc902562e5b2920d",
+        "accepted_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a15011300200020006c41016c2000417d6c6a41076a0b",
+        "accepted_wasm_sha256": "b4060174a074929c2710b731f1d2be8df0fdf3b7f05ae95ff3cc9734cfd5a264",
+        "all_i32_neural_weight_equivalence_proved": false,
+        "all_i32_source_vs_candidate_equivalent": true,
+        "arbitrary_unknown_weight_decompiled": false,
+        "coefficient_limit": 16,
+        "construction_manifest_received_by_synthesizer": false,
+        "grammar": "i32-poly-degree2-smallcoeff-or-signed-predicate.v50",
+        "historical_source_uniquely_recovered": false,
+        "neural_weights_received_by_synthesizer": false,
+        "observed_input_outputs": [
+          {
+            "input_i32": -3,
+            "output_i32": 25
+          },
+          {
+            "input_i32": -2,
+            "output_i32": 17
+          },
+          {
+            "input_i32": -1,
+            "output_i32": 11
+          },
+          {
+            "input_i32": 0,
+            "output_i32": 7
+          },
+          {
+            "input_i32": 1,
+            "output_i32": 5
+          },
+          {
+            "input_i32": 2,
+            "output_i32": 5
+          },
+          {
+            "input_i32": 3,
+            "output_i32": 7
+          }
+        ],
+        "rounds": [
+          {
+            "iteration": 0,
+            "selected_hypothesis": {
+              "a": 1,
+              "b": -3,
+              "c": 7,
+              "kind": "poly",
+              "threshold": 0
+            },
+            "selected_hypothesis_sha256": "7ec398f3ae22f7541cc0234c4403e553ea4902c90faf1c1cc7af8b3be9f0d303",
+            "surviving_candidate_count": 1,
+            "verification": {
+              "all_i32_neural_circuit_proved": false,
+              "all_i32_typed_source_equivalent": true,
+              "candidate_sha256": "7ec398f3ae22f7541cc0234c4403e553ea4902c90faf1c1cc7af8b3be9f0d303",
+              "machine_checked_proof_object": false,
+              "schema": "visuaml.blinded-candidate-i32-smt.v50",
+              "smt_formula_sha256": "13f9f0403fe9ff6fbe35d291c93cf807459b1f9551f538ede8ae7937c1841245",
+              "solver_outcome": "unsat",
+              "source_wasm_sha256": "9078c1b6b8f3edc0030e3017b9bae5c965752546a4582437236746f5f3611481",
+              "unique_original_source_recovered": false,
+              "z3_version": "4.13.4"
+            }
+          }
+        ],
+        "schema": "visuaml.blinded-neural-behavior-synthesis.v50",
+        "source_program_received_by_synthesizer": false
+      }
+    },
+    {
+      "candidate": {
+        "a": 0,
+        "b": 1,
+        "c": 0,
+        "kind": "poly",
+        "threshold": 0
+      },
+      "candidate_expression": "(0)*x*x+(1)*x+(0) mod 2^32",
+      "fixed_weights_not_passed_into_synthesizer": true,
+      "heldout_witnesses": [
+        {
+          "fixed_neural_bit_gate_output": -2147483648,
+          "input_i32": -2147483648,
+          "original_typed_i32": -2147483648,
+          "pass": true,
+          "recompiled_wasmtime": -2147483648,
+          "source_wasmtime": -2147483648
+        },
+        {
+          "fixed_neural_bit_gate_output": 2147483647,
+          "input_i32": 2147483647,
+          "original_typed_i32": 2147483647,
+          "pass": true,
+          "recompiled_wasmtime": 2147483647,
+          "source_wasmtime": 2147483647
+        },
+        {
+          "fixed_neural_bit_gate_output": -2147483647,
+          "input_i32": -2147483647,
+          "original_typed_i32": -2147483647,
+          "pass": true,
+          "recompiled_wasmtime": -2147483647,
+          "source_wasmtime": -2147483647
+        },
+        {
+          "fixed_neural_bit_gate_output": 2147483646,
+          "input_i32": 2147483646,
+          "original_typed_i32": 2147483646,
+          "pass": true,
+          "recompiled_wasmtime": 2147483646,
+          "source_wasmtime": 2147483646
+        },
+        {
+          "fixed_neural_bit_gate_output": -1024,
+          "input_i32": -1024,
+          "original_typed_i32": -1024,
+          "pass": true,
+          "recompiled_wasmtime": -1024,
+          "source_wasmtime": -1024
+        },
+        {
+          "fixed_neural_bit_gate_output": -33,
+          "input_i32": -33,
+          "original_typed_i32": -33,
+          "pass": true,
+          "recompiled_wasmtime": -33,
+          "source_wasmtime": -33
+        },
+        {
+          "fixed_neural_bit_gate_output": 33,
+          "input_i32": 33,
+          "original_typed_i32": 33,
+          "pass": true,
+          "recompiled_wasmtime": 33,
+          "source_wasmtime": 33
+        },
+        {
+          "fixed_neural_bit_gate_output": 1024,
+          "input_i32": 1024,
+          "original_typed_i32": 1024,
+          "pass": true,
+          "recompiled_wasmtime": 1024,
+          "source_wasmtime": 1024
+        },
+        {
+          "fixed_neural_bit_gate_output": 1208317069,
+          "input_i32": 1208317069,
+          "original_typed_i32": 1208317069,
+          "pass": true,
+          "recompiled_wasmtime": 1208317069,
+          "source_wasmtime": 1208317069
+        },
+        {
+          "fixed_neural_bit_gate_output": 1234471061,
+          "input_i32": 1234471061,
+          "original_typed_i32": 1234471061,
+          "pass": true,
+          "recompiled_wasmtime": 1234471061,
+          "source_wasmtime": 1234471061
+        },
+        {
+          "fixed_neural_bit_gate_output": 921565462,
+          "input_i32": 921565462,
+          "original_typed_i32": 921565462,
+          "pass": true,
+          "recompiled_wasmtime": 921565462,
+          "source_wasmtime": 921565462
+        },
+        {
+          "fixed_neural_bit_gate_output": 1433098879,
+          "input_i32": 1433098879,
+          "original_typed_i32": 1433098879,
+          "pass": true,
+          "recompiled_wasmtime": 1433098879,
+          "source_wasmtime": 1433098879
+        },
+        {
+          "fixed_neural_bit_gate_output": 1390628510,
+          "input_i32": 1390628510,
+          "original_typed_i32": 1390628510,
+          "pass": true,
+          "recompiled_wasmtime": 1390628510,
+          "source_wasmtime": 1390628510
+        },
+        {
+          "fixed_neural_bit_gate_output": 205748089,
+          "input_i32": 205748089,
+          "original_typed_i32": 205748089,
+          "pass": true,
+          "recompiled_wasmtime": 205748089,
+          "source_wasmtime": 205748089
+        },
+        {
+          "fixed_neural_bit_gate_output": -1105761888,
+          "input_i32": -1105761888,
+          "original_typed_i32": -1105761888,
+          "pass": true,
+          "recompiled_wasmtime": -1105761888,
+          "source_wasmtime": -1105761888
+        },
+        {
+          "fixed_neural_bit_gate_output": 2033448384,
+          "input_i32": 2033448384,
+          "original_typed_i32": 2033448384,
+          "pass": true,
+          "recompiled_wasmtime": 2033448384,
+          "source_wasmtime": 2033448384
+        }
+      ],
+      "name": "identity_plus_zero",
+      "original_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a09010700200041006a0b",
+      "original_wasm_sha256": "a7c4467e8eba3ebbc0fa2b7e75f211566eff6bb4065b64f953b04ee8731c4fbf",
+      "recovered_typed_program_sha256": "e4dd689e4453d81e15e43bda5088aee87c432479371065be16a259de088be3c4",
+      "recovered_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a15011300200020006c41006c200041016c6a41006a0b",
+      "recovered_wasm_sha256": "33b6aa7ebac9ef173f6ce67c14b865785580c11cdfc5b6be99b76ff82dc8ee37",
+      "source_program_not_passed_into_synthesizer": true,
+      "synthesis_report": {
+        "accepted_candidate": {
+          "a": 0,
+          "b": 1,
+          "c": 0,
+          "kind": "poly",
+          "threshold": 0
+        },
+        "accepted_expression": "(0)*x*x+(1)*x+(0) mod 2^32",
+        "accepted_typed_program_sha256": "e4dd689e4453d81e15e43bda5088aee87c432479371065be16a259de088be3c4",
+        "accepted_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a15011300200020006c41006c200041016c6a41006a0b",
+        "accepted_wasm_sha256": "33b6aa7ebac9ef173f6ce67c14b865785580c11cdfc5b6be99b76ff82dc8ee37",
+        "all_i32_neural_weight_equivalence_proved": false,
+        "all_i32_source_vs_candidate_equivalent": true,
+        "arbitrary_unknown_weight_decompiled": false,
+        "coefficient_limit": 16,
+        "construction_manifest_received_by_synthesizer": false,
+        "grammar": "i32-poly-degree2-smallcoeff-or-signed-predicate.v50",
+        "historical_source_uniquely_recovered": false,
+        "neural_weights_received_by_synthesizer": false,
+        "observed_input_outputs": [
+          {
+            "input_i32": -3,
+            "output_i32": -3
+          },
+          {
+            "input_i32": -2,
+            "output_i32": -2
+          },
+          {
+            "input_i32": -1,
+            "output_i32": -1
+          },
+          {
+            "input_i32": 0,
+            "output_i32": 0
+          },
+          {
+            "input_i32": 1,
+            "output_i32": 1
+          },
+          {
+            "input_i32": 2,
+            "output_i32": 2
+          },
+          {
+            "input_i32": 3,
+            "output_i32": 3
+          }
+        ],
+        "rounds": [
+          {
+            "iteration": 0,
+            "selected_hypothesis": {
+              "a": 0,
+              "b": 1,
+              "c": 0,
+              "kind": "poly",
+              "threshold": 0
+            },
+            "selected_hypothesis_sha256": "c9e7c1ef8dfbec12be2c1eba058e9daae8e3e7c9f7bd35cd507f131b0d1cffaa",
+            "surviving_candidate_count": 1,
+            "verification": {
+              "all_i32_neural_circuit_proved": false,
+              "all_i32_typed_source_equivalent": true,
+              "candidate_sha256": "c9e7c1ef8dfbec12be2c1eba058e9daae8e3e7c9f7bd35cd507f131b0d1cffaa",
+              "machine_checked_proof_object": false,
+              "schema": "visuaml.blinded-candidate-i32-smt.v50",
+              "smt_formula_sha256": "72ecbd4092321d16f9c957cdf13bfc94812be7e201af8f23575326af75d62701",
+              "solver_outcome": "unsat",
+              "source_wasm_sha256": "a7c4467e8eba3ebbc0fa2b7e75f211566eff6bb4065b64f953b04ee8731c4fbf",
+              "unique_original_source_recovered": false,
+              "z3_version": "4.13.4"
+            }
+          }
+        ],
+        "schema": "visuaml.blinded-neural-behavior-synthesis.v50",
+        "source_program_received_by_synthesizer": false
+      }
+    },
+    {
+      "candidate": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "kind": "eqz",
+        "threshold": 0
+      },
+      "candidate_expression": "i32.eqz(x)",
+      "fixed_weights_not_passed_into_synthesizer": true,
+      "heldout_witnesses": [
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": -2147483648,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 2147483647,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": -2147483647,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 2147483646,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": -1024,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": -33,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 33,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1024,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1208317069,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1234471061,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 921565462,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1433098879,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1390628510,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 205748089,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": -1105761888,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 2033448384,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        }
+      ],
+      "name": "zero_test",
+      "original_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a070105002000450b",
+      "original_wasm_sha256": "6896a7c05f3fcd7ab75970defc5a3481b1e592e925845f5534b63681693ae186",
+      "recovered_typed_program_sha256": "b339dae7d3d6b9478cd19f1159f07495288390eb64b436165ba95f06bdc216f4",
+      "recovered_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a070105002000450b",
+      "recovered_wasm_sha256": "6896a7c05f3fcd7ab75970defc5a3481b1e592e925845f5534b63681693ae186",
+      "source_program_not_passed_into_synthesizer": true,
+      "synthesis_report": {
+        "accepted_candidate": {
+          "a": 0,
+          "b": 0,
+          "c": 0,
+          "kind": "eqz",
+          "threshold": 0
+        },
+        "accepted_expression": "i32.eqz(x)",
+        "accepted_typed_program_sha256": "b339dae7d3d6b9478cd19f1159f07495288390eb64b436165ba95f06bdc216f4",
+        "accepted_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a070105002000450b",
+        "accepted_wasm_sha256": "6896a7c05f3fcd7ab75970defc5a3481b1e592e925845f5534b63681693ae186",
+        "all_i32_neural_weight_equivalence_proved": false,
+        "all_i32_source_vs_candidate_equivalent": true,
+        "arbitrary_unknown_weight_decompiled": false,
+        "coefficient_limit": 16,
+        "construction_manifest_received_by_synthesizer": false,
+        "grammar": "i32-poly-degree2-smallcoeff-or-signed-predicate.v50",
+        "historical_source_uniquely_recovered": false,
+        "neural_weights_received_by_synthesizer": false,
+        "observed_input_outputs": [
+          {
+            "input_i32": -3,
+            "output_i32": 0
+          },
+          {
+            "input_i32": -2,
+            "output_i32": 0
+          },
+          {
+            "input_i32": -1,
+            "output_i32": 0
+          },
+          {
+            "input_i32": 0,
+            "output_i32": 1
+          },
+          {
+            "input_i32": 1,
+            "output_i32": 0
+          },
+          {
+            "input_i32": 2,
+            "output_i32": 0
+          },
+          {
+            "input_i32": 3,
+            "output_i32": 0
+          }
+        ],
+        "rounds": [
+          {
+            "iteration": 0,
+            "selected_hypothesis": {
+              "a": 0,
+              "b": 0,
+              "c": 0,
+              "kind": "eqz",
+              "threshold": 0
+            },
+            "selected_hypothesis_sha256": "a6e4e90e86993d11998d37d5a256125cfa3a4276631c43d6c46ea69d052aa245",
+            "surviving_candidate_count": 1,
+            "verification": {
+              "all_i32_neural_circuit_proved": false,
+              "all_i32_typed_source_equivalent": true,
+              "candidate_sha256": "a6e4e90e86993d11998d37d5a256125cfa3a4276631c43d6c46ea69d052aa245",
+              "machine_checked_proof_object": false,
+              "schema": "visuaml.blinded-candidate-i32-smt.v50",
+              "smt_formula_sha256": "cfc2fe3a20ade475d0fb976b59548bfca8c3d868743fc14ccbbefcfec5936f35",
+              "solver_outcome": "unsat",
+              "source_wasm_sha256": "6896a7c05f3fcd7ab75970defc5a3481b1e592e925845f5534b63681693ae186",
+              "unique_original_source_recovered": false,
+              "z3_version": "4.13.4"
+            }
+          }
+        ],
+        "schema": "visuaml.blinded-neural-behavior-synthesis.v50",
+        "source_program_received_by_synthesizer": false
+      }
+    },
+    {
+      "candidate": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "kind": "lt_s",
+        "threshold": 0
+      },
+      "candidate_expression": "i32.lt_s(x,0)",
+      "fixed_weights_not_passed_into_synthesizer": true,
+      "heldout_witnesses": [
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -2147483648,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 2147483647,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -2147483647,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 2147483646,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -1024,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -33,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 33,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1024,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1208317069,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1234471061,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 921565462,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1433098879,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1390628510,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 205748089,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -1105761888,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 2033448384,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        }
+      ],
+      "name": "signed_negative",
+      "original_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0901070020004100480b",
+      "original_wasm_sha256": "7904fe87877396b9ce90ef7fb53ed815709f6071fcfd04b25e871b09f179fdcb",
+      "recovered_typed_program_sha256": "ace3d648d71383264257347a0f4b50963984009a603ebe134a7a5ef86515e175",
+      "recovered_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0901070020004100480b",
+      "recovered_wasm_sha256": "7904fe87877396b9ce90ef7fb53ed815709f6071fcfd04b25e871b09f179fdcb",
+      "source_program_not_passed_into_synthesizer": true,
+      "synthesis_report": {
+        "accepted_candidate": {
+          "a": 0,
+          "b": 0,
+          "c": 0,
+          "kind": "lt_s",
+          "threshold": 0
+        },
+        "accepted_expression": "i32.lt_s(x,0)",
+        "accepted_typed_program_sha256": "ace3d648d71383264257347a0f4b50963984009a603ebe134a7a5ef86515e175",
+        "accepted_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0901070020004100480b",
+        "accepted_wasm_sha256": "7904fe87877396b9ce90ef7fb53ed815709f6071fcfd04b25e871b09f179fdcb",
+        "all_i32_neural_weight_equivalence_proved": false,
+        "all_i32_source_vs_candidate_equivalent": true,
+        "arbitrary_unknown_weight_decompiled": false,
+        "coefficient_limit": 16,
+        "construction_manifest_received_by_synthesizer": false,
+        "grammar": "i32-poly-degree2-smallcoeff-or-signed-predicate.v50",
+        "historical_source_uniquely_recovered": false,
+        "neural_weights_received_by_synthesizer": false,
+        "observed_input_outputs": [
+          {
+            "input_i32": -3,
+            "output_i32": 1
+          },
+          {
+            "input_i32": -2,
+            "output_i32": 1
+          },
+          {
+            "input_i32": -1,
+            "output_i32": 1
+          },
+          {
+            "input_i32": 0,
+            "output_i32": 0
+          },
+          {
+            "input_i32": 1,
+            "output_i32": 0
+          },
+          {
+            "input_i32": 2,
+            "output_i32": 0
+          },
+          {
+            "input_i32": 3,
+            "output_i32": 0
+          }
+        ],
+        "rounds": [
+          {
+            "iteration": 0,
+            "selected_hypothesis": {
+              "a": 0,
+              "b": 0,
+              "c": 0,
+              "kind": "lt_s",
+              "threshold": 0
+            },
+            "selected_hypothesis_sha256": "a1b9e18f8deb99b07996ab6729994080bda2eeb26439a2271b2939f61d4747b8",
+            "surviving_candidate_count": 1,
+            "verification": {
+              "all_i32_neural_circuit_proved": false,
+              "all_i32_typed_source_equivalent": true,
+              "candidate_sha256": "a1b9e18f8deb99b07996ab6729994080bda2eeb26439a2271b2939f61d4747b8",
+              "machine_checked_proof_object": false,
+              "schema": "visuaml.blinded-candidate-i32-smt.v50",
+              "smt_formula_sha256": "bb295e49891d5aead1082f6823a4cc5227c27231192822a1c3c2a6bb46e51b5a",
+              "solver_outcome": "unsat",
+              "source_wasm_sha256": "7904fe87877396b9ce90ef7fb53ed815709f6071fcfd04b25e871b09f179fdcb",
+              "unique_original_source_recovered": false,
+              "z3_version": "4.13.4"
+            }
+          }
+        ],
+        "schema": "visuaml.blinded-neural-behavior-synthesis.v50",
+        "source_program_received_by_synthesizer": false
+      }
+    },
+    {
+      "candidate": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "kind": "lt_s",
+        "threshold": 5
+      },
+      "candidate_expression": "i32.lt_s(x,5)",
+      "fixed_weights_not_passed_into_synthesizer": true,
+      "heldout_witnesses": [
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -2147483648,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 2147483647,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -2147483647,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 2147483646,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -1024,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -33,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 33,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1024,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1208317069,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1234471061,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 921565462,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1433098879,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 1390628510,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 205748089,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        },
+        {
+          "fixed_neural_bit_gate_output": 1,
+          "input_i32": -1105761888,
+          "original_typed_i32": 1,
+          "pass": true,
+          "recompiled_wasmtime": 1,
+          "source_wasmtime": 1
+        },
+        {
+          "fixed_neural_bit_gate_output": 0,
+          "input_i32": 2033448384,
+          "original_typed_i32": 0,
+          "pass": true,
+          "recompiled_wasmtime": 0,
+          "source_wasmtime": 0
+        }
+      ],
+      "name": "signed_threshold_5",
+      "original_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0901070020004105480b",
+      "original_wasm_sha256": "7228696781e32fef243137f3261c91bf5dd5af7f4243e4ab194e122f1440c923",
+      "recovered_typed_program_sha256": "27224046a0f9d3db64e9be77fd980692fa400f700a2b24eddfa5a1bcf66c1edc",
+      "recovered_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0901070020004105480b",
+      "recovered_wasm_sha256": "7228696781e32fef243137f3261c91bf5dd5af7f4243e4ab194e122f1440c923",
+      "source_program_not_passed_into_synthesizer": true,
+      "synthesis_report": {
+        "accepted_candidate": {
+          "a": 0,
+          "b": 0,
+          "c": 0,
+          "kind": "lt_s",
+          "threshold": 5
+        },
+        "accepted_expression": "i32.lt_s(x,5)",
+        "accepted_typed_program_sha256": "27224046a0f9d3db64e9be77fd980692fa400f700a2b24eddfa5a1bcf66c1edc",
+        "accepted_wasm_hex": "0061736d0100000001060160017f017f030201000707010372756e00000a0901070020004105480b",
+        "accepted_wasm_sha256": "7228696781e32fef243137f3261c91bf5dd5af7f4243e4ab194e122f1440c923",
+        "all_i32_neural_weight_equivalence_proved": false,
+        "all_i32_source_vs_candidate_equivalent": true,
+        "arbitrary_unknown_weight_decompiled": false,
+        "coefficient_limit": 16,
+        "construction_manifest_received_by_synthesizer": false,
+        "grammar": "i32-poly-degree2-smallcoeff-or-signed-predicate.v50",
+        "historical_source_uniquely_recovered": false,
+        "neural_weights_received_by_synthesizer": false,
+        "observed_input_outputs": [
+          {
+            "input_i32": -3,
+            "output_i32": 1
+          },
+          {
+            "input_i32": -2,
+            "output_i32": 1
+          },
+          {
+            "input_i32": -1,
+            "output_i32": 1
+          },
+          {
+            "input_i32": 0,
+            "output_i32": 1
+          },
+          {
+            "input_i32": 1,
+            "output_i32": 1
+          },
+          {
+            "input_i32": 2,
+            "output_i32": 1
+          },
+          {
+            "input_i32": 3,
+            "output_i32": 1
+          },
+          {
+            "input_i32": 4,
+            "output_i32": 1
+          },
+          {
+            "input_i32": 5,
+            "output_i32": 0
+          }
+        ],
+        "rounds": [
+          {
+            "iteration": 0,
+            "selected_hypothesis": {
+              "a": 0,
+              "b": 0,
+              "c": 1,
+              "kind": "poly",
+              "threshold": 0
+            },
+            "selected_hypothesis_sha256": "1cc9b431258ff116521d83d285bfb5fa7f20a8b92c0e869cdbe60948e2593356",
+            "surviving_candidate_count": 27,
+            "verification": {
+              "all_i32_neural_circuit_proved": false,
+              "all_i32_typed_source_equivalent": false,
+              "candidate_sha256": "1cc9b431258ff116521d83d285bfb5fa7f20a8b92c0e869cdbe60948e2593356",
+              "counterexample_i32": 5,
+              "hypothesis_output_u32": 1,
+              "machine_checked_proof_object": false,
+              "schema": "visuaml.blinded-candidate-i32-smt.v50",
+              "smt_formula_sha256": "7db1dfb5114008e172f66bdc408ab5f499646494fc825f01da7917a5f57c81be",
+              "solver_outcome": "sat",
+              "source_output_u32": 0,
+              "source_wasm_sha256": "7228696781e32fef243137f3261c91bf5dd5af7f4243e4ab194e122f1440c923",
+              "unique_original_source_recovered": false,
+              "z3_version": "4.13.4"
+            }
+          },
+          {
+            "iteration": 1,
+            "selected_hypothesis": {
+              "a": 0,
+              "b": 0,
+              "c": 0,
+              "kind": "lt_s",
+              "threshold": 4
+            },
+            "selected_hypothesis_sha256": "e626833a9af9eacbe584b89069b4e1905f468d872112212f25aff8aac02f951d",
+            "surviving_candidate_count": 2,
+            "verification": {
+              "all_i32_neural_circuit_proved": false,
+              "all_i32_typed_source_equivalent": false,
+              "candidate_sha256": "e626833a9af9eacbe584b89069b4e1905f468d872112212f25aff8aac02f951d",
+              "counterexample_i32": 4,
+              "hypothesis_output_u32": 0,
+              "machine_checked_proof_object": false,
+              "schema": "visuaml.blinded-candidate-i32-smt.v50",
+              "smt_formula_sha256": "ff0f7dae92ad79cdf0660f2f0debfd6a70505692700bcbbf49b67109a6ca1266",
+              "solver_outcome": "sat",
+              "source_output_u32": 1,
+              "source_wasm_sha256": "7228696781e32fef243137f3261c91bf5dd5af7f4243e4ab194e122f1440c923",
+              "unique_original_source_recovered": false,
+              "z3_version": "4.13.4"
+            }
+          },
+          {
+            "iteration": 2,
+            "selected_hypothesis": {
+              "a": 0,
+              "b": 0,
+              "c": 0,
+              "kind": "lt_s",
+              "threshold": 5
+            },
+            "selected_hypothesis_sha256": "d27f690640bf1244eaeea9212b27f53ca17ef2492e74292196926a0f792b0a8b",
+            "surviving_candidate_count": 1,
+            "verification": {
+              "all_i32_neural_circuit_proved": false,
+              "all_i32_typed_source_equivalent": true,
+              "candidate_sha256": "d27f690640bf1244eaeea9212b27f53ca17ef2492e74292196926a0f792b0a8b",
+              "machine_checked_proof_object": false,
+              "schema": "visuaml.blinded-candidate-i32-smt.v50",
+              "smt_formula_sha256": "679488e1b0e74bbf76233d451c3b5a35635979a2a8c0ffa7574ee9373152dcb9",
+              "solver_outcome": "unsat",
+              "source_wasm_sha256": "7228696781e32fef243137f3261c91bf5dd5af7f4243e4ab194e122f1440c923",
+              "unique_original_source_recovered": false,
+              "z3_version": "4.13.4"
+            }
+          }
+        ],
+        "schema": "visuaml.blinded-neural-behavior-synthesis.v50",
+        "source_program_received_by_synthesizer": false
+      }
+    }
+  ],
+  "schema": "visuaml.blinded-neural-behavior-evidence.v50",
+  "source_commit": "cf25a876e2971169274df5fca1beb04caff60f0f",
+  "source_file_sha256": {
+    "scripts/probe_blinded_neural_synthesis_v50.py": "a87760a0eb1b8ac51274e3150d14782b31e37ba330850019dbcd32e801e23400",
+    "visuaml/compiler_lab/bit_neural_vm_v49.py": "b17dc58a4d378e722e4db501404d122fdbf5a795f0b1f61678a0c71a364ecb07",
+    "visuaml/compiler_lab/blinded_behavioral_synthesis_v50.py": "0d9361cade0620fa58a0545e23d55a655111f35b6d27684eae89fc09c48b1f91"
+  },
+  "synthesis_schema": "visuaml.blinded-neural-behavior-synthesis.v50",
+  "true_source_wasm_compiled_by_wasmtime": true,
+  "unique_historical_program_recovery_claimed": false,
+  "wasmtime_version": "28.0.0"
+}
