@@ -16,10 +16,11 @@ from pathlib import Path
 
 import numpy as np
 import torch
-
 from visuaml.compiler_lab.analytic_relu_specialization_v41 import AnalyticRelu
 from visuaml.compiler_lab.native_kan_codegen_v45 import run_kan_cpp17
-from visuaml.compiler_lab.neural_symbolic_recovery_v43 import recover_quadratic_from_weights
+from visuaml.compiler_lab.neural_symbolic_recovery_v43 import (
+    recover_quadratic_from_weights,
+)
 from visuaml.compiler_lab.torch_kan_v45 import TorchKAN
 from visuaml.compiler_lab.typed_kan_v45 import (
     KANEdge,
