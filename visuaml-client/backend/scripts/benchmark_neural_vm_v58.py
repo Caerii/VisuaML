@@ -11,6 +11,7 @@ Usage (from repository root):
 from __future__ import annotations
 
 import argparse
+import gc
 import hashlib
 import importlib.metadata
 import json
@@ -20,6 +21,7 @@ import statistics
 import subprocess
 import sys
 import time
+import tracemalloc
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -173,10 +175,34 @@ def measure(action, *, warmups: int, repeats: int) -> dict:
     return {"wall": summarize_ns(wall), "process_cpu": summarize_ns(cpu)}
 
 
+def measure_python_allocations(action) -> dict:
+    """Separate traced Python-allocation pass, NOT a process RSS measure.
+
+    Native NumPy buffers and allocator caches may not be accounted for;
+    never present this as total CPU or GPU memory.
+    """
+    action()  # warm interpreter path before isolated memory sample
+    gc.collect()
+    tracemalloc.start()
+    try:
+        current, _ = tracemalloc.get_traced_memory()
+        tracemalloc.reset_peak()
+        action()
+        _, peak = tracemalloc.get_traced_memory()
+    finally:
+        tracemalloc.stop()
+    return {
+        "peak_python_traced_bytes_above_start": max(0, peak - current),
+        "is_total_process_rss": False,
+        "numpy_native_buffer_coverage_not_guaranteed": True,
+    }
+
+
 def run(
     root: Path, *, repeats: int, warmups: int, holdout: int,
     fuel: int,
     scaling: bool = False,
+    memory: bool = False,
 ) -> dict:
     if type(repeats) is not int or not 1 <= repeats <= 10000:
         raise ValueError("Repeat count outside benchmark policy")
@@ -289,12 +315,20 @@ def run(
                 name: measure(action, warmups=warmups, repeats=repeats)
                 for name, action in actions.items()
             }
+            allocations = (
+                {
+                    name: measure_python_allocations(action)
+                    for name, action in actions.items()
+                }
+                if memory and argument == workload.arguments[0] else None
+            )
             case = {
                 "input_i32": argument,
                 "expected_i32": native,
                 "steps": v57.steps,
                 "trace_sha256": digest(list(v57.trace)),
                 "latencies": measurements,
+                "python_allocation_profile": allocations,
             }
             cases.append(case)
             overall["witnesses"] += 1
@@ -330,6 +364,7 @@ def run(
             "repeats": repeats, "warmups": warmups, "fuel": fuel,
             "holdout_programs": holdout,
             "scaling_suite_enabled": scaling,
+            "isolated_python_allocation_profile": memory,
             "timing_scope": "Python/NumPy engine invocation including traces",
             "setup_excluded_from_warm": True,
             "wasmtime_calls_include_python_binding_overhead": True,
@@ -337,6 +372,7 @@ def run(
             "same_hardware_comparisons_only": True,
             "performance_not_correctness_proof": True,
             "not_native_neural_hardware": True,
+            "tracemalloc_is_not_total_memory": True,
             "v58_only_straightline_admitted": True,
         },
         "inventory": overall,
@@ -352,6 +388,8 @@ def main() -> None:
     parser.add_argument("--warmups", type=int, default=1)
     parser.add_argument("--holdout", type=int, default=8)
     parser.add_argument("--fuel", type=int, default=1500)
+    parser.add_argument("--memory", action="store_true",
+                        help="Opt-in separate traced Python-allocation profile")
     parser.add_argument("--scaling", action="store_true",
                         help="Include controlled workload growth sweeps")
     args = parser.parse_args()
@@ -362,7 +400,7 @@ def main() -> None:
     record = run(
         root, repeats=args.repeats, warmups=args.warmups,
         holdout=args.holdout, fuel=args.fuel,
-        scaling=args.scaling,
+        scaling=args.scaling, memory=args.memory,
     )
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(stable_bytes(record) + b"\n")
