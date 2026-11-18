@@ -19,6 +19,7 @@ from visuaml.compiler_lab.constructed_reglu_quadratic_v44 import (
     ConstructedGatedQuadratic,
     GatedConstructionError,
     bundle_fingerprint,
+    check_real_algebraic_identity,
     construct_from_symbolic,
     evaluate_constructed,
     permute_gated_units,
@@ -135,3 +136,15 @@ def test_pretrained_polynomial_digest_mismatch_rejected_at_build_time():
         construct_from_symbolic(replace(poly, c=8))
     with pytest.raises(GatedConstructionError, match="bound neural function"):
         construct_from_symbolic(replace(poly, a=0))
+
+
+def test_z3_exact_real_case_split_and_wrong_gate_negative_control():
+    pytest.importorskip("z3")
+    proof = check_real_algebraic_identity()
+    assert proof["nonnegative_domain_solver"] == "unsat"
+    assert proof["negative_domain_solver"] == "unsat"
+    assert proof["negative_control"] == "sat"
+    assert proof["all_real_algebraic_identity_smt_checked"]
+    assert not proof["float64_all_real_bitwise_proved"]
+    assert not proof["wasm_i32_wrap_equivalence_proved"]
+    assert not proof["machine_checked_proof_object"]
