@@ -62,7 +62,7 @@ def review(path: Path, root: Path) -> dict:
                     original
                 ).hexdigest()):
             raise ValueError("Recovery result not bound to canonical source")
-        if item["status"] not in ("verified", "rejected"):
+        if item["status"] not in ("verified", "rejected", "invalid"):
             raise ValueError("Unknown recovery status")
         audit = item.get("audit", {})
         if any(type(audit.get(key, 0)) is not int
@@ -91,8 +91,10 @@ def review(path: Path, root: Path) -> dict:
     if archive.get("summary") != recomputed:
         raise ValueError("Recovery success/failure denominator modified")
     negative = recomputed["by_split"]["negative_control"]
-    if negative["verified"]:
-        raise ValueError("Outside-grammar cubic was incorrectly accepted")
+    if negative["verified"] or negative["invalid"]:
+        raise ValueError(
+            "Outside-grammar cubic must be explicitly rejected, not invalid"
+        )
     # Reuse the independent strict receipt verifier, which reruns Z3 and
     # independently executes the original/recovered WASM and v58 traces.
     validated = None
@@ -129,6 +131,7 @@ def review(path: Path, root: Path) -> dict:
         "full_denominator_verified": True,
         "source_bytes_verified": True,
         "rejected_attempts_preserved": recomputed["total_rejected"],
+        "invalid_attempts_preserved": recomputed["total_invalid"],
         "verified_attempts_replayed": recomputed["total_verified"],
         "independent_success_receipt_replay": validated,
         "summary": recomputed,
