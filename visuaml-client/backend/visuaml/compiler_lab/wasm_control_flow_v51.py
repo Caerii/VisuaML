@@ -278,14 +278,15 @@ def execute_control(
     def label_jump(depth: int) -> int:
         if depth >= len(frames):
             raise ControlExecutionTrap("Dynamic branch label outside control stack")
-        target = frames[len(frames) - 1 - depth]
+        index = len(frames) - 1 - depth
+        target = frames[index]
         del stack[target.stack_base:]
         if target.kind == "loop":
-            del frames[len(frames) - depth:]
-            # Keep the target loop frame while discarding nested frames.
-            frames.append(target)
+            # Keep the target loop label; remove only its nested labels.
+            del frames[index + 1:]
             return target.start_pc + 1
-        del frames[len(frames)-1-depth:]
+        # A branch to block/if exits that label and all nested labels.
+        del frames[index:]
         return target.end_pc + 1
 
     for tick in range(fuel):
