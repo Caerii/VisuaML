@@ -1,0 +1,63 @@
+{
+  "all_passed": true,
+  "atol": 0.0001,
+  "checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+  "executed_native_semantic_cpp": false,
+  "framework": "ONNX Runtime CPU graph optimization disabled",
+  "limitations": "Independent pretrained ONNX vs NumPy oracle parity; not generated C++ execution, graph admission, native speedup, or all-input equivalence.",
+  "numpy_version": "2.2.6",
+  "onnx_version": "1.18.0",
+  "onnxruntime_version": "1.22.1",
+  "oracle": "closed-world scalar NumPy reference",
+  "preflight_schema": "visuaml.pretrained-onnx-preflight.v37",
+  "rtol": 0.0001,
+  "schema": "visuaml.pretrained-cnn-onnx-vs-numpy.v37",
+  "source_revision": "a19f9a8c2333de1df9b03f10f5739f468b699a1a",
+  "witnesses": [
+    {
+      "input_sha256": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271",
+      "max_abs_error": 0.0,
+      "max_allowed_error": 0.00011402187374187633,
+      "name": "zero",
+      "numpy_logits_sha256": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+      "onnxruntime_logits_sha256": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+      "pass": true
+    },
+    {
+      "input_sha256": "c0acddaeb5e08ca7c6f0ab859e008b5ea5544cac1fe9eea8d644f87f071f9eab",
+      "max_abs_error": 7.152557373046875e-07,
+      "max_allowed_error": 0.00044099061051383615,
+      "name": "ones",
+      "numpy_logits_sha256": "2f8bbbbdb75c398c76e584a632ce5d304e23503bd2ae8eeffdebdb585cba189f",
+      "onnxruntime_logits_sha256": "6f5b020c84e189d4859ba602d3b265a79a302863cd006a7342db5c14f7855674",
+      "pass": true
+    },
+    {
+      "input_sha256": "32103f0e4502624f9a3c903d5b054eba10a60e339c90c06320029b5b876b0040",
+      "max_abs_error": 2.086162567138672e-07,
+      "max_allowed_error": 0.00020895444322377443,
+      "name": "impulse",
+      "numpy_logits_sha256": "d5ff6d3db2c779f7d50c21e96d29a13a4a5f6946b6aff24d636064ee9cfcca0a",
+      "onnxruntime_logits_sha256": "1e9d6632f49fdd3e907ce8da0b1458579792ac78e69bca6ac0174f38a55330dd",
+      "pass": true
+    },
+    {
+      "input_sha256": "e51a26131006fdf17007855cbf9044dcdb3e1397246249e188cfa49684c21abc",
+      "max_abs_error": 2.384185791015625e-07,
+      "max_allowed_error": 0.00023119445540942252,
+      "name": "checkerboard",
+      "numpy_logits_sha256": "e082775a8ea4b13ea19f906421f483829413c94b432b6a34c9e3dc41a82b64b3",
+      "onnxruntime_logits_sha256": "1f0ad1faf09da2ba76959b017a4858a2d84da3cbe5fdbdad1bcbaa557a51f5b3",
+      "pass": true
+    },
+    {
+      "input_sha256": "e2486188057941c7f35c0731a98e83bda088639002b89a9b38e7bac9241849f0",
+      "max_abs_error": 3.8743019104003906e-07,
+      "max_allowed_error": 0.00028779692365787923,
+      "name": "random_seed_37",
+      "numpy_logits_sha256": "80cc64ee94ea99306aefb332e5ebe8b5fe9305585eb02cdfea943f1f2c8fcfea",
+      "onnxruntime_logits_sha256": "7ccb13e905eadac28562f21df8cca3444678274a7f61bd4bcdd01a07cce96724",
+      "pass": true
+    }
+  ]
+}
