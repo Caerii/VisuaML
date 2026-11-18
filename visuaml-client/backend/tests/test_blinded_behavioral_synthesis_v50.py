@@ -137,17 +137,29 @@ def test_adversarial_oracle_and_verifier_are_rejected_before_acceptance():
 
     with pytest.raises(BehavioralSynthesisError, match="conclusive"):
         synthesize_from_oracle(
-            lambda x:x, lambda _: {"solver_outcome":"unknown"},
+            lambda x:x, lambda h: {
+                "solver_outcome":"unknown", "candidate_sha256":h.digest()
+            },
         )
     with pytest.raises(BehavioralSynthesisError, match="contradicted"):
         synthesize_from_oracle(
             lambda x:x,
-            lambda _: {"solver_outcome":"sat", "counterexample_i32":0},
+            lambda h: {"solver_outcome":"sat", "counterexample_i32":0,
+                       "candidate_sha256":h.digest()},
         )
     with pytest.raises(BehavioralSynthesisError, match="Counterexample"):
         synthesize_from_oracle(
             lambda x:x,
-            lambda _: {"solver_outcome":"sat", "counterexample_i32":1000},
+            lambda h: {"solver_outcome":"sat", "counterexample_i32":1000,
+                       "candidate_sha256":h.digest()},
+        )
+
+
+def test_verifier_cannot_certify_an_unbound_hypothesis():
+    with pytest.raises(BehavioralSynthesisError, match="Unbound"):
+        synthesize_from_oracle(
+            lambda x:x,
+            lambda _: {"solver_outcome":"unsat", "candidate_sha256":"0"*64},
         )
 
 
