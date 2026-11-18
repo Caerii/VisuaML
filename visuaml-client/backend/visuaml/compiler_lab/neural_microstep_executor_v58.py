@@ -16,6 +16,7 @@ from .bit_neural_vm_v49 import (
     _bits, _int, BitCircuitWeights, construct_bit_weights,
 )
 from .compact_routing_v58 import CompactRouter
+from .native_microstep_v58 import _NativeMicrostep
 from .neural_alu_v56 import ALUWeights, construct_alu_weights
 from .neural_control_routing_v52 import (
     TERMINAL, ControlRouteTokens, ControlRouterWeights, _onehot,
@@ -88,6 +89,7 @@ class _ExecutionInputs:
     indexed: IndexedMicroops | None
     rows: tuple[SelectedMicroop, ...] | None = None
     provenance: tuple[str, ...] | None = None
+    native_microstep: _NativeMicrostep | None = None
 
     def digests(self) -> tuple[str, ...]:
         assert self.pc_fixed is not None
@@ -240,13 +242,15 @@ class PreparedMicrostepProgram:
 
     Preparation validates all data microop rows. Each run starts with fresh
     operands, locals, PC, fuel, and trace. The live gates use the snapshotted
-    coefficients, including supported fault-injection overrides.
+    coefficients, including supported fault-injection overrides. The opt-in
+    native microstep binds these same rows and coefficients to one C++ call.
     """
 
     def __init__(
         self, program: ControlProgram, *,
         use_compiled_alu: bool = True,
         use_fused_state: bool = True,
+        use_native_microstep: bool = False,
         tokens: ControlRouteTokens | None = None,
         program_tokens: ProgramMicroopTokens | None = None,
         pc_fixed: ControlRouterWeights | None = None,
@@ -257,13 +261,25 @@ class PreparedMicrostepProgram:
         local_fixed: LocalBankWeights | None = None,
         operand_fixed: OperandWeights | None = None,
     ):
-        self._inputs = _prepare(
+        if type(use_native_microstep) is not bool:
+            raise MicrostepAdmissionError("use_native_microstep must be a boolean")
+        if use_native_microstep and (not use_compiled_alu or not use_fused_state):
+            raise MicrostepAdmissionError("Native microstep requires compiled ALU and fused state")
+        inputs = _prepare(
             program, use_compiled_alu=use_compiled_alu, use_fused_state=use_fused_state,
             use_compact_routing=True, use_indexed_pc=True,
             tokens=tokens, program_tokens=program_tokens, pc_fixed=pc_fixed, bit_fixed=bit_fixed,
             microop_fixed=microop_fixed, microstep_fixed=microstep_fixed, alu_fixed=alu_fixed,
             local_fixed=local_fixed, operand_fixed=operand_fixed, reusable=True,
         )
+
+        if use_native_microstep:
+            native = _NativeMicrostep(
+                inputs.rows, inputs.microstep_fixed, inputs.operand_fixed,
+                inputs.alu_fixed, inputs.bit_fixed, inputs.local_fixed,
+            )
+            inputs = replace(inputs, native_microstep=native, rows=None)
+        self._inputs = inputs
 
     def run(
         self, argument: int, *, fuel: int = 400, capture_trace: bool = True,
@@ -278,6 +294,9 @@ def _run(inputs: _ExecutionInputs, argument: int, fuel: int, capture_trace: bool
     operands = empty_operands()
     locals_ = np.zeros((LOCALS_WIDTH, 32), dtype=np.float64)
     locals_[0] = _bits(argument)
+    native = inputs.native_microstep
+    if native is not None:
+        buffers = (operands.height.ctypes.data, operands.cells.ctypes.data, locals_.ctypes.data)
     pc_vector = None if indexed is not None else _onehot(0)
     pc = 0
     count = len(program.operations)
@@ -311,6 +330,8 @@ def _run(inputs: _ExecutionInputs, argument: int, fuel: int, capture_trace: bool
                 raise ControlExecutionTrap(
                     "Final source WASM end needs exactly one i32"
                 )
+        elif native is not None:
+            native.apply(pc, buffers)
         else:
             if rows is not None:
                 microop = rows[pc]

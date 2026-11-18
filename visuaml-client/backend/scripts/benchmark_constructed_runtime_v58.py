@@ -35,7 +35,7 @@ def _git(root, *args):
     return subprocess.check_output(("git", "-C", str(root), *args))
 
 
-def _identify(root, baseline):
+def _identify(root, baseline, native_microstep=False):
     if _git(root, "status", "--porcelain"):
         raise ValueError("Run with a clean research checkout")
     revision = _BASE if baseline else "HEAD"
@@ -50,6 +50,12 @@ def _identify(root, baseline):
         file = f"visuaml-client/backend/visuaml/compiler_lab/{path.name}"
         if path.read_bytes() != _git(root, "show", f"{commit}:{file}"):
             raise ValueError(f"Loaded runtime doesn't match producing source: {file}")
+    if native_microstep:
+        base = "visuaml-client/backend/visuaml/compiler_lab"
+        for name in ("constructed_alu_v58.cpp", "constructed_alu_v58.py", "native_microstep_v58.py"):
+            file = f"{base}/{name}"
+            if (root / file).read_bytes() != _git(root, "show", f"{commit}:{file}"):
+                raise ValueError(f"Native gate source doesn't match producing source: {file}")
     return {"commit": commit, "tree": tree, "baseline": baseline}
 
 
@@ -72,8 +78,8 @@ def _profile_rows(profile):
     return sorted(rows, key=lambda row: row["inclusive_s"], reverse=True)
 
 
-def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fused=False, compact_routing=False, indexed_pc=False, prepared=False):
-    identity = _identify(root, baseline)
+def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fused=False, compact_routing=False, indexed_pc=False, prepared=False, native_microstep=False):
+    identity = _identify(root, baseline, native_microstep)
     compiled_metadata = None
     if use_compiled or compact_routing:
         from time import perf_counter_ns
@@ -108,7 +114,9 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
             v58.PreparedMicrostepProgram, work.program, program_tokens=tokens,
             use_compiled_alu=use_compiled, use_fused_state=use_fused,
         )
+        prepare_native = partial(prepare, use_native_microstep=True)
         session = prepare() if prepared else None
+        native_session = prepare_native() if native_microstep else None
         cases = []
         for argument in work.arguments:
             actions = {"trace": partial(v58.execute_microstep_control, work.program, argument,
@@ -128,7 +136,12 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
             indexed = actions["trace"]
             if session is not None:
                 actions["trace"] = partial(session.run, argument, fuel=1500)
+            prepared_trace = actions["trace"]
+            if native_session is not None:
+                actions["trace"] = partial(native_session.run, argument, fuel=1500)
             traced = actions["trace"]()
+            if native_session is not None and prepared_trace() != traced:
+                raise AssertionError((work.name, argument, "native data gate changed the trace"))
             if session is not None and indexed() != traced:
                 raise AssertionError((work.name, argument, "preparation changed the trace"))
             if indexed_pc and compact() != traced:
@@ -152,7 +165,12 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
                 actions["no_trace"] = partial(actions["trace"], capture_trace=False)
                 if actions["no_trace"]() != replace(traced, trace=()):
                     raise AssertionError((work.name, argument, "trace mode changes state evidence"))
-            if session is not None:
+            if native_session is not None:
+                actions["prepared_trace"] = prepared_trace
+                actions["prepared_no_trace"] = partial(prepared_trace, capture_trace=False)
+                if actions["prepared_no_trace"]() != replace(traced, trace=()):
+                    raise AssertionError((work.name, argument, "native no-trace mode changed the result"))
+            elif session is not None:
                 actions["indexed_trace"] = indexed
                 actions["indexed_no_trace"] = partial(indexed, capture_trace=False)
             elif indexed_pc:
@@ -189,6 +207,8 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
             "cases": cases,
             **({"program_preparation": measure(prepare, warmups=1, repeats=repeats)}
                if prepared else {}),
+            **({"native_preparation": measure(prepare_native, warmups=1, repeats=repeats)}
+               if native_microstep else {}),
         })
     allocations = []
     for actions, first in to_profile:
@@ -197,6 +217,7 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
             allocations.append({name: measure_python_allocations(action) for name, action in actions.items()})
     return {
         **({"prepared": True} if prepared else {}),
+        **({"native_microstep": True} if native_microstep else {}),
         "schema": "visuaml.constructed-runtime-profile.v58", "source": identity,
         "environment": environment(), "repeats": repeats, "fixed_weights": weight_ids,
         "compiled_alu": compiled_metadata, "fused_state": use_fused,
@@ -249,7 +270,10 @@ def main():
     parser.add_argument("--compact-routing", action="store_true")
     parser.add_argument("--indexed-pc", action="store_true")
     parser.add_argument("--prepared", action="store_true")
+    parser.add_argument("--native-microstep", action="store_true")
     args = parser.parse_args()
+    if args.native_microstep and not (args.prepared and args.compiled_alu and args.fused_state):
+        parser.error("--native-microstep requires --prepared, --compiled-alu, and --fused-state")
     if args.prepared and not args.indexed_pc:
         parser.error("--prepared requires --indexed-pc")
     if args.indexed_pc and not args.compact_routing:
@@ -265,7 +289,7 @@ def main():
     else:
         record = collect(
             root, args.baseline, args.repeats, args.profile, args.compiled_alu,
-            args.fused_state, args.compact_routing, args.indexed_pc, args.prepared,
+            args.fused_state, args.compact_routing, args.indexed_pc, args.prepared, args.native_microstep,
         )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as stream:

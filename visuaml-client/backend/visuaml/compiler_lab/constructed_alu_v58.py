@@ -25,6 +25,7 @@ class CompiledAlu:
     function: object
     route: object
     indexed_route: object
+    data_microstep: object
     source_sha256: str
     binary_sha256: str
     compiler: str
@@ -52,7 +53,11 @@ def compiled_alu():
         indexed_route = library.visuaml_indexed_route
         indexed_route.argtypes = (ctypes.c_size_t, *route.argtypes[1:])
         indexed_route.restype = ctypes.c_int
-    return CompiledAlu(function, route, indexed_route, hashlib.sha256(source.read_bytes()).hexdigest(),
+        data_microstep = library.visuaml_data_microstep
+        data_microstep.argtypes = (ctypes.c_size_t, ctypes.c_size_t, ctypes.c_size_t, _P, _P, _P, _P, _P)
+        data_microstep.restype = ctypes.c_int
+    return CompiledAlu(function, route, indexed_route, data_microstep,
+                       hashlib.sha256(source.read_bytes()).hexdigest(),
                        binary_id, version, _FLAGS)
 
 
@@ -62,8 +67,8 @@ def _canonical_coefficients():
     return tuple(getattr(fixed, name) for name in _NAMES)
 
 
-def evaluate_candidates(left, right, fixed: BitCircuitWeights) -> np.ndarray:
-    """Evaluate all six candidates, with Python retaining binary admission and selection."""
+def compiled_coefficients(fixed: BitCircuitWeights) -> tuple[np.ndarray, ...]:
+    """Snapshot the coefficient arrays admitted by the compiled bit gates."""
     if type(fixed) is not BitCircuitWeights:
         raise BitVMAdmissionError("Compiled ALU requires canonical v49 arithmetic coefficients")
     coefficients = []
@@ -75,11 +80,16 @@ def evaluate_candidates(left, right, fixed: BitCircuitWeights) -> np.ndarray:
         if not np.array_equal(snapshot, expected):
             raise BitVMAdmissionError("Compiled ALU requires canonical v49 arithmetic coefficients")
         coefficients.append(snapshot)
+    return tuple(coefficients)
+
+
+def evaluate_candidates(left, right, fixed: BitCircuitWeights) -> np.ndarray:
+    """Evaluate all six candidates, with Python retaining binary admission and selection."""
+    and_weight, xor_weight, carry, adder = compiled_coefficients(fixed)
     a, b = (np.array(value, copy=True, order="C", subok=False) for value in (left, right))
     if any(value.dtype != np.float64 or value.shape != (WIDTH,) or not is_exact_binary(value)
            for value in (a, b)):
         raise BitVMAdmissionError("Compiled ALU requires exact binary i32 inputs")
-    and_weight, xor_weight, carry, adder = coefficients
     candidates = np.zeros((6, WIDTH), dtype=np.float64)
     compiled_alu().function(
         a.ctypes.data, b.ctypes.data, and_weight.ctypes.data, xor_weight.ctypes.data,

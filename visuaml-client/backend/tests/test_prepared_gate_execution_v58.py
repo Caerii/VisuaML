@@ -18,9 +18,17 @@ _OPTIONS = dict(use_compact_routing=True, use_indexed_pc=True,
                 use_fused_state=True, use_compiled_alu=True)
 
 
-def test_prepared_calls_reset_machine_state_after_trap_and_under_concurrency():
+@pytest.fixture(params=(False, True), ids=("python", "native"))
+def prepared_factory(request):
+    def prepare(program, **options):
+        return PreparedMicrostepProgram(program, use_native_microstep=request.param, **options)
+
+    return prepare
+
+
+def test_prepared_calls_reset_machine_state_after_trap_and_under_concurrency(prepared_factory):
     program = generated(2)
-    prepared = PreparedMicrostepProgram(program)
+    prepared = prepared_factory(program)
     inputs = (-17, 0, 1, -(1 << 31), (1 << 31) - 1, -17)
     expected = [execute_microstep_control(program, x, **_OPTIONS) for x in inputs]
     with pytest.raises(ControlFuelExhausted):
@@ -30,7 +38,7 @@ def test_prepared_calls_reset_machine_state_after_trap_and_under_concurrency():
     assert prepared.run(inputs[0], capture_trace=False) == replace(expected[0], trace=())
 
 
-def test_preparation_captures_source_tokens_and_live_coefficients():
+def test_preparation_captures_source_tokens_and_live_coefficients(prepared_factory):
     program = ControlProgram(0, (
         ControlOperation("local.get", 0), ControlOperation("i32.const", 3),
         ControlOperation("i32.add"), ControlOperation("end"),
@@ -44,22 +52,22 @@ def test_preparation_captures_source_tokens_and_live_coefficients():
     options = dict(tokens=route, program_tokens=decoded, pc_fixed=pc, alu_fixed=alu)
     expected = execute_microstep_control(program, 7, **_OPTIONS, **options)
     assert expected.result_i32 == 10
-    prepared = PreparedMicrostepProgram(program, **options)
+    prepared = prepared_factory(program, **options)
     route.sequential[:] = 0.
     decoded.i32_immediates[:] = 0.
     pc.path_weights[:] = 0.
     alu.output_gains[0] = 0.
     with pytest.raises(NeuralALUError, match="fails unique selection"):
-        PreparedMicrostepProgram(program, alu_fixed=alu).run(7)
+        prepared_factory(program, alu_fixed=alu).run(7)
     assert prepared.run(7) == expected
 
 
-def test_preparation_rejects_noncanonical_tokens_before_running():
+def test_preparation_rejects_noncanonical_tokens_before_running(prepared_factory):
     program = generated(2)
     tokens = compile_microop_tokens(program)
     corrupted = tokens.i32_immediates.copy()
     corrupted[0, 0] = 1. - corrupted[0, 0]
     with pytest.raises(MicroopAdmissionError, match="differ from canonical"):
-        PreparedMicrostepProgram(program, program_tokens=replace(
+        prepared_factory(program, program_tokens=replace(
             tokens, i32_immediates=corrupted,
         ))
