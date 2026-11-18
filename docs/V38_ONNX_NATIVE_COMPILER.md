@@ -1,6 +1,6 @@
 # v38 — Checked ONNX-to-Semantic IR and graph-generated native CPU replay
 
-**Status: draft research, under CI verification.** This milestone depends on the independently reviewed v37 pretrained MNIST-8 source and two-oracle experiment. A green source audit is **not** a green C++ numerical replay.
+**Status: native experimental replay passed and exact bytes archived, pending review and merge.** This milestone builds upon the independently executed v37 pretrained MNIST-8 source and two-oracle experiment. A green source audit alone is never numerical replay.
 
 ## Why the architecture-independent path matters
 
@@ -45,7 +45,15 @@ PYTHONPATH=visuaml-client/backend \
 
 Predefined witnesses: zeros, ones, centered impulse, checkerboard and seeded-random float32 inputs. The exact same original checkpoint must run in compiled native C++, ONNX Runtime CPU and the v37 closed-world scalar NumPy interpreter. Every output is compared elementwise using the **previously fixed** atol=rtol=1e-4, recording maxima, source and tensor hashes and the full generated C++ code. A changed tolerance would require a new report and explicit rationale.
 
-No benchmark success, independent codegen parity or second pretrained-family claim may be made until the dedicated CI workflow passes and its original unmodified artifact is archived with the origin manifest. Even success will be finite-checkpoint, finite-input evidence, not all-input equivalence.
+The dedicated v38 compiler workflow **passed** on [GitHub Actions run #44214684259](https://github.com/Caerii/VisuaML/actions/runs/44214684259) and its append-only archival job also **passed**. The original 32,007-byte [full native numerical report](../benchmarks/pretrained_mnist8_native_semantic_v38.json), including the generated C++ text and per-run receipts, is now a Git-tracked artifact, with separate [origin manifest](../benchmarks/pretrained_mnist8_native_semantic_v38.origin.json). The latter identifies source commit `ce03d412a86e32d2b9071ccc7f253b041629d7fa` rather than pretending the later archival commit executed the experiment.
+
+Five independent exact trained-model inputs all passed against ONNX Runtime and the separate scalar NumPy oracle. **Observed maximum absolute error: 7.152557373046875e-7**, under the preexisting atol=rtol=1e-4. The native result used all 12 source nodes, 7 float32 runtime inputs including six learned parameter arrays, and validated unchanged input hashes. The generated C++ source SHA is `e395e04f14a9ef3c5ee0534da2fe81605f3fb2e9b2deefaf3f9bb96a207ba686`; the compiled .so SHA is `b4870951b77e6b7d7973d86c6c7526cfd26d4e5fdfb6bb3e56602d7e4a5d4aff`. Compiler: Ubuntu GCC 15.2, `-std=c++17 -O2 -fno-fast-math -fPIC -shared`.
+
+Research-only on-runner metrics: 158,648 bytes upper-bound retained tensor storage, 786,560 scalar multiplies per program invocation, 325.5ms compile and approximately 0.9ms observed warm kernel calls. Not matched, optimized, production-serving, accuracy-on-digit-images or hardware-energy measurements.
+
+A separate [archive test](../visuaml-client/backend/tests/test_pretrained_onnx_native_archive_v38.py) validates the immutable report bytes and origin. A passing static archive check is **not** an independent re-execution; the source-bound GitHub Actions run provides the executable replay.
+
+**Claim boundary:** This is the *first truly pretrained CNN through the general graph-emitted native Semantic IR*. It is additional pretrained architecture evidence alongside the fixed-program Llama v28/v36 backend; it does **not** establish that both Llama and CNN are compiled by the same general emitter, that all ONNX graphs work, or all-input equivalence. The v37 and v38 branches are not merged into main, and roadmap acceptance weights remain unchanged pending review.
 
 ## Separate next research track — reversible virtual machines and WASM
 
