@@ -122,11 +122,12 @@ def select_compressed_rank(results: list[dict], *, full_rank: int,
                    if w["group"] == "heldout"]
         if len(discovery) != 5 or len(heldout) != 5:
             raise PrimitiveCandidateError("Expected separate five-case sets")
-        passes = lambda cases: all(
-            x["top1_unchanged"]
-            and x["relative_l2_logit_change"] <= threshold
-            for x in cases
-        )
+        def passes(cases):
+            return all(
+                x["top1_unchanged"]
+                and x["relative_l2_logit_change"] <= threshold
+                for x in cases
+            )
         if rank == full_rank:
             full_control = bool(passes(discovery) and passes(heldout))
         elif passes(discovery):
