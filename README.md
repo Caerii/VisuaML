@@ -27,7 +27,7 @@ The **reviewed WASM subset** admits one canonical exported `run(i32)->i32` with 
 **GitHub Actions are disabled** to avoid consuming hosted CI minutes. Historical passing runs are preserved, but new code must be verified offline before its claims can be promoted or merged. The dedicated v57 procedure is documented in [the research report](docs/V57_SOURCE_BOUND_TYPED_MICROOPERATIONS.md) and can be launched from a clean clone with:
 
 ```bash
-python -m pip install pytest wasmtime
+python -m pip install -r visuaml-client/backend/requirements.txt pytest wasmtime
 python visuaml-client/backend/scripts/verify_offline_v57.py --output /tmp/visuaml-v57-evidence.json --full
 ```
 
