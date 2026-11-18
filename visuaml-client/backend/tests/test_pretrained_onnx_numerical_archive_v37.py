@@ -6,8 +6,6 @@ import hashlib
 import json
 from pathlib import Path
 
-
-
 ROOT = Path(__file__).resolve().parents[3]
 RECORD = ROOT / "benchmarks/pretrained_mnist8_onnx_numpy_oracles_v37.json"
 ORIGIN = ROOT / "benchmarks/pretrained_mnist8_onnx_numpy_oracles_v37.origin.json"
