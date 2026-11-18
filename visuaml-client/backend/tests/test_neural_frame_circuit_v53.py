@@ -98,14 +98,17 @@ def test_depth_capacity_and_invalid_branch_fail_closed():
         step_frames(state, tokens(2))
     with pytest.raises(FrameCircuitError):
         step_frames(state, tokens(3, depth=0))
-    for _ in range(MAX_NESTING):
+    state, _ = step_frames(state, tokens(1, kind=1, base=0))
+    with pytest.raises(FrameCircuitError):
+        step_frames(state, tokens(3, depth=1))
+    for _ in range(MAX_NESTING - 1):
         state, _ = step_frames(
             state, tokens(1, kind=1, base=0)
         )
     with pytest.raises(FrameCircuitError):
         step_frames(state, tokens(1, kind=1, base=0))
-    with pytest.raises(FrameCircuitError):
-        step_frames(state, tokens(3, depth=MAX_NESTING-1))
+    after, _ = step_frames(state, tokens(3, depth=MAX_NESTING - 1))
+    assert depth(after) == 1
 
 
 def test_weight_ablation_is_not_silently_repaired():
