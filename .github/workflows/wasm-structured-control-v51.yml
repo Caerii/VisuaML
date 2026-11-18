@@ -1,0 +1,71 @@
+name: v51 structured WASM control flow and bit-neural arithmetic differential
+on:
+  push:
+    branches:
+      - research/v51-wasm-structured-control
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/wasm_control_flow_v51.py
+      - visuaml-client/backend/tests/test_wasm_control_flow_v51.py
+      - visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py
+      - .github/workflows/wasm-structured-control-v51.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/wasm_control_flow_v51.py
+      - visuaml-client/backend/tests/test_wasm_control_flow_v51.py
+      - visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py
+      - .github/workflows/wasm-structured-control-v51.yml
+permissions:
+  contents: read
+jobs:
+  structured-control:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned independent Wasmtime and arithmetic dependencies
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==2.2.6 pytest==8.4.2 wasmtime==28.0.0 ruff==0.17.5
+      - name: Execute original WASM blocks, loops, branches, return, and fuel controls
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_wasm_control_flow_v51.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/wasm_control_flow_v51.py visuaml-client/backend/tests/test_wasm_control_flow_v51.py visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py
+      - name: Record original source WASM, control traces and independent oracle results
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p evidence-v51
+          python visuaml-client/backend/scripts/probe_wasm_control_flow_v51.py --output evidence-v51/structured-control-v51.json
+          python - <<'PY'
+          import json
+          r=json.load(open("evidence-v51/structured-control-v51.json"))
+          assert r["schema"]=="visuaml.structured-control-differential.v51"
+          assert r["source_wasm_independently_validated"]
+          assert r["real_wasmtime_executed"]
+          assert r["all_finite_witnesses_passed"]
+          assert r["nonterminating_case_rejected_with_bounded_fuel"]
+          assert not r["neural_pc_routing_implemented"]
+          assert not r["general_wasm_supported"]
+          assert all(x["pass"] for x in r["witnesses"])
+          print("Original structured WASM witness count",len(r["witnesses"]))
+          PY
+      - name: Upload complete source-bound structured-control transition evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: wasm-structured-control-v51
+          path: evidence-v51/structured-control-v51.json
+          if-no-files-found: error
+          retention-days: 30
