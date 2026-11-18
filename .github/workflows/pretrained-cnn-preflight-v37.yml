@@ -4,6 +4,9 @@ on:
     paths:
       - visuaml-client/backend/scripts/audit_pretrained_onnx_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_preflight_v37.py
+      - visuaml-client/backend/tests/test_pretrained_onnx_archive_v37.py
+      - benchmarks/pretrained_mnist8_onnx_preflight_v37.json
+      - benchmarks/pretrained_mnist8_onnx_preflight_v37.origin.json
       - .github/workflows/pretrained-cnn-preflight-v37.yml
       - docs/V37_PRETRAINED_CNN_PREFLIGHT.md
   push:
@@ -12,6 +15,9 @@ on:
     paths:
       - visuaml-client/backend/scripts/audit_pretrained_onnx_v37.py
       - visuaml-client/backend/tests/test_pretrained_onnx_preflight_v37.py
+      - visuaml-client/backend/tests/test_pretrained_onnx_archive_v37.py
+      - benchmarks/pretrained_mnist8_onnx_preflight_v37.json
+      - benchmarks/pretrained_mnist8_onnx_preflight_v37.origin.json
       - .github/workflows/pretrained-cnn-preflight-v37.yml
       - docs/V37_PRETRAINED_CNN_PREFLIGHT.md
 jobs:
@@ -32,7 +38,7 @@ jobs:
           PYTHONNOUSERSITE: "1"
         run: |
           cd visuaml-client/backend
-          python -m pytest -q tests/test_pretrained_onnx_preflight_v37.py
+          python -m pytest -q tests/test_pretrained_onnx_preflight_v37.py tests/test_pretrained_onnx_archive_v37.py
       - name: Retrieve exact published ONNX Model Zoo checkpoint bytes
         run: |
           mkdir -p pretrained-v37
@@ -57,6 +63,7 @@ jobs:
           assert p['checkpoint_sha256']=='2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf'
           print('Exact-byte graph inventory:',p['op_histogram'])
           PY
+          cmp pretrained-v37/mnist-8-preflight.json benchmarks/pretrained_mnist8_onnx_preflight_v37.json
           printf '%s\n' "${GITHUB_SHA}" > pretrained-v37/source-commit.txt
       - name: Upload raw source-bound preflight (no numerical certification)
         uses: actions/upload-artifact@v4
