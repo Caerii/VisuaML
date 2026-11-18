@@ -127,3 +127,28 @@ new test is an important compositional compatibility gate, **not completion
 of the v53 milestone**. The next implementation must connect the constructed
 state output into execution and independently ensure host metadata is only
 validation/program data, not a branch selector.
+
+## Experimental frame-authoritative executor
+
+`neural_frame_executor_v53.py` now implements a **separate execution path**
+rather than merely observing v52 traces. The unchanged v52 PC gates choose
+the next instruction; the new v53 circuit evolves live frame depth, frame
+kind/base metadata and chooses the actual operand-stack truncation height
+for taken branches. The executor applies that output to its physical operand
+stack; a wrong gate configuration cannot be silently replaced with the host
+frame-base value. Source frame start/end/else metadata is still maintained
+and checked by the host, and operation/event decoding remains CPU dispatch.
+
+The dedicated `test_neural_frame_executor_v53.py` suite compares complete
+per-instruction PC, next PC, i32 locals, operand stack, label stack and halt
+states to the original v51 and v52 interpreters on the six canonical
+program families, checks original source bytes with Wasmtime and includes
+negative weight-ablation and fuel tests.
+
+**Verification status must be taken from CI at the specific source head.**
+This is a *restricted neural frame-state machine*, not a general-purpose
+WASM implementation or proof that every label-related operation is neural:
+host instruction/event decoding, lexical metadata and physical operand slot
+storage remain. The next architectural gate eliminates host event choice by
+constructing an opcode-token event decoder, followed by constructed
+stack-pointer and data-slot movement.
