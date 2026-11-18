@@ -1,0 +1,1654 @@
+{
+  "all_variants_finite": true,
+  "base_input_sha256": "d76dd0a4f1b7731a8f8a4b66a58b12b9025c04bb7dd7f39a38cd69f5d341b262",
+  "generalization_beyond_one_input_manifold_established": false,
+  "heldout_coordinates": [
+    0.015625,
+    0.046875,
+    0.078125,
+    0.109375,
+    0.140625,
+    0.171875,
+    0.203125,
+    0.234375,
+    0.265625,
+    0.296875,
+    0.328125,
+    0.359375,
+    0.390625,
+    0.421875,
+    0.453125,
+    0.484375,
+    0.515625,
+    0.546875,
+    0.578125,
+    0.609375,
+    0.640625,
+    0.671875,
+    0.703125,
+    0.734375,
+    0.765625,
+    0.796875,
+    0.828125,
+    0.859375,
+    0.890625,
+    0.921875,
+    0.953125,
+    0.984375
+  ],
+  "heldout_count": 32,
+  "heldout_logit_sha256": "2eabc4eb5f2197793c70750734fcfce1289d16c7124f5c5db6ce2a089f41a7a4",
+  "independent_scalar_numpy_oracles": [
+    {
+      "input_sha256": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271",
+      "max_abs_error": 0.0,
+      "numpy_logits_sha256": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+      "onnxruntime_logits_sha256": "92fc257d10ed14b72991f2d5d09a9558dfcda22aa7782850321cbfcf1615b091",
+      "t": 0.0
+    },
+    {
+      "input_sha256": "4ae706cb12a35464a37c17480b575a3a731db1302027834bd1c31c2c03705a12",
+      "max_abs_error": 2.384185791015625e-07,
+      "numpy_logits_sha256": "31eb2fedf13857aa384246bd9ba35181a5544a629341aa45dce8bfdee068e34e",
+      "onnxruntime_logits_sha256": "50dc21201324afda129aad74012155414d3a0e46865198fe545a904626de6431",
+      "t": 0.5
+    },
+    {
+      "input_sha256": "923d08a9051dc503945358bd83acd226ce10ac1eae30a982c7ce1a9b5a56f5f6",
+      "max_abs_error": 4.76837158203125e-07,
+      "numpy_logits_sha256": "1ca6cad109935d66e72677e2e0eadc66ccdfa81f50c39a8562e5248d93549208",
+      "onnxruntime_logits_sha256": "c0e58e5871aebd4ea46d48eaa73679adbac0a195a6c3b98bd18ac3c6c34775a1",
+      "t": 0.984375
+    }
+  ],
+  "input_domain": [
+    0.0,
+    1.0
+  ],
+  "least_squares_fitted_surrogate": true,
+  "limitations": "Five 1D KAN basis families fit to trained CNN scalar-sweep logits by least squares; 33 training/32 interleaved heldout coordinates, one fixed random base image, no labels or distribution shifts. Not evidence of internal mechanistic circuit identity, factual symbolic law recovery, universal KAN advantage, speedup, or cross-model transfer.",
+  "numpy_version": "2.2.6",
+  "onnxruntime_version": "1.22.1",
+  "pretrained_internal_mechanism_extracted": false,
+  "probe_definition": "t * a single frozen random 28x28 image",
+  "real_digit_accuracy_evaluated": false,
+  "schema": "visuaml.pretrained-kan-surrogate-slice.v45",
+  "seed": 450,
+  "selected_by_training_error_only": "gaussian_rbf",
+  "selected_heldout_mean_abs_logit_error": 0.004776978703270305,
+  "selection_uses_heldout_data": false,
+  "source_checkpoint_revision": "a19f9a8c2333de1df9b03f10f5739f468b699a1a",
+  "source_checkpoint_sha256": "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf",
+  "source_commit": "3ef0920640dd4a4b34aeb42294f0a9f5445526f9",
+  "source_file_sha256": {
+    "scripts/probe_pretrained_kan_slice_v45.py": "9d56d5fc12ceecd6dd677efb2e4520f015baae883736a7c17301b51e3beda4a3",
+    "visuaml/compiler_lab/kan_mechanism_ir_v45.py": "38d4b4c01dd6de40328924404086b0a016f0e7103359face4e0c1db24275a9df",
+    "visuaml/compiler_lab/kan_teacher_slice_v45.py": "622a6606f827909321637107eea9d8e4d99ee03f9b0d9881570ed0f3b8a66ab6"
+  },
+  "teacher_perturbation_ablations_executed": false,
+  "train_coordinates": [
+    0.0,
+    0.03125,
+    0.0625,
+    0.09375,
+    0.125,
+    0.15625,
+    0.1875,
+    0.21875,
+    0.25,
+    0.28125,
+    0.3125,
+    0.34375,
+    0.375,
+    0.40625,
+    0.4375,
+    0.46875,
+    0.5,
+    0.53125,
+    0.5625,
+    0.59375,
+    0.625,
+    0.65625,
+    0.6875,
+    0.71875,
+    0.75,
+    0.78125,
+    0.8125,
+    0.84375,
+    0.875,
+    0.90625,
+    0.9375,
+    0.96875,
+    1.0
+  ],
+  "train_count": 33,
+  "trained_kan": false,
+  "training_logit_sha256": "78d4b4d375d002453a20d3951184f4f14703104410619654fcac01e2f37656d1",
+  "variants": [
+    {
+      "family": "linear",
+      "functional_surrogate_only": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.01982269125016096,
+                  0.43941422460232205
+                ],
+                "name": "edge_0",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.0391989307678944,
+                  -0.40796072839853925
+                ],
+                "name": "edge_1",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.28162902666657563,
+                  -0.28600230733341053
+                ],
+                "name": "edge_2",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.04208597483083518,
+                  0.5399935677010109
+                ],
+                "name": "edge_3",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.21362218786688392,
+                  -0.47228168389376507
+                ],
+                "name": "edge_4",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.3518515803225324,
+                  -0.09389995636149505
+                ],
+                "name": "edge_5",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.09593147769862524,
+                  -0.2380485546421557
+                ],
+                "name": "edge_6",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.04884960691638814,
+                  -1.3949417902585017
+                ],
+                "name": "edge_7",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0667739056462487,
+                  1.2191555585293847
+                ],
+                "name": "edge_8",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.16509613842967347,
+                  -0.7723533733085515
+                ],
+                "name": "edge_9",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "861e0f7fe481e90567444c2a3d302bf75c981adcb60da2d616ab055bf6b1d26a",
+      "heldout_max_abs_logit_error": 0.3138822802589832,
+      "heldout_mean_abs_logit_error": 0.08032852243518042,
+      "heldout_relative_l2_logit_error": 0.23287662077261237,
+      "heldout_top1_agreement": 0.8125,
+      "pretrained_internal_mechanism_recovered": false,
+      "train_max_abs_logit_error": 0.3394856468214921
+    },
+    {
+      "family": "polynomial",
+      "functional_surrogate_only": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.051444857603066246,
+                  0.01886472384838589,
+                  2.792991724474247,
+                  -3.8373841199720506,
+                  1.3642288527498576
+                ],
+                "name": "edge_0",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.017247619768920402,
+                  0.02298589890048125,
+                  -1.9938472908637528,
+                  3.240611034125896,
+                  -1.6904517819581428
+                ],
+                "name": "edge_1",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.09787319860923333,
+                  -1.1496491915678575,
+                  9.832182599280415,
+                  -16.613596088107318,
+                  7.4981830379723675
+                ],
+                "name": "edge_2",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.049736150783967994,
+                  -1.3607987166639752,
+                  9.38420291013801,
+                  -12.6875548276867,
+                  4.9511945868553005
+                ],
+                "name": "edge_3",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.14497513835839063,
+                  0.5836144073764176,
+                  -7.08880798676339,
+                  10.312400383784711,
+                  -4.084896153124729
+                ],
+                "name": "edge_4",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.12988496281884815,
+                  0.3065444836951423,
+                  4.315966366643117,
+                  -9.239625892607492,
+                  4.501774510688576
+                ],
+                "name": "edge_5",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.054937850078181895,
+                  -0.056279131920620916,
+                  3.4557611372901755,
+                  -7.118323714641189,
+                  3.4633986693066294
+                ],
+                "name": "edge_6",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.01060318771052081,
+                  -1.1552744630437555,
+                  0.4464410871249736,
+                  -1.4286697427644317,
+                  0.7488263892957191
+                ],
+                "name": "edge_7",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  0.06998173027995643,
+                  -0.14625014266273184,
+                  3.3350707857178814,
+                  -3.143242487743654,
+                  1.0852287703281132
+                ],
+                "name": "edge_8",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "polynomial",
+                "coefficients": [
+                  -0.0586618248721015,
+                  0.6106927794275888,
+                  -10.047091633322836,
+                  15.353669698386543,
+                  -6.470505867633765
+                ],
+                "name": "edge_9",
+                "parameters": [],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "77826002aff0ddfea0a614c45f9048e498e04754e64b8919c919f60584aa27ed",
+      "heldout_max_abs_logit_error": 0.04433085553859904,
+      "heldout_mean_abs_logit_error": 0.009655823152167852,
+      "heldout_relative_l2_logit_error": 0.028362118726504067,
+      "heldout_top1_agreement": 1.0,
+      "pretrained_internal_mechanism_recovered": false,
+      "train_max_abs_logit_error": 0.04815883893544402
+    },
+    {
+      "family": "linear_spline",
+      "functional_surrogate_only": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -0.053960550504755025,
+                  -0.024623970157411336,
+                  0.09070656252946496,
+                  0.165579119952997,
+                  0.24103475221656281,
+                  0.3533117170993177,
+                  0.34953412585790233,
+                  0.3200179505217878,
+                  0.2995384955449633
+                ],
+                "name": "edge_0",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.010615447712408419,
+                  0.011632433004776305,
+                  -0.06668582283944399,
+                  -0.1162388835191897,
+                  -0.1781877653553278,
+                  -0.2052830326995642,
+                  -0.248442836811512,
+                  -0.31879776222530726,
+                  -0.3905244962936517
+                ],
+                "name": "edge_1",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.07366402226343557,
+                  0.08339108891323747,
+                  0.17797198700297595,
+                  0.31331297338459974,
+                  0.42171898125224766,
+                  0.2933349987829407,
+                  0.13460095921099774,
+                  -0.11107840523109233,
+                  -0.344980231970597
+                ],
+                "name": "edge_2",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.029161130478701603,
+                  -0.0026447097680625587,
+                  0.1100305783816249,
+                  0.28779749852638853,
+                  0.4312591739251701,
+                  0.5541734114943048,
+                  0.5182669503837694,
+                  0.4436693820955847,
+                  0.3422476280529468
+                ],
+                "name": "edge_3",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -0.13032804363713585,
+                  -0.1588515510038756,
+                  -0.29086054654618465,
+                  -0.47501018462336375,
+                  -0.5648812602974158,
+                  -0.6885819607723516,
+                  -0.6469668512034682,
+                  -0.5315244577827941,
+                  -0.43586105033745726
+                ],
+                "name": "edge_4",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.12974268736225145,
+                  0.20999881202632847,
+                  0.3400331450476011,
+                  0.48581577990948904,
+                  0.48438403994305357,
+                  0.4399048803991194,
+                  0.3111426391671844,
+                  0.16328884005373756,
+                  -0.00035055756511302044
+                ],
+                "name": "edge_5",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -0.0573888226965616,
+                  -0.032594525927439257,
+                  0.07113307522152701,
+                  0.08480054401544908,
+                  0.11700734134075289,
+                  0.06239924570282281,
+                  -0.05832252023757626,
+                  -0.205923870161564,
+                  -0.3090349962461688
+                ],
+                "name": "edge_6",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -0.034318809212210574,
+                  -0.10831941067885496,
+                  -0.33127204717372294,
+                  -0.45103795607011604,
+                  -0.5569443328250693,
+                  -0.8174829692227822,
+                  -0.9998942544425283,
+                  -1.1857675409130213,
+                  -1.4063325770758275
+                ],
+                "name": "edge_7",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  0.06917817063239272,
+                  0.08148453929701373,
+                  0.2095342210800016,
+                  0.3292032947045173,
+                  0.5008585135700658,
+                  0.6876501297577245,
+                  0.8489888185950056,
+                  1.0276481246681508,
+                  1.1992447344550992
+                ],
+                "name": "edge_8",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "linear_spline",
+                "coefficients": [
+                  -0.038580050038364185,
+                  -0.10153321484605372,
+                  -0.3258364388328954,
+                  -0.5433800958087527,
+                  -0.7688885355055043,
+                  -0.8542472235010872,
+                  -0.8295189941619181,
+                  -0.7154463000792378,
+                  -0.6160599566930494
+                ],
+                "name": "edge_9",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "e6426980517d50a1aecdc441d2950bf5eaa65f3938ba9367cfee020bdfec7a4f",
+      "heldout_max_abs_logit_error": 0.02764888417561326,
+      "heldout_mean_abs_logit_error": 0.004582520505342492,
+      "heldout_relative_l2_logit_error": 0.01450516969488118,
+      "heldout_top1_agreement": 1.0,
+      "pretrained_internal_mechanism_recovered": false,
+      "train_max_abs_logit_error": 0.02415932801576587
+    },
+    {
+      "family": "gaussian_rbf",
+      "functional_surrogate_only": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.04315815268159222,
+                  -0.2129921636414444,
+                  0.21866494859970548,
+                  0.01347447410158572,
+                  -0.05210648578612165,
+                  0.2756679471892244,
+                  0.11872448219760359,
+                  -0.060544129002802746,
+                  0.29000426559052633
+                ],
+                "name": "edge_0",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  -0.2576114007473432,
+                  0.6524404489517253,
+                  -0.9448920361761204,
+                  1.046588772124772,
+                  -1.1989470094743597,
+                  1.0225780720371647,
+                  -1.0263362940913479,
+                  0.6832035690257967,
+                  -0.645723128430063
+                ],
+                "name": "edge_1",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.11225492462251832,
+                  -0.11470784742616619,
+                  0.165845352711852,
+                  -0.08717464954885007,
+                  0.4294042047051966,
+                  -0.008971847899670515,
+                  -0.08285786873299984,
+                  0.3514531135608564,
+                  -0.5720663586717613
+                ],
+                "name": "edge_2",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.15959351021052964,
+                  -0.19519790143578053,
+                  -0.020152467167749565,
+                  0.3981854467036186,
+                  -0.36320217256741333,
+                  0.7727229831239009,
+                  -0.24797197370210225,
+                  0.3249753640172273,
+                  0.12391999580267472
+                ],
+                "name": "edge_3",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.012435153957405333,
+                  -0.38243210660189897,
+                  0.7537474414023018,
+                  -1.405728800116764,
+                  1.192117862577526,
+                  -1.3911485104948753,
+                  0.4365468424064322,
+                  -0.3441745291320927,
+                  -0.22483467852630565
+                ],
+                "name": "edge_4",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  -0.07184032265930593,
+                  0.447762574231901,
+                  -0.6968670746611145,
+                  1.327021651985489,
+                  -1.111499359937759,
+                  1.3753448785220006,
+                  -0.9179177511414086,
+                  0.7796048915378554,
+                  -0.3857329770212668
+                ],
+                "name": "edge_5",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.14420209177280696,
+                  -0.4996240043649327,
+                  0.717765175561019,
+                  -0.6632053956510211,
+                  0.5883790248498693,
+                  -0.2570480049822737,
+                  0.055810036989271415,
+                  0.051315302478386754,
+                  -0.34147277373729923
+                ],
+                "name": "edge_6",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  -0.3691937886246166,
+                  0.8708021628487211,
+                  -1.2776065702109303,
+                  1.0180693053067706,
+                  -1.317734138096664,
+                  1.1482511370901407,
+                  -2.0898932308676756,
+                  1.5709010115954654,
+                  -1.9989999588004652
+                ],
+                "name": "edge_7",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  0.5210808622990867,
+                  -1.1392304692626767,
+                  1.7074228285374142,
+                  -1.8451290227327457,
+                  2.2182665405897044,
+                  -1.8822103808667279,
+                  2.336500271671369,
+                  -1.5773812287522089,
+                  1.7677034340742745
+                ],
+                "name": "edge_8",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "gaussian_rbf",
+                "coefficients": [
+                  -0.3823351199847742,
+                  0.902683139103607,
+                  -1.372014707001642,
+                  1.2970093540717542,
+                  -1.7706847152396477,
+                  1.1045140777954001,
+                  -1.5259784923424793,
+                  0.7779261691640693,
+                  -0.7997665351096368
+                ],
+                "name": "edge_9",
+                "parameters": [
+                  0.0,
+                  0.125,
+                  0.25,
+                  0.375,
+                  0.5,
+                  0.625,
+                  0.75,
+                  0.875,
+                  1.0,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16,
+                  0.16
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "58d1873add36ecf462f83c0624e0d50909ebf6a262afbca09893d60174ba32e6",
+      "heldout_max_abs_logit_error": 0.021497955475189276,
+      "heldout_mean_abs_logit_error": 0.004776978703270305,
+      "heldout_relative_l2_logit_error": 0.013634369077567746,
+      "heldout_top1_agreement": 0.96875,
+      "pretrained_internal_mechanism_recovered": false,
+      "train_max_abs_logit_error": 0.018804611915996028
+    },
+    {
+      "family": "fourier",
+      "functional_surrogate_only": true,
+      "graph": {
+        "domain": [
+          0.0,
+          1.0
+        ],
+        "inputs": [
+          "t"
+        ],
+        "nodes": [
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.2022256833021966,
+                  -0.06598734438883472,
+                  -0.1618693423071896,
+                  -0.01634757678091624,
+                  -0.051277435656436006,
+                  0.0063736631792218204,
+                  -0.04359386381431036,
+                  -0.001300396298959148,
+                  -0.032451763315166186
+                ],
+                "name": "edge_0",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_0"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  -0.16415551270380305,
+                  -0.000675092249844713,
+                  0.12585718711859203,
+                  -0.011023466850760522,
+                  0.07160082018053568,
+                  -0.0028515750755588216,
+                  0.046317529462703406,
+                  -0.006105249833714392,
+                  0.02888513958779068
+                ],
+                "name": "edge_1",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_1"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.14656497714435693,
+                  -0.24097844206753408,
+                  0.05882634347857238,
+                  -0.006176165619856358,
+                  0.05808760994152834,
+                  -0.015808599488622784,
+                  0.048138161993377164,
+                  0.001038770407954749,
+                  0.036155886428945086
+                ],
+                "name": "edge_2",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_2"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.3159163150242368,
+                  -0.12635095024022555,
+                  -0.2266845635418258,
+                  -0.0025867628806743453,
+                  -0.0538377016717508,
+                  0.006594819674210854,
+                  -0.03852554003363095,
+                  -0.004164465868889085,
+                  -0.02355775136416617
+                ],
+                "name": "edge_3",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_3"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  -0.45470559758686335,
+                  0.14746514388653092,
+                  0.19274577804420062,
+                  0.01921639660743394,
+                  0.049460471642030664,
+                  -0.011497925004215922,
+                  0.030442935674671715,
+                  0.007921121022455202,
+                  0.020183773765960686
+                ],
+                "name": "edge_4",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_4"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.3119166498978438,
+                  -0.1941049177005697,
+                  0.026343066144397447,
+                  -0.02250268062959879,
+                  0.0066557483326091646,
+                  -0.003072502734181922,
+                  0.014033937767791872,
+                  -0.011816474885597544,
+                  0.008705769359248723
+                ],
+                "name": "edge_5",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_5"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  -0.018371235590962473,
+                  -0.13705118568676591,
+                  0.0712643269576019,
+                  -0.017180566190473052,
+                  0.04475546509210806,
+                  -0.005115955706353862,
+                  0.01993858481563245,
+                  0.0035360945444182124,
+                  0.018345102140072653
+                ],
+                "name": "edge_6",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_6"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  -0.6467523578499834,
+                  -0.04385546135318398,
+                  0.44329779803679564,
+                  0.011137085998197517,
+                  0.22086635136885077,
+                  -0.023278212888550878,
+                  0.15219308875421356,
+                  -0.005678113731478464,
+                  0.11053731258864073
+                ],
+                "name": "edge_7",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_7"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  0.5403261228285817,
+                  0.04794963835853533,
+                  -0.4057071424718091,
+                  0.01587800438464866,
+                  -0.1823918621547827,
+                  0.009868791637250032,
+                  -0.12508945798639887,
+                  0.008069341685004942,
+                  -0.08987508694511488
+                ],
+                "name": "edge_8",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_8"
+          },
+          {
+            "combine": "sum",
+            "edges": [
+              {
+                "basis": "fourier",
+                "coefficients": [
+                  -0.5579290323766463,
+                  0.20376887747287417,
+                  0.2929839193780891,
+                  0.013647541030544306,
+                  0.09359172115940737,
+                  0.00553224707673345,
+                  0.06515081819503717,
+                  -0.00329382492114714,
+                  0.05149439772110159
+                ],
+                "name": "edge_9",
+                "parameters": [
+                  6.283185307179586
+                ],
+                "source": "t"
+              }
+            ],
+            "name": "logit_9"
+          }
+        ],
+        "outputs": [
+          "logit_0",
+          "logit_1",
+          "logit_2",
+          "logit_3",
+          "logit_4",
+          "logit_5",
+          "logit_6",
+          "logit_7",
+          "logit_8",
+          "logit_9"
+        ],
+        "schema": "visuaml.kan-mechanism-ir.v45"
+      },
+      "graph_sha256": "743308a2f34e898a6143ceed1fa5dccd74f39e7a51da8e863504c155e3b47a3c",
+      "heldout_max_abs_logit_error": 0.49886349644776173,
+      "heldout_mean_abs_logit_error": 0.030708539579552017,
+      "heldout_relative_l2_logit_error": 0.14431046648068058,
+      "heldout_top1_agreement": 0.90625,
+      "pretrained_internal_mechanism_recovered": false,
+      "train_max_abs_logit_error": 0.6991880057496463
+    }
+  ]
+}

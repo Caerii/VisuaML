@@ -1,0 +1,221 @@
+name: v45 typed KAN and MultKAN mechanism validation
+on:
+  push:
+    branches:
+      - research/v45-kan-mechanism-ir
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/kan_mechanism_ir_v45.py
+      - visuaml-client/backend/visuaml/compiler_lab/kan_symbolic_frontend_v45.py
+      - visuaml-client/backend/scripts/probe_kan_mechanisms_v45.py
+      - visuaml-client/backend/visuaml/compiler_lab/kan_teacher_slice_v45.py
+      - visuaml-client/backend/scripts/probe_pretrained_kan_slice_v45.py
+      - visuaml-client/backend/tests/test_kan_teacher_slice_v45.py
+      - visuaml-client/backend/tests/test_kan_archive_v45.py
+      - visuaml-client/backend/visuaml/compiler_lab/kan_native_bridge_v45.py
+      - visuaml-client/backend/tests/test_kan_native_bridge_v45.py
+      - benchmarks/kan_mechanism_replay_v45.json
+      - benchmarks/kan_mechanism_replay_v45.origin.json
+      - benchmarks/pretrained_kan_surrogate_v45.json
+      - benchmarks/pretrained_kan_surrogate_v45.origin.json
+      - visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py
+      - visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py
+      - .github/workflows/kan-mechanisms-v45.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/kan_mechanism_ir_v45.py
+      - visuaml-client/backend/visuaml/compiler_lab/kan_symbolic_frontend_v45.py
+      - visuaml-client/backend/scripts/probe_kan_mechanisms_v45.py
+      - visuaml-client/backend/visuaml/compiler_lab/kan_teacher_slice_v45.py
+      - visuaml-client/backend/scripts/probe_pretrained_kan_slice_v45.py
+      - visuaml-client/backend/tests/test_kan_teacher_slice_v45.py
+      - visuaml-client/backend/tests/test_kan_archive_v45.py
+      - visuaml-client/backend/visuaml/compiler_lab/kan_native_bridge_v45.py
+      - visuaml-client/backend/tests/test_kan_native_bridge_v45.py
+      - benchmarks/kan_mechanism_replay_v45.json
+      - benchmarks/kan_mechanism_replay_v45.origin.json
+      - benchmarks/pretrained_kan_surrogate_v45.json
+      - benchmarks/pretrained_kan_surrogate_v45.origin.json
+      - visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py
+      - visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py
+      - .github/workflows/kan-mechanisms-v45.yml
+permissions:
+  contents: write
+jobs:
+  kan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned numerical, SMT, WASM and regression dependencies
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==2.2.6 onnx==1.18.0 onnxruntime==1.22.1 pytest==8.4.2 wasmtime==28.0.0 z3-solver==4.13.4.0 ruff==0.17.5
+      - name: Validate typed KAN/MultKAN, four edge families, symbolic compositional proof, causal guards
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py visuaml-client/backend/tests/test_kan_teacher_slice_v45.py visuaml-client/backend/tests/test_neural_symbolic_archive_v43.py visuaml-client/backend/tests/test_kan_archive_v45.py visuaml-client/backend/tests/test_kan_native_bridge_v45.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/kan_mechanism_ir_v45.py visuaml-client/backend/visuaml/compiler_lab/kan_symbolic_frontend_v45.py visuaml-client/backend/tests/test_kan_mechanism_ir_v45.py visuaml-client/backend/tests/test_kan_symbolic_frontend_v45.py visuaml-client/backend/scripts/probe_kan_mechanisms_v45.py visuaml-client/backend/visuaml/compiler_lab/kan_teacher_slice_v45.py visuaml-client/backend/scripts/probe_pretrained_kan_slice_v45.py visuaml-client/backend/tests/test_kan_teacher_slice_v45.py visuaml-client/backend/tests/test_kan_archive_v45.py visuaml-client/backend/visuaml/compiler_lab/kan_native_bridge_v45.py visuaml-client/backend/tests/test_kan_native_bridge_v45.py
+      - name: Independently replay v41 neural through KAN and typed WASM in 256-point signed-i8 domain
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          mkdir -p evidence-v45
+          python visuaml-client/backend/scripts/probe_kan_mechanisms_v45.py --output evidence-v45/kan-mechanisms-v45.json
+          python - <<'PY'
+          import json
+          d=json.load(open("evidence-v45/kan-mechanisms-v45.json"))
+          assert d["schema"] == "visuaml.kan-symbolic-construction-replay.v45"
+          assert d["independently_normalized_polynomial_coefficients"] == ["7", "-3", "1"]
+          assert d["full_domain_bounded_witnesses"] == 256
+          assert all(w["pass"] for w in d["witnesses"])
+          assert {x["basis"] for x in d["basis_extensions"]} == {"polynomial","linear_spline","gaussian_rbf","fourier"}
+          assert all(x["all_passed"] for x in d["basis_extensions"])
+          assert d["all_i32_symbolic_vs_original_wasm"]["solver_outcome"] == "unsat"
+          assert d["kan_is_pretrained_mechanism"] is False
+          assert d["pretrained_feature_discovery_completed"] is False
+          assert d["all_i32_kan_graph_proved"] is False
+          assert d["kan_speedup_measured"] is False
+          print("KAN graph and independent Wasmtime replay passed")
+          PY
+      - name: Fetch immutable real pretrained MNIST-8 model for KAN surrogate comparisons
+        run: |
+          mkdir -p evidence-v45
+          curl --fail --location --retry 3 --max-time 75 'https://huggingface.co/onnxmodelzoo/mnist-8/resolve/a19f9a8c2333de1df9b03f10f5739f468b699a1a/mnist-8.onnx' --output evidence-v45/mnist-8.onnx
+          echo '2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf  evidence-v45/mnist-8.onnx' | sha256sum --check
+          test "$(wc -c < evidence-v45/mnist-8.onnx)" -eq 26454
+      - name: Fit KAN basis surrogates with disjoint heldout original-CNN logits and NumPy oracles
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python visuaml-client/backend/scripts/probe_pretrained_kan_slice_v45.py --model evidence-v45/mnist-8.onnx --output evidence-v45/pretrained-kan-slice-v45.json
+          python - <<'PY'
+          import json
+          d=json.load(open("evidence-v45/pretrained-kan-slice-v45.json"))
+          assert d["schema"] == "visuaml.pretrained-kan-surrogate-slice.v45"
+          assert d["train_count"] == 33 and d["heldout_count"] == 32
+          assert not d["selection_uses_heldout_data"] and d["all_variants_finite"]
+          assert {v["family"] for v in d["variants"]} == {"linear", "polynomial", "linear_spline", "gaussian_rbf", "fourier"}
+          assert len(d["independent_scalar_numpy_oracles"]) == 3
+          assert not d["trained_kan"] and d["least_squares_fitted_surrogate"]
+          assert not d["pretrained_internal_mechanism_extracted"]
+          assert not d["real_digit_accuracy_evaluated"]
+          assert not d["generalization_beyond_one_input_manifold_established"]
+          print("Heldout surrogates",[(v["family"],v["heldout_mean_abs_logit_error"]) for v in d["variants"]])
+          PY
+      - name: Upload KAN surrogate responses to real checkpoint
+        uses: actions/upload-artifact@v4
+        with:
+          name: pretrained-kan-surrogate-v45
+          path: evidence-v45/pretrained-kan-slice-v45.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Upload original KAN witnesses and exact graph provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: typed-kan-mechanisms-v45
+          path: evidence-v45/kan-mechanisms-v45.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Archive original KAN and pretrained-surrogate evidence on trusted branch pushes
+        env:
+          PYTHONNOUSERSITE: "1"
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ "$GITHUB_REF_NAME" != "research/v45-kan-mechanism-ir" ]; then
+            echo "No archival mutations on PRs, forks, main, or unrelated branches."
+            exit 0
+          fi
+          if [ -e benchmarks/kan_mechanism_replay_v45.json ] || [ -e benchmarks/pretrained_kan_surrogate_v45.json ]; then
+            test -f benchmarks/kan_mechanism_replay_v45.json
+            test -f benchmarks/kan_mechanism_replay_v45.origin.json
+            test -f benchmarks/pretrained_kan_surrogate_v45.json
+            test -f benchmarks/pretrained_kan_surrogate_v45.origin.json
+            echo "Existing v45 original records must never be overwritten."
+            exit 0
+          fi
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          directory=Path("benchmarks")
+          directory.mkdir(parents=True, exist_ok=True)
+          jobs=(
+              ("kan-mechanisms-v45.json", "kan_mechanism_replay_v45",
+               "visuaml.kan-symbolic-construction-replay.v45",
+               "typed-kan-mechanisms-v45"),
+              ("pretrained-kan-slice-v45.json", "pretrained_kan_surrogate_v45",
+               "visuaml.pretrained-kan-surrogate-slice.v45",
+               "pretrained-kan-surrogate-v45"),
+          )
+          for original_name, base, schema, artifact in jobs:
+              raw=Path("evidence-v45", original_name).read_bytes()
+              record=json.loads(raw)
+              assert record["schema"] == schema
+              assert record["source_commit"] == os.environ["GITHUB_SHA"]
+              if schema.startswith("visuaml.kan-symbolic"):
+                  assert record["full_domain_bounded_witnesses"] == 256
+                  assert all(w["pass"] for w in record["witnesses"])
+                  assert record["independently_normalized_polynomial_coefficients"] == ["7","-3","1"]
+                  assert not record["kan_is_pretrained_mechanism"]
+                  assert not record["all_i32_kan_graph_proved"]
+              else:
+                  assert record["train_count"] == 33 and record["heldout_count"] == 32
+                  assert not record["selection_uses_heldout_data"]
+                  assert record["least_squares_fitted_surrogate"]
+                  assert not record["pretrained_internal_mechanism_extracted"]
+                  assert record["all_variants_finite"]
+              archive=directory / (base+".json")
+              origin=directory / (base+".origin.json")
+              if archive.exists() or origin.exists():
+                  raise SystemExit("Refuse partial or conflicting evidence archive")
+              archive.write_bytes(raw)
+              metadata={
+                  "schema": "visuaml.evidence-origin.v45",
+                  "record_schema": schema,
+                  "record_name": base,
+                  "source_commit": os.environ["GITHUB_SHA"],
+                  "workflow_run_url": (
+                      "https://github.com/"+os.environ["GITHUB_REPOSITORY"]
+                      +"/actions/runs/"+os.environ["GITHUB_RUN_ID"]
+                  ),
+                  "github_artifact_name": artifact,
+                  "raw_sha256": hashlib.sha256(raw).hexdigest(),
+                  "raw_bytes": len(raw),
+                  "source_file_sha256": record["source_file_sha256"],
+                  "actual_pretrained_checkpoint_sha256": (
+                      record["source_checkpoint_sha256"]
+                      if "source_checkpoint_sha256" in record else None
+                  ),
+                  "evidence_scope": (
+                      "constructed exact rational KAN identity and finite original-model replay"
+                      if "kan_graph_digest" in record
+                      else "fitted KAN surrogates on one measured pretrained scalar response"
+                  ),
+                  "signed_external_attestation": False,
+                  "generic_pretrained_mechanism_certified": False,
+              }
+              origin.write_text(
+                  json.dumps(metadata,indent=2,sort_keys=True,allow_nan=False)+"\n",
+                  encoding="utf-8",
+              )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add benchmarks/kan_mechanism_replay_v45.json benchmarks/kan_mechanism_replay_v45.origin.json benchmarks/pretrained_kan_surrogate_v45.json benchmarks/pretrained_kan_surrogate_v45.origin.json
+          git commit -m "v45: preserve original KAN identities and real-teacher surrogate evidence [skip ci]"
+          git push origin "HEAD:refs/heads/research/v45-kan-mechanism-ir"
