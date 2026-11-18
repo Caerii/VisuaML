@@ -4,7 +4,6 @@ These do not claim integration into the v52 WASM executor.
 """
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.neural_frame_circuit_v53 import (
     ACTIONS,
     HEIGHTS,
