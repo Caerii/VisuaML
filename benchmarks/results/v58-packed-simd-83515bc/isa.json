@@ -1,0 +1,19 @@
+{
+  "avx2_available": true,
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "instructions": [
+    "34b5:\tc5 d5 76 fe          \tvpcmpeqd %ymm6,%ymm5,%ymm7",
+    "3515:\tc5 c5 76 bd b0 fa ff \tvpcmpeqd -0x550(%rbp),%ymm7,%ymm7",
+    "3525:\tc5 3d 76 85 b0 fa ff \tvpcmpeqd -0x550(%rbp),%ymm8,%ymm8",
+    "353d:\tc4 e2 55 40 fe       \tvpmulld %ymm6,%ymm5,%ymm7",
+    "354a:\tc5 55 fa c6          \tvpsubd %ymm6,%ymm5,%ymm8",
+    "354e:\tc5 d5 fe ee          \tvpaddd %ymm6,%ymm5,%ymm5",
+    "3cad:\tc5 e5 fa c9          \tvpsubd %ymm1,%ymm3,%ymm1"
+  ],
+  "kernel_sha256": "9b2101bfef0b29a0f129666462ce04628725fc812013bfabadfd2cf526780627",
+  "source": {
+    "branch": "research/v58-packed-simd",
+    "commit": "83515bc3f50bf815aeb50034b7c34011c4649f52",
+    "tree": "d99bba8aa785642466b6f49948adedfb97fc4ed9"
+  }
+}

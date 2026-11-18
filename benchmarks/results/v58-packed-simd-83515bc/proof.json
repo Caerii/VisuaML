@@ -1,0 +1,21 @@
+{
+  "checks": [
+    "add",
+    "subtract",
+    "signed less",
+    "signed greater",
+    "zero",
+    "multiply column invariant"
+  ],
+  "finite_carry_tables": {
+    "add": 4,
+    "multiply": 64
+  },
+  "multiply_retained_monomials": 528,
+  "solver": "4.15.3",
+  "source": {
+    "branch": "research/v58-packed-simd",
+    "commit": "83515bc3f50bf815aeb50034b7c34011c4649f52",
+    "tree": "d99bba8aa785642466b6f49948adedfb97fc4ed9"
+  }
+}

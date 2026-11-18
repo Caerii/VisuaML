@@ -262,3 +262,12 @@ uses an exact canonical ALU lowering. The two-run archive compares single
 calls and batches, checks traces, coefficient effects and fuel behavior,
 and records the arithmetic proof and direct prepared-Python timings.
 [Packed scalar execution report](V58_PACKED_SCALAR.md)
+
+## v58 packed AVX2 batches
+
+Eight packed lanes share each straight-line program's admitted step
+logic. Warm 1,024-input throughput improved 1.22–1.27× at the API and
+1.99× in the separate preallocated kernel measurement. The archive
+includes emitted vector instructions, trace and result parity, and
+fuel and coefficient replays.
+[Packed AVX2 batch report](V58_PACKED_SIMD.md)
