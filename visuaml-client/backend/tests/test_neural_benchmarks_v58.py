@@ -128,3 +128,21 @@ def test_workload_discovery_has_disjoint_holdout_source_programs():
     assert sum(len(w.arguments) for w in work) == 194
     with pytest.raises(ValueError):
         workloads(holdout=-1)
+
+
+def test_system_benchmark_registry_is_accurate_and_nonfabricated():
+    from pathlib import Path
+
+    from scripts.list_system_benchmarks_v58 import read_registry, summary
+
+    root = Path(__file__).resolve().parents[3]
+    record = read_registry(root)
+    values = summary(record)
+    assert values["suite_count"] >= 10
+    assert values["implemented_unmeasured"] >= 2
+    assert values["planned"] >= 5
+    assert values["measured_result_count"] == 0
+    assert {s["id"] for s in values["suites"]} >= {
+        "neural-vm", "compiler-ir-roundtrip", "collaborative-graph",
+        "neural-symbolic-recovery", "native-backend-parity",
+    }
