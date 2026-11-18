@@ -201,11 +201,15 @@ def execute_microop_routed_control(
         entry_base = None
         branch_depth = None
         entering_metadata = None
+        # The source-bound decoder, rather than the host opcode, owns
+        # how many physical operands the execution path consumes.
+        effect = microop.effect
+        pop_count = int(effect[2] + effect[3] + 2. * effect[4])
+        consumed = tuple(_pop(stack) for _ in range(pop_count))
+        produced = None
         depth_before = int(np.argmax(frame_state.depth))
         if kind in ("block", "loop", "if"):
             end, else_pc = links[pc]
-            if kind == "if":
-                _pop(stack)
             entry_kind = ("block", "loop", "if").index(kind)
             entry_base = len(stack)
             entering_metadata = (kind, pc, end, else_pc)
@@ -228,8 +232,6 @@ def execute_microop_routed_control(
             else:
                 raise ControlExecutionTrap("Function must end with one i32")
         elif kind in ("br", "br_if"):
-            if kind == "br_if":
-                _pop(stack)
             branch_depth = int(np.argmax(microop.branch_depth))
         elif kind == "return":
             if len(stack) != 1 or next_pc != TERMINAL:
@@ -238,17 +240,17 @@ def execute_microop_routed_control(
         elif kind == "nop":
             pass
         elif kind == "i32.const":
-            stack.append(microop.immediate_bits.copy())
+            produced = microop.immediate_bits.copy()
         elif kind == "local.get":
             local_bank, fetched = apply_local_microop(
                 local_bank, microop.local_selector, microop.local_mode,
                 np.zeros(32, dtype=np.float64), fixed=local_fixed,
             )
-            stack.append(fetched)
+            produced = fetched
         elif kind == "local.set":
             local_bank, _ = apply_local_microop(
                 local_bank, microop.local_selector, microop.local_mode,
-                _pop(stack), fixed=local_fixed,
+                consumed[0], fixed=local_fixed,
             )
         elif kind == "local.tee":
             if not stack:
@@ -258,16 +260,16 @@ def execute_microop_routed_control(
                 stack[-1], fixed=local_fixed,
             )
         elif kind == "drop":
-            _pop(stack)
+            pass
         elif kind == "i32.eqz":
-            left = _pop(stack)
+            left = consumed[0]
             result = execute_alu(
                 microop.alu_selector, left, np.zeros(32, dtype=np.float64),
                 fixed=alu_fixed, bit_fixed=bit_fixed,
             )
-            stack.append(result)
+            produced = result
         elif kind in _BINARY:
-            right, left = _pop(stack), _pop(stack)
+            right, left = consumed
             # All candidate operations use the same v49 analytic circuit.
             # The fixed ALU output gate, not Python opcode dispatch,
             # chooses the i32 result.
@@ -275,9 +277,18 @@ def execute_microop_routed_control(
                 microop.alu_selector, left, right, fixed=alu_fixed,
                 bit_fixed=bit_fixed,
             )
-            stack.append(result)
+            produced = result
         else:
             raise ControlExecutionTrap("Unadmitted dynamic operation")
+        # The selected microop effect also determines result materialization,
+        # including both ALU outputs and source-immediate/local reads.
+        pushes = int(effect[1] + effect[3] + effect[4])
+        if pushes:
+            if produced is None:
+                raise ControlExecutionTrap("Microop requested missing output")
+            stack.append(produced)
+        elif produced is not None:
+            raise ControlExecutionTrap("Microop suppressed executable output")
         # Frame-event action is emitted exclusively by the constructed
         # opcode/guard circuit; host opcode branches above handle only
         # operand effects, lexical admission and return validation.
