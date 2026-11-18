@@ -15,6 +15,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from .exact_binary import is_exact_binary
+from .fused_state_v58 import local_access, pop_pair, push_one
 
 from .bit_neural_vm_v49 import WIDTH, BitCircuitWeights, construct_bit_weights
 from .neural_alu_v56 import (
@@ -98,6 +99,7 @@ def step_data_microop(
     alu_fixed: ALUWeights | None = None,
     bit_fixed: BitCircuitWeights | None = None,
     use_compiled_alu: bool = False,
+    use_fused_state: bool = False,
 ) -> MicrostepResult:
     """Execute a fixed-weight data microstep without Python opcode dispatch.
 
@@ -144,19 +146,17 @@ def step_data_microop(
     effect = token.effect
     first = (effect[2] + effect[3] + effect[4]) * fixed.pop_gain[0]
     second = effect[4] * fixed.pop_gain[1]
-    pop_first = np.array((1. - first, 0., first, 0.), dtype=np.float64)
-    pop_second = np.array((1. - second, 0., second, 0.), dtype=np.float64)
-    _hot(pop_first, (len(ACTIONS),))
-    _hot(pop_second, (len(ACTIONS),))
-
-    # Tee has no pop effect. The source operand is the original live top.
-    top = top_word(operands)
-    after_first, right = step_operands(
-        operands, pop_first, fixed=operand_fixed,
-    )
-    after_second, left = step_operands(
-        after_first, pop_second, fixed=operand_fixed,
-    )
+    # Tee reads the original top, before the two pop gates take effect.
+    if use_fused_state:
+        after_second, top, right, left = pop_pair(operands, first, second, operand_fixed)
+    else:
+        pop_first = np.array((1. - first, 0., first, 0.), dtype=np.float64)
+        pop_second = np.array((1. - second, 0., second, 0.), dtype=np.float64)
+        _hot(pop_first, (len(ACTIONS),))
+        _hot(pop_second, (len(ACTIONS),))
+        top = top_word(operands)
+        after_first, right = step_operands(operands, pop_first, fixed=operand_fixed)
+        after_second, left = step_operands(after_first, pop_second, fixed=operand_fixed)
     # Single-pop unary operators consume the first popped word; binary
     # operations use the second popped word as the left operand.
     alu_left = effect[3] * right + effect[4] * left
@@ -180,14 +180,18 @@ def step_data_microop(
     default_local = onehot(0, LOCALS_WIDTH)
     local_slot = token.local_selector + (1. - active_local) * default_local
     _hot(local_slot, (LOCALS_WIDTH,))
-    local_read = read_local(locals_, local_slot, fixed=local_fixed)
+    if not use_fused_state:
+        local_read = read_local(locals_, local_slot, fixed=local_fixed)
     local_write = local_mode[2] * right + local_mode[3] * top
     _binary(local_write, (WIDTH,))
-    modified_bank = write_local(
-        locals_, local_slot, local_write, fixed=local_fixed,
-    )
     write_mask = (local_mode[2] + local_mode[3]) * fixed.write_gain[0]
-    result_bank = (1. - write_mask) * locals_ + write_mask * modified_bank
+    if use_fused_state:
+        local_read, result_bank = local_access(
+            locals_, local_slot, local_write, write_mask, local_fixed,
+        )
+    else:
+        modified_bank = write_local(locals_, local_slot, local_write, fixed=local_fixed)
+        result_bank = (1. - write_mask) * locals_ + write_mask * modified_bank
     _binary(result_bank, (LOCALS_WIDTH, WIDTH))
 
     const_mask = token.opcode[OPCODES.index("i32.const")]
@@ -205,13 +209,12 @@ def step_data_microop(
     if (sources.sum() != push_expected
             or first + second != effect[2] + effect[3] + 2. * effect[4]):
         raise MicroopAdmissionError("Fixed microstep lost stack effect authority")
-    push = np.array(
-        (1. - push_expected, push_expected, 0., 0.), dtype=np.float64
-    )
-    _hot(push, (len(ACTIONS),))
-    final, _ = step_operands(
-        after_second, push, value=candidate, fixed=operand_fixed,
-    )
+    if use_fused_state:
+        final = push_one(after_second, push_expected, candidate, operand_fixed)
+    else:
+        push = np.array((1. - push_expected, push_expected, 0., 0.), dtype=np.float64)
+        _hot(push, (len(ACTIONS),))
+        final, _ = step_operands(after_second, push, value=candidate, fixed=operand_fixed)
     return MicrostepResult(
         final, result_bank, int(first + second), int(push_expected),
     )
