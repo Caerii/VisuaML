@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
-
 from visuaml.compiler_lab.kan_mechanism_ir_v45 import KANAdmissionError
 from visuaml.compiler_lab.kan_teacher_slice_v45 import fit_teacher_slice
 
