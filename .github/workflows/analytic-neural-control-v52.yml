@@ -7,12 +7,18 @@ on:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py
       - visuaml-client/backend/tests/test_neural_control_routing_v52.py
+      - visuaml-client/backend/tests/test_neural_pc_archive_v52.py
+      - benchmarks/neural_pc_control_v52.json
+      - benchmarks/neural_pc_control_v52.origin.json
       - visuaml-client/backend/scripts/probe_neural_control_router_v52.py
       - .github/workflows/analytic-neural-control-v52.yml
   pull_request:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py
       - visuaml-client/backend/tests/test_neural_control_routing_v52.py
+      - visuaml-client/backend/tests/test_neural_pc_archive_v52.py
+      - benchmarks/neural_pc_control_v52.json
+      - benchmarks/neural_pc_control_v52.origin.json
       - visuaml-client/backend/scripts/probe_neural_control_router_v52.py
       - .github/workflows/analytic-neural-control-v52.yml
 permissions:
@@ -37,9 +43,9 @@ jobs:
           OPENBLAS_NUM_THREADS: "1"
           OMP_NUM_THREADS: "1"
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_neural_control_routing_v52.py
+          python -m pytest -q visuaml-client/backend/tests/test_neural_control_routing_v52.py visuaml-client/backend/tests/test_neural_pc_archive_v52.py
           python -m pytest -q visuaml-client/backend/tests/test_wasm_control_archive_v51.py visuaml-client/backend/tests/test_wasm_gcd_archive_v51_1.py
-          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py visuaml-client/backend/tests/test_neural_control_routing_v52.py visuaml-client/backend/scripts/probe_neural_control_router_v52.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/neural_control_routing_v52.py visuaml-client/backend/tests/test_neural_control_routing_v52.py visuaml-client/backend/scripts/probe_neural_control_router_v52.py visuaml-client/backend/tests/test_neural_pc_archive_v52.py
       - name: Replay original source WASM in Wasmtime and independently compare all routed machine state
         env:
           PYTHONPATH: visuaml-client/backend
