@@ -1,15 +1,20 @@
 """Bind admitted v58 data rows to the native fused data gate."""
 from __future__ import annotations
 
+import ctypes
+
 import numpy as np
 
-from .bit_neural_vm_v49 import WIDTH
+from .bit_neural_vm_v49 import WIDTH, _validate_i32
+from .compact_routing_v58 import CompactRouter
 from .constructed_alu_v58 import compiled_alu, compiled_coefficients
 from .neural_alu_v56 import ALU_OPS, ALUWeights, NeuralALUError
+from .neural_control_routing_v52 import TERMINAL, NeuralControlError
 from .neural_local_bank_v57 import LocalBankWeights
 from .neural_microstep_v58 import DATA_OPS, MicrostepWeights
 from .neural_operand_storage_v55 import ACTIONS, MAX_STACK, OperandCircuitError, OperandWeights
 from .typed_microop_ir_v57 import EFFECTS, LOCALS_WIDTH, LOCAL_MODES, OPCODES, MicroopAdmissionError
+from .wasm_control_flow_v51 import ControlExecutionTrap, ControlFuelExhausted
 
 _ERRORS = (
     None,
@@ -26,6 +31,12 @@ _ERRORS = (
     (MicroopAdmissionError, "Local read gate ablated"),
     (MicroopAdmissionError, "Local write gate ablated"),
     (MicroopAdmissionError, "Fixed microstep lost stack effect authority"),
+    (NeuralControlError, "Invalid binary condition or noncanonical active PC"),
+    (NeuralControlError, "Constructed route lost unique next PC"),
+    (ControlExecutionTrap, "Reached terminal before function end"),
+    (ControlExecutionTrap, "Final source WASM end needs exactly one i32"),
+    (ControlFuelExhausted, "Explicit bounded fuel exhausted after {fuel} v58 microsteps"),
+    (RuntimeError, "Native trace exceeded its straight-line capacity"),
 )
 
 # This ordering is the row and coefficient ABI in constructed_alu_v58.cpp.
@@ -88,8 +99,11 @@ class _NativeMicrostep:
                 row.effect, row.local_mode, row.alu_selector, row.immediate_bits,
                 row.local_selector, row.opcode[const:const + 1],
             )))
+        self._row_count = len(table)
         self._rows = np.frombuffer(np.stack(table).tobytes(), dtype=np.float64)
-        self._gate = compiled_alu().data_microstep
+        kernels = compiled_alu()
+        self._gate = kernels.data_microstep
+        self._loop = kernels.prepared_loop
         self._pointers = self._rows.ctypes.data, self._fixed.ctypes.data
 
     def apply(self, pc, buffers):
@@ -97,3 +111,58 @@ class _NativeMicrostep:
         if status:
             error, message = _ERRORS[status]
             raise error(message)
+
+    def bind_loop(self, program, router):
+        if (MAX_STACK, LOCALS_WIDTH) != (24, 5):
+            raise RuntimeError("Incompatible v58 native loop state layout")
+        opcodes = tuple(op.opcode for op in program.operations)
+        visible_locals = program.local_count + 1
+        if (len(opcodes) != self._row_count + 1 or opcodes[-1] != "end"
+                or not 1 <= visible_locals <= LOCALS_WIDTH):
+            raise MicroopAdmissionError("Invalid prepared loop metadata")
+        self._opcodes = opcodes
+        self._visible_locals = visible_locals
+        self._router = router  # Owns the buffers borrowed by the native loop.
+
+    def run_loop(self, argument, fuel, capture_trace):
+        _validate_i32(argument)
+        count = len(self._opcodes)
+        visible_locals = self._visible_locals
+        result = (ctypes.c_int32 * 2)()
+        if capture_trace:
+            capacity = min(fuel, count)
+            states = np.zeros((capacity, 2 + MAX_STACK + visible_locals), dtype=np.int32)
+            routes = np.empty((capacity, 5), dtype=np.float64)
+            state_pointer, route_pointer = states.ctypes.data, routes.ctypes.data
+        else:
+            state_pointer = route_pointer = None
+        status = self._loop(
+            argument, fuel, count, TERMINAL, visible_locals,
+            *self._pointers, *self._router._pointers, result, state_pointer, route_pointer,
+        )
+        if status:
+            error, message = _ERRORS[status]
+            raise error(message.format(fuel=fuel))
+
+        value, steps = result
+        if not capture_trace:
+            return value, steps, ()
+
+        records = []
+        for tick, (state, route) in enumerate(zip(
+            states[:steps].tolist(), routes[:steps].tolist(), strict=True,
+        )):
+            pc, depth = state[:2]
+            next_pc, details = CompactRouter._read_route(0, route, True)
+            records.append({
+                "step": tick,
+                "pc": pc,
+                "opcode": self._opcodes[pc],
+                "next_pc": count if next_pc == TERMINAL else next_pc,
+                "stack_i32": state[2:2 + depth],
+                "locals_i32": state[2 + MAX_STACK:],
+                "control_labels": [],
+                "halted": pc == count - 1,
+                "neural_route": details,
+            })
+        return value, steps, tuple(records)

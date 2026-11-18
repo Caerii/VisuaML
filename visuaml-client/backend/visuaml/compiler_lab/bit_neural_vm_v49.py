@@ -106,10 +106,14 @@ def construct_bit_weights() -> BitCircuitWeights:
     )
 
 
-def _bits(value: int) -> np.ndarray:
-    """External program/input encoding, not part of the neural instruction path."""
+def _validate_i32(value: int) -> None:
     if type(value) is not int or not -(1 << 31) <= value < (1 << 31):
         raise BitVMAdmissionError("Expected signed i32 external value")
+
+
+def _bits(value: int) -> np.ndarray:
+    """External program/input encoding, not part of the neural instruction path."""
+    _validate_i32(value)
     unsigned = value & LIMIT
     return np.array([(unsigned >> i) & 1 for i in range(WIDTH)], dtype=np.float64)
 

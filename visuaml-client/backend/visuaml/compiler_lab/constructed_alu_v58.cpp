@@ -164,7 +164,8 @@ enum Gain { pop_first, pop_second, produce_const, produce_local, produce_alu, wr
 enum Status {
     ok, operand_binary, operand_onehot, inactive_cells, underflow, overflow,
     micro_binary, alu_binary, alu_selection, local_onehot, local_binary,
-    local_read, local_write, stack_authority,
+    local_read, local_write, stack_authority, route_binary, route_selection,
+    early_terminal, final_stack, fuel_exhausted, trace_capacity,
 };
 
 bool binary_tensor(const double* values, std::size_t count) {
@@ -183,31 +184,11 @@ double sum(const double* values, std::size_t count) {
     }
     return value;
 }
-} // namespace
-
-extern "C" int visuaml_data_microstep(
+// The caller supplies an admitted active prefix and its depth. The
+// transition preserves that invariant on every successful microstep.
+int data_microstep_at_depth(
         std::size_t pc, std::size_t stack_size, std::size_t locals_size,
-        const double* rows, const double* fixed, double* height, double* cells, double* locals) {
-    // The prepared caller owns the buffers. Check the initial state in the
-    // same order as the fused NumPy equations before reading its active slots.
-    if (!binary_tensor(height, stack_size + 1)) {
-        return operand_binary;
-    }
-    if (sum(height, stack_size + 1) != 1.0) {
-        return operand_onehot;
-    }
-    std::size_t depth = 0;
-    while (height[depth] == 0.0) {
-        ++depth;
-    }
-    if (!binary_tensor(cells, stack_size * width)) {
-        return operand_binary;
-    }
-    for (std::size_t i = depth * width; i < stack_size * width; ++i) {
-        if (cells[i] != 0.0) {
-            return inactive_cells;
-        }
-    }
+        const double* rows, const double* fixed, std::size_t& depth, double* cells, double* locals) {
     if (!binary_tensor(locals, locals_size * width) || !binary_tensor(fixed, actions)) {
         return micro_binary;
     }
@@ -344,7 +325,122 @@ extern "C" int visuaml_data_microstep(
     for (int i = 0; i < width; ++i) {
         local[i] = bank_word[i];
     }
-    height[depth] = 0.0;
-    height[next_depth] = 1.0;
+    depth = next_depth;
     return ok;
+}
+
+
+// Keep the signed i32 representation independent of implementation-defined
+// signed conversions when the high bit is set.
+std::int32_t decode_word(const double* bits) {
+    std::uint32_t word = 0;
+    for (int i = 0; i < width; ++i) {
+        word |= static_cast<std::uint32_t>(bits[i]) << i;
+    }
+    const auto signed_word = static_cast<std::int64_t>(word)
+        - (static_cast<std::int64_t>(word >> 31) << 32);
+    return static_cast<std::int32_t>(signed_word);
+}
+
+} // namespace
+
+extern "C" int visuaml_data_microstep(
+        std::size_t pc, std::size_t stack_size, std::size_t locals_size,
+        const double* rows, const double* fixed, double* height, double* cells, double* locals) {
+    // The prepared caller owns the buffers. Check the initial state in the
+    // same order as the fused NumPy equations before reading its active slots.
+    if (!binary_tensor(height, stack_size + 1)) {
+        return operand_binary;
+    }
+    if (sum(height, stack_size + 1) != 1.0) {
+        return operand_onehot;
+    }
+    std::size_t depth = 0;
+    while (height[depth] == 0.0) {
+        ++depth;
+    }
+    if (!binary_tensor(cells, stack_size * width)) {
+        return operand_binary;
+    }
+    for (std::size_t i = depth * width; i < stack_size * width; ++i) {
+        if (cells[i] != 0.0) {
+            return inactive_cells;
+        }
+    }
+    const auto old_depth = depth;
+    const auto status = data_microstep_at_depth(pc, stack_size, locals_size, rows, fixed, depth, cells, locals);
+    if (status == ok) {
+        height[old_depth] = 0.0;
+        height[depth] = 1.0;
+    }
+    return status;
+}
+
+extern "C" int visuaml_prepared_loop(
+        std::int32_t argument, std::size_t fuel, std::size_t count, std::size_t terminal,
+        std::size_t visible_locals, const double* rows, const double* fixed,
+        const std::int32_t* targets, const double* guards, const double* guard_weights,
+        const double* path_weights, const double* and_weight, std::int32_t* result,
+        std::int32_t* trace_states, double* trace_routes) {
+    constexpr std::size_t stack_size = 24;
+    constexpr std::size_t locals_size = 5;
+    double cells[stack_size * width] = {};
+    double locals[locals_size * width] = {};
+    const double zero[width] = {};
+    const auto input = static_cast<std::uint32_t>(argument);
+    for (int i = 0; i < width; ++i) {
+        locals[i] = (input >> i) & 1U;
+    }
+    std::size_t pc = 0;
+    std::size_t depth = 0;
+    for (std::size_t tick = 0; tick < fuel; ++tick) {
+        if (pc >= count || pc == terminal) {
+            return early_terminal;
+        }
+        const double* top = depth ? cells + (depth - 1) * width : zero;
+        double route[5];
+        const auto route_status = visuaml_indexed_route(
+            pc, terminal + 1, top, targets, guards, guard_weights, path_weights, and_weight, route);
+        if (route_status) {
+            return route_status == 1 ? route_binary : route_selection;
+        }
+        const auto next = static_cast<std::size_t>(route[0]);
+        const bool halted = pc == count - 1;
+        if (halted) {
+            if (depth != 1 || next != terminal) {
+                return final_stack;
+            }
+        } else {
+            const auto status = data_microstep_at_depth(
+                pc, stack_size, locals_size, rows, fixed, depth, cells, locals);
+            if (status) {
+                return status;
+            }
+        }
+        if (trace_states) {
+            // The caller reserves min(fuel, count) rows for straight-line WASM.
+            if (tick >= count) {
+                return trace_capacity;
+            }
+            auto* state = trace_states + tick * (2 + stack_size + visible_locals);
+            state[0] = static_cast<std::int32_t>(pc);
+            state[1] = static_cast<std::int32_t>(depth);
+            for (std::size_t slot = 0; slot < depth; ++slot) {
+                state[2 + slot] = decode_word(cells + slot * width);
+            }
+            for (std::size_t slot = 0; slot < visible_locals; ++slot) {
+                state[2 + stack_size + slot] = decode_word(locals + slot * width);
+            }
+            for (int field = 0; field < 5; ++field) {
+                trace_routes[tick * 5 + field] = route[field];
+            }
+        }
+        if (halted) {
+            result[0] = decode_word(cells);
+            result[1] = static_cast<std::int32_t>(tick + 1);
+            return ok;
+        }
+        pc = next;
+    }
+    return fuel_exhausted;
 }

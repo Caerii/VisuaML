@@ -90,6 +90,7 @@ class _ExecutionInputs:
     rows: tuple[SelectedMicroop, ...] | None = None
     provenance: tuple[str, ...] | None = None
     native_microstep: _NativeMicrostep | None = None
+    native_loop: bool = False
 
     def digests(self) -> tuple[str, ...]:
         assert self.pc_fixed is not None
@@ -244,6 +245,7 @@ class PreparedMicrostepProgram:
     operands, locals, PC, fuel, and trace. The live gates use the snapshotted
     coefficients, including supported fault-injection overrides. The opt-in
     native microstep binds these same rows and coefficients to one C++ call.
+    The native loop also runs live PC routing in that call for the full program.
     """
 
     def __init__(
@@ -251,6 +253,7 @@ class PreparedMicrostepProgram:
         use_compiled_alu: bool = True,
         use_fused_state: bool = True,
         use_native_microstep: bool = False,
+        use_native_loop: bool = False,
         tokens: ControlRouteTokens | None = None,
         program_tokens: ProgramMicroopTokens | None = None,
         pc_fixed: ControlRouterWeights | None = None,
@@ -261,9 +264,11 @@ class PreparedMicrostepProgram:
         local_fixed: LocalBankWeights | None = None,
         operand_fixed: OperandWeights | None = None,
     ):
+        if type(use_native_loop) is not bool:
+            raise MicrostepAdmissionError("use_native_loop must be a boolean")
         if type(use_native_microstep) is not bool:
             raise MicrostepAdmissionError("use_native_microstep must be a boolean")
-        if use_native_microstep and (not use_compiled_alu or not use_fused_state):
+        if (use_native_microstep or use_native_loop) and (not use_compiled_alu or not use_fused_state):
             raise MicrostepAdmissionError("Native microstep requires compiled ALU and fused state")
         inputs = _prepare(
             program, use_compiled_alu=use_compiled_alu, use_fused_state=use_fused_state,
@@ -273,12 +278,14 @@ class PreparedMicrostepProgram:
             local_fixed=local_fixed, operand_fixed=operand_fixed, reusable=True,
         )
 
-        if use_native_microstep:
+        if use_native_microstep or use_native_loop:
             native = _NativeMicrostep(
                 inputs.rows, inputs.microstep_fixed, inputs.operand_fixed,
                 inputs.alu_fixed, inputs.bit_fixed, inputs.local_fixed,
             )
-            inputs = replace(inputs, native_microstep=native, rows=None)
+            if use_native_loop:
+                native.bind_loop(inputs.program, inputs.compact)
+            inputs = replace(inputs, native_microstep=native, rows=None, native_loop=use_native_loop)
         self._inputs = inputs
 
     def run(
@@ -291,10 +298,13 @@ class PreparedMicrostepProgram:
 def _run(inputs: _ExecutionInputs, argument: int, fuel: int, capture_trace: bool) -> MicrostepExecution:
     program = inputs.program
     compact, indexed, rows = inputs.compact, inputs.indexed, inputs.rows
+    native = inputs.native_microstep
+    if inputs.native_loop:
+        value, steps, trace = native.run_loop(argument, fuel, capture_trace)
+        return MicrostepExecution(value, trace, steps, *inputs.provenance)
     operands = empty_operands()
     locals_ = np.zeros((LOCALS_WIDTH, 32), dtype=np.float64)
     locals_[0] = _bits(argument)
-    native = inputs.native_microstep
     if native is not None:
         buffers = (operands.height.ctypes.data, operands.cells.ctypes.data, locals_.ctypes.data)
     pc_vector = None if indexed is not None else _onehot(0)

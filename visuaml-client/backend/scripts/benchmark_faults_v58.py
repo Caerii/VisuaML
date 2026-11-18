@@ -158,7 +158,7 @@ def mutate(attack: Attack, program) -> dict:
     raise ValueError("Unknown mutation")
 
 
-def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False, use_indexed_pc: bool = False, prepared: bool = False, native_microstep: bool = False) -> dict:
+def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False, use_indexed_pc: bool = False, prepared: bool = False, native_microstep: bool = False, native_loop: bool = False) -> dict:
     program = countdown() if attack.source == "countdown" else generated(2)
     argument = 4 if attack.source == "countdown" else -17
     options = {"use_compiled_alu": True} if use_compiled_alu and attack.engine == "v58" else {}
@@ -172,6 +172,7 @@ def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_stat
         options = {
             "prepared": True, "use_compiled_alu": use_compiled_alu,
             "use_fused_state": use_fused_state, "use_native_microstep": native_microstep,
+            "use_native_loop": native_loop,
         }
     baseline = execute(attack.engine, program, argument, **options)
     if not any(
@@ -220,10 +221,10 @@ def run_attack(attack: Attack, *, use_compiled_alu: bool = False, use_fused_stat
     }
 
 
-def campaign(*, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False, use_indexed_pc: bool = False, prepared: bool = False, native_microstep: bool = False) -> dict:
+def campaign(*, use_compiled_alu: bool = False, use_fused_state: bool = False, use_compact_routing: bool = False, use_indexed_pc: bool = False, prepared: bool = False, native_microstep: bool = False, native_loop: bool = False) -> dict:
     cases = [run_attack(attack, use_compiled_alu=use_compiled_alu, use_fused_state=use_fused_state,
                         use_compact_routing=use_compact_routing, use_indexed_pc=use_indexed_pc,
-                        prepared=prepared, native_microstep=native_microstep) for attack in ATTACKS]
+                        prepared=prepared, native_microstep=native_microstep, native_loop=native_loop) for attack in ATTACKS]
     return {
         "schema": SCHEMA,
         "injected_faults": len(cases),
@@ -251,7 +252,10 @@ def main() -> None:
     parser.add_argument("--indexed-pc", action="store_true")
     parser.add_argument("--prepared", action="store_true")
     parser.add_argument("--native-microstep", action="store_true")
+    parser.add_argument("--native-loop", action="store_true")
     args = parser.parse_args()
+    if args.native_loop and not args.native_microstep:
+        parser.error("--native-loop requires --native-microstep")
     if args.native_microstep and not (args.prepared and args.compiled_alu and args.fused_state):
         parser.error("--native-microstep requires --prepared, --compiled-alu, and --fused-state")
     if args.prepared and not args.indexed_pc:
@@ -268,7 +272,9 @@ def main() -> None:
         parser.error("Fault evidence requires a clean Git worktree")
     report = campaign(use_compiled_alu=args.compiled_alu, use_fused_state=args.fused_state,
                       use_compact_routing=args.compact_routing, use_indexed_pc=args.indexed_pc,
-                      prepared=args.prepared, native_microstep=args.native_microstep)
+                      prepared=args.prepared, native_microstep=args.native_microstep, native_loop=args.native_loop)
+    if args.native_loop:
+        report["v58_native_loop"] = True
     if args.native_microstep:
         report["v58_native_microstep"] = True
     if args.prepared:

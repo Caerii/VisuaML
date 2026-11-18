@@ -18,10 +18,13 @@ _OPTIONS = dict(use_compact_routing=True, use_indexed_pc=True,
                 use_fused_state=True, use_compiled_alu=True)
 
 
-@pytest.fixture(params=(False, True), ids=("python", "native"))
+@pytest.fixture(params=("python", "microstep", "loop"))
 def prepared_factory(request):
     def prepare(program, **options):
-        return PreparedMicrostepProgram(program, use_native_microstep=request.param, **options)
+        return PreparedMicrostepProgram(
+            program, use_native_microstep=request.param == "microstep",
+            use_native_loop=request.param == "loop", **options,
+        )
 
     return prepare
 

@@ -78,7 +78,7 @@ def _profile_rows(profile):
     return sorted(rows, key=lambda row: row["inclusive_s"], reverse=True)
 
 
-def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fused=False, compact_routing=False, indexed_pc=False, prepared=False, native_microstep=False):
+def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fused=False, compact_routing=False, indexed_pc=False, prepared=False, native_microstep=False, native_loop=False):
     identity = _identify(root, baseline, native_microstep)
     compiled_metadata = None
     if use_compiled or compact_routing:
@@ -115,8 +115,10 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
             use_compiled_alu=use_compiled, use_fused_state=use_fused,
         )
         prepare_native = partial(prepare, use_native_microstep=True)
+        prepare_loop = partial(prepare, use_native_loop=True)
         session = prepare() if prepared else None
         native_session = prepare_native() if native_microstep else None
+        loop_session = prepare_loop() if native_loop else None
         cases = []
         for argument in work.arguments:
             actions = {"trace": partial(v58.execute_microstep_control, work.program, argument,
@@ -139,7 +141,12 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
             prepared_trace = actions["trace"]
             if native_session is not None:
                 actions["trace"] = partial(native_session.run, argument, fuel=1500)
+            microstep_trace = actions["trace"]
+            if loop_session is not None:
+                actions["trace"] = partial(loop_session.run, argument, fuel=1500)
             traced = actions["trace"]()
+            if loop_session is not None and microstep_trace() != traced:
+                raise AssertionError((work.name, argument, "native loop changed the trace"))
             if native_session is not None and prepared_trace() != traced:
                 raise AssertionError((work.name, argument, "native data gate changed the trace"))
             if session is not None and indexed() != traced:
@@ -165,7 +172,12 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
                 actions["no_trace"] = partial(actions["trace"], capture_trace=False)
                 if actions["no_trace"]() != replace(traced, trace=()):
                     raise AssertionError((work.name, argument, "trace mode changes state evidence"))
-            if native_session is not None:
+            if loop_session is not None:
+                actions["microstep_trace"] = microstep_trace
+                actions["microstep_no_trace"] = partial(microstep_trace, capture_trace=False)
+                if actions["microstep_no_trace"]() != replace(traced, trace=()):
+                    raise AssertionError((work.name, argument, "native loop changed the untraced result"))
+            elif native_session is not None:
                 actions["prepared_trace"] = prepared_trace
                 actions["prepared_no_trace"] = partial(prepared_trace, capture_trace=False)
                 if actions["prepared_no_trace"]() != replace(traced, trace=()):
@@ -209,6 +221,8 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
                if prepared else {}),
             **({"native_preparation": measure(prepare_native, warmups=1, repeats=repeats)}
                if native_microstep else {}),
+            **({"loop_preparation": measure(prepare_loop, warmups=1, repeats=repeats)}
+               if native_loop else {}),
         })
     allocations = []
     for actions, first in to_profile:
@@ -218,6 +232,7 @@ def collect(root, baseline, repeats, profile_enabled, use_compiled=False, use_fu
     return {
         **({"prepared": True} if prepared else {}),
         **({"native_microstep": True} if native_microstep else {}),
+        **({"native_loop": True} if native_loop else {}),
         "schema": "visuaml.constructed-runtime-profile.v58", "source": identity,
         "environment": environment(), "repeats": repeats, "fixed_weights": weight_ids,
         "compiled_alu": compiled_metadata, "fused_state": use_fused,
@@ -271,7 +286,10 @@ def main():
     parser.add_argument("--indexed-pc", action="store_true")
     parser.add_argument("--prepared", action="store_true")
     parser.add_argument("--native-microstep", action="store_true")
+    parser.add_argument("--native-loop", action="store_true")
     args = parser.parse_args()
+    if args.native_loop and not args.native_microstep:
+        parser.error("--native-loop requires --native-microstep for the paired reference")
     if args.native_microstep and not (args.prepared and args.compiled_alu and args.fused_state):
         parser.error("--native-microstep requires --prepared, --compiled-alu, and --fused-state")
     if args.prepared and not args.indexed_pc:
@@ -289,7 +307,7 @@ def main():
     else:
         record = collect(
             root, args.baseline, args.repeats, args.profile, args.compiled_alu,
-            args.fused_state, args.compact_routing, args.indexed_pc, args.prepared, args.native_microstep,
+            args.fused_state, args.compact_routing, args.indexed_pc, args.prepared, args.native_microstep, args.native_loop,
         )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as stream:
