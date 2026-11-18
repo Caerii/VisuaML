@@ -22,6 +22,7 @@ from visuaml.compiler_lab.neural_control_routing_v52 import (
     validate_route_tokens,
 )
 from visuaml.compiler_lab.wasm_control_flow_v51 import (
+    ControlAdmissionError,
     ControlFuelExhausted,
     ControlOperation,
     ControlProgram,
