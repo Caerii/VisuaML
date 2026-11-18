@@ -95,6 +95,7 @@ def main() -> None:
         "backend/scripts/benchmark_neural_symbolic_roundtrip_v58.py",
         "backend/scripts/benchmark_recovery_failures_v58.py",
         "backend/scripts/verify_recovery_campaign_v58.py",
+        "backend/tests/test_recovery_campaign_audit_v58.py",
         "backend/tests/test_recovery_failure_ledger_v58.py",
         "backend/scripts/verify_neural_roundtrip_evidence_v58.py",
         "backend/scripts/summarize_neural_roundtrips_v58.py",
@@ -155,6 +156,7 @@ def main() -> None:
         invoke((
             sys.executable, "-m", "pytest", "-q",
             "backend/tests/test_recovery_failure_ledger_v58.py",
+            "backend/tests/test_recovery_campaign_audit_v58.py",
         ), client=client, env=env)
         campaign_file = output_dir / "neural-v58-recovery-campaign.json"
         invoke((
