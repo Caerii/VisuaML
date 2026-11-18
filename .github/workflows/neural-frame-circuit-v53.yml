@@ -34,7 +34,7 @@ jobs:
         run: |
           python -m pip install torch==2.9.1+cpu torchvision==0.24.1+cpu torchaudio==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
           python -m pip install -r visuaml-client/backend/requirements.txt
-          python -m pip install pytest ruff
+          python -m pip install pytest ruff 'wasmtime>=20,<50'
       - name: Check circuit and focused tests
         run: |
           ruff check visuaml-client/backend/visuaml/compiler_lab/neural_frame_circuit_v53.py visuaml-client/backend/tests/test_neural_frame_circuit_v53.py visuaml-client/backend/visuaml/compiler_lab/neural_frame_replay_v53.py visuaml-client/backend/tests/test_neural_frame_replay_v53.py visuaml-client/backend/visuaml/compiler_lab/neural_frame_executor_v53.py visuaml-client/backend/tests/test_neural_frame_executor_v53.py
