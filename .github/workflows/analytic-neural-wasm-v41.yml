@@ -8,12 +8,18 @@ on:
       - visuaml-client/backend/visuaml/compiler_lab/analytic_relu_specialization_v41.py
       - visuaml-client/backend/scripts/probe_analytic_neural_wasm_v41.py
       - visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py
+      - visuaml-client/backend/tests/test_analytic_neural_archive_v41.py
+      - benchmarks/analytic_neural_wasm_v41.json
+      - benchmarks/analytic_neural_wasm_v41.origin.json
       - .github/workflows/analytic-neural-wasm-v41.yml
   pull_request:
     paths:
       - visuaml-client/backend/visuaml/compiler_lab/analytic_relu_specialization_v41.py
       - visuaml-client/backend/scripts/probe_analytic_neural_wasm_v41.py
       - visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py
+      - visuaml-client/backend/tests/test_analytic_neural_archive_v41.py
+      - benchmarks/analytic_neural_wasm_v41.json
+      - benchmarks/analytic_neural_wasm_v41.origin.json
       - .github/workflows/analytic-neural-wasm-v41.yml
 permissions:
   contents: write
@@ -37,7 +43,7 @@ jobs:
           OPENBLAS_NUM_THREADS: "1"
           OMP_NUM_THREADS: "1"
         run: |
-          python -m pytest -q visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py visuaml-client/backend/tests/test_wasm_state_vm_v40.py visuaml-client/backend/tests/test_wasm_state_archive_v40.py
+          python -m pytest -q visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py visuaml-client/backend/tests/test_wasm_state_vm_v40.py visuaml-client/backend/tests/test_wasm_state_archive_v40.py visuaml-client/backend/tests/test_analytic_neural_archive_v41.py
           ruff check visuaml-client/backend/visuaml/compiler_lab/analytic_relu_specialization_v41.py visuaml-client/backend/tests/test_analytic_relu_specialization_v41.py visuaml-client/backend/scripts/probe_analytic_neural_wasm_v41.py
       - name: Execute real WASM, analytic ReLU circuit, and function recovery over 256 inputs
         env:
