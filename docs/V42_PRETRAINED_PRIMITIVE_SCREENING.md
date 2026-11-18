@@ -68,3 +68,19 @@ With CI-pinned Python, ONNX 1.18.0, ONNX Runtime 1.22.1 and NumPy 2.2.6:
     PYTHONPATH=visuaml-client/backend python visuaml-client/backend/scripts/probe_pretrained_primitives_v42.py --model /path/to/exact/mnist-8.onnx --output /tmp/primitive-survey-v42.json
 
 The [dedicated Actions workflow](../.github/workflows/pretrained-primitives-v42.yml) independently fetches and hashes the source model and publishes the full intervention matrix. The full CI suite remains mandatory. A green candidate survey is **not** a completed extraction/synthesis library. The original raw record must be archived with an independent CI-origin manifest before promoting permanent provenance status.
+
+## Observed first-party CI result — original evidence preserved
+
+The independently executed [CI run 44222189766](https://github.com/Caerii/VisuaML/actions/runs/44222189766) re-fetched the exact pinned pretrained MNIST-8 bytes and ran all candidate models through both scalar NumPy and ONNX Runtime. The original **54,727-byte JSON** is committed as [the full experiment](../benchmarks/pretrained_primitive_screening_v42.json), with a [separate CI-origin manifest](../benchmarks/pretrained_primitive_screening_v42.origin.json) binding the full record SHA-256, source commit, all relevant source-file hashes, and exact checkpoint/parameter identities. The archive is now guarded against overwrites. Its permanent integrity regression rejects reclassifying a negative result as a successful compressed model.
+
+| Candidate rank | Weight spectral energy retained | Top-1 unchanged on discovery / 5 | Top-1 unchanged on heldout / 5 |
+| --- | ---: | ---: | ---: |
+| 2 of 10 | 33.75% | 3 | 3 |
+| 4 of 10 | 59.11% | 4 | 1 |
+| 8 of 10 | 92.33% | 5 | 3 |
+| 10 of 10 (full-rank control) | 100.0% | 5 | 5 |
+| rank-4 coordinate-scramble negative control | 59.11% | 1 | 0 |
+
+**Predeclared acceptance outcome:** **No compressed candidate qualified.** Rank 10 is a valid complete-rank numerical reconstruction and explicitly **not** compression. In particular, although rank 8 retained over 92% of matrix spectral energy and kept all five discovery top-1 labels, it changed two of five held-out top-1 labels and also exceeded the separate relative-logit-error threshold. A rank-4 scrambled tensor with the *same singular spectrum* produced substantially different outputs.
+
+These probes are deliberately synthetic, small and unlabeled. They are useful counterexamples to unwarranted inferences from singular-value energy, not evidence that rank-8 compression fails on the entire natural MNIST distribution or that any discovered feature transferred. The full record preserves per-input logit displacement and both independent implementation hashes. This is a **negative scientific result** with substantial compounding value for future candidate-review gates.
