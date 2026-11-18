@@ -66,3 +66,20 @@ python scripts/audit_pretrained_onnx_v37.py \
 
 **Scope:** a research preflight, not inference, trained architecture
 certification, ONNX Runtime correctness, or native performance evidence.
+
+## Independently observed CI checkpoint ledger
+
+The [first exact-byte CI audit](https://github.com/Caerii/VisuaML/actions/runs/44207675149) passed its seven adversarial tests and pinned-source download gate. Its full unmodified [8,044-byte graph record](../benchmarks/pretrained_mnist8_onnx_preflight_v37.json) and separate [origin manifest](../benchmarks/pretrained_mnist8_onnx_preflight_v37.origin.json) are now checked in. The original artifact ZIP's SHA-256 matched the digest reported by GitHub Actions. The workflow uses `GITHUB_SHA` at the PR's synthetic **merge** commit (`b5a9396636d7e011434d81dd15fbb11d7299eaf3`), whose actual parents are `main` `6fb0371c...` and PR head `d4b90100...`; this is deliberately not mislabeled as the PR head SHA.
+
+| Observed ONNX operator | Count |
+| --- | ---: |
+| `Conv` | 2 |
+| `Add` (broadcasted learned biases) | 3 |
+| `Relu` | 2 |
+| `MaxPool` | 2 |
+| `Reshape` | 2 |
+| `MatMul` | 1 |
+
+The checkpoint has **eight exact named initializers**, takes `[1,1,28,28]` float32 and produces `[1,10]` float32. Both convolutions specify `auto_pad=SAME_UPPER` and 5×5 kernels; the pools have 2×2 stride-2 and 3×3 stride-3 kernels. `Add` is **broadcasting**, not v32's equal-shape addition. One weight tensor is reshaped *before* matrix multiplication; another reshapes activations. Thus the true missing contracts are static reshape, max pooling, bounded broadcasting, and ONNX `SAME_UPPER` normalization, with exact buffer and constant provenance. Recognizing `Conv` and `Add` by name alone would be scientifically misleading.
+
+Subsequent CI regenerates the record from the verified external bytes and **compares the generated JSON byte-for-byte** with the durable original. Source or toolchain changes must record a new observation rather than quietly changing this one. The archive test binds those immutable bytes to its separately reported origin and explicitly rejects treating this preflight as numerical execution.
