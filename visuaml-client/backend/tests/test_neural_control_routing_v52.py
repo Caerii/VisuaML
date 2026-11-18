@@ -11,7 +11,6 @@ from dataclasses import replace
 
 import numpy as np
 import pytest
-from scripts.probe_wasm_gcd_v51_1 import gcd_program
 from visuaml.compiler_lab.neural_control_routing_v52 import (
     NeuralControlError,
     compile_route_tokens,
@@ -89,6 +88,29 @@ def infinite():
     return ControlProgram(0, (
         op("loop"), op("br", 0), op("end"),
         op("i32.const", 1), op("end"),
+    ))
+
+
+def gcd_program():
+    """Self-contained canonical GCD fixture; no Wasmtime needed at import."""
+    return ControlProgram(1, (
+        op("local.get", 0), op("i32.eqz"),
+        op("if"), op("i32.const", 12), op("return"), op("end"),
+        op("local.get", 0), op("i32.const", 0), op("i32.lt_s"),
+        op("if"), op("i32.const", 0), op("return"), op("end"),
+        op("i32.const", 12), op("local.set", 1),
+        op("block"), op("loop"),
+        op("local.get", 0), op("local.get", 1),
+        op("i32.sub"), op("i32.eqz"), op("br_if", 1),
+        op("local.get", 0), op("local.get", 1), op("i32.gt_s"),
+        op("if"),
+        op("local.get", 0), op("local.get", 1),
+        op("i32.sub"), op("local.set", 0),
+        op("else"),
+        op("local.get", 1), op("local.get", 0),
+        op("i32.sub"), op("local.set", 1),
+        op("end"), op("br", 0),
+        op("end"), op("end"), op("local.get", 0), op("end"),
     ))
 
 
