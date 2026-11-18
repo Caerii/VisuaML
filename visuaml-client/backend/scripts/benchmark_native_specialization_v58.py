@@ -74,7 +74,7 @@ def run(root: Path, *, repeats: int, scaling: bool) -> dict:
                           "latencies": latencies})
         rows.append({
             "name": work.name, "split": work.split, "family": work.family,
-            "wasm_sha256": candidate.source_sha256, "cpp_sha256": candidate.cpp_sha256,
+            "wasm_sha256": candidate.source_sha256, "cpp_sha256": candidate.scalar_cpp_sha256, "translation_unit_sha256": candidate.cpp_sha256,
             "binary_sha256": candidate.binary_sha256, "compiler": candidate.compiler,
             "native_setup_ns": native_setup_ns, "wasmtime_setup_ns": wasmtime_setup_ns,
             "cases": cases,

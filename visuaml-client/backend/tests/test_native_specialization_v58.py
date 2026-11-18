@@ -45,3 +45,30 @@ def test_native_specialization_rejects_invalid_and_structured_programs():
         NativeSpecialization(encode_control(malformed))
     with pytest.raises(MicrostepAdmissionError, match="straight-line"):
         NativeSpecialization(encode_control(gcd12()))
+
+
+def test_batch_and_cached_reload(tmp_path):
+    import numpy as np
+
+    source = encode_control(generated(3))
+    cache = tmp_path / "cache"
+    fresh = NativeSpecialization(source, cache_dir=cache)
+    reloaded = NativeSpecialization(source, cache_dir=cache)
+    assert not fresh.cache_hit and reloaded.cache_hit
+    assert fresh.binary_sha256 == reloaded.binary_sha256
+    values = np.array([-(1 << 31), -1, 0, 1, (1 << 31) - 1], dtype=np.int32)
+    expected = [fresh.run(int(value)) for value in values]
+    reloaded.run_batch_inplace(values)
+    assert values.tolist() == expected
+    reloaded.run_batch_inplace(values[:0])
+    from visuaml.compiler_lab.bit_neural_vm_v49 import BitVMAdmissionError
+    with pytest.raises(BitVMAdmissionError):
+        reloaded.run_batch_inplace(values[::-1])
+    with pytest.raises(ControlFuelExhausted):
+        reloaded.run_batch_inplace(values, fuel=1)
+    assert values.tolist() == expected
+    artifact, = cache.iterdir()
+    artifact.write_bytes(b"invalid artifact")
+    rebuilt = NativeSpecialization(source, cache_dir=cache)
+    assert not rebuilt.cache_hit
+    assert rebuilt.run(1) == fresh.run(1)

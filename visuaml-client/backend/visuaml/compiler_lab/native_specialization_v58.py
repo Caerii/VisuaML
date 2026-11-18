@@ -9,10 +9,15 @@ from __future__ import annotations
 
 import ctypes
 import hashlib
+import os
+import platform
 import shutil
 import subprocess
 import tempfile
+from functools import lru_cache
 from pathlib import Path
+
+import numpy as np
 
 from .bit_neural_vm_v49 import BitVMAdmissionError
 from .neural_microstep_executor_v58 import MicrostepAdmissionError
@@ -106,6 +111,45 @@ def _emit(definitions, states):
     return "\n".join(lines) + "\n"
 
 
+_BATCH = """extern "C" void visuaml_batch(std::int32_t* values, std::uint32_t count) {
+    for (std::uint32_t i = 0; i < count; ++i) {
+        Word result = run<false>(static_cast<Word>(values[i]), nullptr);
+        values[i] = result < sign ? static_cast<std::int32_t>(result)
+                                 : static_cast<std::int32_t>(result - sign) - 2147483647 - 1;
+    }
+}
+"""
+_FLAGS = ("-std=c++17", "-O3", "-fPIC", "-shared")
+_WORD_POINTER = ctypes.POINTER(ctypes.c_int32)
+
+
+@lru_cache(maxsize=8)
+def _compiler_version(path, _identity):
+    return subprocess.check_output(
+        [path, "--version"], text=True, timeout=10,
+    ).splitlines()[0]
+
+
+def _private_cache(directory: Path) -> Path:
+    directory = directory.absolute()
+    directory.mkdir(mode=0o700, parents=True, exist_ok=True)
+    info = directory.lstat()
+    if directory.is_symlink() or not directory.is_dir() or (
+        info.st_uid != os.getuid() or info.st_mode & 0o077
+    ):
+        raise ValueError("Native cache requires a private directory owned by the caller")
+    return directory
+
+
+def _read_cached(path):
+    try:
+        raw = path.read_bytes()
+    except FileNotFoundError:
+        return None
+    digest, binary = raw[:32], raw[32:]
+    return binary if binary and hashlib.sha256(binary).digest() == digest else None
+
+
 def _signed(word):
     return ctypes.c_int32(word).value
 
@@ -113,10 +157,10 @@ def _signed(word):
 class NativeSpecialization:
     """Process-local compiled program. Cold construction requires a C++17 compiler."""
 
-    def __init__(self, source: bytes):
+    def __init__(self, source: bytes, *, cache_dir: Path | None = None):
         program = decode_control(source)
         definitions, states = _lower(program)
-        cpp = _emit(definitions, states).encode()
+        cpp = (_emit(definitions, states) + _BATCH).encode()
         compiler = next(
             (path for name in ("c++", "g++", "clang++") if (path := shutil.which(name))),
             None,
@@ -125,25 +169,56 @@ class NativeSpecialization:
             raise RuntimeError("Native specialization requires a C++17 compiler")
         self.source_sha256 = hashlib.sha256(source).hexdigest()
         self.cpp_sha256 = hashlib.sha256(cpp).hexdigest()
-        self.compiler = subprocess.check_output(
-            [compiler, "--version"], text=True, timeout=10,
-        ).splitlines()[0]
+        self.scalar_cpp_sha256 = hashlib.sha256(_emit(definitions, states).encode()).hexdigest()
+        compiler_path = Path(compiler).resolve()
+        info = compiler_path.stat()
+        identity = (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns)
+        self.compiler = _compiler_version(str(compiler_path), identity)
+        cache_file = None
+        if cache_dir is not None:
+            directory = _private_cache(Path(cache_dir))
+            key = hashlib.sha256(repr((
+                self.cpp_sha256, self.source_sha256, str(compiler_path),
+                identity, self.compiler, platform.machine(), platform.system(),
+                platform.libc_ver(), _FLAGS,
+            )).encode()).hexdigest()
+            cache_file = directory / key
+        cached = _read_cached(cache_file) if cache_file is not None else None
+        self.cache_hit = cached is not None
         with tempfile.TemporaryDirectory(prefix="visuaml-v58-native-") as directory:
             cpp_path = Path(directory) / "program.cpp"
             binary = Path(directory) / "program.so"
-            cpp_path.write_bytes(cpp)
-            result = subprocess.run(
-                [compiler, "-std=c++17", "-O3", "-fPIC", "-shared", str(cpp_path),
-                 "-o", str(binary)],
-                capture_output=True, text=True, timeout=30,
-            )
-            if result.returncode:
-                raise RuntimeError(f"Native specialization compilation failed: {result.stderr}")
-            self.binary_sha256 = hashlib.sha256(binary.read_bytes()).hexdigest()
+            if cached is None:
+                cpp_path.write_bytes(cpp)
+                result = subprocess.run(
+                    [compiler, *_FLAGS, str(cpp_path), "-o", str(binary)],
+                    capture_output=True, text=True, timeout=30,
+                )
+                if result.returncode:
+                    raise RuntimeError(f"Native specialization compilation failed: {result.stderr}")
+                payload = binary.read_bytes()
+            else:
+                payload = cached
+                binary.write_bytes(payload)
+            digest = hashlib.sha256(payload)
+            self.binary_sha256 = digest.hexdigest()
             self._library = ctypes.CDLL(str(binary))
+            if cache_file is not None and cached is None:
+                with tempfile.NamedTemporaryFile(dir=cache_file.parent, delete=False) as record:
+                    pending = Path(record.name)
+                    try:
+                        record.write(digest.digest())
+                        record.write(payload)
+                        record.close()
+                        os.replace(pending, cache_file)
+                    finally:
+                        pending.unlink(missing_ok=True)
         self._run = self._library.visuaml_run
         self._run.argtypes = (ctypes.c_uint32,)
         self._run.restype = ctypes.c_uint32
+        self._batch = self._library.visuaml_batch
+        self._batch.argtypes = (_WORD_POINTER, ctypes.c_uint32)
+        self._batch.restype = None
         self._trace = self._library.visuaml_trace
         self._trace.argtypes = (ctypes.c_uint32, ctypes.POINTER(ctypes.c_uint32))
         self._trace.restype = ctypes.c_uint32
@@ -165,6 +240,16 @@ class NativeSpecialization:
     def run(self, argument: int, *, fuel: int = 400) -> int:
         self._validate_call(argument, fuel)
         return _signed(self._run(argument & _MASK))
+
+    def run_batch_inplace(self, values: np.ndarray, *, fuel: int = 400) -> None:
+        """Transform a writable, contiguous native-endian i32 vector in place."""
+        self._validate_call(0, fuel)
+        if (not isinstance(values, np.ndarray) or values.dtype != np.int32
+                or values.ndim != 1 or not values.flags.c_contiguous
+                or not values.flags.aligned or not values.flags.writeable
+                or values.size > _MASK):
+            raise BitVMAdmissionError("Expected a writable contiguous i32 vector")
+        self._batch(values.ctypes.data_as(_WORD_POINTER), values.size)
 
     def trace(self, argument: int, *, fuel: int = 400) -> tuple[dict, ...]:
         self._validate_call(argument, fuel)
