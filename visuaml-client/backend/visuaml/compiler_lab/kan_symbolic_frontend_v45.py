@@ -12,6 +12,7 @@ from fractions import Fraction
 
 import numpy as np
 
+from .analytic_relu_specialization_v41 import function_hash
 from .kan_mechanism_ir_v45 import (
     EdgeFunction,
     KANAdmissionError,
@@ -44,6 +45,12 @@ def quadratic_to_kan(poly: RecoveredPolynomial) -> KANLowering:
         compile_polynomial_wasm(poly)
     except SymbolicRecoveryError as exc:
         raise KANAdmissionError("Unadmitted recovered polynomial") from exc
+    domain_outputs = tuple(
+        poly.a * x * x + poly.b * x + poly.c
+        for x in range(int(poly.domain[0]), int(poly.domain[1]) + 1)
+    )
+    if function_hash(domain_outputs) != poly.recovered_function_sha256:
+        raise KANAdmissionError("Recovered polynomial/function identity mismatch")
     program = KANProgram(
         inputs=("x",),
         nodes=(
