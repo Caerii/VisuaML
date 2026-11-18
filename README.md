@@ -8,9 +8,73 @@ VisuaML is an open-source research platform combining interactive, collaborative
 
 **Research status (November 2026): v56 constructed neural WASM executor merged; v57 typed-microoperation research in progress.** The verified, bounded machine has full-width i32 bit-gate arithmetic, neural PC routing, constructed control-frame transitions, gate-selected frame events, tensor-backed operand storage, and fixed-weight six-operation ALU selection across multiple original WASM source programs. The v57 research branch is consolidating previously separate instruction tokens into one source-bound fixed-weight microoperation IR. That integration is **not yet independently replay-verified**. Earlier pretrained checkpoint replay and causal experiments remain separate evidence classes. Neither restricted constructed execution nor bounded behavior recovery establishes universal WebAssembly, a stock trained transformer interpreter, or arbitrary learned-weight decompilation. Package version 0.0.0 is unchanged.
 
-[v57 typed microoperations — research](docs/V57_SOURCE_BOUND_TYPED_MICROOPERATIONS.md) · [v56 shared neural ALU](docs/V56_SHARED_NEURAL_ALU.md) · [v55 tensor operand storage](docs/V55_NEURAL_OPERAND_STORAGE.md) · [v54 neural frame events](docs/V54_NEURAL_EVENT_ROUTING.md) · [v53 control frames](docs/V53_NEURAL_CONTROL_FRAMES.md) · [v36 independent pretrained replay](docs/V36_PRETRAINED_REPLAY.md) · [v35 replayable knowledge graph](docs/V35_REPLAYABLE_KNOWLEDGE_GRAPH.md) · [v34 compounding evidence library](docs/V34_COMPOUNDING_EVIDENCE_LIBRARY.md) · [v33 exported compilation and evidence](docs/V33_EXPORT_AND_EVIDENCE.md) · [v32 graph-generated C++ research](docs/V32_NATIVE_SEMANTIC_CODEGEN.md) · [v31 online attention research](docs/V31_ONLINE_ATTENTION.md) · [v30 prefill research](docs/V30_NATIVE_PREFILL.md) · [v29 native performance research](docs/V29_NATIVE_CPU_PERFORMANCE.md) · [Public research roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
+[v58 benchmark laboratory — research](docs/V58_BENCHMARK_LAB.md) · [v58 scientific implications](docs/V58_IMPLICATIONS_AND_BENCHMARK_THESIS.md) · [v57 typed microoperations — research](docs/V57_SOURCE_BOUND_TYPED_MICROOPERATIONS.md) · [v56 shared neural ALU](docs/V56_SHARED_NEURAL_ALU.md) · [v55 tensor operand storage](docs/V55_NEURAL_OPERAND_STORAGE.md) · [v54 neural frame events](docs/V54_NEURAL_EVENT_ROUTING.md) · [v53 control frames](docs/V53_NEURAL_CONTROL_FRAMES.md) · [v36 independent pretrained replay](docs/V36_PRETRAINED_REPLAY.md) · [v35 replayable knowledge graph](docs/V35_REPLAYABLE_KNOWLEDGE_GRAPH.md) · [v34 compounding evidence library](docs/V34_COMPOUNDING_EVIDENCE_LIBRARY.md) · [v33 exported compilation and evidence](docs/V33_EXPORT_AND_EVIDENCE.md) · [v32 graph-generated C++ research](docs/V32_NATIVE_SEMANTIC_CODEGEN.md) · [v31 online attention research](docs/V31_ONLINE_ATTENTION.md) · [v30 prefill research](docs/V30_NATIVE_PREFILL.md) · [v29 native performance research](docs/V29_NATIVE_CPU_PERFORMANCE.md) · [Public research roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) · [Compiler guide](docs/COMPILER_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Security and limitations](docs/SECURITY_AND_BOUNDARIES.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](docs/LICENSE)
+
+## Reproducible benchmark laboratory (v58 research branch)
+
+v58 adds a separate fixed-weight **straight-line data microstep** and an
+offline laboratory for independent source-WASM correctness, held-out
+compositions, paired runtime measurements, one-hot token storage cost,
+capacity scaling, negative-control fault injection and local allocation
+profiling. Benchmark numbers are **not yet measured** and the v57/v58
+research PRs remain unmerged.
+
+The benchmark registry now documents fifteen independent VisuaML evaluation
+suites—from native compilers and pretrained-model causal interventions
+to the visual graph client, collaboration and evidence integrity.
+Five offline benchmark runners are implemented but unmeasured, including
+blinded neural-to-symbolic round trips, failure-complete recovery, and
+proof-gated representation costs. The other ten remain explicit specifications,
+not measured performance claims.
+
+To preflight a clean local checkout without any GitHub Actions:
+
+```bash
+python -m pip install -r visuaml-client/backend/requirements.txt pytest wasmtime ruff
+python visuaml-client/backend/scripts/verify_offline_v58.py \
+  --output-dir /tmp/visuaml-v58-smoke --repeats 2
+```
+
+The result includes measured-only scorecard JSON/CSV; the full suite is
+opt-in. See the [benchmark methodology](docs/V58_BENCHMARK_LAB.md)
+and [cross-system benchmark registry](benchmarks/VISUAML_SYSTEM_BENCHMARK_REGISTRY_V58.json).
+Do not interpret NumPy-based timings as native GPU or optical hardware
+execution.
+
+## Neural-to-symbolic round-trip research (v58, unverified)
+
+The v58 laboratory now includes an **end-to-end experimental bridge**
+from v49's constructed neural bit-VM through v50's blinded CEGIS
+synthesis and independent full-i32 typed-source Z3 verifier, back into
+canonical WASM executed by both Wasmtime and v58's fixed microstep
+machine. It preserves original/recovered source bytes and an independently
+replayable proof/evidence receipt.
+
+A separate **proof-gated representation-cost experiment** compares the
+original versus recovered WASM on the same engine and inputs, accounting
+for the recovery/SMT cost before interpreting any measured speedup.
+
+A **failure-complete recovery campaign** also preserves every attempted
+program, rejected grammar hypothesis, and invalid experiment. It prevents
+successful-only proof archives from being mistaken for unbiased recovery
+rates, and independently audits all accepted proof receipts.
+This is not specialization of neural interpreter weights or arbitrary
+learned-network decompilation.
+
+These experiments are committed but **not yet run or independently
+numerically verified**. To run them locally without GitHub Actions:
+
+```bash
+python -m pip install -r visuaml-client/backend/requirements.txt pytest ruff wasmtime z3-solver
+python visuaml-client/backend/scripts/verify_offline_v58.py \
+  --output-dir /tmp/visuaml-v58-roundtrip \
+  --roundtrip --roundtrip-holdout --representation-cost
+```
+
+See [v58 experiment methodology](docs/V58_BENCHMARK_LAB.md) and
+[the research implications](docs/V58_IMPLICATIONS_AND_BENCHMARK_THESIS.md).
 
 ## Constructed neural WASM research and verification
 

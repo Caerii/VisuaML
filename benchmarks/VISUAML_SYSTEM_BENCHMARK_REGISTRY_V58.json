@@ -1,0 +1,390 @@
+{
+  "schema": "visuaml.system-benchmark-registry.v58",
+  "version": 1,
+  "measured_results": null,
+  "policy": {
+    "execution": "offline-only",
+    "github_actions_disabled": true,
+    "require_source_provenance": true,
+    "separate_correctness_and_performance": true,
+    "no_fabricated_results": true,
+    "immutable_evidence": true,
+    "never_average_unrelated_dimensions_into_one_score": true,
+    "admission_rule": "A benchmark is measured only after independent correctness gates pass on source-bound inputs.",
+    "state_values": [
+      "implemented_unmeasured",
+      "planned",
+      "blocked"
+    ]
+  },
+  "suites": [
+    {
+      "id": "neural-vm",
+      "title": "Neural WASM execution and microstep",
+      "status": "implemented_unmeasured",
+      "runner": "visuaml-client/backend/scripts/benchmark_neural_vm_v58.py",
+      "units": [
+        "ns/run",
+        "ns/instruction",
+        "source programs",
+        "witnesses"
+      ],
+      "dimensions": [
+        "correctness",
+        "program generalization",
+        "latency",
+        "scaling"
+      ],
+      "baselines": [
+        "v51",
+        "v56",
+        "v57",
+        "Wasmtime"
+      ],
+      "source_binding": "original canonical WASM SHA-256",
+      "admission": "every source/step matches v51 and Wasmtime"
+    },
+    {
+      "id": "neural-vm-faults",
+      "title": "Constructed gate falsification",
+      "status": "implemented_unmeasured",
+      "runner": "visuaml-client/backend/scripts/benchmark_faults_v58.py",
+      "units": [
+        "activated mutations",
+        "detected mutations",
+        "undetected mutations"
+      ],
+      "dimensions": [
+        "fault sensitivity"
+      ],
+      "baselines": [
+        "unmodified exact execution"
+      ],
+      "source_binding": "WASM source digest + fixed gate mutation",
+      "admission": "all target opcodes activated; report every undetected case"
+    },
+    {
+      "id": "neural-symbolic-roundtrip",
+      "title": "Blinded neural behavior → independently proved symbolic WASM → neural microstep",
+      "status": "implemented_unmeasured",
+      "runner": "visuaml-client/backend/scripts/benchmark_neural_symbolic_roundtrip_v58.py",
+      "units": [
+        "distinct source programs",
+        "blinded neural oracle queries",
+        "CEGIS refinements",
+        "SMT proof outcomes",
+        "Z3 wall ns",
+        "recovered WASM bytes",
+        "finite V58 instruction transitions"
+      ],
+      "dimensions": [
+        "bidirectional compilation",
+        "symbolic synthesis",
+        "all-i32 typed-source proof",
+        "finite neural reexecution",
+        "representation size"
+      ],
+      "baselines": [
+        "original typed v40 source semantics",
+        "v49 constructed bit-neural oracle",
+        "independent Z3 SMT oracle",
+        "v51 independent host execution",
+        "Wasmtime original and recovered binaries",
+        "v58 unified microstep"
+      ],
+      "source_binding": "original and recovered canonical WASM SHA-256 and bytes, Z3 formula digest, fixed v49 weight digest, Git commit/tree",
+      "admission": "synthesizer sees oracle I/O but no original source, weights, manifests or traces; solver proves typed source-to-symbolic candidate across full i32 domain; original and recovered Wasmtime and V58 finite traces agree; do not infer neural all-input proof or unknown-model decompilation"
+    },
+    {
+      "id": "recovery-failure-ledger",
+      "title": "Failure-complete blinded neural-to-symbolic synthesis experiment",
+      "status": "implemented_unmeasured",
+      "runner": "visuaml-client/backend/scripts/benchmark_recovery_failures_v58.py",
+      "units": [
+        "attempted source behaviors",
+        "verified",
+        "rejected by grammar or budget",
+        "invalid experiments",
+        "neural oracle queries",
+        "SMT invocations"
+      ],
+      "dimensions": [
+        "synthesis generalization",
+        "proof validity",
+        "failure attribution",
+        "negative control sensitivity"
+      ],
+      "baselines": [
+        "v50 source-bound five historical cases",
+        "eight held-out source programs",
+        "cubic outside admitted grammar"
+      ],
+      "source_binding": "original source WASM bytes plus SHA-256, fixed bit-VM hash, Git tree, per-attempt audit and independent archive verifier",
+      "admission": "all attempts preserved, cubic negative rejected, source digests match known source inputs, independent SMT/Wasmtime/v58 reruns every successful receipt, invalid protocol/trace results never count as scientific rejection"
+    },
+    {
+      "id": "representation-cost",
+      "title": "Proof-gated original-versus-recovered WASM cost and specialization amortization",
+      "status": "implemented_unmeasured",
+      "runner": "visuaml-client/backend/scripts/benchmark_representation_cost_v58.py",
+      "units": [
+        "original/recovered source WASM bytes",
+        "paired warm invocation ns",
+        "break-even call count lower bound",
+        "recovery-and-proof ns"
+      ],
+      "dimensions": [
+        "cross-representation optimization",
+        "code size",
+        "execution performance",
+        "specialization amortization"
+      ],
+      "baselines": [
+        "original WASM in Wasmtime",
+        "recovered WASM in Wasmtime",
+        "original WASM in v58 microstep",
+        "recovered WASM in v58 microstep"
+      ],
+      "source_binding": "independently replayed v50-v58 original/recovered WASM receipt with exact Git tree and Z3 proof hash",
+      "admission": "independently reverify archive typed i32 proof and finite execution traces before any timing; pair within same engine/input; never call these experiments neural-weight specialization; no optimization speedups without actual measurements"
+    },
+    {
+      "id": "compiler-ir-roundtrip",
+      "title": "Typed Semantic IR decode/reencode fidelity",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "graphs",
+        "roundtrip byte hashes",
+        "semantic mismatches",
+        "ms/graph"
+      ],
+      "dimensions": [
+        "correctness",
+        "serialization",
+        "scaling"
+      ],
+      "baselines": [
+        "original IR decoder",
+        "independent scalar semantics"
+      ],
+      "source_binding": "source graph + typed operations + weights",
+      "admission": "canonical roundtrip + semantic parity + corrupt IR rejection"
+    },
+    {
+      "id": "native-backend-parity",
+      "title": "Independent native C++17 kernel correctness and cost",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "max abs error",
+        "relative error",
+        "tokens/s",
+        "ms/inference",
+        "RSS bytes"
+      ],
+      "dimensions": [
+        "numerical fidelity",
+        "performance",
+        "resource"
+      ],
+      "baselines": [
+        "PyTorch",
+        "independent NumPy",
+        "prior native C++"
+      ],
+      "source_binding": "checkpoint SHA-256 + source/compiler flags",
+      "admission": "pretrained model parity before timing; no mixed-precision numerical claims"
+    },
+    {
+      "id": "pretrained-mechanism-causality",
+      "title": "Causal intervention and mechanistic model validity",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "heldout intervention effect",
+        "baseline displacement",
+        "counterfactual error",
+        "CI"
+      ],
+      "dimensions": [
+        "causal sufficiency",
+        "transfer",
+        "negative controls"
+      ],
+      "baselines": [
+        "identity mask",
+        "simple channel mean",
+        "spatial shuffle",
+        "seeded random intervention"
+      ],
+      "source_binding": "immutable checkpoint + sample/split + intervention mask",
+      "admission": "heldout separation and negative controls must pass"
+    },
+    {
+      "id": "neural-symbolic-recovery",
+      "title": "Blinded behavior-to-symbolic recovery",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "functions recovered",
+        "CEGIS rounds",
+        "queries",
+        "solver ms",
+        "false acceptance"
+      ],
+      "dimensions": [
+        "synthesis",
+        "proof",
+        "grammar generalization"
+      ],
+      "baselines": [
+        "Z3 original WASM semantics",
+        "random grammar search"
+      ],
+      "source_binding": "oracle I/O only; separate program verifier",
+      "admission": "no source or weights leaked to synthesis; independent all-i32 SMT check"
+    },
+    {
+      "id": "graph-ui-interaction",
+      "title": "Visual neural graph editor responsiveness",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "frame-time p95 ms",
+        "input latency p95 ms",
+        "node count",
+        "render time ms"
+      ],
+      "dimensions": [
+        "client performance",
+        "UX scaling"
+      ],
+      "baselines": [
+        "prior client revision",
+        "browser renderer idle"
+      ],
+      "source_binding": "frozen graph scene + browser/renderer versions",
+      "admission": "visually identical scene and interaction sequence"
+    },
+    {
+      "id": "collaborative-graph",
+      "title": "Multiplayer graph consistency and synchronization",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "update latency ms",
+        "conflicts",
+        "convergence mismatches",
+        "connected clients"
+      ],
+      "dimensions": [
+        "correctness",
+        "network scalability"
+      ],
+      "baselines": [
+        "single-client serial reference",
+        "Yjs/CRDT invariants"
+      ],
+      "source_binding": "operation log + seeds + network impairment policy",
+      "admission": "all clients converge; no silent lost updates"
+    },
+    {
+      "id": "export-evidence-chain",
+      "title": "Evidence provenance and tamper resistance",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "tamper detection rate",
+        "manifest completeness",
+        "replay time",
+        "source mismatches"
+      ],
+      "dimensions": [
+        "provenance",
+        "research integrity"
+      ],
+      "baselines": [
+        "original artifacts",
+        "independent recomputed hash"
+      ],
+      "source_binding": "exact Git tree/commit and raw data SHA-256",
+      "admission": "all mutated artifacts rejected or explicitly marked superseded"
+    },
+    {
+      "id": "runtime-reuse-scaling",
+      "title": "Inference model reuse and multi-session isolation",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "model load ms",
+        "warm inference ms",
+        "per-session memory",
+        "KV leakage failures"
+      ],
+      "dimensions": [
+        "performance",
+        "state isolation",
+        "resource"
+      ],
+      "baselines": [
+        "cold model load",
+        "independent session oracle"
+      ],
+      "source_binding": "checkpoint/config/tokenizer + session protocol",
+      "admission": "no shared state leakage, exact bounded numerical reference parity"
+    },
+    {
+      "id": "compiler-optimization",
+      "title": "IR lowering and rewrite profitability",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "speedup",
+        "IR size",
+        "proof successes",
+        "semantic regressions"
+      ],
+      "dimensions": [
+        "optimization",
+        "verification"
+      ],
+      "baselines": [
+        "unoptimized source/IR execution"
+      ],
+      "source_binding": "typed source tree + policy digest + rewrite log",
+      "admission": "independent semantic equivalence before speed claims"
+    },
+    {
+      "id": "portability-backends",
+      "title": "Cross-platform and future hardware portability",
+      "status": "planned",
+      "runner": null,
+      "units": [
+        "passed compiler triples",
+        "numerical parity",
+        "energy per operation",
+        "measured throughput"
+      ],
+      "dimensions": [
+        "portability",
+        "resource",
+        "hardware"
+      ],
+      "baselines": [
+        "same reference IR/WASM semantics"
+      ],
+      "source_binding": "source/version/host/compiler/device identity",
+      "admission": "do not claim unsupported GPU, optical or accelerator execution"
+    }
+  ],
+  "priority": [
+    "Only after verified v50-to-v58 roundtrip receipts exist, compare original/recovered canonical WASM costs within Wasmtime and fixed-weight v58 execution and report source-size tradeoffs, regressions and recovery amortization.",
+    "Run the v50-to-v58 blinded neural-symbolic roundtrip with independent full-i32 Z3 proof and finite Wasmtime/v58 replay; record all failed attempts and grammar limitations.",
+    "Keep correctness and research-integrity failures as hard gates, not weighted score dimensions.",
+    "Complete local measured v58 neural VM regression and export immutable evidence.",
+    "Add typed Semantic IR roundtrip and native replay adapters to the same benchmark artifact schema.",
+    "Add model causality negative-control benchmark adapter before reporting a mechanism recovery score.",
+    "Extend UI and collaboration benchmarks with deterministic captured workloads after correctness definitions exist."
+  ]
+}
