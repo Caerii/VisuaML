@@ -87,7 +87,7 @@ def test_host_control_and_noncanonical_program_not_admitted():
         ControlOperation("drop"),
         ControlOperation("end"),
     ))
-    with pytest.raises(Exception):
+    with pytest.raises((MicroopAdmissionError, RuntimeError, ValueError)):
         execute_microstep_control(invalid, 0)
 
 
