@@ -13,9 +13,17 @@ import numpy as np
 
 from .neural_control_routing_v52 import RoutedResult, execute_routed_control
 from .neural_frame_circuit_v53 import (
-    ACTIONS, HEIGHTS, KINDS, MAX_NESTING,
-    FrameCircuitError, FrameCircuitWeights, FrameTokens, empty_frames,
-    fixed_frame_weights, onehot, step_frames,
+    ACTIONS,
+    HEIGHTS,
+    KINDS,
+    MAX_NESTING,
+    FrameCircuitError,
+    FrameCircuitWeights,
+    FrameTokens,
+    empty_frames,
+    fixed_frame_weights,
+    onehot,
+    step_frames,
 )
 from .wasm_control_flow_v51 import ControlProgram, _syntax
 
@@ -65,9 +73,7 @@ def replay_routed_frames(
                 action = 1
                 kind = FRAME_KINDS.index(opcode)
                 base = len(record["stack_i32"])
-        elif opcode == "else":
-            action = 2
-        elif opcode == "end" and depth:
+        elif opcode == "else" or (opcode == "end" and depth):
             action = 2
         elif opcode in ("br", "br_if"):
             if record["neural_route"]["branch_guard_gate"]:
