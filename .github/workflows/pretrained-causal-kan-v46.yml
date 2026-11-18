@@ -1,0 +1,86 @@
+name: v46 pretrained internal activation and causal KAN verification
+on:
+  push:
+    branches:
+      - research/v46-activation-causal-kan
+      - main
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/onnx_activation_causality_v46.py
+      - visuaml-client/backend/scripts/probe_pretrained_internal_kan_v46.py
+      - visuaml-client/backend/tests/test_onnx_activation_causality_v46.py
+      - .github/workflows/pretrained-causal-kan-v46.yml
+  pull_request:
+    paths:
+      - visuaml-client/backend/visuaml/compiler_lab/onnx_activation_causality_v46.py
+      - visuaml-client/backend/scripts/probe_pretrained_internal_kan_v46.py
+      - visuaml-client/backend/tests/test_onnx_activation_causality_v46.py
+      - .github/workflows/pretrained-causal-kan-v46.yml
+permissions:
+  contents: read
+jobs:
+  internal-intervention:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install reviewed ONNX and numerical evidence dependencies
+        run: |
+          python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check onnx==1.18.0 onnxruntime==1.22.1 numpy==2.2.6 pytest==8.4.2 ruff==0.17.5
+      - name: Fetch immutable pretrained CNN source bytes
+        run: |
+          mkdir -p evidence-v46
+          curl --fail --location --retry 3 --max-time 75 'https://huggingface.co/onnxmodelzoo/mnist-8/resolve/a19f9a8c2333de1df9b03f10f5739f468b699a1a/mnist-8.onnx' --output evidence-v46/mnist-8.onnx
+          echo '2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf  evidence-v46/mnist-8.onnx' | sha256sum --check
+          test "$(wc -c < evidence-v46/mnist-8.onnx)" -eq 26454
+      - name: Verify actual graph output tracing and channel interventions in two numerical implementations
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_PINNED_MODEL: evidence-v46/mnist-8.onnx
+        run: |
+          python -m pytest -q visuaml-client/backend/tests/test_onnx_activation_causality_v46.py
+          ruff check visuaml-client/backend/visuaml/compiler_lab/onnx_activation_causality_v46.py visuaml-client/backend/scripts/probe_pretrained_internal_kan_v46.py visuaml-client/backend/tests/test_onnx_activation_causality_v46.py
+      - name: Measure complete pretrained CNN internal causal interventions, KAN fitting, and second-image transfer
+        env:
+          PYTHONPATH: visuaml-client/backend
+          PYTHONNOUSERSITE: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          VISUAML_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python visuaml-client/backend/scripts/probe_pretrained_internal_kan_v46.py --model evidence-v46/mnist-8.onnx --output evidence-v46/internal-kan-v46.json
+          python - <<'PY'
+          import json
+          r=json.load(open("evidence-v46/internal-kan-v46.json"))
+          assert r["schema"] == "visuaml.pretrained-internal-kan-causality.v46"
+          assert r["source_checkpoint_sha256"] == "2f06e72de813a8635c9bc0397ac447a601bdbfa7df4bebc278723b958831c9bf"
+          assert r["reviewed_internal_stage"]["target_output"] == "ReLU114_Output_0"
+          assert (r["train_input_count"],r["heldout_same_image_input_count"],r["cross_image_input_count"]) == (17,16,16)
+          assert len(r["basis_families"]) == 5
+          assert {x["basis"] for x in r["basis_families"]} == {"linear","polynomial","linear_spline","gaussian_rbf","fourier"}
+          assert len(r["all_channel_discovery_effects"]) == 16
+          assert r["selected_causal_channel"] != r["negative_control_channel"]
+          assert len(r["heldout_causal_witnesses"]) == 16 and len(r["cross_image_causal_witnesses"]) == 16
+          assert len(r["independent_scalar_replay_witnesses"]) == 3
+          assert all(all(w[key]["passed"] for key in ("stage", "final_logits", "selected_ablation_logits")) for w in r["independent_scalar_replay_witnesses"])
+          assert all(w["identity_mask_numerical_parity"]["passed"] for group in (r["heldout_causal_witnesses"],r["cross_image_causal_witnesses"]) for w in group)
+          assert r["actual_pretrained_internal_interventions_executed"]
+          assert r["selected_channel_chosen_without_heldout"]
+          assert not r["fitted_kan_edges_are_teacher_internal_mechanisms"]
+          assert not r["cross_checkpoint_generalization_proved"]
+          assert r["all_passed"]
+          print("Internal causal channel",r["selected_causal_channel"],"control",r["negative_control_channel"])
+          PY
+      - name: Upload raw, source-bound real pretrained internal KAN observations
+        uses: actions/upload-artifact@v4
+        with:
+          name: pretrained-internal-kan-v46
+          path: evidence-v46/internal-kan-v46.json
+          if-no-files-found: error
+          retention-days: 30
