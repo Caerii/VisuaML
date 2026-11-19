@@ -104,14 +104,15 @@ def witness():
         ("zero", 0, 100, None),
         ("rollback", 0, 100, None),
         ("cutoff_after_store", 0, 9, ControlFuelExhausted),
-        ("trapping_store", 65530, 100, LinearMemoryTrap),
+        ("trapping_store", 65526, 100, LinearMemoryTrap),
         ("widened_load", -1, 100, LinearMemoryTrap),
     ):
         initial = bytearray(65_536)
         if name in ("rollback", "cutoff_after_store"):
             initial[1:5] = initial[7:11] = bytes.fromhex("01000080")
         if name == "trapping_store":
-            initial[65531:65535] = bytes.fromhex("01000080")
+            initial[65527:65531] = bytes.fromhex("01000080")
+            initial[65533:] = bytes.fromhex("aabbcc")
         result, page, trace, trap = compare_traced(program, packed, argument, initial, fuel, error)
         writes = [row["memory_access"] for row in trace if row["opcode"] == "i32.store"]
         if name == "cutoff_after_store":
