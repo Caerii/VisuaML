@@ -24,6 +24,8 @@ from .neural_alu_v56 import (
     ALUWeights,
     construct_alu_weights,
     execute_alu,
+    _prepare_selected_alu,
+    _PREPARED_CIRCUITS,
 )
 from .neural_control_routing_v52 import (
     TERMINAL,
@@ -166,6 +168,7 @@ def execute_microop_routed_control(
     capture_trace: bool = True,
     observe_store: Callable[[int, int, dict], None] | None = None,
     prepare_operand_pop: bool = True,
+    prepare_alu: bool = True,
 ) -> FrameRoutedResult:
     """Execute with fixed-weight routing and frame operations.
 
@@ -173,13 +176,16 @@ def execute_microop_routed_control(
     updates. Completed stores survive traps. The optional store observer
     receives (step, source PC, access) after each write, even without tracing.
     The default array profile prepares unit pop for its private operand
-    state. Passing custom tokens or weights uses the checked stack.
+    state and binds source-admitted add and signed less-than circuits.
+    Custom tokens or weights use the checked stack and full-candidate ALU.
 
     v53 gate output owns frame depths and branch operand-stack restoration.
     Host still dispatches opcode arithmetic and carries lexical PC metadata.
     """
     if type(prepare_operand_pop) is not bool:
         raise ControlAdmissionError("prepare_operand_pop must be a boolean")
+    if type(prepare_alu) is not bool:
+        raise ControlAdmissionError("prepare_alu must be a boolean")
     links = _syntax(program)
     memory = uses_memory(program)
     array_mode = array_memory is not None
@@ -198,7 +204,7 @@ def execute_microop_routed_control(
     max_fuel = SCALED_MAX_FUEL if scaled and not capture_trace else MAX_FUEL
     if type(fuel) is not int or not 1 <= fuel <= max_fuel:
         raise ControlAdmissionError("Invalid execution fuel")
-    prepared_pop = array_mode and prepare_operand_pop and type(program) is ControlProgram and all(
+    canonical_array = array_mode and type(program) is ControlProgram and all(
         value is None for value in (tokens, fixed, bit_fixed, frame_fixed, event_fixed,
                                     operand_fixed, alu_fixed, microop_fixed, microop_tokens, local_fixed)
     )
@@ -235,8 +241,16 @@ def execute_microop_routed_control(
     )
     local_bank = np.zeros((LOCALS_WIDTH, 32), dtype=np.float64)
     local_bank[0] = _bits(argument)
-    stack = _PreparedPopStack() if prepared_pop else TensorOperandStack(operand_fixed)
+    stack = _PreparedPopStack() if canonical_array and prepare_operand_pop else TensorOperandStack(operand_fixed)
     alu_fixed = construct_alu_weights() if alu_fixed is None else alu_fixed
+    selected_circuits = {}
+    if canonical_array and prepare_alu:
+        for pc, op in enumerate(program.operations):
+            if op.opcode in _PREPARED_CIRCUITS:
+                selected_circuits[pc] = _prepare_selected_alu(
+                    op.opcode, indexed.read(pc).alu_selector, alu_fixed, bit_fixed,
+                )
+
 
     frame_state = empty_frames()
     frame_meta: list[tuple[str, int, int, int | None]] = []
@@ -382,14 +396,13 @@ def execute_microop_routed_control(
             produced = result
         elif kind in _BINARY:
             right, left = consumed
-            # All candidate operations use the same v49 analytic circuit.
-            # The fixed ALU output gate, not Python opcode dispatch,
-            # chooses the i32 result.
-            result = execute_alu(
-                microop.alu_selector, left, right, fixed=alu_fixed,
-                bit_fixed=bit_fixed,
-            )
-            produced = result
+            circuit = selected_circuits.get(pc)
+            if circuit is None:
+                produced = execute_alu(
+                    microop.alu_selector, left, right, fixed=alu_fixed, bit_fixed=bit_fixed,
+                )
+            else:
+                produced = circuit(left, right)
         else:
             raise ControlExecutionTrap("Unadmitted dynamic operation")
         # The selected microop effect also determines result materialization,

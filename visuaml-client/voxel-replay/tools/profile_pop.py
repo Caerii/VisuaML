@@ -25,7 +25,7 @@ def profile(program, argument, initial, fuel):
         try:
             result = vm.execute_microop_routed_control(
                 program, argument, array_memory=initial.copy(), fuel=fuel,
-                capture_trace=False, prepare_operand_pop=prepared,
+                capture_trace=False, prepare_operand_pop=prepared, prepare_alu=False,
             )
             return result.steps
         except ControlFuelExhausted:

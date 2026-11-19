@@ -27,7 +27,7 @@ def test_prepared_and_checked_causal_traces(scene):
 
         def trace(*args, **kwargs):
             output = vm.execute_microop_routed_control(*args, **{
-                **kwargs, "capture_trace": True, "fuel": 2000, "prepare_operand_pop": prepared,
+                **kwargs, "capture_trace": True, "fuel": 2000, "prepare_operand_pop": prepared, "prepare_alu": False,
             })
             traces.append(output.trace)
             return output

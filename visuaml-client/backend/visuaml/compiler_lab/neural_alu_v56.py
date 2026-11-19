@@ -2,7 +2,9 @@
 
 Six candidate circuits run on the *same* two input registers; the selected
 32-bit output is a bilinear contraction against one-hot opcode PROGRAM DATA.
-The host does not choose between add/sub/mul/lt/gt/eqz implementations.
+The generic host path does not choose among the implementations.
+The canonical prepared path resolves eligible source selectors ahead
+of execution and invokes only the matching v49 circuit.
 
 This does NOT remove host stack-arity handling, opcode fetch, or locals.
 The v49 bit gates remain the arithmetic substrate, not learned parameters.
@@ -11,6 +13,7 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass
+from functools import partial
 
 import numpy as np
 
@@ -70,6 +73,35 @@ def onehot_alu(name: str) -> np.ndarray:
     result = np.zeros(OP_COUNT, dtype=np.float64)
     result[ALU_OPS.index(name)] = 1.
     return result
+
+
+def _less_than_word(left: np.ndarray, right: np.ndarray, *, fixed: BitCircuitWeights) -> np.ndarray:
+    result = np.zeros(WIDTH, dtype=np.float64)
+    result[0] = _signed_lt(left, right, fixed)
+    return result
+
+
+_PREPARED_CIRCUITS = {"i32.add": _add, "i32.lt_s": _less_than_word}
+
+
+def _run_prepared_alu(circuit, fixed, left: np.ndarray, right: np.ndarray) -> np.ndarray:
+    _admit_binary(left, (WIDTH,))
+    _admit_binary(right, (WIDTH,))
+    result = circuit(left, right, fixed=fixed)
+    _admit_binary(result, (WIDTH,))
+    return result
+
+
+def _prepare_selected_alu(name, selector, fixed, bit_fixed):
+    """Bind a source-admitted canonical selector to its original bit gates."""
+    circuit = _PREPARED_CIRCUITS.get(name)
+    if circuit is None:
+        return None
+    expected = onehot_alu(name)
+    _admit_binary(fixed.output_gains, (OP_COUNT,))
+    if not np.array_equal(selector, expected) or not np.array_equal(selector * fixed.output_gains, expected):
+        raise NeuralALUError("Selected circuit does not match the admitted ALU selector and gain")
+    return partial(_run_prepared_alu, circuit, bit_fixed)
 
 
 def execute_alu(

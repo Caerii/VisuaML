@@ -25,7 +25,7 @@ def test_saved_causal_histories(name):
 
     def traced(*args, **kwargs):
         result = vm.execute_microop_routed_control(*args, **{
-            **kwargs, "fuel": 2000, "capture_trace": True, "prepare_operand_pop": False,
+            **kwargs, "fuel": 2000, "capture_trace": True, "prepare_operand_pop": False, "prepare_alu": False,
         })
         traces[-1].append(result.trace)
         return result
@@ -64,7 +64,7 @@ def test_exact_fuel_and_trap_prefix(fuel, argument, active, error):
             page = initial.copy()
             with patch.object(adapter, "step_operands", step), pytest.raises(error) as failure:
                 vm.execute_microop_routed_control(program, argument, array_memory=page, fuel=fuel,
-                                                  prepare_operand_pop=prepared)
+                                                  prepare_operand_pop=prepared, prepare_alu=False)
             observed.append((failure.value.trace, failure.value.trap_site, page))
     assert observed[0] == observed[1] == observed[2]
     if error is LinearMemoryTrap:

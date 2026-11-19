@@ -42,7 +42,7 @@ def count_run(case, enabled, expected):
             try:
                 result = vm.execute_microop_routed_control(
                     program, argument, array_memory=page.copy(), capture_trace=False,
-                    fuel=source_steps, prepare_operand_pop=enabled,
+                    fuel=source_steps, prepare_operand_pop=enabled, prepare_alu=False,
                 )
                 assert result.steps == source_steps
             except ControlFuelExhausted:
