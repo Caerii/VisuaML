@@ -1,0 +1,444 @@
+{
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "prepared": true,
+  "cases": {
+    "sparse": {
+      "selected": {
+        "i32.lt_s": 204,
+        "i32.add": 676,
+        "i32.eqz": 4
+      },
+      "prepared_selected": {
+        "i32.lt_s": 204,
+        "i32.add": 676
+      },
+      "profile_seconds": 3.325276933000001,
+      "functions": [
+        {
+          "file": "shape_base.py",
+          "function": "stack",
+          "calls": 2796,
+          "self_seconds": 0.016457538,
+          "cumulative_seconds": 0.018682402
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_add",
+          "calls": 684,
+          "self_seconds": 0.049492110000000006,
+          "cumulative_seconds": 0.050035196000000004
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_mul",
+          "calls": 4,
+          "self_seconds": 0.0005523980000000001,
+          "cumulative_seconds": 0.0009132200000000001
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "execute_alu",
+          "calls": 4,
+          "self_seconds": 5.9192000000000005e-05,
+          "cumulative_seconds": 0.004184321
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_and",
+          "calls": 239100,
+          "self_seconds": 0.29026402500000004,
+          "cumulative_seconds": 0.29026402500000004
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_unsigned_lt",
+          "calls": 212,
+          "self_seconds": 0.008382961000000001,
+          "cumulative_seconds": 0.058386786
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "_run_prepared_alu",
+          "calls": 880,
+          "self_seconds": 0.001339831,
+          "cumulative_seconds": 0.12115782400000001
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_eqz",
+          "calls": 6604,
+          "self_seconds": 0.063791131,
+          "cumulative_seconds": 0.320669709
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "_admit_binary",
+          "calls": 2744,
+          "self_seconds": 0.0021880470000000003,
+          "cumulative_seconds": 0.012230479
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_xor",
+          "calls": 6996,
+          "self_seconds": 0.016040540000000002,
+          "cumulative_seconds": 0.016040540000000002
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_signed_lt",
+          "calls": 212,
+          "self_seconds": 0.00048471200000000004,
+          "cumulative_seconds": 0.060467449000000006
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_sub",
+          "calls": 4,
+          "self_seconds": 1.0196e-05,
+          "cumulative_seconds": 0.00028779500000000003
+        },
+        {
+          "file": "multiarray.py",
+          "function": "bincount",
+          "calls": 4,
+          "self_seconds": 5.310000000000001e-07,
+          "cumulative_seconds": 5.310000000000001e-07
+        }
+      ]
+    },
+    "crowded": {
+      "selected": {
+        "i32.lt_s": 156,
+        "i32.add": 564,
+        "i32.eqz": 4
+      },
+      "prepared_selected": {
+        "i32.lt_s": 156,
+        "i32.add": 564
+      },
+      "profile_seconds": 2.649900536999998,
+      "functions": [
+        {
+          "file": "shape_base.py",
+          "function": "stack",
+          "calls": 2204,
+          "self_seconds": 0.013150504,
+          "cumulative_seconds": 0.014931889
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_add",
+          "calls": 572,
+          "self_seconds": 0.040630637000000004,
+          "cumulative_seconds": 0.040915798
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_mul",
+          "calls": 4,
+          "self_seconds": 0.0007926400000000001,
+          "cumulative_seconds": 0.0012904090000000002
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "execute_alu",
+          "calls": 4,
+          "self_seconds": 0.00022945500000000002,
+          "cumulative_seconds": 0.004920030000000001
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_and",
+          "calls": 188780,
+          "self_seconds": 0.22643289100000003,
+          "cumulative_seconds": 0.22643289100000003
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_unsigned_lt",
+          "calls": 164,
+          "self_seconds": 0.006457111000000001,
+          "cumulative_seconds": 0.044717193
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "_run_prepared_alu",
+          "calls": 720,
+          "self_seconds": 0.001130299,
+          "cumulative_seconds": 0.09545742800000001
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_eqz",
+          "calls": 5228,
+          "self_seconds": 0.050653829000000004,
+          "cumulative_seconds": 0.25138987100000004
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "_admit_binary",
+          "calls": 2264,
+          "self_seconds": 0.001829441,
+          "cumulative_seconds": 0.009930174
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_xor",
+          "calls": 5412,
+          "self_seconds": 0.012139616,
+          "cumulative_seconds": 0.012139616
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_signed_lt",
+          "calls": 164,
+          "self_seconds": 0.000544705,
+          "cumulative_seconds": 0.046545720000000006
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_sub",
+          "calls": 4,
+          "self_seconds": 8.713000000000001e-06,
+          "cumulative_seconds": 0.00030051400000000004
+        },
+        {
+          "file": "multiarray.py",
+          "function": "bincount",
+          "calls": 4,
+          "self_seconds": 5.51e-07,
+          "cumulative_seconds": 5.51e-07
+        }
+      ]
+    },
+    "bfs": {
+      "selected": {
+        "i32.mul": 431,
+        "i32.lt_s": 206,
+        "i32.eqz": 192,
+        "i32.add": 402
+      },
+      "prepared_selected": {
+        "i32.lt_s": 206,
+        "i32.add": 402
+      },
+      "profile_seconds": 2.6228382209999994,
+      "functions": [
+        {
+          "file": "shape_base.py",
+          "function": "stack",
+          "calls": 1764,
+          "self_seconds": 0.012273116,
+          "cumulative_seconds": 0.01388378
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_add",
+          "calls": 1648,
+          "self_seconds": 0.11668418900000001,
+          "cumulative_seconds": 0.11750242600000001
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_mul",
+          "calls": 623,
+          "self_seconds": 0.08332030700000001,
+          "cumulative_seconds": 0.138855384
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "execute_alu",
+          "calls": 623,
+          "self_seconds": 0.007422489000000001,
+          "cumulative_seconds": 0.638926479
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_and",
+          "calls": 338148,
+          "self_seconds": 0.40534168400000004,
+          "cumulative_seconds": 0.40534168400000004
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_unsigned_lt",
+          "calls": 1452,
+          "self_seconds": 0.054934885,
+          "cumulative_seconds": 0.393444785
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "_run_prepared_alu",
+          "calls": 608,
+          "self_seconds": 0.000884525,
+          "cumulative_seconds": 0.09731113100000001
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_eqz",
+          "calls": 4623,
+          "self_seconds": 0.043444790000000004,
+          "cumulative_seconds": 0.222575513
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "_admit_binary",
+          "calls": 5570,
+          "self_seconds": 0.00418946,
+          "cumulative_seconds": 0.025792465
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_xor",
+          "calls": 47916,
+          "self_seconds": 0.10807836800000001,
+          "cumulative_seconds": 0.10807836800000001
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_signed_lt",
+          "calls": 1452,
+          "self_seconds": 0.002635464,
+          "cumulative_seconds": 0.40580515500000003
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_sub",
+          "calls": 623,
+          "self_seconds": 0.001028728,
+          "cumulative_seconds": 0.044865107
+        },
+        {
+          "file": "multiarray.py",
+          "function": "bincount",
+          "calls": 623,
+          "self_seconds": 8.0104e-05,
+          "cumulative_seconds": 8.0104e-05
+        }
+      ]
+    },
+    "sudoku": {
+      "selected": {
+        "i32.sub": 2,
+        "i32.eqz": 18,
+        "i32.lt_s": 25,
+        "i32.mul": 124,
+        "i32.add": 123,
+        "i32.gt_s": 5
+      },
+      "prepared_selected": {
+        "i32.lt_s": 25,
+        "i32.add": 123
+      },
+      "profile_seconds": 0.5997181099999999,
+      "functions": [
+        {
+          "file": "shape_base.py",
+          "function": "stack",
+          "calls": 319,
+          "self_seconds": 0.002333397,
+          "cumulative_seconds": 0.002631514
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_add",
+          "calls": 421,
+          "self_seconds": 0.030150972,
+          "cumulative_seconds": 0.030342342
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_mul",
+          "calls": 149,
+          "self_seconds": 0.019833548000000003,
+          "cumulative_seconds": 0.033211482
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "execute_alu",
+          "calls": 149,
+          "self_seconds": 0.0017788020000000001,
+          "cumulative_seconds": 0.152423118
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_and",
+          "calls": 75657,
+          "self_seconds": 0.089917171,
+          "cumulative_seconds": 0.089917171
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_unsigned_lt",
+          "calls": 323,
+          "self_seconds": 0.012291989000000001,
+          "cumulative_seconds": 0.086517998
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "_run_prepared_alu",
+          "calls": 148,
+          "self_seconds": 0.000214006,
+          "cumulative_seconds": 0.018139375000000003
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_eqz",
+          "calls": 1042,
+          "self_seconds": 0.010036133000000001,
+          "cumulative_seconds": 0.050200357
+        },
+        {
+          "file": "neural_alu_v56.py",
+          "function": "_admit_binary",
+          "calls": 1376,
+          "self_seconds": 0.001025679,
+          "cumulative_seconds": 0.006259306
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_xor",
+          "calls": 10659,
+          "self_seconds": 0.023641618000000003,
+          "cumulative_seconds": 0.023641618000000003
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_signed_lt",
+          "calls": 323,
+          "self_seconds": 0.000631678,
+          "cumulative_seconds": 0.089304093
+        },
+        {
+          "file": "bit_neural_vm_v49.py",
+          "function": "_sub",
+          "calls": 149,
+          "self_seconds": 0.000258932,
+          "cumulative_seconds": 0.010858704
+        },
+        {
+          "file": "multiarray.py",
+          "function": "bincount",
+          "calls": 149,
+          "self_seconds": 1.8906e-05,
+          "cumulative_seconds": 1.8906e-05
+        }
+      ]
+    }
+  }
+}

@@ -372,3 +372,12 @@ control-flow joins, and dynamic underflow remains checked. Paired
 terrain, full BFS, and Sudoku runs improved median execution latency.
 Exact causal traces, fuel and trap prefixes, and Wasmtime pages matched.
 [Prepared pop profiles, counters, and paired samples](../visuaml-client/voxel-replay/evidence/prepared-pop/README.md)
+
+## v58 prepared fixed-gate ALU selection
+
+Canonical source-bound add and signed less-than bind their existing
+v49 circuits during invocation setup. Eligible sites skip five
+unused arithmetic candidates. Paired terrain, complete BFS, and
+one-blank Sudoku replays improved under the same prepared-pop
+baseline. Exact pages, traces, fuel and traps were retained.
+[ALU profiles, work counts, and raw replay timings](../visuaml-client/voxel-replay/evidence/prepared-alu/README.md)

@@ -1,0 +1,993 @@
+{
+  "baseline": "acf7abfa52da9ca8fff4c8eae3c7d0d7b854e669",
+  "workload": "crowded",
+  "binary_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "pairs_after_warmup": 10,
+  "world_logs": [
+    {
+      "version": 1,
+      "mode": "terrain",
+      "binary_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24",
+      "initial": {
+        "positions": [
+          1,
+          3,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18
+        ],
+        "materials": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "inputs": [
+        {
+          "moves": [
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1
+          ],
+          "edit": false
+        },
+        {
+          "moves": [
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1
+          ],
+          "edit": false
+        },
+        {
+          "moves": [
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ],
+          "edit": false
+        },
+        {
+          "moves": [
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1
+          ],
+          "edit": false
+        }
+      ]
+    },
+    {
+      "version": 1,
+      "mode": "terrain",
+      "binary_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24",
+      "initial": {
+        "positions": [
+          18,
+          16,
+          13,
+          11,
+          8,
+          6,
+          3,
+          1
+        ],
+        "materials": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "inputs": [
+        {
+          "moves": [
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ],
+          "edit": false
+        },
+        {
+          "moves": [
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ],
+          "edit": false
+        },
+        {
+          "moves": [
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1
+          ],
+          "edit": false
+        },
+        {
+          "moves": [
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1,
+            -1,
+            1
+          ],
+          "edit": false
+        }
+      ]
+    }
+  ],
+  "samples": {
+    "six_candidates": [
+      {
+        "pre_execution_ns": 2838636,
+        "execution_ns": 578451313,
+        "steps": 1250,
+        "module_preparation_ns": 1783704,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 2495208,
+        "execution_ns": 572570017,
+        "steps": 1250,
+        "module_preparation_ns": 1783704,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 2410810,
+        "execution_ns": 581592921,
+        "steps": 1362,
+        "module_preparation_ns": 1783704,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 2562489,
+        "execution_ns": 566157805,
+        "steps": 1362,
+        "module_preparation_ns": 1783704,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 2552865,
+        "execution_ns": 569381243,
+        "steps": 1250,
+        "module_preparation_ns": 1916093,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 2416879,
+        "execution_ns": 519918281,
+        "steps": 1250,
+        "module_preparation_ns": 1916093,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 2548918,
+        "execution_ns": 564992357,
+        "steps": 1362,
+        "module_preparation_ns": 1916093,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 2443349,
+        "execution_ns": 613499089,
+        "steps": 1362,
+        "module_preparation_ns": 1916093,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 2423459,
+        "execution_ns": 530233028,
+        "steps": 1250,
+        "module_preparation_ns": 1861351,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 2705936,
+        "execution_ns": 550191962,
+        "steps": 1250,
+        "module_preparation_ns": 1861351,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 2446744,
+        "execution_ns": 580595265,
+        "steps": 1362,
+        "module_preparation_ns": 1861351,
+        "log": 1,
+        "page_sha256": "ab3c687e6ae267d113d6db4a10980734878fc01a563c28be246383395d77090d",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 2461496,
+        "execution_ns": 565793388,
+        "steps": 1362,
+        "module_preparation_ns": 1861351,
+        "log": 1,
+        "page_sha256": "1c6fdb827aa3f72deb620be21eb42e2ef7436b62bc3ff2857b5f5f1149acbdad",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 2605604,
+        "execution_ns": 544015677,
+        "steps": 1250,
+        "module_preparation_ns": 2019669,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 2826377,
+        "execution_ns": 542417530,
+        "steps": 1250,
+        "module_preparation_ns": 2019669,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 2450590,
+        "execution_ns": 551039071,
+        "steps": 1362,
+        "module_preparation_ns": 2019669,
+        "log": 1,
+        "page_sha256": "ab3c687e6ae267d113d6db4a10980734878fc01a563c28be246383395d77090d",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 2409949,
+        "execution_ns": 582682952,
+        "steps": 1362,
+        "module_preparation_ns": 2019669,
+        "log": 1,
+        "page_sha256": "1c6fdb827aa3f72deb620be21eb42e2ef7436b62bc3ff2857b5f5f1149acbdad",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 2507366,
+        "execution_ns": 520781524,
+        "steps": 1250,
+        "module_preparation_ns": 2104467,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 2425692,
+        "execution_ns": 520459819,
+        "steps": 1250,
+        "module_preparation_ns": 2104467,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 2517340,
+        "execution_ns": 573079454,
+        "steps": 1362,
+        "module_preparation_ns": 2104467,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 2483069,
+        "execution_ns": 568442934,
+        "steps": 1362,
+        "module_preparation_ns": 2104467,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 2447836,
+        "execution_ns": 530988784,
+        "steps": 1250,
+        "module_preparation_ns": 1850644,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 2519954,
+        "execution_ns": 541981092,
+        "steps": 1250,
+        "module_preparation_ns": 1850644,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 2583470,
+        "execution_ns": 565506350,
+        "steps": 1362,
+        "module_preparation_ns": 1850644,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 2412633,
+        "execution_ns": 559618671,
+        "steps": 1362,
+        "module_preparation_ns": 1850644,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 2469759,
+        "execution_ns": 553641299,
+        "steps": 1250,
+        "module_preparation_ns": 1782471,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 2504311,
+        "execution_ns": 544557154,
+        "steps": 1250,
+        "module_preparation_ns": 1782471,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 2883683,
+        "execution_ns": 573117243,
+        "steps": 1362,
+        "module_preparation_ns": 1782471,
+        "log": 1,
+        "page_sha256": "ab3c687e6ae267d113d6db4a10980734878fc01a563c28be246383395d77090d",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 2631412,
+        "execution_ns": 619200124,
+        "steps": 1362,
+        "module_preparation_ns": 1782471,
+        "log": 1,
+        "page_sha256": "1c6fdb827aa3f72deb620be21eb42e2ef7436b62bc3ff2857b5f5f1149acbdad",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 2636270,
+        "execution_ns": 543197882,
+        "steps": 1250,
+        "module_preparation_ns": 4333713,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 8
+      },
+      {
+        "pre_execution_ns": 2404460,
+        "execution_ns": 528566163,
+        "steps": 1250,
+        "module_preparation_ns": 4333713,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 8
+      },
+      {
+        "pre_execution_ns": 2433123,
+        "execution_ns": 609233422,
+        "steps": 1362,
+        "module_preparation_ns": 4333713,
+        "log": 1,
+        "page_sha256": "ab3c687e6ae267d113d6db4a10980734878fc01a563c28be246383395d77090d",
+        "pair": 8
+      },
+      {
+        "pre_execution_ns": 2414085,
+        "execution_ns": 612936522,
+        "steps": 1362,
+        "module_preparation_ns": 4333713,
+        "log": 1,
+        "page_sha256": "1c6fdb827aa3f72deb620be21eb42e2ef7436b62bc3ff2857b5f5f1149acbdad",
+        "pair": 8
+      },
+      {
+        "pre_execution_ns": 2746188,
+        "execution_ns": 532540464,
+        "steps": 1250,
+        "module_preparation_ns": 1844035,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 9
+      },
+      {
+        "pre_execution_ns": 2443223,
+        "execution_ns": 564533885,
+        "steps": 1250,
+        "module_preparation_ns": 1844035,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 9
+      },
+      {
+        "pre_execution_ns": 2444204,
+        "execution_ns": 576748829,
+        "steps": 1362,
+        "module_preparation_ns": 1844035,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 9
+      },
+      {
+        "pre_execution_ns": 2759407,
+        "execution_ns": 605361470,
+        "steps": 1362,
+        "module_preparation_ns": 1844035,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 9
+      },
+      {
+        "pre_execution_ns": 2505677,
+        "execution_ns": 558064250,
+        "steps": 1250,
+        "module_preparation_ns": 1935883,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 10
+      },
+      {
+        "pre_execution_ns": 2719656,
+        "execution_ns": 542819935,
+        "steps": 1250,
+        "module_preparation_ns": 1935883,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 10
+      },
+      {
+        "pre_execution_ns": 2426594,
+        "execution_ns": 579341425,
+        "steps": 1362,
+        "module_preparation_ns": 1935883,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 10
+      },
+      {
+        "pre_execution_ns": 2398942,
+        "execution_ns": 549350390,
+        "steps": 1362,
+        "module_preparation_ns": 1935883,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 10
+      }
+    ],
+    "prepared": [
+      {
+        "pre_execution_ns": 2681579,
+        "execution_ns": 386301294,
+        "steps": 1250,
+        "module_preparation_ns": 1982313,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 2632365,
+        "execution_ns": 388974330,
+        "steps": 1250,
+        "module_preparation_ns": 1982313,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 2988141,
+        "execution_ns": 451650387,
+        "steps": 1362,
+        "module_preparation_ns": 1982313,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 2841410,
+        "execution_ns": 471036822,
+        "steps": 1362,
+        "module_preparation_ns": 1982313,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 2826296,
+        "execution_ns": 409576642,
+        "steps": 1250,
+        "module_preparation_ns": 2139491,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 2814119,
+        "execution_ns": 407287655,
+        "steps": 1250,
+        "module_preparation_ns": 2139491,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 2784234,
+        "execution_ns": 443077442,
+        "steps": 1362,
+        "module_preparation_ns": 2139491,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 2852977,
+        "execution_ns": 435909350,
+        "steps": 1362,
+        "module_preparation_ns": 2139491,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 2666786,
+        "execution_ns": 420223908,
+        "steps": 1250,
+        "module_preparation_ns": 1864154,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 3186301,
+        "execution_ns": 398887561,
+        "steps": 1250,
+        "module_preparation_ns": 1864154,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 2852928,
+        "execution_ns": 437340879,
+        "steps": 1362,
+        "module_preparation_ns": 1864154,
+        "log": 1,
+        "page_sha256": "ab3c687e6ae267d113d6db4a10980734878fc01a563c28be246383395d77090d",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 2837594,
+        "execution_ns": 431555635,
+        "steps": 1362,
+        "module_preparation_ns": 1864154,
+        "log": 1,
+        "page_sha256": "1c6fdb827aa3f72deb620be21eb42e2ef7436b62bc3ff2857b5f5f1149acbdad",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 4516119,
+        "execution_ns": 400155066,
+        "steps": 1250,
+        "module_preparation_ns": 2856041,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 2870704,
+        "execution_ns": 389330703,
+        "steps": 1250,
+        "module_preparation_ns": 2856041,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 2885136,
+        "execution_ns": 418155858,
+        "steps": 1362,
+        "module_preparation_ns": 2856041,
+        "log": 1,
+        "page_sha256": "ab3c687e6ae267d113d6db4a10980734878fc01a563c28be246383395d77090d",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 2678094,
+        "execution_ns": 418338860,
+        "steps": 1362,
+        "module_preparation_ns": 2856041,
+        "log": 1,
+        "page_sha256": "1c6fdb827aa3f72deb620be21eb42e2ef7436b62bc3ff2857b5f5f1149acbdad",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 2747297,
+        "execution_ns": 384897270,
+        "steps": 1250,
+        "module_preparation_ns": 1951707,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 2662240,
+        "execution_ns": 400492760,
+        "steps": 1250,
+        "module_preparation_ns": 1951707,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 3148223,
+        "execution_ns": 424266166,
+        "steps": 1362,
+        "module_preparation_ns": 1951707,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 2623871,
+        "execution_ns": 427090751,
+        "steps": 1362,
+        "module_preparation_ns": 1951707,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 2678103,
+        "execution_ns": 393534858,
+        "steps": 1250,
+        "module_preparation_ns": 1887690,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 2722050,
+        "execution_ns": 397450089,
+        "steps": 1250,
+        "module_preparation_ns": 1887690,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 2894079,
+        "execution_ns": 426058853,
+        "steps": 1362,
+        "module_preparation_ns": 1887690,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 2611082,
+        "execution_ns": 431852320,
+        "steps": 1362,
+        "module_preparation_ns": 1887690,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 2839637,
+        "execution_ns": 395132420,
+        "steps": 1250,
+        "module_preparation_ns": 1941161,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 2787189,
+        "execution_ns": 458861222,
+        "steps": 1250,
+        "module_preparation_ns": 1941161,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 2769412,
+        "execution_ns": 441938303,
+        "steps": 1362,
+        "module_preparation_ns": 1941161,
+        "log": 1,
+        "page_sha256": "ab3c687e6ae267d113d6db4a10980734878fc01a563c28be246383395d77090d",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 2933669,
+        "execution_ns": 415151700,
+        "steps": 1362,
+        "module_preparation_ns": 1941161,
+        "log": 1,
+        "page_sha256": "1c6fdb827aa3f72deb620be21eb42e2ef7436b62bc3ff2857b5f5f1149acbdad",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 2769090,
+        "execution_ns": 423557971,
+        "steps": 1250,
+        "module_preparation_ns": 1899969,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 8
+      },
+      {
+        "pre_execution_ns": 2705395,
+        "execution_ns": 390619573,
+        "steps": 1250,
+        "module_preparation_ns": 1899969,
+        "log": 1,
+        "page_sha256": "c4072f72b7f33ea3863a8cd1073239af4630886d9d5b86ef0b386934f1202ea7",
+        "pair": 8
+      },
+      {
+        "pre_execution_ns": 2829933,
+        "execution_ns": 521073731,
+        "steps": 1362,
+        "module_preparation_ns": 1899969,
+        "log": 1,
+        "page_sha256": "ab3c687e6ae267d113d6db4a10980734878fc01a563c28be246383395d77090d",
+        "pair": 8
+      },
+      {
+        "pre_execution_ns": 2697402,
+        "execution_ns": 432359533,
+        "steps": 1362,
+        "module_preparation_ns": 1899969,
+        "log": 1,
+        "page_sha256": "1c6fdb827aa3f72deb620be21eb42e2ef7436b62bc3ff2857b5f5f1149acbdad",
+        "pair": 8
+      },
+      {
+        "pre_execution_ns": 3905236,
+        "execution_ns": 409418485,
+        "steps": 1250,
+        "module_preparation_ns": 2150066,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 9
+      },
+      {
+        "pre_execution_ns": 2743132,
+        "execution_ns": 402322330,
+        "steps": 1250,
+        "module_preparation_ns": 2150066,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 9
+      },
+      {
+        "pre_execution_ns": 2721268,
+        "execution_ns": 438195853,
+        "steps": 1362,
+        "module_preparation_ns": 2150066,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 9
+      },
+      {
+        "pre_execution_ns": 2763543,
+        "execution_ns": 441423296,
+        "steps": 1362,
+        "module_preparation_ns": 2150066,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 9
+      },
+      {
+        "pre_execution_ns": 2699516,
+        "execution_ns": 385248712,
+        "steps": 1250,
+        "module_preparation_ns": 1783273,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 10
+      },
+      {
+        "pre_execution_ns": 2736712,
+        "execution_ns": 384159107,
+        "steps": 1250,
+        "module_preparation_ns": 1783273,
+        "log": 0,
+        "page_sha256": "4a5fd8e30d7c66a547a9ed85b024486f095d2e9c9c6ca3d38c67d452259f1609",
+        "pair": 10
+      },
+      {
+        "pre_execution_ns": 2663442,
+        "execution_ns": 428132918,
+        "steps": 1362,
+        "module_preparation_ns": 1783273,
+        "log": 0,
+        "page_sha256": "cef318c4ac4b13a48a5b015631932aafaf6b404d7091d4ecee9ffaf8636a0fa5",
+        "pair": 10
+      },
+      {
+        "pre_execution_ns": 2710292,
+        "execution_ns": 450006313,
+        "steps": 1362,
+        "module_preparation_ns": 1783273,
+        "log": 0,
+        "page_sha256": "ca81bb13de37f2c9d3043a2db3cbf06cc8245dd158960f0fe63e223be5dd39c7",
+        "pair": 10
+      }
+    ]
+  },
+  "counter_pass": {
+    "six_candidates": [
+      {
+        "steps": 5224,
+        "generic_ticks": 724,
+        "prepared_add": 0,
+        "prepared_lt_s": 0,
+        "candidates_evaluated": 4344
+      },
+      {
+        "steps": 5224,
+        "generic_ticks": 724,
+        "prepared_add": 0,
+        "prepared_lt_s": 0,
+        "candidates_evaluated": 4344
+      }
+    ],
+    "prepared": [
+      {
+        "steps": 5224,
+        "generic_ticks": 4,
+        "prepared_add": 564,
+        "prepared_lt_s": 156,
+        "candidates_evaluated": 744
+      },
+      {
+        "steps": 5224,
+        "generic_ticks": 4,
+        "prepared_add": 564,
+        "prepared_lt_s": 156,
+        "candidates_evaluated": 744
+      }
+    ]
+  },
+  "summary": {
+    "six_candidates": {
+      "samples": 40,
+      "median_ms": 564.763121,
+      "p95_ms": 612.936522,
+      "pre_execution_median_ms": 2.4891385,
+      "agent_ticks_per_second": 14.230063946246691,
+      "steps_per_sample": [
+        1250,
+        1362
+      ]
+    },
+    "prepared": {
+      "samples": 40,
+      "median_ms": 419.281384,
+      "p95_ms": 458.861222,
+      "pre_execution_median_ms": 2.769251,
+      "agent_ticks_per_second": 19.035102418582113,
+      "steps_per_sample": [
+        1250,
+        1362
+      ]
+    }
+  }
+}
