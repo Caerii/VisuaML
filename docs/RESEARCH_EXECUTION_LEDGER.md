@@ -390,3 +390,12 @@ the original live fixed gates and materialize just the final stack
 state. Terrain, full BFS, and Sudoku retained exact pages and source
 steps, with reference traces at every tested fuel boundary.
 [Region profiles, dispatch counters, and paired samples](../visuaml-client/voxel-replay/evidence/prepared-regions/README.md)
+
+## v58 compiled fixed-gate frame events
+
+The canonical untraced array profile can bind the v54 event selector
+to a dedicated compiled gate symbol. Its graph matches the full
+144-case canonical truth table. Terrain, full BFS, and Sudoku
+retained exact pages and source steps with packed fallback blocked.
+The warmed speedups and cold compilation cost are recorded separately.
+[Compiled gate graph, replay checks, and measurements](../visuaml-client/voxel-replay/evidence/compiled-frame-event/README.md)

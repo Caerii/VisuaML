@@ -1,0 +1,61 @@
+{
+  "compile_and_load_ns": 1070435956,
+  "binding_ns": 170989,
+  "kernel_source_sha256": "dc13aa7982b066fb088d78d0740926b83dbd0fdc5a3aad3bb9b3199d477c95e0",
+  "kernel_binary_sha256": "ef2083e417fb1de71ff7b64cf547cc605ef701e1538f69a9f6fbee8516133bfb",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-fno-fast-math",
+    "-ffp-contract=off",
+    "-shared",
+    "-fPIC"
+  ],
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "calls_per_sample": 5760,
+  "samples_ns": {
+    "numpy": [
+      438032481,
+      435303226,
+      440311174,
+      464400556,
+      434834550,
+      435002653,
+      433866538,
+      447888370
+    ],
+    "kernel": [
+      5056070,
+      5209151,
+      5546371,
+      5472049,
+      5045304,
+      5121069,
+      5166036,
+      5678510
+    ]
+  },
+  "separate_numpy_array_pass": {
+    "calls": 34560,
+    "construction_ns": 11880229
+  },
+  "median_ns_per_call": {
+    "numpy": 75810.39123263888,
+    "kernel": 900.6238715277777
+  }
+}

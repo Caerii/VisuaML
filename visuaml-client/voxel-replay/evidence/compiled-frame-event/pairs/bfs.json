@@ -1,0 +1,112 @@
+{
+  "baseline": "574e6c55c9c7e137d8df6aad3dd783b40b2cc6bb",
+  "case": "bfs",
+  "binary_sha256": "7726937328d9d66462c3ff4838e732549bd983b23f4e8cd26eeae0edf696b63f",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "compile_and_load_ns": 1320342702,
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-fno-fast-math",
+    "-ffp-contract=off",
+    "-shared",
+    "-fPIC"
+  ],
+  "kernel_source_sha256": "dc13aa7982b066fb088d78d0740926b83dbd0fdc5a3aad3bb9b3199d477c95e0",
+  "kernel_binary_sha256": "ef2083e417fb1de71ff7b64cf547cc605ef701e1538f69a9f6fbee8516133bfb",
+  "pairs_after_warmup": 2,
+  "world_logs": null,
+  "samples": {
+    "numpy": [
+      {
+        "pre_execution_ns": 1653592,
+        "execution_ns": 14297354574,
+        "steps": 41591,
+        "module_preparation_ns": 4133820,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 1640716,
+        "execution_ns": 14281193965,
+        "steps": 41591,
+        "module_preparation_ns": 4133820,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+        "pair": 2
+      }
+    ],
+    "compiled": [
+      {
+        "pre_execution_ns": 1804233,
+        "execution_ns": 12653070358,
+        "steps": 41591,
+        "module_preparation_ns": 4133820,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 1836422,
+        "execution_ns": 10923238120,
+        "steps": 41591,
+        "module_preparation_ns": 4133820,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+        "pair": 2
+      }
+    ]
+  },
+  "counter_pass": {
+    "numpy": {
+      "source_steps": 41591,
+      "numpy_event_calls": 35196,
+      "kernel_calls": 0,
+      "const_add_calls": 31,
+      "local_const_add_calls": 2111,
+      "explicit_per_event_array_constructions": 211176
+    },
+    "compiled": {
+      "source_steps": 41591,
+      "numpy_event_calls": 0,
+      "kernel_calls": 35196,
+      "const_add_calls": 31,
+      "local_const_add_calls": 2111,
+      "explicit_per_event_array_constructions": 0
+    }
+  },
+  "summary": {
+    "numpy": {
+      "samples": 2,
+      "median_ms": 14289.2742695,
+      "p95_ms": 14297.354574,
+      "pre_execution_median_ms": 1.647154,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        41591
+      ]
+    },
+    "compiled": {
+      "samples": 2,
+      "median_ms": 11788.154239,
+      "p95_ms": 12653.070358,
+      "pre_execution_median_ms": 1.8203275,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        41591
+      ]
+    }
+  }
+}

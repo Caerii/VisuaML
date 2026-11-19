@@ -1,0 +1,208 @@
+{
+  "baseline": "574e6c55c9c7e137d8df6aad3dd783b40b2cc6bb",
+  "case": "sudoku",
+  "binary_sha256": "8df78d3cf72907abd4004e23ae9075682396ece4be3547631451f54effd311cf",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "compile_and_load_ns": 1293124074,
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-fno-fast-math",
+    "-ffp-contract=off",
+    "-shared",
+    "-fPIC"
+  ],
+  "kernel_source_sha256": "dc13aa7982b066fb088d78d0740926b83dbd0fdc5a3aad3bb9b3199d477c95e0",
+  "kernel_binary_sha256": "ef2083e417fb1de71ff7b64cf547cc605ef701e1538f69a9f6fbee8516133bfb",
+  "pairs_after_warmup": 8,
+  "world_logs": null,
+  "samples": {
+    "numpy": [
+      {
+        "pre_execution_ns": 4632173,
+        "execution_ns": 367368795,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 4637861,
+        "execution_ns": 368194473,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 24568180,
+        "execution_ns": 336653570,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 4902320,
+        "execution_ns": 370283109,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 6121692,
+        "execution_ns": 375853637,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 4934178,
+        "execution_ns": 434351488,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 4654806,
+        "execution_ns": 346579015,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 4636599,
+        "execution_ns": 349455027,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 8
+      }
+    ],
+    "compiled": [
+      {
+        "pre_execution_ns": 5219339,
+        "execution_ns": 258600210,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 1
+      },
+      {
+        "pre_execution_ns": 5476067,
+        "execution_ns": 283953166,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 2
+      },
+      {
+        "pre_execution_ns": 5215713,
+        "execution_ns": 263879629,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 3
+      },
+      {
+        "pre_execution_ns": 5077615,
+        "execution_ns": 254927164,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 4
+      },
+      {
+        "pre_execution_ns": 5149464,
+        "execution_ns": 279645700,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 5
+      },
+      {
+        "pre_execution_ns": 28273432,
+        "execution_ns": 304369749,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 6
+      },
+      {
+        "pre_execution_ns": 5045637,
+        "execution_ns": 247311097,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 7
+      },
+      {
+        "pre_execution_ns": 8370215,
+        "execution_ns": 265007392,
+        "steps": 893,
+        "module_preparation_ns": 3748649,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+        "pair": 8
+      }
+    ]
+  },
+  "counter_pass": {
+    "numpy": {
+      "source_steps": 893,
+      "numpy_event_calls": 728,
+      "kernel_calls": 0,
+      "const_add_calls": 45,
+      "local_const_add_calls": 25,
+      "explicit_per_event_array_constructions": 4368
+    },
+    "compiled": {
+      "source_steps": 893,
+      "numpy_event_calls": 0,
+      "kernel_calls": 728,
+      "const_add_calls": 45,
+      "local_const_add_calls": 25,
+      "explicit_per_event_array_constructions": 0
+    }
+  },
+  "summary": {
+    "numpy": {
+      "samples": 8,
+      "median_ms": 367.781634,
+      "p95_ms": 434.351488,
+      "pre_execution_median_ms": 4.778563,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        893
+      ]
+    },
+    "compiled": {
+      "samples": 8,
+      "median_ms": 264.4435105,
+      "p95_ms": 304.369749,
+      "pre_execution_median_ms": 5.217526,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        893
+      ]
+    }
+  }
+}
