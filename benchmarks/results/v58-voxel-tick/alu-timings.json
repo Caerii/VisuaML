@@ -1,0 +1,72 @@
+{
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "baseline": "c0a3d3264c658afd5dae24f2bcaf239171190046",
+  "cases": {
+    "sudoku": {
+      "name": "sudoku",
+      "steps": 893,
+      "selected_alu_opcodes": {
+        "i32.sub": 2,
+        "i32.eqz": 18,
+        "i32.lt_s": 25,
+        "i32.mul": 124,
+        "i32.add": 123,
+        "i32.gt_s": 5
+      },
+      "seconds": {
+        "original": [
+          0.8038737330000458,
+          0.7574008100000356
+        ],
+        "grouped_columns": [
+          0.7326565240000491,
+          0.7338135499999225
+        ]
+      },
+      "median_seconds": {
+        "original": 0.7806372715000407,
+        "grouped_columns": 0.7332350369999858
+      },
+      "paired_median_ratio": 1.0646480761394055
+    },
+    "bfs": {
+      "name": "bfs",
+      "steps": 41591,
+      "selected_alu_opcodes": {
+        "i32.mul": 4381,
+        "i32.lt_s": 2272,
+        "i32.eqz": 2113,
+        "i32.add": 4190
+      },
+      "seconds": {
+        "original": [
+          33.65782271099988,
+          35.062757823000084
+        ],
+        "grouped_columns": [
+          30.392213157000015,
+          30.311447187999875
+        ]
+      },
+      "median_seconds": {
+        "original": 34.36029026699998,
+        "grouped_columns": 30.351830172499945
+      },
+      "paired_median_ratio": 1.132066503789675
+    }
+  }
+}

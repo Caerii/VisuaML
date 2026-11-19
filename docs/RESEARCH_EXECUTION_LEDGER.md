@@ -325,3 +325,13 @@ match packed C++ and Wasmtime. The archive includes a placement and
 reversal, exact page hashes, fault and fuel replay, a standalone Rust
 Sudoku checker, and paired timings for the frame contraction.
 [Structured NumPy memory replay](../benchmarks/results/v58-array-memory/README.md)
+
+## v58 Rust voxel guest and fixed-bit multiply
+
+Original Rust-generated WASM runs a voxel collision tick with the
+structured NumPy executor, packed C++, Wasmtime, and Node WebAssembly.
+Four deterministic fixtures match full memory. Grouping the NumPy
+multiply partial products preserved the ReLU carry gates and improved
+paired Sudoku and BFS timings. A bounded Escargot replay matched the
+packed trace and memory cutoffs.
+[Rust guest and fixed-bit ALU replay](../benchmarks/results/v58-voxel-tick/README.md)

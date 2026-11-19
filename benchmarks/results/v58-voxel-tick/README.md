@@ -26,7 +26,8 @@ The replay uses four cases with clear movement and collision in both
 directions. It compares full memory and return values against Wasmtime,
 the packed runtime, and independently constructed expected pages.
 Source PCs, stack, locals, control labels, and accesses match packed
-traces. The NumPy invocation disallows packed entry.
+traces. The NumPy invocation disallows packed entry. Node 24.22.1
+also reproduced all four full-page hashes through its WebAssembly API.
 
 ## Reproduce
 
@@ -42,6 +43,7 @@ out=$(mktemp -d)
 "$lab/build_guest.sh" "$lab/voxel_tick.rs" "$out/voxel_tick.wasm"
 cmp "$out/voxel_tick.wasm" "$lab/voxel_tick.wasm"
 python "$lab/replay_guest.py"
+node "$lab/replay_guest.mjs"
 python "$lab/profile_alu.py" --case sudoku --case bfs --pairs 2
 python "$lab/profile_alu.py" --case escargot
 ```
@@ -56,3 +58,32 @@ simulation throughput, and multiplayer replication are separate
 measurements. For multiplayer, use fixed ticks, ordered inputs, and
 periodic state hashes, and measure rollback and synchronization before
 scaling the voxel count.
+
+## ALU results
+
+The multiply optimization groups the triangular ReGLU products with one
+NumPy reduction. It removes 32 Python lists and per-column reductions
+per multiply evaluation, and computes the lower threshold vector once.
+The carry recurrence still evaluates the same live ReLU thresholds.
+All six fixed-gate candidates still run before one-hot selection.
+
+| Archived workload | Original median | Grouped median | Speedup |
+| --- | ---: | ---: | ---: |
+| One-blank Sudoku, 893 steps | 781 ms | 733 ms | 1.06× |
+| BFS seed 0, 41,591 steps | 34.36 s | 30.35 s | 1.13× |
+
+Each workload used two alternating pairs pinned to CPU 0 with one
+numerical-library thread. The timed region starts at executor entry and
+includes preparation. Every run checked full memory, return value, and
+source steps against packed C++. Profiling ran separately. Sudoku
+selected multiply on 124 of 297 ALU ticks. BFS selected multiply on
+4,381 of 12,956. Signed comparison now has the largest cumulative time
+among ALU candidates, at 0.166 s for Sudoku and 7.876 s for BFS.
+These are sample timings on one environment.
+
+AI Escargot matched 2,000 traced source steps and the entire memory page
+at a 20,000-step untraced cutoff. That prefix took 16.44 s in NumPy.
+A linear extrapolation to the archived 2,080,993 steps gives about
+29 minutes. The full NumPy solve remains unverified.
+
+[Timing pairs and dynamic opcode counts](alu-timings.json) · [CPU profile](alu-profile.txt) · [Escargot prefix](escargot-prefix.json)

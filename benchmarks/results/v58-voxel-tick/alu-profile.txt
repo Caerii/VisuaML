@@ -1,0 +1,42 @@
+Benchmarking sudoku: 893 steps
+         997587 function calls (994689 primitive calls) in 0.968 seconds
+
+   Ordered by: cumulative time
+   List reduced from 189 to 13 due to restriction <'neural_alu|_mul|_signed_lt|_unsigned_lt|_and|_array_route|step_frames|bincount'>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      297    0.003    0.000    0.305    0.001 neural_alu_v56.py:75(execute_alu)
+      893    0.041    0.000    0.179    0.000 neural_frame_circuit_v53.py:106(step_frames)
+      594    0.001    0.000    0.166    0.000 bit_neural_vm_v49.py:302(_signed_lt)
+      594    0.023    0.000    0.161    0.000 bit_neural_vm_v49.py:292(_unsigned_lt)
+   115894    0.138    0.000    0.138    0.000 bit_neural_vm_v49.py:217(_and)
+      297    0.040    0.000    0.067    0.000 bit_neural_vm_v49.py:261(_mul)
+      893    0.009    0.000    0.064    0.000 neural_microop_executor_v57.py:135(_array_route)
+     4271    0.018    0.000    0.018    0.000 {built-in method numpy._core._multiarray_umath.c_einsum}
+     1782    0.001    0.000    0.008    0.000 neural_alu_v56.py:61(_admit_binary)
+    15461    0.003    0.000    0.003    0.000 {built-in method numpy._core._multiarray_umath.count_nonzero}
+      297    0.000    0.000    0.000    0.000 multiarray.py:910(bincount)
+        1    0.000    0.000    0.000    0.000 neural_alu_v56.py:57(construct_alu_weights)
+        1    0.000    0.000    0.000    0.000 neural_alu_v56.py:49(digest)
+
+
+Benchmarking bfs: 41591 steps
+         43686305 function calls (43685489 primitive calls) in 47.213 seconds
+
+   Ordered by: cumulative time
+   List reduced from 189 to 13 due to restriction <'neural_alu|_mul|_signed_lt|_unsigned_lt|_and|_array_route|step_frames|bincount'>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    12956    0.181    0.000   14.487    0.001 neural_alu_v56.py:75(execute_alu)
+    41591    2.146    0.000    9.234    0.000 neural_frame_circuit_v53.py:106(step_frames)
+    25912    0.058    0.000    7.876    0.000 bit_neural_vm_v49.py:302(_signed_lt)
+    25912    1.067    0.000    7.622    0.000 bit_neural_vm_v49.py:292(_unsigned_lt)
+  5139976    6.642    0.000    6.642    0.000 bit_neural_vm_v49.py:217(_and)
+    41591    0.490    0.000    3.279    0.000 neural_microop_executor_v57.py:135(_array_route)
+    12956    1.904    0.000    3.182    0.000 bit_neural_vm_v49.py:261(_mul)
+   192273    0.888    0.000    0.888    0.000 {built-in method numpy._core._multiarray_umath.c_einsum}
+    77736    0.061    0.000    0.381    0.000 neural_alu_v56.py:61(_admit_binary)
+   667644    0.131    0.000    0.131    0.000 {built-in method numpy._core._multiarray_umath.count_nonzero}
+    12956    0.002    0.000    0.002    0.000 multiarray.py:910(bincount)
+        1    0.000    0.000    0.000    0.000 neural_alu_v56.py:57(construct_alu_weights)
+        1    0.000    0.000    0.000    0.000 neural_alu_v56.py:49(digest)
