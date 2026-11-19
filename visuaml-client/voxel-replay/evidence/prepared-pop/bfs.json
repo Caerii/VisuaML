@@ -1,0 +1,95 @@
+{
+  "baseline": "c562449dd6d2d6dd5062007629795176673bce0c",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "workload": "bfs",
+  "binary_sha256": "7726937328d9d66462c3ff4838e732549bd983b23f4e8cd26eeae0edf696b63f",
+  "pairs_after_warmup": 2,
+  "samples": {
+    "checked": [
+      {
+        "pre_execution_ns": 1294214,
+        "execution_ns": 24897858943,
+        "steps": 41591,
+        "module_preparation_ns": 4064187,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744"
+      },
+      {
+        "pre_execution_ns": 1310318,
+        "execution_ns": 24499953798,
+        "steps": 41591,
+        "module_preparation_ns": 4064187,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744"
+      }
+    ],
+    "prepared": [
+      {
+        "pre_execution_ns": 1903725,
+        "execution_ns": 23599016363,
+        "steps": 41591,
+        "module_preparation_ns": 4064187,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744"
+      },
+      {
+        "pre_execution_ns": 1439393,
+        "execution_ns": 23153425359,
+        "steps": 41591,
+        "module_preparation_ns": 4064187,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744"
+      }
+    ]
+  },
+  "counter_pass": {
+    "checked": {
+      "source_steps": 4000,
+      "invocations": 1,
+      "checked_pops": 3145,
+      "prepared_pops": 0,
+      "all_operand_state_scans": 16109
+    },
+    "prepared": {
+      "source_steps": 4000,
+      "invocations": 1,
+      "checked_pops": 0,
+      "prepared_pops": 3145,
+      "all_operand_state_scans": 9820
+    },
+    "state_scans_avoided": 6289
+  },
+  "world_session": null,
+  "summary": {
+    "checked": {
+      "samples": 2,
+      "median_ms": 24698.9063705,
+      "p95_ms": 24897.858943,
+      "pre_execution_median_ms": 1.302266,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        41591
+      ]
+    },
+    "prepared": {
+      "samples": 2,
+      "median_ms": 23376.220861,
+      "p95_ms": 23599.016363,
+      "pre_execution_median_ms": 1.671559,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        41591
+      ]
+    }
+  }
+}

@@ -1,0 +1,507 @@
+{
+  "baseline": "c562449dd6d2d6dd5062007629795176673bce0c",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "workload": "sparse",
+  "binary_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24",
+  "pairs_after_warmup": 6,
+  "samples": {
+    "checked": [
+      {
+        "pre_execution_ns": 4282405,
+        "execution_ns": 1256608578,
+        "steps": 1650,
+        "module_preparation_ns": 2860848,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2636289,
+        "execution_ns": 1057429559,
+        "steps": 1650,
+        "module_preparation_ns": 2860848,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 3471811,
+        "execution_ns": 1147855765,
+        "steps": 1650,
+        "module_preparation_ns": 2860848,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2708869,
+        "execution_ns": 1151141295,
+        "steps": 1650,
+        "module_preparation_ns": 2860848,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2819987,
+        "execution_ns": 1338571970,
+        "steps": 1650,
+        "module_preparation_ns": 2509809,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 4858804,
+        "execution_ns": 1359795218,
+        "steps": 1650,
+        "module_preparation_ns": 2509809,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 4378760,
+        "execution_ns": 1294511400,
+        "steps": 1650,
+        "module_preparation_ns": 2509809,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 4354753,
+        "execution_ns": 1342879153,
+        "steps": 1650,
+        "module_preparation_ns": 2509809,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2410920,
+        "execution_ns": 976512284,
+        "steps": 1650,
+        "module_preparation_ns": 1911736,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2343228,
+        "execution_ns": 1059721430,
+        "steps": 1650,
+        "module_preparation_ns": 1911736,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2566064,
+        "execution_ns": 808544524,
+        "steps": 1650,
+        "module_preparation_ns": 1911736,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2553294,
+        "execution_ns": 802978001,
+        "steps": 1650,
+        "module_preparation_ns": 1911736,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2440404,
+        "execution_ns": 714789245,
+        "steps": 1650,
+        "module_preparation_ns": 1843794,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2416548,
+        "execution_ns": 847661451,
+        "steps": 1650,
+        "module_preparation_ns": 1843794,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2410259,
+        "execution_ns": 779336530,
+        "steps": 1650,
+        "module_preparation_ns": 1843794,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2521186,
+        "execution_ns": 764032606,
+        "steps": 1650,
+        "module_preparation_ns": 1843794,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2615940,
+        "execution_ns": 720202126,
+        "steps": 1650,
+        "module_preparation_ns": 2106630,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2424310,
+        "execution_ns": 729469621,
+        "steps": 1650,
+        "module_preparation_ns": 2106630,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2468847,
+        "execution_ns": 809524796,
+        "steps": 1650,
+        "module_preparation_ns": 2106630,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2647758,
+        "execution_ns": 845821806,
+        "steps": 1650,
+        "module_preparation_ns": 2106630,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2643280,
+        "execution_ns": 772937892,
+        "steps": 1650,
+        "module_preparation_ns": 2342757,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2741087,
+        "execution_ns": 743570828,
+        "steps": 1650,
+        "module_preparation_ns": 2342757,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2525422,
+        "execution_ns": 751120394,
+        "steps": 1650,
+        "module_preparation_ns": 2342757,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2666066,
+        "execution_ns": 790604802,
+        "steps": 1650,
+        "module_preparation_ns": 2342757,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      }
+    ],
+    "prepared": [
+      {
+        "pre_execution_ns": 5285118,
+        "execution_ns": 1121235525,
+        "steps": 1650,
+        "module_preparation_ns": 2958366,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 4555077,
+        "execution_ns": 986665863,
+        "steps": 1650,
+        "module_preparation_ns": 2958366,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2758284,
+        "execution_ns": 1055593568,
+        "steps": 1650,
+        "module_preparation_ns": 2958366,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2759947,
+        "execution_ns": 946831232,
+        "steps": 1650,
+        "module_preparation_ns": 2958366,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 4114991,
+        "execution_ns": 823880797,
+        "steps": 1650,
+        "module_preparation_ns": 3500614,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2699285,
+        "execution_ns": 1217052152,
+        "steps": 1650,
+        "module_preparation_ns": 3500614,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 5781183,
+        "execution_ns": 843035777,
+        "steps": 1650,
+        "module_preparation_ns": 3500614,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2468356,
+        "execution_ns": 712662218,
+        "steps": 1650,
+        "module_preparation_ns": 3500614,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2508027,
+        "execution_ns": 1016779238,
+        "steps": 1650,
+        "module_preparation_ns": 2216176,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 4239921,
+        "execution_ns": 928683630,
+        "steps": 1650,
+        "module_preparation_ns": 2216176,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2411861,
+        "execution_ns": 756219709,
+        "steps": 1650,
+        "module_preparation_ns": 2216176,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2603330,
+        "execution_ns": 662908071,
+        "steps": 1650,
+        "module_preparation_ns": 2216176,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2931936,
+        "execution_ns": 708975048,
+        "steps": 1650,
+        "module_preparation_ns": 1915131,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2834299,
+        "execution_ns": 764926645,
+        "steps": 1650,
+        "module_preparation_ns": 1915131,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2572173,
+        "execution_ns": 762001320,
+        "steps": 1650,
+        "module_preparation_ns": 1915131,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2604953,
+        "execution_ns": 728348445,
+        "steps": 1650,
+        "module_preparation_ns": 1915131,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2407215,
+        "execution_ns": 759070776,
+        "steps": 1650,
+        "module_preparation_ns": 1859038,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2466605,
+        "execution_ns": 688636824,
+        "steps": 1650,
+        "module_preparation_ns": 1859038,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2380304,
+        "execution_ns": 737538785,
+        "steps": 1650,
+        "module_preparation_ns": 1859038,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2402608,
+        "execution_ns": 693997368,
+        "steps": 1650,
+        "module_preparation_ns": 1859038,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2772618,
+        "execution_ns": 698283312,
+        "steps": 1650,
+        "module_preparation_ns": 2569190,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2676903,
+        "execution_ns": 701874438,
+        "steps": 1650,
+        "module_preparation_ns": 2569190,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      },
+      {
+        "pre_execution_ns": 2615278,
+        "execution_ns": 688283281,
+        "steps": 1650,
+        "module_preparation_ns": 2569190,
+        "page_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+      },
+      {
+        "pre_execution_ns": 2794378,
+        "execution_ns": 667597913,
+        "steps": 1650,
+        "module_preparation_ns": 2569190,
+        "page_sha256": "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      }
+    ]
+  },
+  "counter_pass": {
+    "checked": {
+      "source_steps": 6600,
+      "invocations": 4,
+      "checked_pops": 4640,
+      "prepared_pops": 0,
+      "all_operand_state_scans": 24888
+    },
+    "prepared": {
+      "source_steps": 6600,
+      "invocations": 4,
+      "checked_pops": 0,
+      "prepared_pops": 4640,
+      "all_operand_state_scans": 15612
+    },
+    "state_scans_avoided": 9276
+  },
+  "world_session": {
+    "version": 1,
+    "mode": "terrain",
+    "binary_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24",
+    "initial": {
+      "positions": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29
+      ],
+      "materials": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "inputs": [
+      {
+        "moves": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "edit": false
+      },
+      {
+        "moves": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "edit": false
+      },
+      {
+        "moves": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "edit": false
+      },
+      {
+        "moves": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "edit": false
+      }
+    ]
+  },
+  "summary": {
+    "checked": {
+      "samples": 24,
+      "median_ms": 827.673301,
+      "p95_ms": 1342.879153,
+      "pre_execution_median_ms": 2.6261145,
+      "agent_ticks_per_second": 8.396885337129195,
+      "steps_per_sample": [
+        1650
+      ]
+    },
+    "prepared": {
+      "samples": 24,
+      "median_ms": 757.6452425,
+      "p95_ms": 1121.235525,
+      "pre_execution_median_ms": 2.688094,
+      "agent_ticks_per_second": 9.760520577080296,
+      "steps_per_sample": [
+        1650
+      ]
+    }
+  }
+}

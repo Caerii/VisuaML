@@ -1,0 +1,151 @@
+{
+  "baseline": "c562449dd6d2d6dd5062007629795176673bce0c",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "workload": "sudoku",
+  "binary_sha256": "8df78d3cf72907abd4004e23ae9075682396ece4be3547631451f54effd311cf",
+  "pairs_after_warmup": 6,
+  "samples": {
+    "checked": [
+      {
+        "pre_execution_ns": 3722037,
+        "execution_ns": 560837293,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 4493291,
+        "execution_ns": 599956937,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3615116,
+        "execution_ns": 577239911,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3673411,
+        "execution_ns": 567687556,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3585324,
+        "execution_ns": 581144059,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3551513,
+        "execution_ns": 536691579,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      }
+    ],
+    "prepared": [
+      {
+        "pre_execution_ns": 3928789,
+        "execution_ns": 548465112,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3598311,
+        "execution_ns": 508390260,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3590509,
+        "execution_ns": 569188692,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3630565,
+        "execution_ns": 507598519,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3638013,
+        "execution_ns": 523651519,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3610251,
+        "execution_ns": 501635275,
+        "steps": 893,
+        "module_preparation_ns": 4959695,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      }
+    ]
+  },
+  "counter_pass": {
+    "checked": {
+      "source_steps": 893,
+      "invocations": 1,
+      "checked_pops": 783,
+      "prepared_pops": 0,
+      "all_operand_state_scans": 3969
+    },
+    "prepared": {
+      "source_steps": 893,
+      "invocations": 1,
+      "checked_pops": 0,
+      "prepared_pops": 783,
+      "all_operand_state_scans": 2404
+    },
+    "state_scans_avoided": 1565
+  },
+  "world_session": null,
+  "summary": {
+    "checked": {
+      "samples": 6,
+      "median_ms": 572.4637335,
+      "p95_ms": 599.956937,
+      "pre_execution_median_ms": 3.6442635,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        893
+      ]
+    },
+    "prepared": {
+      "samples": 6,
+      "median_ms": 516.0208895,
+      "p95_ms": 569.188692,
+      "pre_execution_median_ms": 3.620408,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        893
+      ]
+    }
+  }
+}

@@ -363,3 +363,12 @@ from those transitions while preserving buffer ownership. Paired
 runs improved sparse and crowded terrain, full BFS, and one-blank
 Sudoku. The causal histories retained exact traces and full pages.
 [Operand profile, replay checks, and paired samples](../visuaml-client/voxel-replay/evidence/operands/README.md)
+
+## v58 prepared operand pop
+
+The canonical array profile prepares unit pop for its invocation-owned
+operand state. Checked push and truncation maintain the invariant across
+control-flow joins, and dynamic underflow remains checked. Paired
+terrain, full BFS, and Sudoku runs improved median execution latency.
+Exact causal traces, fuel and trap prefixes, and Wasmtime pages matched.
+[Prepared pop profiles, counters, and paired samples](../visuaml-client/voxel-replay/evidence/prepared-pop/README.md)
