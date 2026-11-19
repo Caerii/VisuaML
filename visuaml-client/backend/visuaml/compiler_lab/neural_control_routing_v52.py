@@ -236,6 +236,18 @@ def validate_route_tokens(
         raise NeuralControlError("Altered routing targets do not match reviewed source")
 
 
+def _validate_router_weights(fixed: ControlRouterWeights) -> None:
+    if not isinstance(fixed, ControlRouterWeights):
+        raise NeuralControlError("Unknown fixed neural control weights")
+    for value, shape in (
+        (fixed.guard_weights, (3,)), (fixed.path_weights, (2,))
+    ):
+        if (not isinstance(value, np.ndarray)
+                or value.shape != shape or value.dtype != np.float64
+                or not np.isfinite(value).all()):
+            raise NeuralControlError("Invalid neural gate coefficients")
+
+
 def neural_pc_step(
     pc: np.ndarray,
     top_condition: np.ndarray,
@@ -252,15 +264,7 @@ def neural_pc_step(
     _admit_onehot(top_condition, (32,))
     if float(np.sum(pc)) != 1.:
         raise NeuralControlError("Current PC is not uniquely active")
-    if not isinstance(fixed, ControlRouterWeights):
-        raise NeuralControlError("Unknown fixed neural control weights")
-    for value, shape in (
-        (fixed.guard_weights, (3,)), (fixed.path_weights, (2,))
-    ):
-        if (not isinstance(value, np.ndarray)
-                or value.shape != shape or value.dtype != np.float64
-                or not np.isfinite(value).all()):
-            raise NeuralControlError("Invalid neural gate coefficients")
+    _validate_router_weights(fixed)
     flags = pc @ tokens.guard_kind
     zero = np.float64(_eqz(top_condition, bit_fixed))
     nonzero = np.float64(1.) - zero

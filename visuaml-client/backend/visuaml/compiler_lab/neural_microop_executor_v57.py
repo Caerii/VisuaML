@@ -8,6 +8,7 @@ metadata, but all live operands reside in v55 tensor storage. Not universal WASM
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Callable
 from dataclasses import dataclass
 
 import numpy as np
@@ -15,6 +16,7 @@ import numpy as np
 from .bit_neural_vm_v49 import (
     BitCircuitWeights,
     _bits,
+    _eqz,
     _int,
     construct_bit_weights,
 )
@@ -27,7 +29,10 @@ from .neural_control_routing_v52 import (
     TERMINAL,
     ControlRouterWeights,
     ControlRouteTokens,
+    NeuralControlError,
     _onehot,
+    _validate_router_weights,
+    compile_route_coordinates,
     compile_route_tokens,
     construct_router_weights,
     neural_pc_step,
@@ -59,6 +64,7 @@ from .neural_operand_adapter_v55 import TensorOperandStack
 from .neural_operand_storage_v55 import OperandWeights, fixed_operand_weights
 from .typed_microop_ir_v57 import (
     LOCALS_WIDTH,
+    IndexedMicroops,
     MicroopWeights,
     ProgramMicroopTokens,
     compile_microop_tokens,
@@ -69,6 +75,11 @@ from .typed_microop_ir_v57 import (
 from .wasm_control_flow_v51 import (
     _BINARY,
     MAX_FUEL,
+    MEMORY_BYTES,
+    MEMORY_OPCODES,
+    SCALED_MAX_FUEL,
+    SCALED_SCHEMA,
+    LinearMemoryTrap,
     MAX_STACK,
     ControlAdmissionError,
     ControlExecutionTrap,
@@ -100,6 +111,7 @@ class FrameRoutedResult:
     fixed_microop_weights_sha256: str = ""
     fixed_alu_weights_sha256: str = ""
     fixed_event_weight_digest: str = ""
+    backend: str = "v57-structured-numpy"
 
 
 def _event_digest(weights: EventWeights) -> str:
@@ -120,6 +132,24 @@ def _pop(stack: list[np.ndarray]) -> np.ndarray:
     return stack.pop()
 
 
+def _array_route(targets, flags, condition, fixed, bit_fixed):
+    # Contract the same v52 gate over only its two source-bound coordinates.
+    normal, alternate = map(int, targets)
+    zero = _eqz(condition, bit_fixed)
+    nonzero = 1. - zero
+    take = (flags * fixed.guard_weights) @ np.array([1., nonzero, zero])
+    gains = fixed.path_weights * np.array([1. - take, take])
+    if normal == alternate:
+        gains = np.array([gains.sum(), 0.])
+    if not np.array_equal(np.sort(gains), [0., 1.]):
+        raise NeuralControlError("Constructed route lost unique next PC")
+    next_pc = (normal, alternate)[int(np.argmax(gains))]
+    return next_pc, {
+        "nonzero_condition_gate": int(nonzero), "branch_guard_gate": int(take),
+        "sequential_target": normal, "alternative_target": alternate, "next_pc": next_pc,
+    }
+
+
 def execute_microop_routed_control(
     program: ControlProgram, argument: int, *, fuel: int = 500,
     tokens: ControlRouteTokens | None = None,
@@ -132,31 +162,64 @@ def execute_microop_routed_control(
     microop_fixed: MicroopWeights | None = None,
     microop_tokens: ProgramMicroopTokens | None = None,
     local_fixed: LocalBankWeights | None = None,
+    array_memory: bytearray | None = None,
+    capture_trace: bool = True,
+    observe_store: Callable[[int, int, dict], None] | None = None,
 ) -> FrameRoutedResult:
-    """EXECUTE using the one-hot route output as the next PC.
+    """Execute with fixed-weight routing and frame operations.
+
+    Passing array_memory opts into indexed NumPy routing and direct page
+    updates. Completed stores survive traps. The optional store observer
+    receives (step, source PC, access) after each write, even without tracing.
 
     v53 gate output owns frame depths and branch operand-stack restoration.
     Host still dispatches opcode arithmetic and carries lexical PC metadata.
     """
-    _syntax(program)
-    if uses_memory(program):
-        raise ControlAdmissionError("Memory execution requires the packed v58 executor")
-    if type(fuel) is not int or not 1 <= fuel <= MAX_FUEL:
+    links = _syntax(program)
+    memory = uses_memory(program)
+    array_mode = array_memory is not None
+    if memory and not array_mode:
+        raise ControlAdmissionError("Linear memory requires explicit array_memory or packed execution")
+    if array_mode and (not memory or type(array_memory) is not bytearray
+                       or len(array_memory) != MEMORY_BYTES):
+        raise ControlAdmissionError("Expected a memory program and one bytearray page")
+    if observe_store is not None and (not array_mode or not callable(observe_store)):
+        raise ControlAdmissionError("A store observer requires an array memory program")
+    if type(capture_trace) is not bool:
+        raise ControlAdmissionError("capture_trace must be a boolean")
+    scaled = program.schema == SCALED_SCHEMA
+    if scaled and not array_mode:
+        raise ControlAdmissionError("Scaled NumPy execution requires array_memory")
+    max_fuel = SCALED_MAX_FUEL if scaled and not capture_trace else MAX_FUEL
+    if type(fuel) is not int or not 1 <= fuel <= max_fuel:
         raise ControlAdmissionError("Invalid execution fuel")
-    tokens = compile_route_tokens(program) if tokens is None else tokens
-    validate_route_tokens(tokens, program)
     fixed = construct_router_weights() if fixed is None else fixed
     bit_fixed = construct_bit_weights() if bit_fixed is None else bit_fixed
-    links = _syntax(program)
+    if array_mode:
+        if tokens is not None:
+            raise ControlAdmissionError("Array memory routes derive coordinates from source")
+        _validate_router_weights(fixed)
+        terminal = len(program.operations)
+        targets, guards = compile_route_coordinates(program, terminal)
+        route_digest = hashlib.sha256(targets.astype("<i4", copy=False).tobytes() + guards.astype("<f8", copy=False).tobytes()).hexdigest()
+        page = np.frombuffer(array_memory, dtype=np.uint8)
+    else:
+        terminal = TERMINAL
+        tokens = compile_route_tokens(program) if tokens is None else tokens
+        validate_route_tokens(tokens, program)
+        route_digest = tokens.digest()
     microop_tokens = (
         compile_microop_tokens(program) if microop_tokens is None
         else microop_tokens
     )
-    validate_microop_tokens(microop_tokens, program)
     microop_fixed = (
-        construct_microop_weights() if microop_fixed is None
+        construct_microop_weights(include_memory=memory) if microop_fixed is None
         else microop_fixed
     )
+    if array_mode:
+        indexed = IndexedMicroops(program, microop_tokens, microop_fixed)
+    else:
+        validate_microop_tokens(microop_tokens, program)
     local_fixed = (
         construct_local_bank_weights() if local_fixed is None
         else local_fixed
@@ -171,20 +234,25 @@ def execute_microop_routed_control(
 
     frame_state = empty_frames()
     frame_meta: list[tuple[str, int, int, int | None]] = []
-    pc_vector = _onehot(0)
+    pc_vector = None if array_mode else _onehot(0)
+    pc = 0
     frame_fixed = fixed_frame_weights() if frame_fixed is None else frame_fixed
     event_fixed = fixed_event_weights() if event_fixed is None else event_fixed
-    opcode_tokens = tuple(decode_opcode_token(op.opcode) for op in program.operations)
+    # Memory operations retain the current control frame, as nop does.
+    opcode_tokens = tuple(decode_opcode_token("nop" if op.opcode in MEMORY_OPCODES else op.opcode)
+                          for op in program.operations)
     records = []
     count = len(program.operations)
 
     for tick in range(fuel):
-        pc = int(np.argmax(pc_vector))
-        if pc == TERMINAL or pc >= count:
+        if not array_mode:
+            pc = int(np.argmax(pc_vector))
+        if pc == terminal or pc >= count:
             raise ControlExecutionTrap("Reached terminal without WASM return")
         op = program.operations[pc]
         kind = op.opcode
-        microop = read_microop(pc_vector, microop_tokens, microop_fixed)
+        microop = (indexed.read(pc) if array_mode else
+                   read_microop(pc_vector, microop_tokens, microop_fixed))
         # Condition is read from the ACTUAL binary neural stack before
         # consuming the operand. The gate itself is independent of host
         # opcode branch selection and uses v49 fixed ReLU zero testing.
@@ -192,13 +260,15 @@ def execute_microop_routed_control(
             stack[-1] if stack
             else np.zeros(32, dtype=np.float64)
         )
-        selected, route = neural_pc_step(
-            pc_vector, condition, tokens, fixed, bit_fixed,
-        )
-        next_pc = int(np.argmax(selected))
+        if array_mode:
+            next_pc, route = _array_route(targets[pc], guards[pc], condition, fixed, bit_fixed)
+        else:
+            selected, route = neural_pc_step(pc_vector, condition, tokens, fixed, bit_fixed)
+            next_pc = int(np.argmax(selected))
         sequential_pc = route["sequential_target"]
         taken = bool(route["branch_guard_gate"])
         halted = False
+        access = None
 
         entry_kind = None
         entry_base = None
@@ -208,12 +278,14 @@ def execute_microop_routed_control(
         # how many physical operands the execution path consumes.
         effect = microop.effect
         pop_count = int(effect[2] + effect[3] + 2. * effect[4])
+        if array_mode:
+            pop_count += int(2 * effect[5])
         # Source semantics are a fail-closed admission oracle only:
         # they never choose the runtime pop count. A mutated one-hot
         # decoder cannot silently consume the wrong number of operands.
         expected_pops = (
-            2 if kind in _BINARY else
-            1 if kind in ("if", "br_if", "drop", "local.set", "i32.eqz")
+            2 if kind in _BINARY or kind == "i32.store" else
+            1 if kind in ("if", "br_if", "drop", "local.set", "i32.eqz", "i32.load")
             else 0
         )
         if pop_count != expected_pops:
@@ -247,7 +319,7 @@ def execute_microop_routed_control(
         elif kind in ("br", "br_if"):
             branch_depth = int(np.argmax(microop.branch_depth))
         elif kind == "return":
-            if len(stack) != 1 or next_pc != TERMINAL:
+            if len(stack) != 1 or next_pc != terminal:
                 raise ControlExecutionTrap("Unexpected return stack or target")
             halted = True
         elif kind == "nop":
@@ -274,6 +346,27 @@ def execute_microop_routed_control(
             )
         elif kind == "drop":
             pass
+        elif kind in MEMORY_OPCODES:
+            base = np.packbits(consumed[-1].astype(np.uint8), bitorder="little").view("<u4")[0]
+            address = np.uint64(base) + np.uint64(op.immediate.offset)
+            if address > MEMORY_BYTES - 4:
+                error = LinearMemoryTrap("i32 memory access exceeds the admitted page")
+                if capture_trace:
+                    error.trace = tuple(records)
+                    error.trap_site = {"step": tick, "pc": pc, "opcode": kind, "address": int(address)}
+                raise error
+            word = page[address:address + np.uint64(4)]
+            record_access = capture_trace or (kind == "i32.store" and observe_store is not None)
+            before = word.tobytes().hex() if record_access else None
+            if kind == "i32.load":
+                produced = np.unpackbits(word, bitorder="little").astype(np.float64)
+            else:
+                word[:] = np.packbits(consumed[0].astype(np.uint8), bitorder="little")
+            if record_access:
+                access = {"kind": kind, "address": int(address), "before_hex": before,
+                          "after_hex": word.tobytes().hex()}
+                if kind == "i32.store" and observe_store is not None:
+                    observe_store(tick, pc, access.copy())
         elif kind == "i32.eqz":
             left = consumed[0]
             result = execute_alu(
@@ -347,45 +440,55 @@ def execute_microop_routed_control(
             frame_meta.append(entering_metadata)
         if len(frame_meta) != depth_after:
             raise ControlExecutionTrap("Frame metadata not aligned to circuit depth")
-        labels = [
-            ("block", "loop", "if")[int(np.argmax(frame_state.kinds[i]))]
-            for i in range(depth_after)
-        ]
         if len(stack) > MAX_STACK:
             raise ControlExecutionTrap("Operand stack resource budget exceeded")
-        records.append({
-            "step": tick, "pc": pc, "opcode": kind,
-            # TERMINAL is a routing sink, represented as WASM len(program)
-            # in public trace for parity with the v51 host reference.
-            "next_pc": count if next_pc == TERMINAL else next_pc,
-            "stack_i32": [_int(v) for v in stack],
-            "locals_i32": [
-                _int(v) for v in local_bank[:program.local_count + 1]
-            ],
-            "control_labels": labels,
-            "halted": halted,
-            "neural_route": route,
-            "neural_frame_event": action,
-            "microop_effect": int(np.argmax(microop.effect)),
-            "microop_local_mode": int(np.argmax(microop.local_mode)),
-            "neural_alu_opcode": (
-                int(np.argmax(microop.alu_selector))
-                if microop.alu_selector.sum() else None
-            ),
-        })
-        pc_vector = selected
+        if capture_trace:
+            labels = [
+                ("block", "loop", "if")[int(np.argmax(frame_state.kinds[i]))]
+                for i in range(depth_after)
+            ]
+            records.append({
+                "step": tick, "pc": pc, "opcode": kind,
+                # TERMINAL is a routing sink, represented as WASM len(program)
+                # in public trace for parity with the v51 host reference.
+                "next_pc": count if next_pc == terminal else next_pc,
+                "stack_i32": [_int(v) for v in stack],
+                "locals_i32": [
+                    _int(v) for v in local_bank[:program.local_count + 1]
+                ],
+                "control_labels": labels,
+                "halted": halted,
+                "neural_route": route,
+                "neural_frame_event": action,
+                "microop_effect": int(np.argmax(microop.effect)),
+                "microop_local_mode": int(np.argmax(microop.local_mode)),
+                "neural_alu_opcode": (
+                    int(np.argmax(microop.alu_selector))
+                    if microop.alu_selector.sum() else None
+                ),
+            })
+            if array_mode:
+                records[-1]["memory_access"] = access
+
+        if array_mode:
+            pc = next_pc
+        else:
+            pc_vector = selected
         if halted:
-            if next_pc != TERMINAL:
+            if next_pc != terminal:
                 raise ControlExecutionTrap("WASM halted at nonterminal routing PC")
             return FrameRoutedResult(
-                _int(stack[-1]), tuple(records), len(records),
+                _int(stack[-1]), tuple(records), tick + 1,
                 hashlib.sha256(encode_control(program)).hexdigest(),
-                fixed.digest(), bit_fixed.digest(), tokens.digest(),
+                fixed.digest(), bit_fixed.digest(), route_digest,
                 tuple(float(x) for x in frame_fixed.action_weights),
                 fixed_event_weight_digest=_event_digest(event_fixed),
                 fixed_alu_weights_sha256=alu_fixed.digest(),
                 fixed_microop_weights_sha256=microop_fixed.digest(),
+                backend="v58-structured-numpy-memory" if array_mode else "v57-structured-numpy",
             )
-    raise ControlFuelExhausted(
-        f"Explicit bounded fuel exhausted after {fuel} neural-routed transitions"
-    )
+    error = ControlFuelExhausted(f"Explicit bounded fuel exhausted after {fuel} neural-routed transitions")
+    if array_mode and capture_trace:
+        error.trace = tuple(records)
+        error.trap_site = {"step": fuel, "pc": pc, "opcode": None, "address": None}
+    raise error

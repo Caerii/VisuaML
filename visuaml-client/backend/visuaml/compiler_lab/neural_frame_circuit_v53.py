@@ -68,8 +68,7 @@ def empty_frames() -> FrameState:
 
 def _binary(array: np.ndarray, shape: tuple[int, ...]) -> None:
     if (not isinstance(array, np.ndarray) or array.dtype != np.float64
-            or array.shape != shape or not np.isfinite(array).all()
-            or not np.isin(array, (0., 1.)).all()):
+            or array.shape != shape or not ((array == 0.) | (array == 1.)).all()):
         raise FrameCircuitError("Noncanonical binary tensor")
 
 
@@ -146,7 +145,6 @@ def step_frames(
     # Fixed tensor contraction selects target frame from two input one-hots.
     target = np.einsum(
         "d,k,dki->i", state.depth, tokens.branch_depth, _TARGET,
-        optimize=True,
     )
     if branch and target.sum() != 1.:
         raise FrameCircuitError("Branch target is not a live frame")
