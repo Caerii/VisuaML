@@ -102,11 +102,12 @@ def step_operands(
     truncate_height: np.ndarray | None = None,
     fixed: OperandWeights | None = None,
 ) -> tuple[OperandState, np.ndarray]:
-    """Construct all four state transitions, mask by a one-hot event.
+    """Apply the admitted one-hot event and its fixed-weight gain.
 
     The output second value is the popped 32-bit word for a pop event,
-    otherwise zero. No Python conditional chooses among the candidate
-    state tensors; all changes flow through fixed action-gain mixing.
+    otherwise zero. Unit-weight push/pop use the sparse form of the
+    contraction; other actions and non-unit active gains use all
+    candidates and the general fixed action-gain mixing.
     """
     validate_operands(state)
     _hot(action, (len(ACTIONS),))
@@ -130,6 +131,26 @@ def step_operands(
         raise OperandCircuitError("Bounded operand stack underflow")
     if action[3] and target > depth:
         raise OperandCircuitError("Truncation must not grow the live stack")
+
+    # A unique one-hot height selects exactly one row, and a unit
+    # action gain discards every other candidate. Materialize only the
+    # selected transition. Keep independent output buffers, including
+    # the popped word, because callers may retain or mutate snapshots.
+    push, pop = action[1:3]
+    if (push * fixed.action_gain[1] + pop * fixed.action_gain[2] == 1.
+            and all(type(array) is np.ndarray for array in
+                    (state.height, state.cells, action, value, truncate_height, fixed.action_gain))):
+        cells = state.cells.copy()
+        if push:
+            cells[depth] = value
+            result = OperandState(state.height @ _UP, cells)
+            returned = np.zeros(WIDTH, dtype=np.float64)
+        else:
+            returned = cells[depth - 1].copy()
+            cells[depth - 1] = 0.
+            result = OperandState(state.height @ _DOWN, cells)
+        validate_operands(result)
+        return result, returned
 
     push_slot = state.height[:MAX_STACK]
     pop_slot = state.height @ _PREVIOUS

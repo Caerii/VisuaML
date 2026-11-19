@@ -114,3 +114,33 @@ def test_retain_produces_exact_same_tensor_and_no_pop_result():
     assert np.array_equal(after.height, state.height)
     assert np.array_equal(after.cells, state.cells)
     assert not popped.any()
+
+
+def test_unit_push_pop_matches_dense_and_owns_output_arrays():
+    class DenseAction(np.ndarray):
+        pass
+
+    state = empty_operands()
+    for index in range(MAX_STACK):
+        value = _bits(-1 if index == 0 else index)
+        if index:
+            value = state.cells[index - 1]  # The supplied word may alias live input.
+        action = onehot(1, len(ACTIONS))
+        fast, returned = step_operands(state, action, value=value)
+        dense, dense_word = step_operands(state, action.view(DenseAction), value=value)
+        np.testing.assert_array_equal(fast.height, dense.height)
+        np.testing.assert_array_equal(fast.cells, dense.cells)
+        np.testing.assert_array_equal(returned, dense_word)
+        assert not np.shares_memory(fast.cells, state.cells)
+        assert not np.shares_memory(fast.height, state.height)
+        state = fast
+    while depth(state):
+        action = onehot(2, len(ACTIONS))
+        fast, returned = step_operands(state, action)
+        dense, dense_word = step_operands(state, action.view(DenseAction))
+        np.testing.assert_array_equal(fast.height, dense.height)
+        np.testing.assert_array_equal(fast.cells, dense.cells)
+        np.testing.assert_array_equal(returned, dense_word)
+        assert not np.shares_memory(returned, state.cells)
+        assert not np.shares_memory(returned, fast.cells)
+        state = fast
