@@ -271,3 +271,12 @@ logic. Warm 1,024-input throughput improved 1.22–1.27× at the API and
 includes emitted vector instructions, trace and result parity, and
 fuel and coefficient replays.
 [Packed AVX2 batch report](V58_PACKED_SIMD.md)
+
+## v58 packed structured control
+
+The prepared packed loop now covers all eight structured-control opcodes
+in the bounded v51 dialect. Replays include full frame and data states,
+every branch depth, fuel boundaries, and a live route-gain intervention
+localized to its first divergent state. The verifier preserves original
+WASM fixtures and can be reused for later lowering and recovery work.
+[Packed structured control report](V58_PACKED_STRUCTURED_CONTROL.md)
