@@ -185,6 +185,7 @@ enum Status {
     micro_binary, alu_binary, alu_selection, local_onehot, local_binary,
     local_read, local_write, stack_authority, route_binary, route_selection,
     early_terminal, final_stack, fuel_exhausted, trace_capacity,
+    control_effect, control_frame, control_event, frame_gain, invalid_return,
 };
 
 bool binary_tensor(const double* values, std::size_t count) {
@@ -517,6 +518,26 @@ extern "C" int visuaml_data_microstep(
 namespace {
 constexpr std::size_t prepared_stack_size = 24;
 constexpr std::size_t prepared_locals_size = 5;
+constexpr std::size_t prepared_frame_limit = 12;
+
+template <typename Word>
+void record_state(std::int32_t* states, double* routes, std::size_t tick,
+                  std::size_t pc, std::size_t depth, std::size_t visible_locals,
+                  const Word* cells, const Word* locals, const double* route) {
+    constexpr auto stride = word_stride<Word>;
+    auto state = states + tick * (2 + prepared_stack_size + visible_locals);
+    state[0] = static_cast<std::int32_t>(pc);
+    state[1] = static_cast<std::int32_t>(depth);
+    for (std::size_t slot = 0; slot < depth; ++slot) {
+        state[2 + slot] = decode_word(cells + slot * stride);
+    }
+    for (std::size_t slot = 0; slot < visible_locals; ++slot) {
+        state[2 + prepared_stack_size + slot] = decode_word(locals + slot * stride);
+    }
+    for (int field = 0; field < 5; ++field) {
+        routes[tick * 5 + field] = route[field];
+    }
+}
 
 template <typename Word>
 int prepared_loop(
@@ -576,18 +597,7 @@ int prepared_loop(
             if (tick >= count) {
                 return trace_capacity;
             }
-            auto* state = trace_states + tick * (2 + stack_size + visible_locals);
-            state[0] = static_cast<std::int32_t>(pc);
-            state[1] = static_cast<std::int32_t>(depth);
-            for (std::size_t slot = 0; slot < depth; ++slot) {
-                state[2 + slot] = decode_word(cells + slot * stride);
-            }
-            for (std::size_t slot = 0; slot < visible_locals; ++slot) {
-                state[2 + stack_size + slot] = decode_word(locals + slot * stride);
-            }
-            for (int field = 0; field < 5; ++field) {
-                trace_routes[tick * 5 + field] = route[field];
-            }
+            record_state(trace_states, trace_routes, tick, pc, depth, visible_locals, cells, locals, route);
         }
         if (halted) {
             result[0] = decode_word(cells);
@@ -709,5 +719,197 @@ extern "C" void visuaml_prepared_batch(
 #endif
     for (; i < size; ++i) {
         scalar(i);
+    }
+}
+
+namespace {
+// Coordinates from v54 event tokens and v53 one-hot frame states.
+enum ControlOp { block_op, loop_op, if_op, else_op, end_op, br_op, br_if_op, return_op, data_op };
+enum FrameAction { keep_frame, push_frame, pop_frame, jump_frame, return_frame };
+constexpr int frame_actions = 5;
+constexpr int control_fields = 5;
+constexpr int frame_fields = 2 + 2 * prepared_frame_limit;
+
+struct ActiveFrame {
+    std::size_t pc;
+    std::size_t base;
+};
+
+int select_frame_event(const double* defaults, const double* gains, int opcode,
+                       bool has_else, bool sequential, bool active, bool taken) {
+    const double enter = (opcode == if_op && (has_else || sequential)) ? gains[0] : 0.0;
+    const double leave = (opcode == end_op && active) ? gains[1] : 0.0;
+    const double branch = (opcode == br_if_op && taken) ? gains[2] : 0.0;
+    const double shifts[] = {-(enter + leave + branch), enter, leave, branch, 0.0};
+    int action = -1;
+    const auto row = defaults + opcode * frame_actions;
+    for (int i = 0; i < frame_actions; ++i) {
+        const auto selected = row[i] + shifts[i];
+        if (selected == 1.0 && action < 0) {
+            action = i;
+        } else if (selected != 0.0) {
+            return -1;
+        }
+    }
+    return action;
+}
+
+int structured_loop(
+        std::int32_t argument, std::size_t fuel, std::size_t count, std::size_t terminal,
+        std::size_t visible_locals, const double* rows, const double* fixed,
+        const std::int32_t* targets, const double* guards, const double* guard_weights,
+        const double* path_weights, const std::int32_t* flow, const double* event_defaults,
+        const double* event_gains, const double* frame_gains, std::int32_t* result,
+        std::int32_t* trace_states, double* trace_routes, std::int32_t* trace_frames) {
+    std::uint32_t cells[prepared_stack_size] = {}, locals[prepared_locals_size] = {};
+    ActiveFrame frames[prepared_frame_limit];
+    locals[0] = static_cast<std::uint32_t>(argument);
+    std::size_t pc = 0, depth = 0, frame_count = 0;
+    for (std::size_t tick = 0; tick < fuel; ++tick) {
+        if (pc >= count || pc == terminal) {
+            return early_terminal;
+        }
+        if (targets[2 * pc] < 0) {
+            return route_binary;
+        }
+        double route[5];
+        const bool zero = depth == 0 || cells[depth - 1] == 0;
+        if (route_from_zero(pc, zero, targets, guards, guard_weights, path_weights, route)) {
+            return route_selection;
+        }
+        const auto next = static_cast<std::size_t>(route[0]);
+        const auto instruction = flow + control_fields * pc;
+        const int opcode = instruction[0];
+        bool halted = false;
+        if (opcode == data_op) {
+            const auto status = data_microstep_at_depth(
+                pc, prepared_stack_size, prepared_locals_size, rows, fixed, depth, cells, locals);
+            if (status) {
+                return status;
+            }
+        } else {
+            // The source is an admission oracle for the decoded control arity.
+            // Route selection above reads the actual operand before consumption.
+            const int pops = instruction[4];
+            if (pops != (opcode == if_op || opcode == br_if_op ? 1 : 0)) {
+                return control_effect;
+            }
+            if (pops) {
+                if (!depth) {
+                    return underflow;
+                }
+                if (!binary_tensor(fixed + actions, 4)) {
+                    return operand_binary;
+                }
+                if (fixed[actions + 2] != 1.0) {
+                    return operand_onehot;
+                }
+                cells[--depth] = 0;
+            }
+            if (opcode == else_op || opcode == end_op) {
+                if (frame_count) {
+                    const auto& top = frames[frame_count - 1];
+                    const auto matching = flow + control_fields * top.pc;
+                    if (matching[opcode == else_op ? 2 : 1] != static_cast<std::int32_t>(pc)
+                            || depth != top.base) {
+                        return control_frame;
+                    }
+                } else if (opcode == end_op && pc == count - 1 && depth == 1) {
+                    halted = true;
+                } else {
+                    return control_frame;
+                }
+            } else if (opcode == return_op) {
+                if (depth != 1 || next != terminal) {
+                    return invalid_return;
+                }
+                halted = true;
+            }
+        }
+
+        const int action = select_frame_event(
+            event_defaults, event_gains, opcode, instruction[2] >= 0,
+            next == route[3], frame_count != 0, route[2] != 0.0);
+        if (action < 0) {
+            return control_event;
+        }
+        if (frame_gains[action] != 1.0) {
+            return frame_gain;
+        }
+        // The live event gate selects the contraction. Lexical metadata
+        // supplies frame tags and the packed coordinates of their bases.
+        if (action == push_frame) {
+            if (instruction[1] < 0 || frame_count == prepared_frame_limit) {
+                return control_frame;
+            }
+            frames[frame_count++] = {pc, depth};
+        } else if (action == pop_frame) {
+            if (!frame_count) {
+                return control_frame;
+            }
+            --frame_count;
+        } else if (action == jump_frame) {
+            const auto branch_depth = static_cast<std::size_t>(instruction[3]);
+            if (branch_depth >= frame_count) {
+                return control_frame;
+            }
+            const auto index = frame_count - 1 - branch_depth;
+            const auto target = frames[index];
+            if (target.base > depth) {
+                return control_frame;
+            }
+            if (!binary_tensor(fixed + actions, 4)) {
+                return operand_binary;
+            }
+            if (fixed[actions + 3] != 1.0) {
+                return operand_onehot;
+            }
+            while (depth > target.base) {
+                cells[--depth] = 0;
+            }
+            frame_count = index + (flow[control_fields * target.pc] == loop_op);
+        } else if (action == return_frame) {
+            frame_count = 0;
+        }
+        if (halted && next != terminal) {
+            return invalid_return;
+        }
+        if (trace_states) {
+            record_state(trace_states, trace_routes, tick, pc, depth, visible_locals, cells, locals, route);
+            auto frame = trace_frames + tick * frame_fields;
+            frame[0] = action;
+            frame[1] = static_cast<std::int32_t>(frame_count);
+            for (std::size_t i = 0; i < frame_count; ++i) {
+                frame[2 + 2 * i] = static_cast<std::int32_t>(frames[i].pc);
+                frame[3 + 2 * i] = static_cast<std::int32_t>(frames[i].base);
+            }
+        }
+        if (halted) {
+            result[0] = signed_word(cells[0]);
+            result[1] = static_cast<std::int32_t>(tick + 1);
+            return ok;
+        }
+        pc = next;
+    }
+    return fuel_exhausted;
+}
+} // namespace
+
+extern "C" void visuaml_structured_batch(
+        const std::int32_t* arguments, const std::int32_t* fuels, std::size_t size,
+        std::size_t count, std::size_t terminal, std::size_t visible_locals, std::size_t trace_stride,
+        const double* rows, const double* fixed, const std::int32_t* targets, const double* guards,
+        const double* guard_weights, const double* path_weights, const double*,
+        const std::int32_t* flow, const double* event_defaults, const double* event_gains,
+        const double* frame_gains, std::int32_t* results, std::int32_t* statuses,
+        std::int32_t* trace_states, double* trace_routes, std::int32_t* trace_frames) {
+    const auto state_stride = trace_stride * (2 + prepared_stack_size + visible_locals);
+    for (std::size_t i = 0; i < size; ++i) {
+        statuses[i] = structured_loop(
+            arguments[i], fuels[i], count, terminal, visible_locals, rows, fixed,
+            targets, guards, guard_weights, path_weights, flow, event_defaults, event_gains, frame_gains,
+            results + i * 2, trace_states ? trace_states + i * state_stride : nullptr,
+            trace_routes ? trace_routes + i * trace_stride * 5 : nullptr,
+            trace_frames ? trace_frames + i * trace_stride * frame_fields : nullptr);
     }
 }

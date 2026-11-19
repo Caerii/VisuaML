@@ -2,8 +2,8 @@
 
 The v52 fixed-weight one-hot PC routes real execution. The same v57 typed
 microop tokens select v58 constructed operand/local/ALU state transitions.
-Only the final WASM function-end structural instruction uses host admission.
-Control flow, memory and calls are NOT yet implemented by this executor.
+Prepared packed execution optionally integrates the bounded v51
+structured subset with v52 routing and packed v53-v54 frame gates.
 """
 from __future__ import annotations
 
@@ -18,6 +18,8 @@ from .bit_neural_vm_v49 import (
 )
 from .compact_routing_v58 import CompactRouter
 from .native_microstep_v58 import _NativeMicrostep
+from .neural_frame_circuit_v53 import FrameCircuitWeights
+from .neural_frame_events_v54 import EventWeights
 from .neural_alu_v56 import ALUWeights, construct_alu_weights
 from .neural_control_routing_v52 import (
     TERMINAL, ControlRouteTokens, ControlRouterWeights, _onehot,
@@ -61,6 +63,7 @@ class MicrostepExecution:
     source_program_tokens_sha256: str
     host_structural_end: bool = True
     data_effects_driven_by_microstep: bool = True
+    structured_control_sha256: str | None = None
 
 
 @dataclass(frozen=True)
@@ -151,6 +154,7 @@ def _prepare(
     local_fixed: LocalBankWeights | None = None,
     operand_fixed: OperandWeights | None = None,
     reusable: bool = False,
+    structured_control: bool = False,
 ) -> _ExecutionInputs:
     if type(use_indexed_pc) is not bool or (use_indexed_pc and not use_compact_routing):
         raise MicrostepAdmissionError("Indexed execution requires compact routing")
@@ -161,10 +165,10 @@ def _prepare(
     if type(use_fused_state) is not bool:
         raise MicrostepAdmissionError("use_fused_state must be a boolean")
     _syntax(program)
-    if (not program.operations or program.operations[-1].opcode != "end"
-            or any(op.opcode in (
-                "block", "loop", "if", "else", "br", "br_if", "return",
-            ) for op in program.operations[:-1])):
+    if not structured_control and any(
+        op.opcode in ("block", "loop", "if", "else", "br", "br_if", "return")
+        for op in program.operations[:-1]
+    ):
         raise MicrostepAdmissionError(
             "v58 microstep executor admits straight-line WASM only"
         )
@@ -215,7 +219,8 @@ def _prepare(
     )
     if reusable:
         assert indexed is not None
-        rows = tuple(indexed.read(pc) for pc in range(len(program.operations) - 1))
+        row_count = len(program.operations) - (not structured_control)
+        rows = tuple(indexed.read(pc) for pc in range(row_count))
         return replace(
             inputs, rows=rows, provenance=inputs.digests(),
             tokens=None, program_tokens=None, pc_fixed=None, microop_fixed=None,
@@ -260,6 +265,7 @@ class PreparedMicrostepProgram:
     The native loop also runs live PC routing in that call for the full program.
     The packed scalar mode uses uint32 words for the native loop's binary state.
     Optional AVX2 SIMD processes groups of eight eligible untraced inputs.
+    Structured control uses the packed scalar loop and live frame-event gains.
     """
 
     def __init__(
@@ -270,6 +276,9 @@ class PreparedMicrostepProgram:
         use_native_loop: bool = False,
         use_packed_scalar: bool = False,
         use_packed_simd: bool = False,
+        use_structured_control: bool = False,
+        event_fixed: EventWeights | None = None,
+        frame_fixed: FrameCircuitWeights | None = None,
         tokens: ControlRouteTokens | None = None,
         program_tokens: ProgramMicroopTokens | None = None,
         pc_fixed: ControlRouterWeights | None = None,
@@ -280,6 +289,12 @@ class PreparedMicrostepProgram:
         local_fixed: LocalBankWeights | None = None,
         operand_fixed: OperandWeights | None = None,
     ):
+        if type(use_structured_control) is not bool:
+            raise MicrostepAdmissionError("use_structured_control must be a boolean")
+        if use_structured_control and (not use_packed_scalar or not use_native_loop or use_packed_simd):
+            raise MicrostepAdmissionError("Structured control requires the scalar packed native loop")
+        if not use_structured_control and (event_fixed is not None or frame_fixed is not None):
+            raise MicrostepAdmissionError("Frame coefficients require structured control")
         if type(use_packed_simd) is not bool:
             raise MicrostepAdmissionError("use_packed_simd must be a boolean")
         if use_packed_simd and not use_packed_scalar:
@@ -299,17 +314,19 @@ class PreparedMicrostepProgram:
             use_compact_routing=True, use_indexed_pc=True,
             tokens=tokens, program_tokens=program_tokens, pc_fixed=pc_fixed, bit_fixed=bit_fixed,
             microop_fixed=microop_fixed, microstep_fixed=microstep_fixed, alu_fixed=alu_fixed,
-            local_fixed=local_fixed, operand_fixed=operand_fixed, reusable=True,
+            local_fixed=local_fixed, operand_fixed=operand_fixed, reusable=True, structured_control=use_structured_control,
         )
 
         if use_native_microstep or use_native_loop:
             native = _NativeMicrostep(
                 inputs.rows, inputs.microstep_fixed, inputs.operand_fixed,
                 inputs.alu_fixed, inputs.bit_fixed, inputs.local_fixed,
-                packed=use_packed_scalar, simd=use_packed_simd,
+                packed=use_packed_scalar, simd=use_packed_simd, structured=use_structured_control,
             )
             if use_native_loop:
                 native.bind_loop(inputs.program, inputs.compact)
+            if use_structured_control:
+                native.bind_control(inputs.program, inputs.rows, event_fixed, frame_fixed)
             inputs = replace(inputs, native_microstep=native, rows=None, native_loop=use_native_loop)
         self._inputs = inputs
 
@@ -368,7 +385,10 @@ class PreparedMicrostepProgram:
                 outcomes.append(MicrostepBatchFailure(result))
             else:
                 value, steps, trace = result
-                outcomes.append(MicrostepExecution(value, trace, steps, *inputs.provenance))
+                outcomes.append(MicrostepExecution(
+                    value, trace, steps, *inputs.provenance,
+                    structured_control_sha256=inputs.native_microstep.control_digest,
+                ))
         return tuple(outcomes)
 
 
@@ -378,7 +398,9 @@ def _run(inputs: _ExecutionInputs, argument: int, fuel: int, capture_trace: bool
     native = inputs.native_microstep
     if inputs.native_loop:
         value, steps, trace = native.run_loop(argument, fuel, capture_trace)
-        return MicrostepExecution(value, trace, steps, *inputs.provenance)
+        return MicrostepExecution(
+            value, trace, steps, *inputs.provenance, structured_control_sha256=native.control_digest,
+        )
     operands = empty_operands()
     locals_ = np.zeros((LOCALS_WIDTH, 32), dtype=np.float64)
     locals_[0] = _bits(argument)

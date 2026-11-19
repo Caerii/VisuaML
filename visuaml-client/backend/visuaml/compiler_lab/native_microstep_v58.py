@@ -2,19 +2,25 @@
 from __future__ import annotations
 
 import ctypes
+import hashlib
 
 import numpy as np
 
 from .bit_neural_vm_v49 import WIDTH, _validate_i32
 from .compact_routing_v58 import CompactRouter
 from .constructed_alu_v58 import compiled_alu, compiled_coefficients
+from .exact_binary import is_exact_binary
+from .neural_frame_circuit_v53 import FrameCircuitError, FrameCircuitWeights, fixed_frame_weights
+from .neural_frame_events_v54 import ACTIONS as FRAME_ACTIONS
+from .neural_frame_events_v54 import OPCODES as FRAME_OPCODES
+from .neural_frame_events_v54 import EventCircuitError, EventWeights, fixed_event_weights
 from .neural_alu_v56 import ALU_OPS, ALUWeights, NeuralALUError
 from .neural_control_routing_v52 import TERMINAL, NeuralControlError
 from .neural_local_bank_v57 import LocalBankWeights
 from .neural_microstep_v58 import DATA_OPS, MicrostepWeights
 from .neural_operand_storage_v55 import ACTIONS, MAX_STACK, OperandCircuitError, OperandWeights
 from .typed_microop_ir_v57 import EFFECTS, LOCALS_WIDTH, LOCAL_MODES, OPCODES, MicroopAdmissionError
-from .wasm_control_flow_v51 import ControlExecutionTrap, ControlFuelExhausted
+from .wasm_control_flow_v51 import MAX_NESTING, ControlExecutionTrap, ControlFuelExhausted, _syntax
 
 _ERRORS = (
     None,
@@ -37,6 +43,11 @@ _ERRORS = (
     (ControlExecutionTrap, "Final source WASM end needs exactly one i32"),
     (ControlFuelExhausted, "Explicit bounded fuel exhausted after {fuel} v58 microsteps"),
     (RuntimeError, "Native trace exceeded its straight-line capacity"),
+    (ControlExecutionTrap, "Decoded stack effect violates source WASM"),
+    (ControlExecutionTrap, "Unbalanced or invalid structured control frame"),
+    (EventCircuitError, "Noncanonical one-hot frame event"),
+    (FrameCircuitError, "Noncanonical one-hot frame output"),
+    (ControlExecutionTrap, "Unexpected return stack or target"),
 )
 
 # This ordering is the row and coefficient ABI in constructed_alu_v58.cpp.
@@ -60,7 +71,7 @@ def _tensors(weights, layout, error, message):
 class _NativeMicrostep:
     """Internal gate for owned operand and local buffers from the prepared executor."""
 
-    def __init__(self, rows, micro, operand, alu, bits, local, *, packed=False, simd=False):
+    def __init__(self, rows, micro, operand, alu, bits, local, *, packed=False, simd=False, structured=False):
         if (EFFECTS, LOCAL_MODES, ALU_OPS, ACTIONS, WIDTH) != _LAYOUT:
             raise RuntimeError("Incompatible v58 native data gate layout")
         if not isinstance(micro, MicrostepWeights):
@@ -93,10 +104,16 @@ class _NativeMicrostep:
         data = np.array([name in DATA_OPS for name in OPCODES], dtype=np.float64)
         self._packed = packed
         self._simd = simd
+        self.control_digest = None
+        self._structured = structured
         powers = np.ldexp(np.ones(WIDTH), np.arange(WIDTH)) if packed else None
         table = []
         for row in rows:
-            if row.opcode @ data != 1.:
+            is_data = row.opcode @ data
+            if structured and is_data == 0.:
+                table.append(np.zeros(len(EFFECTS) + len(LOCAL_MODES) + len(ALU_OPS) + 1 + LOCALS_WIDTH + 1))
+                continue
+            if is_data != 1.:
                 raise MicroopAdmissionError("Control opcode outside v58 data microstep")
             literal = (row.immediate_bits @ powers,) if packed else row.immediate_bits
             table.append(np.concatenate((
@@ -109,6 +126,7 @@ class _NativeMicrostep:
         self._gate = kernels.data_microstep
         self._loop = kernels.prepared_loop
         self._batch = kernels.prepared_batch
+        self._structured_batch = kernels.structured_batch
         self._pointers = self._rows.ctypes.data, self._fixed.ctypes.data
 
     def apply(self, pc, buffers):
@@ -122,15 +140,65 @@ class _NativeMicrostep:
             raise RuntimeError("Incompatible v58 native loop state layout")
         opcodes = tuple(op.opcode for op in program.operations)
         visible_locals = program.local_count + 1
-        if (len(opcodes) != self._row_count + 1 or opcodes[-1] != "end"
+        if (len(opcodes) != self._row_count + (not self._structured) or opcodes[-1] != "end"
                 or not 1 <= visible_locals <= LOCALS_WIDTH):
             raise MicroopAdmissionError("Invalid prepared loop metadata")
         self._opcodes = opcodes
         self._visible_locals = visible_locals
         self._router = router  # Owns the buffers borrowed by the native loop.
 
+    def bind_control(self, program, rows, event_fixed, frame_fixed):
+        opcodes = ("block", "loop", "if", "else", "end", "br", "br_if", "return", "other")
+        if (FRAME_OPCODES, FRAME_ACTIONS, MAX_NESTING) != (
+            opcodes, ("retain", "push", "pop", "branch", "return"), 12,
+        ):
+            raise RuntimeError("Incompatible v58 native frame layout")
+        event = fixed_event_weights() if event_fixed is None else event_fixed
+        frame = fixed_frame_weights() if frame_fixed is None else frame_fixed
+        if not isinstance(event, EventWeights):
+            raise EventCircuitError("Unrecognized fixed circuit")
+        if not isinstance(frame, FrameCircuitWeights):
+            raise FrameCircuitError("Unknown weights")
+
+        def snapshot(value, shape, error):
+            if (type(value) is not np.ndarray or value.dtype != np.float64 or value.shape != shape):
+                raise error("Noncanonical frame coefficients")
+            immutable = np.frombuffer(value.tobytes(), dtype=np.float64).reshape(shape)
+            if not is_exact_binary(immutable):
+                raise error("Noncanonical frame coefficients")
+            return immutable
+
+        defaults = snapshot(event.default, (len(opcodes), len(FRAME_ACTIONS)), EventCircuitError)
+        conditional = snapshot(event.conditional_gains, (3,), EventCircuitError)
+        gains = snapshot(frame.action_weights, (len(FRAME_ACTIONS),), FrameCircuitError)
+        if not np.all(defaults.sum(axis=1) == 1.):
+            raise EventCircuitError("Corrupt opcode action matrix")
+        links = _syntax(program)
+        flow = []
+        for pc, (op, row) in enumerate(zip(program.operations, rows, strict=True)):
+            code = opcodes.index(op.opcode) if op.opcode in opcodes else opcodes.index("other")
+            end, otherwise = links.get(pc, (-1, None))
+            target = int(row.branch_depth.argmax()) if op.opcode in ("br", "br_if") else -1
+            pops = int(row.effect[2] + row.effect[3] + 2 * row.effect[4])
+            flow.append((code, end, -1 if otherwise is None else otherwise, target, pops))
+        self._control_arrays = (
+            np.frombuffer(np.array(flow, dtype=np.int32).tobytes(), dtype=np.int32),
+            defaults, conditional, gains,
+        )
+        self._control_pointers = tuple(array.ctypes.data for array in self._control_arrays)
+        self._links = links
+        h = hashlib.sha256(b"visuaml.v58.packed.frame-gates")
+        for array in self._control_arrays[1:]:
+            h.update(array.astype("<f8", copy=False).tobytes())
+        self.control_digest = h.hexdigest()
+
     def run_loop(self, argument, fuel, capture_trace):
         _validate_i32(argument)
+        if self._structured:
+            result = next(self.run_many((argument,), (fuel,), capture_trace))
+            if isinstance(result, Exception):
+                raise result
+            return result
         count = len(self._opcodes)
         visible_locals = self._visible_locals
         result = (ctypes.c_int32 * 2)()
@@ -154,15 +222,16 @@ class _NativeMicrostep:
 
         return value, steps, self._trace(steps, states, routes)
 
-    def _trace(self, steps, states, routes):
+    def _trace(self, steps, states, routes, frames=None):
         count = len(self._opcodes)
         records = []
+        frame_rows = frames[:steps].tolist() if frames is not None else None
         for tick, (state, route) in enumerate(zip(
             states[:steps].tolist(), routes[:steps].tolist(), strict=True,
         )):
             pc, depth = state[:2]
             next_pc, details = CompactRouter._read_route(0, route, True)
-            records.append({
+            record = {
                 "step": tick,
                 "pc": pc,
                 "opcode": self._opcodes[pc],
@@ -172,7 +241,20 @@ class _NativeMicrostep:
                 "control_labels": [],
                 "halted": pc == count - 1,
                 "neural_route": details,
-            })
+            }
+            if frame_rows is not None:
+                frame = frame_rows[tick]
+                active = []
+                for i in range(frame[1]):
+                    entry, base = frame[2 + 2 * i:4 + 2 * i]
+                    end, otherwise = self._links[entry]
+                    active.append({"kind": self._opcodes[entry], "start_pc": entry, "end_pc": end,
+                                   "else_pc": otherwise, "stack_base": base})
+                record["control_labels"] = [item["kind"] for item in active]
+                record["control_frames"] = active
+                record["neural_frame_event"] = frame[0]
+                record["halted"] = next_pc == TERMINAL and tick == steps - 1
+            records.append(record)
         return tuple(records)
 
     def run_many(self, arguments, fuels, capture_trace):
@@ -184,23 +266,34 @@ class _NativeMicrostep:
         statuses = np.empty(size, dtype=np.int32)
         count = len(self._opcodes)
         stride = 0
-        state_pointer = route_pointer = None
+        state_pointer = route_pointer = frame_pointer = None
+        frames = None
         if capture_trace:
-            stride = min(max(fuels), count)
+            stride = max(fuels) if self._structured else min(max(fuels), count)
             states = np.zeros((size, stride, 2 + MAX_STACK + self._visible_locals), dtype=np.int32)
             routes = np.empty((size, stride, 5), dtype=np.float64)
             state_pointer, route_pointer = states.ctypes.data, routes.ctypes.data
-        self._batch(
+            if self._structured:
+                frames = np.zeros((size, stride, 2 + 2 * MAX_NESTING), dtype=np.int32)
+                frame_pointer = frames.ctypes.data
+        common = (
             arguments.ctypes.data, limits.ctypes.data, size,
             count, TERMINAL, self._visible_locals, stride,
             *self._pointers, *self._router._pointers,
-            results.ctypes.data, statuses.ctypes.data, state_pointer, route_pointer, self._packed, self._simd,
         )
+        outputs = (results.ctypes.data, statuses.ctypes.data, state_pointer, route_pointer)
+        if self._structured:
+            self._structured_batch(*common, *self._control_pointers, *outputs, frame_pointer)
+        else:
+            self._batch(*common, *outputs, self._packed, self._simd)
         for i, (status, (value, steps)) in enumerate(zip(statuses.tolist(), results.tolist(), strict=True)):
             if status:
                 yield _loop_error(status, fuels[i])
             else:
-                yield value, steps, self._trace(steps, states[i], routes[i]) if capture_trace else ()
+                trace = ()
+                if capture_trace:
+                    trace = self._trace(steps, states[i], routes[i], frames[i] if frames is not None else None)
+                yield value, steps, trace
 
 
 def _loop_error(status: int, fuel: int) -> Exception:
