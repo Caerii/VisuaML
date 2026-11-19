@@ -6,6 +6,11 @@
   },
   "python": "3.12.14",
   "witness": {
+    "source": {
+      "commit": "cb88ccefb99ed9ee5905872a3d179b66f76cca39",
+      "tree": "a17a64b482ff8ae8b3e93ad27e912e0939829cd4",
+      "branch": "research/v58-array-memory"
+    },
     "wasm_sha256": "8dd6c6a7c32a293921d32e64b9e6635163bc0d641406dffc751e8ce17e47b357",
     "cases": [
       {
@@ -1244,16 +1249,16 @@
       },
       {
         "name": "trapping_store",
-        "argument": 65530,
+        "argument": 65526,
         "fuel": 100,
         "result": null,
-        "input_sha256": "dbf113cafac4487258f74b539f77924dda65c983ea08ccf77b29f6672c844126",
-        "output_sha256": "dbf113cafac4487258f74b539f77924dda65c983ea08ccf77b29f6672c844126",
+        "input_sha256": "403f8cef2b4063ad0a57ea9c2c918290ea4344045b8dc027496f6a04cb8e3491",
+        "output_sha256": "403f8cef2b4063ad0a57ea9c2c918290ea4344045b8dc027496f6a04cb8e3491",
         "trap": {
           "step": 8,
           "pc": 8,
           "opcode": "i32.store",
-          "address": 65537
+          "address": 65533
         },
         "trace": [
           {
@@ -1262,10 +1267,10 @@
             "opcode": "local.get",
             "next_pc": 1,
             "stack_i32": [
-              65530
+              65526
             ],
             "locals_i32": [
-              65530,
+              65526,
               0,
               0
             ],
@@ -1289,7 +1294,7 @@
               -2147483647
             ],
             "locals_i32": [
-              65530,
+              65526,
               0,
               0
             ],
@@ -1304,7 +1309,7 @@
             },
             "memory_access": {
               "kind": "i32.load",
-              "address": 65531,
+              "address": 65527,
               "before_hex": "01000080",
               "after_hex": "01000080"
             }
@@ -1318,7 +1323,7 @@
               -2147483647
             ],
             "locals_i32": [
-              65530,
+              65526,
               -2147483647,
               0
             ],
@@ -1340,7 +1345,7 @@
             "next_pc": 4,
             "stack_i32": [],
             "locals_i32": [
-              65530,
+              65526,
               -2147483647,
               0
             ],
@@ -1363,10 +1368,10 @@
             "opcode": "local.get",
             "next_pc": 5,
             "stack_i32": [
-              65530
+              65526
             ],
             "locals_i32": [
-              65530,
+              65526,
               -2147483647,
               0
             ],
@@ -1389,11 +1394,11 @@
             "opcode": "i32.const",
             "next_pc": 6,
             "stack_i32": [
-              65530,
+              65526,
               7
             ],
             "locals_i32": [
-              65530,
+              65526,
               -2147483647,
               0
             ],
@@ -1416,10 +1421,10 @@
             "opcode": "i32.add",
             "next_pc": 7,
             "stack_i32": [
-              65537
+              65533
             ],
             "locals_i32": [
-              65530,
+              65526,
               -2147483647,
               0
             ],
@@ -1442,11 +1447,11 @@
             "opcode": "i32.const",
             "next_pc": 8,
             "stack_i32": [
-              65537,
+              65533,
               305419896
             ],
             "locals_i32": [
-              65530,
+              65526,
               -2147483647,
               0
             ],
