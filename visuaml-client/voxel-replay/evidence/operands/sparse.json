@@ -1,0 +1,415 @@
+{
+  "baseline": "24dd138e13b0ab1ccc24d8eeb1bb0db7bdb041ea",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "workload": "sparse",
+  "pairs_after_warmup": 6,
+  "samples": {
+    "dense": [
+      {
+        "pre_execution_ns": 2471721,
+        "execution_ns": 841918357,
+        "steps": 1650,
+        "module_preparation_ns": 1841087
+      },
+      {
+        "pre_execution_ns": 2469377,
+        "execution_ns": 818289080,
+        "steps": 1650,
+        "module_preparation_ns": 1841087
+      },
+      {
+        "pre_execution_ns": 2602339,
+        "execution_ns": 793281667,
+        "steps": 1650,
+        "module_preparation_ns": 1841087
+      },
+      {
+        "pre_execution_ns": 2454415,
+        "execution_ns": 806813816,
+        "steps": 1650,
+        "module_preparation_ns": 1841087
+      },
+      {
+        "pre_execution_ns": 2572635,
+        "execution_ns": 829456081,
+        "steps": 1650,
+        "module_preparation_ns": 1943365
+      },
+      {
+        "pre_execution_ns": 2527667,
+        "execution_ns": 877825517,
+        "steps": 1650,
+        "module_preparation_ns": 1943365
+      },
+      {
+        "pre_execution_ns": 2383660,
+        "execution_ns": 970468553,
+        "steps": 1650,
+        "module_preparation_ns": 1943365
+      },
+      {
+        "pre_execution_ns": 5264510,
+        "execution_ns": 896710376,
+        "steps": 1650,
+        "module_preparation_ns": 1943365
+      },
+      {
+        "pre_execution_ns": 2508317,
+        "execution_ns": 796031213,
+        "steps": 1650,
+        "module_preparation_ns": 1887029
+      },
+      {
+        "pre_execution_ns": 2361415,
+        "execution_ns": 824852653,
+        "steps": 1650,
+        "module_preparation_ns": 1887029
+      },
+      {
+        "pre_execution_ns": 2650242,
+        "execution_ns": 841647491,
+        "steps": 1650,
+        "module_preparation_ns": 1887029
+      },
+      {
+        "pre_execution_ns": 2370970,
+        "execution_ns": 817758641,
+        "steps": 1650,
+        "module_preparation_ns": 1887029
+      },
+      {
+        "pre_execution_ns": 2350599,
+        "execution_ns": 804475145,
+        "steps": 1650,
+        "module_preparation_ns": 2018889
+      },
+      {
+        "pre_execution_ns": 2356268,
+        "execution_ns": 877928660,
+        "steps": 1650,
+        "module_preparation_ns": 2018889
+      },
+      {
+        "pre_execution_ns": 2590432,
+        "execution_ns": 876084519,
+        "steps": 1650,
+        "module_preparation_ns": 2018889
+      },
+      {
+        "pre_execution_ns": 2667288,
+        "execution_ns": 902322135,
+        "steps": 1650,
+        "module_preparation_ns": 2018889
+      },
+      {
+        "pre_execution_ns": 2384353,
+        "execution_ns": 786521981,
+        "steps": 1650,
+        "module_preparation_ns": 1840771
+      },
+      {
+        "pre_execution_ns": 2375800,
+        "execution_ns": 778264278,
+        "steps": 1650,
+        "module_preparation_ns": 1840771
+      },
+      {
+        "pre_execution_ns": 2492006,
+        "execution_ns": 783062008,
+        "steps": 1650,
+        "module_preparation_ns": 1840771
+      },
+      {
+        "pre_execution_ns": 2374538,
+        "execution_ns": 804836420,
+        "steps": 1650,
+        "module_preparation_ns": 1840771
+      },
+      {
+        "pre_execution_ns": 2447318,
+        "execution_ns": 824398079,
+        "steps": 1650,
+        "module_preparation_ns": 1814953
+      },
+      {
+        "pre_execution_ns": 2400958,
+        "execution_ns": 781112772,
+        "steps": 1650,
+        "module_preparation_ns": 1814953
+      },
+      {
+        "pre_execution_ns": 2376912,
+        "execution_ns": 788287934,
+        "steps": 1650,
+        "module_preparation_ns": 1814953
+      },
+      {
+        "pre_execution_ns": 2342911,
+        "execution_ns": 789832872,
+        "steps": 1650,
+        "module_preparation_ns": 1814953
+      }
+    ],
+    "unit_push_pop": [
+      {
+        "pre_execution_ns": 2459066,
+        "execution_ns": 713054555,
+        "steps": 1650,
+        "module_preparation_ns": 2036808
+      },
+      {
+        "pre_execution_ns": 2397863,
+        "execution_ns": 715785471,
+        "steps": 1650,
+        "module_preparation_ns": 2036808
+      },
+      {
+        "pre_execution_ns": 2393046,
+        "execution_ns": 793408125,
+        "steps": 1650,
+        "module_preparation_ns": 2036808
+      },
+      {
+        "pre_execution_ns": 2505152,
+        "execution_ns": 761002062,
+        "steps": 1650,
+        "module_preparation_ns": 2036808
+      },
+      {
+        "pre_execution_ns": 2468227,
+        "execution_ns": 718283800,
+        "steps": 1650,
+        "module_preparation_ns": 1827530
+      },
+      {
+        "pre_execution_ns": 2381655,
+        "execution_ns": 730556173,
+        "steps": 1650,
+        "module_preparation_ns": 1827530
+      },
+      {
+        "pre_execution_ns": 2986017,
+        "execution_ns": 715562336,
+        "steps": 1650,
+        "module_preparation_ns": 1827530
+      },
+      {
+        "pre_execution_ns": 2370398,
+        "execution_ns": 733779381,
+        "steps": 1650,
+        "module_preparation_ns": 1827530
+      },
+      {
+        "pre_execution_ns": 2534436,
+        "execution_ns": 715748190,
+        "steps": 1650,
+        "module_preparation_ns": 2407604
+      },
+      {
+        "pre_execution_ns": 2646305,
+        "execution_ns": 716378081,
+        "steps": 1650,
+        "module_preparation_ns": 2407604
+      },
+      {
+        "pre_execution_ns": 2444050,
+        "execution_ns": 724635257,
+        "steps": 1650,
+        "module_preparation_ns": 2407604
+      },
+      {
+        "pre_execution_ns": 2639205,
+        "execution_ns": 714940110,
+        "steps": 1650,
+        "module_preparation_ns": 2407604
+      },
+      {
+        "pre_execution_ns": 2982514,
+        "execution_ns": 728101937,
+        "steps": 1650,
+        "module_preparation_ns": 2617372
+      },
+      {
+        "pre_execution_ns": 2569099,
+        "execution_ns": 752004672,
+        "steps": 1650,
+        "module_preparation_ns": 2617372
+      },
+      {
+        "pre_execution_ns": 2513946,
+        "execution_ns": 719229489,
+        "steps": 1650,
+        "module_preparation_ns": 2617372
+      },
+      {
+        "pre_execution_ns": 2350299,
+        "execution_ns": 751248680,
+        "steps": 1650,
+        "module_preparation_ns": 2617372
+      },
+      {
+        "pre_execution_ns": 2396218,
+        "execution_ns": 714537464,
+        "steps": 1650,
+        "module_preparation_ns": 1974532
+      },
+      {
+        "pre_execution_ns": 2420526,
+        "execution_ns": 711704271,
+        "steps": 1650,
+        "module_preparation_ns": 1974532
+      },
+      {
+        "pre_execution_ns": 2357372,
+        "execution_ns": 710823220,
+        "steps": 1650,
+        "module_preparation_ns": 1974532
+      },
+      {
+        "pre_execution_ns": 2406557,
+        "execution_ns": 718672471,
+        "steps": 1650,
+        "module_preparation_ns": 1974532
+      },
+      {
+        "pre_execution_ns": 2463832,
+        "execution_ns": 709280538,
+        "steps": 1650,
+        "module_preparation_ns": 2070784
+      },
+      {
+        "pre_execution_ns": 2369247,
+        "execution_ns": 711393416,
+        "steps": 1650,
+        "module_preparation_ns": 2070784
+      },
+      {
+        "pre_execution_ns": 2512585,
+        "execution_ns": 736626795,
+        "steps": 1650,
+        "module_preparation_ns": 2070784
+      },
+      {
+        "pre_execution_ns": 2416489,
+        "execution_ns": 711765030,
+        "steps": 1650,
+        "module_preparation_ns": 2070784
+      }
+    ]
+  },
+  "world_hashes": {
+    "dense": [
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ]
+    ],
+    "unit_push_pop": [
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ],
+      [
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530",
+        "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41",
+        "bd44ed015e30dbf6c2042dc7a9ef0822e895b2e07c1483db058e4d6618511530"
+      ]
+    ]
+  },
+  "summary": {
+    "dense": {
+      "samples": 24,
+      "median_ms": 818.0238605,
+      "p95_ms": 902.322135,
+      "pre_execution_median_ms": 2.4508665,
+      "agent_ticks_per_second": 9.642339392708374,
+      "steps_per_sample": [
+        1650
+      ]
+    },
+    "unit_push_pop": {
+      "samples": 24,
+      "median_ms": 717.3309405,
+      "p95_ms": 761.002062,
+      "pre_execution_median_ms": 2.451558,
+      "agent_ticks_per_second": 11.016424986801422,
+      "steps_per_sample": [
+        1650
+      ]
+    }
+  },
+  "binary_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24"
+}

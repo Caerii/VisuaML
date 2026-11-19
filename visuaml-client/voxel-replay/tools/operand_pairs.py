@@ -144,7 +144,9 @@ def main():
                     records[name].extend(samples)
                     if proof is not None:
                         proofs[name].append([r["page_sha256"] for r in proof["ticks"]])
+    binary = terrain.GUEST if isinstance(inputs, dict) else ARCHIVE / f"{args.case}.wasm"
     print(json.dumps({"baseline": BASELINE, "environment": environment(), "workload": args.case,
+                      "binary_sha256": terrain.digest(binary.read_bytes()),
                       "pairs_after_warmup": args.pairs, "samples": records, "world_hashes": proofs,
                       "summary": {name: summarize(samples, 8 if isinstance(inputs, dict) else None)
                                   for name, samples in records.items()}}, indent=2))

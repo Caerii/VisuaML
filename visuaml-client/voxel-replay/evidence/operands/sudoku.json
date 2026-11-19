@@ -1,0 +1,137 @@
+{
+  "baseline": "24dd138e13b0ab1ccc24d8eeb1bb0db7bdb041ea",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "workload": "sudoku",
+  "pairs_after_warmup": 6,
+  "samples": {
+    "dense": [
+      {
+        "pre_execution_ns": 3528081,
+        "execution_ns": 586790977,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 4169329,
+        "execution_ns": 623173533,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3519338,
+        "execution_ns": 594582585,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3537225,
+        "execution_ns": 633128070,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 4171193,
+        "execution_ns": 644054971,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3526259,
+        "execution_ns": 642891022,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      }
+    ],
+    "unit_push_pop": [
+      {
+        "pre_execution_ns": 3532458,
+        "execution_ns": 592352479,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3871510,
+        "execution_ns": 602975242,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3542383,
+        "execution_ns": 532937260,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3775144,
+        "execution_ns": 544320466,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3521671,
+        "execution_ns": 595278386,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      },
+      {
+        "pre_execution_ns": 3996779,
+        "execution_ns": 574784066,
+        "steps": 893,
+        "module_preparation_ns": 4764875,
+        "page_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9"
+      }
+    ]
+  },
+  "world_hashes": {
+    "dense": [],
+    "unit_push_pop": []
+  },
+  "summary": {
+    "dense": {
+      "samples": 6,
+      "median_ms": 628.1508015,
+      "p95_ms": 644.054971,
+      "pre_execution_median_ms": 3.532653,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        893
+      ]
+    },
+    "unit_push_pop": {
+      "samples": 6,
+      "median_ms": 583.5682725,
+      "p95_ms": 602.975242,
+      "pre_execution_median_ms": 3.6587635,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        893
+      ]
+    }
+  },
+  "binary_sha256": "8df78d3cf72907abd4004e23ae9075682396ece4be3547631451f54effd311cf"
+}

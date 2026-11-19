@@ -1,0 +1,192 @@
+{
+  "terrain": {
+    "instrumented_ns": 1101459247,
+    "instrumented_categories_ns": {
+      "through_loop_entry": 6507774,
+      "operand_admission_and_postchecks": 162989173,
+      "candidate_arithmetic_and_temporaries": 32322090,
+      "candidate_stack_allocation_copy": 37617360,
+      "fixed_gain_contraction": 22975360,
+      "memory_dispatch": 5831813
+    },
+    "cprofile_dispatch": {
+      "__delitem__": {
+        "calls": 81,
+        "self_ms": 0.25425100000000006,
+        "cumulative_ms": 10.263940000000002
+      },
+      "execute_microop_routed_control": {
+        "calls": 1,
+        "self_ms": 26.721056,
+        "cumulative_ms": 930.429643
+      },
+      "__bool__": {
+        "calls": 3292,
+        "self_ms": 0.807926,
+        "cumulative_ms": 9.588416
+      },
+      "__getitem__": {
+        "calls": 1066,
+        "self_ms": 0.815229,
+        "cumulative_ms": 31.32873
+      },
+      "_pop": {
+        "calls": 888,
+        "self_ms": 0.571624,
+        "cumulative_ms": 111.797424
+      },
+      "__len__": {
+        "calls": 5925,
+        "self_ms": 4.4264220000000005,
+        "cumulative_ms": 14.231899
+      },
+      "append": {
+        "calls": 889,
+        "self_ms": 1.6307070000000001,
+        "cumulative_ms": 107.489613
+      },
+      "pop": {
+        "calls": 888,
+        "self_ms": 1.624602,
+        "cumulative_ms": 108.37875100000001
+      }
+    },
+    "physical_work": {
+      "dense": {
+        "operand_candidate_stack_allocations": 3716
+      },
+      "unit_push_pop": {
+        "operand_candidate_stack_allocations": 162
+      }
+    },
+    "completed_source_opcodes": {
+      "block": 48,
+      "local.get": 394,
+      "i32.load": 214,
+      "br_if": 49,
+      "i32.const": 104,
+      "i32.store": 136,
+      "loop": 3,
+      "i32.lt_s": 39,
+      "local.tee": 88,
+      "i32.add": 137,
+      "br": 36,
+      "i32.eqz": 1,
+      "end": 1
+    },
+    "operand_transitions": {
+      "local.get:push": 394,
+      "i32.load:pop": 214,
+      "i32.load:push": 214,
+      "br_if:pop": 49,
+      "i32.const:push": 104,
+      "i32.store:pop": 272,
+      "i32.lt_s:pop": 78,
+      "i32.lt_s:push": 39,
+      "br_if:truncate": 45,
+      "i32.add:pop": 274,
+      "i32.add:push": 137,
+      "br:truncate": 36,
+      "i32.eqz:pop": 1,
+      "i32.eqz:push": 1
+    }
+  },
+  "bfs_prefix": {
+    "instrumented_ns": 2195272167,
+    "instrumented_categories_ns": {
+      "through_loop_entry": 3344629,
+      "operand_admission_and_postchecks": 292975559,
+      "candidate_arithmetic_and_temporaries": 58359696,
+      "candidate_stack_allocation_copy": 67613689,
+      "fixed_gain_contraction": 43093614,
+      "memory_dispatch": 2610048
+    },
+    "cprofile_dispatch": {
+      "__delitem__": {
+        "calls": 96,
+        "self_ms": 0.43339700000000003,
+        "cumulative_ms": 14.380498000000001
+      },
+      "execute_microop_routed_control": {
+        "calls": 1,
+        "self_ms": 47.554797,
+        "cumulative_ms": 2447.3836870000005
+      },
+      "__bool__": {
+        "calls": 5141,
+        "self_ms": 1.3687099999999999,
+        "cumulative_ms": 17.391366
+      },
+      "__getitem__": {
+        "calls": 1571,
+        "self_ms": 1.4089040000000002,
+        "cumulative_ms": 58.897704000000004
+      },
+      "_pop": {
+        "calls": 1570,
+        "self_ms": 1.247801,
+        "cumulative_ms": 266.35489900000005
+      },
+      "__len__": {
+        "calls": 9355,
+        "self_ms": 9.185253000000001,
+        "cumulative_ms": 27.582805
+      },
+      "append": {
+        "calls": 1572,
+        "self_ms": 3.743678,
+        "cumulative_ms": 280.233357
+      },
+      "pop": {
+        "calls": 1570,
+        "self_ms": 3.5524980000000004,
+        "cumulative_ms": 259.15549400000003
+      }
+    },
+    "physical_work": {
+      "dense": {
+        "operand_candidate_stack_allocations": 6476
+      },
+      "unit_push_pop": {
+        "operand_candidate_stack_allocations": 192
+      }
+    },
+    "completed_source_opcodes": {
+      "i32.const": 427,
+      "local.get": 421,
+      "i32.store": 12,
+      "i32.mul": 214,
+      "local.set": 105,
+      "block": 3,
+      "loop": 3,
+      "i32.lt_s": 104,
+      "i32.eqz": 98,
+      "br_if": 98,
+      "i32.load": 108,
+      "i32.add": 200,
+      "if": 101,
+      "br": 95,
+      "end": 11
+    },
+    "operand_transitions": {
+      "i32.const:push": 427,
+      "local.get:push": 421,
+      "i32.store:pop": 24,
+      "i32.mul:pop": 428,
+      "i32.mul:push": 214,
+      "local.set:pop": 105,
+      "i32.lt_s:pop": 208,
+      "i32.lt_s:push": 104,
+      "i32.eqz:pop": 98,
+      "i32.eqz:push": 98,
+      "br_if:pop": 98,
+      "i32.load:pop": 108,
+      "i32.load:push": 108,
+      "i32.add:pop": 400,
+      "i32.add:push": 200,
+      "if:pop": 101,
+      "br:truncate": 95,
+      "br_if:truncate": 1
+    }
+  }
+}

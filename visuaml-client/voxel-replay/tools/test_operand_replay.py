@@ -21,8 +21,24 @@ WITNESS = ROOT.parents[1] / "benchmarks/results/v58-array-memory/rollback.wasm"
 @pytest.mark.parametrize("name", ["terrain", "terrain-omitted"])
 def test_saved_causal_histories(name):
     expected = loads((ROOT / "fixtures" / f"{name}.proof.json").read_text())
-    proof = terrain.verify(expected["session"], expected)
-    assert [row["steps"] for row in proof["ticks"]] == [row["steps"] for row in expected["ticks"]]
+    traces = []
+
+    def traced(*args, **kwargs):
+        result = vm.execute_microop_routed_control(*args, **{
+            **kwargs, "fuel": 2000, "capture_trace": True,
+        })
+        traces[-1].append(result.trace)
+        return result
+
+    for step in (reference_transition(), adapter.step_operands):
+        traces.append([])
+        with patch.object(adapter, "step_operands", step), patch.object(
+            terrain, "execute_microop_routed_control", traced,
+        ):
+            proof = terrain.verify(expected["session"], expected)
+        assert [row["steps"] for row in proof["ticks"]] == [row["steps"] for row in expected["ticks"]]
+    assert traces[0] == traces[1]
+
 
 
 @pytest.mark.parametrize(("fuel", "argument", "active", "error"), [

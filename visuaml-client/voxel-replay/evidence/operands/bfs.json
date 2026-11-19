@@ -1,0 +1,81 @@
+{
+  "baseline": "24dd138e13b0ab1ccc24d8eeb1bb0db7bdb041ea",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "workload": "bfs",
+  "pairs_after_warmup": 2,
+  "samples": {
+    "dense": [
+      {
+        "pre_execution_ns": 1429648,
+        "execution_ns": 27555471712,
+        "steps": 41591,
+        "module_preparation_ns": 4016404,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744"
+      },
+      {
+        "pre_execution_ns": 1347806,
+        "execution_ns": 27722045922,
+        "steps": 41591,
+        "module_preparation_ns": 4016404,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744"
+      }
+    ],
+    "unit_push_pop": [
+      {
+        "pre_execution_ns": 1587422,
+        "execution_ns": 25536619210,
+        "steps": 41591,
+        "module_preparation_ns": 4016404,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744"
+      },
+      {
+        "pre_execution_ns": 1559594,
+        "execution_ns": 26191204975,
+        "steps": 41591,
+        "module_preparation_ns": 4016404,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744"
+      }
+    ]
+  },
+  "world_hashes": {
+    "dense": [],
+    "unit_push_pop": []
+  },
+  "summary": {
+    "dense": {
+      "samples": 2,
+      "median_ms": 27638.758817,
+      "p95_ms": 27722.045922,
+      "pre_execution_median_ms": 1.388727,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        41591
+      ]
+    },
+    "unit_push_pop": {
+      "samples": 2,
+      "median_ms": 25863.9120925,
+      "p95_ms": 26191.204975,
+      "pre_execution_median_ms": 1.573508,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        41591
+      ]
+    }
+  },
+  "binary_sha256": "7726937328d9d66462c3ff4838e732549bd983b23f4e8cd26eeae0edf696b63f"
+}

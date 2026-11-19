@@ -354,3 +354,12 @@ VisuaML NumPy. The first-mismatch report preserves the input and
 full pages. A profile-guided unit-retain frame contraction improved
 paired terrain and BFS cutoff runs.
 [Terrain scene, replay commands, and evidence](../visuaml-client/voxel-replay/README.md#terrain-edit-and-counterfactual)
+
+## v58 unit operand push/pop contraction
+
+A diagnostic profile of terrain and BFS motivated sparse contraction
+of unit-gain push and pop. It removes both dense candidate stacks
+from those transitions while preserving buffer ownership. Paired
+runs improved sparse and crowded terrain, full BFS, and one-blank
+Sudoku. The causal histories retained exact traces and full pages.
+[Operand profile, replay checks, and paired samples](../visuaml-client/voxel-replay/evidence/operands/README.md)
