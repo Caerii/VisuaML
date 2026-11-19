@@ -16,7 +16,7 @@ from .neural_frame_events_v54 import ACTIONS as FRAME_ACTIONS
 from .neural_frame_events_v54 import OPCODES as FRAME_OPCODES
 from .neural_frame_events_v54 import EventCircuitError, EventWeights, fixed_event_weights
 from .neural_alu_v56 import ALU_OPS, ALUWeights, NeuralALUError
-from .neural_control_routing_v52 import TERMINAL, NeuralControlError
+from .neural_control_routing_v52 import NeuralControlError
 from .neural_local_bank_v57 import LocalBankWeights
 from .neural_microstep_v58 import DATA_OPS, MicrostepWeights
 from .neural_operand_storage_v55 import ACTIONS, MAX_STACK, OperandCircuitError, OperandWeights
@@ -159,6 +159,7 @@ class _NativeMicrostep:
             raise MicroopAdmissionError("Invalid prepared loop metadata")
         self._opcodes = opcodes
         self._visible_locals = visible_locals
+        self._terminal = router.terminal
         self._router = router  # Owns the buffers borrowed by the native loop.
 
     def bind_control(self, program, rows, event_fixed, frame_fixed, memory_fixed):
@@ -242,7 +243,7 @@ class _NativeMicrostep:
         else:
             state_pointer = route_pointer = None
         status = self._loop(
-            argument, fuel, count, TERMINAL, visible_locals,
+            argument, fuel, count, self._terminal, visible_locals,
             *self._pointers, *self._router._pointers, result, state_pointer, route_pointer, self._packed,
         )
         if status:
@@ -274,7 +275,7 @@ class _NativeMicrostep:
                 "step": tick,
                 "pc": pc,
                 "opcode": self._opcodes[pc],
-                "next_pc": count if next_pc == TERMINAL else next_pc,
+                "next_pc": count if next_pc == self._terminal else next_pc,
                 "stack_i32": state[2:2 + depth],
                 "locals_i32": state[2 + MAX_STACK:],
                 "control_labels": [],
@@ -292,7 +293,7 @@ class _NativeMicrostep:
                 record["control_labels"] = [item["kind"] for item in active]
                 record["control_frames"] = active
                 record["neural_frame_event"] = frame[0]
-                record["halted"] = next_pc == TERMINAL and tick == steps - 1
+                record["halted"] = next_pc == self._terminal and tick == steps - 1
             if accesses is not None:
                 access = None
                 if self._opcodes[pc] in MEMORY_OPCODES:
@@ -335,7 +336,7 @@ class _NativeMicrostep:
                 trap_pointer = trap.ctypes.data
         common = (
             arguments.ctypes.data, limits.ctypes.data, size,
-            count, TERMINAL, self._visible_locals, stride,
+            count, self._terminal, self._visible_locals, stride,
             *self._pointers, *self._router._pointers,
         )
         outputs = (results.ctypes.data, statuses.ctypes.data, state_pointer, route_pointer)

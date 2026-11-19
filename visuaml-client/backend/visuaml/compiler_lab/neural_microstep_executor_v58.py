@@ -41,7 +41,7 @@ from .typed_microop_ir_v57 import (
     validate_microop_tokens,
 )
 from .wasm_control_flow_v51 import (
-    MAX_FUEL, MEMORY_BYTES, ControlAdmissionError, ControlExecutionTrap,
+    MAX_FUEL, MEMORY_BYTES, SCALED_MAX_FUEL, SCALED_SCHEMA, ControlAdmissionError, ControlExecutionTrap,
     ControlFuelExhausted, ControlProgram, _syntax, encode_control, uses_memory,
 )
 
@@ -128,14 +128,14 @@ def _snapshot_weights(weights):
     })
 
 
-def _validate_run_options(fuel: int, capture_trace: bool) -> None:
+def _validate_run_options(fuel: int, capture_trace: bool, max_fuel: int = MAX_FUEL) -> None:
     if type(capture_trace) is not bool:
         raise MicrostepAdmissionError("capture_trace must be a boolean")
-    _validate_fuel(fuel)
+    _validate_fuel(fuel, MAX_FUEL if capture_trace else max_fuel)
 
 
-def _validate_fuel(fuel: int) -> None:
-    if type(fuel) is not int or not 1 <= fuel <= MAX_FUEL:
+def _validate_fuel(fuel: int, max_fuel: int = MAX_FUEL) -> None:
+    if type(fuel) is not int or not 1 <= fuel <= max_fuel:
         raise MicrostepAdmissionError("Invalid v58 execution fuel")
 
 
@@ -166,6 +166,9 @@ def _prepare(
     if type(use_fused_state) is not bool:
         raise MicrostepAdmissionError("use_fused_state must be a boolean")
     _syntax(program)
+    scaled = program.schema == SCALED_SCHEMA
+    if scaled and not (structured_control and use_indexed_pc):
+        raise MicrostepAdmissionError("Scaled programs require packed structured execution")
     memory = uses_memory(program)
     if memory and not structured_control:
         raise MicrostepAdmissionError("Linear memory requires packed structured control")
@@ -177,7 +180,8 @@ def _prepare(
             "v58 microstep executor admits straight-line WASM only"
         )
 
-    tokens = compile_route_tokens(program) if tokens is None else tokens
+    if not scaled and tokens is None:
+        tokens = compile_route_tokens(program)
     if not use_compact_routing:
         validate_route_tokens(tokens, program)
     program_tokens = (
@@ -336,11 +340,12 @@ class PreparedMicrostepProgram:
                 native.bind_control(inputs.program, inputs.rows, event_fixed, frame_fixed, memory_fixed)
             inputs = replace(inputs, native_microstep=native, rows=None, native_loop=use_native_loop)
         self._inputs = inputs
+        self._max_fuel = SCALED_MAX_FUEL if program.schema == SCALED_SCHEMA else MAX_FUEL
 
     def run(
         self, argument: int, *, fuel: int = 400, capture_trace: bool = True,
     ) -> MicrostepExecution:
-        _validate_run_options(fuel, capture_trace)
+        _validate_run_options(fuel, capture_trace, self._max_fuel)
         if self._inputs.native_microstep and self._inputs.native_microstep.memory_digest:
             raise MicrostepAdmissionError("Memory programs require run_memory")
         return _run(self._inputs, argument, fuel, capture_trace)
@@ -349,7 +354,7 @@ class PreparedMicrostepProgram:
         self, argument: int, memory: bytearray, *, fuel: int = 400, capture_trace: bool = True,
     ) -> MicrostepExecution:
         """Execute against one page, committing completed stores even when a later instruction traps."""
-        _validate_run_options(fuel, capture_trace)
+        _validate_run_options(fuel, capture_trace, self._max_fuel)
         native = self._inputs.native_microstep
         if native is None or native.memory_digest is None:
             raise MicrostepAdmissionError("run_memory requires a prepared memory program")
@@ -399,7 +404,7 @@ class PreparedMicrostepProgram:
         admitted, limits, failures = [], [], {}
         for i, (argument, limit) in enumerate(zip(arguments, fuels, strict=True)):
             try:
-                _validate_fuel(limit)
+                _validate_fuel(limit, MAX_FUEL if capture_trace else self._max_fuel)
                 _validate_i32(argument)
             except ValueError as error:
                 failures[i] = MicrostepBatchFailure(error.with_traceback(None))

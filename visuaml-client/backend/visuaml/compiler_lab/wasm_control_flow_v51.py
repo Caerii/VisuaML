@@ -52,6 +52,9 @@ from .wasm_state_vm_v40 import (
 SCHEMA = "visuaml.wasm-structured-control.v51"
 MAX_OPERATIONS = 96
 MAX_FUEL = 2000
+SCALED_SCHEMA = "visuaml.wasm-structured-control.v58-scaled"
+SCALED_MAX_OPERATIONS = 4096
+SCALED_MAX_FUEL = 50_000_000
 MAX_NESTING = 12
 MAX_STACK = 24
 MAX_LOCALS = 4
@@ -149,11 +152,13 @@ def uses_memory(program: ControlProgram) -> bool:
 
 
 def _syntax(program: ControlProgram) -> dict[int, tuple[int, int | None]]:
-    if (not isinstance(program, ControlProgram) or program.schema != SCHEMA
+    if (not isinstance(program, ControlProgram) or program.schema not in (SCHEMA, SCALED_SCHEMA)
             or type(program.local_count) is not int
             or not 0 <= program.local_count <= MAX_LOCALS
             or not isinstance(program.operations, tuple)
-            or not 2 <= len(program.operations) <= MAX_OPERATIONS):
+            or not 2 <= len(program.operations) <= (
+                SCALED_MAX_OPERATIONS if program.schema == SCALED_SCHEMA else MAX_OPERATIONS
+            )):
         raise ControlAdmissionError("Invalid bounded structured WASM program")
     stack: list[tuple[int, str, int | None]] = []
     links: dict[int, tuple[int, int | None]] = {}
@@ -239,8 +244,11 @@ def encode_control(program: ControlProgram) -> bytes:
             + section(10, code))
 
 
-def decode_control(raw: bytes) -> ControlProgram:
-    """Parse exact canonical v51 subset, rejecting ALL other WASM modules."""
+def decode_control(raw: bytes, *, scaled: bool = False) -> ControlProgram:
+    """Parse the canonical opcode subset with optional packed-scale bounds."""
+    if type(scaled) is not bool:
+        raise ControlAdmissionError("scaled must be a boolean")
+    max_operations = SCALED_MAX_OPERATIONS if scaled else MAX_OPERATIONS
     try:
         chunks = parse_section_envelope(raw)
         ids = [section.section_id for section in chunks]
@@ -289,9 +297,9 @@ def decode_control(raw: bytes) -> ControlProgram:
                 offset, pos = _read_u32(data, pos)
                 imm = MemoryArgument(offset, align)
             ops.append(ControlOperation(name, imm))
-            if len(ops) > MAX_OPERATIONS:
+            if len(ops) > max_operations:
                 raise ControlAdmissionError("Instruction count exceeded")
-        program = ControlProgram(count, tuple(ops))
+        program = ControlProgram(count, tuple(ops), SCALED_SCHEMA if scaled else SCHEMA)
         _syntax(program)
         if encode_control(program) != raw:
             raise ControlAdmissionError("Noncanonical or unreviewed WASM encoding")

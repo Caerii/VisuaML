@@ -9,9 +9,9 @@ from .bit_neural_vm_v49 import BitCircuitWeights, WIDTH
 from .constructed_alu_v58 import compiled_alu
 from .neural_control_routing_v52 import (
     SLOTS, TERMINAL, ControlRouteTokens, ControlRouterWeights, NeuralControlError,
-    _onehot, validate_route_tokens,
+    _onehot, compile_route_coordinates, validate_route_tokens,
 )
-from .wasm_control_flow_v51 import ControlProgram
+from .wasm_control_flow_v51 import SCALED_SCHEMA, ControlProgram
 
 
 def _snapshot(value, shape):
@@ -23,27 +23,34 @@ def _snapshot(value, shape):
 class CompactRouter:
     """Program-scoped, admitted route tables and coefficient snapshots."""
 
-    def __init__(self, program: ControlProgram, tokens: ControlRouteTokens,
+    def __init__(self, program: ControlProgram, tokens: ControlRouteTokens | None,
                  fixed: ControlRouterWeights, bit_fixed: BitCircuitWeights):
-        # Preserve canonical admission of both dense token matrices. A compact
-        # row is valid only because each target was proven one-hot at admission.
-        if not isinstance(tokens, ControlRouteTokens):
-            raise NeuralControlError("Unknown program route-token representation")
-        tokens = replace(
-            tokens,
-            sequential=_snapshot(tokens.sequential, (SLOTS, SLOTS)),
-            alternate=_snapshot(tokens.alternate, (SLOTS, SLOTS)),
-            guard_kind=_snapshot(tokens.guard_kind, (SLOTS, 3)),
-        )
-        validate_route_tokens(tokens, program)
+        self._scaled = program.schema == SCALED_SCHEMA
+        self.terminal = len(program.operations) if self._scaled else TERMINAL
+        if self._scaled:
+            if tokens is not None:
+                raise NeuralControlError("Scaled routes derive coordinates directly from source")
+            targets, guards = compile_route_coordinates(program, self.terminal)
+        else:
+            if not isinstance(tokens, ControlRouteTokens):
+                raise NeuralControlError("Unknown program route-token representation")
+            tokens = replace(
+                tokens,
+                sequential=_snapshot(tokens.sequential, (SLOTS, SLOTS)),
+                alternate=_snapshot(tokens.alternate, (SLOTS, SLOTS)),
+                guard_kind=_snapshot(tokens.guard_kind, (SLOTS, 3)),
+            )
+            validate_route_tokens(tokens, program)
+            targets = np.column_stack((
+                np.argmax(tokens.sequential, axis=1), np.argmax(tokens.alternate, axis=1),
+            )).astype(np.int32)
+            targets[tokens.instruction_count:TERMINAL] = -1
+            guards = tokens.guard_kind
         if not isinstance(fixed, ControlRouterWeights) or not isinstance(bit_fixed, BitCircuitWeights):
             raise NeuralControlError("Unknown fixed neural control weights")
-        self._targets = np.column_stack((
-            np.argmax(tokens.sequential, axis=1), np.argmax(tokens.alternate, axis=1),
-        )).astype(np.int32)
-        self._targets[tokens.instruction_count:TERMINAL] = -1
+        self._targets = targets
         self._tensors = (
-            self._targets, tokens.guard_kind,
+            self._targets, guards,
             _snapshot(fixed.guard_weights, (3,)), _snapshot(fixed.path_weights, (2,)),
             _snapshot(bit_fixed.and_kernel, (3,)),
         )
@@ -56,6 +63,8 @@ class CompactRouter:
 
     def step(self, pc: np.ndarray, condition: np.ndarray, *, capture_trace: bool = True):
         # Copies isolate the read-only native inputs from external array writes.
+        if self._scaled:
+            raise NeuralControlError("Scaled routing requires an indexed PC")
         pc = _snapshot(pc, (SLOTS,))
         condition = _snapshot(condition, (WIDTH,))
         details = np.empty(5)
@@ -67,12 +76,12 @@ class CompactRouter:
 
     def step_index(self, pc: int, condition: np.ndarray, *, capture_trace: bool = True):
         """Route from an admitted PC coordinate and return its next coordinate."""
-        if type(pc) is not int or not 0 <= pc < SLOTS:
+        if type(pc) is not int or not 0 <= pc <= self.terminal:
             raise NeuralControlError("Invalid active PC coordinate")
         condition = _snapshot(condition, (WIDTH,))
         details = np.empty(5)
         status = self._indexed_route(
-            pc, SLOTS, condition.ctypes.data, *self._pointers, details.ctypes.data,
+            pc, self.terminal + 1, condition.ctypes.data, *self._pointers, details.ctypes.data,
         )
         return self._read_route(status, details, capture_trace)
 

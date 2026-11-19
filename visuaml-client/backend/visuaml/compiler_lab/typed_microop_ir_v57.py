@@ -25,7 +25,7 @@ from .neural_control_routing_v52 import SLOTS
 from .wasm_control_flow_v51 import (
     MAX_LOCALS,
     MAX_NESTING,
-    MAX_OPERATIONS, MEMORY_OPCODES,
+    SCALED_SCHEMA, MEMORY_OPCODES,
     ControlProgram,
     _OPCODES,
     _syntax,
@@ -138,10 +138,11 @@ def construct_microop_weights(*, include_memory=False) -> MicroopWeights:
 def compile_microop_tokens(program: ControlProgram) -> ProgramMicroopTokens:
     _syntax(program)
     names = _MEMORY_NAMES if uses_memory(program) else OPCODES
-    opcodes = np.zeros((SLOTS, len(names)), dtype=np.float64)
-    imm = np.zeros((SLOTS, 32), dtype=np.float64)
-    locals_ = np.zeros((SLOTS, LOCALS_WIDTH), dtype=np.float64)
-    branches = np.zeros((SLOTS, MAX_NESTING), dtype=np.float64)
+    slots = len(program.operations) if program.schema == SCALED_SCHEMA else SLOTS
+    opcodes = np.zeros((slots, len(names)), dtype=np.float64)
+    imm = np.zeros((slots, 32), dtype=np.float64)
+    locals_ = np.zeros((slots, LOCALS_WIDTH), dtype=np.float64)
+    branches = np.zeros((slots, MAX_NESTING), dtype=np.float64)
     for pc, operation in enumerate(program.operations):
         opcode = operation.opcode
         opcodes[pc, names.index(opcode)] = 1.
@@ -165,18 +166,20 @@ def validate_microop_tokens(
 ) -> None:
     if not isinstance(tokens, ProgramMicroopTokens):
         raise MicroopAdmissionError("Unexpected token representation")
+    _syntax(program)
     count = len(program.operations)
-    if (tokens.length != count or count > MAX_OPERATIONS
+    slots = count if program.schema == SCALED_SCHEMA else SLOTS
+    if (tokens.length != count
             or tokens.source_wasm_sha256 != hashlib.sha256(
                 encode_control(program)
             ).hexdigest()
             or tokens.source_program_sha256 != program.digest()):
         raise MicroopAdmissionError("Source/structural token identity mismatch")
     for value, shape in (
-        (tokens.opcode_rows, (SLOTS, len(_MEMORY_NAMES if uses_memory(program) else OPCODES))),
-        (tokens.i32_immediates, (SLOTS, 32)),
-        (tokens.local_selectors, (SLOTS, LOCALS_WIDTH)),
-        (tokens.branch_depths, (SLOTS, MAX_NESTING)),
+        (tokens.opcode_rows, (slots, len(_MEMORY_NAMES if uses_memory(program) else OPCODES))),
+        (tokens.i32_immediates, (slots, 32)),
+        (tokens.local_selectors, (slots, LOCALS_WIDTH)),
+        (tokens.branch_depths, (slots, MAX_NESTING)),
     ):
         _binary(value, shape)
         if np.any(value[count:]):

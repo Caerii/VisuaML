@@ -35,7 +35,7 @@ from .wasm_control_flow_v51 import (
     _BINARY,
     _BLOCKS,
     MAX_FUEL,
-    MAX_OPERATIONS,
+    MAX_OPERATIONS, SCALED_MAX_OPERATIONS,
     MAX_STACK,
     ControlAdmissionError,
     ControlExecutionTrap,
@@ -121,24 +121,24 @@ def _admit_onehot(array: np.ndarray, shape: tuple[int, ...]) -> None:
         raise NeuralControlError("Noncanonical one-hot routing tensor")
 
 
-def _target(position: int, count: int) -> int:
+def _target(position: int, count: int, terminal: int) -> int:
     if not 0 <= position <= count:
         raise NeuralControlError("Lexical branch target outside admitted program")
-    return TERMINAL if position == count else position
+    return terminal if position == count else position
 
 
-def compile_route_tokens(program: ControlProgram) -> ControlRouteTokens:
-    """Trusted structural admission/preprocessing; NOT neural stack parsing."""
+def compile_route_coordinates(program: ControlProgram, terminal: int):
+    """Resolve canonical lexical edges without materializing dense PC tensors."""
     links = _syntax(program)
     count = len(program.operations)
-    sequential = np.zeros((SLOTS, SLOTS), dtype=np.float64)
-    alternate = np.zeros((SLOTS, SLOTS), dtype=np.float64)
-    # guard columns: always jump; jump if nonzero; jump if zero
-    guards = np.zeros((SLOTS, 3), dtype=np.float64)
+    if type(terminal) is not int or not count <= terminal <= SCALED_MAX_OPERATIONS:
+        raise NeuralControlError("Terminal is outside the admitted route coordinate range")
+    targets = np.full((terminal + 1, 2), -1, dtype=np.int32)
+    guards = np.zeros((terminal + 1, 3), dtype=np.float64)
     lexical: list[int] = []
     for pc, op in enumerate(program.operations):
-        successor = _target(pc + 1, count)
-        sequential[pc, successor] = 1.
+        successor = _target(pc + 1, count, terminal)
+        targets[pc, 0] = successor
         other = successor
         kind = op.opcode
         if kind in _BLOCKS:
@@ -146,7 +146,7 @@ def compile_route_tokens(program: ControlProgram) -> ControlRouteTokens:
             if kind == "if":
                 end, otherwise = links[pc]
                 other = _target(
-                    otherwise + 1 if otherwise is not None else end + 1, count
+                    otherwise + 1 if otherwise is not None else end + 1, count, terminal
                 )
                 guards[pc, 2] = 1.
         elif kind == "else":
@@ -155,7 +155,7 @@ def compile_route_tokens(program: ControlProgram) -> ControlRouteTokens:
             enclosing = lexical[-1]
             if links[enclosing][1] != pc:
                 raise NeuralControlError("Else does not match lexical if")
-            other = _target(links[enclosing][0] + 1, count)
+            other = _target(links[enclosing][0] + 1, count, terminal)
             guards[pc, 0] = 1.
         elif kind == "end":
             if lexical:
@@ -172,17 +172,29 @@ def compile_route_tokens(program: ControlProgram) -> ControlRouteTokens:
                 enclosing + 1 if open_kind == "loop"
                 else links[enclosing][0] + 1
             )
-            other = _target(branch_to, count)
+            other = _target(branch_to, count, terminal)
             guards[pc, 0 if kind == "br" else 1] = 1.
         elif kind == "return":
-            other = TERMINAL
+            other = terminal
             guards[pc, 0] = 1.
-        alternate[pc, other] = 1.
+        targets[pc, 1] = other
     if lexical:
         raise NeuralControlError("Nonempty structural label stack at function end")
-    # Terminal slot is a sink for validating the fixed architecture.
-    sequential[TERMINAL, TERMINAL] = 1.
-    alternate[TERMINAL, TERMINAL] = 1.
+    targets[terminal] = terminal
+    return targets, guards
+
+
+def compile_route_tokens(program: ControlProgram) -> ControlRouteTokens:
+    """Trusted structural admission for the legacy dense route tensors."""
+    count = len(program.operations)
+    if count > MAX_OPERATIONS:
+        raise NeuralControlError("Large programs require compact routing")
+    targets, guards = compile_route_coordinates(program, TERMINAL)
+    sequential = np.zeros((SLOTS, SLOTS), dtype=np.float64)
+    alternate = np.zeros((SLOTS, SLOTS), dtype=np.float64)
+    active = np.r_[np.arange(count), TERMINAL]
+    sequential[active, targets[active, 0]] = 1.
+    alternate[active, targets[active, 1]] = 1.
     return ControlRouteTokens(
         sequential, alternate, guards, count,
         hashlib.sha256(encode_control(program)).hexdigest(),
