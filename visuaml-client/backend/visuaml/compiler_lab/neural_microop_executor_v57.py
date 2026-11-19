@@ -61,9 +61,10 @@ from .neural_local_bank_v57 import (
     LocalBankWeights,
     apply_local_microop,
     construct_local_bank_weights,
+    read_local,
 )
 from .neural_operand_adapter_v55 import TensorOperandStack, _PreparedPopStack
-from .neural_operand_storage_v55 import OperandWeights
+from .neural_operand_storage_v55 import OperandState, OperandWeights
 from .typed_microop_ir_v57 import (
     LOCALS_WIDTH,
     IndexedMicroops,
@@ -152,6 +153,54 @@ def _array_route(targets, flags, condition, fixed, bit_fixed):
     }
 
 
+def _prepare_const_add_regions(program, targets, guards, indexed, selected_circuits, include_local):
+    """Bind single-entry, unconditional const/add pairs and optional local reads."""
+    alternate_entries = {
+        int(target) for pc, row in enumerate(targets) for target in row if target != pc + 1
+    }
+
+    def sequential(pc):
+        return (targets[pc] == pc + 1).all() and not guards[pc].any()
+
+    regions = {}
+    local_regions = {}
+    for pc, op in enumerate(program.operations[:-1]):
+        finish = pc + 1
+        if (op.opcode != "i32.const" or program.operations[finish].opcode != "i32.add"
+                or finish in alternate_entries or finish not in selected_circuits
+                or not sequential(pc) or not sequential(finish)):
+            continue
+        constant = indexed.read(pc)
+        addition = indexed.read(finish)
+        if int(np.argmax(constant.effect)) != 1 or int(np.argmax(addition.effect)) != 4:
+            continue
+        regions[pc] = (constant.immediate_bits, selected_circuits[finish])
+        start = pc - 1
+        if (include_local and start >= 0 and program.operations[start].opcode == "local.get"
+                and pc not in alternate_entries and sequential(start)):
+            local = indexed.read(start)
+            if int(np.argmax(local.effect)) == 1 and int(np.argmax(local.local_mode)) == 1:
+                local_regions[start] = (local.local_selector, *regions[pc])
+    return regions, local_regions
+
+
+def _run_const_add_region(stack, depth, region):
+    constant, add = region
+    state = stack.state
+    result = add(state.cells[depth - 1], constant)
+    cells = state.cells.copy()
+    cells[depth - 1] = result
+    # The initial and final heights are identical. Subsequent transitions
+    # create new arrays, and no intermediate state is exposed.
+    stack.state = OperandState(state.height, cells)
+
+
+def _run_local_const_add_region(stack, region, local_bank, local_fixed):
+    selector, constant, add = region
+    value = read_local(local_bank, selector, fixed=local_fixed)
+    stack.append(add(value, constant))
+
+
 def execute_microop_routed_control(
     program: ControlProgram, argument: int, *, fuel: int = 500,
     tokens: ControlRouteTokens | None = None,
@@ -169,6 +218,9 @@ def execute_microop_routed_control(
     observe_store: Callable[[int, int, dict], None] | None = None,
     prepare_operand_pop: bool = True,
     prepare_alu: bool = True,
+    prepare_mul: bool = True,
+    prepare_regions: bool = True,
+    prepare_local_region: bool = True,
 ) -> FrameRoutedResult:
     """Execute with fixed-weight routing and frame operations.
 
@@ -178,6 +230,8 @@ def execute_microop_routed_control(
     The default array profile prepares unit pop for its private operand
     state and binds source-admitted add and signed less-than circuits.
     Custom tokens or weights use the checked stack and full-candidate ALU.
+    Prepared multiply and untraced const/add regions can be disabled
+    independently for differential execution.
 
     v53 gate output owns frame depths and branch operand-stack restoration.
     Host still dispatches opcode arithmetic and carries lexical PC metadata.
@@ -186,6 +240,8 @@ def execute_microop_routed_control(
         raise ControlAdmissionError("prepare_operand_pop must be a boolean")
     if type(prepare_alu) is not bool:
         raise ControlAdmissionError("prepare_alu must be a boolean")
+    if any(type(flag) is not bool for flag in (prepare_mul, prepare_regions, prepare_local_region)):
+        raise ControlAdmissionError("Prepared multiply and region options must be booleans")
     links = _syntax(program)
     memory = uses_memory(program)
     array_mode = array_memory is not None
@@ -246,11 +302,16 @@ def execute_microop_routed_control(
     selected_circuits = {}
     if canonical_array and prepare_alu:
         for pc, op in enumerate(program.operations):
-            if op.opcode in _PREPARED_CIRCUITS:
+            if op.opcode in _PREPARED_CIRCUITS and (prepare_mul or op.opcode != "i32.mul"):
                 selected_circuits[pc] = _prepare_selected_alu(
                     op.opcode, indexed.read(pc).alu_selector, alu_fixed, bit_fixed,
                 )
 
+    regions, local_regions = (
+        _prepare_const_add_regions(program, targets, guards, indexed, selected_circuits, prepare_local_region)
+        if canonical_array and prepare_alu and prepare_operand_pop and prepare_regions and not capture_trace
+        else ({}, {})
+    )
 
     frame_state = empty_frames()
     frame_meta: list[tuple[str, int, int, int | None]] = []
@@ -264,7 +325,22 @@ def execute_microop_routed_control(
     records = []
     count = len(program.operations)
 
-    for tick in range(fuel):
+    tick = 0
+    while tick < fuel:
+        local_region = local_regions.get(pc)
+        if local_region is not None and fuel - tick >= 3 and len(stack) <= MAX_STACK - 2:
+            _run_local_const_add_region(stack, local_region, local_bank, local_fixed)
+            pc += 3
+            tick += 3
+            continue
+        region = regions.get(pc)
+        if region is not None and fuel - tick >= 2:
+            depth = len(stack)
+            if 0 < depth < MAX_STACK:
+                _run_const_add_region(stack, depth, region)
+                pc += 2
+                tick += 2
+                continue
         if not array_mode:
             pc = int(np.argmax(pc_vector))
         if pc == terminal or pc >= count:
@@ -506,6 +582,7 @@ def execute_microop_routed_control(
                 fixed_microop_weights_sha256=microop_fixed.digest(),
                 backend="v58-structured-numpy-memory" if array_mode else "v57-structured-numpy",
             )
+        tick += 1
     error = ControlFuelExhausted(f"Explicit bounded fuel exhausted after {fuel} neural-routed transitions")
     if array_mode and capture_trace:
         error.trace = tuple(records)

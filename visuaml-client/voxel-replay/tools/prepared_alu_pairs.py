@@ -47,7 +47,7 @@ def counters(case, enabled, expected):
             try:
                 result = vm.execute_microop_routed_control(
                     program, argument, array_memory=page.copy(), capture_trace=False,
-                    fuel=steps, prepare_alu=enabled,
+                    fuel=steps, prepare_alu=enabled, prepare_mul=False, prepare_regions=False,
                 )
                 assert result.steps == steps
             except ControlFuelExhausted:

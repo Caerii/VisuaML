@@ -48,7 +48,7 @@ def diagnostic(program, argument, initial, fuel):
     stack_start = marker(reference, 'choices_height = np.stack')
     gate_start = marker(reference, 'gates = action')
     gate_stop = marker(reference, 'validate_operands(result)')
-    execution_start = marker(executor, 'for tick in range(fuel)')
+    execution_start = marker(executor, 'while tick < fuel')
     instruction = marker(executor, 'kind = op.opcode')
     current_opcode = None
 

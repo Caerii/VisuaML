@@ -81,7 +81,11 @@ def _less_than_word(left: np.ndarray, right: np.ndarray, *, fixed: BitCircuitWei
     return result
 
 
-_PREPARED_CIRCUITS = {"i32.add": _add, "i32.lt_s": _less_than_word}
+def _multiply_word(left: np.ndarray, right: np.ndarray, *, fixed: BitCircuitWeights) -> np.ndarray:
+    return _mul(left, right, fixed.carry_thresholds)
+
+
+_PREPARED_CIRCUITS = {"i32.add": _add, "i32.lt_s": _less_than_word, "i32.mul": _multiply_word}
 
 
 def _run_prepared_alu(circuit, fixed, left: np.ndarray, right: np.ndarray) -> np.ndarray:
