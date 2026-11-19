@@ -289,3 +289,11 @@ live write-gain intervention, and counterexample-guided search over
 three fold operations. Two identical runs checked full page equivalence
 across 781 finite-domain inputs.
 [Packed memory and recovery report](V58_PACKED_MEMORY.md)
+
+## v58 shared memory-region verification
+
+One terminal comparator rejected both a forward-only recovery and a
+forward-specialized compiler proposal on the same overlapping copy.
+Guarded bulk lowering, access-order replay, partial effects on traps,
+and bounded SMT model claims are recorded independently.
+[Memory-region contract report](V58_MEMORY_REGION.md)

@@ -1,0 +1,179 @@
+{
+  "access_replay_cases": 822,
+  "array_proof_obligations": 8,
+  "artifacts": {
+    "access.json.gz": {
+      "bytes": 20180,
+      "sha256": "2e14f53b668adb8b32b566edec2829da9c8c3bc5ff6a1c7959409f0389cb52e8",
+      "source": {
+        "branch": "research/v58-memory-region-contract",
+        "commit": "36bb96e290a3c0e2f9f46f8fda7e472ead61a11f",
+        "tree": "65ad829b601d07e743b7835e3955f554e37786cd"
+      },
+      "uncompressed_sha256": "5d59d471766315d5642a67ba6f75b60bd4d4ab369c1f1ea4c1dc14bddfd12483"
+    },
+    "backend.log.gz": {
+      "bytes": 974,
+      "sha256": "cabfe67a51c5edbd28b14440fdfc2863b3f7e1c7ddf54c3fe77ed4a89c3ae2c7",
+      "uncompressed_sha256": "2f4b76cf030a258f159865f70f396902bf6327cda5d65fd642e547876365666c"
+    },
+    "benchmark_copy.py": {
+      "bytes": 1923,
+      "sha256": "e969594b2e0cb6201ea30fa49cbf40b30f262817f92f7e5fc26b6cbd7fedddf1"
+    },
+    "evidence-1.json.gz": {
+      "bytes": 4186,
+      "sha256": "b4bf9b452ea8c26adc0b81bf04f0ac222b8f90a78343589a7e0409d45d100674",
+      "source": {
+        "branch": "research/v58-memory-region-contract",
+        "commit": "36bb96e290a3c0e2f9f46f8fda7e472ead61a11f",
+        "tree": "65ad829b601d07e743b7835e3955f554e37786cd"
+      },
+      "uncompressed_sha256": "b189a1765a7ecbf69dd42c17382fcac3b5c5e2a0d74c2b0031facf6421b7b4c7"
+    },
+    "evidence-2.json.gz": {
+      "bytes": 4186,
+      "sha256": "b4bf9b452ea8c26adc0b81bf04f0ac222b8f90a78343589a7e0409d45d100674",
+      "source": {
+        "branch": "research/v58-memory-region-contract",
+        "commit": "36bb96e290a3c0e2f9f46f8fda7e472ead61a11f",
+        "tree": "65ad829b601d07e743b7835e3955f554e37786cd"
+      },
+      "uncompressed_sha256": "b189a1765a7ecbf69dd42c17382fcac3b5c5e2a0d74c2b0031facf6421b7b4c7"
+    },
+    "overlapping_copy.wasm": {
+      "bytes": 178,
+      "sha256": "019eaaa7c641fb02399a8d928fefb166dcf300911450e2f6af07ce9ba0837c37"
+    },
+    "proof.json.gz": {
+      "bytes": 313,
+      "sha256": "8ee36d26564bf6ddaa599601dafe78ed09f232acb13a9e69c29882b034f7430a",
+      "source": {
+        "branch": "research/v58-memory-region-contract",
+        "commit": "36bb96e290a3c0e2f9f46f8fda7e472ead61a11f",
+        "tree": "65ad829b601d07e743b7835e3955f554e37786cd"
+      },
+      "uncompressed_sha256": "ceb0290b67d79ff666a37ac2810bfa44a2af6bf0c037a52df9e557d43928f828"
+    },
+    "prove_copy_model.py": {
+      "bytes": 1813,
+      "sha256": "982e3f1c67b1e4f4d435566e3b74c1a44e6e25ddf4ade509f6eb8f6c9801e8e4"
+    },
+    "timings.json.gz": {
+      "bytes": 1783,
+      "sha256": "c7e31b58a3f439820f5c8963abb786d6b5e058fa7f3eea3a6c9d2a45f957539e",
+      "source": {
+        "branch": "research/v58-memory-region-contract",
+        "commit": "36bb96e290a3c0e2f9f46f8fda7e472ead61a11f",
+        "tree": "65ad829b601d07e743b7835e3955f554e37786cd"
+      },
+      "uncompressed_sha256": "e30672cd8a0af821bfd5b6683e7d6e7aacae4f7b45339fb5ddfdfaad33cde052"
+    },
+    "verify_access_order.py": {
+      "bytes": 1588,
+      "sha256": "25a07ede999e1390fcad0ae490736e655b02af46a4771f51835b783f65b74608"
+    }
+  },
+  "contract": {
+    "addresses": [
+      0,
+      4,
+      8,
+      9,
+      12,
+      16,
+      24,
+      65532,
+      65533,
+      4294967295
+    ],
+    "counts": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "default_fuel": 400,
+    "descriptor": {
+      "destination": 4,
+      "encoding": "u32 little-endian",
+      "source": 0
+    },
+    "diagnostic_equivalence": "packed replay for traced invocations",
+    "domain_witnesses": 1200,
+    "entry_pc": 0,
+    "fused_witnesses": 822,
+    "initial_word_patterns": [
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      [
+        -1,
+        0,
+        2147483647,
+        -2147483648,
+        33,
+        71
+      ]
+    ],
+    "last_word": 109,
+    "memory_traps": 378,
+    "open_claims": [
+      "general source-region discovery",
+      "access history before a trap",
+      "all-input executable equivalence"
+    ],
+    "optimization_guard": [
+      "exact source",
+      "default gains",
+      "untraced",
+      "in-bounds ranges",
+      "sufficient source fuel"
+    ],
+    "page_bytes": 65536,
+    "proof": {
+      "checks": [
+        "forward_writes_preserve_unread_words",
+        "backward_writes_preserve_unread_words",
+        "guarded_word_addresses_do_not_wrap"
+      ],
+      "kind": "SMT interval lemmas"
+    },
+    "sentinel_byte": 165,
+    "source_fuel_boundaries": 1644,
+    "terminal_equivalence": "exhaustive on the declared domain"
+  },
+  "environment": {
+    "cpu_count": 5,
+    "machine": "x86_64",
+    "numpy": "2.1.3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "processor": "",
+    "python": "3.12.14",
+    "thread_controls": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null,
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "wasmtime": "36.0.0"
+  },
+  "schema": "visuaml.v58-memory-region-evidence.v1",
+  "source": {
+    "branch": "research/v58-memory-region-contract",
+    "commit": "36bb96e290a3c0e2f9f46f8fda7e472ead61a11f",
+    "tree": "65ad829b601d07e743b7835e3955f554e37786cd"
+  },
+  "tests": {
+    "passed": 1287,
+    "skipped": 20,
+    "wall_s": 104.46
+  }
+}
