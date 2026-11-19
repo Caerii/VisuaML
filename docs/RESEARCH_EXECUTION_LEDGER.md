@@ -306,3 +306,12 @@ padded local assignments replay against Wasmtime. Three near-misses
 use source execution. Memory trap traces preserve the completed
 prefix and identify the widened failing address.
 [Copy recognition report](V58_COPY_RECOGNITION.md)
+
+## v58 stateful WASM scale
+
+An opt-in packed profile raises the source and untraced fuel limits
+and uses source-bound linear-size route coordinates. Full WASM Sudoku,
+directed graph BFS, and matrix multiplication were compared to Wasmtime
+and independent references. The archive preserves full-page hashes,
+curated Sudoku proofs, seeded scale sweeps, and a near-cap fuel run.
+[Stateful scale report](V58_STATEFUL_SCALE.md)
