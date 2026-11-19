@@ -297,3 +297,12 @@ forward-specialized compiler proposal on the same overlapping copy.
 Guarded bulk lowering, access-order replay, partial effects on traps,
 and bounded SMT model claims are recorded independently.
 [Memory-region contract report](V58_MEMORY_REGION.md)
+
+## v58 copy recognition and trap replay
+
+The guarded move lowering derives roles, descriptor addresses, and
+fuel from a matched WASM grammar. Independently written WAT and 24
+padded local assignments replay against Wasmtime. Three near-misses
+use source execution. Memory trap traces preserve the completed
+prefix and identify the widened failing address.
+[Copy recognition report](V58_COPY_RECOGNITION.md)

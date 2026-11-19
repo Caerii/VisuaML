@@ -1,0 +1,148 @@
+{
+  "artifacts": {
+    "backend.log.gz": {
+      "bytes": 938,
+      "sha256": "469d6705147190f622aad9c7a2d97167ffcc719a5f06d9c54a5532fd7cd9e974",
+      "uncompressed_sha256": "b897a5051b86a3751e3963ae5b7deb89edbf030d912676219acfe7e939865337"
+    },
+    "benchmark_copy.py": {
+      "bytes": 2091,
+      "sha256": "801f3698f385cdeacbd091241ad3cc434501ca2a9180a683b68b6c51ec2ab4cd"
+    },
+    "evidence-1.json.gz": {
+      "bytes": 1106,
+      "sha256": "fbb272c8ea02e79c3e0f465bd511d407b3459e833dc9fc78c0b57cfdf7493edb",
+      "source": {
+        "branch": "research/v58-copy-recognition",
+        "commit": "77bd340cba2aa969915200c91a76aab89d2a4a0d",
+        "tree": "7b191098070da2084e4fe003802c7056806255e6"
+      },
+      "uncompressed_sha256": "5529ff90e89e53f8949769670e884f2cbf650c8bdb7f04a4a3e166a00dacaa0d"
+    },
+    "evidence-2.json.gz": {
+      "bytes": 1106,
+      "sha256": "fbb272c8ea02e79c3e0f465bd511d407b3459e833dc9fc78c0b57cfdf7493edb",
+      "source": {
+        "branch": "research/v58-copy-recognition",
+        "commit": "77bd340cba2aa969915200c91a76aab89d2a4a0d",
+        "tree": "7b191098070da2084e4fe003802c7056806255e6"
+      },
+      "uncompressed_sha256": "5529ff90e89e53f8949769670e884f2cbf650c8bdb7f04a4a3e166a00dacaa0d"
+    },
+    "independent_copy.wasm": {
+      "bytes": 181,
+      "sha256": "1a572dc19b90807f2d684d7abe431d5a0f086613abe31b89e6c2aff54a22c2b7"
+    },
+    "independent_copy.wat": {
+      "bytes": 1114,
+      "sha256": "954a2ad0180ddc69da431ca44cd1067a7a29d725acf5c06aa8625074e34bf5ca"
+    },
+    "previous-region-replay.json.gz": {
+      "bytes": 4189,
+      "sha256": "58a298175ca46b9b2c35d8f716e5de21920caa7583291d8558f14e9e81acb6be",
+      "source": {
+        "branch": "research/v58-copy-recognition",
+        "commit": "77bd340cba2aa969915200c91a76aab89d2a4a0d",
+        "tree": "7b191098070da2084e4fe003802c7056806255e6"
+      },
+      "uncompressed_sha256": "8fb6bfd409ae4cd17a20384ef1704c4adaf6d477be688e3f8e55c762e833130f"
+    },
+    "timings.json.gz": {
+      "bytes": 1857,
+      "sha256": "7721e3603495ef863fd0aca59bd3c63bc3c37c4098c29a3fbe1dc2309f439ac9",
+      "source": {
+        "branch": "research/v58-copy-recognition",
+        "commit": "77bd340cba2aa969915200c91a76aab89d2a4a0d",
+        "tree": "7b191098070da2084e4fe003802c7056806255e6"
+      },
+      "uncompressed_sha256": "0af034db2ec4c7df9c14757a854963f097ecafdb547724667132f0014881a210"
+    },
+    "variants.json.gz": {
+      "bytes": 1143,
+      "sha256": "24135c7e61e87058c05df5c75982bcd25cba9686aae3826fc80456a17e9ab20e",
+      "source": {
+        "branch": "research/v58-copy-recognition",
+        "commit": "77bd340cba2aa969915200c91a76aab89d2a4a0d",
+        "tree": "7b191098070da2084e4fe003802c7056806255e6"
+      },
+      "uncompressed_sha256": "068c660a1472ea8e3bf59255596b4df909a90c6a520a0c6e679d952386f54c59"
+    },
+    "verify_variants.py": {
+      "bytes": 2267,
+      "sha256": "779003a344d2c1225f82d50b87859c79c432660b6dcdd5ebfead9ed9d6d5890b"
+    }
+  },
+  "cases": 1200,
+  "environment": {
+    "cpu_count": 5,
+    "machine": "x86_64",
+    "numpy": "2.1.3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "processor": "",
+    "python": "3.12.14",
+    "thread_controls": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null,
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "wasmtime": "36.0.0"
+  },
+  "late_trap": {
+    "accesses": [
+      {
+        "address": 24,
+        "after_hex": "fcff0000",
+        "before_hex": "fcff0000",
+        "kind": "i32.load"
+      },
+      {
+        "address": 28,
+        "after_hex": "08000000",
+        "before_hex": "08000000",
+        "kind": "i32.load"
+      },
+      {
+        "address": 65532,
+        "after_hex": "6d000000",
+        "before_hex": "6d000000",
+        "kind": "i32.load"
+      },
+      {
+        "address": 8,
+        "after_hex": "6d000000",
+        "before_hex": "01000000",
+        "kind": "i32.store"
+      }
+    ],
+    "site": {
+      "address": 65536,
+      "opcode": "i32.load",
+      "pc": 60,
+      "step": 54
+    }
+  },
+  "plan": {
+    "backward_base": 27,
+    "backward_iteration": 21,
+    "destination_descriptor": 28,
+    "empty_steps": 7,
+    "forward_base": 27,
+    "forward_iteration": 22,
+    "source_descriptor": 24
+  },
+  "prior_region_replay": "benchmarks/results/v58-memory-region-36bb96e/evidence-1.json.gz",
+  "schema": "visuaml.v58-copy-recognition-evidence.v1",
+  "source": {
+    "branch": "research/v58-copy-recognition",
+    "commit": "77bd340cba2aa969915200c91a76aab89d2a4a0d",
+    "tree": "7b191098070da2084e4fe003802c7056806255e6"
+  },
+  "tests": {
+    "passed": 1296,
+    "skipped": 20,
+    "wall_s": 84.94
+  },
+  "variants": 24,
+  "wasm_sha256": "1a572dc19b90807f2d684d7abe431d5a0f086613abe31b89e6c2aff54a22c2b7"
+}
