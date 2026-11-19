@@ -335,3 +335,11 @@ multiply partial products preserved the ReLU carry gates and improved
 paired Sudoku and BFS timings. A bounded Escargot replay matched the
 packed trace and memory cutoffs.
 [Rust guest and fixed-bit ALU replay](../benchmarks/results/v58-voxel-tick/README.md)
+
+## v58 interactive voxel replay
+
+A React Three Fiber scene runs the original one-agent Rust WASM and a
+shared two-agent guest. Chromium inputs can be exported and replayed
+offline. Both fixtures match VisuaML NumPy and Wasmtime after each
+tick, including the shared claim that leaves both positions unchanged.
+[Interactive replay and measurements](../visuaml-client/voxel-replay/README.md)

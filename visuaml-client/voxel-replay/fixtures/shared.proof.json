@@ -1,0 +1,72 @@
+{
+  "session": {
+    "version": 1,
+    "mode": "shared",
+    "binary_sha256": "ae2c579ffab6b3c4334d0386ae65377f0c21715ea02b6d0591022d9eafc28ffb",
+    "initial": {
+      "positions": [
+        0,
+        4
+      ],
+      "materials": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "inputs": [
+      [
+        1,
+        -1
+      ],
+      [
+        1,
+        -1
+      ]
+    ]
+  },
+  "initial_page_sha256": "ca3a9278229d5244ae330f993fd4cad54e1e6da4219ecdda0a99f2e3ca87086d",
+  "ticks": [
+    {
+      "page_sha256": "1edfdc4ae1c2c39a9f3e927560567a8a025626f0fc5b6b215ca8f57b0717a8d2",
+      "positions": [
+        1,
+        3
+      ],
+      "materials": [
+        0,
+        0
+      ],
+      "conflict": false,
+      "steps": 78,
+      "numpy_to_first_route_ns": 1716872,
+      "numpy_first_route_to_return_ns": 45987652,
+      "wasmtime_call_ns": 191068
+    },
+    {
+      "page_sha256": "03332f533c2dbcc6e45388cf332385ed0c6e6b7259b6dab4633020f932679f3a",
+      "positions": [
+        1,
+        3
+      ],
+      "materials": [
+        0,
+        0
+      ],
+      "conflict": true,
+      "steps": 46,
+      "numpy_to_first_route_ns": 1493715,
+      "numpy_first_route_to_return_ns": 26523370,
+      "wasmtime_call_ns": 122595
+    }
+  ],
+  "module_preparation_ns": 3679716,
+  "replay_ns": 88950456,
+  "engines": [
+    "VisuaML fixed-weight NumPy",
+    "Wasmtime"
+  ],
+  "packed_fallback": false
+}
