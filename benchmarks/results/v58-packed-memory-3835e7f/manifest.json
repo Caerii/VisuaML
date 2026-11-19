@@ -1,0 +1,147 @@
+{
+  "artifacts": {
+    "backend.log.gz": {
+      "bytes": 971,
+      "sha256": "3452b5adf289058382b33bc54eff1a979e211f371c4eaff7714189337e1eb63c",
+      "uncompressed_sha256": "6c91cb81d64b37aca0b5519888f19cf4a8c7a3ae80573de1a8df01336e47192c"
+    },
+    "benchmark_memory.py": {
+      "bytes": 1798,
+      "sha256": "6d082745b3cc7055863165ff0b553e7ec9be3f9b88000e478c392cdbf5ba4632"
+    },
+    "prefix_sum.wasm": {
+      "bytes": 106,
+      "sha256": "ca344c0533d6401ed8d87e18ca4aeea5193a8e44de7da1e11cdf432562462eb1"
+    },
+    "recovered_prefix_sum.txt": {
+      "bytes": 149,
+      "sha256": "faf495b1b718c8ef82650f81a9de93af9bfe09f655cce77ed24b24903f33454b"
+    },
+    "recovery-1.json.gz": {
+      "bytes": 2876,
+      "sha256": "9f98ef9d43d89d024552ce1843f6b80df3e78a36059caadff2e08ed4a4b7cbb4",
+      "source": {
+        "branch": "research/v58-packed-memory",
+        "commit": "3835e7f31be68aee6cc9fc9735daef52bb745677",
+        "tree": "c960ea49f70fce60378481be36cd5e052dfd532d"
+      },
+      "uncompressed_sha256": "5a0952ebb020efa9b74a6754bdf04b1ec7d5083ea4383bfbf80d15c3a25d8cb1"
+    },
+    "recovery-2.json.gz": {
+      "bytes": 2876,
+      "sha256": "9f98ef9d43d89d024552ce1843f6b80df3e78a36059caadff2e08ed4a4b7cbb4",
+      "source": {
+        "branch": "research/v58-packed-memory",
+        "commit": "3835e7f31be68aee6cc9fc9735daef52bb745677",
+        "tree": "c960ea49f70fce60378481be36cd5e052dfd532d"
+      },
+      "uncompressed_sha256": "5a0952ebb020efa9b74a6754bdf04b1ec7d5083ea4383bfbf80d15c3a25d8cb1"
+    },
+    "timings.json.gz": {
+      "bytes": 1124,
+      "sha256": "02dfe5f108469d813c36830f23f2d97e11a13e07419277aa0bb7fd61beb44709",
+      "source": {
+        "branch": "research/v58-packed-memory",
+        "commit": "3835e7f31be68aee6cc9fc9735daef52bb745677",
+        "tree": "c960ea49f70fce60378481be36cd5e052dfd532d"
+      },
+      "uncompressed_sha256": "a938ecdc5ad22c8ff7fb069f00676888fe2b7d563e57a790ff414c14db13cd05"
+    }
+  },
+  "domain": {
+    "cases": 781,
+    "length_max": 4,
+    "length_min": 0,
+    "values": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ]
+  },
+  "environment": {
+    "cpu_count": 5,
+    "machine": "x86_64",
+    "numpy": "2.1.3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "processor": "",
+    "python": "3.12.14",
+    "thread_controls": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null,
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "wasmtime": "36.0.0"
+  },
+  "kernel_sha256": "e5d31547a3872d9c154b1f6828c75dc1ad3ae978a82e93ae3c1c97c069200cbb",
+  "rounds": [
+    {
+      "candidate": "overwrite",
+      "candidate_output": [
+        -2,
+        [
+          -2,
+          -2
+        ]
+      ],
+      "counterexample": [
+        -2,
+        -2
+      ],
+      "original_output": [
+        -4,
+        [
+          -2,
+          -4
+        ]
+      ]
+    },
+    {
+      "candidate": "sum",
+      "counterexample": null
+    }
+  ],
+  "schema": "visuaml.v58-packed-memory-evidence.v1",
+  "source": {
+    "branch": "research/v58-packed-memory",
+    "commit": "3835e7f31be68aee6cc9fc9735daef52bb745677",
+    "tree": "c960ea49f70fce60378481be36cd5e052dfd532d"
+  },
+  "store_gain_intervention": {
+    "first_divergence": {
+      "changes": {
+        "memory_access": [
+          {
+            "address": 4,
+            "after_hex": "02000000",
+            "before_hex": "ffffffff",
+            "kind": "i32.store"
+          },
+          {
+            "address": 4,
+            "after_hex": "ffffffff",
+            "before_hex": "ffffffff",
+            "kind": "i32.store"
+          }
+        ]
+      },
+      "pc": [
+        16,
+        16
+      ],
+      "step": 41
+    },
+    "output": [
+      3,
+      -1,
+      4
+    ]
+  },
+  "tests": {
+    "passed": 1283,
+    "skipped": 20,
+    "wall_s": 106.23
+  }
+}

@@ -280,3 +280,12 @@ every branch depth, fuel boundaries, and a live route-gain intervention
 localized to its first divergent state. The verifier preserves original
 WASM fixtures and can be reused for later lowering and recovery work.
 [Packed structured control report](V58_PACKED_STRUCTURED_CONTROL.md)
+
+## v58 packed memory and bounded recovery
+
+The packed structured executor supports bounded i32 load and store.
+The prefix-sum witness preserves the original WASM, access replay,
+live write-gain intervention, and counterexample-guided search over
+three fold operations. Two identical runs checked full page equivalence
+across 781 finite-domain inputs.
+[Packed memory and recovery report](V58_PACKED_MEMORY.md)

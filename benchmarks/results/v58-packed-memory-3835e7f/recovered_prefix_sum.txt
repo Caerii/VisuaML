@@ -1,0 +1,6 @@
+acc = 0
+for i in range(length):
+    value = read_i32_le(memory, 4*i)
+    acc = signed_i32(acc + value)
+    write_i32_le(memory, 4*i, acc)
+return acc
