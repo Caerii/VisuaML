@@ -30,6 +30,7 @@ class CompiledAlu:
     prepared_batch: object
     prepared_simd_available: object
     structured_batch: object
+    frame_event: object
     source_sha256: str
     binary_sha256: str
     compiler: str
@@ -72,8 +73,11 @@ def compiled_alu():
         structured_batch = library.visuaml_structured_batch
         structured_batch.argtypes = (_P, _P, *((ctypes.c_size_t,) * 5), *((_P,) * 20))
         structured_batch.restype = None
+        frame_event = library.visuaml_frame_event_gate
+        frame_event.argtypes = (_P, *((ctypes.c_bool,) * 4), _P)
+        frame_event.restype = ctypes.c_int
     return CompiledAlu(function, route, indexed_route, data_microstep, prepared_loop, prepared_batch,
-                       prepared_simd_available, structured_batch,
+                       prepared_simd_available, structured_batch, frame_event,
                        hashlib.sha256(source.read_bytes()).hexdigest(),
                        binary_id, version, _FLAGS)
 

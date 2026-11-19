@@ -93,6 +93,32 @@ extern "C" void visuaml_alu_candidates(
     candidates[5 * width] = eqz;
 }
 
+// v54 event graph, after contracting the source opcode with the fixed
+// default matrix and conditional gains. No WASM state or PC is accepted.
+extern "C" int visuaml_frame_event_gate(
+        const double* row, bool sequential, bool has_else,
+        bool frame_active, bool branch_taken, double* output) {
+    const double both = static_cast<double>(sequential) + static_cast<double>(has_else);
+    const double enter_if = both - relu(both - 1.0);
+    const double push = row[5] * enter_if;
+    const double pop = row[6] * static_cast<double>(frame_active);
+    const double branch = row[7] * static_cast<double>(branch_taken);
+    output[0] = row[0] - (push + pop + branch);
+    output[1] = row[1] + push;
+    output[2] = row[2] + pop;
+    output[3] = row[3] + branch;
+    output[4] = row[4];
+    int selected = -1;
+    for (int i = 0; i < 5; ++i) {
+        if (output[i] == 1.0 && selected < 0) {
+            selected = i;
+        } else if (output[i] != 0.0) {
+            return -1;
+        }
+    }
+    return selected;
+}
+
 namespace {
 int route_from_zero(
         std::size_t active, double zero, const std::int32_t* targets,

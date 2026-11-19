@@ -20,6 +20,7 @@ from .bit_neural_vm_v49 import (
     _int,
     construct_bit_weights,
 )
+from .compiled_frame_event_v58 import CompiledFrameEvents
 from .neural_alu_v56 import (
     ALUWeights,
     construct_alu_weights,
@@ -115,6 +116,7 @@ class FrameRoutedResult:
     fixed_alu_weights_sha256: str = ""
     fixed_event_weight_digest: str = ""
     backend: str = "v57-structured-numpy"
+    compiled_frame_event_sha256: str | None = None
 
 
 def _event_digest(weights: EventWeights) -> str:
@@ -221,6 +223,7 @@ def execute_microop_routed_control(
     prepare_mul: bool = True,
     prepare_regions: bool = True,
     prepare_local_region: bool = True,
+    use_compiled_frame_event: bool = False,
 ) -> FrameRoutedResult:
     """Execute with fixed-weight routing and frame operations.
 
@@ -231,7 +234,8 @@ def execute_microop_routed_control(
     state and binds source-admitted add and signed less-than circuits.
     Custom tokens or weights use the checked stack and full-candidate ALU.
     Prepared multiply and untraced const/add regions can be disabled
-    independently for differential execution.
+    independently for differential execution. The opt-in compiled event
+    gate is used only by the canonical untraced array profile.
 
     v53 gate output owns frame depths and branch operand-stack restoration.
     Host still dispatches opcode arithmetic and carries lexical PC metadata.
@@ -242,6 +246,8 @@ def execute_microop_routed_control(
         raise ControlAdmissionError("prepare_alu must be a boolean")
     if any(type(flag) is not bool for flag in (prepare_mul, prepare_regions, prepare_local_region)):
         raise ControlAdmissionError("Prepared multiply and region options must be booleans")
+    if type(use_compiled_frame_event) is not bool:
+        raise ControlAdmissionError("use_compiled_frame_event must be a boolean")
     links = _syntax(program)
     memory = uses_memory(program)
     array_mode = array_memory is not None
@@ -322,6 +328,10 @@ def execute_microop_routed_control(
     # Memory operations retain the current control frame, as nop does.
     opcode_tokens = tuple(decode_opcode_token("nop" if op.opcode in MEMORY_OPCODES else op.opcode)
                           for op in program.operations)
+    compiled_event = (
+        CompiledFrameEvents(opcode_tokens, event_fixed)
+        if canonical_array and not capture_trace and use_compiled_frame_event else None
+    )
     records = []
     count = len(program.operations)
 
@@ -493,23 +503,22 @@ def execute_microop_routed_control(
         # Frame-event action is emitted exclusively by the constructed
         # opcode/guard circuit; host opcode branches above handle only
         # operand effects, lexical admission and return validation.
-        event_vector = select_frame_action(
-            opcode_tokens[pc],
-            conditional_sequential=np.array([
-                float(next_pc == sequential_pc)
-            ], dtype=np.float64),
-            has_else=np.array([
-                float(kind == "if" and links[pc][1] is not None)
-            ], dtype=np.float64),
-            frame_active=np.array([
-                float(depth_before > 0)
-            ], dtype=np.float64),
-            branch_taken=np.array([
-                float(taken)
-            ], dtype=np.float64),
-            weights=event_fixed,
-        )
-        action = int(np.argmax(event_vector))
+        sequential = next_pc == sequential_pc
+        has_else = kind == "if" and links[pc][1] is not None
+        active = depth_before > 0
+        if compiled_event is None:
+            event_vector = select_frame_action(
+                opcode_tokens[pc],
+                conditional_sequential=np.array([float(sequential)], dtype=np.float64),
+                has_else=np.array([float(has_else)], dtype=np.float64),
+                frame_active=np.array([float(active)], dtype=np.float64),
+                branch_taken=np.array([float(taken)], dtype=np.float64),
+                weights=event_fixed,
+            )
+            action = int(np.argmax(event_vector))
+        else:
+            action = compiled_event.select(pc, sequential, has_else, active, taken)
+            event_vector = compiled_event.vector
         if action == 1 and entering_metadata is None:
             raise ControlExecutionTrap("Gate emitted unsupported frame enter")
         if action == 3 and branch_depth is None:
@@ -581,6 +590,7 @@ def execute_microop_routed_control(
                 fixed_alu_weights_sha256=alu_fixed.digest(),
                 fixed_microop_weights_sha256=microop_fixed.digest(),
                 backend="v58-structured-numpy-memory" if array_mode else "v57-structured-numpy",
+                compiled_frame_event_sha256=compiled_event.binary_sha256 if compiled_event else None,
             )
         tick += 1
     error = ControlFuelExhausted(f"Explicit bounded fuel exhausted after {fuel} neural-routed transitions")
