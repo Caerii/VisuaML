@@ -253,6 +253,11 @@ def _sub(a: np.ndarray, b: np.ndarray,
     return _add(a, 1. - b, 1., fixed)
 
 
+# Column labels for the fixed triangular contraction of partial products.
+_MUL_LEFT, _MUL_RIGHT = np.nonzero(np.add.outer(np.arange(WIDTH), np.arange(WIDTH)) < WIDTH)
+_MUL_COLUMNS = _MUL_LEFT + _MUL_RIGHT
+
+
 def _mul(a: np.ndarray, b: np.ndarray, thresholds: np.ndarray) -> np.ndarray:
     """32x32 ReGLU bit products + a fixed ReLU carry staircase.
 
@@ -260,15 +265,17 @@ def _mul(a: np.ndarray, b: np.ndarray, thresholds: np.ndarray) -> np.ndarray:
     step(n>=2j), each represented as ReLU(n-(2j-1))-ReLU(n-2j).
     Discard the carry past bit 31 for WASM modulo 2**32 semantics.
     """
-    partial = np.maximum(0., a[:, None]) * b[None, :]
+    # Sum the same ReGLU terms by column before the sequential carry
+    # recurrence. For binary inputs all column sums are exact in float64.
+    partial = np.maximum(0., a[_MUL_LEFT]) * b[_MUL_RIGHT]
+    columns = np.bincount(_MUL_COLUMNS, weights=partial, minlength=WIDTH)
+    lower_thresholds = thresholds - 1.
     out = np.empty(WIDTH, dtype=np.float64)
     carry = np.float64(0.)
     for k in range(WIDTH):
         # No unknown-width integer multiplication and no modulo operation.
-        n = np.sum([partial[i, k-i] for i in range(k+1)]) + carry
-        step = np.maximum(0., n - (thresholds - 1.)) - np.maximum(
-            0., n - thresholds
-        )
+        n = columns[k] + carry
+        step = np.maximum(0., n - lower_thresholds) - np.maximum(0., n - thresholds)
         carry = np.sum(step)
         out[k] = n - 2. * carry
     return out
