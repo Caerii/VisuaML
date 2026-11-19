@@ -120,3 +120,100 @@ Sudoku and BFS profiles. This demo keeps the executor implementation
 as-is. AI Escargot's prior verified prefix is a separate scale result.
 
 [Raw Chromium samples](evidence/chromium-timings.json) · [One-agent proof](fixtures/single.proof.json) · [Two-agent proof](fixtures/shared.proof.json)
+
+## Terrain edit and counterfactual
+
+Open **Terrain Edit** and press **Play scene**. In tick 1, B moves from
+cell 3 to cell 2. A clears cell 1 after movement resolves. On tick 2,
+B reads material 0 and enters the passage. Use **Replay without edit**
+to remove only A's action from the input log. B takes the same actions
+and remains at cell 2 because cell 1 still contains material 7.
+Select **Tick 1 · Edit** to inspect the terrain write, then **Tick 2**
+to see its consequence.
+
+The guest takes a pre-tick snapshot of occupied cells and counts all
+destination claims, including stay intentions. Agents can enter only a
+unique destination that was empty and traversable at tick start.
+Contested and preoccupied destinations are blocked. The guest commits
+A's edit to the cell on its right after resolving all movement.
+Everyone sees that edit in the next tick. The ABI stores lengths in
+bytes and uses one i32 word per cell or agent. It reserves 1,856 bytes
+of one 64 KiB guest page for up to 64 cells and agents.
+
+The initial Rust loop compilation used a result-bearing WASM loop and
+too many locals for the current VM. The working source keeps loop
+indices and temporary addresses in documented volatile scratch words,
+uses signed bounds, and joins the loops through an empty block.
+The resulting unmodified rustc 1.100.0 binary uses 171 instructions
+and three locals. Browser, Wasmtime, and VisuaML all use those bytes.
+
+```bash
+export PYTHONPATH=.:../backend PYTHONDONTWRITEBYTECODE=1
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+python verify_replay.py fixtures/terrain.json --fixture
+python verify_replay.py fixtures/terrain-omitted.json --fixture
+python verify_replay.py /path/to/exported-voxel-terrain.json \
+  --expected-proof fixtures/terrain.proof.json --divergence /tmp/voxel-divergence.json
+```
+
+Omit `--expected-proof` when verifying a new history. When a mismatch
+occurs, the command stops at the first divergent tick. The divergence
+file includes that input and the preceding page plus both resulting
+engine pages as base64. The full input log and initial state also
+allow reconstruction from tick zero. The regression flips one edit
+input at tick 1 and a NumPy page byte at tick 2.
+
+```bash
+out=$(mktemp -d)
+python tools/scale_terrain.py --ticks 12 --output "$out/sweep"
+PLAYWRIGHT_CORE="$tools_dir/node_modules/playwright-core/index.mjs" \
+  CHROMIUM_PATH=/usr/bin/chromium node tools/terrain_browser.mjs "$out/sweep"
+python tools/frame_pair.py
+# Optional full Escargot correctness run. Execute separately from timings.
+python tools/check_escargot.py
+```
+
+### First sustained scale sweep
+
+Each row has 12 verified ticks. The independent model checks all
+positions, materials and conflict counts. NumPy and Wasmtime compare
+every byte each tick. Chromium independently matches all 72 page
+hashes. The reported p95 is the maximum in each 12-tick sample.
+
+| Agents | Scene | Cells | Source steps | NumPy agent-ticks/s | NumPy p95 tick |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 2 | Sparse | 8 | 5,400 | 8.5 | 254 ms |
+| 2 | Crowded | 5 | 4,368 | 10.5 | 199 ms |
+| 4 | Sparse | 16 | 10,200 | 9.3 | 452 ms |
+| 4 | Crowded | 10 | 8,136 | 10.9 | 400 ms |
+| 8 | Sparse | 32 | 19,800 | 9.4 | 903 ms |
+| 8 | Crowded | 20 | 15,672 | 12.0 | 689 ms |
+
+Half of the crowded agent-ticks have conflicting claims. The dense
+rows are shorter and blocked moves skip stores, so the crowded
+scenes execute fewer source steps at each agent count. The archived
+Chromium batches separately time warmed guest calls and host input
+writes, with rendering, hashing, and inspection excluded. The live
+two-agent terrain view also measures CPU render submission and frame
+interval using headless SwiftShader. The numbers in each fixture proof
+include the individual NumPy and Wasmtime calls.
+
+### Profile-driven frame change
+
+Before the change, signed comparison took about 9% of the crowded
+8-agent sample and 16% of a 4,000-instruction BFS prefix. Frame
+transitions took about 24% and 20%, respectively. The frame circuit
+now copies the retained rows directly when its validated one-hot
+action has unit retain gain. The other candidates have zero weight
+in that case. Non-unit gains and other actions still use the general
+contraction.
+
+Across three alternating pairs after warmup, the median of each
+four-tick world's mean execution time fell from 796 to 676 ms per tick
+(1.18×). Execution on a separate 2,000-step BFS cutoff fell from 1,466
+to 1,339 ms (1.10×). Per-call time through the first route was measured
+separately. Matching world hashes and exact BFS cutoff pages were
+checked in both variants. Operand transitions now account for the
+largest measured share of the terrain sample, at about 24%.
+
+[Scale proofs and raw timing samples](evidence/terrain)

@@ -1,0 +1,104 @@
+{
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "cases": {},
+  "profiles": {
+    "crowded_world_8": {
+      "profile_ms": 4905.522372,
+      "functions": {
+        "signed_comparison": {
+          "calls": 1448,
+          "self_ms": 2.889824,
+          "cumulative_ms": 434.769961,
+          "cumulative_share": 0.08862867764738022
+        },
+        "array_driver": {
+          "calls": 4,
+          "self_ms": 130.218983,
+          "cumulative_ms": 4917.834503,
+          "cumulative_share": 1.0025098511567851
+        },
+        "fixed_alu": {
+          "calls": 724,
+          "self_ms": 10.005112,
+          "cumulative_ms": 799.5548570000001,
+          "cumulative_share": 0.16299076762216835
+        },
+        "frame_transition": {
+          "calls": 5224,
+          "self_ms": 268.773602,
+          "cumulative_ms": 1156.21188,
+          "cumulative_share": 0.2356959753357741
+        },
+        "operand_transition": {
+          "calls": 7736,
+          "self_ms": 236.78326400000003,
+          "cumulative_ms": 1014.527027,
+          "cumulative_share": 0.20681325046864957
+        },
+        "route": {
+          "calls": 5224,
+          "self_ms": 57.231014,
+          "cumulative_ms": 408.25304300000005,
+          "cumulative_share": 0.08322315383377892
+        }
+      }
+    },
+    "bfs_prefix": {
+      "source_steps": 4000,
+      "decode_and_input_ns": 1637607,
+      "profile_ms": 4495.440982,
+      "functions": {
+        "signed_comparison": {
+          "calls": 2462,
+          "self_ms": 4.972133,
+          "cumulative_ms": 734.600087,
+          "cumulative_share": 0.1634100169352418
+        },
+        "array_driver": {
+          "calls": 1,
+          "self_ms": 90.82438100000002,
+          "cumulative_ms": 4513.223835000001,
+          "cumulative_share": 1.003955752743992
+        },
+        "fixed_alu": {
+          "calls": 1231,
+          "self_ms": 16.140102,
+          "cumulative_ms": 1351.85647,
+          "cumulative_share": 0.3007172100385501
+        },
+        "frame_transition": {
+          "calls": 4000,
+          "self_ms": 204.29543300000003,
+          "cumulative_ms": 888.020929,
+          "cumulative_share": 0.19753811306959343
+        },
+        "operand_transition": {
+          "calls": 6482,
+          "self_ms": 202.92679800000002,
+          "cumulative_ms": 860.6721570000001,
+          "cumulative_share": 0.191454444724373
+        },
+        "route": {
+          "calls": 4000,
+          "self_ms": 44.96600000000001,
+          "cumulative_ms": 309.235383,
+          "cumulative_share": 0.06878866483581833
+        }
+      }
+    }
+  }
+}

@@ -9,6 +9,8 @@ from unittest.mock import patch
 
 import wasmtime
 
+import terrain_verify
+
 from visuaml.compiler_lab import neural_microop_executor_v57 as vm
 from visuaml.compiler_lab.wasm_control_flow_v51 import decode_control, encode_control
 
@@ -108,8 +110,23 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("session", type=Path)
     parser.add_argument("--fixture", action="store_true", help="Check independent shipped-scene expectations")
+    parser.add_argument("--expected-proof", type=Path, help="Compare terrain ticks to a saved proof")
+    parser.add_argument("--divergence", type=Path, help="Write input and full pages for the first mismatch")
     args = parser.parse_args()
     session = json.loads(args.session.read_text())
+    if session["mode"] == "terrain":
+        expected = json.loads(args.expected_proof.read_text()) if args.expected_proof else None
+        try:
+            result = terrain_verify.verify(session, expected)
+        except terrain_verify.Divergence as error:
+            if args.divergence:
+                args.divergence.write_text(json.dumps(error.report, indent=2) + "\n")
+            parser.exit(1, f"{error}\n")
+        if args.fixture:
+            expected_positions = [0, 1] if session["inputs"][0]["edit"] else [0, 2]
+            assert [tick["positions"] for tick in result["ticks"]] == [[0, 2], expected_positions]
+        print(json.dumps(result, indent=2))
+        return
     expected = EXPECTED[session["mode"]] if args.fixture else None
     if expected is not None:
         assert len(session["inputs"]) == len(expected)

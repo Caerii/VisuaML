@@ -81,11 +81,15 @@ def test_retain_is_identical_and_input_height_is_preserved():
     state, _ = step_frames(
         empty_frames(), tokens(1, kind=2, base=1)
     )
-    after, height = step_frames(state, tokens(0, height=7))
+    retain = tokens(0, height=7)
+    after, height = step_frames(state, retain)
     assert np.array_equal(after.depth, state.depth)
     assert np.array_equal(after.kinds, state.kinds)
     assert np.array_equal(after.bases, state.bases)
     assert height[7] == 1
+    for result, source in ((after.depth, state.depth), (after.kinds, state.kinds),
+                           (after.bases, state.bases), (height, retain.operand_height)):
+        assert not np.shares_memory(result, source)
 
 
 @pytest.mark.parametrize("kind", [0, 1, 2])
@@ -128,6 +132,10 @@ def test_weight_ablation_is_not_silently_repaired():
         step_frames(
             state, tokens(1, kind=0, base=0), ablated
         )
+
+    ablated.action_weights[0] = 0.
+    with pytest.raises(FrameCircuitError):
+        step_frames(state, tokens(0, height=0), ablated)
 
 
 def test_malformed_frame_metadata_and_noncanonical_action_rejected():

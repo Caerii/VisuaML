@@ -343,3 +343,14 @@ shared two-agent guest. Chromium inputs can be exported and replayed
 offline. Both fixtures match VisuaML NumPy and Wasmtime after each
 tick, including the shared claim that leaves both positions unchanged.
 [Interactive replay and measurements](../visuaml-client/voxel-replay/README.md)
+
+## v58 terrain histories and sustained replay
+
+The terrain guest resolves simultaneous movement against pre-tick
+occupancy, claims, and materials, then commits A's terrain edit. A
+counterfactual omits the edit and keeps B blocked. Both histories and
+a 72-tick sparse and crowded sweep match Chromium, Wasmtime, and
+VisuaML NumPy. The first-mismatch report preserves the input and
+full pages. A profile-guided unit-retain frame contraction improved
+paired terrain and BFS cutoff runs.
+[Terrain scene, replay commands, and evidence](../visuaml-client/voxel-replay/README.md#terrain-edit-and-counterfactual)

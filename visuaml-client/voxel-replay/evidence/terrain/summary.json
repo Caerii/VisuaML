@@ -1,0 +1,225 @@
+{
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "cases": {
+    "2-sparse": {
+      "agents": 2,
+      "cells": 8,
+      "completed_ticks": 12,
+      "agent_ticks_in_conflict": 0,
+      "source_steps": 5400,
+      "guest_page_bytes": 65536,
+      "reserved_abi_bytes": 1856,
+      "numpy": {
+        "median_ms": 233.162168,
+        "p95_ms": 254.187562,
+        "agent_ticks_per_second": 8.522860415182004
+      },
+      "wasmtime": {
+        "median_ms": 0.096356,
+        "p95_ms": 0.175134,
+        "agent_ticks_per_second": 18887.836941303685
+      },
+      "replay_ns": 2821171421
+    },
+    "2-crowded": {
+      "agents": 2,
+      "cells": 5,
+      "completed_ticks": 12,
+      "agent_ticks_in_conflict": 12,
+      "source_steps": 4368,
+      "guest_page_bytes": 65536,
+      "reserved_abi_bytes": 1856,
+      "numpy": {
+        "median_ms": 190.950202,
+        "p95_ms": 198.721404,
+        "agent_ticks_per_second": 10.496845743121838
+      },
+      "wasmtime": {
+        "median_ms": 0.093967,
+        "p95_ms": 0.189225,
+        "agent_ticks_per_second": 18917.359514958902
+      },
+      "replay_ns": 2290049628
+    },
+    "4-sparse": {
+      "agents": 4,
+      "cells": 16,
+      "completed_ticks": 12,
+      "agent_ticks_in_conflict": 0,
+      "source_steps": 10200,
+      "guest_page_bytes": 65536,
+      "reserved_abi_bytes": 1856,
+      "numpy": {
+        "median_ms": 430.169259,
+        "p95_ms": 451.832618,
+        "agent_ticks_per_second": 9.267177626354378
+      },
+      "wasmtime": {
+        "median_ms": 0.093206,
+        "p95_ms": 0.095053,
+        "agent_ticks_per_second": 43735.88264933754
+      },
+      "replay_ns": 5182899321
+    },
+    "4-crowded": {
+      "agents": 4,
+      "cells": 10,
+      "completed_ticks": 12,
+      "agent_ticks_in_conflict": 24,
+      "source_steps": 8136,
+      "guest_page_bytes": 65536,
+      "reserved_abi_bytes": 1856,
+      "numpy": {
+        "median_ms": 369.594365,
+        "p95_ms": 400.318695,
+        "agent_ticks_per_second": 10.885459881942397
+      },
+      "wasmtime": {
+        "median_ms": 0.0944275,
+        "p95_ms": 0.106471,
+        "agent_ticks_per_second": 42610.98830861008
+      },
+      "replay_ns": 4412952716
+    },
+    "8-sparse": {
+      "agents": 8,
+      "cells": 32,
+      "completed_ticks": 12,
+      "agent_ticks_in_conflict": 0,
+      "source_steps": 19800,
+      "guest_page_bytes": 65536,
+      "reserved_abi_bytes": 1856,
+      "numpy": {
+        "median_ms": 837.427849,
+        "p95_ms": 902.572902,
+        "agent_ticks_per_second": 9.419729218073641
+      },
+      "wasmtime": {
+        "median_ms": 0.097127,
+        "p95_ms": 0.156166,
+        "agent_ticks_per_second": 77003.72104439505
+      },
+      "replay_ns": 10194919268
+    },
+    "8-crowded": {
+      "agents": 8,
+      "cells": 20,
+      "completed_ticks": 12,
+      "agent_ticks_in_conflict": 48,
+      "source_steps": 15672,
+      "guest_page_bytes": 65536,
+      "reserved_abi_bytes": 1856,
+      "numpy": {
+        "median_ms": 668.6471475,
+        "p95_ms": 689.267405,
+        "agent_ticks_per_second": 12.013052278907082
+      },
+      "wasmtime": {
+        "median_ms": 0.09612,
+        "p95_ms": 0.12577,
+        "agent_ticks_per_second": 77477.9006394348
+      },
+      "replay_ns": 7994771653
+    }
+  },
+  "profiles": {
+    "crowded_world_8": {
+      "profile_ms": 3850.710733,
+      "functions": {
+        "signed_comparison": {
+          "calls": 1448,
+          "self_ms": 2.6078200000000002,
+          "cumulative_ms": 401.379788,
+          "cumulative_share": 0.10423524794013657
+        },
+        "array_driver": {
+          "calls": 4,
+          "self_ms": 110.687172,
+          "cumulative_ms": 3864.999022,
+          "cumulative_share": 1.003710558904763
+        },
+        "fixed_alu": {
+          "calls": 724,
+          "self_ms": 8.413454000000002,
+          "cumulative_ms": 737.560188,
+          "cumulative_share": 0.19153871561403518
+        },
+        "frame_transition": {
+          "calls": 5224,
+          "self_ms": 52.221794,
+          "cumulative_ms": 479.78948600000007,
+          "cumulative_share": 0.12459764424480857
+        },
+        "operand_transition": {
+          "calls": 7736,
+          "self_ms": 217.61244200000002,
+          "cumulative_ms": 919.291021,
+          "cumulative_share": 0.23873281706720192
+        },
+        "route": {
+          "calls": 5224,
+          "self_ms": 50.381487,
+          "cumulative_ms": 365.211283,
+          "cumulative_share": 0.09484256500240211
+        }
+      }
+    },
+    "bfs_prefix": {
+      "source_steps": 4000,
+      "decode_and_input_ns": 1276888,
+      "profile_ms": 3606.6215560000005,
+      "functions": {
+        "signed_comparison": {
+          "calls": 2462,
+          "self_ms": 4.556256,
+          "cumulative_ms": 678.929109,
+          "cumulative_share": 0.18824517584067807
+        },
+        "array_driver": {
+          "calls": 1,
+          "self_ms": 77.23638600000001,
+          "cumulative_ms": 3621.8806700000005,
+          "cumulative_share": 1.0042308608660686
+        },
+        "fixed_alu": {
+          "calls": 1231,
+          "self_ms": 14.017942,
+          "cumulative_ms": 1242.206218,
+          "cumulative_share": 0.34442377685384185
+        },
+        "frame_transition": {
+          "calls": 4000,
+          "self_ms": 34.505099,
+          "cumulative_ms": 346.010481,
+          "cumulative_share": 0.09593756251591594
+        },
+        "operand_transition": {
+          "calls": 6482,
+          "self_ms": 182.84087200000002,
+          "cumulative_ms": 773.6210490000001,
+          "cumulative_share": 0.21450020108513984
+        },
+        "route": {
+          "calls": 4000,
+          "self_ms": 39.039878,
+          "cumulative_ms": 280.10554800000006,
+          "cumulative_share": 0.077664247177255
+        }
+      }
+    }
+  }
+}

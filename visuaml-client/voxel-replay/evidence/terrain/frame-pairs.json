@@ -1,0 +1,210 @@
+{
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "baseline": "2588452e6474fafc71ac2580a07362311e567d28",
+  "world_agents": 8,
+  "world_ticks_per_sample": 4,
+  "bfs_steps": 2000,
+  "pairs_after_warmup": 3,
+  "cases": {
+    "world": {
+      "original": [
+        {
+          "module_preparation_ns": 3134141,
+          "calls": [
+            {
+              "before_first_route_ns": 3151358,
+              "execution_ns": 799543751
+            },
+            {
+              "before_first_route_ns": 3139369,
+              "execution_ns": 777420172
+            },
+            {
+              "before_first_route_ns": 2413914,
+              "execution_ns": 788059615
+            },
+            {
+              "before_first_route_ns": 2394034,
+              "execution_ns": 820935866
+            }
+          ]
+        },
+        {
+          "module_preparation_ns": 3840167,
+          "calls": [
+            {
+              "before_first_route_ns": 2808039,
+              "execution_ns": 710307783
+            },
+            {
+              "before_first_route_ns": 2399122,
+              "execution_ns": 704850916
+            },
+            {
+              "before_first_route_ns": 2415747,
+              "execution_ns": 782680423
+            },
+            {
+              "before_first_route_ns": 3114501,
+              "execution_ns": 765312937
+            }
+          ]
+        },
+        {
+          "module_preparation_ns": 5206105,
+          "calls": [
+            {
+              "before_first_route_ns": 3808656,
+              "execution_ns": 754154073
+            },
+            {
+              "before_first_route_ns": 2501995,
+              "execution_ns": 832823116
+            },
+            {
+              "before_first_route_ns": 3819096,
+              "execution_ns": 842656090
+            },
+            {
+              "before_first_route_ns": 2672314,
+              "execution_ns": 828761114
+            }
+          ]
+        }
+      ],
+      "unit_retain": [
+        {
+          "module_preparation_ns": 3460554,
+          "calls": [
+            {
+              "before_first_route_ns": 2416999,
+              "execution_ns": 648476666
+            },
+            {
+              "before_first_route_ns": 3079549,
+              "execution_ns": 621936449
+            },
+            {
+              "before_first_route_ns": 2424060,
+              "execution_ns": 661260165
+            },
+            {
+              "before_first_route_ns": 2411681,
+              "execution_ns": 726580530
+            }
+          ]
+        },
+        {
+          "module_preparation_ns": 2784773,
+          "calls": [
+            {
+              "before_first_route_ns": 3099438,
+              "execution_ns": 608236624
+            },
+            {
+              "before_first_route_ns": 2409487,
+              "execution_ns": 610840403
+            },
+            {
+              "before_first_route_ns": 2396818,
+              "execution_ns": 699303074
+            },
+            {
+              "before_first_route_ns": 2583659,
+              "execution_ns": 789392571
+            }
+          ]
+        },
+        {
+          "module_preparation_ns": 2636631,
+          "calls": [
+            {
+              "before_first_route_ns": 3620276,
+              "execution_ns": 663320273
+            },
+            {
+              "before_first_route_ns": 2395183,
+              "execution_ns": 711608311
+            },
+            {
+              "before_first_route_ns": 2351147,
+              "execution_ns": 665269779
+            },
+            {
+              "before_first_route_ns": 2449977,
+              "execution_ns": 664191327
+            }
+          ]
+        }
+      ]
+    },
+    "bfs": {
+      "original": [
+        {
+          "calls": [
+            {
+              "before_first_route_ns": 1858015,
+              "execution_ns": 1466198674
+            }
+          ]
+        },
+        {
+          "calls": [
+            {
+              "before_first_route_ns": 1363768,
+              "execution_ns": 1425959697
+            }
+          ]
+        },
+        {
+          "calls": [
+            {
+              "before_first_route_ns": 1361505,
+              "execution_ns": 1580697336
+            }
+          ]
+        }
+      ],
+      "unit_retain": [
+        {
+          "calls": [
+            {
+              "before_first_route_ns": 1811374,
+              "execution_ns": 1300882901
+            }
+          ]
+        },
+        {
+          "calls": [
+            {
+              "before_first_route_ns": 2937825,
+              "execution_ns": 1804205687
+            }
+          ]
+        },
+        {
+          "calls": [
+            {
+              "before_first_route_ns": 1343397,
+              "execution_ns": 1338786581
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -44,3 +44,25 @@ test('invalid boundary input preserves the starting page, and an occupied cell b
   assert.equal(outcome.conflict, false);
   await outcome.pageHash;
 });
+
+
+for (const [name, moves, material] of [
+  ['terrain', [0, 1], 0],
+  ['terrain-omitted', [0, 2], 7],
+]) {
+  test(`${name} reproduces the causal history on the original guest`, async () => {
+    const session = await fixture(name);
+    const proof = await fixture(`${name}.proof`);
+    const world = await createWorld(await readFile(GUESTS.terrain), session);
+    const first = world.step(session.inputs[0]);
+    assert.deepEqual(first.positions, [0, 2]);
+    assert.equal(first.terrain[1], material);
+    const next = world.step(session.inputs[1]);
+    assert.deepEqual(next.positions, moves);
+    assert.equal(next.materials[1], material);
+    assert.ok(matchesProof(session, [
+      { input: first.input, hash: await first.pageHash },
+      { input: next.input, hash: await next.pageHash },
+    ], proof));
+  });
+}

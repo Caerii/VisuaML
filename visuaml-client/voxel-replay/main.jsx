@@ -4,14 +4,18 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { createWorld, GUESTS, matchesProof } from './world.mjs';
 import single from './fixtures/single.json';
 import shared from './fixtures/shared.json';
+import terrain from './fixtures/terrain.json';
+import terrainOmitted from './fixtures/terrain-omitted.json';
+import terrainProof from './fixtures/terrain.proof.json';
+import terrainOmittedProof from './fixtures/terrain-omitted.proof.json';
 import singleProof from './fixtures/single.proof.json';
 import sharedProof from './fixtures/shared.proof.json';
 import './style.css';
 
-const scenes = { single, shared };
-const proofs = { single: singleProof, shared: sharedProof };
+const scenes = { single, shared, terrain };
+const proofs = { single: singleProof, shared: sharedProof, terrain: terrainProof };
 const agentColors = ['#70ebd0', '#9a8cff'];
-const zeroes = (mode) => mode === 'shared' ? [0, 0] : [0];
+const zeroes = (mode) => mode === 'single' ? [0] : [0, 0];
 const arrows = { '-1': '←', 0: '·', 1: '→' };
 const hex = (value) => value.toString(16).padStart(2, '0').toUpperCase();
 
@@ -25,7 +29,7 @@ function RenderMeter({ samples }) {
   return null;
 }
 
-function Board({ positions, materials, targets, conflict, samples }) {
+function Board({ positions, materials, targets, conflict, editCell, samples }) {
   const origin = (materials.length - 1) / 2;
   return <Canvas orthographic camera={{ position: [4.2, 5.5, 7.5], zoom: 82, near: 0.1, far: 40 }}
     dpr={[1, 1.5]} aria-label="Voxel world">
@@ -43,9 +47,9 @@ function Board({ positions, materials, targets, conflict, samples }) {
         <boxGeometry args={[0.77, 0.77, 0.77]} />
         <meshStandardMaterial color="#e59562" roughness={0.8} />
       </mesh>}
-      {conflict && targets.includes(index) && <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.1, 0]}>
+      {(editCell === index || (conflict && targets.includes(index))) && <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.1, 0]}>
         <ringGeometry args={[0.24, 0.31, 32]} />
-        <meshBasicMaterial color="#ffaf7b" />
+        <meshBasicMaterial color={editCell === index ? "#90ebca" : "#ffaf7b"} />
       </mesh>}
     </group>)}
     {positions.map((position, index) => <mesh key={index} position={[position - origin, 0.46, 0]}>
@@ -68,6 +72,8 @@ function download(name, data) {
 
 function App() {
   const [mode, setMode] = useState('single');
+  const [omitEdit, setOmitEdit] = useState(false);
+  const [editQueued, setEditQueued] = useState(false);
   const [rows, setRows] = useState([]);
   const [selected, setSelected] = useState(0);
   const [draft, setDraft] = useState([0]);
@@ -80,8 +86,9 @@ function App() {
   const generation = useRef(0);
   const draftRef = useRef([0]);
   const renderSamples = useRef([]);
-  const scene = scenes[mode];
-  const proof = proofs[mode];
+  const keyboard = useRef(null);
+  const scene = mode === 'terrain' && omitEdit ? terrainOmitted : scenes[mode];
+  const proof = mode === 'terrain' && omitEdit ? terrainOmittedProof : proofs[mode];
   const verified = matchesProof(scene, rows, proof);
 
   useEffect(() => {
@@ -110,6 +117,7 @@ function App() {
     setRows([]);
     setSelected(0);
     queue(zeroes(mode));
+    setEditQueued(false);
     setError('');
     setPlayback(null);
     setMetrics(null);
@@ -122,6 +130,7 @@ function App() {
     queue(zeroes(next));
     setReady(false);
     setPaused(false);
+    setOmitEdit(false);
     setMode(next);
   }
 
@@ -135,6 +144,7 @@ function App() {
       setSelected(null);
       setError('');
       queue(zeroes(mode));
+      setEditQueued(false);
       pageHash.then((hash) => {
         if (key === generation.current) {
           setRows((prior) => prior.map((entry) => entry.tickId === tickId ? { ...entry, hash } : entry));
@@ -178,7 +188,7 @@ function App() {
       setPlayback(tick(playback.inputs[playback.index]) && next < playback.inputs.length
         ? { ...playback, index: next } : null);
     } else {
-      tick(draftRef.current);
+      tick(mode === 'terrain' ? { moves: draftRef.current, edit: editQueued } : draftRef.current);
     }
   }
 
@@ -189,24 +199,25 @@ function App() {
     if (mode === 'single' && !paused) tick(input);
   }
 
-  useEffect(() => {
-    function onKey(event) {
-      if (event.repeat || event.altKey || event.ctrlKey || event.metaKey
-        || ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return;
-      // Preserve Space activation when focus is already on a button.
-      if (event.code === 'Space' && event.target.tagName === 'BUTTON') return;
-      if (['ArrowLeft', 'ArrowRight', 'KeyJ', 'KeyL', 'Space'].includes(event.code)) {
-        event.preventDefault();
-        if (event.code === 'ArrowLeft') move(0, -1);
-        if (event.code === 'ArrowRight') move(0, 1);
-        if (mode === 'shared' && event.code === 'KeyJ') move(1, -1);
-        if (mode === 'shared' && event.code === 'KeyL') move(1, 1);
-        if (event.code === 'Space') step();
-      }
+  keyboard.current = (event) => {
+    if (event.repeat || event.altKey || event.ctrlKey || event.metaKey
+      || ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return;
+    // Preserve Space activation when focus is already on a button.
+    if (event.code === 'Space' && event.target.tagName === 'BUTTON') return;
+    if (['ArrowLeft', 'ArrowRight', 'KeyJ', 'KeyL', 'Space'].includes(event.code)) {
+      event.preventDefault();
+      if (event.code === 'ArrowLeft') move(0, -1);
+      if (event.code === 'ArrowRight') move(0, 1);
+      if (mode !== 'single' && event.code === 'KeyJ') move(1, -1);
+      if (mode !== 'single' && event.code === 'KeyL') move(1, 1);
+      if (event.code === 'Space') step();
     }
+  };
+  useEffect(() => {
+    const onKey = (event) => keyboard.current(event);
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  });
+  }, []);
 
   function snapshotMetrics() {
     const samples = renderSamples.current.filter((sample) => sample.frameMs > 0 && sample.frameMs < 1000);
@@ -233,22 +244,27 @@ function App() {
       <nav aria-label="Scene">
         <button aria-pressed={mode === 'single'} onClick={() => changeMode('single')}>One Agent</button>
         <button aria-pressed={mode === 'shared'} onClick={() => changeMode('shared')}>Two Agents</button>
+        <button aria-pressed={mode === 'terrain'} onClick={() => changeMode('terrain')}>Terrain Edit</button>
       </nav>
     </section>
     <div className="layout">
       <section className="panel world-panel" aria-label="World">
-        <div className="panel-head"><h2>{mode === 'single' ? 'Obstacle course' : 'Shared cell'}</h2>
+        <div className="panel-head"><h2>{mode === 'single' ? 'Obstacle course' : mode === 'shared' ? 'Shared cell' : 'Open the passage'}</h2>
           <span className="counter">TICK {String(selectedTick).padStart(2, '0')}</span></div>
-        <div className="canvas"><Board positions={shownPositions} materials={scene.initial.materials}
-          targets={shown?.targets ?? []} conflict={shown?.conflict} samples={renderSamples} />
+        <div className="canvas"><Board positions={shownPositions} materials={shown?.terrain ?? scene.initial.materials}
+          targets={shown?.targets ?? []} conflict={shown?.conflict} editCell={shown?.editCell} samples={renderSamples} />
           <div className="legend"><span><i style={{ background: agentColors[0] }} />Agent A</span>
-            {mode === 'shared' ? <span><i style={{ background: agentColors[1] }} />Agent B</span>
-              : <span><i style={{ background: '#e59562' }} />Obstacle</span>}</div>
+            {mode !== 'single' && <span><i style={{ background: agentColors[1] }} />Agent B</span>}
+            {mode !== 'shared' && <span><i style={{ background: '#e59562' }} />Obstacle</span>}</div>
           <div className="position-strip" aria-label="Agent positions">{shownPositions.map((position, i) =>
             <span key={i}>{i ? 'B' : 'A'} · Cell {position}</span>)}</div>
         </div>
         <div className="actions">
           <button className="primary" disabled={!ready} onClick={() => play(scene.inputs)}>Play scene</button>
+          {mode === 'terrain' && <button disabled={!ready} onClick={() => {
+            setOmitEdit(!omitEdit);
+            play((omitEdit ? terrain : terrainOmitted).inputs);
+          }}>{omitEdit ? 'Replay with edit' : 'Replay without edit'}</button>}
           <button disabled={!ready} onClick={() => setPaused(!paused)}>{paused ? 'Resume' : 'Pause'}</button>
           <button disabled={!ready} onClick={step}>Single step</button>
           <button disabled={!ready || !rows.length} onClick={() => play(rows.map((row) => row.input))}>Replay inputs</button>
@@ -262,7 +278,11 @@ function App() {
               onClick={() => move(i, value)}>{arrows[value]}</button>)}
             <kbd>{i ? 'J / L' : '← / →'}</kbd>
           </div>)}
+          {mode === 'terrain' && <button disabled={!ready || Boolean(playback)}
+            aria-pressed={editQueued} onClick={() => setEditQueued(!editQueued)}>Queue removal</button>}
         </div>
+        {mode === 'terrain' && <p className="rule">A removes the block to its right after movement resolves.
+          B sees the new passage on the next tick.</p>}
         {mode === 'shared' && <p className="rule">Queue both moves, then press Space or Single step. A shared claim leaves both agents in place. Cells occupied at the start of a tick are blocked.</p>}
         {error && <p role="alert" className="error">{error}</p>}
       </section>
@@ -277,17 +297,18 @@ function App() {
           <div className="timeline" aria-label="Replay ticks">
             <button aria-pressed={selectedTick === 0} onClick={() => setSelected(0)}>Start</button>
             {rows.map((row, i) => <button key={i} aria-pressed={selectedTick === i + 1}
-              onClick={() => setSelected(i + 1)}>Tick {i + 1}</button>)}
+              onClick={() => setSelected(i + 1)}>Tick {i + 1}{row.editCell != null ? ' · Edit' : ''}</button>)}
           </div>
           {shown ? <>
             <h3>Attempted action</h3>
             {shown.targets.map((target, index) => <div className="detail" key={index}>
-              <span>Agent {index ? 'B' : 'A'} {arrows[shown.input[index]]} cell {target}</span>
+              <span>Agent {index ? 'B' : 'A'} {arrows[shown.moves[index]]} cell {target}</span>
               <code>material {shown.materials[index]}</code>
             </div>)}
             <p className="outcome">{shown.conflict ? 'Collision · both agents stayed' :
-              shown.input.every((input, i) => !input || shown.positions[i] === shown.targets[i])
+              shown.moves.every((input, i) => !input || shown.positions[i] === shown.targets[i])
                 ? 'Turn resolved' : 'Blocked move · agent stayed'}</p>
+            {shown.editCell != null && <p className="outcome">Terrain edit · cell {shown.editCell} cleared after movement</p>}
             {verified && <p className="steps">{proof.ticks[selectedTick - 1].steps} WASM source steps</p>}
             <h3>Changed bytes</h3>
             <div className="memory">{shown.changes.length ? shown.changes.map(({ address, before, after, owner }) =>

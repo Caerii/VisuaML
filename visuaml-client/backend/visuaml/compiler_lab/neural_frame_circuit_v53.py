@@ -108,7 +108,7 @@ def step_frames(
     tokens: FrameTokens,
     weights: FrameCircuitWeights | None = None,
 ) -> tuple[FrameState, np.ndarray]:
-    """Compute ALL event candidates, then select using fixed bilinear masks.
+    """Select the frame transition using fixed bilinear masks.
 
     The returned height is an operand-stack truncation *request*. The caller
     still applies the actual stack data movement; integration is outstanding.
@@ -130,6 +130,16 @@ def step_frames(
     if not isinstance(weights, FrameCircuitWeights):
         raise FrameCircuitError("Unknown weights")
     _binary(weights.action_weights, (ACTIONS,))
+
+    # With a unit retain gate, every alternative candidate has a zero
+    # coefficient. Copy the selected rows to preserve the result ownership.
+    if tokens.action[0] == 1. and weights.action_weights[0] == 1. and all(
+        type(value) is np.ndarray for value in (
+            state.depth, state.kinds, state.bases, tokens.action, tokens.kind,
+            tokens.base, tokens.branch_depth, tokens.operand_height, weights.action_weights,
+        )
+    ):
+        return FrameState(state.depth.copy(), state.kinds.copy(), state.bases.copy()), tokens.operand_height.copy()
 
     d = int(np.argmax(state.depth))  # admission only; NOT event dispatch
     push, pop, branch = tokens.action[1:4]
