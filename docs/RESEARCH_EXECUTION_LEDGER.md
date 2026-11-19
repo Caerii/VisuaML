@@ -399,3 +399,12 @@ to a dedicated compiled gate symbol. Its graph matches the full
 retained exact pages and source steps with packed fallback blocked.
 The warmed speedups and cold compilation cost are recorded separately.
 [Compiled gate graph, replay checks, and measurements](../visuaml-client/voxel-replay/evidence/compiled-frame-event/README.md)
+
+## v58 fused frame-event retain
+
+The canonical untraced array path can fuse the compiled event selector
+with the v53 unit-retain identity. Checked frame changes remain in NumPy.
+Paired terrain, full BFS, and Sudoku replays preserve exact pages and
+steps. The resident arm removes the frame copy but adds little to the
+terrain median gain from eliminating checked retain materialization.
+[Profiles, ownership checks, and staged replay timings](../visuaml-client/voxel-replay/evidence/fused-frame-retain/README.md)
