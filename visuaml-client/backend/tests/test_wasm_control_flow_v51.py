@@ -7,6 +7,7 @@ branch targets and fuel separately from Wasmtime final results.
 from __future__ import annotations
 
 import hashlib
+from pathlib import Path
 
 import pytest
 from visuaml.compiler_lab.wasm_control_flow_v51 import (
@@ -19,6 +20,17 @@ from visuaml.compiler_lab.wasm_control_flow_v51 import (
     encode_control,
     execute_control,
 )
+
+
+
+def test_scaled_profile_roundtrips_rust_memory_first_exports():
+    guest = Path(__file__).resolve().parents[3] / "benchmarks/results/v58-voxel-tick/voxel_tick.wasm"
+    original = guest.read_bytes()
+    with pytest.raises(ControlAdmissionError, match="Expected reviewed run export"):
+        decode_control(original)
+    decoded = decode_control(original, scaled=True)
+    assert decoded.memory_export_first
+    assert encode_control(decoded) == original
 
 
 def op(name, value=None):

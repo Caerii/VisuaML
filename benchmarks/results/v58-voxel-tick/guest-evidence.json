@@ -1,0 +1,117 @@
+{
+  "guest_sha256": "b23198c360fc8b47505826917b54dab9128b26341e588881a6d18dcd69184f53",
+  "backend": "v58-structured-numpy-memory",
+  "base": 256,
+  "opcodes": [
+    "local.get",
+    "local.get",
+    "local.get",
+    "i32.load",
+    "local.get",
+    "i32.load",
+    "i32.add",
+    "local.tee",
+    "i32.add",
+    "i32.load",
+    "local.tee",
+    "i32.store",
+    "block",
+    "local.get",
+    "br_if",
+    "local.get",
+    "local.get",
+    "i32.store",
+    "end",
+    "local.get",
+    "i32.load",
+    "end"
+  ],
+  "cases": [
+    {
+      "case": "empty",
+      "initial_position_bytes": 0,
+      "delta_bytes": 4,
+      "final_position_bytes": 4,
+      "material": 0,
+      "steps": 22,
+      "page_sha256": "b8433b3f7fbb0af57ed38a4524826ab7e2f9040ef24bf062f4104534eeeaa859",
+      "writes": [
+        {
+          "pc": 11,
+          "kind": "i32.store",
+          "address": 264,
+          "before_hex": "ffffffff",
+          "after_hex": "00000000"
+        },
+        {
+          "pc": 17,
+          "kind": "i32.store",
+          "address": 256,
+          "before_hex": "00000000",
+          "after_hex": "04000000"
+        }
+      ]
+    },
+    {
+      "case": "collision",
+      "initial_position_bytes": 4,
+      "delta_bytes": 4,
+      "final_position_bytes": 4,
+      "material": 7,
+      "steps": 18,
+      "page_sha256": "51ec7db61649862c1e6fe4971a0d95aaf2f3b794109b2588415cc927dfc3f2df",
+      "writes": [
+        {
+          "pc": 11,
+          "kind": "i32.store",
+          "address": 264,
+          "before_hex": "ffffffff",
+          "after_hex": "07000000"
+        }
+      ]
+    },
+    {
+      "case": "reverse",
+      "initial_position_bytes": 12,
+      "delta_bytes": -4,
+      "final_position_bytes": 12,
+      "material": 7,
+      "steps": 18,
+      "page_sha256": "de3f1bef2f191d9bb3f590ec8384cbddd3bb48747d6404065b61ee24bff831a1",
+      "writes": [
+        {
+          "pc": 11,
+          "kind": "i32.store",
+          "address": 264,
+          "before_hex": "ffffffff",
+          "after_hex": "07000000"
+        }
+      ]
+    },
+    {
+      "case": "reverse_clear",
+      "initial_position_bytes": 4,
+      "delta_bytes": -4,
+      "final_position_bytes": 0,
+      "material": 0,
+      "steps": 22,
+      "page_sha256": "2a92a9bd526cd7bc0b14956cf7a7d98d4ae0dce8b69b03b2d3ec5769771b319d",
+      "writes": [
+        {
+          "pc": 11,
+          "kind": "i32.store",
+          "address": 264,
+          "before_hex": "ffffffff",
+          "after_hex": "00000000"
+        },
+        {
+          "pc": 17,
+          "kind": "i32.store",
+          "address": 256,
+          "before_hex": "04000000",
+          "after_hex": "00000000"
+        }
+      ]
+    }
+  ]
+}

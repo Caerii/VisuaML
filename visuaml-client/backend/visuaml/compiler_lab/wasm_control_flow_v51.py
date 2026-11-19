@@ -63,7 +63,9 @@ MEMORY_OPCODES = ("i32.load", "i32.store")
 _MEMORY_CODES = {0x28: MEMORY_OPCODES[0], 0x36: MEMORY_OPCODES[1]}
 _MEMORY_ENCODING = {name: code for code, name in _MEMORY_CODES.items()}
 _MEMORY_SECTION = b"\x01\x01\x01\x01"  # one memory, minimum and maximum one page
-_MEMORY_EXPORT = b"\x02" + _EXPORT_PAYLOAD[1:] + b"\x06memory\x02\x00"
+_MEMORY_ENTRY = b"\x06memory\x02\x00"
+_MEMORY_EXPORT = b"\x02" + _EXPORT_PAYLOAD[1:] + _MEMORY_ENTRY
+_MEMORY_FIRST_EXPORT = b"\x02" + _MEMORY_ENTRY + _EXPORT_PAYLOAD[1:]
 
 _CODES = {
     0x01: "nop",
@@ -121,10 +123,14 @@ class ControlProgram:
     local_count: int
     operations: tuple[ControlOperation, ...]
     schema: str = SCHEMA
+    memory_export_first: bool = False
 
     def digest(self) -> str:
+        data = asdict(self)
+        if not self.memory_export_first:
+            del data["memory_export_first"]  # Preserve legacy source identities.
         return hashlib.sha256(json.dumps(
-            asdict(self), sort_keys=True, separators=(",", ":")
+            data, sort_keys=True, separators=(",", ":")
         ).encode()).hexdigest()
 
 
@@ -153,6 +159,7 @@ def uses_memory(program: ControlProgram) -> bool:
 
 def _syntax(program: ControlProgram) -> dict[int, tuple[int, int | None]]:
     if (not isinstance(program, ControlProgram) or program.schema not in (SCHEMA, SCALED_SCHEMA)
+            or type(program.memory_export_first) is not bool
             or type(program.local_count) is not int
             or not 0 <= program.local_count <= MAX_LOCALS
             or not isinstance(program.operations, tuple)
@@ -237,10 +244,17 @@ def encode_control(program: ControlProgram) -> bytes:
         return bytes((kind,)) + _u32(len(data)) + data
 
     memory = uses_memory(program)
+    exports = _EXPORT_PAYLOAD
+    if program.memory_export_first:
+        if not memory or program.schema != SCALED_SCHEMA:
+            raise ControlAdmissionError("Memory-first exports require a scaled memory program")
+        exports = _MEMORY_FIRST_EXPORT
+    elif memory:
+        exports = _MEMORY_EXPORT
     return (MAGIC + section(1, _TYPE_PAYLOAD)
             + section(3, _FUNCTION_PAYLOAD)
             + (section(5, _MEMORY_SECTION) if memory else b"")
-            + section(7, _MEMORY_EXPORT if memory else _EXPORT_PAYLOAD)
+            + section(7, exports)
             + section(10, code))
 
 
@@ -256,8 +270,10 @@ def decode_control(raw: bytes, *, scaled: bool = False) -> ControlProgram:
         if not memory and ids != [1, 3, 7, 10]:
             raise ControlAdmissionError("Only reviewed standard sections admitted")
         payloads = {section.section_id: section.payload for section in chunks}
+        memory_first = scaled and memory and payloads[7] == _MEMORY_FIRST_EXPORT
+        exports = _MEMORY_FIRST_EXPORT if memory_first else (_MEMORY_EXPORT if memory else _EXPORT_PAYLOAD)
         if (payloads[1] != _TYPE_PAYLOAD or payloads[3] != _FUNCTION_PAYLOAD
-                or payloads[7] != (_MEMORY_EXPORT if memory else _EXPORT_PAYLOAD)
+                or payloads[7] != exports
                 or (memory and payloads[5] != _MEMORY_SECTION)):
             raise ControlAdmissionError("Expected reviewed run export and optional one-page memory")
         data = payloads[10]
@@ -299,7 +315,7 @@ def decode_control(raw: bytes, *, scaled: bool = False) -> ControlProgram:
             ops.append(ControlOperation(name, imm))
             if len(ops) > max_operations:
                 raise ControlAdmissionError("Instruction count exceeded")
-        program = ControlProgram(count, tuple(ops), SCALED_SCHEMA if scaled else SCHEMA)
+        program = ControlProgram(count, tuple(ops), SCALED_SCHEMA if scaled else SCHEMA, memory_first)
         _syntax(program)
         if encode_control(program) != raw:
             raise ControlAdmissionError("Noncanonical or unreviewed WASM encoding")
