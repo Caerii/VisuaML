@@ -25,16 +25,18 @@ from .neural_control_routing_v52 import SLOTS
 from .wasm_control_flow_v51 import (
     MAX_LOCALS,
     MAX_NESTING,
-    MAX_OPERATIONS,
+    MAX_OPERATIONS, MEMORY_OPCODES,
     ControlProgram,
     _OPCODES,
     _syntax,
-    encode_control,
+    encode_control, uses_memory,
 )
 
 SCHEMA = "visuaml.typed-neural-microoperations.v57"
 OPCODES = tuple(_OPCODES)
 EFFECTS = ("retain", "push", "pop", "unary", "binary")
+_MEMORY_NAMES = OPCODES + MEMORY_OPCODES
+_MEMORY_EFFECTS = EFFECTS + ("store",)
 LOCAL_MODES = ("none", "get", "set", "tee")
 STACK_EFFECT = {
     "i32.const": "push",
@@ -44,6 +46,8 @@ STACK_EFFECT = {
     "if": "pop",
     "br_if": "pop",
     "i32.eqz": "unary",
+    "i32.load": "unary",
+    "i32.store": "store",
     **{op: "binary" for op in ALU_OPS if op != "i32.eqz"},
 }
 LOCAL_MODE = {
@@ -117,12 +121,14 @@ def _onehot(value: np.ndarray, shape: tuple[int, ...], *, allow_zero=False):
         raise MicroopAdmissionError("Invalid one-hot microop selection")
 
 
-def construct_microop_weights() -> MicroopWeights:
-    effects = np.zeros((len(OPCODES), len(EFFECTS)), dtype=np.float64)
-    modes = np.zeros((len(OPCODES), len(LOCAL_MODES)), dtype=np.float64)
-    alu = np.zeros((len(OPCODES), len(ALU_OPS)), dtype=np.float64)
-    for i, name in enumerate(OPCODES):
-        effects[i, EFFECTS.index(STACK_EFFECT.get(name, "retain"))] = 1.
+def construct_microop_weights(*, include_memory=False) -> MicroopWeights:
+    names = _MEMORY_NAMES if include_memory else OPCODES
+    effects_names = _MEMORY_EFFECTS if include_memory else EFFECTS
+    effects = np.zeros((len(names), len(effects_names)), dtype=np.float64)
+    modes = np.zeros((len(names), len(LOCAL_MODES)), dtype=np.float64)
+    alu = np.zeros((len(names), len(ALU_OPS)), dtype=np.float64)
+    for i, name in enumerate(names):
+        effects[i, effects_names.index(STACK_EFFECT.get(name, "retain"))] = 1.
         modes[i, LOCAL_MODES.index(LOCAL_MODE.get(name, "none"))] = 1.
         if name in ALU_OPS:
             alu[i, ALU_OPS.index(name)] = 1.
@@ -131,15 +137,19 @@ def construct_microop_weights() -> MicroopWeights:
 
 def compile_microop_tokens(program: ControlProgram) -> ProgramMicroopTokens:
     _syntax(program)
-    opcodes = np.zeros((SLOTS, len(OPCODES)), dtype=np.float64)
+    names = _MEMORY_NAMES if uses_memory(program) else OPCODES
+    opcodes = np.zeros((SLOTS, len(names)), dtype=np.float64)
     imm = np.zeros((SLOTS, 32), dtype=np.float64)
     locals_ = np.zeros((SLOTS, LOCALS_WIDTH), dtype=np.float64)
     branches = np.zeros((SLOTS, MAX_NESTING), dtype=np.float64)
     for pc, operation in enumerate(program.operations):
         opcode = operation.opcode
-        opcodes[pc, OPCODES.index(opcode)] = 1.
+        opcodes[pc, names.index(opcode)] = 1.
         if opcode == "i32.const":
             imm[pc] = _bits(operation.immediate)
+        elif opcode in MEMORY_OPCODES:
+            offset = operation.immediate.offset
+            imm[pc] = _bits(offset if offset < 1 << 31 else offset - (1 << 32))
         elif opcode in LOCAL_MODE:
             locals_[pc, operation.immediate] = 1.
         elif opcode in ("br", "br_if"):
@@ -163,7 +173,7 @@ def validate_microop_tokens(
             or tokens.source_program_sha256 != program.digest()):
         raise MicroopAdmissionError("Source/structural token identity mismatch")
     for value, shape in (
-        (tokens.opcode_rows, (SLOTS, len(OPCODES))),
+        (tokens.opcode_rows, (SLOTS, len(_MEMORY_NAMES if uses_memory(program) else OPCODES))),
         (tokens.i32_immediates, (SLOTS, 32)),
         (tokens.local_selectors, (SLOTS, LOCALS_WIDTH)),
         (tokens.branch_depths, (SLOTS, MAX_NESTING)),
@@ -183,13 +193,15 @@ def validate_microop_tokens(
         raise MicroopAdmissionError("Program tokens differ from canonical WASM")
 
 
-def _admit_weights(fixed: MicroopWeights) -> None:
+def _admit_weights(fixed: MicroopWeights, include_memory=False) -> None:
+    names = _MEMORY_NAMES if include_memory else OPCODES
+    effects_names = _MEMORY_EFFECTS if include_memory else EFFECTS
     if not isinstance(fixed, MicroopWeights):
         raise MicroopAdmissionError("Unexpected microop weights")
     for value, shape in (
-        (fixed.effects, (len(OPCODES), len(EFFECTS))),
-        (fixed.local_modes, (len(OPCODES), len(LOCAL_MODES))),
-        (fixed.alu_selectors, (len(OPCODES), len(ALU_OPS))),
+        (fixed.effects, (len(names), len(effects_names))),
+        (fixed.local_modes, (len(names), len(LOCAL_MODES))),
+        (fixed.alu_selectors, (len(names), len(ALU_OPS))),
     ):
         _binary(value, shape)
 
@@ -197,8 +209,8 @@ def _admit_weights(fixed: MicroopWeights) -> None:
 _ALU_OPCODE_INDICES = tuple(OPCODES.index(name) for name in ALU_OPS)
 
 
-def _admit_selection(effect, mode, alu, opcode_is_alu):
-    _onehot(effect, (len(EFFECTS),))
+def _admit_selection(effect, mode, alu, opcode_is_alu, include_memory=False):
+    _onehot(effect, (len(_MEMORY_EFFECTS if include_memory else EFFECTS),))
     _onehot(mode, (len(LOCAL_MODES),))
     _onehot(alu, (len(ALU_OPS),), allow_zero=True)
     if alu.sum() != opcode_is_alu:
@@ -252,7 +264,8 @@ class IndexedMicroops:
         fixed = MicroopWeights(*(_immutable_tensor(value) for value in (
             fixed.effects, fixed.local_modes, fixed.alu_selectors,
         )))
-        _admit_weights(fixed)
+        self._memory = uses_memory(program)
+        _admit_weights(fixed, self._memory)
         self.token_digest = tokens.digest()
         self.weight_digest = fixed.digest()
         self._fixed = fixed
@@ -269,7 +282,7 @@ class IndexedMicroops:
             self._fixed.alu_selectors[opcode],
         )
         if opcode not in self._checked:
-            _admit_selection(effect, mode, alu, opcode in _ALU_OPCODE_INDICES)
+            _admit_selection(effect, mode, alu, opcode in _ALU_OPCODE_INDICES, self._memory)
             self._checked.add(opcode)
         tokens = self._tokens
         return SelectedMicroop(tokens.opcode_rows[pc], effect, mode, alu,

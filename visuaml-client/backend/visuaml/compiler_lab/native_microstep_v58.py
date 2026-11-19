@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import ctypes
 import hashlib
+from dataclasses import dataclass
 
 import numpy as np
 
@@ -20,7 +21,10 @@ from .neural_local_bank_v57 import LocalBankWeights
 from .neural_microstep_v58 import DATA_OPS, MicrostepWeights
 from .neural_operand_storage_v55 import ACTIONS, MAX_STACK, OperandCircuitError, OperandWeights
 from .typed_microop_ir_v57 import EFFECTS, LOCALS_WIDTH, LOCAL_MODES, OPCODES, MicroopAdmissionError
-from .wasm_control_flow_v51 import MAX_NESTING, ControlExecutionTrap, ControlFuelExhausted, _syntax
+from .wasm_control_flow_v51 import (
+    MAX_NESTING, MEMORY_OPCODES, ControlExecutionTrap, ControlFuelExhausted,
+    LinearMemoryTrap, _syntax, uses_memory,
+)
 
 _ERRORS = (
     None,
@@ -48,6 +52,7 @@ _ERRORS = (
     (EventCircuitError, "Noncanonical one-hot frame event"),
     (FrameCircuitError, "Noncanonical one-hot frame output"),
     (ControlExecutionTrap, "Unexpected return stack or target"),
+    (LinearMemoryTrap, "Out of bounds i32 linear memory access"),
 )
 
 # This ordering is the row and coefficient ABI in constructed_alu_v58.cpp.
@@ -66,6 +71,12 @@ def _tensors(weights, layout, error, message):
            for value, (_, size) in zip(values, layout, strict=True)):
         raise error(message)
     return values
+
+
+@dataclass(frozen=True)
+class MemoryWeights:
+    load_gain: int = 1
+    store_gain: int = 1
 
 
 class _NativeMicrostep:
@@ -105,11 +116,14 @@ class _NativeMicrostep:
         self._packed = packed
         self._simd = simd
         self.control_digest = None
+        self.memory_digest = None
         self._structured = structured
         powers = np.ldexp(np.ones(WIDTH), np.arange(WIDTH)) if packed else None
         table = []
         for row in rows:
-            is_data = row.opcode @ data
+            is_data = row.opcode[:len(OPCODES)] @ data
+            if is_data and len(row.effect) > len(EFFECTS) and row.effect[len(EFFECTS)] != 0.:
+                raise MicroopAdmissionError("Data instruction selected a memory store effect")
             if structured and is_data == 0.:
                 table.append(np.zeros(len(EFFECTS) + len(LOCAL_MODES) + len(ALU_OPS) + 1 + LOCALS_WIDTH + 1))
                 continue
@@ -117,7 +131,7 @@ class _NativeMicrostep:
                 raise MicroopAdmissionError("Control opcode outside v58 data microstep")
             literal = (row.immediate_bits @ powers,) if packed else row.immediate_bits
             table.append(np.concatenate((
-                row.effect, row.local_mode, row.alu_selector, literal,
+                row.effect[:len(EFFECTS)], row.local_mode, row.alu_selector, literal,
                 row.local_selector, row.opcode[const:const + 1],
             )))
         self._row_count = len(table)
@@ -147,7 +161,7 @@ class _NativeMicrostep:
         self._visible_locals = visible_locals
         self._router = router  # Owns the buffers borrowed by the native loop.
 
-    def bind_control(self, program, rows, event_fixed, frame_fixed):
+    def bind_control(self, program, rows, event_fixed, frame_fixed, memory_fixed):
         opcodes = ("block", "loop", "if", "else", "end", "br", "br_if", "return", "other")
         if (FRAME_OPCODES, FRAME_ACTIONS, MAX_NESTING) != (
             opcodes, ("retain", "push", "pop", "branch", "return"), 12,
@@ -175,14 +189,32 @@ class _NativeMicrostep:
             raise EventCircuitError("Corrupt opcode action matrix")
         links = _syntax(program)
         flow = []
+        names = (*opcodes, *MEMORY_OPCODES)
+        if uses_memory(program):
+            memory = MemoryWeights() if memory_fixed is None else memory_fixed
+            if not isinstance(memory, MemoryWeights):
+                raise MicroopAdmissionError("Invalid fixed memory coefficients")
+            pair = memory.load_gain, memory.store_gain
+            if any(type(bit) is not int or bit not in (0, 1) for bit in pair):
+                raise MicroopAdmissionError("Expected binary memory gains")
+            self._memory_gains = np.frombuffer(bytes(pair), dtype=np.uint8)
+            self.memory_digest = hashlib.sha256(b"visuaml.v58.memory" + bytes(pair)).hexdigest()
+        powers = np.ldexp(np.ones(WIDTH), np.arange(WIDTH))
         for pc, (op, row) in enumerate(zip(program.operations, rows, strict=True)):
-            code = opcodes.index(op.opcode) if op.opcode in opcodes else opcodes.index("other")
+            code = names.index(op.opcode) if op.opcode in names else opcodes.index("other")
             end, otherwise = links.get(pc, (-1, None))
             target = int(row.branch_depth.argmax()) if op.opcode in ("br", "br_if") else -1
             pops = int(row.effect[2] + row.effect[3] + 2 * row.effect[4])
-            flow.append((code, end, -1 if otherwise is None else otherwise, target, pops))
+            offset = 0
+            if op.opcode in MEMORY_OPCODES:
+                if op.opcode == "i32.load" and row.effect[3] != 1.:
+                    raise MicroopAdmissionError("Load requires the admitted unary effect")
+                if op.opcode == "i32.store":
+                    pops = 2 * int(row.effect[5])
+                offset = int(row.immediate_bits @ powers)
+            flow.append((code, end, -1 if otherwise is None else otherwise, target, pops, offset))
         self._control_arrays = (
-            np.frombuffer(np.array(flow, dtype=np.int32).tobytes(), dtype=np.int32),
+            np.frombuffer(np.array(flow, dtype=np.int64).tobytes(), dtype=np.int64),
             defaults, conditional, gains,
         )
         self._control_pointers = tuple(array.ctypes.data for array in self._control_arrays)
@@ -222,9 +254,16 @@ class _NativeMicrostep:
 
         return value, steps, self._trace(steps, states, routes)
 
-    def _trace(self, steps, states, routes, frames=None):
+    def run_memory(self, argument, fuel, capture_trace, page):
+        result = next(self.run_many((argument,), (fuel,), capture_trace, memory=page))
+        if isinstance(result, Exception):
+            raise result
+        return result
+
+    def _trace(self, steps, states, routes, frames=None, memory=None):
         count = len(self._opcodes)
         records = []
+        accesses = memory[:steps].tolist() if memory is not None else None
         frame_rows = frames[:steps].tolist() if frames is not None else None
         for tick, (state, route) in enumerate(zip(
             states[:steps].tolist(), routes[:steps].tolist(), strict=True,
@@ -254,10 +293,18 @@ class _NativeMicrostep:
                 record["control_frames"] = active
                 record["neural_frame_event"] = frame[0]
                 record["halted"] = next_pc == TERMINAL and tick == steps - 1
+            if accesses is not None:
+                access = None
+                if self._opcodes[pc] in MEMORY_OPCODES:
+                    address, before, after = accesses[tick]
+                    access = {"kind": self._opcodes[pc], "address": address,
+                              "before_hex": before.to_bytes(4, "little").hex(),
+                              "after_hex": after.to_bytes(4, "little").hex()}
+                record["memory_access"] = access
             records.append(record)
         return tuple(records)
 
-    def run_many(self, arguments, fuels, capture_trace):
+    def run_many(self, arguments, fuels, capture_trace, *, memory=None):
         """Yield outcomes for admitted inputs after one native batch call."""
         size = len(arguments)
         arguments = np.asarray(arguments, dtype=np.int32)
@@ -267,7 +314,12 @@ class _NativeMicrostep:
         count = len(self._opcodes)
         stride = 0
         state_pointer = route_pointer = frame_pointer = None
-        frames = None
+        frames = memory_trace = None
+        memory_pointer = memory_gains_pointer = access_pointer = None
+        if memory is not None:
+            memory_buffer = np.frombuffer(memory, dtype=np.uint8)
+            memory_pointer = memory_buffer.ctypes.data
+            memory_gains_pointer = self._memory_gains.ctypes.data
         if capture_trace:
             stride = max(fuels) if self._structured else min(max(fuels), count)
             states = np.zeros((size, stride, 2 + MAX_STACK + self._visible_locals), dtype=np.int32)
@@ -276,6 +328,9 @@ class _NativeMicrostep:
             if self._structured:
                 frames = np.zeros((size, stride, 2 + 2 * MAX_NESTING), dtype=np.int32)
                 frame_pointer = frames.ctypes.data
+            if memory is not None:
+                memory_trace = np.zeros((stride, 3), dtype=np.uint32)
+                access_pointer = memory_trace.ctypes.data
         common = (
             arguments.ctypes.data, limits.ctypes.data, size,
             count, TERMINAL, self._visible_locals, stride,
@@ -283,7 +338,10 @@ class _NativeMicrostep:
         )
         outputs = (results.ctypes.data, statuses.ctypes.data, state_pointer, route_pointer)
         if self._structured:
-            self._structured_batch(*common, *self._control_pointers, *outputs, frame_pointer)
+            self._structured_batch(
+                *common, *self._control_pointers, *outputs, frame_pointer,
+                memory_pointer, memory_gains_pointer, access_pointer,
+            )
         else:
             self._batch(*common, *outputs, self._packed, self._simd)
         for i, (status, (value, steps)) in enumerate(zip(statuses.tolist(), results.tolist(), strict=True)):
@@ -292,7 +350,9 @@ class _NativeMicrostep:
             else:
                 trace = ()
                 if capture_trace:
-                    trace = self._trace(steps, states[i], routes[i], frames[i] if frames is not None else None)
+                    trace = self._trace(
+                        steps, states[i], routes[i], frames[i] if frames is not None else None, memory_trace,
+                    )
                 yield value, steps, trace
 
 

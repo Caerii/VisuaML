@@ -70,7 +70,7 @@ def compiled_alu():
         prepared_simd_available.argtypes = ()
         prepared_simd_available.restype = ctypes.c_bool
         structured_batch = library.visuaml_structured_batch
-        structured_batch.argtypes = (_P, _P, *((ctypes.c_size_t,) * 5), *((_P,) * 16))
+        structured_batch.argtypes = (_P, _P, *((ctypes.c_size_t,) * 5), *((_P,) * 19))
         structured_batch.restype = None
     return CompiledAlu(function, route, indexed_route, data_microstep, prepared_loop, prepared_batch,
                        prepared_simd_available, structured_batch,

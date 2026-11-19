@@ -75,7 +75,7 @@ from .wasm_control_flow_v51 import (
     ControlFuelExhausted,
     ControlProgram,
     _syntax,
-    encode_control,
+    encode_control, uses_memory,
 )
 
 
@@ -139,6 +139,8 @@ def execute_microop_routed_control(
     Host still dispatches opcode arithmetic and carries lexical PC metadata.
     """
     _syntax(program)
+    if uses_memory(program):
+        raise ControlAdmissionError("Memory execution requires the packed v58 executor")
     if type(fuel) is not int or not 1 <= fuel <= MAX_FUEL:
         raise ControlAdmissionError("Invalid execution fuel")
     tokens = compile_route_tokens(program) if tokens is None else tokens
@@ -181,7 +183,7 @@ def execute_microop_routed_control(
         if pc == TERMINAL or pc >= count:
             raise ControlExecutionTrap("Reached terminal without WASM return")
         op = program.operations[pc]
-        kind, imm = op.opcode, op.immediate
+        kind = op.opcode
         microop = read_microop(pc_vector, microop_tokens, microop_fixed)
         # Condition is read from the ACTUAL binary neural stack before
         # consuming the operand. The gate itself is independent of host

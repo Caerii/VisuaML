@@ -17,7 +17,7 @@ from .bit_neural_vm_v49 import (
     _bits, _int, _validate_i32, BitCircuitWeights, construct_bit_weights,
 )
 from .compact_routing_v58 import CompactRouter
-from .native_microstep_v58 import _NativeMicrostep
+from .native_microstep_v58 import MemoryWeights, _NativeMicrostep
 from .neural_frame_circuit_v53 import FrameCircuitWeights
 from .neural_frame_events_v54 import EventWeights
 from .neural_alu_v56 import ALUWeights, construct_alu_weights
@@ -41,8 +41,8 @@ from .typed_microop_ir_v57 import (
     validate_microop_tokens,
 )
 from .wasm_control_flow_v51 import (
-    MAX_FUEL, ControlAdmissionError, ControlExecutionTrap,
-    ControlFuelExhausted, ControlProgram, _syntax, encode_control,
+    MAX_FUEL, MEMORY_BYTES, ControlAdmissionError, ControlExecutionTrap,
+    ControlFuelExhausted, ControlProgram, _syntax, encode_control, uses_memory,
 )
 
 
@@ -64,6 +64,7 @@ class MicrostepExecution:
     host_structural_end: bool = True
     data_effects_driven_by_microstep: bool = True
     structured_control_sha256: str | None = None
+    memory_weights_sha256: str | None = None
 
 
 @dataclass(frozen=True)
@@ -165,6 +166,9 @@ def _prepare(
     if type(use_fused_state) is not bool:
         raise MicrostepAdmissionError("use_fused_state must be a boolean")
     _syntax(program)
+    memory = uses_memory(program)
+    if memory and not structured_control:
+        raise MicrostepAdmissionError("Linear memory requires packed structured control")
     if not structured_control and any(
         op.opcode in ("block", "loop", "if", "else", "br", "br_if", "return")
         for op in program.operations[:-1]
@@ -185,7 +189,7 @@ def _prepare(
     pc_fixed = construct_router_weights() if pc_fixed is None else pc_fixed
     bit_fixed = construct_bit_weights() if bit_fixed is None else bit_fixed
     microop_fixed = (
-        construct_microop_weights() if microop_fixed is None
+        construct_microop_weights(include_memory=memory) if microop_fixed is None
         else microop_fixed
     )
     indexed = IndexedMicroops(program, program_tokens, microop_fixed) if use_indexed_pc else None
@@ -279,6 +283,7 @@ class PreparedMicrostepProgram:
         use_structured_control: bool = False,
         event_fixed: EventWeights | None = None,
         frame_fixed: FrameCircuitWeights | None = None,
+        memory_fixed: MemoryWeights | None = None,
         tokens: ControlRouteTokens | None = None,
         program_tokens: ProgramMicroopTokens | None = None,
         pc_fixed: ControlRouterWeights | None = None,
@@ -317,6 +322,8 @@ class PreparedMicrostepProgram:
             local_fixed=local_fixed, operand_fixed=operand_fixed, reusable=True, structured_control=use_structured_control,
         )
 
+        if memory_fixed is not None and not uses_memory(inputs.program):
+            raise MicrostepAdmissionError("Memory coefficients require a memory instruction")
         if use_native_microstep or use_native_loop:
             native = _NativeMicrostep(
                 inputs.rows, inputs.microstep_fixed, inputs.operand_fixed,
@@ -326,7 +333,7 @@ class PreparedMicrostepProgram:
             if use_native_loop:
                 native.bind_loop(inputs.program, inputs.compact)
             if use_structured_control:
-                native.bind_control(inputs.program, inputs.rows, event_fixed, frame_fixed)
+                native.bind_control(inputs.program, inputs.rows, event_fixed, frame_fixed, memory_fixed)
             inputs = replace(inputs, native_microstep=native, rows=None, native_loop=use_native_loop)
         self._inputs = inputs
 
@@ -334,8 +341,32 @@ class PreparedMicrostepProgram:
         self, argument: int, *, fuel: int = 400, capture_trace: bool = True,
     ) -> MicrostepExecution:
         _validate_run_options(fuel, capture_trace)
+        if self._inputs.native_microstep and self._inputs.native_microstep.memory_digest:
+            raise MicrostepAdmissionError("Memory programs require run_memory")
         return _run(self._inputs, argument, fuel, capture_trace)
 
+    def run_memory(
+        self, argument: int, memory: bytearray, *, fuel: int = 400, capture_trace: bool = True,
+    ) -> MicrostepExecution:
+        """Execute against one page, committing completed stores even when a later instruction traps."""
+        _validate_run_options(fuel, capture_trace)
+        native = self._inputs.native_microstep
+        if native is None or native.memory_digest is None:
+            raise MicrostepAdmissionError("run_memory requires a prepared memory program")
+        _validate_i32(argument)
+        if type(memory) is not bytearray or len(memory) != MEMORY_BYTES:
+            raise MicrostepAdmissionError("Expected a bytearray with one WASM memory page")
+        page = bytearray(memory)
+        if len(page) != MEMORY_BYTES:
+            raise MicrostepAdmissionError("Expected a bytearray with one WASM memory page")
+        try:
+            value, steps, trace = native.run_memory(argument, fuel, capture_trace, page)
+        finally:
+            memory[:] = page
+        return MicrostepExecution(
+            value, trace, steps, *self._inputs.provenance,
+            structured_control_sha256=native.control_digest, memory_weights_sha256=native.memory_digest,
+        )
 
     def run_many(
         self, arguments: Iterable[int], *, fuel: int | Iterable[int] = 400,
@@ -350,6 +381,8 @@ class PreparedMicrostepProgram:
         inputs = self._inputs
         if not inputs.native_loop:
             raise MicrostepAdmissionError("Batch execution requires use_native_loop=True")
+        if inputs.native_microstep.memory_digest:
+            raise MicrostepAdmissionError("Memory programs require run_memory")
         if type(capture_trace) is not bool:
             raise MicrostepAdmissionError("capture_trace must be a boolean")
         arguments = tuple(arguments)

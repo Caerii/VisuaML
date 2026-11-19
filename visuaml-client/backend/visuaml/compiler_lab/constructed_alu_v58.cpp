@@ -185,7 +185,7 @@ enum Status {
     micro_binary, alu_binary, alu_selection, local_onehot, local_binary,
     local_read, local_write, stack_authority, route_binary, route_selection,
     early_terminal, final_stack, fuel_exhausted, trace_capacity,
-    control_effect, control_frame, control_event, frame_gain, invalid_return,
+    control_effect, control_frame, control_event, frame_gain, invalid_return, memory_oob,
 };
 
 bool binary_tensor(const double* values, std::size_t count) {
@@ -724,11 +724,62 @@ extern "C" void visuaml_prepared_batch(
 
 namespace {
 // Coordinates from v54 event tokens and v53 one-hot frame states.
-enum ControlOp { block_op, loop_op, if_op, else_op, end_op, br_op, br_if_op, return_op, data_op };
+enum ControlOp { block_op, loop_op, if_op, else_op, end_op, br_op, br_if_op, return_op, data_op, load_op, store_op };
 enum FrameAction { keep_frame, push_frame, pop_frame, jump_frame, return_frame };
 constexpr int frame_actions = 5;
-constexpr int control_fields = 5;
+constexpr int control_fields = 6;
 constexpr int frame_fields = 2 + 2 * prepared_frame_limit;
+constexpr int memory_fields = 3;
+constexpr std::uint64_t memory_bytes = 65536;
+
+int memory_step(int opcode, const std::int64_t* instruction, const double* action,
+                std::uint32_t* cells, std::size_t& depth, std::uint8_t* memory,
+                const std::uint8_t* gains, std::uint32_t* trace) {
+    const bool store = opcode == store_op;
+    const std::size_t pops = store ? 2 : 1;
+    if (instruction[4] != static_cast<std::int64_t>(pops)) {
+        return control_effect;
+    }
+    if (depth < pops) {
+        return underflow;
+    }
+    if (!binary_tensor(action, 4)) {
+        return operand_binary;
+    }
+    if (action[2] != 1.0 || (!store && action[1] != 1.0)) {
+        return operand_onehot;
+    }
+    // WASM memory32 uses an unsigned input address plus an unsigned offset
+    // in a widened sum. Admission precedes all byte reads and writes.
+    const auto address = std::uint64_t{cells[depth - pops]} + instruction[5];
+    if (!memory || address > memory_bytes - 4) {
+        return memory_oob;
+    }
+    auto word = memory + address;
+    std::uint32_t before = 0;
+    for (int i = 0; i < 4; ++i) {
+        before |= std::uint32_t{word[i]} << (8 * i);
+    }
+    auto after = before;
+    if (store) {
+        if (gains[1]) {
+            after = cells[depth - 1];
+            for (int i = 0; i < 4; ++i) {
+                word[i] = static_cast<std::uint8_t>(after >> (8 * i));
+            }
+        }
+        cells[--depth] = 0;
+        cells[--depth] = 0;
+    } else {
+        cells[depth - 1] = gains[0] ? before : 0;
+    }
+    if (trace) {
+        trace[0] = static_cast<std::uint32_t>(address);
+        trace[1] = before;
+        trace[2] = after;
+    }
+    return ok;
+}
 
 struct ActiveFrame {
     std::size_t pc;
@@ -758,9 +809,10 @@ int structured_loop(
         std::int32_t argument, std::size_t fuel, std::size_t count, std::size_t terminal,
         std::size_t visible_locals, const double* rows, const double* fixed,
         const std::int32_t* targets, const double* guards, const double* guard_weights,
-        const double* path_weights, const std::int32_t* flow, const double* event_defaults,
+        const double* path_weights, const std::int64_t* flow, const double* event_defaults,
         const double* event_gains, const double* frame_gains, std::int32_t* result,
-        std::int32_t* trace_states, double* trace_routes, std::int32_t* trace_frames) {
+        std::int32_t* trace_states, double* trace_routes, std::int32_t* trace_frames,
+        std::uint8_t* memory, const std::uint8_t* memory_gains, std::uint32_t* trace_memory) {
     std::uint32_t cells[prepared_stack_size] = {}, locals[prepared_locals_size] = {};
     ActiveFrame frames[prepared_frame_limit];
     locals[0] = static_cast<std::uint32_t>(argument);
@@ -784,6 +836,13 @@ int structured_loop(
         if (opcode == data_op) {
             const auto status = data_microstep_at_depth(
                 pc, prepared_stack_size, prepared_locals_size, rows, fixed, depth, cells, locals);
+            if (status) {
+                return status;
+            }
+        } else if (opcode == load_op || opcode == store_op) {
+            auto access = trace_memory ? trace_memory + tick * memory_fields : nullptr;
+            const auto status = memory_step(opcode, instruction, fixed + actions, cells, depth,
+                                            memory, memory_gains, access);
             if (status) {
                 return status;
             }
@@ -828,7 +887,7 @@ int structured_loop(
         }
 
         const int action = select_frame_event(
-            event_defaults, event_gains, opcode, instruction[2] >= 0,
+            event_defaults, event_gains, opcode > data_op ? data_op : opcode, instruction[2] >= 0,
             next == route[3], frame_count != 0, route[2] != 0.0);
         if (action < 0) {
             return control_event;
@@ -900,9 +959,10 @@ extern "C" void visuaml_structured_batch(
         std::size_t count, std::size_t terminal, std::size_t visible_locals, std::size_t trace_stride,
         const double* rows, const double* fixed, const std::int32_t* targets, const double* guards,
         const double* guard_weights, const double* path_weights, const double*,
-        const std::int32_t* flow, const double* event_defaults, const double* event_gains,
+        const std::int64_t* flow, const double* event_defaults, const double* event_gains,
         const double* frame_gains, std::int32_t* results, std::int32_t* statuses,
-        std::int32_t* trace_states, double* trace_routes, std::int32_t* trace_frames) {
+        std::int32_t* trace_states, double* trace_routes, std::int32_t* trace_frames,
+        std::uint8_t* memory, const std::uint8_t* memory_gains, std::uint32_t* trace_memory) {
     const auto state_stride = trace_stride * (2 + prepared_stack_size + visible_locals);
     for (std::size_t i = 0; i < size; ++i) {
         statuses[i] = structured_loop(
@@ -910,6 +970,7 @@ extern "C" void visuaml_structured_batch(
             targets, guards, guard_weights, path_weights, flow, event_defaults, event_gains, frame_gains,
             results + i * 2, trace_states ? trace_states + i * state_stride : nullptr,
             trace_routes ? trace_routes + i * trace_stride * 5 : nullptr,
-            trace_frames ? trace_frames + i * trace_stride * frame_fields : nullptr);
+            trace_frames ? trace_frames + i * trace_stride * frame_fields : nullptr,
+            memory, memory_gains, trace_memory);
     }
 }

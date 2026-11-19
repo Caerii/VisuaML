@@ -55,6 +55,12 @@ MAX_FUEL = 2000
 MAX_NESTING = 12
 MAX_STACK = 24
 MAX_LOCALS = 4
+MEMORY_BYTES = 65536
+MEMORY_OPCODES = ("i32.load", "i32.store")
+_MEMORY_CODES = {0x28: MEMORY_OPCODES[0], 0x36: MEMORY_OPCODES[1]}
+_MEMORY_ENCODING = {name: code for code, name in _MEMORY_CODES.items()}
+_MEMORY_SECTION = b"\x01\x01\x01\x01"  # one memory, minimum and maximum one page
+_MEMORY_EXPORT = b"\x02" + _EXPORT_PAYLOAD[1:] + b"\x06memory\x02\x00"
 
 _CODES = {
     0x01: "nop",
@@ -66,6 +72,7 @@ _CODES = {
     0x6B: "i32.sub", 0x6C: "i32.mul",
 }
 _OPCODES = {name: code for code, name in _CODES.items()}
+_ADMITTED_NAMES = frozenset((*_OPCODES, *MEMORY_OPCODES))
 _BLOCKS = frozenset(("block", "loop", "if"))
 _LOCALS = frozenset(("local.get", "local.set", "local.tee"))
 _BINARY = frozenset(("i32.add", "i32.sub", "i32.mul", "i32.lt_s", "i32.gt_s"))
@@ -79,14 +86,24 @@ class ControlExecutionTrap(RuntimeError):
     """Runtime stack/control error in the admitted bounded machine."""
 
 
+class LinearMemoryTrap(ControlExecutionTrap):
+    """A bounded linear memory access exceeded the admitted page."""
+
+
 class ControlFuelExhausted(ControlExecutionTrap):
     """Bounded nontermination witness, NOT a WASM language trap."""
 
 
 @dataclass(frozen=True)
+class MemoryArgument:
+    offset: int = 0
+    align: int = 2
+
+
+@dataclass(frozen=True)
 class ControlOperation:
     opcode: str
-    immediate: int | None = None
+    immediate: int | MemoryArgument | None = None
 
 
 @dataclass(frozen=True)
@@ -120,6 +137,10 @@ class ControlResult:
     host_control_routing: bool = True
 
 
+def uses_memory(program: ControlProgram) -> bool:
+    return any(op.opcode in MEMORY_OPCODES for op in program.operations)
+
+
 def _syntax(program: ControlProgram) -> dict[int, tuple[int, int | None]]:
     if (not isinstance(program, ControlProgram) or program.schema != SCHEMA
             or type(program.local_count) is not int
@@ -131,7 +152,7 @@ def _syntax(program: ControlProgram) -> dict[int, tuple[int, int | None]]:
     links: dict[int, tuple[int, int | None]] = {}
     terminal = -1
     for pc, op in enumerate(program.operations):
-        if not isinstance(op, ControlOperation) or op.opcode not in _OPCODES:
+        if not isinstance(op, ControlOperation) or op.opcode not in _ADMITTED_NAMES:
             raise ControlAdmissionError("Unsupported structured instruction")
         name, imm = op.opcode, op.immediate
         if name in _BLOCKS:
@@ -166,6 +187,11 @@ def _syntax(program: ControlProgram) -> dict[int, tuple[int, int | None]]:
         elif name == "i32.const":
             if type(imm) is not int or not -(1 << 31) <= imm < (1 << 31):
                 raise ControlAdmissionError("Non-i32 immediate")
+        elif name in MEMORY_OPCODES:
+            if (type(imm) is not MemoryArgument or type(imm.offset) is not int
+                    or not 0 <= imm.offset < 1 << 32 or type(imm.align) is not int
+                    or not 0 <= imm.align <= 2):
+                raise ControlAdmissionError("Invalid i32 memory alignment or offset")
         elif imm is not None:
             raise ControlAdmissionError("Unexpected instruction immediate")
     if terminal != len(program.operations) - 1 or stack:
@@ -182,6 +208,10 @@ def encode_control(program: ControlProgram) -> bytes:
     else:
         body.extend(_u32(0))
     for operation in program.operations:
+        if operation.opcode in MEMORY_OPCODES:
+            body.append(_MEMORY_ENCODING[operation.opcode])
+            body.extend(_u32(operation.immediate.align) + _u32(operation.immediate.offset))
+            continue
         body.append(_OPCODES[operation.opcode])
         if operation.opcode in _BLOCKS:
             body.append(0x40)
@@ -194,9 +224,11 @@ def encode_control(program: ControlProgram) -> bytes:
     def section(kind: int, data: bytes) -> bytes:
         return bytes((kind,)) + _u32(len(data)) + data
 
+    memory = uses_memory(program)
     return (MAGIC + section(1, _TYPE_PAYLOAD)
             + section(3, _FUNCTION_PAYLOAD)
-            + section(7, _EXPORT_PAYLOAD)
+            + (section(5, _MEMORY_SECTION) if memory else b"")
+            + section(7, _MEMORY_EXPORT if memory else _EXPORT_PAYLOAD)
             + section(10, code))
 
 
@@ -204,13 +236,16 @@ def decode_control(raw: bytes) -> ControlProgram:
     """Parse exact canonical v51 subset, rejecting ALL other WASM modules."""
     try:
         chunks = parse_section_envelope(raw)
-        if [section.section_id for section in chunks] != [1, 3, 7, 10]:
-            raise ControlAdmissionError("Only four reviewed standard sections admitted")
-        if (chunks[0].payload != _TYPE_PAYLOAD
-                or chunks[1].payload != _FUNCTION_PAYLOAD
-                or chunks[2].payload != _EXPORT_PAYLOAD):
-            raise ControlAdmissionError("Expected only run(i32)->i32 export")
-        data = chunks[3].payload
+        ids = [section.section_id for section in chunks]
+        memory = ids == [1, 3, 5, 7, 10]
+        if not memory and ids != [1, 3, 7, 10]:
+            raise ControlAdmissionError("Only reviewed standard sections admitted")
+        payloads = {section.section_id: section.payload for section in chunks}
+        if (payloads[1] != _TYPE_PAYLOAD or payloads[3] != _FUNCTION_PAYLOAD
+                or payloads[7] != (_MEMORY_EXPORT if memory else _EXPORT_PAYLOAD)
+                or (memory and payloads[5] != _MEMORY_SECTION)):
+            raise ControlAdmissionError("Expected reviewed run export and optional one-page memory")
+        data = payloads[10]
         n, pos = _read_u32(data, 0)
         length, pos = _read_u32(data, pos)
         if n != 1 or pos + length != len(data):
@@ -230,7 +265,7 @@ def decode_control(raw: bytes) -> ControlProgram:
         while pos < len(data):
             code = data[pos]
             pos += 1
-            name = _CODES.get(code)
+            name = _CODES.get(code) or (_MEMORY_CODES.get(code) if memory else None)
             if name is None:
                 raise ControlAdmissionError("Unknown or excluded WASM instruction byte")
             imm = None
@@ -242,6 +277,10 @@ def decode_control(raw: bytes) -> ControlProgram:
                 imm, pos = _read_u32(data, pos)
             elif name == "i32.const":
                 imm, pos = _read_s32(data, pos)
+            elif name in MEMORY_OPCODES:
+                align, pos = _read_u32(data, pos)
+                offset, pos = _read_u32(data, pos)
+                imm = MemoryArgument(offset, align)
             ops.append(ControlOperation(name, imm))
             if len(ops) > MAX_OPERATIONS:
                 raise ControlAdmissionError("Instruction count exceeded")
@@ -271,6 +310,8 @@ def execute_control(
     control flow; the v49 numeric gates implement all i32 arithmetic.
     """
     links = _syntax(program)
+    if uses_memory(program):
+        raise ControlAdmissionError("Memory execution requires the packed v58 executor")
     if type(fuel) is not int or not 1 <= fuel <= MAX_FUEL:
         raise ControlAdmissionError("Unbounded or invalid execution fuel")
     fixed = construct_bit_weights() if fixed is None else fixed
