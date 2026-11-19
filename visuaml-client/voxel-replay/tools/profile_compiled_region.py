@@ -34,10 +34,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("case", choices=("sparse", "crowded", "bfs", "sudoku"))
     parser.add_argument("--compiled", action="store_true")
+    parser.add_argument("--retain", choices=("off", "copy", "resident"), default="off")
     args = parser.parse_args()
     case = workload(args.case)
     settings = dict(prepare_operand_pop=True, prepare_alu=True, prepare_mul=True,
-                    prepare_regions=True, prepare_local_region=True, use_compiled_frame_event=args.compiled)
+                    prepare_regions=True, prepare_local_region=True, use_compiled_frame_event=args.compiled,
+                    compiled_frame_retain=args.retain)
     with patch("visuaml.compiler_lab.neural_microstep_executor_v58._NativeMicrostep",
                side_effect=AssertionError("Unexpected packed fallback")):
         expected = run(case, [], None, **settings)
@@ -78,7 +80,7 @@ def main():
                 for (path, _, label), (_, count, own, cumulative, _) in stats.stats.items()
                 if Path(path).name == file and label == name}
     print(json.dumps({"case": args.case, "environment": environment(), "profile_s": stats.total_tt,
-                      "hotspots": selected, "memory_body_line_trace_ns": memory_ns}, indent=2))
+                      "retain": args.retain, "hotspots": selected, "memory_body_line_trace_ns": memory_ns}, indent=2))
 
 
 if __name__ == "__main__":

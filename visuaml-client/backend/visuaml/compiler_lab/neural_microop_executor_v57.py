@@ -20,7 +20,7 @@ from .bit_neural_vm_v49 import (
     _int,
     construct_bit_weights,
 )
-from .compiled_frame_event_v58 import CompiledFrameEvents
+from .compiled_frame_event_v58 import CompiledFrameEvents, _CompiledFrameRetain
 from .neural_alu_v56 import (
     ALUWeights,
     construct_alu_weights,
@@ -117,6 +117,7 @@ class FrameRoutedResult:
     fixed_event_weight_digest: str = ""
     backend: str = "v57-structured-numpy"
     compiled_frame_event_sha256: str | None = None
+    compiled_frame_retain_mode: str | None = None
 
 
 def _event_digest(weights: EventWeights) -> str:
@@ -224,6 +225,7 @@ def execute_microop_routed_control(
     prepare_regions: bool = True,
     prepare_local_region: bool = True,
     use_compiled_frame_event: bool = False,
+    compiled_frame_retain: str = "off",
 ) -> FrameRoutedResult:
     """Execute with fixed-weight routing and frame operations.
 
@@ -235,7 +237,8 @@ def execute_microop_routed_control(
     Custom tokens or weights use the checked stack and full-candidate ALU.
     Prepared multiply and untraced const/add regions can be disabled
     independently for differential execution. The opt-in compiled event
-    gate is used only by the canonical untraced array profile.
+    gate is used only by the canonical untraced array profile. Its optional
+    copy and resident retain modes keep frame slabs private to the run.
 
     v53 gate output owns frame depths and branch operand-stack restoration.
     Host still dispatches opcode arithmetic and carries lexical PC metadata.
@@ -248,6 +251,8 @@ def execute_microop_routed_control(
         raise ControlAdmissionError("Prepared multiply and region options must be booleans")
     if type(use_compiled_frame_event) is not bool:
         raise ControlAdmissionError("use_compiled_frame_event must be a boolean")
+    if type(compiled_frame_retain) is not str or compiled_frame_retain not in ("off", "copy", "resident"):
+        raise ControlAdmissionError("Invalid compiled_frame_retain mode")
     links = _syntax(program)
     memory = uses_memory(program)
     array_mode = array_memory is not None
@@ -328,10 +333,16 @@ def execute_microop_routed_control(
     # Memory operations retain the current control frame, as nop does.
     opcode_tokens = tuple(decode_opcode_token("nop" if op.opcode in MEMORY_OPCODES else op.opcode)
                           for op in program.operations)
-    compiled_event = (
-        CompiledFrameEvents(opcode_tokens, event_fixed)
-        if canonical_array and not capture_trace and use_compiled_frame_event else None
-    )
+    compiled_event = None
+    fused_frame = None
+    if canonical_array and not capture_trace and use_compiled_frame_event:
+        if compiled_frame_retain == "off":
+            compiled_event = CompiledFrameEvents(opcode_tokens, event_fixed)
+        else:
+            fused_frame = _CompiledFrameRetain(opcode_tokens, event_fixed, frame_state,
+                                             resident=compiled_frame_retain == "resident")
+            compiled_event = fused_frame
+            frame_state = fused_frame.state
     records = []
     count = len(program.operations)
 
@@ -523,25 +534,34 @@ def execute_microop_routed_control(
             raise ControlExecutionTrap("Gate emitted unsupported frame enter")
         if action == 3 and branch_depth is None:
             raise ControlExecutionTrap("Gate emitted branch without depth token")
-        event_tokens = FrameTokens(
-            event_vector,
-            _frame_optional(entry_kind, KINDS),
-            _frame_optional(entry_base, HEIGHTS),
-            _frame_optional(branch_depth, MAX_NESTING),
-            frame_onehot(len(stack), HEIGHTS),
-        )
-        frame_state, restored = step_frames(frame_state, event_tokens, frame_fixed)
-        depth_after = int(np.argmax(frame_state.depth))
-        if action == 3:
-            restored_height = int(np.argmax(restored))
-            if restored_height > len(stack):
-                raise ControlExecutionTrap("Neural restoration beyond live operands")
-            # The actual data stack is trimmed using the constructed output,
-            # not a host-selected dynamic branch-frame base.
-            del stack[restored_height:]
-        frame_meta = frame_meta[:depth_after]
-        if action == 1:
-            frame_meta.append(entering_metadata)
+        if fused_frame is not None and action == 0:
+            # Unit retain preserves depth and lexical metadata. The v53
+            # returned height would be the live height and is unused here.
+            frame_state = fused_frame.state
+            depth_after = depth_before
+        else:
+            event_tokens = FrameTokens(
+                event_vector,
+                _frame_optional(entry_kind, KINDS),
+                _frame_optional(entry_base, HEIGHTS),
+                _frame_optional(branch_depth, MAX_NESTING),
+                frame_onehot(len(stack), HEIGHTS),
+            )
+            frame_state, restored = step_frames(frame_state, event_tokens, frame_fixed)
+            depth_after = int(np.argmax(frame_state.depth))
+            if action == 3:
+                restored_height = int(np.argmax(restored))
+                if restored_height > len(stack):
+                    raise ControlExecutionTrap("Neural restoration beyond live operands")
+                # The actual data stack is trimmed using the constructed output,
+                # not a host-selected dynamic branch-frame base.
+                del stack[restored_height:]
+            frame_meta = frame_meta[:depth_after]
+            if action == 1:
+                frame_meta.append(entering_metadata)
+            if fused_frame is not None:
+                fused_frame.publish_checked(frame_state)
+                frame_state = fused_frame.state
         if len(frame_meta) != depth_after:
             raise ControlExecutionTrap("Frame metadata not aligned to circuit depth")
         if len(stack) > MAX_STACK:
@@ -591,6 +611,7 @@ def execute_microop_routed_control(
                 fixed_microop_weights_sha256=microop_fixed.digest(),
                 backend="v58-structured-numpy-memory" if array_mode else "v57-structured-numpy",
                 compiled_frame_event_sha256=compiled_event.binary_sha256 if compiled_event else None,
+                compiled_frame_retain_mode=compiled_frame_retain if fused_frame is not None else None,
             )
         tick += 1
     error = ControlFuelExhausted(f"Explicit bounded fuel exhausted after {fuel} neural-routed transitions")

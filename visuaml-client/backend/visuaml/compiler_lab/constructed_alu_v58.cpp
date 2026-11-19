@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <cmath>
 #include <cstddef>
+#include <cstring>
 #include <type_traits>
 
 #if defined(__x86_64__) && (defined(__GNUC__) || defined(__clang__))
@@ -117,6 +118,21 @@ extern "C" int visuaml_frame_event_gate(
         }
     }
     return selected;
+}
+
+// The v53 unit-retain contraction is the identity on the three frame
+// tensors. The copying arm materializes that identity in a second buffer.
+// An absent destination retains the private input representation in place.
+extern "C" int visuaml_frame_event_retain(
+        const double* row, bool sequential, bool has_else, bool frame_active,
+        bool branch_taken, double* event, const double* state, double* destination,
+        std::size_t elements) {
+    const int action = visuaml_frame_event_gate(
+        row, sequential, has_else, frame_active, branch_taken, event);
+    if (action == 0 && destination != nullptr) {
+        std::memcpy(destination, state, elements * sizeof(double));
+    }
+    return action;
 }
 
 namespace {
