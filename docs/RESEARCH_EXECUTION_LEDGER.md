@@ -381,3 +381,12 @@ unused arithmetic candidates. Paired terrain, complete BFS, and
 one-blank Sudoku replays improved under the same prepared-pop
 baseline. Exact pages, traces, fuel and traps were retained.
 [ALU profiles, work counts, and raw replay timings](../visuaml-client/voxel-replay/evidence/prepared-alu/README.md)
+
+## v58 prepared instruction regions
+
+Prepared multiply, a source-bound const/add pair, and an adjacent
+local-read extension were measured separately. The regions retain
+the original live fixed gates and materialize just the final stack
+state. Terrain, full BFS, and Sudoku retained exact pages and source
+steps, with reference traces at every tested fuel boundary.
+[Region profiles, dispatch counters, and paired samples](../visuaml-client/voxel-replay/evidence/prepared-regions/README.md)

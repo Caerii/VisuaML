@@ -1,0 +1,108 @@
+{
+  "baseline": "d1ff1df5432fc299c4fab0054ac310226e95c186",
+  "workload": "bfs",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "binary_sha256": "7726937328d9d66462c3ff4838e732549bd983b23f4e8cd26eeae0edf696b63f",
+  "measured_sets_after_warmup": 2,
+  "samples": {
+    "region": [
+      {
+        "pre_execution_ns": 1609569,
+        "execution_ns": 15523610205,
+        "steps": 41591,
+        "module_preparation_ns": 2652946,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+        "set": 1
+      },
+      {
+        "pre_execution_ns": 1642611,
+        "execution_ns": 14714483461,
+        "steps": 41591,
+        "module_preparation_ns": 2652946,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+        "set": 2
+      }
+    ],
+    "local_region": [
+      {
+        "pre_execution_ns": 1816722,
+        "execution_ns": 14088061377,
+        "steps": 41591,
+        "module_preparation_ns": 2652946,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+        "set": 1
+      },
+      {
+        "pre_execution_ns": 1654247,
+        "execution_ns": 14339071362,
+        "steps": 41591,
+        "module_preparation_ns": 2652946,
+        "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+        "set": 2
+      }
+    ]
+  },
+  "world_logs": null,
+  "counter_pass": {
+    "region": {
+      "steps": 4000,
+      "regions": 215,
+      "local_regions": 0,
+      "route_calls": 3570,
+      "frame_event_calls": 3570,
+      "checked_operand_transitions": 2907,
+      "unit_pop_copies": 2715,
+      "generic_alu_calls": 192,
+      "prepared_alu_calls": 1039,
+      "alu_candidates": 2191
+    },
+    "local_region": {
+      "steps": 4000,
+      "regions": 13,
+      "local_regions": 202,
+      "route_calls": 3368,
+      "frame_event_calls": 3368,
+      "checked_operand_transitions": 2907,
+      "unit_pop_copies": 2715,
+      "generic_alu_calls": 192,
+      "prepared_alu_calls": 1039,
+      "alu_candidates": 2191
+    }
+  },
+  "summary": {
+    "region": {
+      "samples": 2,
+      "median_ms": 15119.046833,
+      "p95_ms": 15523.610205,
+      "pre_execution_median_ms": 1.62609,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        41591
+      ]
+    },
+    "local_region": {
+      "samples": 2,
+      "median_ms": 14213.5663695,
+      "p95_ms": 14339.071362,
+      "pre_execution_median_ms": 1.7354845,
+      "agent_ticks_per_second": null,
+      "steps_per_sample": [
+        41591
+      ]
+    }
+  }
+}
