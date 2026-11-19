@@ -87,10 +87,12 @@ def workload(name):
     return program, initial, argument, expected_return, reference, expected_steps, setup_ns
 
 
-def run(case, samples, expected):
+def run(case, samples, expected, *, prepare_operand_pop=False):
     if isinstance(case, dict):
         def execute(*args, **kwargs):
-            return measured(lambda: vm.execute_microop_routed_control(*args, **kwargs), samples)
+            return measured(lambda: vm.execute_microop_routed_control(
+                *args, **kwargs, prepare_operand_pop=prepare_operand_pop,
+            ), samples)
 
         with patch.object(terrain, "execute_microop_routed_control", execute):
             proof = terrain.verify(case, expected)
@@ -101,6 +103,7 @@ def run(case, samples, expected):
     page = initial.copy()
     result = measured(lambda: vm.execute_microop_routed_control(
         program, argument, array_memory=page, fuel=50_000, capture_trace=False,
+        prepare_operand_pop=prepare_operand_pop,
     ), samples)
     assert result.backend == "v58-structured-numpy-memory"
     assert (page, result.result_i32, result.steps) == (reference, expected_return, expected_steps)

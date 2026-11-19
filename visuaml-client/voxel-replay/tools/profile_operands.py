@@ -31,7 +31,7 @@ def diagnostic(program, argument, initial, fuel):
     def run():
         try:
             vm.execute_microop_routed_control(program, argument, array_memory=initial.copy(),
-                                                fuel=fuel, capture_trace=False)
+                                                fuel=fuel, capture_trace=False, prepare_operand_pop=False)
         except ControlFuelExhausted:
             pass
 

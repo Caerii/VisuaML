@@ -60,8 +60,8 @@ from .neural_local_bank_v57 import (
     apply_local_microop,
     construct_local_bank_weights,
 )
-from .neural_operand_adapter_v55 import TensorOperandStack
-from .neural_operand_storage_v55 import OperandWeights, fixed_operand_weights
+from .neural_operand_adapter_v55 import TensorOperandStack, _PreparedPopStack
+from .neural_operand_storage_v55 import OperandWeights
 from .typed_microop_ir_v57 import (
     LOCALS_WIDTH,
     IndexedMicroops,
@@ -165,16 +165,21 @@ def execute_microop_routed_control(
     array_memory: bytearray | None = None,
     capture_trace: bool = True,
     observe_store: Callable[[int, int, dict], None] | None = None,
+    prepare_operand_pop: bool = True,
 ) -> FrameRoutedResult:
     """Execute with fixed-weight routing and frame operations.
 
     Passing array_memory opts into indexed NumPy routing and direct page
     updates. Completed stores survive traps. The optional store observer
     receives (step, source PC, access) after each write, even without tracing.
+    The default array profile prepares unit pop for its private operand
+    state. Passing custom tokens or weights uses the checked stack.
 
     v53 gate output owns frame depths and branch operand-stack restoration.
     Host still dispatches opcode arithmetic and carries lexical PC metadata.
     """
+    if type(prepare_operand_pop) is not bool:
+        raise ControlAdmissionError("prepare_operand_pop must be a boolean")
     links = _syntax(program)
     memory = uses_memory(program)
     array_mode = array_memory is not None
@@ -193,6 +198,10 @@ def execute_microop_routed_control(
     max_fuel = SCALED_MAX_FUEL if scaled and not capture_trace else MAX_FUEL
     if type(fuel) is not int or not 1 <= fuel <= max_fuel:
         raise ControlAdmissionError("Invalid execution fuel")
+    prepared_pop = array_mode and prepare_operand_pop and type(program) is ControlProgram and all(
+        value is None for value in (tokens, fixed, bit_fixed, frame_fixed, event_fixed,
+                                    operand_fixed, alu_fixed, microop_fixed, microop_tokens, local_fixed)
+    )
     fixed = construct_router_weights() if fixed is None else fixed
     bit_fixed = construct_bit_weights() if bit_fixed is None else bit_fixed
     if array_mode:
@@ -226,10 +235,7 @@ def execute_microop_routed_control(
     )
     local_bank = np.zeros((LOCALS_WIDTH, 32), dtype=np.float64)
     local_bank[0] = _bits(argument)
-    operand_fixed = (
-        fixed_operand_weights() if operand_fixed is None else operand_fixed
-    )
-    stack = TensorOperandStack(operand_fixed)
+    stack = _PreparedPopStack() if prepared_pop else TensorOperandStack(operand_fixed)
     alu_fixed = construct_alu_weights() if alu_fixed is None else alu_fixed
 
     frame_state = empty_frames()

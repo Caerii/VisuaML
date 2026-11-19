@@ -94,6 +94,14 @@ def top_word(state: OperandState) -> np.ndarray:
     return state.height @ _PREVIOUS @ state.cells
 
 
+def _unit_pop(state: OperandState, depth: int) -> tuple[OperandState, np.ndarray]:
+    """Contract the unit pop of a validated, nonempty operand state."""
+    cells = state.cells.copy()
+    returned = cells[depth - 1].copy()
+    cells[depth - 1] = 0.
+    return OperandState(state.height @ _DOWN, cells), returned
+
+
 def step_operands(
     state: OperandState,
     action: np.ndarray,
@@ -140,15 +148,13 @@ def step_operands(
     if (push * fixed.action_gain[1] + pop * fixed.action_gain[2] == 1.
             and all(type(array) is np.ndarray for array in
                     (state.height, state.cells, action, value, truncate_height, fixed.action_gain))):
-        cells = state.cells.copy()
         if push:
+            cells = state.cells.copy()
             cells[depth] = value
             result = OperandState(state.height @ _UP, cells)
             returned = np.zeros(WIDTH, dtype=np.float64)
         else:
-            returned = cells[depth - 1].copy()
-            cells[depth - 1] = 0.
-            result = OperandState(state.height @ _DOWN, cells)
+            result, returned = _unit_pop(state, depth)
         validate_operands(result)
         return result, returned
 

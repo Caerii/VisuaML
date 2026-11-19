@@ -15,11 +15,13 @@ from .neural_operand_storage_v55 import (
     OperandCircuitError,
     OperandState,
     OperandWeights,
+    _unit_pop,
     empty_operands,
     fixed_operand_weights,
     onehot,
     step_operands,
     top_word,
+    validate_operands,
 )
 
 
@@ -68,3 +70,22 @@ class TensorOperandStack:
         # Python-owned parallel list of operand values.
         for index in range(len(self)):
             yield self.state.cells[index].copy()
+
+
+class _PreparedPopStack(TensorOperandStack):
+    """Invocation-owned operand state with the canonical v55 pop prepared."""
+
+    def __init__(self):
+        super().__init__()
+        validate_operands(self.state)
+
+    def pop(self) -> np.ndarray:
+        depth = len(self)
+        if depth == 0:
+            raise OperandCircuitError("Bounded operand stack underflow")
+        # Entry is checked. Inherited push and truncation validate their
+        # outputs on every edge, including branch restoration. This pop
+        # clears exactly the retired row and applies the fixed down matrix,
+        # so binary live words and zero inactive rows hold inductively.
+        self.state, popped = _unit_pop(self.state, depth)
+        return popped
