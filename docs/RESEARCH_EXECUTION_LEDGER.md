@@ -315,3 +315,13 @@ directed graph BFS, and matrix multiplication were compared to Wasmtime
 and independent references. The archive preserves full-page hashes,
 curated Sudoku proofs, seeded scale sweeps, and a near-cap fuel run.
 [Stateful scale report](V58_STATEFUL_SCALE.md)
+
+## v58 structured NumPy memory
+
+The opt-in array path reuses the fixed-weight v57 state transitions
+with validated indexed v52 routes and NumPy linear memory. A rollback
+fixture, three runs of the original Sudoku binary, and directed BFS
+match packed C++ and Wasmtime. The archive includes a placement and
+reversal, exact page hashes, fault and fuel replay, a standalone Rust
+Sudoku checker, and paired timings for the frame contraction.
+[Structured NumPy memory replay](../benchmarks/results/v58-array-memory/README.md)

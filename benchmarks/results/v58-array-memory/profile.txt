@@ -1,0 +1,58 @@
+Replaying nearly_solved
+Replaying classic_unsatisfiable
+Replaying classic
+Replaying bfs
+         32049 function calls (31786 primitive calls) in 0.029 seconds
+
+   Ordered by: cumulative time
+   List reduced from 238 to 20 due to restriction <20>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.029    0.029 replay.py:44(run_array)
+        1    0.001    0.001    0.028    0.028 neural_microop_executor_v57.py:153(execute_microop_routed_control)
+       31    0.002    0.000    0.007    0.000 neural_frame_circuit_v53.py:106(step_frames)
+        4    0.000    0.000    0.005    0.001 neural_alu_v56.py:75(execute_alu)
+       31    0.000    0.000    0.005    0.000 neural_frame_events_v54.py:53(select_frame_action)
+       36    0.001    0.000    0.004    0.000 neural_operand_storage_v55.py:97(step_operands)
+      248    0.001    0.000    0.004    0.000 neural_frame_events_v54.py:45(_admit)
+     2381    0.003    0.000    0.003    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+     2168    0.002    0.000    0.002    0.000 bit_neural_vm_v49.py:217(_and)
+      249    0.000    0.000    0.002    0.000 _arraysetops_impl.py:1018(isin)
+       97    0.001    0.000    0.002    0.000 neural_operand_storage_v55.py:81(validate_operands)
+     1274    0.000    0.000    0.002    0.000 {method 'all' of 'numpy.ndarray' objects}
+       31    0.000    0.000    0.002    0.000 neural_microop_executor_v57.py:135(_array_route)
+      584    0.002    0.000    0.002    0.000 exact_binary.py:7(is_exact_binary)
+       18    0.000    0.000    0.002    0.000 neural_operand_adapter_v55.py:39(append)
+       48    0.000    0.000    0.002    0.000 neural_microop_executor_v57.py:293(<genexpr>)
+       17    0.000    0.000    0.002    0.000 neural_microop_executor_v57.py:129(_pop)
+       17    0.000    0.000    0.002    0.000 neural_operand_adapter_v55.py:45(pop)
+        8    0.000    0.000    0.002    0.000 bit_neural_vm_v49.py:295(_signed_lt)
+      249    0.002    0.000    0.002    0.000 _arraysetops_impl.py:865(_in1d)
+
+
+         1063805 function calls (1060908 primitive calls) in 1.063 seconds
+
+   Ordered by: cumulative time
+   List reduced from 238 to 20 due to restriction <20>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    1.068    1.068 replay.py:44(run_array)
+        1    0.020    0.020    1.067    1.067 neural_microop_executor_v57.py:153(execute_microop_routed_control)
+      297    0.004    0.000    0.374    0.001 neural_alu_v56.py:75(execute_alu)
+     1592    0.046    0.000    0.197    0.000 neural_operand_storage_v55.py:97(step_operands)
+      893    0.043    0.000    0.186    0.000 neural_frame_circuit_v53.py:106(step_frames)
+      594    0.001    0.000    0.168    0.000 bit_neural_vm_v49.py:295(_signed_lt)
+      594    0.023    0.000    0.163    0.000 bit_neural_vm_v49.py:285(_unsigned_lt)
+   115894    0.139    0.000    0.139    0.000 bit_neural_vm_v49.py:217(_and)
+      893    0.011    0.000    0.137    0.000 neural_frame_events_v54.py:53(select_frame_action)
+      297    0.065    0.000    0.132    0.000 bit_neural_vm_v49.py:256(_mul)
+     7144    0.016    0.000    0.117    0.000 neural_frame_events_v54.py:45(_admit)
+    82644    0.107    0.000    0.107    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+     1676    0.001    0.000    0.102    0.000 neural_microop_executor_v57.py:293(<genexpr>)
+      783    0.001    0.000    0.101    0.000 neural_microop_executor_v57.py:129(_pop)
+      784    0.002    0.000    0.101    0.000 neural_operand_adapter_v55.py:39(append)
+      783    0.002    0.000    0.098    0.000 neural_operand_adapter_v55.py:45(pop)
+     3969    0.027    0.000    0.095    0.000 neural_operand_storage_v55.py:81(validate_operands)
+    20617    0.058    0.000    0.077    0.000 exact_binary.py:7(is_exact_binary)
+     7145    0.007    0.000    0.073    0.000 _arraysetops_impl.py:1018(isin)
+    15898    0.011    0.000    0.072    0.000 neural_operand_storage_v55.py:69(_binary)

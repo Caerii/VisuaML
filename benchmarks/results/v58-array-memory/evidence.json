@@ -1,0 +1,1592 @@
+{
+  "source": {
+    "commit": "a7c7d560ab0702a60d76d1519379ea99089c1e32",
+    "tree": "408b210f3839267b2015cabd239595a01c765576",
+    "branch": "research/v58-array-memory"
+  },
+  "python": "3.12.14",
+  "witness": {
+    "wasm_sha256": "8dd6c6a7c32a293921d32e64b9e6635163bc0d641406dffc751e8ce17e47b357",
+    "cases": [
+      {
+        "name": "zero",
+        "argument": 0,
+        "fuel": 100,
+        "result": 0,
+        "input_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+        "output_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+        "trap": null,
+        "trace": [
+          {
+            "step": 0,
+            "pc": 0,
+            "opcode": "local.get",
+            "next_pc": 1,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 1,
+              "alternative_target": 1,
+              "next_pc": 1
+            },
+            "memory_access": null
+          },
+          {
+            "step": 1,
+            "pc": 1,
+            "opcode": "i32.load",
+            "next_pc": 2,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 2,
+              "alternative_target": 2,
+              "next_pc": 2
+            },
+            "memory_access": {
+              "kind": "i32.load",
+              "address": 1,
+              "before_hex": "00000000",
+              "after_hex": "00000000"
+            }
+          },
+          {
+            "step": 2,
+            "pc": 2,
+            "opcode": "local.tee",
+            "next_pc": 3,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 3,
+              "alternative_target": 3,
+              "next_pc": 3
+            },
+            "memory_access": null
+          },
+          {
+            "step": 3,
+            "pc": 3,
+            "opcode": "if",
+            "next_pc": 24,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 1,
+              "sequential_target": 4,
+              "alternative_target": 24,
+              "next_pc": 24
+            },
+            "memory_access": null
+          },
+          {
+            "step": 4,
+            "pc": 24,
+            "opcode": "local.get",
+            "next_pc": 25,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 25,
+              "alternative_target": 25,
+              "next_pc": 25
+            },
+            "memory_access": null
+          },
+          {
+            "step": 5,
+            "pc": 25,
+            "opcode": "end",
+            "next_pc": 26,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": true,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 26,
+              "alternative_target": 26,
+              "next_pc": 26
+            },
+            "memory_access": null
+          }
+        ]
+      },
+      {
+        "name": "rollback",
+        "argument": 0,
+        "fuel": 100,
+        "result": -2147483647,
+        "input_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+        "output_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+        "trap": null,
+        "trace": [
+          {
+            "step": 0,
+            "pc": 0,
+            "opcode": "local.get",
+            "next_pc": 1,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 1,
+              "alternative_target": 1,
+              "next_pc": 1
+            },
+            "memory_access": null
+          },
+          {
+            "step": 1,
+            "pc": 1,
+            "opcode": "i32.load",
+            "next_pc": 2,
+            "stack_i32": [
+              -2147483647
+            ],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 2,
+              "alternative_target": 2,
+              "next_pc": 2
+            },
+            "memory_access": {
+              "kind": "i32.load",
+              "address": 1,
+              "before_hex": "01000080",
+              "after_hex": "01000080"
+            }
+          },
+          {
+            "step": 2,
+            "pc": 2,
+            "opcode": "local.tee",
+            "next_pc": 3,
+            "stack_i32": [
+              -2147483647
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 3,
+              "alternative_target": 3,
+              "next_pc": 3
+            },
+            "memory_access": null
+          },
+          {
+            "step": 3,
+            "pc": 3,
+            "opcode": "if",
+            "next_pc": 4,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 4,
+              "alternative_target": 24,
+              "next_pc": 4
+            },
+            "memory_access": null
+          },
+          {
+            "step": 4,
+            "pc": 4,
+            "opcode": "local.get",
+            "next_pc": 5,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 5,
+              "alternative_target": 5,
+              "next_pc": 5
+            },
+            "memory_access": null
+          },
+          {
+            "step": 5,
+            "pc": 5,
+            "opcode": "i32.const",
+            "next_pc": 6,
+            "stack_i32": [
+              0,
+              7
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 6,
+              "alternative_target": 6,
+              "next_pc": 6
+            },
+            "memory_access": null
+          },
+          {
+            "step": 6,
+            "pc": 6,
+            "opcode": "i32.add",
+            "next_pc": 7,
+            "stack_i32": [
+              7
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 7,
+              "alternative_target": 7,
+              "next_pc": 7
+            },
+            "memory_access": null
+          },
+          {
+            "step": 7,
+            "pc": 7,
+            "opcode": "i32.const",
+            "next_pc": 8,
+            "stack_i32": [
+              7,
+              305419896
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 8,
+              "alternative_target": 8,
+              "next_pc": 8
+            },
+            "memory_access": null
+          },
+          {
+            "step": 8,
+            "pc": 8,
+            "opcode": "i32.store",
+            "next_pc": 9,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 9,
+              "alternative_target": 9,
+              "next_pc": 9
+            },
+            "memory_access": {
+              "kind": "i32.store",
+              "address": 7,
+              "before_hex": "01000080",
+              "after_hex": "78563412"
+            }
+          },
+          {
+            "step": 9,
+            "pc": 9,
+            "opcode": "i32.const",
+            "next_pc": 10,
+            "stack_i32": [
+              2
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 10,
+              "alternative_target": 10,
+              "next_pc": 10
+            },
+            "memory_access": null
+          },
+          {
+            "step": 10,
+            "pc": 10,
+            "opcode": "local.set",
+            "next_pc": 11,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              2
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 11,
+              "alternative_target": 11,
+              "next_pc": 11
+            },
+            "memory_access": null
+          },
+          {
+            "step": 11,
+            "pc": 11,
+            "opcode": "loop",
+            "next_pc": 12,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              2
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 12,
+              "alternative_target": 12,
+              "next_pc": 12
+            },
+            "memory_access": null
+          },
+          {
+            "step": 12,
+            "pc": 12,
+            "opcode": "local.get",
+            "next_pc": 13,
+            "stack_i32": [
+              2
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              2
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 13,
+              "alternative_target": 13,
+              "next_pc": 13
+            },
+            "memory_access": null
+          },
+          {
+            "step": 13,
+            "pc": 13,
+            "opcode": "i32.const",
+            "next_pc": 14,
+            "stack_i32": [
+              2,
+              1
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              2
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 14,
+              "alternative_target": 14,
+              "next_pc": 14
+            },
+            "memory_access": null
+          },
+          {
+            "step": 14,
+            "pc": 14,
+            "opcode": "i32.sub",
+            "next_pc": 15,
+            "stack_i32": [
+              1
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              2
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 15,
+              "alternative_target": 15,
+              "next_pc": 15
+            },
+            "memory_access": null
+          },
+          {
+            "step": 15,
+            "pc": 15,
+            "opcode": "local.tee",
+            "next_pc": 16,
+            "stack_i32": [
+              1
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              1
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 16,
+              "alternative_target": 16,
+              "next_pc": 16
+            },
+            "memory_access": null
+          },
+          {
+            "step": 16,
+            "pc": 16,
+            "opcode": "br_if",
+            "next_pc": 12,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              1
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 1,
+              "sequential_target": 17,
+              "alternative_target": 12,
+              "next_pc": 12
+            },
+            "memory_access": null
+          },
+          {
+            "step": 17,
+            "pc": 12,
+            "opcode": "local.get",
+            "next_pc": 13,
+            "stack_i32": [
+              1
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              1
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 13,
+              "alternative_target": 13,
+              "next_pc": 13
+            },
+            "memory_access": null
+          },
+          {
+            "step": 18,
+            "pc": 13,
+            "opcode": "i32.const",
+            "next_pc": 14,
+            "stack_i32": [
+              1,
+              1
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              1
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 14,
+              "alternative_target": 14,
+              "next_pc": 14
+            },
+            "memory_access": null
+          },
+          {
+            "step": 19,
+            "pc": 14,
+            "opcode": "i32.sub",
+            "next_pc": 15,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              1
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 15,
+              "alternative_target": 15,
+              "next_pc": 15
+            },
+            "memory_access": null
+          },
+          {
+            "step": 20,
+            "pc": 15,
+            "opcode": "local.tee",
+            "next_pc": 16,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 16,
+              "alternative_target": 16,
+              "next_pc": 16
+            },
+            "memory_access": null
+          },
+          {
+            "step": 21,
+            "pc": 16,
+            "opcode": "br_if",
+            "next_pc": 17,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 17,
+              "alternative_target": 12,
+              "next_pc": 17
+            },
+            "memory_access": null
+          },
+          {
+            "step": 22,
+            "pc": 17,
+            "opcode": "local.get",
+            "next_pc": 18,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 18,
+              "alternative_target": 18,
+              "next_pc": 18
+            },
+            "memory_access": null
+          },
+          {
+            "step": 23,
+            "pc": 18,
+            "opcode": "i32.const",
+            "next_pc": 19,
+            "stack_i32": [
+              0,
+              7
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 19,
+              "alternative_target": 19,
+              "next_pc": 19
+            },
+            "memory_access": null
+          },
+          {
+            "step": 24,
+            "pc": 19,
+            "opcode": "i32.add",
+            "next_pc": 20,
+            "stack_i32": [
+              7
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 20,
+              "alternative_target": 20,
+              "next_pc": 20
+            },
+            "memory_access": null
+          },
+          {
+            "step": 25,
+            "pc": 20,
+            "opcode": "local.get",
+            "next_pc": 21,
+            "stack_i32": [
+              7,
+              -2147483647
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 21,
+              "alternative_target": 21,
+              "next_pc": 21
+            },
+            "memory_access": null
+          },
+          {
+            "step": 26,
+            "pc": 21,
+            "opcode": "i32.store",
+            "next_pc": 22,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if",
+              "loop"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 22,
+              "alternative_target": 22,
+              "next_pc": 22
+            },
+            "memory_access": {
+              "kind": "i32.store",
+              "address": 7,
+              "before_hex": "78563412",
+              "after_hex": "01000080"
+            }
+          },
+          {
+            "step": 27,
+            "pc": 22,
+            "opcode": "end",
+            "next_pc": 23,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 23,
+              "alternative_target": 23,
+              "next_pc": 23
+            },
+            "memory_access": null
+          },
+          {
+            "step": 28,
+            "pc": 23,
+            "opcode": "end",
+            "next_pc": 24,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 24,
+              "alternative_target": 24,
+              "next_pc": 24
+            },
+            "memory_access": null
+          },
+          {
+            "step": 29,
+            "pc": 24,
+            "opcode": "local.get",
+            "next_pc": 25,
+            "stack_i32": [
+              -2147483647
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 25,
+              "alternative_target": 25,
+              "next_pc": 25
+            },
+            "memory_access": null
+          },
+          {
+            "step": 30,
+            "pc": 25,
+            "opcode": "end",
+            "next_pc": 26,
+            "stack_i32": [
+              -2147483647
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [],
+            "halted": true,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 26,
+              "alternative_target": 26,
+              "next_pc": 26
+            },
+            "memory_access": null
+          }
+        ]
+      },
+      {
+        "name": "cutoff_after_store",
+        "argument": 0,
+        "fuel": 9,
+        "result": null,
+        "input_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+        "output_sha256": "44591f30da75f6b49c311f759f957d79d20fd3b2d38be21c4bb4410751dc2563",
+        "trap": {
+          "step": 9,
+          "pc": 9,
+          "opcode": null,
+          "address": null
+        },
+        "trace": [
+          {
+            "step": 0,
+            "pc": 0,
+            "opcode": "local.get",
+            "next_pc": 1,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 1,
+              "alternative_target": 1,
+              "next_pc": 1
+            },
+            "memory_access": null
+          },
+          {
+            "step": 1,
+            "pc": 1,
+            "opcode": "i32.load",
+            "next_pc": 2,
+            "stack_i32": [
+              -2147483647
+            ],
+            "locals_i32": [
+              0,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 2,
+              "alternative_target": 2,
+              "next_pc": 2
+            },
+            "memory_access": {
+              "kind": "i32.load",
+              "address": 1,
+              "before_hex": "01000080",
+              "after_hex": "01000080"
+            }
+          },
+          {
+            "step": 2,
+            "pc": 2,
+            "opcode": "local.tee",
+            "next_pc": 3,
+            "stack_i32": [
+              -2147483647
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 3,
+              "alternative_target": 3,
+              "next_pc": 3
+            },
+            "memory_access": null
+          },
+          {
+            "step": 3,
+            "pc": 3,
+            "opcode": "if",
+            "next_pc": 4,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 4,
+              "alternative_target": 24,
+              "next_pc": 4
+            },
+            "memory_access": null
+          },
+          {
+            "step": 4,
+            "pc": 4,
+            "opcode": "local.get",
+            "next_pc": 5,
+            "stack_i32": [
+              0
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 5,
+              "alternative_target": 5,
+              "next_pc": 5
+            },
+            "memory_access": null
+          },
+          {
+            "step": 5,
+            "pc": 5,
+            "opcode": "i32.const",
+            "next_pc": 6,
+            "stack_i32": [
+              0,
+              7
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 6,
+              "alternative_target": 6,
+              "next_pc": 6
+            },
+            "memory_access": null
+          },
+          {
+            "step": 6,
+            "pc": 6,
+            "opcode": "i32.add",
+            "next_pc": 7,
+            "stack_i32": [
+              7
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 7,
+              "alternative_target": 7,
+              "next_pc": 7
+            },
+            "memory_access": null
+          },
+          {
+            "step": 7,
+            "pc": 7,
+            "opcode": "i32.const",
+            "next_pc": 8,
+            "stack_i32": [
+              7,
+              305419896
+            ],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 8,
+              "alternative_target": 8,
+              "next_pc": 8
+            },
+            "memory_access": null
+          },
+          {
+            "step": 8,
+            "pc": 8,
+            "opcode": "i32.store",
+            "next_pc": 9,
+            "stack_i32": [],
+            "locals_i32": [
+              0,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 9,
+              "alternative_target": 9,
+              "next_pc": 9
+            },
+            "memory_access": {
+              "kind": "i32.store",
+              "address": 7,
+              "before_hex": "01000080",
+              "after_hex": "78563412"
+            }
+          }
+        ]
+      },
+      {
+        "name": "trapping_store",
+        "argument": 65530,
+        "fuel": 100,
+        "result": null,
+        "input_sha256": "dbf113cafac4487258f74b539f77924dda65c983ea08ccf77b29f6672c844126",
+        "output_sha256": "dbf113cafac4487258f74b539f77924dda65c983ea08ccf77b29f6672c844126",
+        "trap": {
+          "step": 8,
+          "pc": 8,
+          "opcode": "i32.store",
+          "address": 65537
+        },
+        "trace": [
+          {
+            "step": 0,
+            "pc": 0,
+            "opcode": "local.get",
+            "next_pc": 1,
+            "stack_i32": [
+              65530
+            ],
+            "locals_i32": [
+              65530,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 1,
+              "alternative_target": 1,
+              "next_pc": 1
+            },
+            "memory_access": null
+          },
+          {
+            "step": 1,
+            "pc": 1,
+            "opcode": "i32.load",
+            "next_pc": 2,
+            "stack_i32": [
+              -2147483647
+            ],
+            "locals_i32": [
+              65530,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 2,
+              "alternative_target": 2,
+              "next_pc": 2
+            },
+            "memory_access": {
+              "kind": "i32.load",
+              "address": 65531,
+              "before_hex": "01000080",
+              "after_hex": "01000080"
+            }
+          },
+          {
+            "step": 2,
+            "pc": 2,
+            "opcode": "local.tee",
+            "next_pc": 3,
+            "stack_i32": [
+              -2147483647
+            ],
+            "locals_i32": [
+              65530,
+              -2147483647,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 3,
+              "alternative_target": 3,
+              "next_pc": 3
+            },
+            "memory_access": null
+          },
+          {
+            "step": 3,
+            "pc": 3,
+            "opcode": "if",
+            "next_pc": 4,
+            "stack_i32": [],
+            "locals_i32": [
+              65530,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 4,
+              "alternative_target": 24,
+              "next_pc": 4
+            },
+            "memory_access": null
+          },
+          {
+            "step": 4,
+            "pc": 4,
+            "opcode": "local.get",
+            "next_pc": 5,
+            "stack_i32": [
+              65530
+            ],
+            "locals_i32": [
+              65530,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 5,
+              "alternative_target": 5,
+              "next_pc": 5
+            },
+            "memory_access": null
+          },
+          {
+            "step": 5,
+            "pc": 5,
+            "opcode": "i32.const",
+            "next_pc": 6,
+            "stack_i32": [
+              65530,
+              7
+            ],
+            "locals_i32": [
+              65530,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 6,
+              "alternative_target": 6,
+              "next_pc": 6
+            },
+            "memory_access": null
+          },
+          {
+            "step": 6,
+            "pc": 6,
+            "opcode": "i32.add",
+            "next_pc": 7,
+            "stack_i32": [
+              65537
+            ],
+            "locals_i32": [
+              65530,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 7,
+              "alternative_target": 7,
+              "next_pc": 7
+            },
+            "memory_access": null
+          },
+          {
+            "step": 7,
+            "pc": 7,
+            "opcode": "i32.const",
+            "next_pc": 8,
+            "stack_i32": [
+              65537,
+              305419896
+            ],
+            "locals_i32": [
+              65530,
+              -2147483647,
+              0
+            ],
+            "control_labels": [
+              "if"
+            ],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 1,
+              "branch_guard_gate": 0,
+              "sequential_target": 8,
+              "alternative_target": 8,
+              "next_pc": 8
+            },
+            "memory_access": null
+          }
+        ]
+      },
+      {
+        "name": "widened_load",
+        "argument": -1,
+        "fuel": 100,
+        "result": null,
+        "input_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+        "output_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+        "trap": {
+          "step": 1,
+          "pc": 1,
+          "opcode": "i32.load",
+          "address": 4294967296
+        },
+        "trace": [
+          {
+            "step": 0,
+            "pc": 0,
+            "opcode": "local.get",
+            "next_pc": 1,
+            "stack_i32": [
+              -1
+            ],
+            "locals_i32": [
+              -1,
+              0,
+              0
+            ],
+            "control_labels": [],
+            "halted": false,
+            "neural_route": {
+              "nonzero_condition_gate": 0,
+              "branch_guard_gate": 0,
+              "sequential_target": 1,
+              "alternative_target": 1,
+              "next_pc": 1
+            },
+            "memory_access": null
+          }
+        ]
+      }
+    ]
+  },
+  "sudoku": [
+    {
+      "name": "nearly_solved",
+      "givens": "034678912672195348198342567859761423426853791713924856961537284287419635345286179",
+      "argument": 1,
+      "result": 1,
+      "steps": 893,
+      "trace_rows_matched": 893,
+      "backend": "v58-structured-numpy-memory",
+      "wasm_sha256": "8df78d3cf72907abd4004e23ae9075682396ece4be3547631451f54effd311cf",
+      "input_sha256": "ed6f33d5f6643904a4e83b0eb3829d62c0827a570d61adaae8023d1148e44bdf",
+      "output_sha256": "7fd58dc43dfd551b3a437d3a3e1bffb565f3bc6dd31b4a4a57f75606211580a9",
+      "first_rollback": [],
+      "execution_with_preparation_seconds": 0.7436097449999579,
+      "rust_checker_passed": true
+    },
+    {
+      "name": "classic_unsatisfiable",
+      "givens": "531070000600195000098000060800060003400803001700020006060000280000419005000080079",
+      "argument": 50,
+      "result": 0,
+      "steps": 12797,
+      "trace_rows_matched": 2000,
+      "backend": "v58-structured-numpy-memory",
+      "wasm_sha256": "8df78d3cf72907abd4004e23ae9075682396ece4be3547631451f54effd311cf",
+      "input_sha256": "a93a7cb091b7073f0bf1c98984dafd79f043a51513f61bd4094bfe836d3b7812",
+      "output_sha256": "0b9671d877553f90b567107a848d22a1ff3a416062271723c617d7e2c5f0651f",
+      "first_rollback": [
+        {
+          "step": 6001,
+          "pc": 218,
+          "kind": "i32.store",
+          "address": 88,
+          "before_hex": "00000000",
+          "after_hex": "04000000"
+        },
+        {
+          "step": 7891,
+          "pc": 194,
+          "kind": "i32.store",
+          "address": 88,
+          "before_hex": "04000000",
+          "after_hex": "00000000"
+        }
+      ],
+      "execution_with_preparation_seconds": 10.935007719000055,
+      "rust_checker_passed": true
+    },
+    {
+      "name": "classic",
+      "givens": "530070000600195000098000060800060003400803001700020006060000280000419005000080079",
+      "argument": 51,
+      "result": 1,
+      "steps": 79754,
+      "trace_rows_matched": 2000,
+      "backend": "v58-structured-numpy-memory",
+      "wasm_sha256": "8df78d3cf72907abd4004e23ae9075682396ece4be3547631451f54effd311cf",
+      "input_sha256": "ec5d47c3ae7382d6deaf2d5d58ee8a092611adbca50e310954d74f53c43eafcb",
+      "output_sha256": "53b30a7d289f6cbddddda975a305cb3c225fe71fe12a61493e284cf95a763359",
+      "first_rollback": [],
+      "execution_with_preparation_seconds": 66.36508773699995,
+      "rust_checker_passed": true
+    }
+  ],
+  "bfs": {
+    "seed": 0,
+    "wasm_sha256": "7726937328d9d66462c3ff4838e732549bd983b23f4e8cd26eeae0edf696b63f",
+    "steps": 41591,
+    "result": 32,
+    "output_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+    "trace_rows_matched": 2000
+  },
+  "profile": {
+    "witness": {
+      "through_first_route_seconds": 0.0010425240000131453,
+      "remaining_execution_seconds": 0.018805174000021907
+    },
+    "nearly_solved": {
+      "through_first_route_seconds": 0.004530549000037354,
+      "remaining_execution_seconds": 0.7398887299999615
+    }
+  }
+}
