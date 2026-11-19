@@ -13,6 +13,7 @@ class RegionObservation:
     page: bytes
     source_steps: int | None = None
     accesses: tuple[dict, ...] | None = None
+    trap_site: dict | None = None
 
 
 def observe(execute, argument, initial, *, fuel=400, capture_trace=False):
@@ -20,14 +21,20 @@ def observe(execute, argument, initial, *, fuel=400, capture_trace=False):
     page = bytearray(initial)
     try:
         result = execute(argument, page, fuel=fuel, capture_trace=capture_trace)
-    except LinearMemoryTrap:
-        return RegionObservation("memory_oob", None, bytes(page))
-    except ControlFuelExhausted:
-        return RegionObservation("fuel", None, bytes(page))
+    except (LinearMemoryTrap, ControlFuelExhausted) as error:
+        exit_mode = "memory_oob" if isinstance(error, LinearMemoryTrap) else "fuel"
+        trace = error.trace
+        accesses = _accesses(trace) if trace is not None else None
+        return RegionObservation(exit_mode, None, bytes(page), accesses=accesses,
+                                 trap_site=error.trap_site)
     accesses = None
     if capture_trace:
-        accesses = tuple(row["memory_access"] for row in result.trace if row["memory_access"] is not None)
+        accesses = _accesses(result.trace)
     return RegionObservation("return", result.result_i32, bytes(page), result.steps, accesses)
+
+
+def _accesses(trace):
+    return tuple(row["memory_access"] for row in trace if row["memory_access"] is not None)
 
 
 def first_difference(expected, actual, *, source_steps=False, access_order=False):
@@ -48,7 +55,11 @@ def first_difference(expected, actual, *, source_steps=False, access_order=False
     if source_steps and expected.source_steps != actual.source_steps:
         return {"field": "source_steps", "expected": expected.source_steps, "actual": actual.source_steps}
     if access_order:
-        return first_access_difference(expected.accesses, actual.accesses)
+        difference = first_access_difference(expected.accesses, actual.accesses)
+        if difference is not None:
+            return difference
+        if expected.trap_site != actual.trap_site:
+            return {"field": "trap_site", "expected": expected.trap_site, "actual": actual.trap_site}
     return None
 
 

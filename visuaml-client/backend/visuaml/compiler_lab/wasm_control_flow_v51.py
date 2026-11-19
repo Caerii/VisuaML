@@ -83,7 +83,14 @@ class ControlAdmissionError(ValueError):
 
 
 class ControlExecutionTrap(RuntimeError):
-    """Runtime stack/control error in the admitted bounded machine."""
+    """Runtime stack/control error in the admitted bounded machine.
+
+    Traced packed memory runs populate the completed prefix and trap site
+    for out-of-bounds and fuel exhaustion.
+    """
+
+    trace: tuple[dict, ...] | None = None
+    trap_site: dict | None = None
 
 
 class LinearMemoryTrap(ControlExecutionTrap):

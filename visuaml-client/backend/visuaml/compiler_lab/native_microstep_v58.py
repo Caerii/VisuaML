@@ -314,8 +314,8 @@ class _NativeMicrostep:
         count = len(self._opcodes)
         stride = 0
         state_pointer = route_pointer = frame_pointer = None
-        frames = memory_trace = None
-        memory_pointer = memory_gains_pointer = access_pointer = None
+        frames = memory_trace = trap = None
+        memory_pointer = memory_gains_pointer = access_pointer = trap_pointer = None
         if memory is not None:
             memory_buffer = np.frombuffer(memory, dtype=np.uint8)
             memory_pointer = memory_buffer.ctypes.data
@@ -331,6 +331,8 @@ class _NativeMicrostep:
             if memory is not None:
                 memory_trace = np.zeros((stride, 3), dtype=np.uint32)
                 access_pointer = memory_trace.ctypes.data
+                trap = np.full(3, -1, dtype=np.int64)
+                trap_pointer = trap.ctypes.data
         common = (
             arguments.ctypes.data, limits.ctypes.data, size,
             count, TERMINAL, self._visible_locals, stride,
@@ -340,13 +342,22 @@ class _NativeMicrostep:
         if self._structured:
             self._structured_batch(
                 *common, *self._control_pointers, *outputs, frame_pointer,
-                memory_pointer, memory_gains_pointer, access_pointer,
+                memory_pointer, memory_gains_pointer, access_pointer, trap_pointer,
             )
         else:
             self._batch(*common, *outputs, self._packed, self._simd)
         for i, (status, (value, steps)) in enumerate(zip(statuses.tolist(), results.tolist(), strict=True)):
             if status:
-                yield _loop_error(status, fuels[i])
+                error = _loop_error(status, fuels[i])
+                if trap is not None and isinstance(error, (LinearMemoryTrap, ControlFuelExhausted)):
+                    tick, pc, address = trap.tolist()
+                    error.trace = self._trace(tick, states[i], routes[i], frames[i], memory_trace)
+                    error.trap_site = {
+                        "step": tick, "pc": pc,
+                        "opcode": self._opcodes[pc] if isinstance(error, LinearMemoryTrap) else None,
+                        "address": address if address >= 0 else None,
+                    }
+                yield error
             else:
                 trace = ()
                 if capture_trace:

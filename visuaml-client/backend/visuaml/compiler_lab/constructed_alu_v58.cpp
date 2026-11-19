@@ -734,7 +734,7 @@ constexpr std::uint64_t memory_bytes = 65536;
 
 int memory_step(int opcode, const std::int64_t* instruction, const double* action,
                 std::uint32_t* cells, std::size_t& depth, std::uint8_t* memory,
-                const std::uint8_t* gains, std::uint32_t* trace) {
+                const std::uint8_t* gains, std::uint32_t* trace, std::int64_t* attempted) {
     const bool store = opcode == store_op;
     const std::size_t pops = store ? 2 : 1;
     if (instruction[4] != static_cast<std::int64_t>(pops)) {
@@ -753,6 +753,9 @@ int memory_step(int opcode, const std::int64_t* instruction, const double* actio
     // in a widened sum. Admission precedes all byte reads and writes.
     const auto address = std::uint64_t{cells[depth - pops]} + instruction[5];
     if (!memory || address > memory_bytes - 4) {
+        if (attempted) {
+            *attempted = static_cast<std::int64_t>(address);
+        }
         return memory_oob;
     }
     auto word = memory + address;
@@ -812,12 +815,16 @@ int structured_loop(
         const double* path_weights, const std::int64_t* flow, const double* event_defaults,
         const double* event_gains, const double* frame_gains, std::int32_t* result,
         std::int32_t* trace_states, double* trace_routes, std::int32_t* trace_frames,
-        std::uint8_t* memory, const std::uint8_t* memory_gains, std::uint32_t* trace_memory) {
+        std::uint8_t* memory, const std::uint8_t* memory_gains, std::uint32_t* trace_memory, std::int64_t* trap) {
     std::uint32_t cells[prepared_stack_size] = {}, locals[prepared_locals_size] = {};
     ActiveFrame frames[prepared_frame_limit];
     locals[0] = static_cast<std::uint32_t>(argument);
     std::size_t pc = 0, depth = 0, frame_count = 0;
     for (std::size_t tick = 0; tick < fuel; ++tick) {
+        if (trap) {
+            trap[0] = static_cast<std::int64_t>(tick);
+            trap[1] = static_cast<std::int64_t>(pc);
+        }
         if (pc >= count || pc == terminal) {
             return early_terminal;
         }
@@ -842,7 +849,7 @@ int structured_loop(
         } else if (opcode == load_op || opcode == store_op) {
             auto access = trace_memory ? trace_memory + tick * memory_fields : nullptr;
             const auto status = memory_step(opcode, instruction, fixed + actions, cells, depth,
-                                            memory, memory_gains, access);
+                                            memory, memory_gains, access, trap ? trap + 2 : nullptr);
             if (status) {
                 return status;
             }
@@ -950,6 +957,10 @@ int structured_loop(
         }
         pc = next;
     }
+    if (trap) {
+        trap[0] = static_cast<std::int64_t>(fuel);
+        trap[1] = static_cast<std::int64_t>(pc);
+    }
     return fuel_exhausted;
 }
 } // namespace
@@ -962,7 +973,7 @@ extern "C" void visuaml_structured_batch(
         const std::int64_t* flow, const double* event_defaults, const double* event_gains,
         const double* frame_gains, std::int32_t* results, std::int32_t* statuses,
         std::int32_t* trace_states, double* trace_routes, std::int32_t* trace_frames,
-        std::uint8_t* memory, const std::uint8_t* memory_gains, std::uint32_t* trace_memory) {
+        std::uint8_t* memory, const std::uint8_t* memory_gains, std::uint32_t* trace_memory, std::int64_t* trap) {
     const auto state_stride = trace_stride * (2 + prepared_stack_size + visible_locals);
     for (std::size_t i = 0; i < size; ++i) {
         statuses[i] = structured_loop(
@@ -971,6 +982,6 @@ extern "C" void visuaml_structured_batch(
             results + i * 2, trace_states ? trace_states + i * state_stride : nullptr,
             trace_routes ? trace_routes + i * trace_stride * 5 : nullptr,
             trace_frames ? trace_frames + i * trace_stride * frame_fields : nullptr,
-            memory, memory_gains, trace_memory);
+            memory, memory_gains, trace_memory, trap);
     }
 }
