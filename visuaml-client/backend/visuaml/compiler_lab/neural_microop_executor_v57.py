@@ -50,6 +50,8 @@ from .neural_frame_circuit_v53 import (
     empty_frames,
     fixed_frame_weights,
     step_frames,
+    _step_frame_gates,
+    validate_state as validate_frame_state,
 )
 from .neural_frame_circuit_v53 import onehot as frame_onehot
 from .neural_frame_events_v54 import (
@@ -226,6 +228,8 @@ def execute_microop_routed_control(
     prepare_local_region: bool = True,
     use_compiled_frame_event: bool = False,
     compiled_frame_retain: str = "off",
+    prepare_frame_inputs: bool = False,
+    compact_frame_inputs: bool = False,
 ) -> FrameRoutedResult:
     """Execute with fixed-weight routing and frame operations.
 
@@ -253,6 +257,8 @@ def execute_microop_routed_control(
         raise ControlAdmissionError("use_compiled_frame_event must be a boolean")
     if type(compiled_frame_retain) is not str or compiled_frame_retain not in ("off", "copy", "resident"):
         raise ControlAdmissionError("Invalid compiled_frame_retain mode")
+    if type(prepare_frame_inputs) is not bool or type(compact_frame_inputs) is not bool:
+        raise ControlAdmissionError("Frame input preparation options must be booleans")
     links = _syntax(program)
     memory = uses_memory(program)
     array_mode = array_memory is not None
@@ -335,12 +341,25 @@ def execute_microop_routed_control(
                           for op in program.operations)
     compiled_event = None
     fused_frame = None
+    prepared_frame_inputs = False
     if canonical_array and not capture_trace and use_compiled_frame_event:
         if compiled_frame_retain == "off":
             compiled_event = CompiledFrameEvents(opcode_tokens, event_fixed)
         else:
+            lexical_else = (tuple(op.opcode == "if" and links[pc][1] is not None
+                                  for pc, op in enumerate(program.operations))
+                            if prepare_frame_inputs else None)
             fused_frame = _CompiledFrameRetain(opcode_tokens, event_fixed, frame_state,
-                                             resident=compiled_frame_retain == "resident")
+                                              resident=compiled_frame_retain == "resident",
+                                              lexical_else=lexical_else)
+            prepared_frame_inputs = lexical_else is not None
+            if prepared_frame_inputs:
+                kinds = np.eye(KINDS, dtype=np.float64)
+                heights = np.eye(HEIGHTS, dtype=np.float64)
+                absent_kind = np.zeros(KINDS)
+                absent_height = np.zeros(HEIGHTS)
+                for array in (kinds, heights, absent_kind, absent_height):
+                    array.flags.writeable = False
             compiled_event = fused_frame
             frame_state = fused_frame.state
     records = []
@@ -515,20 +534,22 @@ def execute_microop_routed_control(
         # opcode/guard circuit; host opcode branches above handle only
         # operand effects, lexical admission and return validation.
         sequential = next_pc == sequential_pc
-        has_else = kind == "if" and links[pc][1] is not None
         active = depth_before > 0
         if compiled_event is None:
             event_vector = select_frame_action(
                 opcode_tokens[pc],
                 conditional_sequential=np.array([float(sequential)], dtype=np.float64),
-                has_else=np.array([float(has_else)], dtype=np.float64),
+                has_else=np.array([float(kind == "if" and links[pc][1] is not None)], dtype=np.float64),
                 frame_active=np.array([float(active)], dtype=np.float64),
                 branch_taken=np.array([float(taken)], dtype=np.float64),
                 weights=event_fixed,
             )
             action = int(np.argmax(event_vector))
+        elif prepared_frame_inputs:
+            action = fused_frame.select_live(pc, sequential, active, taken)
+            event_vector = fused_frame.vector
         else:
-            action = compiled_event.select(pc, sequential, has_else, active, taken)
+            action = compiled_event.select(pc, sequential, kind == "if" and links[pc][1] is not None, active, taken)
             event_vector = compiled_event.vector
         if action == 1 and entering_metadata is None:
             raise ControlExecutionTrap("Gate emitted unsupported frame enter")
@@ -540,14 +561,29 @@ def execute_microop_routed_control(
             frame_state = fused_frame.state
             depth_after = depth_before
         else:
-            event_tokens = FrameTokens(
-                event_vector,
-                _frame_optional(entry_kind, KINDS),
-                _frame_optional(entry_base, HEIGHTS),
-                _frame_optional(branch_depth, MAX_NESTING),
-                frame_onehot(len(stack), HEIGHTS),
-            )
-            frame_state, restored = step_frames(frame_state, event_tokens, frame_fixed)
+            if prepared_frame_inputs:
+                height = len(stack)
+                if not 0 <= height < HEIGHTS or (entry_base is not None and not 0 <= entry_base < HEIGHTS):
+                    raise ControlExecutionTrap("Frame operand height exceeds resource budget")
+                fields = (event_vector, absent_kind if entry_kind is None else kinds[entry_kind],
+                          absent_height if entry_base is None else heights[entry_base],
+                          microop.branch_depth, heights[height])
+                if compact_frame_inputs:
+                    # Event output is admitted by the compiled kernel;
+                    # lexical rows and unit weights come from preparation.
+                    validate_frame_state(frame_state)
+                    frame_state, restored = _step_frame_gates(frame_state, *fields, frame_fixed)
+                else:
+                    frame_state, restored = step_frames(frame_state, FrameTokens(*fields), frame_fixed)
+            else:
+                event_tokens = FrameTokens(
+                    event_vector,
+                    _frame_optional(entry_kind, KINDS),
+                    _frame_optional(entry_base, HEIGHTS),
+                    _frame_optional(branch_depth, MAX_NESTING),
+                    frame_onehot(len(stack), HEIGHTS),
+                )
+                frame_state, restored = step_frames(frame_state, event_tokens, frame_fixed)
             depth_after = int(np.argmax(frame_state.depth))
             if action == 3:
                 restored_height = int(np.argmax(restored))

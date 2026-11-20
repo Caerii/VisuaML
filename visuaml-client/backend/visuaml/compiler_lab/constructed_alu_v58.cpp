@@ -135,6 +135,14 @@ extern "C" int visuaml_frame_event_retain(
     return action;
 }
 
+// The lexical else bit travels with the prepared v54 coefficients.
+extern "C" int visuaml_prepared_frame_event_retain(
+        const double* row, bool sequential, bool frame_active, bool branch_taken,
+        double* event, const double* state, double* destination, std::size_t elements) {
+    return visuaml_frame_event_retain(row, sequential, row[8] == 1.0, frame_active,
+                                     branch_taken, event, state, destination, elements);
+}
+
 namespace {
 int route_from_zero(
         std::size_t active, double zero, const std::int32_t* targets,

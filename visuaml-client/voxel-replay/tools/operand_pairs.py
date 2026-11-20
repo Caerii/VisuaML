@@ -87,12 +87,14 @@ def workload(name):
     return program, initial, argument, expected_return, reference, expected_steps, setup_ns
 
 
-def run(case, samples, expected, *, prepare_operand_pop=False, prepare_alu=False, prepare_mul=False, prepare_regions=False, prepare_local_region=False, use_compiled_frame_event=False, compiled_frame_retain="off"):
+def run(case, samples, expected, *, prepare_operand_pop=False, prepare_alu=False, prepare_mul=False, prepare_regions=False, prepare_local_region=False, use_compiled_frame_event=False, compiled_frame_retain="off",
+        prepare_frame_inputs=False, compact_frame_inputs=False):
     if isinstance(case, dict):
         def execute(*args, **kwargs):
             return measured(lambda: vm.execute_microop_routed_control(
                 *args, **kwargs, prepare_operand_pop=prepare_operand_pop, prepare_alu=prepare_alu, prepare_mul=prepare_mul, prepare_regions=prepare_regions,
                 prepare_local_region=prepare_local_region, use_compiled_frame_event=use_compiled_frame_event, compiled_frame_retain=compiled_frame_retain,
+                prepare_frame_inputs=prepare_frame_inputs, compact_frame_inputs=compact_frame_inputs,
             ), samples)
 
         with patch.object(terrain, "execute_microop_routed_control", execute):
@@ -106,6 +108,7 @@ def run(case, samples, expected, *, prepare_operand_pop=False, prepare_alu=False
         program, argument, array_memory=page, fuel=50_000, capture_trace=False,
         prepare_operand_pop=prepare_operand_pop, prepare_alu=prepare_alu, prepare_mul=prepare_mul, prepare_regions=prepare_regions,
         prepare_local_region=prepare_local_region, use_compiled_frame_event=use_compiled_frame_event, compiled_frame_retain=compiled_frame_retain,
+        prepare_frame_inputs=prepare_frame_inputs, compact_frame_inputs=compact_frame_inputs,
     ), samples)
     assert result.backend == "v58-structured-numpy-memory"
     assert (page, result.result_i32, result.steps) == (reference, expected_return, expected_steps)

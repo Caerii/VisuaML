@@ -131,30 +131,36 @@ def step_frames(
         raise FrameCircuitError("Unknown weights")
     _binary(weights.action_weights, (ACTIONS,))
 
+    return _step_frame_gates(state, tokens.action, tokens.kind, tokens.base,
+                             tokens.branch_depth, tokens.operand_height, weights)
+
+
+def _step_frame_gates(state, action_token, kind, base, branch_depth, operand_height, weights):
+    """Contract admitted frame inputs; keep all live resource and output checks."""
     # With a unit retain gate, every alternative candidate has a zero
     # coefficient. Copy the selected rows to preserve the result ownership.
-    if tokens.action[0] == 1. and weights.action_weights[0] == 1. and all(
+    if action_token[0] == 1. and weights.action_weights[0] == 1. and all(
         type(value) is np.ndarray for value in (
-            state.depth, state.kinds, state.bases, tokens.action, tokens.kind,
-            tokens.base, tokens.branch_depth, tokens.operand_height, weights.action_weights,
+            state.depth, state.kinds, state.bases, action_token, kind,
+            base, branch_depth, operand_height, weights.action_weights,
         )
     ):
-        return FrameState(state.depth.copy(), state.kinds.copy(), state.bases.copy()), tokens.operand_height.copy()
+        return FrameState(state.depth.copy(), state.kinds.copy(), state.bases.copy()), operand_height.copy()
 
     d = int(np.argmax(state.depth))  # admission only; NOT event dispatch
-    push, pop, branch = tokens.action[1:4]
+    push, pop, branch = action_token[1:4]
     if push and (d >= MAX_NESTING
-                 or tokens.kind.sum() != 1.
-                 or tokens.base.sum() != 1.):
+                 or kind.sum() != 1.
+                 or base.sum() != 1.):
         raise FrameCircuitError("Cannot enter a noncanonical/full frame")
     if pop and d == 0:
         raise FrameCircuitError("Frame stack underflow")
-    if branch and (d == 0 or tokens.branch_depth.sum() != 1.):
+    if branch and (d == 0 or branch_depth.sum() != 1.):
         raise FrameCircuitError("Missing target branch depth")
 
     # Fixed tensor contraction selects target frame from two input one-hots.
     target = np.einsum(
-        "d,k,dki->i", state.depth, tokens.branch_depth, _TARGET,
+        "d,k,dki->i", state.depth, branch_depth, _TARGET,
     )
     if branch and target.sum() != 1.:
         raise FrameCircuitError("Branch target is not a live frame")
@@ -176,8 +182,8 @@ def step_frames(
 
     # Construct all frame metadata candidates without an opcode dispatch.
     slot = state.depth[:MAX_NESTING]
-    pushed_kinds = state.kinds + slot[:, None] * tokens.kind[None, :]
-    pushed_bases = state.bases + slot[:, None] * tokens.base[None, :]
+    pushed_kinds = state.kinds + slot[:, None] * kind[None, :]
+    pushed_bases = state.bases + slot[:, None] * base[None, :]
     popped_mask = popped_depth @ _PREFIX
     branched_mask = branch_level @ _PREFIX
     choices_kind = np.stack((
@@ -194,7 +200,7 @@ def step_frames(
         state.bases * branched_mask[:, None],
         np.zeros_like(state.bases),
     ))
-    action = tokens.action * weights.action_weights
+    action = action_token * weights.action_weights
     out = FrameState(
         action @ choices_depth,
         np.einsum("a,ajk->jk", action, choices_kind),
@@ -203,7 +209,7 @@ def step_frames(
     restore = target @ state.bases
     # For branch, restore saved frame base; otherwise keep externally
     # supplied operand height. The actual data stack is not modified here.
-    height = branch * restore + (1. - branch) * tokens.operand_height
+    height = branch * restore + (1. - branch) * operand_height
     validate_state(out)
     _hot(height, (HEIGHTS,))
     return out, height
