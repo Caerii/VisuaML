@@ -1,0 +1,25 @@
+{
+  "case": "bfs",
+  "bfs_prefix_steps": 4000,
+  "instrumented_ns": 1692342947,
+  "categories_ns": {
+    "driver_frame_token_encoding": 3132997,
+    "state_admission": 9425305,
+    "token_and_weight_admission": 11187677,
+    "retain_eligibility": 123457,
+    "change_gate_and_validation": 45053231,
+    "driver_depth_decode": 1752333,
+    "driver_metadata_update": 4299444
+  },
+  "transition_ns_by_action": {
+    "change": 65789670
+  },
+  "checked_opcode_events": {
+    "block:push": 4,
+    "loop:push": 4,
+    "br:branch": 189,
+    "if:push": 27,
+    "end:pop": 27,
+    "br_if:branch": 2
+  }
+}

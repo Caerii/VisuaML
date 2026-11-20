@@ -14,9 +14,9 @@ from compiled_frame_event_pairs import SETTINGS
 from operand_pairs import run, workload
 
 
-def line_of(func, text):
+def line_of(func, text, *, after=0):
     lines, start = inspect.getsourcelines(func)
-    return start + next(i for i, line in enumerate(lines) if text in line)
+    return start + next(i for i, line in enumerate(lines) if start + i > after and text in line)
 
 
 def profile(case, retain="off"):
@@ -34,6 +34,7 @@ def profile(case, retain="off"):
 
     costs = Counter()
     by_action = Counter()
+    checked_events = Counter()
     frame = vm.step_frames
     gates = vm._step_frame_gates
     driver = vm.execute_microop_routed_control
@@ -44,7 +45,7 @@ def profile(case, retain="off"):
     retain_copy = line_of(gates, "return FrameState(state.depth.copy")
     change_start = line_of(gates, "d = int(np.argmax")
     build_tokens = line_of(driver, "event_tokens = FrameTokens(")
-    check_frame = line_of(driver, "frame_state, restored = step_frames")
+    check_frame = line_of(driver, "frame_state, restored = step_frames", after=build_tokens)
     decode_depth = line_of(driver, "depth_after = int(np.argmax")
     materialize_metadata = line_of(driver, "frame_meta = frame_meta[:depth_after]")
     decode_fields_end = line_of(driver, "fused_frame.publish_checked")
@@ -54,6 +55,11 @@ def profile(case, retain="off"):
             return None
         is_frame = call.f_code is frame.__code__
         is_gates = call.f_code is gates.__code__
+        if is_frame and call.f_back.f_code is driver.__code__:
+            opcode = call.f_back.f_locals["kind"]
+            action_id = int(call.f_locals["tokens"].action.argmax())
+            event_name = ("retain", "push", "pop", "branch", "return")[action_id]
+            checked_events[f"{opcode}:{event_name}"] += 1
         action_token = (call.f_locals["tokens"].action if is_frame else
                         call.f_locals["action_token"] if is_gates else None)
         action = "retain" if action_token is not None and action_token[0] else "change"
@@ -99,7 +105,7 @@ def profile(case, retain="off"):
             execute()
         finally:
             sys.settrace(None)
-        return {"instrumented_ns": perf_counter_ns() - began, "categories_ns": dict(costs), "transition_ns_by_action": dict(by_action)}
+        return {"instrumented_ns": perf_counter_ns() - began, "categories_ns": dict(costs), "transition_ns_by_action": dict(by_action), "checked_opcode_events": dict(checked_events)}
 
 
 def main():

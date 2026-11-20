@@ -1,0 +1,27 @@
+{
+  "case": "sudoku",
+  "bfs_prefix_steps": null,
+  "instrumented_ns": 341816225,
+  "categories_ns": {
+    "driver_frame_token_encoding": 479834,
+    "state_admission": 1348193,
+    "token_and_weight_admission": 1710686,
+    "retain_eligibility": 19763,
+    "change_gate_and_validation": 7707297,
+    "driver_depth_decode": 285142,
+    "driver_metadata_update": 333037
+  },
+  "transition_ns_by_action": {
+    "change": 10785939
+  },
+  "checked_opcode_events": {
+    "loop:push": 4,
+    "if:push": 5,
+    "block:push": 2,
+    "end:pop": 2,
+    "br_if:branch": 20,
+    "else:pop": 1,
+    "br:branch": 5,
+    "return:return": 1
+  }
+}

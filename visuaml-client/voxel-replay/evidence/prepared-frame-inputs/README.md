@@ -34,7 +34,11 @@ profile is a 4,000-step prefix. The paired BFS runs complete all
 
 The prior action profile for the same logs shows branches are the
 majority of surviving checked work, with 388 of 672 sparse transitions,
-308 of 528 crowded, and 2,113 of 2,559 in full BFS. The compact path
+308 of 528 crowded, and 2,113 of 2,559 in full BFS. An opcode-attributed repeat found 196 conditional
+and 192 unconditional branch events in four sparse ticks, 164 and
+144 on crowded terrain, and 2 and 189 in the BFS prefix. The
+[full fused-copy profile](../fused-frame-retain/copy-profile/bfs.json)
+provides the corresponding full-invocation breakdown. The compact path
 preserves those computations. In its four-tick crowded profile,
 routing takes 315 ms, operand transitions 295 ms, and retained frame
 equations 76 ms. Routing and operands have more remaining coverage.

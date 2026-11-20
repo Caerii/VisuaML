@@ -1,0 +1,24 @@
+{
+  "case": "sparse",
+  "bfs_prefix_steps": null,
+  "instrumented_ns": 2387529316,
+  "categories_ns": {
+    "driver_frame_token_encoding": 7814485,
+    "state_admission": 25098672,
+    "token_and_weight_admission": 29297706,
+    "retain_eligibility": 403023,
+    "change_gate_and_validation": 114739033,
+    "driver_depth_decode": 5018176,
+    "driver_metadata_update": 5564191
+  },
+  "transition_ns_by_action": {
+    "change": 169538434
+  },
+  "checked_opcode_events": {
+    "block:push": 240,
+    "loop:push": 12,
+    "br_if:branch": 196,
+    "br:branch": 192,
+    "end:pop": 32
+  }
+}
