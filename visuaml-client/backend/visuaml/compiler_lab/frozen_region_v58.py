@@ -35,6 +35,14 @@ class RegionStep(torch.nn.Module):
         loaded = 0
         while budget > 0 and bool(state.vm.status == 0):
             vm = state.vm
+            if self.load_regions and not bool(vm.fuel > 0):
+                # Fuel rejection is observable, but no instruction may
+                # reach the operand or page gather after this boundary.
+                vm = MachineState(vm.pc, vm.height, vm.stack, vm.locals, vm.page,
+                                  vm.fuel, torch.full_like(vm.status, 2))
+                state = CallState(vm, state.depth, state.frames)
+                access = torch.zeros_like(access)
+                break
             row = torch.index_select(image, 0, vm.pc.reshape(1))[0]
             if (budget >= 2 and bool(row[11] >= 0)
                     and bool((vm.fuel >= 2) & (vm.height <= self.capacity - 2))):
