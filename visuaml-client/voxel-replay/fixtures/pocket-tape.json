@@ -1,0 +1,5 @@
+[
+  {"name":"Flip bits","states":1,"symbols":3,"head":1,"tape":[0,1,2,1,0],"rules":"0 1 0 2 R\n0 2 0 1 R","limit":6},
+  {"name":"Grow unary","states":2,"symbols":2,"head":1,"tape":[0,1,1,0,0],"rules":"0 1 0 1 R\n0 0 1 1 L","limit":6},
+  {"name":"Walk off the tape","states":1,"symbols":2,"head":1,"tape":[0,0,0,0],"rules":"0 0 0 1 L\n0 1 0 1 L","limit":6}
+]

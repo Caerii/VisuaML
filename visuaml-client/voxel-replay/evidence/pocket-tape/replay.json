@@ -1,0 +1,430 @@
+{
+  "graph_sha256": "41586e82580ae9b30bc1758a324b06ffb51402fbaabb34fbe535709b01ca2275",
+  "wasm_sha256": "baa1ef80306f63ff4c2c0728ea98e2d0630a802c6aa36c7807502e1c48f1202c",
+  "packed_fallback": false,
+  "runs": {
+    "Flip bits": [
+      {
+        "before": [
+          0,
+          1,
+          1
+        ],
+        "state": 0,
+        "head": 2,
+        "tape": [
+          0,
+          2,
+          2,
+          1,
+          0
+        ],
+        "status": 0,
+        "transitions": 1,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 328,
+            "before": 1,
+            "after": 1
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 328,
+            "before": 1,
+            "after": 1
+          },
+          {
+            "pc": 186,
+            "kind": 2,
+            "address": 328,
+            "before": 1,
+            "after": 2
+          }
+        ],
+        "source_steps": 205,
+        "host_calls": 4,
+        "page_sha256": "cbbc145891541970b462a37da967fe559ca42601d73fbc624f1c9b6cf1bd510d"
+      },
+      {
+        "before": [
+          0,
+          2,
+          2
+        ],
+        "state": 0,
+        "head": 3,
+        "tape": [
+          0,
+          2,
+          1,
+          1,
+          0
+        ],
+        "status": 0,
+        "transitions": 2,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 332,
+            "before": 2,
+            "after": 2
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 332,
+            "before": 2,
+            "after": 2
+          },
+          {
+            "pc": 186,
+            "kind": 2,
+            "address": 332,
+            "before": 2,
+            "after": 1
+          }
+        ],
+        "source_steps": 205,
+        "host_calls": 4,
+        "page_sha256": "9f093ccd912e96a858b4f3672554b39d8a9c21643b92f9e5b56b81759abacaaf"
+      },
+      {
+        "before": [
+          0,
+          3,
+          1
+        ],
+        "state": 0,
+        "head": 4,
+        "tape": [
+          0,
+          2,
+          1,
+          2,
+          0
+        ],
+        "status": 0,
+        "transitions": 3,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 336,
+            "before": 1,
+            "after": 1
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 336,
+            "before": 1,
+            "after": 1
+          },
+          {
+            "pc": 186,
+            "kind": 2,
+            "address": 336,
+            "before": 1,
+            "after": 2
+          }
+        ],
+        "source_steps": 205,
+        "host_calls": 4,
+        "page_sha256": "580fdfe78a77ca1d95dbc092dc67751cd1a7c08ba91095697b8fc0551d2f44b5"
+      },
+      {
+        "before": [
+          0,
+          4,
+          0
+        ],
+        "state": 0,
+        "head": 4,
+        "tape": [
+          0,
+          2,
+          1,
+          2,
+          0
+        ],
+        "status": 1,
+        "transitions": 3,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 340,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 340,
+            "before": 0,
+            "after": 0
+          }
+        ],
+        "source_steps": 132,
+        "host_calls": 3,
+        "page_sha256": "f0da4ec304166d5113e4a067200ad436d317c450b2534b1cae7e29404bd3674f"
+      }
+    ],
+    "Grow unary": [
+      {
+        "before": [
+          0,
+          1,
+          1
+        ],
+        "state": 0,
+        "head": 2,
+        "tape": [
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "status": 0,
+        "transitions": 1,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 340,
+            "before": 1,
+            "after": 1
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 340,
+            "before": 1,
+            "after": 1
+          },
+          {
+            "pc": 186,
+            "kind": 2,
+            "address": 340,
+            "before": 1,
+            "after": 1
+          }
+        ],
+        "source_steps": 205,
+        "host_calls": 4,
+        "page_sha256": "c7780191604b949ad02b0c1f54b064cd92f98efaaa5f6d673e7ce36115e25384"
+      },
+      {
+        "before": [
+          0,
+          2,
+          1
+        ],
+        "state": 0,
+        "head": 3,
+        "tape": [
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "status": 0,
+        "transitions": 2,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 344,
+            "before": 1,
+            "after": 1
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 344,
+            "before": 1,
+            "after": 1
+          },
+          {
+            "pc": 186,
+            "kind": 2,
+            "address": 344,
+            "before": 1,
+            "after": 1
+          }
+        ],
+        "source_steps": 205,
+        "host_calls": 4,
+        "page_sha256": "f5859fba2845485630fe4549e75ebbb1f9790c79ee81d227d451b5f41228c734"
+      },
+      {
+        "before": [
+          0,
+          3,
+          0
+        ],
+        "state": 1,
+        "head": 2,
+        "tape": [
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "status": 0,
+        "transitions": 3,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 348,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 348,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "pc": 186,
+            "kind": 2,
+            "address": 348,
+            "before": 0,
+            "after": 1
+          }
+        ],
+        "source_steps": 205,
+        "host_calls": 4,
+        "page_sha256": "84c0a08ab3b87f335ba09f846d9fcd0675307d429d0e023a85a18cd37943f108"
+      },
+      {
+        "before": [
+          1,
+          2,
+          1
+        ],
+        "state": 1,
+        "head": 2,
+        "tape": [
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "status": 1,
+        "transitions": 3,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 344,
+            "before": 1,
+            "after": 1
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 344,
+            "before": 1,
+            "after": 1
+          }
+        ],
+        "source_steps": 132,
+        "host_calls": 3,
+        "page_sha256": "ba3a49b747711079541decbeaf5c6e0cdeff9167d8c504c2ac2947c42407d439"
+      }
+    ],
+    "Walk off the tape": [
+      {
+        "before": [
+          0,
+          1,
+          0
+        ],
+        "state": 0,
+        "head": 0,
+        "tape": [
+          0,
+          1,
+          0,
+          0
+        ],
+        "status": 0,
+        "transitions": 1,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 316,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 316,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "pc": 186,
+            "kind": 2,
+            "address": 316,
+            "before": 0,
+            "after": 1
+          }
+        ],
+        "source_steps": 205,
+        "host_calls": 4,
+        "page_sha256": "089016ce77475f15e4c09f810bc0b755d04c4154e8ad8666828f47858787e5ab"
+      },
+      {
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "state": 0,
+        "head": 0,
+        "tape": [
+          0,
+          1,
+          0,
+          0
+        ],
+        "status": 2,
+        "transitions": 1,
+        "accesses": [
+          {
+            "pc": 93,
+            "kind": 1,
+            "address": 312,
+            "before": 0,
+            "after": 0
+          },
+          {
+            "pc": 99,
+            "kind": 1,
+            "address": 312,
+            "before": 0,
+            "after": 0
+          }
+        ],
+        "source_steps": 182,
+        "host_calls": 3,
+        "page_sha256": "87862f429177beffd164e9077a63f05a321810f4477ebee00111cf5cb7ee8fea"
+      }
+    ]
+  }
+}

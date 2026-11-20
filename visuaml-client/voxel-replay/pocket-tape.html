@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket · Tape machine</title>
+  <link rel="stylesheet" href="./pocket.css">
+  <style>
+    .tape-form { display: grid; gap: .8rem; }
+    .tape-form label { display: grid; gap: .3rem; }
+    .tape-form textarea { min-height: 7rem; padding: .7rem; border: 1px solid var(--line); background: #101917; color: var(--accent); font: 1rem ui-monospace, monospace; }
+    .dimensions { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .4rem; }
+    .tape { display: flex; flex-wrap: wrap; gap: .35rem; margin: 1.1rem 0; }
+    .cell { width: 2.5rem; padding: .4rem 0; text-align: center; border: 1px solid var(--line); border-radius: 5px; font-family: ui-monospace, monospace; }
+    .cell small { display: block; opacity: .75; }
+    .cell[aria-current] { color: #1b291f; background: var(--accent); border-color: var(--accent); }
+    .tape-buttons { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+<main>
+  <header class="masthead"><a href="./pocket.html">Pocket</a><span>Virtual console</span></header>
+  <div class="page-title"><h1>Tape machine</h1></div>
+  <div class="layout">
+    <section class="console" aria-labelledby="tape-title">
+      <div class="display-header"><h2 id="tape-title">Tape and head</h2><span>Browser WASM</span></div>
+      <div class="screen">
+        <p id="tape-state" role="status">Loading guest…</p>
+        <div id="tape" class="tape" aria-label="Tape symbols"></div>
+        <p id="tape-proof" class="verification">Saved VisuaML replays are available for the examples.</p>
+      </div>
+      <div class="run-controls tape-buttons">
+        <button id="tape-run" class="primary" disabled>Run</button>
+        <button id="tape-step" disabled>Step</button>
+      </div>
+    </section>
+    <section class="panel tape-form" aria-labelledby="rule-title">
+      <h2 id="rule-title">Transition table</h2>
+      <label>Example <select id="example"></select></label>
+      <div class="dimensions">
+        <label>States <input id="states" type="number"></label>
+        <label>Symbols <input id="symbols" type="number"></label>
+        <label>Head index <input id="head" type="number"></label>
+      </div>
+      <label>Initial tape <input id="initial-tape" type="text"></label>
+      <label>Rules <textarea id="rules" spellcheck="false"></textarea></label>
+      <p class="guide">Enter one rule per line as <code>state read next write L/R/S</code>. Symbol 0 is blank by convention. A missing rule halts.</p>
+      <button id="load-tape" disabled>Load rules and reset</button>
+      <p id="tape-error" class="event" role="alert"></p>
+    </section>
+  </div>
+</main>
+<script type="module" src="./pocket-tape-ui.mjs"></script>
+</body>
+</html>
