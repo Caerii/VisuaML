@@ -1,0 +1,13 @@
+{
+  "events": [
+    {"address": 1, "value": 4294967293},
+    {"address": 1},
+    {"address": 1, "value": 4294967294, "replace": 17},
+    {"address": 2, "value": 2779096485},
+    {"address": 1, "value": 3735928559, "commit": false},
+    {"address": 1},
+    {"address": 2}
+  ],
+  "expected": [4294967293, 4294967294, 2779096485],
+  "intervened": [4294967293, 17, 2779096485]
+}

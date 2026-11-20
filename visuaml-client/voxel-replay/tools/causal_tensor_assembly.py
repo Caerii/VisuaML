@@ -42,7 +42,7 @@ class CausalAssembly(nn.Module):
         incoming = torch.cat((left.new_zeros(1), carry[:-1]))
         return propagate + incoming - 2 * self.gate(propagate, incoming)
 
-    def forward(self, history: torch.Tensor):
+    def forward(self, history: torch.Tensor, external_load: torch.Tensor | None = None):
         # Lanes: program key, opcode, register selector, memory address, immediate,
         # target PC, next PC, R0, R1, live. Writes reuse address and immediate lanes.
         pc = history[-1, 75:91]
@@ -51,7 +51,8 @@ class CausalAssembly(nn.Module):
         address, immediate, target = instruction[7:11], instruction[11:43], instruction[43:59]
         r0, r1 = history[-1, 91:123], history[-1, 123:155]
         previous = self.gate(r0, registers[0]) + self.gate(r1, registers[1])
-        loaded = self.select(address, history[:, 155:159], history[:, 27:59])
+        loaded = (self.select(address, history[:, 155:159], history[:, 27:59])
+                  if external_load is None else external_load)
         added = self.add(previous, immediate)
         updated = self.gate(loaded, op[1]) + self.gate(added, op[3])
         changed = op[1] + op[3]
