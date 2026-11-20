@@ -60,7 +60,8 @@ class ComposedStep(torch.nn.Module):
                     local = torch.gather(vm.locals, 0, row[11:12])[0]
                     address = local + row[13]
                     if bool(address <= vm.page.numel() - 4):
-                        if budget >= 4 and bool(row[14] >= 0) and bool(vm.fuel >= 4):
+                        if (budget >= 4 and bool(row[14] >= 0)
+                                and bool((vm.fuel >= 4) & (vm.height <= self.capacity - 3))):
                             second = torch.gather(vm.locals, 0, row[14:15])[0] + row[15]
                             if bool(second <= vm.page.numel() - 4):
                                 addresses = torch.stack((address, second))
