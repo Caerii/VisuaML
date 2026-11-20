@@ -110,3 +110,9 @@ From the voxel-replay directory, with the research Python environment:
 Run the last command separately from timing.
 
 [Warm pairs and counters](pairs) · [Profiles](profile) · [Scaled footprint](footprint.json)
+
+The separate AI Escargot check completed with packed fallback blocked.
+It matched the independent solution, Wasmtime and the archived full-page
+hash, and the exact archived 2,080,993 source steps. The invocation
+took 455 seconds outside the paired timing experiments.
+[Escargot correctness record](escargot.json)
