@@ -108,9 +108,8 @@ def witness(machine, name, raw, argument, initial, fuel, expected_status):
             "input_page_sha256": sha(initial), "output_page_sha256": sha(page), "trace": log}
 
 
-def main():
+def main(image_file=EVIDENCE / "machine.pt"):
     torch.set_num_threads(1)
-    image_file = EVIDENCE / "machine.pt"
     machine = torch.jit.load(image_file, map_location="cpu")
     assert not tuple(machine.parameters()) and not tuple(machine.buffers())
     graph = str(machine.inlined_graph)
@@ -186,4 +185,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    main(*map(Path, sys.argv[1:]))
