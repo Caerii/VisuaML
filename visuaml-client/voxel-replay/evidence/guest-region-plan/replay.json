@@ -1,0 +1,1070 @@
+{
+  "wasm_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24",
+  "image_sha256": "9439502dcb0247d1dcc070f44594ca53419f200553e6ad527bf2eb47a1de2f0b",
+  "plan_image_sha256": "c144092949d9028ace72f50135e330134f9b433661fc2a7dbd7689a4bec2bcdc",
+  "source_pcs": {
+    "26": [
+      0,
+      0
+    ],
+    "47": [
+      0,
+      0
+    ],
+    "55": [
+      0,
+      0
+    ],
+    "56": [
+      0,
+      0
+    ],
+    "67": [
+      2,
+      0
+    ],
+    "68": [
+      0,
+      0
+    ],
+    "74": [
+      0,
+      0
+    ],
+    "75": [
+      0,
+      0
+    ],
+    "83": [
+      2,
+      0
+    ],
+    "91": [
+      0,
+      0
+    ],
+    "100": [
+      2,
+      0
+    ],
+    "105": [
+      0,
+      1
+    ],
+    "113": [
+      0,
+      0
+    ],
+    "114": [
+      0,
+      0
+    ],
+    "125": [
+      0,
+      3
+    ],
+    "126": [
+      3,
+      1
+    ],
+    "131": [
+      0,
+      0
+    ],
+    "141": [
+      0,
+      2
+    ],
+    "149": [
+      0,
+      0
+    ],
+    "160": [
+      0,
+      2
+    ]
+  },
+  "planner_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+  "graph_sha256": "e842b36229ad93025ca00ba8dc238a32954e3712629c8895a029805a5b06b563",
+  "operators": [
+    "aten::Bool.Tensor",
+    "aten::Int.Tensor",
+    "aten::__and__.Scalar",
+    "aten::__and__.Tensor",
+    "aten::__lshift__.Tensor",
+    "aten::__or__.Tensor",
+    "aten::__rshift__.Tensor",
+    "aten::__xor__.Scalar",
+    "aten::add.Scalar",
+    "aten::add.Tensor",
+    "aten::add.int",
+    "aten::bitwise_not",
+    "aten::cat",
+    "aten::clamp",
+    "aten::eq.Scalar",
+    "aten::eq.Tensor",
+    "aten::eq.int",
+    "aten::gather",
+    "aten::ge.Scalar",
+    "aten::ge.int",
+    "aten::gt.Scalar",
+    "aten::gt.Tensor",
+    "aten::gt.int",
+    "aten::index_copy",
+    "aten::index_select",
+    "aten::le.Scalar",
+    "aten::le.int",
+    "aten::lt.Tensor",
+    "aten::lt.int",
+    "aten::mul.Scalar",
+    "aten::mul.Tensor",
+    "aten::ne.Scalar",
+    "aten::ne.int",
+    "aten::numel",
+    "aten::reshape",
+    "aten::scatter.src",
+    "aten::scatter_.src",
+    "aten::select.int",
+    "aten::size.int",
+    "aten::slice.Tensor",
+    "aten::stack",
+    "aten::sub.Scalar",
+    "aten::sub.Tensor",
+    "aten::sub.int",
+    "aten::sum",
+    "aten::to.dtype",
+    "aten::unsqueeze",
+    "aten::where.ScalarSelf",
+    "aten::where.self",
+    "aten::zeros",
+    "aten::zeros_like"
+  ],
+  "accepted": [
+    {
+      "input_words": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "plan_words": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "replay": {
+        "return_i32": 1,
+        "status": 1,
+        "fuel_budget": 200,
+        "unspent_fuel": 157,
+        "source_steps": 43,
+        "stop_image_pc": 47,
+        "graph_invocations": 1,
+        "binary_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+        "image_sha256": "84660818f9ecdba6fcd293c29cd23e6d1ba2371a12fe8249864bb8c13770bbc8",
+        "input_page_sha256": "14cc2cc8ea77f785d4b57b0a66ab0c7bbcb69a21654dd9f8fa85487785b94648",
+        "output_page_sha256": "0dfcdef0a098f0b835d03e078a064f1f0ef6e06007b6e5f586b76d90fcebfd29",
+        "words_at_result": [
+          0
+        ]
+      },
+      "proof": [
+        {
+          "source_boundary": 1,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x356 (<= height 0)))\n (=> $x356 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x359 (<= height 1)))\n (=> $x359 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x362 (<= height 2)))\n (=> $x362 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x365 (<= height 3)))\n (=> $x365 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x368 (<= height 4)))\n (=> $x368 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x371 (<= height 5)))\n (=> $x371 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x374 (<= height 6)))\n (=> $x374 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x377 (<= height 7)))\n (=> $x377 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x380 (<= height 8)))\n (=> $x380 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x383 (<= height 9)))\n (=> $x383 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x386 (<= height 10)))\n (=> $x386 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x389 (<= height 11)))\n (=> $x389 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x392 (<= height 12)))\n (=> $x392 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x395 (<= height 13)))\n (=> $x395 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x398 (<= height 14)))\n (=> $x398 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x401 (<= height 15)))\n (=> $x401 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x404 (<= height 16)))\n (=> $x404 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x407 (<= height 17)))\n (=> $x407 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x410 (<= height 18)))\n (=> $x410 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x413 (<= height 19)))\n (=> $x413 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x416 (<= height 20)))\n (=> $x416 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x419 (<= height 21)))\n (=> $x419 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x336 (<= height 22)))\n (=> $x336 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x424 (<= height 23)))\n (=> $x424 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x286 (ite $x158 local_0 stack_23)))\n(let ((?x159 (ite $x158 local_0 (_ bv0 32))))\n(let ((?x160 (ite (> height 23) stack_23 ?x159)))\n(let (($x153 (= height 22)))\n(let ((?x285 (ite $x153 local_0 stack_22)))\n(let ((?x154 (ite $x153 local_0 (_ bv0 32))))\n(let ((?x155 (ite (> height 22) stack_22 ?x154)))\n(let (($x148 (= height 21)))\n(let ((?x284 (ite $x148 local_0 stack_21)))\n(let ((?x149 (ite $x148 local_0 (_ bv0 32))))\n(let ((?x150 (ite (> height 21) stack_21 ?x149)))\n(let (($x143 (= height 20)))\n(let ((?x283 (ite $x143 local_0 stack_20)))\n(let ((?x144 (ite $x143 local_0 (_ bv0 32))))\n(let ((?x145 (ite (> height 20) stack_20 ?x144)))\n(let (($x138 (= height 19)))\n(let ((?x282 (ite $x138 local_0 stack_19)))\n(let ((?x139 (ite $x138 local_0 (_ bv0 32))))\n(let ((?x140 (ite (> height 19) stack_19 ?x139)))\n(let (($x133 (= height 18)))\n(let ((?x281 (ite $x133 local_0 stack_18)))\n(let ((?x134 (ite $x133 local_0 (_ bv0 32))))\n(let ((?x135 (ite (> height 18) stack_18 ?x134)))\n(let (($x128 (= height 17)))\n(let ((?x280 (ite $x128 local_0 stack_17)))\n(let ((?x129 (ite $x128 local_0 (_ bv0 32))))\n(let ((?x130 (ite (> height 17) stack_17 ?x129)))\n(let (($x123 (= height 16)))\n(let ((?x279 (ite $x123 local_0 stack_16)))\n(let ((?x124 (ite $x123 local_0 (_ bv0 32))))\n(let ((?x125 (ite (> height 16) stack_16 ?x124)))\n(let (($x118 (= height 15)))\n(let ((?x278 (ite $x118 local_0 stack_15)))\n(let ((?x119 (ite $x118 local_0 (_ bv0 32))))\n(let ((?x120 (ite (> height 15) stack_15 ?x119)))\n(let (($x113 (= height 14)))\n(let ((?x277 (ite $x113 local_0 stack_14)))\n(let ((?x114 (ite $x113 local_0 (_ bv0 32))))\n(let ((?x115 (ite (> height 14) stack_14 ?x114)))\n(let (($x108 (= height 13)))\n(let ((?x276 (ite $x108 local_0 stack_13)))\n(let ((?x109 (ite $x108 local_0 (_ bv0 32))))\n(let ((?x110 (ite (> height 13) stack_13 ?x109)))\n(let (($x103 (= height 12)))\n(let ((?x275 (ite $x103 local_0 stack_12)))\n(let ((?x104 (ite $x103 local_0 (_ bv0 32))))\n(let ((?x105 (ite (> height 12) stack_12 ?x104)))\n(let (($x98 (= height 11)))\n(let ((?x274 (ite $x98 local_0 stack_11)))\n(let ((?x99 (ite $x98 local_0 (_ bv0 32))))\n(let ((?x100 (ite (> height 11) stack_11 ?x99)))\n(let (($x93 (= height 10)))\n(let ((?x273 (ite $x93 local_0 stack_10)))\n(let ((?x94 (ite $x93 local_0 (_ bv0 32))))\n(let ((?x95 (ite (> height 10) stack_10 ?x94)))\n(let (($x88 (= height 9)))\n(let ((?x272 (ite $x88 local_0 stack_9)))\n(let ((?x89 (ite $x88 local_0 (_ bv0 32))))\n(let ((?x90 (ite (> height 9) stack_9 ?x89)))\n(let (($x83 (= height 8)))\n(let ((?x271 (ite $x83 local_0 stack_8)))\n(let ((?x84 (ite $x83 local_0 (_ bv0 32))))\n(let ((?x85 (ite (> height 8) stack_8 ?x84)))\n(let (($x78 (= height 7)))\n(let ((?x270 (ite $x78 local_0 stack_7)))\n(let ((?x79 (ite $x78 local_0 (_ bv0 32))))\n(let ((?x80 (ite (> height 7) stack_7 ?x79)))\n(let (($x73 (= height 6)))\n(let ((?x269 (ite $x73 local_0 stack_6)))\n(let ((?x74 (ite $x73 local_0 (_ bv0 32))))\n(let ((?x75 (ite (> height 6) stack_6 ?x74)))\n(let (($x68 (= height 5)))\n(let ((?x268 (ite $x68 local_0 stack_5)))\n(let ((?x69 (ite $x68 local_0 (_ bv0 32))))\n(let ((?x70 (ite (> height 5) stack_5 ?x69)))\n(let (($x63 (= height 4)))\n(let ((?x267 (ite $x63 local_0 stack_4)))\n(let ((?x64 (ite $x63 local_0 (_ bv0 32))))\n(let ((?x65 (ite (> height 4) stack_4 ?x64)))\n(let (($x58 (= height 3)))\n(let ((?x266 (ite $x58 local_0 stack_3)))\n(let ((?x59 (ite $x58 local_0 (_ bv0 32))))\n(let ((?x60 (ite (> height 3) stack_3 ?x59)))\n(let (($x53 (= height 2)))\n(let ((?x265 (ite $x53 local_0 stack_2)))\n(let ((?x54 (ite $x53 local_0 (_ bv0 32))))\n(let ((?x55 (ite (> height 2) stack_2 ?x54)))\n(let (($x48 (= height 1)))\n(let ((?x264 (ite $x48 local_0 stack_1)))\n(let ((?x49 (ite $x48 local_0 (_ bv0 32))))\n(let ((?x50 (ite (> height 1) stack_1 ?x49)))\n(let (($x43 (= height 0)))\n(let ((?x263 (ite $x43 local_0 stack_0)))\n(let ((?x44 (ite $x43 local_0 (_ bv0 32))))\n(let ((?x45 (ite (> height 0) stack_0 ?x44)))\n(or (and (distinct ?x45 ?x263) true) (and (distinct ?x50 ?x264) true) (and (distinct ?x55 ?x265) true) (and (distinct ?x60 ?x266) true) (and (distinct ?x65 ?x267) true) (and (distinct ?x70 ?x268) true) (and (distinct ?x75 ?x269) true) (and (distinct ?x80 ?x270) true) (and (distinct ?x85 ?x271) true) (and (distinct ?x90 ?x272) true) (and (distinct ?x95 ?x273) true) (and (distinct ?x100 ?x274) true) (and (distinct ?x105 ?x275) true) (and (distinct ?x110 ?x276) true) (and (distinct ?x115 ?x277) true) (and (distinct ?x120 ?x278) true) (and (distinct ?x125 ?x279) true) (and (distinct ?x130 ?x280) true) (and (distinct ?x135 ?x281) true) (and (distinct ?x140 ?x282) true) (and (distinct ?x145 ?x283) true) (and (distinct ?x150 ?x284) true) (and (distinct ?x155 ?x285) true) (and (distinct ?x160 ?x286) true) (and (distinct (+ height 1) (+ height 1)) true) (and (distinct (+ pc 1) (+ pc 1)) true) (and (distinct (- fuel 1) (- fuel 1)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        },
+        {
+          "source_boundary": 2,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x520 (<= height 0)))\n (=> $x520 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x523 (<= height 1)))\n (=> $x523 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x526 (<= height 2)))\n (=> $x526 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x529 (<= height 3)))\n (=> $x529 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x532 (<= height 4)))\n (=> $x532 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x424 (<= height 5)))\n (=> $x424 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x336 (<= height 6)))\n (=> $x336 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x419 (<= height 7)))\n (=> $x419 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x416 (<= height 8)))\n (=> $x416 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x413 (<= height 9)))\n (=> $x413 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x410 (<= height 10)))\n (=> $x410 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x407 (<= height 11)))\n (=> $x407 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x404 (<= height 12)))\n (=> $x404 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x401 (<= height 13)))\n (=> $x401 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x398 (<= height 14)))\n (=> $x398 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x395 (<= height 15)))\n (=> $x395 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x392 (<= height 16)))\n (=> $x392 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x389 (<= height 17)))\n (=> $x389 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x386 (<= height 18)))\n (=> $x386 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x383 (<= height 19)))\n (=> $x383 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x380 (<= height 20)))\n (=> $x380 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x377 (<= height 21)))\n (=> $x377 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x500 (<= height 22)))\n (=> $x500 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x376 (<= height 23)))\n (=> $x376 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x334 (ite $x158 local_0 (ite (= (+ height 1) 23) local_0 stack_23))))\n(let ((?x159 (ite $x158 local_0 (_ bv0 32))))\n(let ((?x160 (ite (> height 23) stack_23 ?x159)))\n(let ((?x259 (ite (> (+ height 1) 23) ?x160 (ite (= (+ height 1) 23) local_0 (_ bv0 32)))))\n(let (($x153 (= height 22)))\n(let ((?x332 (ite $x153 local_0 (ite (= (+ height 1) 22) local_0 stack_22))))\n(let ((?x154 (ite $x153 local_0 (_ bv0 32))))\n(let ((?x155 (ite (> height 22) stack_22 ?x154)))\n(let ((?x255 (ite (> (+ height 1) 22) ?x155 (ite (= (+ height 1) 22) local_0 (_ bv0 32)))))\n(let (($x148 (= height 21)))\n(let ((?x330 (ite $x148 local_0 (ite (= (+ height 1) 21) local_0 stack_21))))\n(let ((?x149 (ite $x148 local_0 (_ bv0 32))))\n(let ((?x150 (ite (> height 21) stack_21 ?x149)))\n(let ((?x251 (ite (> (+ height 1) 21) ?x150 (ite (= (+ height 1) 21) local_0 (_ bv0 32)))))\n(let (($x143 (= height 20)))\n(let ((?x328 (ite $x143 local_0 (ite (= (+ height 1) 20) local_0 stack_20))))\n(let ((?x144 (ite $x143 local_0 (_ bv0 32))))\n(let ((?x145 (ite (> height 20) stack_20 ?x144)))\n(let ((?x247 (ite (> (+ height 1) 20) ?x145 (ite (= (+ height 1) 20) local_0 (_ bv0 32)))))\n(let (($x138 (= height 19)))\n(let ((?x326 (ite $x138 local_0 (ite (= (+ height 1) 19) local_0 stack_19))))\n(let ((?x139 (ite $x138 local_0 (_ bv0 32))))\n(let ((?x140 (ite (> height 19) stack_19 ?x139)))\n(let ((?x243 (ite (> (+ height 1) 19) ?x140 (ite (= (+ height 1) 19) local_0 (_ bv0 32)))))\n(let (($x133 (= height 18)))\n(let ((?x324 (ite $x133 local_0 (ite (= (+ height 1) 18) local_0 stack_18))))\n(let ((?x134 (ite $x133 local_0 (_ bv0 32))))\n(let ((?x135 (ite (> height 18) stack_18 ?x134)))\n(let ((?x239 (ite (> (+ height 1) 18) ?x135 (ite (= (+ height 1) 18) local_0 (_ bv0 32)))))\n(let (($x128 (= height 17)))\n(let ((?x322 (ite $x128 local_0 (ite (= (+ height 1) 17) local_0 stack_17))))\n(let ((?x129 (ite $x128 local_0 (_ bv0 32))))\n(let ((?x130 (ite (> height 17) stack_17 ?x129)))\n(let ((?x235 (ite (> (+ height 1) 17) ?x130 (ite (= (+ height 1) 17) local_0 (_ bv0 32)))))\n(let (($x123 (= height 16)))\n(let ((?x320 (ite $x123 local_0 (ite (= (+ height 1) 16) local_0 stack_16))))\n(let ((?x124 (ite $x123 local_0 (_ bv0 32))))\n(let ((?x125 (ite (> height 16) stack_16 ?x124)))\n(let ((?x231 (ite (> (+ height 1) 16) ?x125 (ite (= (+ height 1) 16) local_0 (_ bv0 32)))))\n(let (($x118 (= height 15)))\n(let ((?x318 (ite $x118 local_0 (ite (= (+ height 1) 15) local_0 stack_15))))\n(let ((?x119 (ite $x118 local_0 (_ bv0 32))))\n(let ((?x120 (ite (> height 15) stack_15 ?x119)))\n(let ((?x227 (ite (> (+ height 1) 15) ?x120 (ite (= (+ height 1) 15) local_0 (_ bv0 32)))))\n(let (($x113 (= height 14)))\n(let ((?x316 (ite $x113 local_0 (ite (= (+ height 1) 14) local_0 stack_14))))\n(let ((?x114 (ite $x113 local_0 (_ bv0 32))))\n(let ((?x115 (ite (> height 14) stack_14 ?x114)))\n(let ((?x223 (ite (> (+ height 1) 14) ?x115 (ite (= (+ height 1) 14) local_0 (_ bv0 32)))))\n(let (($x108 (= height 13)))\n(let ((?x314 (ite $x108 local_0 (ite (= (+ height 1) 13) local_0 stack_13))))\n(let ((?x109 (ite $x108 local_0 (_ bv0 32))))\n(let ((?x110 (ite (> height 13) stack_13 ?x109)))\n(let ((?x219 (ite (> (+ height 1) 13) ?x110 (ite (= (+ height 1) 13) local_0 (_ bv0 32)))))\n(let (($x103 (= height 12)))\n(let ((?x312 (ite $x103 local_0 (ite (= (+ height 1) 12) local_0 stack_12))))\n(let ((?x104 (ite $x103 local_0 (_ bv0 32))))\n(let ((?x105 (ite (> height 12) stack_12 ?x104)))\n(let ((?x215 (ite (> (+ height 1) 12) ?x105 (ite (= (+ height 1) 12) local_0 (_ bv0 32)))))\n(let (($x98 (= height 11)))\n(let ((?x310 (ite $x98 local_0 (ite (= (+ height 1) 11) local_0 stack_11))))\n(let ((?x99 (ite $x98 local_0 (_ bv0 32))))\n(let ((?x100 (ite (> height 11) stack_11 ?x99)))\n(let ((?x211 (ite (> (+ height 1) 11) ?x100 (ite (= (+ height 1) 11) local_0 (_ bv0 32)))))\n(let (($x93 (= height 10)))\n(let ((?x308 (ite $x93 local_0 (ite (= (+ height 1) 10) local_0 stack_10))))\n(let ((?x94 (ite $x93 local_0 (_ bv0 32))))\n(let ((?x95 (ite (> height 10) stack_10 ?x94)))\n(let ((?x207 (ite (> (+ height 1) 10) ?x95 (ite (= (+ height 1) 10) local_0 (_ bv0 32)))))\n(let (($x88 (= height 9)))\n(let ((?x306 (ite $x88 local_0 (ite (= (+ height 1) 9) local_0 stack_9))))\n(let ((?x89 (ite $x88 local_0 (_ bv0 32))))\n(let ((?x90 (ite (> height 9) stack_9 ?x89)))\n(let ((?x203 (ite (> (+ height 1) 9) ?x90 (ite (= (+ height 1) 9) local_0 (_ bv0 32)))))\n(let (($x83 (= height 8)))\n(let ((?x304 (ite $x83 local_0 (ite (= (+ height 1) 8) local_0 stack_8))))\n(let ((?x84 (ite $x83 local_0 (_ bv0 32))))\n(let ((?x85 (ite (> height 8) stack_8 ?x84)))\n(let ((?x199 (ite (> (+ height 1) 8) ?x85 (ite (= (+ height 1) 8) local_0 (_ bv0 32)))))\n(let (($x78 (= height 7)))\n(let ((?x302 (ite $x78 local_0 (ite (= (+ height 1) 7) local_0 stack_7))))\n(let ((?x79 (ite $x78 local_0 (_ bv0 32))))\n(let ((?x80 (ite (> height 7) stack_7 ?x79)))\n(let ((?x195 (ite (> (+ height 1) 7) ?x80 (ite (= (+ height 1) 7) local_0 (_ bv0 32)))))\n(let (($x73 (= height 6)))\n(let ((?x300 (ite $x73 local_0 (ite (= (+ height 1) 6) local_0 stack_6))))\n(let ((?x74 (ite $x73 local_0 (_ bv0 32))))\n(let ((?x75 (ite (> height 6) stack_6 ?x74)))\n(let ((?x191 (ite (> (+ height 1) 6) ?x75 (ite (= (+ height 1) 6) local_0 (_ bv0 32)))))\n(let (($x68 (= height 5)))\n(let ((?x298 (ite $x68 local_0 (ite (= (+ height 1) 5) local_0 stack_5))))\n(let ((?x69 (ite $x68 local_0 (_ bv0 32))))\n(let ((?x70 (ite (> height 5) stack_5 ?x69)))\n(let ((?x187 (ite (> (+ height 1) 5) ?x70 (ite (= (+ height 1) 5) local_0 (_ bv0 32)))))\n(let (($x63 (= height 4)))\n(let ((?x296 (ite $x63 local_0 (ite (= (+ height 1) 4) local_0 stack_4))))\n(let ((?x64 (ite $x63 local_0 (_ bv0 32))))\n(let ((?x65 (ite (> height 4) stack_4 ?x64)))\n(let ((?x183 (ite (> (+ height 1) 4) ?x65 (ite (= (+ height 1) 4) local_0 (_ bv0 32)))))\n(let (($x58 (= height 3)))\n(let ((?x294 (ite $x58 local_0 (ite (= (+ height 1) 3) local_0 stack_3))))\n(let ((?x59 (ite $x58 local_0 (_ bv0 32))))\n(let ((?x60 (ite (> height 3) stack_3 ?x59)))\n(let ((?x179 (ite (> (+ height 1) 3) ?x60 (ite (= (+ height 1) 3) local_0 (_ bv0 32)))))\n(let (($x53 (= height 2)))\n(let ((?x292 (ite $x53 local_0 (ite (= (+ height 1) 2) local_0 stack_2))))\n(let ((?x54 (ite $x53 local_0 (_ bv0 32))))\n(let ((?x55 (ite (> height 2) stack_2 ?x54)))\n(let ((?x175 (ite (> (+ height 1) 2) ?x55 (ite (= (+ height 1) 2) local_0 (_ bv0 32)))))\n(let (($x48 (= height 1)))\n(let ((?x290 (ite $x48 local_0 (ite (= (+ height 1) 1) local_0 stack_1))))\n(let ((?x49 (ite $x48 local_0 (_ bv0 32))))\n(let ((?x50 (ite (> height 1) stack_1 ?x49)))\n(let ((?x171 (ite (> (+ height 1) 1) ?x50 (ite (= (+ height 1) 1) local_0 (_ bv0 32)))))\n(let (($x43 (= height 0)))\n(let ((?x288 (ite $x43 local_0 (ite (= (+ height 1) 0) local_0 stack_0))))\n(let ((?x44 (ite $x43 local_0 (_ bv0 32))))\n(let ((?x45 (ite (> height 0) stack_0 ?x44)))\n(let ((?x167 (ite (> (+ height 1) 0) ?x45 (ite (= (+ height 1) 0) local_0 (_ bv0 32)))))\n(or (and (distinct ?x167 ?x288) true) (and (distinct ?x171 ?x290) true) (and (distinct ?x175 ?x292) true) (and (distinct ?x179 ?x294) true) (and (distinct ?x183 ?x296) true) (and (distinct ?x187 ?x298) true) (and (distinct ?x191 ?x300) true) (and (distinct ?x195 ?x302) true) (and (distinct ?x199 ?x304) true) (and (distinct ?x203 ?x306) true) (and (distinct ?x207 ?x308) true) (and (distinct ?x211 ?x310) true) (and (distinct ?x215 ?x312) true) (and (distinct ?x219 ?x314) true) (and (distinct ?x223 ?x316) true) (and (distinct ?x227 ?x318) true) (and (distinct ?x231 ?x320) true) (and (distinct ?x235 ?x322) true) (and (distinct ?x239 ?x324) true) (and (distinct ?x243 ?x326) true) (and (distinct ?x247 ?x328) true) (and (distinct ?x251 ?x330) true) (and (distinct ?x255 ?x332) true) (and (distinct ?x259 ?x334) true) (and (distinct (+ height 2) (+ height 2)) true) (and (distinct (+ pc 2) (+ pc 2)) true) (and (distinct (- fuel 2) (- fuel 2)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        }
+      ]
+    },
+    {
+      "input_words": [
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "plan_words": [
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "replay": {
+        "return_i32": 1,
+        "status": 1,
+        "fuel_budget": 200,
+        "unspent_fuel": 157,
+        "source_steps": 43,
+        "stop_image_pc": 47,
+        "graph_invocations": 1,
+        "binary_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+        "image_sha256": "84660818f9ecdba6fcd293c29cd23e6d1ba2371a12fe8249864bb8c13770bbc8",
+        "input_page_sha256": "13ddcc73c9580e288e6605d411eb46489807e5f9645357f55ece883131b2d354",
+        "output_page_sha256": "1f615b87f8dcb7ba47646c1c90c057a161ec036d6afeaaea27da0d2480349b73",
+        "words_at_result": [
+          0
+        ]
+      },
+      "proof": [
+        {
+          "source_boundary": 1,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x65 (<= height 0)))\n (=> $x65 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x1074 (<= height 1)))\n (=> $x1074 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x187 (<= height 2)))\n (=> $x187 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x74 (<= height 3)))\n (=> $x74 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x300 (<= height 4)))\n (=> $x300 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x80 (<= height 5)))\n (=> $x80 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x889 (<= height 6)))\n (=> $x889 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x199 (<= height 7)))\n (=> $x199 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x89 (<= height 8)))\n (=> $x89 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x306 (<= height 9)))\n (=> $x306 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x95 (<= height 10)))\n (=> $x95 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x806 (<= height 11)))\n (=> $x806 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x211 (<= height 12)))\n (=> $x211 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x104 (<= height 13)))\n (=> $x104 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x312 (<= height 14)))\n (=> $x312 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x110 (<= height 15)))\n (=> $x110 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x722 (<= height 16)))\n (=> $x722 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x223 (<= height 17)))\n (=> $x223 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x119 (<= height 18)))\n (=> $x119 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x318 (<= height 19)))\n (=> $x318 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x125 (<= height 20)))\n (=> $x125 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x998 (<= height 21)))\n (=> $x998 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x45 (<= height 22)))\n (=> $x45 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x719 (<= height 23)))\n (=> $x719 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x1387 (ite $x158 local_2 stack_23)))\n(let ((?x825 (ite $x158 local_2 (_ bv0 32))))\n(let ((?x1017 (ite (> height 23) stack_23 ?x825)))\n(let (($x153 (= height 22)))\n(let ((?x1386 (ite $x153 local_2 stack_22)))\n(let ((?x868 (ite $x153 local_2 (_ bv0 32))))\n(let ((?x1067 (ite (> height 22) stack_22 ?x868)))\n(let (($x148 (= height 21)))\n(let ((?x1385 (ite $x148 local_2 stack_21)))\n(let ((?x1097 (ite $x148 local_2 (_ bv0 32))))\n(let ((?x753 (ite (> height 21) stack_21 ?x1097)))\n(let (($x143 (= height 20)))\n(let ((?x1384 (ite $x143 local_2 stack_20)))\n(let ((?x943 (ite $x143 local_2 (_ bv0 32))))\n(let ((?x910 (ite (> height 20) stack_20 ?x943)))\n(let (($x138 (= height 19)))\n(let ((?x1351 (ite $x138 local_2 stack_19)))\n(let ((?x714 (ite $x138 local_2 (_ bv0 32))))\n(let ((?x484 (ite (> height 19) stack_19 ?x714)))\n(let (($x133 (= height 18)))\n(let ((?x1350 (ite $x133 local_2 stack_18)))\n(let ((?x460 (ite $x133 local_2 (_ bv0 32))))\n(let ((?x723 (ite (> height 18) stack_18 ?x460)))\n(let (($x128 (= height 17)))\n(let ((?x568 (ite $x128 local_2 stack_17)))\n(let ((?x866 (ite $x128 local_2 (_ bv0 32))))\n(let ((?x801 (ite (> height 17) stack_17 ?x866)))\n(let (($x123 (= height 16)))\n(let ((?x1203 (ite $x123 local_2 stack_16)))\n(let ((?x811 (ite $x123 local_2 (_ bv0 32))))\n(let ((?x805 (ite (> height 16) stack_16 ?x811)))\n(let (($x118 (= height 15)))\n(let ((?x1201 (ite $x118 local_2 stack_15)))\n(let ((?x1174 (ite $x118 local_2 (_ bv0 32))))\n(let ((?x1169 (ite (> height 15) stack_15 ?x1174)))\n(let (($x113 (= height 14)))\n(let ((?x1200 (ite $x113 local_2 stack_14)))\n(let ((?x1171 (ite $x113 local_2 (_ bv0 32))))\n(let ((?x1173 (ite (> height 14) stack_14 ?x1171)))\n(let (($x108 (= height 13)))\n(let ((?x1202 (ite $x108 local_2 stack_13)))\n(let ((?x1238 (ite $x108 local_2 (_ bv0 32))))\n(let ((?x817 (ite (> height 13) stack_13 ?x1238)))\n(let (($x103 (= height 12)))\n(let ((?x1132 (ite $x103 local_2 stack_12)))\n(let ((?x1263 (ite $x103 local_2 (_ bv0 32))))\n(let ((?x498 (ite (> height 12) stack_12 ?x1263)))\n(let (($x98 (= height 11)))\n(let ((?x1185 (ite $x98 local_2 stack_11)))\n(let ((?x549 (ite $x98 local_2 (_ bv0 32))))\n(let ((?x1170 (ite (> height 11) stack_11 ?x549)))\n(let (($x93 (= height 10)))\n(let ((?x1181 (ite $x93 local_2 stack_10)))\n(let ((?x729 (ite $x93 local_2 (_ bv0 32))))\n(let ((?x810 (ite (> height 10) stack_10 ?x729)))\n(let (($x88 (= height 9)))\n(let ((?x538 (ite $x88 local_2 stack_9)))\n(let ((?x1114 (ite $x88 local_2 (_ bv0 32))))\n(let ((?x1025 (ite (> height 9) stack_9 ?x1114)))\n(let (($x83 (= height 8)))\n(let ((?x1252 (ite $x83 local_2 stack_8)))\n(let ((?x1042 (ite $x83 local_2 (_ bv0 32))))\n(let ((?x926 (ite (> height 8) stack_8 ?x1042)))\n(let (($x78 (= height 7)))\n(let ((?x1254 (ite $x78 local_2 stack_7)))\n(let ((?x1018 (ite $x78 local_2 (_ bv0 32))))\n(let ((?x951 (ite (> height 7) stack_7 ?x1018)))\n(let (($x73 (= height 6)))\n(let ((?x491 (ite $x73 local_2 stack_6)))\n(let ((?x904 (ite $x73 local_2 (_ bv0 32))))\n(let ((?x822 (ite (> height 6) stack_6 ?x904)))\n(let (($x68 (= height 5)))\n(let ((?x1366 (ite $x68 local_2 stack_5)))\n(let ((?x750 (ite $x68 local_2 (_ bv0 32))))\n(let ((?x831 (ite (> height 5) stack_5 ?x750)))\n(let (($x63 (= height 4)))\n(let ((?x1365 (ite $x63 local_2 stack_4)))\n(let ((?x1031 (ite $x63 local_2 (_ bv0 32))))\n(let ((?x874 (ite (> height 4) stack_4 ?x1031)))\n(let (($x58 (= height 3)))\n(let ((?x1364 (ite $x58 local_2 stack_3)))\n(let ((?x1021 (ite $x58 local_2 (_ bv0 32))))\n(let ((?x944 (ite (> height 3) stack_3 ?x1021)))\n(let (($x53 (= height 2)))\n(let ((?x1363 (ite $x53 local_2 stack_2)))\n(let ((?x720 (ite $x53 local_2 (_ bv0 32))))\n(let ((?x1113 (ite (> height 2) stack_2 ?x720)))\n(let (($x48 (= height 1)))\n(let ((?x1362 (ite $x48 local_2 stack_1)))\n(let ((?x798 (ite $x48 local_2 (_ bv0 32))))\n(let ((?x771 (ite (> height 1) stack_1 ?x798)))\n(let (($x43 (= height 0)))\n(let ((?x1361 (ite $x43 local_2 stack_0)))\n(let ((?x1102 (ite $x43 local_2 (_ bv0 32))))\n(let ((?x864 (ite (> height 0) stack_0 ?x1102)))\n(or (and (distinct ?x864 ?x1361) true) (and (distinct ?x771 ?x1362) true) (and (distinct ?x1113 ?x1363) true) (and (distinct ?x944 ?x1364) true) (and (distinct ?x874 ?x1365) true) (and (distinct ?x831 ?x1366) true) (and (distinct ?x822 ?x491) true) (and (distinct ?x951 ?x1254) true) (and (distinct ?x926 ?x1252) true) (and (distinct ?x1025 ?x538) true) (and (distinct ?x810 ?x1181) true) (and (distinct ?x1170 ?x1185) true) (and (distinct ?x498 ?x1132) true) (and (distinct ?x817 ?x1202) true) (and (distinct ?x1173 ?x1200) true) (and (distinct ?x1169 ?x1201) true) (and (distinct ?x805 ?x1203) true) (and (distinct ?x801 ?x568) true) (and (distinct ?x723 ?x1350) true) (and (distinct ?x484 ?x1351) true) (and (distinct ?x910 ?x1384) true) (and (distinct ?x753 ?x1385) true) (and (distinct ?x1067 ?x1386) true) (and (distinct ?x1017 ?x1387) true) (and (distinct (+ height 1) (+ height 1)) true) (and (distinct (+ pc 1) (+ pc 1)) true) (and (distinct (- fuel 1) (- fuel 1)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        },
+        {
+          "source_boundary": 2,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x423 (<= height 0)))\n (=> $x423 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x426 (<= height 1)))\n (=> $x426 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x534 (<= height 2)))\n (=> $x534 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x531 (<= height 3)))\n (=> $x531 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x528 (<= height 4)))\n (=> $x528 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x719 (<= height 5)))\n (=> $x719 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x45 (<= height 6)))\n (=> $x45 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x998 (<= height 7)))\n (=> $x998 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x125 (<= height 8)))\n (=> $x125 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x318 (<= height 9)))\n (=> $x318 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x119 (<= height 10)))\n (=> $x119 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x223 (<= height 11)))\n (=> $x223 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x722 (<= height 12)))\n (=> $x722 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x110 (<= height 13)))\n (=> $x110 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x312 (<= height 14)))\n (=> $x312 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x104 (<= height 15)))\n (=> $x104 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x211 (<= height 16)))\n (=> $x211 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x806 (<= height 17)))\n (=> $x806 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x95 (<= height 18)))\n (=> $x95 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x306 (<= height 19)))\n (=> $x306 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x89 (<= height 20)))\n (=> $x89 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x199 (<= height 21)))\n (=> $x199 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x404 (<= height 22)))\n (=> $x404 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x85 (<= height 23)))\n (=> $x85 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x1320 (ite $x158 local_2 (ite (= (+ height 1) 23) local_0 stack_23))))\n(let ((?x825 (ite $x158 local_2 (_ bv0 32))))\n(let ((?x1017 (ite (> height 23) stack_23 ?x825)))\n(let ((?x1360 (ite (> (+ height 1) 23) ?x1017 (ite (= (+ height 1) 23) local_0 (_ bv0 32)))))\n(let (($x153 (= height 22)))\n(let ((?x1319 (ite $x153 local_2 (ite (= (+ height 1) 22) local_0 stack_22))))\n(let ((?x868 (ite $x153 local_2 (_ bv0 32))))\n(let ((?x1067 (ite (> height 22) stack_22 ?x868)))\n(let ((?x579 (ite (> (+ height 1) 22) ?x1067 (ite (= (+ height 1) 22) local_0 (_ bv0 32)))))\n(let (($x148 (= height 21)))\n(let ((?x465 (ite $x148 local_2 (ite (= (+ height 1) 21) local_0 stack_21))))\n(let ((?x1097 (ite $x148 local_2 (_ bv0 32))))\n(let ((?x753 (ite (> height 21) stack_21 ?x1097)))\n(let ((?x1359 (ite (> (+ height 1) 21) ?x753 (ite (= (+ height 1) 21) local_0 (_ bv0 32)))))\n(let (($x143 (= height 20)))\n(let ((?x1248 (ite $x143 local_2 (ite (= (+ height 1) 20) local_0 stack_20))))\n(let ((?x943 (ite $x143 local_2 (_ bv0 32))))\n(let ((?x910 (ite (> height 20) stack_20 ?x943)))\n(let ((?x1358 (ite (> (+ height 1) 20) ?x910 (ite (= (+ height 1) 20) local_0 (_ bv0 32)))))\n(let (($x138 (= height 19)))\n(let ((?x691 (ite $x138 local_2 (ite (= (+ height 1) 19) local_0 stack_19))))\n(let ((?x714 (ite $x138 local_2 (_ bv0 32))))\n(let ((?x484 (ite (> height 19) stack_19 ?x714)))\n(let ((?x565 (ite (> (+ height 1) 19) ?x484 (ite (= (+ height 1) 19) local_0 (_ bv0 32)))))\n(let (($x133 (= height 18)))\n(let ((?x347 (ite $x133 local_2 (ite (= (+ height 1) 18) local_0 stack_18))))\n(let ((?x460 (ite $x133 local_2 (_ bv0 32))))\n(let ((?x723 (ite (> height 18) stack_18 ?x460)))\n(let ((?x1168 (ite (> (+ height 1) 18) ?x723 (ite (= (+ height 1) 18) local_0 (_ bv0 32)))))\n(let (($x128 (= height 17)))\n(let ((?x1249 (ite $x128 local_2 (ite (= (+ height 1) 17) local_0 stack_17))))\n(let ((?x866 (ite $x128 local_2 (_ bv0 32))))\n(let ((?x801 (ite (> height 17) stack_17 ?x866)))\n(let ((?x1239 (ite (> (+ height 1) 17) ?x801 (ite (= (+ height 1) 17) local_0 (_ bv0 32)))))\n(let (($x123 (= height 16)))\n(let ((?x1409 (ite $x123 local_2 (ite (= (+ height 1) 16) local_0 stack_16))))\n(let ((?x811 (ite $x123 local_2 (_ bv0 32))))\n(let ((?x805 (ite (> height 16) stack_16 ?x811)))\n(let ((?x769 (ite (> (+ height 1) 16) ?x805 (ite (= (+ height 1) 16) local_0 (_ bv0 32)))))\n(let (($x118 (= height 15)))\n(let ((?x1408 (ite $x118 local_2 (ite (= (+ height 1) 15) local_0 stack_15))))\n(let ((?x1174 (ite $x118 local_2 (_ bv0 32))))\n(let ((?x1169 (ite (> height 15) stack_15 ?x1174)))\n(let ((?x775 (ite (> (+ height 1) 15) ?x1169 (ite (= (+ height 1) 15) local_0 (_ bv0 32)))))\n(let (($x113 (= height 14)))\n(let ((?x1404 (ite $x113 local_2 (ite (= (+ height 1) 14) local_0 stack_14))))\n(let ((?x1171 (ite $x113 local_2 (_ bv0 32))))\n(let ((?x1173 (ite (> height 14) stack_14 ?x1171)))\n(let ((?x787 (ite (> (+ height 1) 14) ?x1173 (ite (= (+ height 1) 14) local_0 (_ bv0 32)))))\n(let (($x108 (= height 13)))\n(let ((?x1303 (ite $x108 local_2 (ite (= (+ height 1) 13) local_0 stack_13))))\n(let ((?x1238 (ite $x108 local_2 (_ bv0 32))))\n(let ((?x817 (ite (> height 13) stack_13 ?x1238)))\n(let ((?x793 (ite (> (+ height 1) 13) ?x817 (ite (= (+ height 1) 13) local_0 (_ bv0 32)))))\n(let (($x103 (= height 12)))\n(let ((?x603 (ite $x103 local_2 (ite (= (+ height 1) 12) local_0 stack_12))))\n(let ((?x1263 (ite $x103 local_2 (_ bv0 32))))\n(let ((?x498 (ite (> height 12) stack_12 ?x1263)))\n(let ((?x1133 (ite (> (+ height 1) 12) ?x498 (ite (= (+ height 1) 12) local_0 (_ bv0 32)))))\n(let (($x98 (= height 11)))\n(let ((?x602 (ite $x98 local_2 (ite (= (+ height 1) 11) local_0 stack_11))))\n(let ((?x549 (ite $x98 local_2 (_ bv0 32))))\n(let ((?x1170 (ite (> height 11) stack_11 ?x549)))\n(let ((?x1139 (ite (> (+ height 1) 11) ?x1170 (ite (= (+ height 1) 11) local_0 (_ bv0 32)))))\n(let (($x93 (= height 10)))\n(let ((?x571 (ite $x93 local_2 (ite (= (+ height 1) 10) local_0 stack_10))))\n(let ((?x729 (ite $x93 local_2 (_ bv0 32))))\n(let ((?x810 (ite (> height 10) stack_10 ?x729)))\n(let ((?x569 (ite (> (+ height 1) 10) ?x810 (ite (= (+ height 1) 10) local_0 (_ bv0 32)))))\n(let (($x88 (= height 9)))\n(let ((?x544 (ite $x88 local_2 (ite (= (+ height 1) 9) local_0 stack_9))))\n(let ((?x1114 (ite $x88 local_2 (_ bv0 32))))\n(let ((?x1025 (ite (> height 9) stack_9 ?x1114)))\n(let ((?x1196 (ite (> (+ height 1) 9) ?x1025 (ite (= (+ height 1) 9) local_0 (_ bv0 32)))))\n(let (($x83 (= height 8)))\n(let ((?x727 (ite $x83 local_2 (ite (= (+ height 1) 8) local_0 stack_8))))\n(let ((?x1042 (ite $x83 local_2 (_ bv0 32))))\n(let ((?x926 (ite (> height 8) stack_8 ?x1042)))\n(let ((?x1194 (ite (> (+ height 1) 8) ?x926 (ite (= (+ height 1) 8) local_0 (_ bv0 32)))))\n(let (($x78 (= height 7)))\n(let ((?x1183 (ite $x78 local_2 (ite (= (+ height 1) 7) local_0 stack_7))))\n(let ((?x1018 (ite $x78 local_2 (_ bv0 32))))\n(let ((?x951 (ite (> height 7) stack_7 ?x1018)))\n(let ((?x540 (ite (> (+ height 1) 7) ?x951 (ite (= (+ height 1) 7) local_0 (_ bv0 32)))))\n(let (($x73 (= height 6)))\n(let ((?x1182 (ite $x73 local_2 (ite (= (+ height 1) 6) local_0 stack_6))))\n(let ((?x904 (ite $x73 local_2 (_ bv0 32))))\n(let ((?x822 (ite (> height 6) stack_6 ?x904)))\n(let ((?x1007 (ite (> (+ height 1) 6) ?x822 (ite (= (+ height 1) 6) local_0 (_ bv0 32)))))\n(let (($x68 (= height 5)))\n(let ((?x1186 (ite $x68 local_2 (ite (= (+ height 1) 5) local_0 stack_5))))\n(let ((?x750 (ite $x68 local_2 (_ bv0 32))))\n(let ((?x831 (ite (> height 5) stack_5 ?x750)))\n(let ((?x738 (ite (> (+ height 1) 5) ?x831 (ite (= (+ height 1) 5) local_0 (_ bv0 32)))))\n(let (($x63 (= height 4)))\n(let ((?x1184 (ite $x63 local_2 (ite (= (+ height 1) 4) local_0 stack_4))))\n(let ((?x1031 (ite $x63 local_2 (_ bv0 32))))\n(let ((?x874 (ite (> height 4) stack_4 ?x1031)))\n(let ((?x813 (ite (> (+ height 1) 4) ?x874 (ite (= (+ height 1) 4) local_0 (_ bv0 32)))))\n(let (($x58 (= height 3)))\n(let ((?x745 (ite $x58 local_2 (ite (= (+ height 1) 3) local_0 stack_3))))\n(let ((?x1021 (ite $x58 local_2 (_ bv0 32))))\n(let ((?x944 (ite (> height 3) stack_3 ?x1021)))\n(let ((?x946 (ite (> (+ height 1) 3) ?x944 (ite (= (+ height 1) 3) local_0 (_ bv0 32)))))\n(let (($x53 (= height 2)))\n(let ((?x763 (ite $x53 local_2 (ite (= (+ height 1) 2) local_0 stack_2))))\n(let ((?x720 (ite $x53 local_2 (_ bv0 32))))\n(let ((?x1113 (ite (> height 2) stack_2 ?x720)))\n(let ((?x1024 (ite (> (+ height 1) 2) ?x1113 (ite (= (+ height 1) 2) local_0 (_ bv0 32)))))\n(let (($x48 (= height 1)))\n(let ((?x604 (ite $x48 local_2 (ite (= (+ height 1) 1) local_0 stack_1))))\n(let ((?x798 (ite $x48 local_2 (_ bv0 32))))\n(let ((?x771 (ite (> height 1) stack_1 ?x798)))\n(let ((?x928 (ite (> (+ height 1) 1) ?x771 (ite (= (+ height 1) 1) local_0 (_ bv0 32)))))\n(let (($x43 (= height 0)))\n(let ((?x1388 (ite $x43 local_2 (ite (= (+ height 1) 0) local_0 stack_0))))\n(let ((?x1102 (ite $x43 local_2 (_ bv0 32))))\n(let ((?x864 (ite (> height 0) stack_0 ?x1102)))\n(let ((?x925 (ite (> (+ height 1) 0) ?x864 (ite (= (+ height 1) 0) local_0 (_ bv0 32)))))\n(or (and (distinct ?x925 ?x1388) true) (and (distinct ?x928 ?x604) true) (and (distinct ?x1024 ?x763) true) (and (distinct ?x946 ?x745) true) (and (distinct ?x813 ?x1184) true) (and (distinct ?x738 ?x1186) true) (and (distinct ?x1007 ?x1182) true) (and (distinct ?x540 ?x1183) true) (and (distinct ?x1194 ?x727) true) (and (distinct ?x1196 ?x544) true) (and (distinct ?x569 ?x571) true) (and (distinct ?x1139 ?x602) true) (and (distinct ?x1133 ?x603) true) (and (distinct ?x793 ?x1303) true) (and (distinct ?x787 ?x1404) true) (and (distinct ?x775 ?x1408) true) (and (distinct ?x769 ?x1409) true) (and (distinct ?x1239 ?x1249) true) (and (distinct ?x1168 ?x347) true) (and (distinct ?x565 ?x691) true) (and (distinct ?x1358 ?x1248) true) (and (distinct ?x1359 ?x465) true) (and (distinct ?x579 ?x1319) true) (and (distinct ?x1360 ?x1320) true) (and (distinct (+ height 2) (+ height 2)) true) (and (distinct (+ pc 2) (+ pc 2)) true) (and (distinct (- fuel 2) (- fuel 2)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        }
+      ]
+    },
+    {
+      "input_words": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "plan_words": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        2
+      ],
+      "replay": {
+        "return_i32": 1,
+        "status": 1,
+        "fuel_budget": 200,
+        "unspent_fuel": 157,
+        "source_steps": 43,
+        "stop_image_pc": 47,
+        "graph_invocations": 1,
+        "binary_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+        "image_sha256": "84660818f9ecdba6fcd293c29cd23e6d1ba2371a12fe8249864bb8c13770bbc8",
+        "input_page_sha256": "78114b3c3103766a91aa67679a579553296f6a5f04eb00fce4b7fca5e8262614",
+        "output_page_sha256": "32c62db0c782531d1410d912e081f21c2f5e182dbbf42968baf289f9162e80e6",
+        "words_at_result": [
+          0
+        ]
+      },
+      "proof": [
+        {
+          "source_boundary": 1,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x1021 (<= height 0)))\n (=> $x1021 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x946 (<= height 1)))\n (=> $x946 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x1394 (<= height 2)))\n (=> $x1394 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x182 (<= height 3)))\n (=> $x182 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x1184 (<= height 4)))\n (=> $x1184 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x831 (<= height 5)))\n (=> $x831 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x297 (<= height 6)))\n (=> $x297 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x904 (<= height 7)))\n (=> $x904 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x1007 (<= height 8)))\n (=> $x1007 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x1250 (<= height 9)))\n (=> $x1250 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x194 (<= height 10)))\n (=> $x194 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x1183 (<= height 11)))\n (=> $x1183 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x926 (<= height 12)))\n (=> $x926 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x303 (<= height 13)))\n (=> $x303 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x1114 (<= height 14)))\n (=> $x1114 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x1196 (<= height 15)))\n (=> $x1196 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x1110 (<= height 16)))\n (=> $x1110 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x206 (<= height 17)))\n (=> $x206 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x571 (<= height 18)))\n (=> $x571 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x1170 (<= height 19)))\n (=> $x1170 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x309 (<= height 20)))\n (=> $x309 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x1263 (<= height 21)))\n (=> $x1263 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x864 (<= height 22)))\n (=> $x864 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x603 (<= height 23)))\n (=> $x603 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x381 (ite $x158 local_0 stack_23)))\n(let ((?x912 (ite $x158 local_0 (_ bv0 32))))\n(let ((?x1189 (ite (> height 23) stack_23 ?x912)))\n(let (($x153 (= height 22)))\n(let ((?x1604 (ite $x153 local_0 stack_22)))\n(let ((?x1416 (ite $x153 local_0 (_ bv0 32))))\n(let ((?x1253 (ite (> height 22) stack_22 ?x1416)))\n(let (($x148 (= height 21)))\n(let ((?x1665 (ite $x148 local_0 stack_21)))\n(let ((?x827 (ite $x148 local_0 (_ bv0 32))))\n(let ((?x1002 (ite (> height 21) stack_21 ?x827)))\n(let (($x143 (= height 20)))\n(let ((?x265 (ite $x143 local_0 stack_20)))\n(let ((?x1086 (ite $x143 local_0 (_ bv0 32))))\n(let ((?x913 (ite (> height 20) stack_20 ?x1086)))\n(let (($x138 (= height 19)))\n(let ((?x264 (ite $x138 local_0 stack_19)))\n(let ((?x840 (ite $x138 local_0 (_ bv0 32))))\n(let ((?x1208 (ite (> height 19) stack_19 ?x840)))\n(let (($x133 (= height 18)))\n(let ((?x263 (ite $x133 local_0 stack_18)))\n(let ((?x1257 (ite $x133 local_0 (_ bv0 32))))\n(let ((?x1234 (ite (> height 18) stack_18 ?x1257)))\n(let (($x128 (= height 17)))\n(let ((?x449 (ite $x128 local_0 stack_17)))\n(let ((?x702 (ite $x128 local_0 (_ bv0 32))))\n(let ((?x1136 (ite (> height 17) stack_17 ?x702)))\n(let (($x123 (= height 16)))\n(let ((?x1015 (ite $x123 local_0 stack_16)))\n(let ((?x1562 (ite $x123 local_0 (_ bv0 32))))\n(let ((?x959 (ite (> height 16) stack_16 ?x1562)))\n(let (($x118 (= height 15)))\n(let ((?x338 (ite $x118 local_0 stack_15)))\n(let ((?x1448 (ite $x118 local_0 (_ bv0 32))))\n(let ((?x1561 (ite (> height 15) stack_15 ?x1448)))\n(let (($x113 (= height 14)))\n(let ((?x507 (ite $x113 local_0 stack_14)))\n(let ((?x1552 (ite $x113 local_0 (_ bv0 32))))\n(let ((?x1553 (ite (> height 14) stack_14 ?x1552)))\n(let (($x108 (= height 13)))\n(let ((?x752 (ite $x108 local_0 stack_13)))\n(let ((?x1533 (ite $x108 local_0 (_ bv0 32))))\n(let ((?x1551 (ite (> height 13) stack_13 ?x1533)))\n(let (($x103 (= height 12)))\n(let ((?x1521 (ite $x103 local_0 stack_12)))\n(let ((?x1550 (ite $x103 local_0 (_ bv0 32))))\n(let ((?x823 (ite (> height 12) stack_12 ?x1550)))\n(let (($x98 (= height 11)))\n(let ((?x1520 (ite $x98 local_0 stack_11)))\n(let ((?x1375 (ite $x98 local_0 (_ bv0 32))))\n(let ((?x1549 (ite (> height 11) stack_11 ?x1375)))\n(let (($x93 (= height 10)))\n(let ((?x1439 (ite $x93 local_0 stack_10)))\n(let ((?x1131 (ite $x93 local_0 (_ bv0 32))))\n(let ((?x1072 (ite (> height 10) stack_10 ?x1131)))\n(let (($x88 (= height 9)))\n(let ((?x1519 (ite $x88 local_0 stack_9)))\n(let ((?x1401 (ite $x88 local_0 (_ bv0 32))))\n(let ((?x1027 (ite (> height 9) stack_9 ?x1401)))\n(let (($x83 (= height 8)))\n(let ((?x1223 (ite $x83 local_0 stack_8)))\n(let ((?x1159 (ite $x83 local_0 (_ bv0 32))))\n(let ((?x1237 (ite (> height 8) stack_8 ?x1159)))\n(let (($x78 (= height 7)))\n(let ((?x1518 (ite $x78 local_0 stack_7)))\n(let ((?x388 (ite $x78 local_0 (_ bv0 32))))\n(let ((?x991 (ite (> height 7) stack_7 ?x388)))\n(let (($x73 (= height 6)))\n(let ((?x1282 (ite $x73 local_0 stack_6)))\n(let ((?x1413 (ite $x73 local_0 (_ bv0 32))))\n(let ((?x379 (ite (> height 6) stack_6 ?x1413)))\n(let (($x68 (= height 5)))\n(let ((?x788 (ite $x68 local_0 stack_5)))\n(let ((?x1000 (ite $x68 local_0 (_ bv0 32))))\n(let ((?x968 (ite (> height 5) stack_5 ?x1000)))\n(let (($x63 (= height 4)))\n(let ((?x357 (ite $x63 local_0 stack_4)))\n(let ((?x1078 (ite $x63 local_0 (_ bv0 32))))\n(let ((?x440 (ite (> height 4) stack_4 ?x1078)))\n(let (($x58 (= height 3)))\n(let ((?x337 (ite $x58 local_0 stack_3)))\n(let ((?x652 (ite $x58 local_0 (_ bv0 32))))\n(let ((?x1087 (ite (> height 3) stack_3 ?x652)))\n(let (($x53 (= height 2)))\n(let ((?x279 (ite $x53 local_0 stack_2)))\n(let ((?x1236 (ite $x53 local_0 (_ bv0 32))))\n(let ((?x1372 (ite (> height 2) stack_2 ?x1236)))\n(let (($x48 (= height 1)))\n(let ((?x277 (ite $x48 local_0 stack_1)))\n(let ((?x1014 (ite $x48 local_0 (_ bv0 32))))\n(let ((?x1424 (ite (> height 1) stack_1 ?x1014)))\n(let (($x43 (= height 0)))\n(let ((?x898 (ite $x43 local_0 stack_0)))\n(let ((?x886 (ite $x43 local_0 (_ bv0 32))))\n(let ((?x1428 (ite (> height 0) stack_0 ?x886)))\n(or (and (distinct ?x1428 ?x898) true) (and (distinct ?x1424 ?x277) true) (and (distinct ?x1372 ?x279) true) (and (distinct ?x1087 ?x337) true) (and (distinct ?x440 ?x357) true) (and (distinct ?x968 ?x788) true) (and (distinct ?x379 ?x1282) true) (and (distinct ?x991 ?x1518) true) (and (distinct ?x1237 ?x1223) true) (and (distinct ?x1027 ?x1519) true) (and (distinct ?x1072 ?x1439) true) (and (distinct ?x1549 ?x1520) true) (and (distinct ?x823 ?x1521) true) (and (distinct ?x1551 ?x752) true) (and (distinct ?x1553 ?x507) true) (and (distinct ?x1561 ?x338) true) (and (distinct ?x959 ?x1015) true) (and (distinct ?x1136 ?x449) true) (and (distinct ?x1234 ?x263) true) (and (distinct ?x1208 ?x264) true) (and (distinct ?x913 ?x265) true) (and (distinct ?x1002 ?x1665) true) (and (distinct ?x1253 ?x1604) true) (and (distinct ?x1189 ?x381) true) (and (distinct (+ height 1) (+ height 1)) true) (and (distinct (+ pc 1) (+ pc 1)) true) (and (distinct (- fuel 1) (- fuel 1)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        },
+        {
+          "source_boundary": 2,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x84 (<= height 0)))\n (=> $x84 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x1044 (<= height 1)))\n (=> $x1044 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x203 (<= height 2)))\n (=> $x203 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x94 (<= height 3)))\n (=> $x94 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x308 (<= height 4)))\n (=> $x308 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x603 (<= height 5)))\n (=> $x603 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x864 (<= height 6)))\n (=> $x864 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x1263 (<= height 7)))\n (=> $x1263 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x309 (<= height 8)))\n (=> $x309 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x1170 (<= height 9)))\n (=> $x1170 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x571 (<= height 10)))\n (=> $x571 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x206 (<= height 11)))\n (=> $x206 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x1110 (<= height 12)))\n (=> $x1110 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x1196 (<= height 13)))\n (=> $x1196 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x1114 (<= height 14)))\n (=> $x1114 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x303 (<= height 15)))\n (=> $x303 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x926 (<= height 16)))\n (=> $x926 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x1183 (<= height 17)))\n (=> $x1183 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x194 (<= height 18)))\n (=> $x194 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x1250 (<= height 19)))\n (=> $x1250 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x1007 (<= height 20)))\n (=> $x1007 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x904 (<= height 21)))\n (=> $x904 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x333 (<= height 22)))\n (=> $x333 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x1246 (<= height 23)))\n (=> $x1246 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x328 (ite $x158 local_0 (ite (= (+ height 1) 23) local_1 stack_23))))\n(let ((?x912 (ite $x158 local_0 (_ bv0 32))))\n(let ((?x1189 (ite (> height 23) stack_23 ?x912)))\n(let ((?x281 (ite (> (+ height 1) 23) ?x1189 (ite (= (+ height 1) 23) local_1 (_ bv0 32)))))\n(let (($x153 (= height 22)))\n(let ((?x159 (ite $x153 local_0 (ite (= (+ height 1) 22) local_1 stack_22))))\n(let ((?x1416 (ite $x153 local_0 (_ bv0 32))))\n(let ((?x1253 (ite (> height 22) stack_22 ?x1416)))\n(let ((?x278 (ite (> (+ height 1) 22) ?x1253 (ite (= (+ height 1) 22) local_1 (_ bv0 32)))))\n(let (($x148 (= height 21)))\n(let ((?x371 (ite $x148 local_0 (ite (= (+ height 1) 21) local_1 stack_21))))\n(let ((?x827 (ite $x148 local_0 (_ bv0 32))))\n(let ((?x1002 (ite (> height 21) stack_21 ?x827)))\n(let ((?x282 (ite (> (+ height 1) 21) ?x1002 (ite (= (+ height 1) 21) local_1 (_ bv0 32)))))\n(let (($x143 (= height 20)))\n(let ((?x1033 (ite $x143 local_0 (ite (= (+ height 1) 20) local_1 stack_20))))\n(let ((?x1086 (ite $x143 local_0 (_ bv0 32))))\n(let ((?x913 (ite (> height 20) stack_20 ?x1086)))\n(let ((?x1240 (ite (> (+ height 1) 20) ?x913 (ite (= (+ height 1) 20) local_1 (_ bv0 32)))))\n(let (($x138 (= height 19)))\n(let ((?x845 (ite $x138 local_0 (ite (= (+ height 1) 19) local_1 stack_19))))\n(let ((?x840 (ite $x138 local_0 (_ bv0 32))))\n(let ((?x1208 (ite (> height 19) stack_19 ?x840)))\n(let ((?x1509 (ite (> (+ height 1) 19) ?x1208 (ite (= (+ height 1) 19) local_1 (_ bv0 32)))))\n(let (($x133 (= height 18)))\n(let ((?x1606 (ite $x133 local_0 (ite (= (+ height 1) 18) local_1 stack_18))))\n(let ((?x1257 (ite $x133 local_0 (_ bv0 32))))\n(let ((?x1234 (ite (> height 18) stack_18 ?x1257)))\n(let ((?x1507 (ite (> (+ height 1) 18) ?x1234 (ite (= (+ height 1) 18) local_1 (_ bv0 32)))))\n(let (($x128 (= height 17)))\n(let ((?x1603 (ite $x128 local_0 (ite (= (+ height 1) 17) local_1 stack_17))))\n(let ((?x702 (ite $x128 local_0 (_ bv0 32))))\n(let ((?x1136 (ite (> height 17) stack_17 ?x702)))\n(let ((?x1505 (ite (> (+ height 1) 17) ?x1136 (ite (= (+ height 1) 17) local_1 (_ bv0 32)))))\n(let (($x123 (= height 16)))\n(let ((?x1602 (ite $x123 local_0 (ite (= (+ height 1) 16) local_1 stack_16))))\n(let ((?x1562 (ite $x123 local_0 (_ bv0 32))))\n(let ((?x959 (ite (> height 16) stack_16 ?x1562)))\n(let ((?x888 (ite (> (+ height 1) 16) ?x959 (ite (= (+ height 1) 16) local_1 (_ bv0 32)))))\n(let (($x118 (= height 15)))\n(let ((?x739 (ite $x118 local_0 (ite (= (+ height 1) 15) local_1 stack_15))))\n(let ((?x1448 (ite $x118 local_0 (_ bv0 32))))\n(let ((?x1561 (ite (> height 15) stack_15 ?x1448)))\n(let ((?x1445 (ite (> (+ height 1) 15) ?x1561 (ite (= (+ height 1) 15) local_1 (_ bv0 32)))))\n(let (($x113 (= height 14)))\n(let ((?x150 (ite $x113 local_0 (ite (= (+ height 1) 14) local_1 stack_14))))\n(let ((?x1552 (ite $x113 local_0 (_ bv0 32))))\n(let ((?x1553 (ite (> height 14) stack_14 ?x1552)))\n(let ((?x1138 (ite (> (+ height 1) 14) ?x1553 (ite (= (+ height 1) 14) local_1 (_ bv0 32)))))\n(let (($x108 (= height 13)))\n(let ((?x374 (ite $x108 local_0 (ite (= (+ height 1) 13) local_1 stack_13))))\n(let ((?x1533 (ite $x108 local_0 (_ bv0 32))))\n(let ((?x1551 (ite (> height 13) stack_13 ?x1533)))\n(let ((?x290 (ite (> (+ height 1) 13) ?x1551 (ite (= (+ height 1) 13) local_1 (_ bv0 32)))))\n(let (($x103 (= height 12)))\n(let ((?x1598 (ite $x103 local_0 (ite (= (+ height 1) 12) local_1 stack_12))))\n(let ((?x1550 (ite $x103 local_0 (_ bv0 32))))\n(let ((?x823 (ite (> height 12) stack_12 ?x1550)))\n(let ((?x171 (ite (> (+ height 1) 12) ?x823 (ite (= (+ height 1) 12) local_1 (_ bv0 32)))))\n(let (($x98 (= height 11)))\n(let ((?x1593 (ite $x98 local_0 (ite (= (+ height 1) 11) local_1 stack_11))))\n(let ((?x1375 (ite $x98 local_0 (_ bv0 32))))\n(let ((?x1549 (ite (> height 11) stack_11 ?x1375)))\n(let ((?x1583 (ite (> (+ height 1) 11) ?x1549 (ite (= (+ height 1) 11) local_1 (_ bv0 32)))))\n(let (($x93 (= height 10)))\n(let ((?x1433 (ite $x93 local_0 (ite (= (+ height 1) 10) local_1 stack_10))))\n(let ((?x1131 (ite $x93 local_0 (_ bv0 32))))\n(let ((?x1072 (ite (> height 10) stack_10 ?x1131)))\n(let ((?x1011 (ite (> (+ height 1) 10) ?x1072 (ite (= (+ height 1) 10) local_1 (_ bv0 32)))))\n(let (($x88 (= height 9)))\n(let ((?x1265 (ite $x88 local_0 (ite (= (+ height 1) 9) local_1 stack_9))))\n(let ((?x1401 (ite $x88 local_0 (_ bv0 32))))\n(let ((?x1027 (ite (> height 9) stack_9 ?x1401)))\n(let ((?x659 (ite (> (+ height 1) 9) ?x1027 (ite (= (+ height 1) 9) local_1 (_ bv0 32)))))\n(let (($x83 (= height 8)))\n(let ((?x79 (ite $x83 local_0 (ite (= (+ height 1) 8) local_1 stack_8))))\n(let ((?x1159 (ite $x83 local_0 (_ bv0 32))))\n(let ((?x1237 (ite (> height 8) stack_8 ?x1159)))\n(let ((?x1484 (ite (> (+ height 1) 8) ?x1237 (ite (= (+ height 1) 8) local_1 (_ bv0 32)))))\n(let (($x78 (= height 7)))\n(let ((?x1140 (ite $x78 local_0 (ite (= (+ height 1) 7) local_1 stack_7))))\n(let ((?x388 (ite $x78 local_0 (_ bv0 32))))\n(let ((?x991 (ite (> height 7) stack_7 ?x388)))\n(let ((?x354 (ite (> (+ height 1) 7) ?x991 (ite (= (+ height 1) 7) local_1 (_ bv0 32)))))\n(let (($x73 (= height 6)))\n(let ((?x469 (ite $x73 local_0 (ite (= (+ height 1) 6) local_1 stack_6))))\n(let ((?x1413 (ite $x73 local_0 (_ bv0 32))))\n(let ((?x379 (ite (> height 6) stack_6 ?x1413)))\n(let ((?x340 (ite (> (+ height 1) 6) ?x379 (ite (= (+ height 1) 6) local_1 (_ bv0 32)))))\n(let (($x68 (= height 5)))\n(let ((?x283 (ite $x68 local_0 (ite (= (+ height 1) 5) local_1 stack_5))))\n(let ((?x1000 (ite $x68 local_0 (_ bv0 32))))\n(let ((?x968 (ite (> height 5) stack_5 ?x1000)))\n(let ((?x783 (ite (> (+ height 1) 5) ?x968 (ite (= (+ height 1) 5) local_1 (_ bv0 32)))))\n(let (($x63 (= height 4)))\n(let ((?x1457 (ite $x63 local_0 (ite (= (+ height 1) 4) local_1 stack_4))))\n(let ((?x1078 (ite $x63 local_0 (_ bv0 32))))\n(let ((?x440 (ite (> height 4) stack_4 ?x1078)))\n(let ((?x1419 (ite (> (+ height 1) 4) ?x440 (ite (= (+ height 1) 4) local_1 (_ bv0 32)))))\n(let (($x58 (= height 3)))\n(let ((?x1019 (ite $x58 local_0 (ite (= (+ height 1) 3) local_1 stack_3))))\n(let ((?x652 (ite $x58 local_0 (_ bv0 32))))\n(let ((?x1087 (ite (> height 3) stack_3 ?x652)))\n(let ((?x786 (ite (> (+ height 1) 3) ?x1087 (ite (= (+ height 1) 3) local_1 (_ bv0 32)))))\n(let (($x53 (= height 2)))\n(let ((?x644 (ite $x53 local_0 (ite (= (+ height 1) 2) local_1 stack_2))))\n(let ((?x1236 (ite $x53 local_0 (_ bv0 32))))\n(let ((?x1372 (ite (> height 2) stack_2 ?x1236)))\n(let ((?x1348 (ite (> (+ height 1) 2) ?x1372 (ite (= (+ height 1) 2) local_1 (_ bv0 32)))))\n(let (($x48 (= height 1)))\n(let ((?x1664 (ite $x48 local_0 (ite (= (+ height 1) 1) local_1 stack_1))))\n(let ((?x1014 (ite $x48 local_0 (_ bv0 32))))\n(let ((?x1424 (ite (> height 1) stack_1 ?x1014)))\n(let ((?x699 (ite (> (+ height 1) 1) ?x1424 (ite (= (+ height 1) 1) local_1 (_ bv0 32)))))\n(let (($x43 (= height 0)))\n(let ((?x1346 (ite $x43 local_0 (ite (= (+ height 1) 0) local_1 stack_0))))\n(let ((?x886 (ite $x43 local_0 (_ bv0 32))))\n(let ((?x1428 (ite (> height 0) stack_0 ?x886)))\n(let ((?x875 (ite (> (+ height 1) 0) ?x1428 (ite (= (+ height 1) 0) local_1 (_ bv0 32)))))\n(or (and (distinct ?x875 ?x1346) true) (and (distinct ?x699 ?x1664) true) (and (distinct ?x1348 ?x644) true) (and (distinct ?x786 ?x1019) true) (and (distinct ?x1419 ?x1457) true) (and (distinct ?x783 ?x283) true) (and (distinct ?x340 ?x469) true) (and (distinct ?x354 ?x1140) true) (and (distinct ?x1484 ?x79) true) (and (distinct ?x659 ?x1265) true) (and (distinct ?x1011 ?x1433) true) (and (distinct ?x1583 ?x1593) true) (and (distinct ?x171 ?x1598) true) (and (distinct ?x290 ?x374) true) (and (distinct ?x1138 ?x150) true) (and (distinct ?x1445 ?x739) true) (and (distinct ?x888 ?x1602) true) (and (distinct ?x1505 ?x1603) true) (and (distinct ?x1507 ?x1606) true) (and (distinct ?x1509 ?x845) true) (and (distinct ?x1240 ?x1033) true) (and (distinct ?x282 ?x371) true) (and (distinct ?x278 ?x159) true) (and (distinct ?x281 ?x328) true) (and (distinct (+ height 2) (+ height 2)) true) (and (distinct (+ pc 2) (+ pc 2)) true) (and (distinct (- fuel 2) (- fuel 2)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        }
+      ]
+    },
+    {
+      "input_words": [
+        0,
+        0,
+        0,
+        3,
+        0
+      ],
+      "plan_words": [
+        1,
+        0,
+        3,
+        0,
+        1,
+        2
+      ],
+      "replay": {
+        "return_i32": 1,
+        "status": 1,
+        "fuel_budget": 200,
+        "unspent_fuel": 157,
+        "source_steps": 43,
+        "stop_image_pc": 47,
+        "graph_invocations": 1,
+        "binary_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+        "image_sha256": "84660818f9ecdba6fcd293c29cd23e6d1ba2371a12fe8249864bb8c13770bbc8",
+        "input_page_sha256": "2e412433f1aab144703e21064cc2ce7eddbf701eca0d5dabe6995c11ac9ff460",
+        "output_page_sha256": "c74a13649794482eaedc215c00c576fb06dc0b5060bf146ff167131be63da6ff",
+        "words_at_result": [
+          0
+        ]
+      },
+      "proof": [
+        {
+          "source_boundary": 1,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x1419 (<= height 0)))\n (=> $x1419 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x1486 (<= height 1)))\n (=> $x1486 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x1530 (<= height 2)))\n (=> $x1530 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x355 (<= height 3)))\n (=> $x355 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x469 (<= height 4)))\n (=> $x469 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x354 (<= height 5)))\n (=> $x354 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x1469 (<= height 6)))\n (=> $x1469 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x1210 (<= height 7)))\n (=> $x1210 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x1495 (<= height 8)))\n (=> $x1495 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x1265 (<= height 9)))\n (=> $x1265 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x1011 (<= height 10)))\n (=> $x1011 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x294 (<= height 11)))\n (=> $x294 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x1541 (<= height 12)))\n (=> $x1541 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x1584 (<= height 13)))\n (=> $x1584 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x1598 (<= height 14)))\n (=> $x1598 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x290 (<= height 15)))\n (=> $x290 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x1405 (<= height 16)))\n (=> $x1405 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x255 (<= height 17)))\n (=> $x255 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x490 (<= height 18)))\n (=> $x490 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x739 (<= height 19)))\n (=> $x739 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x888 (<= height 20)))\n (=> $x888 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x451 (<= height 21)))\n (=> $x451 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x875 (<= height 22)))\n (=> $x875 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x1259 (<= height 23)))\n (=> $x1259 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x187 (ite $x158 local_0 stack_23)))\n(let ((?x912 (ite $x158 local_0 (_ bv0 32))))\n(let ((?x1189 (ite (> height 23) stack_23 ?x912)))\n(let (($x153 (= height 22)))\n(let ((?x801 (ite $x153 local_0 stack_22)))\n(let ((?x1416 (ite $x153 local_0 (_ bv0 32))))\n(let ((?x1253 (ite (> height 22) stack_22 ?x1416)))\n(let (($x148 (= height 21)))\n(let ((?x1222 (ite $x148 local_0 stack_21)))\n(let ((?x827 (ite $x148 local_0 (_ bv0 32))))\n(let ((?x1002 (ite (> height 21) stack_21 ?x827)))\n(let (($x143 (= height 20)))\n(let ((?x435 (ite $x143 local_0 stack_20)))\n(let ((?x1086 (ite $x143 local_0 (_ bv0 32))))\n(let ((?x913 (ite (> height 20) stack_20 ?x1086)))\n(let (($x138 (= height 19)))\n(let ((?x370 (ite $x138 local_0 stack_19)))\n(let ((?x840 (ite $x138 local_0 (_ bv0 32))))\n(let ((?x1208 (ite (> height 19) stack_19 ?x840)))\n(let (($x133 (= height 18)))\n(let ((?x861 (ite $x133 local_0 stack_18)))\n(let ((?x1257 (ite $x133 local_0 (_ bv0 32))))\n(let ((?x1234 (ite (> height 18) stack_18 ?x1257)))\n(let (($x128 (= height 17)))\n(let ((?x1335 (ite $x128 local_0 stack_17)))\n(let ((?x702 (ite $x128 local_0 (_ bv0 32))))\n(let ((?x1136 (ite (> height 17) stack_17 ?x702)))\n(let (($x123 (= height 16)))\n(let ((?x1101 (ite $x123 local_0 stack_16)))\n(let ((?x1562 (ite $x123 local_0 (_ bv0 32))))\n(let ((?x959 (ite (> height 16) stack_16 ?x1562)))\n(let (($x118 (= height 15)))\n(let ((?x732 (ite $x118 local_0 stack_15)))\n(let ((?x1448 (ite $x118 local_0 (_ bv0 32))))\n(let ((?x1561 (ite (> height 15) stack_15 ?x1448)))\n(let (($x113 (= height 14)))\n(let ((?x1070 (ite $x113 local_0 stack_14)))\n(let ((?x1552 (ite $x113 local_0 (_ bv0 32))))\n(let ((?x1553 (ite (> height 14) stack_14 ?x1552)))\n(let (($x108 (= height 13)))\n(let ((?x1069 (ite $x108 local_0 stack_13)))\n(let ((?x1533 (ite $x108 local_0 (_ bv0 32))))\n(let ((?x1551 (ite (> height 13) stack_13 ?x1533)))\n(let (($x103 (= height 12)))\n(let ((?x431 (ite $x103 local_0 stack_12)))\n(let ((?x1550 (ite $x103 local_0 (_ bv0 32))))\n(let ((?x823 (ite (> height 12) stack_12 ?x1550)))\n(let (($x98 (= height 11)))\n(let ((?x524 (ite $x98 local_0 stack_11)))\n(let ((?x1375 (ite $x98 local_0 (_ bv0 32))))\n(let ((?x1549 (ite (> height 11) stack_11 ?x1375)))\n(let (($x93 (= height 10)))\n(let ((?x554 (ite $x93 local_0 stack_10)))\n(let ((?x1131 (ite $x93 local_0 (_ bv0 32))))\n(let ((?x1072 (ite (> height 10) stack_10 ?x1131)))\n(let (($x88 (= height 9)))\n(let ((?x703 (ite $x88 local_0 stack_9)))\n(let ((?x1401 (ite $x88 local_0 (_ bv0 32))))\n(let ((?x1027 (ite (> height 9) stack_9 ?x1401)))\n(let (($x83 (= height 8)))\n(let ((?x287 (ite $x83 local_0 stack_8)))\n(let ((?x1159 (ite $x83 local_0 (_ bv0 32))))\n(let ((?x1237 (ite (> height 8) stack_8 ?x1159)))\n(let (($x78 (= height 7)))\n(let ((?x1123 (ite $x78 local_0 stack_7)))\n(let ((?x388 (ite $x78 local_0 (_ bv0 32))))\n(let ((?x991 (ite (> height 7) stack_7 ?x388)))\n(let (($x73 (= height 6)))\n(let ((?x429 (ite $x73 local_0 stack_6)))\n(let ((?x1413 (ite $x73 local_0 (_ bv0 32))))\n(let ((?x379 (ite (> height 6) stack_6 ?x1413)))\n(let (($x68 (= height 5)))\n(let ((?x641 (ite $x68 local_0 stack_5)))\n(let ((?x1000 (ite $x68 local_0 (_ bv0 32))))\n(let ((?x968 (ite (> height 5) stack_5 ?x1000)))\n(let (($x63 (= height 4)))\n(let ((?x853 (ite $x63 local_0 stack_4)))\n(let ((?x1078 (ite $x63 local_0 (_ bv0 32))))\n(let ((?x440 (ite (> height 4) stack_4 ?x1078)))\n(let (($x58 (= height 3)))\n(let ((?x1150 (ite $x58 local_0 stack_3)))\n(let ((?x652 (ite $x58 local_0 (_ bv0 32))))\n(let ((?x1087 (ite (> height 3) stack_3 ?x652)))\n(let (($x53 (= height 2)))\n(let ((?x782 (ite $x53 local_0 stack_2)))\n(let ((?x1236 (ite $x53 local_0 (_ bv0 32))))\n(let ((?x1372 (ite (> height 2) stack_2 ?x1236)))\n(let (($x48 (= height 1)))\n(let ((?x771 (ite $x48 local_0 stack_1)))\n(let ((?x1014 (ite $x48 local_0 (_ bv0 32))))\n(let ((?x1424 (ite (> height 1) stack_1 ?x1014)))\n(let (($x43 (= height 0)))\n(let ((?x1378 (ite $x43 local_0 stack_0)))\n(let ((?x886 (ite $x43 local_0 (_ bv0 32))))\n(let ((?x1428 (ite (> height 0) stack_0 ?x886)))\n(or (and (distinct ?x1428 ?x1378) true) (and (distinct ?x1424 ?x771) true) (and (distinct ?x1372 ?x782) true) (and (distinct ?x1087 ?x1150) true) (and (distinct ?x440 ?x853) true) (and (distinct ?x968 ?x641) true) (and (distinct ?x379 ?x429) true) (and (distinct ?x991 ?x1123) true) (and (distinct ?x1237 ?x287) true) (and (distinct ?x1027 ?x703) true) (and (distinct ?x1072 ?x554) true) (and (distinct ?x1549 ?x524) true) (and (distinct ?x823 ?x431) true) (and (distinct ?x1551 ?x1069) true) (and (distinct ?x1553 ?x1070) true) (and (distinct ?x1561 ?x732) true) (and (distinct ?x959 ?x1101) true) (and (distinct ?x1136 ?x1335) true) (and (distinct ?x1234 ?x861) true) (and (distinct ?x1208 ?x370) true) (and (distinct ?x913 ?x435) true) (and (distinct ?x1002 ?x1222) true) (and (distinct ?x1253 ?x801) true) (and (distinct ?x1189 ?x187) true) (and (distinct (+ height 1) (+ height 1)) true) (and (distinct (+ pc 1) (+ pc 1)) true) (and (distinct (- fuel 1) (- fuel 1)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        },
+        {
+          "source_boundary": 2,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x311 (<= height 0)))\n (=> $x311 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x1238 (<= height 1)))\n (=> $x1238 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x99 (<= height 2)))\n (=> $x99 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x207 (<= height 3)))\n (=> $x207 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x917 (<= height 4)))\n (=> $x917 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x1259 (<= height 5)))\n (=> $x1259 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x875 (<= height 6)))\n (=> $x875 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x451 (<= height 7)))\n (=> $x451 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x888 (<= height 8)))\n (=> $x888 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x739 (<= height 9)))\n (=> $x739 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x490 (<= height 10)))\n (=> $x490 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x255 (<= height 11)))\n (=> $x255 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x1405 (<= height 12)))\n (=> $x1405 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x290 (<= height 13)))\n (=> $x290 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x1598 (<= height 14)))\n (=> $x1598 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x1584 (<= height 15)))\n (=> $x1584 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x1541 (<= height 16)))\n (=> $x1541 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x294 (<= height 17)))\n (=> $x294 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x1011 (<= height 18)))\n (=> $x1011 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x1265 (<= height 19)))\n (=> $x1265 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x1495 (<= height 20)))\n (=> $x1495 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x1210 (<= height 21)))\n (=> $x1210 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x1110 (<= height 22)))\n (=> $x1110 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x1484 (<= height 23)))\n (=> $x1484 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x408 (ite $x158 local_0 (ite (= (+ height 1) 23) local_3 stack_23))))\n(let ((?x912 (ite $x158 local_0 (_ bv0 32))))\n(let ((?x1189 (ite (> height 23) stack_23 ?x912)))\n(let ((?x750 (ite (> (+ height 1) 23) ?x1189 (ite (= (+ height 1) 23) local_3 (_ bv0 32)))))\n(let (($x153 (= height 22)))\n(let ((?x417 (ite $x153 local_0 (ite (= (+ height 1) 22) local_3 stack_22))))\n(let ((?x1416 (ite $x153 local_0 (_ bv0 32))))\n(let ((?x1253 (ite (> height 22) stack_22 ?x1416)))\n(let ((?x1201 (ite (> (+ height 1) 22) ?x1253 (ite (= (+ height 1) 22) local_3 (_ bv0 32)))))\n(let (($x148 (= height 21)))\n(let ((?x416 (ite $x148 local_0 (ite (= (+ height 1) 21) local_3 stack_21))))\n(let ((?x827 (ite $x148 local_0 (_ bv0 32))))\n(let ((?x1002 (ite (> height 21) stack_21 ?x827)))\n(let ((?x463 (ite (> (+ height 1) 21) ?x1002 (ite (= (+ height 1) 21) local_3 (_ bv0 32)))))\n(let (($x143 (= height 20)))\n(let ((?x1418 (ite $x143 local_0 (ite (= (+ height 1) 20) local_3 stack_20))))\n(let ((?x1086 (ite $x143 local_0 (_ bv0 32))))\n(let ((?x913 (ite (> height 20) stack_20 ?x1086)))\n(let ((?x139 (ite (> (+ height 1) 20) ?x913 (ite (= (+ height 1) 20) local_3 (_ bv0 32)))))\n(let (($x138 (= height 19)))\n(let ((?x1388 (ite $x138 local_0 (ite (= (+ height 1) 19) local_3 stack_19))))\n(let ((?x840 (ite $x138 local_0 (_ bv0 32))))\n(let ((?x1208 (ite (> height 19) stack_19 ?x840)))\n(let ((?x1397 (ite (> (+ height 1) 19) ?x1208 (ite (= (+ height 1) 19) local_3 (_ bv0 32)))))\n(let (($x133 (= height 18)))\n(let ((?x1609 (ite $x133 local_0 (ite (= (+ height 1) 18) local_3 stack_18))))\n(let ((?x1257 (ite $x133 local_0 (_ bv0 32))))\n(let ((?x1234 (ite (> height 18) stack_18 ?x1257)))\n(let ((?x857 (ite (> (+ height 1) 18) ?x1234 (ite (= (+ height 1) 18) local_3 (_ bv0 32)))))\n(let (($x128 (= height 17)))\n(let ((?x964 (ite $x128 local_0 (ite (= (+ height 1) 17) local_3 stack_17))))\n(let ((?x702 (ite $x128 local_0 (_ bv0 32))))\n(let ((?x1136 (ite (> height 17) stack_17 ?x702)))\n(let ((?x175 (ite (> (+ height 1) 17) ?x1136 (ite (= (+ height 1) 17) local_3 (_ bv0 32)))))\n(let (($x123 (= height 16)))\n(let ((?x1440 (ite $x123 local_0 (ite (= (+ height 1) 16) local_3 stack_16))))\n(let ((?x1562 (ite $x123 local_0 (_ bv0 32))))\n(let ((?x959 (ite (> height 16) stack_16 ?x1562)))\n(let ((?x1301 (ite (> (+ height 1) 16) ?x959 (ite (= (+ height 1) 16) local_3 (_ bv0 32)))))\n(let (($x118 (= height 15)))\n(let ((?x1359 (ite $x118 local_0 (ite (= (+ height 1) 15) local_3 stack_15))))\n(let ((?x1448 (ite $x118 local_0 (_ bv0 32))))\n(let ((?x1561 (ite (> height 15) stack_15 ?x1448)))\n(let ((?x915 (ite (> (+ height 1) 15) ?x1561 (ite (= (+ height 1) 15) local_3 (_ bv0 32)))))\n(let (($x113 (= height 14)))\n(let ((?x1447 (ite $x113 local_0 (ite (= (+ height 1) 14) local_3 stack_14))))\n(let ((?x1552 (ite $x113 local_0 (_ bv0 32))))\n(let ((?x1553 (ite (> height 14) stack_14 ?x1552)))\n(let ((?x1411 (ite (> (+ height 1) 14) ?x1553 (ite (= (+ height 1) 14) local_3 (_ bv0 32)))))\n(let (($x108 (= height 13)))\n(let ((?x421 (ite $x108 local_0 (ite (= (+ height 1) 13) local_3 stack_13))))\n(let ((?x1533 (ite $x108 local_0 (_ bv0 32))))\n(let ((?x1551 (ite (> height 13) stack_13 ?x1533)))\n(let ((?x688 (ite (> (+ height 1) 13) ?x1551 (ite (= (+ height 1) 13) local_3 (_ bv0 32)))))\n(let (($x103 (= height 12)))\n(let ((?x1449 (ite $x103 local_0 (ite (= (+ height 1) 12) local_3 stack_12))))\n(let ((?x1550 (ite $x103 local_0 (_ bv0 32))))\n(let ((?x823 (ite (> height 12) stack_12 ?x1550)))\n(let ((?x473 (ite (> (+ height 1) 12) ?x823 (ite (= (+ height 1) 12) local_3 (_ bv0 32)))))\n(let (($x98 (= height 11)))\n(let ((?x779 (ite $x98 local_0 (ite (= (+ height 1) 11) local_3 stack_11))))\n(let ((?x1375 (ite $x98 local_0 (_ bv0 32))))\n(let ((?x1549 (ite (> height 11) stack_11 ?x1375)))\n(let ((?x1082 (ite (> (+ height 1) 11) ?x1549 (ite (= (+ height 1) 11) local_3 (_ bv0 32)))))\n(let (($x93 (= height 10)))\n(let ((?x683 (ite $x93 local_0 (ite (= (+ height 1) 10) local_3 stack_10))))\n(let ((?x1131 (ite $x93 local_0 (_ bv0 32))))\n(let ((?x1072 (ite (> height 10) stack_10 ?x1131)))\n(let ((?x1476 (ite (> (+ height 1) 10) ?x1072 (ite (= (+ height 1) 10) local_3 (_ bv0 32)))))\n(let (($x88 (= height 9)))\n(let ((?x681 (ite $x88 local_0 (ite (= (+ height 1) 9) local_3 stack_9))))\n(let ((?x1401 (ite $x88 local_0 (_ bv0 32))))\n(let ((?x1027 (ite (> height 9) stack_9 ?x1401)))\n(let ((?x615 (ite (> (+ height 1) 9) ?x1027 (ite (= (+ height 1) 9) local_3 (_ bv0 32)))))\n(let (($x83 (= height 8)))\n(let ((?x1034 (ite $x83 local_0 (ite (= (+ height 1) 8) local_3 stack_8))))\n(let ((?x1159 (ite $x83 local_0 (_ bv0 32))))\n(let ((?x1237 (ite (> height 8) stack_8 ?x1159)))\n(let ((?x785 (ite (> (+ height 1) 8) ?x1237 (ite (= (+ height 1) 8) local_3 (_ bv0 32)))))\n(let (($x78 (= height 7)))\n(let ((?x1668 (ite $x78 local_0 (ite (= (+ height 1) 7) local_3 stack_7))))\n(let ((?x388 (ite $x78 local_0 (_ bv0 32))))\n(let ((?x991 (ite (> height 7) stack_7 ?x388)))\n(let ((?x160 (ite (> (+ height 1) 7) ?x991 (ite (= (+ height 1) 7) local_3 (_ bv0 32)))))\n(let (($x73 (= height 6)))\n(let ((?x367 (ite $x73 local_0 (ite (= (+ height 1) 6) local_3 stack_6))))\n(let ((?x1413 (ite $x73 local_0 (_ bv0 32))))\n(let ((?x379 (ite (> height 6) stack_6 ?x1413)))\n(let ((?x905 (ite (> (+ height 1) 6) ?x379 (ite (= (+ height 1) 6) local_3 (_ bv0 32)))))\n(let (($x68 (= height 5)))\n(let ((?x145 (ite $x68 local_0 (ite (= (+ height 1) 5) local_3 stack_5))))\n(let ((?x1000 (ite $x68 local_0 (_ bv0 32))))\n(let ((?x968 (ite (> height 5) stack_5 ?x1000)))\n(let ((?x1398 (ite (> (+ height 1) 5) ?x968 (ite (= (+ height 1) 5) local_3 (_ bv0 32)))))\n(let (($x63 (= height 4)))\n(let ((?x356 (ite $x63 local_0 (ite (= (+ height 1) 4) local_3 stack_4))))\n(let ((?x1078 (ite $x63 local_0 (_ bv0 32))))\n(let ((?x440 (ite (> height 4) stack_4 ?x1078)))\n(let ((?x1088 (ite (> (+ height 1) 4) ?x440 (ite (= (+ height 1) 4) local_3 (_ bv0 32)))))\n(let (($x58 (= height 3)))\n(let ((?x1165 (ite $x58 local_0 (ite (= (+ height 1) 3) local_3 stack_3))))\n(let ((?x652 (ite $x58 local_0 (_ bv0 32))))\n(let ((?x1087 (ite (> height 3) stack_3 ?x652)))\n(let ((?x438 (ite (> (+ height 1) 3) ?x1087 (ite (= (+ height 1) 3) local_3 (_ bv0 32)))))\n(let (($x53 (= height 2)))\n(let ((?x1294 (ite $x53 local_0 (ite (= (+ height 1) 2) local_3 stack_2))))\n(let ((?x1236 (ite $x53 local_0 (_ bv0 32))))\n(let ((?x1372 (ite (> height 2) stack_2 ?x1236)))\n(let ((?x1204 (ite (> (+ height 1) 2) ?x1372 (ite (= (+ height 1) 2) local_3 (_ bv0 32)))))\n(let (($x48 (= height 1)))\n(let ((?x368 (ite $x48 local_0 (ite (= (+ height 1) 1) local_3 stack_1))))\n(let ((?x1014 (ite $x48 local_0 (_ bv0 32))))\n(let ((?x1424 (ite (> height 1) stack_1 ?x1014)))\n(let ((?x687 (ite (> (+ height 1) 1) ?x1424 (ite (= (+ height 1) 1) local_3 (_ bv0 32)))))\n(let (($x43 (= height 0)))\n(let ((?x589 (ite $x43 local_0 (ite (= (+ height 1) 0) local_3 stack_0))))\n(let ((?x886 (ite $x43 local_0 (_ bv0 32))))\n(let ((?x1428 (ite (> height 0) stack_0 ?x886)))\n(let ((?x266 (ite (> (+ height 1) 0) ?x1428 (ite (= (+ height 1) 0) local_3 (_ bv0 32)))))\n(or (and (distinct ?x266 ?x589) true) (and (distinct ?x687 ?x368) true) (and (distinct ?x1204 ?x1294) true) (and (distinct ?x438 ?x1165) true) (and (distinct ?x1088 ?x356) true) (and (distinct ?x1398 ?x145) true) (and (distinct ?x905 ?x367) true) (and (distinct ?x160 ?x1668) true) (and (distinct ?x785 ?x1034) true) (and (distinct ?x615 ?x681) true) (and (distinct ?x1476 ?x683) true) (and (distinct ?x1082 ?x779) true) (and (distinct ?x473 ?x1449) true) (and (distinct ?x688 ?x421) true) (and (distinct ?x1411 ?x1447) true) (and (distinct ?x915 ?x1359) true) (and (distinct ?x1301 ?x1440) true) (and (distinct ?x175 ?x964) true) (and (distinct ?x857 ?x1609) true) (and (distinct ?x1397 ?x1388) true) (and (distinct ?x139 ?x1418) true) (and (distinct ?x463 ?x416) true) (and (distinct ?x1201 ?x417) true) (and (distinct ?x750 ?x408) true) (and (distinct (+ height 2) (+ height 2)) true) (and (distinct (+ pc 2) (+ pc 2)) true) (and (distinct (- fuel 2) (- fuel 2)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        }
+      ]
+    },
+    {
+      "input_words": [
+        0,
+        3,
+        0,
+        1,
+        0
+      ],
+      "plan_words": [
+        1,
+        3,
+        1,
+        3,
+        1,
+        2
+      ],
+      "replay": {
+        "return_i32": 1,
+        "status": 1,
+        "fuel_budget": 200,
+        "unspent_fuel": 157,
+        "source_steps": 43,
+        "stop_image_pc": 47,
+        "graph_invocations": 1,
+        "binary_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+        "image_sha256": "84660818f9ecdba6fcd293c29cd23e6d1ba2371a12fe8249864bb8c13770bbc8",
+        "input_page_sha256": "36f2199f4978de99ec2d4387f0aac47348e1b32a28358df47fe7e4740918ad55",
+        "output_page_sha256": "d3669d9d5a5039604d6246861703ee550502ae16711be60f7aa10a07e3717dbe",
+        "words_at_result": [
+          0
+        ]
+      },
+      "proof": [
+        {
+          "source_boundary": 1,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x652 (<= height 0)))\n (=> $x652 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x438 (<= height 1)))\n (=> $x438 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x1245 (<= height 2)))\n (=> $x1245 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x553 (<= height 3)))\n (=> $x553 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x356 (<= height 4)))\n (=> $x356 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x968 (<= height 5)))\n (=> $x968 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x1816 (<= height 6)))\n (=> $x1816 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x1413 (<= height 7)))\n (=> $x1413 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x905 (<= height 8)))\n (=> $x905 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x933 (<= height 9)))\n (=> $x933 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x1161 (<= height 10)))\n (=> $x1161 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x1668 (<= height 11)))\n (=> $x1668 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x1237 (<= height 12)))\n (=> $x1237 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x728 (<= height 13)))\n (=> $x728 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x1401 (<= height 14)))\n (=> $x1401 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x615 (<= height 15)))\n (=> $x615 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x530 (<= height 16)))\n (=> $x530 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x1634 (<= height 17)))\n (=> $x1634 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x683 (<= height 18)))\n (=> $x683 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x1549 (<= height 19)))\n (=> $x1549 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x1094 (<= height 20)))\n (=> $x1094 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x1550 (<= height 21)))\n (=> $x1550 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x1428 (<= height 22)))\n (=> $x1428 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x1449 (<= height 23)))\n (=> $x1449 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x1285 (ite $x158 local_3 stack_23)))\n(let ((?x818 (ite $x158 local_3 (_ bv0 32))))\n(let ((?x1412 (ite (> height 23) stack_23 ?x818)))\n(let (($x153 (= height 22)))\n(let ((?x788 (ite $x153 local_3 stack_22)))\n(let ((?x605 (ite $x153 local_3 (_ bv0 32))))\n(let ((?x170 (ite (> height 22) stack_22 ?x605)))\n(let (($x148 (= height 21)))\n(let ((?x1647 (ite $x148 local_3 stack_21)))\n(let ((?x908 (ite $x148 local_3 (_ bv0 32))))\n(let ((?x568 (ite (> height 21) stack_21 ?x908)))\n(let (($x143 (= height 20)))\n(let ((?x1637 (ite $x143 local_3 stack_20)))\n(let ((?x1544 (ite $x143 local_3 (_ bv0 32))))\n(let ((?x394 (ite (> height 20) stack_20 ?x1544)))\n(let (($x138 (= height 19)))\n(let ((?x595 (ite $x138 local_3 stack_19)))\n(let ((?x372 (ite $x138 local_3 (_ bv0 32))))\n(let ((?x1579 (ite (> height 19) stack_19 ?x372)))\n(let (($x133 (= height 18)))\n(let ((?x753 (ite $x133 local_3 stack_18)))\n(let ((?x437 (ite $x133 local_3 (_ bv0 32))))\n(let ((?x1166 (ite (> height 18) stack_18 ?x437)))\n(let (($x128 (= height 17)))\n(let ((?x1319 (ite $x128 local_3 stack_17)))\n(let ((?x907 (ite $x128 local_3 (_ bv0 32))))\n(let ((?x1062 (ite (> height 17) stack_17 ?x907)))\n(let (($x123 (= height 16)))\n(let ((?x427 (ite $x123 local_3 stack_16)))\n(let ((?x722 (ite $x123 local_3 (_ bv0 32))))\n(let ((?x1176 (ite (> height 16) stack_16 ?x722)))\n(let (($x118 (= height 15)))\n(let ((?x987 (ite $x118 local_3 stack_15)))\n(let ((?x873 (ite $x118 local_3 (_ bv0 32))))\n(let ((?x1427 (ite (> height 15) stack_15 ?x873)))\n(let (($x113 (= height 14)))\n(let ((?x980 (ite $x113 local_3 stack_14)))\n(let ((?x1692 (ite $x113 local_3 (_ bv0 32))))\n(let ((?x996 (ite (> height 14) stack_14 ?x1692)))\n(let (($x108 (= height 13)))\n(let ((?x1542 (ite $x108 local_3 stack_13)))\n(let ((?x1461 (ite $x108 local_3 (_ bv0 32))))\n(let ((?x896 (ite (> height 13) stack_13 ?x1461)))\n(let (($x103 (= height 12)))\n(let ((?x1020 (ite $x103 local_3 stack_12)))\n(let ((?x1639 (ite $x103 local_3 (_ bv0 32))))\n(let ((?x1638 (ite (> height 12) stack_12 ?x1639)))\n(let (($x98 (= height 11)))\n(let ((?x800 (ite $x98 local_3 stack_11)))\n(let ((?x845 (ite $x98 local_3 (_ bv0 32))))\n(let ((?x1732 (ite (> height 11) stack_11 ?x845)))\n(let (($x93 (= height 10)))\n(let ((?x984 (ite $x93 local_3 stack_10)))\n(let ((?x1556 (ite $x93 local_3 (_ bv0 32))))\n(let ((?x1828 (ite (> height 10) stack_10 ?x1556)))\n(let (($x88 (= height 9)))\n(let ((?x610 (ite $x88 local_3 stack_9)))\n(let ((?x776 (ite $x88 local_3 (_ bv0 32))))\n(let ((?x590 (ite (> height 9) stack_9 ?x776)))\n(let (($x83 (= height 8)))\n(let ((?x935 (ite $x83 local_3 stack_8)))\n(let ((?x54 (ite $x83 local_3 (_ bv0 32))))\n(let ((?x268 (ite (> height 8) stack_8 ?x54)))\n(let (($x78 (= height 7)))\n(let ((?x1924 (ite $x78 local_3 stack_7)))\n(let ((?x1483 (ite $x78 local_3 (_ bv0 32))))\n(let ((?x190 (ite (> height 7) stack_7 ?x1483)))\n(let (($x73 (= height 6)))\n(let ((?x625 (ite $x73 local_3 stack_6)))\n(let ((?x918 (ite $x73 local_3 (_ bv0 32))))\n(let ((?x597 (ite (> height 6) stack_6 ?x918)))\n(let (($x68 (= height 5)))\n(let ((?x392 (ite $x68 local_3 stack_5)))\n(let ((?x1830 (ite $x68 local_3 (_ bv0 32))))\n(let ((?x389 (ite (> height 5) stack_5 ?x1830)))\n(let (($x63 (= height 4)))\n(let ((?x830 (ite $x63 local_3 stack_4)))\n(let ((?x795 (ite $x63 local_3 (_ bv0 32))))\n(let ((?x1653 (ite (> height 4) stack_4 ?x795)))\n(let (($x58 (= height 3)))\n(let ((?x752 (ite $x58 local_3 stack_3)))\n(let ((?x1255 (ite $x58 local_3 (_ bv0 32))))\n(let ((?x909 (ite (> height 3) stack_3 ?x1255)))\n(let (($x53 (= height 2)))\n(let ((?x1155 (ite $x53 local_3 stack_2)))\n(let ((?x1659 (ite $x53 local_3 (_ bv0 32))))\n(let ((?x1496 (ite (> height 2) stack_2 ?x1659)))\n(let (($x48 (= height 1)))\n(let ((?x825 (ite $x48 local_3 stack_1)))\n(let ((?x1512 (ite $x48 local_3 (_ bv0 32))))\n(let ((?x400 (ite (> height 1) stack_1 ?x1512)))\n(let (($x43 (= height 0)))\n(let ((?x1452 (ite $x43 local_3 stack_0)))\n(let ((?x159 (ite $x43 local_3 (_ bv0 32))))\n(let ((?x1535 (ite (> height 0) stack_0 ?x159)))\n(or (and (distinct ?x1535 ?x1452) true) (and (distinct ?x400 ?x825) true) (and (distinct ?x1496 ?x1155) true) (and (distinct ?x909 ?x752) true) (and (distinct ?x1653 ?x830) true) (and (distinct ?x389 ?x392) true) (and (distinct ?x597 ?x625) true) (and (distinct ?x190 ?x1924) true) (and (distinct ?x268 ?x935) true) (and (distinct ?x590 ?x610) true) (and (distinct ?x1828 ?x984) true) (and (distinct ?x1732 ?x800) true) (and (distinct ?x1638 ?x1020) true) (and (distinct ?x896 ?x1542) true) (and (distinct ?x996 ?x980) true) (and (distinct ?x1427 ?x987) true) (and (distinct ?x1176 ?x427) true) (and (distinct ?x1062 ?x1319) true) (and (distinct ?x1166 ?x753) true) (and (distinct ?x1579 ?x595) true) (and (distinct ?x394 ?x1637) true) (and (distinct ?x568 ?x1647) true) (and (distinct ?x170 ?x788) true) (and (distinct ?x1412 ?x1285) true) (and (distinct (+ height 1) (+ height 1)) true) (and (distinct (+ pc 1) (+ pc 1)) true) (and (distinct (- fuel 1) (- fuel 1)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        },
+        {
+          "source_boundary": 2,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x780 (<= height 0)))\n (=> $x780 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x650 (<= height 1)))\n (=> $x650 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x1270 (<= height 2)))\n (=> $x1270 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x850 (<= height 3)))\n (=> $x850 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x1433 (<= height 4)))\n (=> $x1433 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x1449 (<= height 5)))\n (=> $x1449 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x1428 (<= height 6)))\n (=> $x1428 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x1550 (<= height 7)))\n (=> $x1550 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x1094 (<= height 8)))\n (=> $x1094 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x1549 (<= height 9)))\n (=> $x1549 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x683 (<= height 10)))\n (=> $x683 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x1634 (<= height 11)))\n (=> $x1634 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x530 (<= height 12)))\n (=> $x530 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x615 (<= height 13)))\n (=> $x615 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x1401 (<= height 14)))\n (=> $x1401 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x728 (<= height 15)))\n (=> $x728 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x1237 (<= height 16)))\n (=> $x1237 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x1668 (<= height 17)))\n (=> $x1668 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x1161 (<= height 18)))\n (=> $x1161 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x933 (<= height 19)))\n (=> $x933 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x905 (<= height 20)))\n (=> $x905 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x1413 (<= height 21)))\n (=> $x1413 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x413 (<= height 22)))\n (=> $x413 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x676 (<= height 23)))\n (=> $x676 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x1127 (ite $x158 local_3 (ite (= (+ height 1) 23) local_1 stack_23))))\n(let ((?x818 (ite $x158 local_3 (_ bv0 32))))\n(let ((?x1412 (ite (> height 23) stack_23 ?x818)))\n(let ((?x1366 (ite (> (+ height 1) 23) ?x1412 (ite (= (+ height 1) 23) local_1 (_ bv0 32)))))\n(let (($x153 (= height 22)))\n(let ((?x619 (ite $x153 local_3 (ite (= (+ height 1) 22) local_1 stack_22))))\n(let ((?x605 (ite $x153 local_3 (_ bv0 32))))\n(let ((?x170 (ite (> height 22) stack_22 ?x605)))\n(let ((?x1015 (ite (> (+ height 1) 22) ?x170 (ite (= (+ height 1) 22) local_1 (_ bv0 32)))))\n(let (($x148 (= height 21)))\n(let ((?x546 (ite $x148 local_3 (ite (= (+ height 1) 21) local_1 stack_21))))\n(let ((?x908 (ite $x148 local_3 (_ bv0 32))))\n(let ((?x568 (ite (> height 21) stack_21 ?x908)))\n(let ((?x507 (ite (> (+ height 1) 21) ?x568 (ite (= (+ height 1) 21) local_1 (_ bv0 32)))))\n(let (($x143 (= height 20)))\n(let ((?x1829 (ite $x143 local_3 (ite (= (+ height 1) 20) local_1 stack_20))))\n(let ((?x1544 (ite $x143 local_3 (_ bv0 32))))\n(let ((?x394 (ite (> height 20) stack_20 ?x1544)))\n(let ((?x1007 (ite (> (+ height 1) 20) ?x394 (ite (= (+ height 1) 20) local_1 (_ bv0 32)))))\n(let (($x138 (= height 19)))\n(let ((?x988 (ite $x138 local_3 (ite (= (+ height 1) 19) local_1 stack_19))))\n(let ((?x372 (ite $x138 local_3 (_ bv0 32))))\n(let ((?x1579 (ite (> height 19) stack_19 ?x372)))\n(let ((?x1643 (ite (> (+ height 1) 19) ?x1579 (ite (= (+ height 1) 19) local_1 (_ bv0 32)))))\n(let (($x133 (= height 18)))\n(let ((?x114 (ite $x133 local_3 (ite (= (+ height 1) 18) local_1 stack_18))))\n(let ((?x437 (ite $x133 local_3 (_ bv0 32))))\n(let ((?x1166 (ite (> height 18) stack_18 ?x437)))\n(let ((?x1787 (ite (> (+ height 1) 18) ?x1166 (ite (= (+ height 1) 18) local_1 (_ bv0 32)))))\n(let (($x128 (= height 17)))\n(let ((?x668 (ite $x128 local_3 (ite (= (+ height 1) 17) local_1 stack_17))))\n(let ((?x907 (ite $x128 local_3 (_ bv0 32))))\n(let ((?x1062 (ite (> height 17) stack_17 ?x907)))\n(let ((?x1785 (ite (> (+ height 1) 17) ?x1062 (ite (= (+ height 1) 17) local_1 (_ bv0 32)))))\n(let (($x123 (= height 16)))\n(let ((?x179 (ite $x123 local_3 (ite (= (+ height 1) 16) local_1 stack_16))))\n(let ((?x722 (ite $x123 local_3 (_ bv0 32))))\n(let ((?x1176 (ite (> height 16) stack_16 ?x722)))\n(let ((?x377 (ite (> (+ height 1) 16) ?x1176 (ite (= (+ height 1) 16) local_1 (_ bv0 32)))))\n(let (($x118 (= height 15)))\n(let ((?x162 (ite $x118 local_3 (ite (= (+ height 1) 15) local_1 stack_15))))\n(let ((?x873 (ite $x118 local_3 (_ bv0 32))))\n(let ((?x1427 (ite (> height 15) stack_15 ?x873)))\n(let ((?x1783 (ite (> (+ height 1) 15) ?x1427 (ite (= (+ height 1) 15) local_1 (_ bv0 32)))))\n(let (($x113 (= height 14)))\n(let ((?x879 (ite $x113 local_3 (ite (= (+ height 1) 14) local_1 stack_14))))\n(let ((?x1692 (ite $x113 local_3 (_ bv0 32))))\n(let ((?x996 (ite (> height 14) stack_14 ?x1692)))\n(let ((?x329 (ite (> (+ height 1) 14) ?x996 (ite (= (+ height 1) 14) local_1 (_ bv0 32)))))\n(let (($x108 (= height 13)))\n(let ((?x1171 (ite $x108 local_3 (ite (= (+ height 1) 13) local_1 stack_13))))\n(let ((?x1461 (ite $x108 local_3 (_ bv0 32))))\n(let ((?x896 (ite (> height 13) stack_13 ?x1461)))\n(let ((?x466 (ite (> (+ height 1) 13) ?x896 (ite (= (+ height 1) 13) local_1 (_ bv0 32)))))\n(let (($x103 (= height 12)))\n(let ((?x238 (ite $x103 local_3 (ite (= (+ height 1) 12) local_1 stack_12))))\n(let ((?x1639 (ite $x103 local_3 (_ bv0 32))))\n(let ((?x1638 (ite (> height 12) stack_12 ?x1639)))\n(let ((?x383 (ite (> (+ height 1) 12) ?x1638 (ite (= (+ height 1) 12) local_1 (_ bv0 32)))))\n(let (($x98 (= height 11)))\n(let ((?x1678 (ite $x98 local_3 (ite (= (+ height 1) 11) local_1 stack_11))))\n(let ((?x845 (ite $x98 local_3 (_ bv0 32))))\n(let ((?x1732 (ite (> height 11) stack_11 ?x845)))\n(let ((?x343 (ite (> (+ height 1) 11) ?x1732 (ite (= (+ height 1) 11) local_1 (_ bv0 32)))))\n(let (($x93 (= height 10)))\n(let ((?x472 (ite $x93 local_3 (ite (= (+ height 1) 10) local_1 stack_10))))\n(let ((?x1556 (ite $x93 local_3 (_ bv0 32))))\n(let ((?x1828 (ite (> height 10) stack_10 ?x1556)))\n(let ((?x444 (ite (> (+ height 1) 10) ?x1828 (ite (= (+ height 1) 10) local_1 (_ bv0 32)))))\n(let (($x88 (= height 9)))\n(let ((?x1102 (ite $x88 local_3 (ite (= (+ height 1) 9) local_1 stack_9))))\n(let ((?x776 (ite $x88 local_3 (_ bv0 32))))\n(let ((?x590 (ite (> height 9) stack_9 ?x776)))\n(let ((?x791 (ite (> (+ height 1) 9) ?x590 (ite (= (+ height 1) 9) local_1 (_ bv0 32)))))\n(let (($x83 (= height 8)))\n(let ((?x1075 (ite $x83 local_3 (ite (= (+ height 1) 8) local_1 stack_8))))\n(let ((?x54 (ite $x83 local_3 (_ bv0 32))))\n(let ((?x268 (ite (> height 8) stack_8 ?x54)))\n(let ((?x1912 (ite (> (+ height 1) 8) ?x268 (ite (= (+ height 1) 8) local_1 (_ bv0 32)))))\n(let (($x78 (= height 7)))\n(let ((?x552 (ite $x78 local_3 (ite (= (+ height 1) 7) local_1 stack_7))))\n(let ((?x1483 (ite $x78 local_3 (_ bv0 32))))\n(let ((?x190 (ite (> height 7) stack_7 ?x1483)))\n(let ((?x1913 (ite (> (+ height 1) 7) ?x190 (ite (= (+ height 1) 7) local_1 (_ bv0 32)))))\n(let (($x73 (= height 6)))\n(let ((?x1819 (ite $x73 local_3 (ite (= (+ height 1) 6) local_1 stack_6))))\n(let ((?x918 (ite $x73 local_3 (_ bv0 32))))\n(let ((?x597 (ite (> height 6) stack_6 ?x918)))\n(let ((?x1914 (ite (> (+ height 1) 6) ?x597 (ite (= (+ height 1) 6) local_1 (_ bv0 32)))))\n(let (($x68 (= height 5)))\n(let ((?x634 (ite $x68 local_3 (ite (= (+ height 1) 5) local_1 stack_5))))\n(let ((?x1830 (ite $x68 local_3 (_ bv0 32))))\n(let ((?x389 (ite (> height 5) stack_5 ?x1830)))\n(let ((?x1915 (ite (> (+ height 1) 5) ?x389 (ite (= (+ height 1) 5) local_1 (_ bv0 32)))))\n(let (($x63 (= height 4)))\n(let ((?x1664 (ite $x63 local_3 (ite (= (+ height 1) 4) local_1 stack_4))))\n(let ((?x795 (ite $x63 local_3 (_ bv0 32))))\n(let ((?x1653 (ite (> height 4) stack_4 ?x795)))\n(let ((?x1114 (ite (> (+ height 1) 4) ?x1653 (ite (= (+ height 1) 4) local_1 (_ bv0 32)))))\n(let (($x58 (= height 3)))\n(let ((?x314 (ite $x58 local_3 (ite (= (+ height 1) 3) local_1 stack_3))))\n(let ((?x1255 (ite $x58 local_3 (_ bv0 32))))\n(let ((?x909 (ite (> height 3) stack_3 ?x1255)))\n(let ((?x1183 (ite (> (+ height 1) 3) ?x909 (ite (= (+ height 1) 3) local_1 (_ bv0 32)))))\n(let (($x53 (= height 2)))\n(let ((?x740 (ite $x53 local_3 (ite (= (+ height 1) 2) local_1 stack_2))))\n(let ((?x1659 (ite $x53 local_3 (_ bv0 32))))\n(let ((?x1496 (ite (> height 2) stack_2 ?x1659)))\n(let ((?x1377 (ite (> (+ height 1) 2) ?x1496 (ite (= (+ height 1) 2) local_1 (_ bv0 32)))))\n(let (($x48 (= height 1)))\n(let ((?x520 (ite $x48 local_3 (ite (= (+ height 1) 1) local_1 stack_1))))\n(let ((?x1512 (ite $x48 local_3 (_ bv0 32))))\n(let ((?x400 (ite (> height 1) stack_1 ?x1512)))\n(let ((?x1916 (ite (> (+ height 1) 1) ?x400 (ite (= (+ height 1) 1) local_1 (_ bv0 32)))))\n(let (($x43 (= height 0)))\n(let ((?x1517 (ite $x43 local_3 (ite (= (+ height 1) 0) local_1 stack_0))))\n(let ((?x159 (ite $x43 local_3 (_ bv0 32))))\n(let ((?x1535 (ite (> height 0) stack_0 ?x159)))\n(let ((?x1244 (ite (> (+ height 1) 0) ?x1535 (ite (= (+ height 1) 0) local_1 (_ bv0 32)))))\n(or (and (distinct ?x1244 ?x1517) true) (and (distinct ?x1916 ?x520) true) (and (distinct ?x1377 ?x740) true) (and (distinct ?x1183 ?x314) true) (and (distinct ?x1114 ?x1664) true) (and (distinct ?x1915 ?x634) true) (and (distinct ?x1914 ?x1819) true) (and (distinct ?x1913 ?x552) true) (and (distinct ?x1912 ?x1075) true) (and (distinct ?x791 ?x1102) true) (and (distinct ?x444 ?x472) true) (and (distinct ?x343 ?x1678) true) (and (distinct ?x383 ?x238) true) (and (distinct ?x466 ?x1171) true) (and (distinct ?x329 ?x879) true) (and (distinct ?x1783 ?x162) true) (and (distinct ?x377 ?x179) true) (and (distinct ?x1785 ?x668) true) (and (distinct ?x1787 ?x114) true) (and (distinct ?x1643 ?x988) true) (and (distinct ?x1007 ?x1829) true) (and (distinct ?x507 ?x546) true) (and (distinct ?x1015 ?x619) true) (and (distinct ?x1366 ?x1127) true) (and (distinct (+ height 2) (+ height 2)) true) (and (distinct (+ pc 2) (+ pc 2)) true) (and (distinct (- fuel 2) (- fuel 2)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        }
+      ]
+    },
+    {
+      "input_words": [
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      "plan_words": [
+        1,
+        0,
+        2,
+        0,
+        1,
+        2
+      ],
+      "replay": {
+        "return_i32": 1,
+        "status": 1,
+        "fuel_budget": 200,
+        "unspent_fuel": 157,
+        "source_steps": 43,
+        "stop_image_pc": 47,
+        "graph_invocations": 1,
+        "binary_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+        "image_sha256": "84660818f9ecdba6fcd293c29cd23e6d1ba2371a12fe8249864bb8c13770bbc8",
+        "input_page_sha256": "af98bc2b27cc918aae49b72a4759eab7df84699d9ac3f9c88acbc4532064e776",
+        "output_page_sha256": "fc9b0f9270f46c1f451f43574557d79e24ee61eaba7e639da93c3822440d5dbf",
+        "words_at_result": [
+          0
+        ]
+      },
+      "proof": [
+        {
+          "source_boundary": 1,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x1255 (<= height 0)))\n (=> $x1255 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x1183 (<= height 1)))\n (=> $x1183 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x1324 (<= height 2)))\n (=> $x1324 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x897 (<= height 3)))\n (=> $x897 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x1664 (<= height 4)))\n (=> $x1664 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x389 (<= height 5)))\n (=> $x389 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x49 (<= height 6)))\n (=> $x49 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x918 (<= height 7)))\n (=> $x918 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x1914 (<= height 8)))\n (=> $x1914 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x263 (<= height 9)))\n (=> $x263 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x454 (<= height 10)))\n (=> $x454 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x552 (<= height 11)))\n (=> $x552 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x268 (<= height 12)))\n (=> $x268 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x1393 (<= height 13)))\n (=> $x1393 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x776 (<= height 14)))\n (=> $x776 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x791 (<= height 15)))\n (=> $x791 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x1763 (<= height 16)))\n (=> $x1763 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x371 (<= height 17)))\n (=> $x371 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x472 (<= height 18)))\n (=> $x472 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x1732 (<= height 19)))\n (=> $x1732 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x419 (<= height 20)))\n (=> $x419 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x1639 (<= height 21)))\n (=> $x1639 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x1535 (<= height 22)))\n (=> $x1535 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x238 (<= height 23)))\n (=> $x238 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x985 (ite $x158 local_0 stack_23)))\n(let ((?x626 (ite $x158 local_0 (_ bv0 32))))\n(let ((?x1066 (ite (> height 23) stack_23 ?x626)))\n(let (($x153 (= height 22)))\n(let ((?x406 (ite $x153 local_0 stack_22)))\n(let ((?x1752 (ite $x153 local_0 (_ bv0 32))))\n(let ((?x677 (ite (> height 22) stack_22 ?x1752)))\n(let (($x148 (= height 21)))\n(let ((?x318 (ite $x148 local_0 stack_21)))\n(let ((?x854 (ite $x148 local_0 (_ bv0 32))))\n(let ((?x1347 (ite (> height 21) stack_21 ?x854)))\n(let (($x143 (= height 20)))\n(let ((?x691 (ite $x143 local_0 stack_20)))\n(let ((?x1029 (ite $x143 local_0 (_ bv0 32))))\n(let ((?x1235 (ite (> height 20) stack_20 ?x1029)))\n(let (($x138 (= height 19)))\n(let ((?x100 (ite $x138 local_0 stack_19)))\n(let ((?x509 (ite $x138 local_0 (_ bv0 32))))\n(let ((?x696 (ite (> height 19) stack_19 ?x509)))\n(let (($x133 (= height 18)))\n(let ((?x949 (ite $x133 local_0 stack_18)))\n(let ((?x1063 (ite $x133 local_0 (_ bv0 32))))\n(let ((?x467 (ite (> height 18) stack_18 ?x1063)))\n(let (($x128 (= height 17)))\n(let ((?x1515 (ite $x128 local_0 stack_17)))\n(let ((?x1917 (ite $x128 local_0 (_ bv0 32))))\n(let ((?x842 (ite (> height 17) stack_17 ?x1917)))\n(let (($x123 (= height 16)))\n(let ((?x486 (ite $x123 local_0 stack_16)))\n(let ((?x303 (ite $x123 local_0 (_ bv0 32))))\n(let ((?x1076 (ite (> height 16) stack_16 ?x303)))\n(let (($x118 (= height 15)))\n(let ((?x1322 (ite $x118 local_0 stack_15)))\n(let ((?x604 (ite $x118 local_0 (_ bv0 32))))\n(let ((?x1656 (ite (> height 15) stack_15 ?x604)))\n(let (($x113 (= height 14)))\n(let ((?x1650 (ite $x113 local_0 stack_14)))\n(let ((?x366 (ite $x113 local_0 (_ bv0 32))))\n(let ((?x411 (ite (> height 14) stack_14 ?x366)))\n(let (($x108 (= height 13)))\n(let ((?x1696 (ite $x108 local_0 stack_13)))\n(let ((?x511 (ite $x108 local_0 (_ bv0 32))))\n(let ((?x1625 (ite (> height 13) stack_13 ?x511)))\n(let (($x103 (= height 12)))\n(let ((?x215 (ite $x103 local_0 stack_12)))\n(let ((?x387 (ite $x103 local_0 (_ bv0 32))))\n(let ((?x931 (ite (> height 12) stack_12 ?x387)))\n(let (($x98 (= height 11)))\n(let ((?x548 (ite $x98 local_0 stack_11)))\n(let ((?x1667 (ite $x98 local_0 (_ bv0 32))))\n(let ((?x1272 (ite (> height 11) stack_11 ?x1667)))\n(let (($x93 (= height 10)))\n(let ((?x713 (ite $x93 local_0 stack_10)))\n(let ((?x1911 (ite $x93 local_0 (_ bv0 32))))\n(let ((?x1032 (ite (> height 10) stack_10 ?x1911)))\n(let (($x88 (= height 9)))\n(let ((?x1718 (ite $x88 local_0 stack_9)))\n(let ((?x1767 (ite $x88 local_0 (_ bv0 32))))\n(let ((?x1501 (ite (> height 9) stack_9 ?x1767)))\n(let (($x83 (= height 8)))\n(let ((?x321 (ite $x83 local_0 stack_8)))\n(let ((?x606 (ite $x83 local_0 (_ bv0 32))))\n(let ((?x1548 (ite (> height 8) stack_8 ?x606)))\n(let (($x78 (= height 7)))\n(let ((?x493 (ite $x78 local_0 stack_7)))\n(let ((?x947 (ite $x78 local_0 (_ bv0 32))))\n(let ((?x746 (ite (> height 7) stack_7 ?x947)))\n(let (($x73 (= height 6)))\n(let ((?x1253 (ite $x73 local_0 stack_6)))\n(let ((?x1479 (ite $x73 local_0 (_ bv0 32))))\n(let ((?x1747 (ite (> height 6) stack_6 ?x1479)))\n(let (($x68 (= height 5)))\n(let ((?x974 (ite $x68 local_0 stack_5)))\n(let ((?x1266 (ite $x68 local_0 (_ bv0 32))))\n(let ((?x783 (ite (> height 5) stack_5 ?x1266)))\n(let (($x63 (= height 4)))\n(let ((?x686 (ite $x63 local_0 stack_4)))\n(let ((?x673 (ite $x63 local_0 (_ bv0 32))))\n(let ((?x957 (ite (> height 4) stack_4 ?x673)))\n(let (($x58 (= height 3)))\n(let ((?x989 (ite $x58 local_0 stack_3)))\n(let ((?x1610 (ite $x58 local_0 (_ bv0 32))))\n(let ((?x611 (ite (> height 3) stack_3 ?x1610)))\n(let (($x53 (= height 2)))\n(let ((?x1222 (ite $x53 local_0 stack_2)))\n(let ((?x432 (ite $x53 local_0 (_ bv0 32))))\n(let ((?x1748 (ite (> height 2) stack_2 ?x432)))\n(let (($x48 (= height 1)))\n(let ((?x1251 (ite $x48 local_0 stack_1)))\n(let ((?x952 (ite $x48 local_0 (_ bv0 32))))\n(let ((?x272 (ite (> height 1) stack_1 ?x952)))\n(let (($x43 (= height 0)))\n(let ((?x274 (ite $x43 local_0 stack_0)))\n(let ((?x75 (ite $x43 local_0 (_ bv0 32))))\n(let ((?x527 (ite (> height 0) stack_0 ?x75)))\n(or (and (distinct ?x527 ?x274) true) (and (distinct ?x272 ?x1251) true) (and (distinct ?x1748 ?x1222) true) (and (distinct ?x611 ?x989) true) (and (distinct ?x957 ?x686) true) (and (distinct ?x783 ?x974) true) (and (distinct ?x1747 ?x1253) true) (and (distinct ?x746 ?x493) true) (and (distinct ?x1548 ?x321) true) (and (distinct ?x1501 ?x1718) true) (and (distinct ?x1032 ?x713) true) (and (distinct ?x1272 ?x548) true) (and (distinct ?x931 ?x215) true) (and (distinct ?x1625 ?x1696) true) (and (distinct ?x411 ?x1650) true) (and (distinct ?x1656 ?x1322) true) (and (distinct ?x1076 ?x486) true) (and (distinct ?x842 ?x1515) true) (and (distinct ?x467 ?x949) true) (and (distinct ?x696 ?x100) true) (and (distinct ?x1235 ?x691) true) (and (distinct ?x1347 ?x318) true) (and (distinct ?x677 ?x406) true) (and (distinct ?x1066 ?x985) true) (and (distinct (+ height 1) (+ height 1)) true) (and (distinct (+ pc 1) (+ pc 1)) true) (and (distinct (- fuel 1) (- fuel 1)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        },
+        {
+          "source_boundary": 2,
+          "result": "unsat",
+          "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x145 (<= height 0)))\n (=> $x145 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x1402 (<= height 1)))\n (=> $x1402 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x367 (<= height 2)))\n (=> $x367 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x991 (<= height 3)))\n (=> $x991 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x1814 (<= height 4)))\n (=> $x1814 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x238 (<= height 5)))\n (=> $x238 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x1535 (<= height 6)))\n (=> $x1535 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x1639 (<= height 7)))\n (=> $x1639 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x419 (<= height 8)))\n (=> $x419 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x1732 (<= height 9)))\n (=> $x1732 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x472 (<= height 10)))\n (=> $x472 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x371 (<= height 11)))\n (=> $x371 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x1763 (<= height 12)))\n (=> $x1763 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x791 (<= height 13)))\n (=> $x791 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x776 (<= height 14)))\n (=> $x776 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x1393 (<= height 15)))\n (=> $x1393 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x268 (<= height 16)))\n (=> $x268 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x552 (<= height 17)))\n (=> $x552 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x454 (<= height 18)))\n (=> $x454 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x263 (<= height 19)))\n (=> $x263 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x1914 (<= height 20)))\n (=> $x1914 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x918 (<= height 21)))\n (=> $x918 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x1360 (<= height 22)))\n (=> $x1360 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x1485 (<= height 23)))\n (=> $x1485 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x55 (ite $x158 local_0 (ite (= (+ height 1) 23) local_2 stack_23))))\n(let ((?x626 (ite $x158 local_0 (_ bv0 32))))\n(let ((?x1066 (ite (> height 23) stack_23 ?x626)))\n(let ((?x1424 (ite (> (+ height 1) 23) ?x1066 (ite (= (+ height 1) 23) local_2 (_ bv0 32)))))\n(let (($x153 (= height 22)))\n(let ((?x219 (ite $x153 local_0 (ite (= (+ height 1) 22) local_2 stack_22))))\n(let ((?x1752 (ite $x153 local_0 (_ bv0 32))))\n(let ((?x677 (ite (> height 22) stack_22 ?x1752)))\n(let ((?x187 (ite (> (+ height 1) 22) ?x677 (ite (= (+ height 1) 22) local_2 (_ bv0 32)))))\n(let (($x148 (= height 21)))\n(let ((?x524 (ite $x148 local_0 (ite (= (+ height 1) 21) local_2 stack_21))))\n(let ((?x854 (ite $x148 local_0 (_ bv0 32))))\n(let ((?x1347 (ite (> height 21) stack_21 ?x854)))\n(let ((?x1014 (ite (> (+ height 1) 21) ?x1347 (ite (= (+ height 1) 21) local_2 (_ bv0 32)))))\n(let (($x143 (= height 20)))\n(let ((?x1028 (ite $x143 local_0 (ite (= (+ height 1) 20) local_2 stack_20))))\n(let ((?x1029 (ite $x143 local_0 (_ bv0 32))))\n(let ((?x1235 (ite (> height 20) stack_20 ?x1029)))\n(let ((?x508 (ite (> (+ height 1) 20) ?x1235 (ite (= (+ height 1) 20) local_2 (_ bv0 32)))))\n(let (($x138 (= height 19)))\n(let ((?x1803 (ite $x138 local_0 (ite (= (+ height 1) 19) local_2 stack_19))))\n(let ((?x509 (ite $x138 local_0 (_ bv0 32))))\n(let ((?x696 (ite (> height 19) stack_19 ?x509)))\n(let ((?x999 (ite (> (+ height 1) 19) ?x696 (ite (= (+ height 1) 19) local_2 (_ bv0 32)))))\n(let (($x133 (= height 18)))\n(let ((?x1057 (ite $x133 local_0 (ite (= (+ height 1) 18) local_2 stack_18))))\n(let ((?x1063 (ite $x133 local_0 (_ bv0 32))))\n(let ((?x467 (ite (> height 18) stack_18 ?x1063)))\n(let ((?x1905 (ite (> (+ height 1) 18) ?x467 (ite (= (+ height 1) 18) local_2 (_ bv0 32)))))\n(let (($x128 (= height 17)))\n(let ((?x1108 (ite $x128 local_0 (ite (= (+ height 1) 17) local_2 stack_17))))\n(let ((?x1917 (ite $x128 local_0 (_ bv0 32))))\n(let ((?x842 (ite (> height 17) stack_17 ?x1917)))\n(let ((?x1903 (ite (> (+ height 1) 17) ?x842 (ite (= (+ height 1) 17) local_2 (_ bv0 32)))))\n(let (($x123 (= height 16)))\n(let ((?x1789 (ite $x123 local_0 (ite (= (+ height 1) 16) local_2 stack_16))))\n(let ((?x303 (ite $x123 local_0 (_ bv0 32))))\n(let ((?x1076 (ite (> height 16) stack_16 ?x303)))\n(let ((?x1759 (ite (> (+ height 1) 16) ?x1076 (ite (= (+ height 1) 16) local_2 (_ bv0 32)))))\n(let (($x118 (= height 15)))\n(let ((?x482 (ite $x118 local_0 (ite (= (+ height 1) 15) local_2 stack_15))))\n(let ((?x604 (ite $x118 local_0 (_ bv0 32))))\n(let ((?x1656 (ite (> height 15) stack_15 ?x604)))\n(let ((?x110 (ite (> (+ height 1) 15) ?x1656 (ite (= (+ height 1) 15) local_2 (_ bv0 32)))))\n(let (($x113 (= height 14)))\n(let ((?x1298 (ite $x113 local_0 (ite (= (+ height 1) 14) local_2 stack_14))))\n(let ((?x366 (ite $x113 local_0 (_ bv0 32))))\n(let ((?x411 (ite (> height 14) stack_14 ?x366)))\n(let ((?x1931 (ite (> (+ height 1) 14) ?x411 (ite (= (+ height 1) 14) local_2 (_ bv0 32)))))\n(let (($x108 (= height 13)))\n(let ((?x1283 (ite $x108 local_0 (ite (= (+ height 1) 13) local_2 stack_13))))\n(let ((?x511 (ite $x108 local_0 (_ bv0 32))))\n(let ((?x1625 (ite (> height 13) stack_13 ?x511)))\n(let ((?x857 (ite (> (+ height 1) 13) ?x1625 (ite (= (+ height 1) 13) local_2 (_ bv0 32)))))\n(let (($x103 (= height 12)))\n(let ((?x1013 (ite $x103 local_0 (ite (= (+ height 1) 12) local_2 stack_12))))\n(let ((?x387 (ite $x103 local_0 (_ bv0 32))))\n(let ((?x931 (ite (> height 12) stack_12 ?x387)))\n(let ((?x1543 (ite (> (+ height 1) 12) ?x931 (ite (= (+ height 1) 12) local_2 (_ bv0 32)))))\n(let (($x98 (= height 11)))\n(let ((?x497 (ite $x98 local_0 (ite (= (+ height 1) 11) local_2 stack_11))))\n(let ((?x1667 (ite $x98 local_0 (_ bv0 32))))\n(let ((?x1272 (ite (> height 11) stack_11 ?x1667)))\n(let ((?x1480 (ite (> (+ height 1) 11) ?x1272 (ite (= (+ height 1) 11) local_2 (_ bv0 32)))))\n(let (($x93 (= height 10)))\n(let ((?x308 (ite $x93 local_0 (ite (= (+ height 1) 10) local_2 stack_10))))\n(let ((?x1911 (ite $x93 local_0 (_ bv0 32))))\n(let ((?x1032 (ite (> height 10) stack_10 ?x1911)))\n(let ((?x1818 (ite (> (+ height 1) 10) ?x1032 (ite (= (+ height 1) 10) local_2 (_ bv0 32)))))\n(let (($x88 (= height 9)))\n(let ((?x1723 (ite $x88 local_0 (ite (= (+ height 1) 9) local_2 stack_9))))\n(let ((?x1767 (ite $x88 local_0 (_ bv0 32))))\n(let ((?x1501 (ite (> height 9) stack_9 ?x1767)))\n(let ((?x60 (ite (> (+ height 1) 9) ?x1501 (ite (= (+ height 1) 9) local_2 (_ bv0 32)))))\n(let (($x83 (= height 8)))\n(let ((?x1726 (ite $x83 local_0 (ite (= (+ height 1) 8) local_2 stack_8))))\n(let ((?x606 (ite $x83 local_0 (_ bv0 32))))\n(let ((?x1548 (ite (> height 8) stack_8 ?x606)))\n(let ((?x744 (ite (> (+ height 1) 8) ?x1548 (ite (= (+ height 1) 8) local_2 (_ bv0 32)))))\n(let (($x78 (= height 7)))\n(let ((?x1728 (ite $x78 local_0 (ite (= (+ height 1) 7) local_2 stack_7))))\n(let ((?x947 (ite $x78 local_0 (_ bv0 32))))\n(let ((?x746 (ite (> height 7) stack_7 ?x947)))\n(let ((?x119 (ite (> (+ height 1) 7) ?x746 (ite (= (+ height 1) 7) local_2 (_ bv0 32)))))\n(let (($x73 (= height 6)))\n(let ((?x1584 (ite $x73 local_0 (ite (= (+ height 1) 6) local_2 stack_6))))\n(let ((?x1479 (ite $x73 local_0 (_ bv0 32))))\n(let ((?x1747 (ite (> height 6) stack_6 ?x1479)))\n(let ((?x247 (ite (> (+ height 1) 6) ?x1747 (ite (= (+ height 1) 6) local_2 (_ bv0 32)))))\n(let (($x68 (= height 5)))\n(let ((?x1170 (ite $x68 local_0 (ite (= (+ height 1) 5) local_2 stack_5))))\n(let ((?x1266 (ite $x68 local_0 (_ bv0 32))))\n(let ((?x783 (ite (> height 5) stack_5 ?x1266)))\n(let ((?x1252 (ite (> (+ height 1) 5) ?x783 (ite (= (+ height 1) 5) local_2 (_ bv0 32)))))\n(let (($x63 (= height 4)))\n(let ((?x1000 (ite $x63 local_0 (ite (= (+ height 1) 4) local_2 stack_4))))\n(let ((?x673 (ite $x63 local_0 (_ bv0 32))))\n(let ((?x957 (ite (> height 4) stack_4 ?x673)))\n(let ((?x1311 (ite (> (+ height 1) 4) ?x957 (ite (= (+ height 1) 4) local_2 (_ bv0 32)))))\n(let (($x58 (= height 3)))\n(let ((?x309 (ite $x58 local_0 (ite (= (+ height 1) 3) local_2 stack_3))))\n(let ((?x1610 (ite $x58 local_0 (_ bv0 32))))\n(let ((?x611 (ite (> height 3) stack_3 ?x1610)))\n(let ((?x723 (ite (> (+ height 1) 3) ?x611 (ite (= (+ height 1) 3) local_2 (_ bv0 32)))))\n(let (($x53 (= height 2)))\n(let ((?x798 (ite $x53 local_0 (ite (= (+ height 1) 2) local_2 stack_2))))\n(let ((?x432 (ite $x53 local_0 (_ bv0 32))))\n(let ((?x1748 (ite (> height 2) stack_2 ?x432)))\n(let ((?x1657 (ite (> (+ height 1) 2) ?x1748 (ite (= (+ height 1) 2) local_2 (_ bv0 32)))))\n(let (($x48 (= height 1)))\n(let ((?x359 (ite $x48 local_0 (ite (= (+ height 1) 1) local_2 stack_1))))\n(let ((?x952 (ite $x48 local_0 (_ bv0 32))))\n(let ((?x272 (ite (> height 1) stack_1 ?x952)))\n(let ((?x463 (ite (> (+ height 1) 1) ?x272 (ite (= (+ height 1) 1) local_2 (_ bv0 32)))))\n(let (($x43 (= height 0)))\n(let ((?x1612 (ite $x43 local_0 (ite (= (+ height 1) 0) local_2 stack_0))))\n(let ((?x75 (ite $x43 local_0 (_ bv0 32))))\n(let ((?x527 (ite (> height 0) stack_0 ?x75)))\n(let ((?x1386 (ite (> (+ height 1) 0) ?x527 (ite (= (+ height 1) 0) local_2 (_ bv0 32)))))\n(or (and (distinct ?x1386 ?x1612) true) (and (distinct ?x463 ?x359) true) (and (distinct ?x1657 ?x798) true) (and (distinct ?x723 ?x309) true) (and (distinct ?x1311 ?x1000) true) (and (distinct ?x1252 ?x1170) true) (and (distinct ?x247 ?x1584) true) (and (distinct ?x119 ?x1728) true) (and (distinct ?x744 ?x1726) true) (and (distinct ?x60 ?x1723) true) (and (distinct ?x1818 ?x308) true) (and (distinct ?x1480 ?x497) true) (and (distinct ?x1543 ?x1013) true) (and (distinct ?x857 ?x1283) true) (and (distinct ?x1931 ?x1298) true) (and (distinct ?x110 ?x482) true) (and (distinct ?x1759 ?x1789) true) (and (distinct ?x1903 ?x1108) true) (and (distinct ?x1905 ?x1057) true) (and (distinct ?x999 ?x1803) true) (and (distinct ?x508 ?x1028) true) (and (distinct ?x1014 ?x524) true) (and (distinct ?x187 ?x219) true) (and (distinct ?x1424 ?x55) true) (and (distinct (+ height 2) (+ height 2)) true) (and (distinct (+ pc 2) (+ pc 2)) true) (and (distinct (- fuel 2) (- fuel 2)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+        }
+      ]
+    }
+  ],
+  "rejected": {
+    "input_words": [
+      0,
+      2,
+      0,
+      0,
+      1
+    ],
+    "plan_words": [
+      1,
+      2,
+      0,
+      0,
+      1,
+      2
+    ],
+    "replay": {
+      "return_i32": 1,
+      "status": 1,
+      "fuel_budget": 200,
+      "unspent_fuel": 153,
+      "source_steps": 47,
+      "stop_image_pc": 47,
+      "graph_invocations": 1,
+      "binary_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+      "image_sha256": "84660818f9ecdba6fcd293c29cd23e6d1ba2371a12fe8249864bb8c13770bbc8",
+      "input_page_sha256": "ffdaa7e0817863725de55a36146c1775ec0a270e64a3b342382bec4b1b6451f5",
+      "output_page_sha256": "b52320983b892e233d94d0a02be5cce88c3f3a2f89a96a9831e314703538ea1f",
+      "words_at_result": [
+        0
+      ]
+    },
+    "proof": [
+      {
+        "source_boundary": 1,
+        "result": "sat",
+        "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x1610 (<= height 0)))\n (=> $x1610 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x723 (<= height 1)))\n (=> $x723 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x1084 (<= height 2)))\n (=> $x1084 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x1124 (<= height 3)))\n (=> $x1124 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x1000 (<= height 4)))\n (=> $x1000 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x783 (<= height 5)))\n (=> $x783 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x357 (<= height 6)))\n (=> $x357 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x1479 (<= height 7)))\n (=> $x1479 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x247 (<= height 8)))\n (=> $x247 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x1341 (<= height 9)))\n (=> $x1341 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x1592 (<= height 10)))\n (=> $x1592 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x1728 (<= height 11)))\n (=> $x1728 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x1548 (<= height 12)))\n (=> $x1548 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x1725 (<= height 13)))\n (=> $x1725 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x1767 (<= height 14)))\n (=> $x1767 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x60 (<= height 15)))\n (=> $x60 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x1813 (<= height 16)))\n (=> $x1813 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x478 (<= height 17)))\n (=> $x478 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x308 (<= height 18)))\n (=> $x308 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x1272 (<= height 19)))\n (=> $x1272 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x1672 (<= height 20)))\n (=> $x1672 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x387 (<= height 21)))\n (=> $x387 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x527 (<= height 22)))\n (=> $x527 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x1013 (<= height 23)))\n (=> $x1013 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x911 (ite $x158 local_0 stack_23)))\n(let ((?x869 (ite $x158 local_2 (_ bv0 32))))\n(let ((?x1703 (ite (> height 23) stack_23 ?x869)))\n(let (($x153 (= height 22)))\n(let ((?x405 (ite $x153 local_0 stack_22)))\n(let ((?x558 (ite $x153 local_2 (_ bv0 32))))\n(let ((?x1134 (ite (> height 22) stack_22 ?x558)))\n(let (($x148 (= height 21)))\n(let ((?x531 (ite $x148 local_0 stack_21)))\n(let ((?x502 (ite $x148 local_2 (_ bv0 32))))\n(let ((?x1098 (ite (> height 21) stack_21 ?x502)))\n(let (($x143 (= height 20)))\n(let ((?x900 (ite $x143 local_0 stack_20)))\n(let ((?x1091 (ite $x143 local_2 (_ bv0 32))))\n(let ((?x202 (ite (> height 20) stack_20 ?x1091)))\n(let (($x138 (= height 19)))\n(let ((?x353 (ite $x138 local_0 stack_19)))\n(let ((?x1600 (ite $x138 local_2 (_ bv0 32))))\n(let ((?x1523 (ite (> height 19) stack_19 ?x1600)))\n(let (($x133 (= height 18)))\n(let ((?x1268 (ite $x133 local_0 stack_18)))\n(let ((?x504 (ite $x133 local_2 (_ bv0 32))))\n(let ((?x1459 (ite (> height 18) stack_18 ?x504)))\n(let (($x128 (= height 17)))\n(let ((?x484 (ite $x128 local_0 stack_17)))\n(let ((?x1357 (ite $x128 local_2 (_ bv0 32))))\n(let ((?x1636 (ite (> height 17) stack_17 ?x1357)))\n(let (($x123 (= height 16)))\n(let ((?x722 (ite $x123 local_0 stack_16)))\n(let ((?x462 (ite $x123 local_2 (_ bv0 32))))\n(let ((?x416 (ite (> height 16) stack_16 ?x462)))\n(let (($x118 (= height 15)))\n(let ((?x853 (ite $x118 local_0 stack_15)))\n(let ((?x941 (ite $x118 local_2 (_ bv0 32))))\n(let ((?x498 (ite (> height 15) stack_15 ?x941)))\n(let (($x113 (= height 14)))\n(let ((?x1303 (ite $x113 local_0 stack_14)))\n(let ((?x1342 (ite $x113 local_2 (_ bv0 32))))\n(let ((?x1602 (ite (> height 14) stack_14 ?x1342)))\n(let (($x108 (= height 13)))\n(let ((?x2020 (ite $x108 local_0 stack_13)))\n(let ((?x1474 (ite $x108 local_2 (_ bv0 32))))\n(let ((?x877 (ite (> height 13) stack_13 ?x1474)))\n(let (($x103 (= height 12)))\n(let ((?x641 (ite $x103 local_0 stack_12)))\n(let ((?x799 (ite $x103 local_2 (_ bv0 32))))\n(let ((?x1301 (ite (> height 12) stack_12 ?x799)))\n(let (($x98 (= height 11)))\n(let ((?x1681 (ite $x98 local_0 stack_11)))\n(let ((?x2097 (ite $x98 local_2 (_ bv0 32))))\n(let ((?x1968 (ite (> height 11) stack_11 ?x2097)))\n(let (($x93 (= height 10)))\n(let ((?x2104 (ite $x93 local_0 stack_10)))\n(let ((?x1685 (ite $x93 local_2 (_ bv0 32))))\n(let ((?x1581 (ite (> height 10) stack_10 ?x1685)))\n(let (($x88 (= height 9)))\n(let ((?x1922 (ite $x88 local_0 stack_9)))\n(let ((?x178 (ite $x88 local_2 (_ bv0 32))))\n(let ((?x930 (ite (> height 9) stack_9 ?x178)))\n(let (($x83 (= height 8)))\n(let ((?x2109 (ite $x83 local_0 stack_8)))\n(let ((?x292 (ite $x83 local_2 (_ bv0 32))))\n(let ((?x1544 (ite (> height 8) stack_8 ?x292)))\n(let (($x78 (= height 7)))\n(let ((?x614 (ite $x78 local_0 stack_7)))\n(let ((?x743 (ite $x78 local_2 (_ bv0 32))))\n(let ((?x1832 (ite (> height 7) stack_7 ?x743)))\n(let (($x73 (= height 6)))\n(let ((?x2107 (ite $x73 local_0 stack_6)))\n(let ((?x140 (ite $x73 local_2 (_ bv0 32))))\n(let ((?x363 (ite (> height 6) stack_6 ?x140)))\n(let (($x68 (= height 5)))\n(let ((?x360 (ite $x68 local_0 stack_5)))\n(let ((?x1611 (ite $x68 local_2 (_ bv0 32))))\n(let ((?x431 (ite (> height 5) stack_5 ?x1611)))\n(let (($x63 (= height 4)))\n(let ((?x1541 (ite $x63 local_0 stack_4)))\n(let ((?x692 (ite $x63 local_2 (_ bv0 32))))\n(let ((?x255 (ite (> height 4) stack_4 ?x692)))\n(let (($x58 (= height 3)))\n(let ((?x2108 (ite $x58 local_0 stack_3)))\n(let ((?x1598 (ite $x58 local_2 (_ bv0 32))))\n(let ((?x1352 (ite (> height 3) stack_3 ?x1598)))\n(let (($x53 (= height 2)))\n(let ((?x1117 (ite $x53 local_0 stack_2)))\n(let ((?x2017 (ite $x53 local_2 (_ bv0 32))))\n(let ((?x959 (ite (> height 2) stack_2 ?x2017)))\n(let (($x48 (= height 1)))\n(let ((?x503 (ite $x48 local_0 stack_1)))\n(let ((?x1846 (ite $x48 local_2 (_ bv0 32))))\n(let ((?x635 (ite (> height 1) stack_1 ?x1846)))\n(let (($x43 (= height 0)))\n(let ((?x646 (ite $x43 local_0 stack_0)))\n(let ((?x139 (ite $x43 local_2 (_ bv0 32))))\n(let ((?x1801 (ite (> height 0) stack_0 ?x139)))\n(or (and (distinct ?x1801 ?x646) true) (and (distinct ?x635 ?x503) true) (and (distinct ?x959 ?x1117) true) (and (distinct ?x1352 ?x2108) true) (and (distinct ?x255 ?x1541) true) (and (distinct ?x431 ?x360) true) (and (distinct ?x363 ?x2107) true) (and (distinct ?x1832 ?x614) true) (and (distinct ?x1544 ?x2109) true) (and (distinct ?x930 ?x1922) true) (and (distinct ?x1581 ?x2104) true) (and (distinct ?x1968 ?x1681) true) (and (distinct ?x1301 ?x641) true) (and (distinct ?x877 ?x2020) true) (and (distinct ?x1602 ?x1303) true) (and (distinct ?x498 ?x853) true) (and (distinct ?x416 ?x722) true) (and (distinct ?x1636 ?x484) true) (and (distinct ?x1459 ?x1268) true) (and (distinct ?x1523 ?x353) true) (and (distinct ?x202 ?x900) true) (and (distinct ?x1098 ?x531) true) (and (distinct ?x1134 ?x405) true) (and (distinct ?x1703 ?x911) true) (and (distinct (+ height 1) (+ height 1)) true) (and (distinct (+ pc 1) (+ pc 1)) true) (and (distinct (- fuel 1) (- fuel 1)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n",
+        "counterexample": {
+          "locals_u32": [
+            128,
+            0,
+            0,
+            0,
+            0
+          ],
+          "height": 19,
+          "fuel": 2,
+          "reference_pushed_u32": 0,
+          "plan_pushed_u32": 128
+        }
+      },
+      {
+        "source_boundary": 2,
+        "result": "unsat",
+        "query": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun height () Int)\n(declare-fun pc () Int)\n(declare-fun fuel () Int)\n(declare-fun stack_0 () (_ BitVec 32))\n(declare-fun stack_1 () (_ BitVec 32))\n(declare-fun stack_2 () (_ BitVec 32))\n(declare-fun stack_3 () (_ BitVec 32))\n(declare-fun stack_4 () (_ BitVec 32))\n(declare-fun stack_5 () (_ BitVec 32))\n(declare-fun stack_6 () (_ BitVec 32))\n(declare-fun stack_7 () (_ BitVec 32))\n(declare-fun stack_8 () (_ BitVec 32))\n(declare-fun stack_9 () (_ BitVec 32))\n(declare-fun stack_10 () (_ BitVec 32))\n(declare-fun stack_11 () (_ BitVec 32))\n(declare-fun stack_12 () (_ BitVec 32))\n(declare-fun stack_13 () (_ BitVec 32))\n(declare-fun stack_14 () (_ BitVec 32))\n(declare-fun stack_15 () (_ BitVec 32))\n(declare-fun stack_16 () (_ BitVec 32))\n(declare-fun stack_17 () (_ BitVec 32))\n(declare-fun stack_18 () (_ BitVec 32))\n(declare-fun stack_19 () (_ BitVec 32))\n(declare-fun stack_20 () (_ BitVec 32))\n(declare-fun stack_21 () (_ BitVec 32))\n(declare-fun stack_22 () (_ BitVec 32))\n(declare-fun stack_23 () (_ BitVec 32))\n(declare-fun local_4 () (_ BitVec 32))\n(declare-fun local_3 () (_ BitVec 32))\n(declare-fun local_2 () (_ BitVec 32))\n(declare-fun local_1 () (_ BitVec 32))\n(declare-fun local_0 () (_ BitVec 32))\n(declare-fun depth () Int)\n(declare-fun frames () (Array Int (_ BitVec 64)))\n(declare-fun memory () (Array Int (_ BitVec 8)))\n(assert\n (>= height 0))\n(assert\n (<= height 22))\n(assert\n (>= pc 0))\n(assert\n (>= fuel 2))\n(assert\n (let (($x634 (<= height 0)))\n (=> $x634 (= (_ bv0 32) stack_0))))\n(assert\n (let (($x536 (<= height 1)))\n (=> $x536 (= (_ bv0 32) stack_1))))\n(assert\n (let (($x1819 (<= height 2)))\n (=> $x1819 (= (_ bv0 32) stack_2))))\n(assert\n (let (($x190 (<= height 3)))\n (=> $x190 (= (_ bv0 32) stack_3))))\n(assert\n (let (($x756 (<= height 4)))\n (=> $x756 (= (_ bv0 32) stack_4))))\n(assert\n (let (($x1013 (<= height 5)))\n (=> $x1013 (= (_ bv0 32) stack_5))))\n(assert\n (let (($x527 (<= height 6)))\n (=> $x527 (= (_ bv0 32) stack_6))))\n(assert\n (let (($x387 (<= height 7)))\n (=> $x387 (= (_ bv0 32) stack_7))))\n(assert\n (let (($x1672 (<= height 8)))\n (=> $x1672 (= (_ bv0 32) stack_8))))\n(assert\n (let (($x1272 (<= height 9)))\n (=> $x1272 (= (_ bv0 32) stack_9))))\n(assert\n (let (($x308 (<= height 10)))\n (=> $x308 (= (_ bv0 32) stack_10))))\n(assert\n (let (($x478 (<= height 11)))\n (=> $x478 (= (_ bv0 32) stack_11))))\n(assert\n (let (($x1813 (<= height 12)))\n (=> $x1813 (= (_ bv0 32) stack_12))))\n(assert\n (let (($x60 (<= height 13)))\n (=> $x60 (= (_ bv0 32) stack_13))))\n(assert\n (let (($x1767 (<= height 14)))\n (=> $x1767 (= (_ bv0 32) stack_14))))\n(assert\n (let (($x1725 (<= height 15)))\n (=> $x1725 (= (_ bv0 32) stack_15))))\n(assert\n (let (($x1548 (<= height 16)))\n (=> $x1548 (= (_ bv0 32) stack_16))))\n(assert\n (let (($x1728 (<= height 17)))\n (=> $x1728 (= (_ bv0 32) stack_17))))\n(assert\n (let (($x1592 (<= height 18)))\n (=> $x1592 (= (_ bv0 32) stack_18))))\n(assert\n (let (($x1341 (<= height 19)))\n (=> $x1341 (= (_ bv0 32) stack_19))))\n(assert\n (let (($x247 (<= height 20)))\n (=> $x247 (= (_ bv0 32) stack_20))))\n(assert\n (let (($x1479 (<= height 21)))\n (=> $x1479 (= (_ bv0 32) stack_21))))\n(assert\n (let (($x1081 (<= height 22)))\n (=> $x1081 (= (_ bv0 32) stack_22))))\n(assert\n (let (($x1472 (<= height 23)))\n (=> $x1472 (= (_ bv0 32) stack_23))))\n(assert\n (let (($x158 (= height 23)))\n(let ((?x1989 (ite $x158 local_2 (ite (= (+ height 1) 23) local_0 stack_23))))\n(let ((?x869 (ite $x158 local_2 (_ bv0 32))))\n(let ((?x1703 (ite (> height 23) stack_23 ?x869)))\n(let ((?x1456 (ite (> (+ height 1) 23) ?x1703 (ite (= (+ height 1) 23) local_0 (_ bv0 32)))))\n(let (($x153 (= height 22)))\n(let ((?x507 (ite $x153 local_2 (ite (= (+ height 1) 22) local_0 stack_22))))\n(let ((?x558 (ite $x153 local_2 (_ bv0 32))))\n(let ((?x1134 (ite (> height 22) stack_22 ?x558)))\n(let ((?x400 (ite (> (+ height 1) 22) ?x1134 (ite (= (+ height 1) 22) local_0 (_ bv0 32)))))\n(let (($x148 (= height 21)))\n(let ((?x480 (ite $x148 local_2 (ite (= (+ height 1) 21) local_0 stack_21))))\n(let ((?x502 (ite $x148 local_2 (_ bv0 32))))\n(let ((?x1098 (ite (> height 21) stack_21 ?x502)))\n(let ((?x1271 (ite (> (+ height 1) 21) ?x1098 (ite (= (+ height 1) 21) local_0 (_ bv0 32)))))\n(let (($x143 (= height 20)))\n(let ((?x710 (ite $x143 local_2 (ite (= (+ height 1) 20) local_0 stack_20))))\n(let ((?x1091 (ite $x143 local_2 (_ bv0 32))))\n(let ((?x202 (ite (> height 20) stack_20 ?x1091)))\n(let ((?x557 (ite (> (+ height 1) 20) ?x202 (ite (= (+ height 1) 20) local_0 (_ bv0 32)))))\n(let (($x138 (= height 19)))\n(let ((?x1433 (ite $x138 local_2 (ite (= (+ height 1) 19) local_0 stack_19))))\n(let ((?x1600 (ite $x138 local_2 (_ bv0 32))))\n(let ((?x1523 (ite (> height 19) stack_19 ?x1600)))\n(let ((?x394 (ite (> (+ height 1) 19) ?x1523 (ite (= (+ height 1) 19) local_0 (_ bv0 32)))))\n(let (($x133 (= height 18)))\n(let ((?x1847 (ite $x133 local_2 (ite (= (+ height 1) 18) local_0 stack_18))))\n(let ((?x504 (ite $x133 local_2 (_ bv0 32))))\n(let ((?x1459 (ite (> height 18) stack_18 ?x504)))\n(let ((?x964 (ite (> (+ height 1) 18) ?x1459 (ite (= (+ height 1) 18) local_0 (_ bv0 32)))))\n(let (($x128 (= height 17)))\n(let ((?x1957 (ite $x128 local_2 (ite (= (+ height 1) 17) local_0 stack_17))))\n(let ((?x1357 (ite $x128 local_2 (_ bv0 32))))\n(let ((?x1636 (ite (> height 17) stack_17 ?x1357)))\n(let ((?x923 (ite (> (+ height 1) 17) ?x1636 (ite (= (+ height 1) 17) local_0 (_ bv0 32)))))\n(let (($x123 (= height 16)))\n(let ((?x659 (ite $x123 local_2 (ite (= (+ height 1) 16) local_0 stack_16))))\n(let ((?x462 (ite $x123 local_2 (_ bv0 32))))\n(let ((?x416 (ite (> height 16) stack_16 ?x462)))\n(let ((?x1034 (ite (> (+ height 1) 16) ?x416 (ite (= (+ height 1) 16) local_0 (_ bv0 32)))))\n(let (($x118 (= height 15)))\n(let ((?x1090 (ite $x118 local_2 (ite (= (+ height 1) 15) local_0 stack_15))))\n(let ((?x941 (ite $x118 local_2 (_ bv0 32))))\n(let ((?x498 (ite (> height 15) stack_15 ?x941)))\n(let ((?x1131 (ite (> (+ height 1) 15) ?x498 (ite (= (+ height 1) 15) local_0 (_ bv0 32)))))\n(let (($x113 (= height 14)))\n(let ((?x239 (ite $x113 local_2 (ite (= (+ height 1) 14) local_0 stack_14))))\n(let ((?x1342 (ite $x113 local_2 (_ bv0 32))))\n(let ((?x1602 (ite (> height 14) stack_14 ?x1342)))\n(let ((?x319 (ite (> (+ height 1) 14) ?x1602 (ite (= (+ height 1) 14) local_0 (_ bv0 32)))))\n(let (($x108 (= height 13)))\n(let ((?x291 (ite $x108 local_2 (ite (= (+ height 1) 13) local_0 stack_13))))\n(let ((?x1474 (ite $x108 local_2 (_ bv0 32))))\n(let ((?x877 (ite (> height 13) stack_13 ?x1474)))\n(let ((?x265 (ite (> (+ height 1) 13) ?x877 (ite (= (+ height 1) 13) local_0 (_ bv0 32)))))\n(let (($x103 (= height 12)))\n(let ((?x1575 (ite $x103 local_2 (ite (= (+ height 1) 12) local_0 stack_12))))\n(let ((?x799 (ite $x103 local_2 (_ bv0 32))))\n(let ((?x1301 (ite (> height 12) stack_12 ?x799)))\n(let ((?x1604 (ite (> (+ height 1) 12) ?x1301 (ite (= (+ height 1) 12) local_0 (_ bv0 32)))))\n(let (($x98 (= height 11)))\n(let ((?x1773 (ite $x98 local_2 (ite (= (+ height 1) 11) local_0 stack_11))))\n(let ((?x2097 (ite $x98 local_2 (_ bv0 32))))\n(let ((?x1968 (ite (> height 11) stack_11 ?x2097)))\n(let ((?x1481 (ite (> (+ height 1) 11) ?x1968 (ite (= (+ height 1) 11) local_0 (_ bv0 32)))))\n(let (($x93 (= height 10)))\n(let ((?x1776 (ite $x93 local_2 (ite (= (+ height 1) 10) local_0 stack_10))))\n(let ((?x1685 (ite $x93 local_2 (_ bv0 32))))\n(let ((?x1581 (ite (> height 10) stack_10 ?x1685)))\n(let ((?x1389 (ite (> (+ height 1) 10) ?x1581 (ite (= (+ height 1) 10) local_0 (_ bv0 32)))))\n(let (($x88 (= height 9)))\n(let ((?x1643 (ite $x88 local_2 (ite (= (+ height 1) 9) local_0 stack_9))))\n(let ((?x178 (ite $x88 local_2 (_ bv0 32))))\n(let ((?x930 (ite (> height 9) stack_9 ?x178)))\n(let ((?x1385 (ite (> (+ height 1) 9) ?x930 (ite (= (+ height 1) 9) local_0 (_ bv0 32)))))\n(let (($x83 (= height 8)))\n(let ((?x1855 (ite $x83 local_2 (ite (= (+ height 1) 8) local_0 stack_8))))\n(let ((?x292 (ite $x83 local_2 (_ bv0 32))))\n(let ((?x1544 (ite (> height 8) stack_8 ?x292)))\n(let ((?x942 (ite (> (+ height 1) 8) ?x1544 (ite (= (+ height 1) 8) local_0 (_ bv0 32)))))\n(let (($x78 (= height 7)))\n(let ((?x987 (ite $x78 local_2 (ite (= (+ height 1) 7) local_0 stack_7))))\n(let ((?x743 (ite $x78 local_2 (_ bv0 32))))\n(let ((?x1832 (ite (> height 7) stack_7 ?x743)))\n(let ((?x1568 (ite (> (+ height 1) 7) ?x1832 (ite (= (+ height 1) 7) local_0 (_ bv0 32)))))\n(let (($x73 (= height 6)))\n(let ((?x587 (ite $x73 local_2 (ite (= (+ height 1) 6) local_0 stack_6))))\n(let ((?x140 (ite $x73 local_2 (_ bv0 32))))\n(let ((?x363 (ite (> height 6) stack_6 ?x140)))\n(let ((?x1110 (ite (> (+ height 1) 6) ?x363 (ite (= (+ height 1) 6) local_0 (_ bv0 32)))))\n(let (($x68 (= height 5)))\n(let ((?x825 (ite $x68 local_2 (ite (= (+ height 1) 5) local_0 stack_5))))\n(let ((?x1611 (ite $x68 local_2 (_ bv0 32))))\n(let ((?x431 (ite (> height 5) stack_5 ?x1611)))\n(let ((?x1438 (ite (> (+ height 1) 5) ?x431 (ite (= (+ height 1) 5) local_0 (_ bv0 32)))))\n(let (($x63 (= height 4)))\n(let ((?x1892 (ite $x63 local_2 (ite (= (+ height 1) 4) local_0 stack_4))))\n(let ((?x692 (ite $x63 local_2 (_ bv0 32))))\n(let ((?x255 (ite (> height 4) stack_4 ?x692)))\n(let ((?x955 (ite (> (+ height 1) 4) ?x255 (ite (= (+ height 1) 4) local_0 (_ bv0 32)))))\n(let (($x58 (= height 3)))\n(let ((?x761 (ite $x58 local_2 (ite (= (+ height 1) 3) local_0 stack_3))))\n(let ((?x1598 (ite $x58 local_2 (_ bv0 32))))\n(let ((?x1352 (ite (> height 3) stack_3 ?x1598)))\n(let ((?x1223 (ite (> (+ height 1) 3) ?x1352 (ite (= (+ height 1) 3) local_0 (_ bv0 32)))))\n(let (($x53 (= height 2)))\n(let ((?x1411 (ite $x53 local_2 (ite (= (+ height 1) 2) local_0 stack_2))))\n(let ((?x2017 (ite $x53 local_2 (_ bv0 32))))\n(let ((?x959 (ite (> height 2) stack_2 ?x2017)))\n(let ((?x365 (ite (> (+ height 1) 2) ?x959 (ite (= (+ height 1) 2) local_0 (_ bv0 32)))))\n(let (($x48 (= height 1)))\n(let ((?x1181 (ite $x48 local_2 (ite (= (+ height 1) 1) local_0 stack_1))))\n(let ((?x1846 (ite $x48 local_2 (_ bv0 32))))\n(let ((?x635 (ite (> height 1) stack_1 ?x1846)))\n(let ((?x1830 (ite (> (+ height 1) 1) ?x635 (ite (= (+ height 1) 1) local_0 (_ bv0 32)))))\n(let (($x43 (= height 0)))\n(let ((?x1211 (ite $x43 local_2 (ite (= (+ height 1) 0) local_0 stack_0))))\n(let ((?x139 (ite $x43 local_2 (_ bv0 32))))\n(let ((?x1801 (ite (> height 0) stack_0 ?x139)))\n(let ((?x1068 (ite (> (+ height 1) 0) ?x1801 (ite (= (+ height 1) 0) local_0 (_ bv0 32)))))\n(or (and (distinct ?x1068 ?x1211) true) (and (distinct ?x1830 ?x1181) true) (and (distinct ?x365 ?x1411) true) (and (distinct ?x1223 ?x761) true) (and (distinct ?x955 ?x1892) true) (and (distinct ?x1438 ?x825) true) (and (distinct ?x1110 ?x587) true) (and (distinct ?x1568 ?x987) true) (and (distinct ?x942 ?x1855) true) (and (distinct ?x1385 ?x1643) true) (and (distinct ?x1389 ?x1776) true) (and (distinct ?x1481 ?x1773) true) (and (distinct ?x1604 ?x1575) true) (and (distinct ?x265 ?x291) true) (and (distinct ?x319 ?x239) true) (and (distinct ?x1131 ?x1090) true) (and (distinct ?x1034 ?x659) true) (and (distinct ?x923 ?x1957) true) (and (distinct ?x964 ?x1847) true) (and (distinct ?x394 ?x1433) true) (and (distinct ?x557 ?x710) true) (and (distinct ?x1271 ?x480) true) (and (distinct ?x400 ?x507) true) (and (distinct ?x1456 ?x1989) true) (and (distinct (+ height 2) (+ height 2)) true) (and (distinct (+ pc 2) (+ pc 2)) true) (and (distinct (- fuel 2) (- fuel 2)) true) (and (distinct memory memory) true) (and (distinct frames frames) true) (and (distinct depth depth) true) (and (distinct local_0 local_0) true) (and (distinct local_1 local_1) true) (and (distinct local_2 local_2) true) (and (distinct local_3 local_3) true) (and (distinct local_4 local_4) true) false false))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))\n(check-sat)\n"
+      }
+    ],
+    "counterexample_replay": {
+      "site": 67,
+      "prefix_reference": 0,
+      "prefix_candidate": 128,
+      "final_pair_both": [
+        0,
+        128
+      ],
+      "fuel_after_prefix": 1,
+      "fuel_after_pair": 0
+    }
+  },
+  "declined": {
+    "input_words": [
+      0,
+      2,
+      1,
+      0,
+      0
+    ],
+    "plan_words": [
+      0,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "replay": {
+      "return_i32": 0,
+      "status": 1,
+      "fuel_budget": 200,
+      "unspent_fuel": 187,
+      "source_steps": 13,
+      "stop_image_pc": 47,
+      "graph_invocations": 1,
+      "binary_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+      "image_sha256": "84660818f9ecdba6fcd293c29cd23e6d1ba2371a12fe8249864bb8c13770bbc8",
+      "input_page_sha256": "9697c768e5b63c5fd3c3441a7e5c5d6128d641e23d0f84f6c06e3ad10b724610",
+      "output_page_sha256": "74218ae479508425f34f3047e643afce99bc23e8172428b424e50e5f290e5ebf",
+      "words_at_result": [
+        0
+      ]
+    }
+  },
+  "audit": {
+    "source_boundaries": 1650,
+    "pair_boundaries": 153,
+    "memory_sha256": "dc66a04cd02858d0a07e3baf32e0efb1fe369942417028a6bc6e0a5555283b41"
+  },
+  "histories": {
+    "terrain": [
+      {
+        "source_steps": 377,
+        "result": 0,
+        "fused_pairs": 32,
+        "page_sha256": "1be31cb3bd43e9c34e66be6acf8e16d40f6c47a6f997ee62ea83fb0c45ee54de"
+      },
+      {
+        "source_steps": 370,
+        "result": 0,
+        "fused_pairs": 31,
+        "page_sha256": "0da60ecd619f1a10d7e6749b1490cbd7e309c55c123835cc890710cb929b7751"
+      }
+    ],
+    "terrain-omitted": [
+      {
+        "source_steps": 370,
+        "result": 0,
+        "fused_pairs": 31,
+        "page_sha256": "45218c449257b6af32b4c1e1eda6faa1588d5e5d56fb9bcac9cfd6bdf2257310"
+      },
+      {
+        "source_steps": 365,
+        "result": 0,
+        "fused_pairs": 30,
+        "page_sha256": "61eee0fd236605d98c714103450f78a11d65c096cf344fb7a5855102bc15c45a"
+      }
+    ]
+  },
+  "graph_load_total_ns": 45573374,
+  "validate_ns": 3727592,
+  "prepare_ns": 585931281,
+  "planner_and_oracle_ns": 96292097,
+  "proof_ns": 487423741,
+  "local_profile": {
+    "site": 149,
+    "slots": [
+      0,
+      0
+    ],
+    "samples": 31,
+    "calls_per_sample": 16,
+    "median_ns": {
+      "baseline": 415342.0625,
+      "specialized": 204073.375
+    },
+    "raw_ns_per_call": {
+      "baseline": [
+        473007.125,
+        417412.6875,
+        428015.5625,
+        418832.9375,
+        428197.6875,
+        403214.375,
+        395985.9375,
+        412861.4375,
+        409499.5,
+        401638.9375,
+        410641.8125,
+        408918.0,
+        404417.4375,
+        410141.0625,
+        445409.25,
+        405306.9375,
+        405062.8125,
+        407975.9375,
+        396723.3125,
+        410490.375,
+        403365.9375,
+        443594.0,
+        415342.0625,
+        423210.1875,
+        451186.75,
+        431315.5,
+        426276.0625,
+        428172.6875,
+        419435.6875,
+        421688.5,
+        457764.125
+      ],
+      "specialized": [
+        204325.6875,
+        206758.6875,
+        230932.625,
+        195979.9375,
+        210779.125,
+        202929.8125,
+        212746.5,
+        197707.5625,
+        198257.125,
+        197723.8125,
+        212896.125,
+        207311.4375,
+        200507.375,
+        199354.4375,
+        202636.875,
+        192780.125,
+        228540.3125,
+        200198.875,
+        196473.8125,
+        204073.375,
+        202382.125,
+        200543.125,
+        206250.4375,
+        229359.6875,
+        219093.5625,
+        205961.25,
+        220680.3125,
+        201570.875,
+        201150.25,
+        254547.0625,
+        210921.875
+      ]
+    },
+    "runtime_operator_counts": {
+      "baseline": {
+        "forward": 1,
+        "aten::eq": 24,
+        "aten::item": 18,
+        "aten::_local_scalar_dense": 18,
+        "aten::reshape": 8,
+        "aten::view": 8,
+        "aten::index_select": 2,
+        "aten::empty": 22,
+        "aten::select": 48,
+        "aten::as_strided": 52,
+        "aten::gt": 8,
+        "aten::__and__": 20,
+        "aten::bitwise_and": 20,
+        "aten::ge": 2,
+        "aten::ne": 8,
+        "aten::to": 26,
+        "aten::_to_copy": 8,
+        "aten::empty_strided": 10,
+        "aten::copy_": 8,
+        "aten::sub": 8,
+        "aten::clamp": 6,
+        "aten::gather": 6,
+        "aten::zeros_like": 2,
+        "aten::empty_like": 2,
+        "aten::zero_": 4,
+        "aten::mul": 10,
+        "aten::add": 14,
+        "aten::where": 24,
+        "aten::sum": 4,
+        "aten::fill_": 4,
+        "aten::bitwise_not": 4,
+        "aten::scalar_tensor": 6,
+        "aten::zeros": 2,
+        "aten::lt": 4,
+        "aten::__or__": 2,
+        "aten::bitwise_or": 2
+      },
+      "specialized": {
+        "forward": 1,
+        "aten::eq": 1,
+        "aten::item": 3,
+        "aten::_local_scalar_dense": 3,
+        "aten::reshape": 1,
+        "aten::view": 1,
+        "aten::index_select": 1,
+        "aten::empty": 1,
+        "aten::select": 4,
+        "aten::as_strided": 5,
+        "aten::ge": 2,
+        "aten::le": 1,
+        "aten::__and__": 1,
+        "aten::bitwise_and": 1,
+        "aten::slice": 1,
+        "aten::gather": 1,
+        "aten::to": 2,
+        "aten::add": 3,
+        "aten::scatter": 1,
+        "aten::copy_": 1,
+        "aten::sub": 1,
+        "aten::zeros_like": 1,
+        "aten::empty_like": 1,
+        "aten::empty_strided": 1,
+        "aten::zero_": 1
+      }
+    }
+  },
+  "timings": {
+    "baseline": {
+      "warm_samples": 24,
+      "median_ns": 172355621.0,
+      "p95_ns": 186576535,
+      "rows": [
+        {
+          "execution_ns": 174398588,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 174115620,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 173445681,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 175661753,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 176408760,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 188294886,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 173774957,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 168816850,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 172401114,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 180187538,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 181374359,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 175681663,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 172310128,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 169153968,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 169768114,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 168144246,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 171876794,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 170439947,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 173055563,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 168532651,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 166999458,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 167954669,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 186576535,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 167313182,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        },
+        {
+          "execution_ns": 169339968,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 0,
+          "result": 0
+        }
+      ]
+    },
+    "specialized": {
+      "warm_samples": 24,
+      "median_ns": 150376462.5,
+      "p95_ns": 161004707,
+      "rows": [
+        {
+          "execution_ns": 158056200,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 153921775,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 156232580,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 154634020,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 151882248,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 150116546,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 146121920,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 151462636,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 146284697,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 156466023,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 158021268,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 163197504,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 149673788,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 150636379,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 150114283,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 153972862,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 145288334,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 149922803,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 148401008,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 145861738,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 144953850,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 149297370,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 161004707,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 156969811,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        },
+        {
+          "execution_ns": 147218725,
+          "source_steps": 1650,
+          "host_calls": 26,
+          "fused_pairs": 149,
+          "result": 0
+        }
+      ]
+    }
+  }
+}

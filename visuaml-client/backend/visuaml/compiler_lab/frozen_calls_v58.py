@@ -130,8 +130,11 @@ class CallStep(torch.nn.Module):
         self.stack_width = MAX_STACK
 
     def forward(self, image: Tensor, state: CallState) -> CallTick:
+        row = torch.index_select(image, 0, state.vm.pc.reshape(1))[0]
+        return self.step_row(image, state, row)
+
+    def step_row(self, image: Tensor, state: CallState, row: Tensor) -> CallTick:
         vm = state.vm
-        row = torch.index_select(image, 0, vm.pc.reshape(1))[0]
         enabled = bool((vm.status == 0) & (vm.fuel > 0))
         if enabled and bool(row[9] >= 0):
             top = torch.gather(vm.stack, 0, (vm.height - 1).reshape(1))
