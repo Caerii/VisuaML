@@ -38,8 +38,8 @@ The one-step audit artifact retains all original source boundaries.
 The evidence checks a one-step observation and a fuel rejection inside
 a selected pair. It compares all 1,650 boundaries of one eight-agent
 tick against the single-step reference. Both Terrain Edit histories
-also matched Wasmtime and the archived NumPy returns, full pages, and
-exact source counts with packed fallback blocked.
+also matched Wasmtime's returns and full pages and the archived NumPy
+page digests and source counts, with packed fallback blocked.
 
 The planner's challenge mode emits an end-only candidate. At terrain
 PC 67, the counterexample replay pushes 0 at the first source boundary.
