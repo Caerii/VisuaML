@@ -1,3 +1,5 @@
+import savedWinner from './evidence/voxel-fork-search/winning-session.json';
+import searchCheckpoint from './evidence/voxel-fork-search/checkpoint.json?url';
 import proof from './evidence/voxel-call-checkpoint/replay.json';
 import checkpointUrl from './evidence/voxel-call-checkpoint/checkpoint.json?url';
 
@@ -54,3 +56,42 @@ get('finish').onclick = () => { while (cursor < proof.suffix.length) step(); };
 get('wait').onclick = () => branch(0);
 get('walk').onclick = () => branch(1);
 rewind();
+
+const find = get('find'), openWinner = get('open-winner'), session = get('session');
+get('search-checkpoint').href = searchCheckpoint;
+let winner, sessionUrl;
+find.onclick = async () => {
+  find.disabled = openWinner.disabled = true;
+  text('search-status', 'Searching five future inputs…');
+  let result = { winner: savedWinner }, label = 'Saved VisuaML search';
+  try {
+    const response = await fetch('/api/voxel-fork-search', { method: 'POST' });
+    if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
+      result = await response.json();
+      label = 'Live VisuaML search';
+    }
+  } catch {
+    // The offline saved search is also available in a static build.
+  }
+  winner = result.winner;
+  if (sessionUrl) URL.revokeObjectURL(sessionUrl);
+  sessionUrl = URL.createObjectURL(new Blob([JSON.stringify(winner, null, 2)], { type: 'application/json' }));
+  session.href = sessionUrl;
+  session.hidden = false;
+  text('search-status', `${label} · 32 branches · change Wait to Walk at tick ${winner.first_input_tick} · first world effect at tick ${winner.first_world_effect_tick}`);
+  find.disabled = openWinner.disabled = false;
+};
+
+openWinner.onclick = () => {
+  const goal = winner.outputs[winner.first_world_effect_tick];
+  const [terrain, position, observed] = goal.world;
+  const write = winner.source_write;
+  const prior = winner.outputs[winner.first_world_effect_tick - 1].world;
+  // The caller's commit store occurs after the crossing write.
+  record = [terrain, 0, position, 1, observed, prior[3]];
+  state = write;
+  cursor = proof.suffix.length;
+  action = `Winning tick ${goal.tick} · ${write.opcode} at PC ${write.pc} · byte ${write.access[1]}: ${write.access[2]} → ${write.access[3]}`;
+  render();
+  get('where').scrollIntoView({ block: 'nearest' });
+};

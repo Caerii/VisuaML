@@ -25,3 +25,5 @@ python tools/replay_voxel_call_checkpoint.py --resume evidence/voxel-call-checkp
 Use `--move 0` for Wait. To rebuild the witness with Rust's WASM target installed, run `bash tools/build_voxel_call_checkpoint.sh`.
 
 [GIF](suspended-passage.gif) · [Checkpoint](checkpoint.json) · [Exact replay](replay.json) · [Rust source](../../guest/passage_call.rs)
+
+[Find a way through](../voxel-fork-search/README.md) searches future inputs from this suspended call.

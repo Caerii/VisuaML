@@ -39,6 +39,17 @@
       <a id="download" download="voxel-call-checkpoint.json">Download checkpoint</a>
     </section>
   </div>
+  <section class="showcase" aria-labelledby="search-heading">
+    <h2 id="search-heading">Search alternate futures</h2>
+    <p>Try Wait or Walk for each of five future ticks. Prefer the fewest edits, then the earliest crossing.</p>
+    <div class="run-controls">
+      <button id="find" class="primary">Find a way through</button>
+      <button id="open-winner" disabled>Open winning write</button>
+    </div>
+    <p id="search-status" role="status"></p>
+    <a id="session" hidden download="winning-session.json">Download winning session</a>
+    <a id="search-checkpoint" download="fork-checkpoint.json">Download input-log checkpoint</a>
+  </section>
 </main>
 <script type="module" src="./voxel-call-checkpoint-ui.mjs"></script>
 </body>
