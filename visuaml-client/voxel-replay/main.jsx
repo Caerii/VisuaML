@@ -242,6 +242,7 @@ function App() {
     <section className="intro">
       <div><h1>Voxel Replay</h1><p>Play a Rust world, then inspect the state it leaves behind.</p></div>
       <nav aria-label="Scene">
+        <a href="./pocket.html">Pocket console</a>
         <button aria-pressed={mode === 'single'} onClick={() => changeMode('single')}>One Agent</button>
         <button aria-pressed={mode === 'shared'} onClick={() => changeMode('shared')}>Two Agents</button>
         <button aria-pressed={mode === 'terrain'} onClick={() => changeMode('terrain')}>Terrain Edit</button>
