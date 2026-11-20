@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket · Checkpoint fork</title>
+  <link rel="stylesheet" href="./pocket.css">
+</head>
+<body>
+<main>
+  <header class="masthead"><a href="./pocket-universal.html">Pocket Universal Tape</a></header>
+  <div class="page-title"><h1>Checkpoint fork</h1></div>
+  <p>Export the state before the first blocked move. Reopen this page and import the same file in both panels.</p>
+  <button id="export" class="primary" disabled>Export checkpoint</button>
+  <p id="status" role="status">Loading linked WASM…</p>
+  <div class="layout">
+    <section class="panel">
+      <h2>Clean copy</h2>
+      <label>Import checkpoint <input id="clean-file" type="file" accept=".json" disabled></label>
+      <button id="clean-run" disabled>Run clean copy</button>
+      <p id="clean-status" role="status"></p>
+      <ol id="clean-trace"></ol>
+    </section>
+    <section class="panel">
+      <h2>Edit coordinate 0 to symbol 2</h2>
+      <label>Import checkpoint <input id="fork-file" type="file" accept=".json" disabled></label>
+      <button id="fork-run" disabled>Run edited copy</button>
+      <p id="fork-status" role="status"></p>
+      <ol id="fork-trace"></ol>
+    </section>
+  </div>
+</main>
+<script type="module" src="./pocket-tape-fork-ui.mjs"></script>
+</body>
+</html>

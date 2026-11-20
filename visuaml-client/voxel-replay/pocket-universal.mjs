@@ -1,4 +1,5 @@
-import { inspectTape, loadTape, MAX_WORDS, TAPE_BASE } from './pocket-tape.mjs';
+import { relocateTapePage } from './pocket-tape-checkpoint.mjs';
+import { inspectTape, loadTape, TAPE_BASE } from './pocket-tape.mjs';
 
 export function encode(program, input, symbols, blankCells = 24) {
   const lines = program.trim().split(/\r?\n/).map(line => line.trim().split(/\s+/));
@@ -47,18 +48,12 @@ function universalInstance(memory, run, table, index) {
 export async function extendUniversal(wasm, table, checkpoint, extra) {
   if (checkpoint.byteLength !== 65536) throw Error("Cannot extend tape checkpoint");
   const page = new DataView(checkpoint);
-  const word = i => page.getInt32(TAPE_BASE + 4 * i, true);
   const index = 8 + 3 * table.states.length * table.symbols.length;
-  const length = word(2);
-  if (word(0) !== table.states.length || word(1) !== table.symbols.length
-      || word(5) !== 0 || length < 1 || !Number.isInteger(extra) || extra < 1
-      || index + length + extra > MAX_WORDS + 8) throw Error('Cannot extend tape checkpoint');
+  if (page.getInt32(TAPE_BASE, true) !== table.states.length
+      || page.getInt32(TAPE_BASE + 4, true) !== table.symbols.length
+      || table.symbols[0] !== '_') throw Error('Cannot extend tape checkpoint');
+  const extended = relocateTapePage(checkpoint, { right: extra });
   const { instance: { exports: { memory, run } } } = await WebAssembly.instantiate(wasm);
-  new Uint8Array(memory.buffer).set(new Uint8Array(checkpoint));
-  const live = new DataView(memory.buffer);
-  live.setInt32(TAPE_BASE + 8, length + extra, true);
-  for (let i = 0; i < extra; i++) {
-    live.setInt32(TAPE_BASE + 4 * (index + length + i), table.symbols.indexOf('_'), true);
-  }
+  new Uint8Array(memory.buffer).set(new Uint8Array(extended));
   return universalInstance(memory, run, table, index);
 }
