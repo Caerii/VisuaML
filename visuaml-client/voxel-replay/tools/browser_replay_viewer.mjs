@@ -23,4 +23,12 @@ try {
   assert.equal((await failure).suggestedFilename(), 'two-call-failure.json');
   await page.locator('#file').setInputFiles('evidence/two-call-controller/failure.json');
   await page.getByText('First difference at event 2 · result 6 → result 8').waitFor();
+  await page.getByRole('button', { name: 'Open tool choice intervention' }).click();
+  await page.getByText('Feedback intervention at event 2 · result 10 → result 14').waitFor();
+  assert.match(await page.locator('#detail').innerText(), /call beta 10 5 \. → call gamma 14 5/);
+  const intervention = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download tool choice replay' }).click();
+  assert.equal((await intervention).suggestedFilename(), 'composed-inference.json');
+  await page.locator('#file').setInputFiles('evidence/composed-inference/replay.json');
+  await page.getByText('Feedback intervention at event 2 · result 10 → result 14').waitFor();
 } finally { await browser.close(); }

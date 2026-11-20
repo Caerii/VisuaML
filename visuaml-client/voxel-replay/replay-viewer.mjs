@@ -1,3 +1,5 @@
+import composed from './evidence/composed-inference/replay.json';
+import composedUrl from './evidence/composed-inference/replay.json?url';
 import toolFailure from './evidence/two-call-controller/failure.json';
 import toolFailureUrl from './evidence/two-call-controller/failure.json?url';
 import discovered from './evidence/counterexample-search/terrain-session.json';
@@ -8,6 +10,21 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.format_version === 1 && data.conditional?.substitute && data.first_difference) {
+    const { conditional: runs, first_difference: first } = data;
+    const left = first.expected[0], right = first.actual[0];
+    get('title').textContent = 'Saved composed inference replay';
+    get('status').textContent = `Feedback intervention at event ${first.event} · ${left.feedback} → ${right.feedback}`;
+    get('detail').textContent = [
+      data.holdout.cases.normal.prompt,
+      `Executor returned ${left.computed} in both runs. The intervention changed the reported value.`,
+      `Next request: ${runs.normal.events[2].tokens.join(' ')} → ${runs.substitute.events[2].tokens.join(' ')}`,
+      `Answer: ${runs.normal.answer} → ${runs.substitute.answer}`,
+      `Zero repeat: ${runs.invalid.events[3].feedback} before execution`,
+      `Fuel cutoff: ${runs.exhausted.events[1].trace.length} executor steps, then ${runs.exhausted.events[1].feedback}`,
+    ].join('\n');
+    return;
+  }
   if (data?.format_version === 1 && data.replay?.first_substitution_difference) {
     const { runs, first_substitution_difference: first } = data.replay;
     const left = first.expected[0], right = first.actual[0];
@@ -77,3 +94,6 @@ get('find-counterexample').onclick = async () => {
 
 get('tool-failure').onclick = () => show(toolFailure);
 get('tool-failure-download').href = toolFailureUrl;
+
+get('composed-failure').onclick = () => show(composed);
+get('composed-download').href = composedUrl;

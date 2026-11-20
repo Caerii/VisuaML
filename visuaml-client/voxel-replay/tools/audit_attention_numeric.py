@@ -19,6 +19,7 @@ def main():
     original = json.loads((EXECUTOR / "programs.json").read_text())
     assert digest(compiled.read_bytes()) == original["frozen_sha256"]
     model = torch.jit.load(str(compiled))
+    bounded = torch.jit.freeze(torch.jit.script(source.eval()))
     cases = []
     for seed in (0, 2147483647, 2147483648, 4294967294, 4294967295):
         for immediate in (-2147483648, -1, 0, 3, 2147483647):
@@ -26,6 +27,8 @@ def main():
             operands = [seed, 9]
             expected = oracle(code, operands)
             answer, trace = model(prepare_program(code), torch.tensor(operands))
+            partial_answer, partial_trace = bounded(prepare_program(code), torch.tensor(operands), 46)
+            assert int(partial_answer) == int(answer) and partial_trace.tolist() == expected
             assert len(expected) == 46 and trace[:46].tolist() == expected
             assert not int(trace[-1, 1]) and int(answer) == expected[-1][4]
             cases.append(dict(seed=seed, signed_immediate=immediate, retired=46,

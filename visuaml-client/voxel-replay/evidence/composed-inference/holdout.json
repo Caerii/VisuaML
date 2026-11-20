@@ -1,0 +1,28 @@
+{
+  "programs": [
+    [[1,0,0],[3,0,7],[2,0,0],[0,0,0]],
+    [[1,0,0],[3,0,2],[2,0,0],[3,1,-1],[4,1,0],[0,0,0]],
+    [[1,0,0],[3,0,-1],[2,0,0],[3,1,-1],[4,1,0],[0,0,0]]
+  ],
+  "cases": {
+    "normal": {
+      "prompt":"please first call alpha 3 once . then choose beta if below 12 otherwise gamma . 5 times . assistant",
+      "fuel":[48,48,48], "slots":["alpha","beta"], "arguments":[[3,1],[10,5]],
+      "feedback":["result 10","result 20"], "answer":20
+    },
+    "substitute": {
+      "prompt":"please first call alpha 3 once . then choose beta if below 12 otherwise gamma . 5 times . assistant",
+      "fuel":[48,48,48], "override":14, "slots":["alpha","gamma"], "arguments":[[3,1],[14,5]],
+      "feedback":["result 14","result 9"], "answer":9
+    },
+    "exhausted": {
+      "prompt":"please first call alpha 3 once . then choose beta if below 12 otherwise gamma . 5 times . assistant",
+      "fuel":[2,48,48], "slots":["alpha"], "arguments":[[3,1]], "feedback":["exhausted"]
+    },
+    "invalid": {
+      "prompt":"please first call alpha 7 once . then choose gamma if below 12 otherwise beta . 0 times . assistant",
+      "fuel":[48,48,48], "slots":["alpha","beta"], "arguments":[[7,1],[14,0]],
+      "feedback":["result 14","invalid"]
+    }
+  }
+}
