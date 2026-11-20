@@ -15,40 +15,37 @@
     </header>
     <div class="page-title">
       <h1>Pocket</h1>
-      <p>Passage Relay</p>
+      <label>Cartridge <select id="cartridge" aria-label="Cartridge"></select></label>
     </div>
     <div class="layout">
       <section class="console" aria-labelledby="screen-title">
         <div class="display-header">
-          <h2 id="screen-title">Passage Relay</h2>
+          <h2 id="screen-title">Pocket</h2>
           <span><i></i>160 × 144</span>
         </div>
         <div class="screen"><canvas id="display" width="160" height="144" aria-label="Pocket guest framebuffer"></canvas></div>
         <div class="device-controls">
-          <button id="dig" type="button" class="primary" disabled>Dig <kbd>X</kbd></button>
+          <div id="game-controls" class="run-controls"></div>
           <div class="run-controls">
             <button id="play" type="button" disabled>Run</button>
-            <button id="step" type="button" disabled>Step <kbd>→</kbd></button>
+            <button id="step" type="button" disabled>Step </button>
             <button id="reset" type="button" disabled>Reset</button>
           </div>
         </div>
-        <p class="guide">Dig to open the passage. On the next tick, the second agent can cross.</p>
+        <p id="guide" class="guide"></p>
       </section>
       <aside class="panel" aria-labelledby="inspector-title">
         <h2 id="inspector-title">Replay inspector</h2>
         <p class="runtime" id="runtime" aria-live="polite">Loading browser WASM…</p>
         <div class="scenes" aria-label="Replay histories">
-          <button id="edit" type="button" disabled>Replay with edit</button>
-          <button id="omit" type="button" disabled>Replay without edit</button>
         </div>
         <div class="timeline" id="timeline" aria-label="Replay frames"></div>
         <dl class="readout">
           <div><dt>Tick</dt><dd id="tick">—</dd></div>
-          <div><dt>Passage</dt><dd id="terrain">—</dd></div>
-          <div><dt>Second agent</dt><dd id="agent">—</dd></div>
         </dl>
         <p id="event" class="event">Waiting for the guest.</p>
         <p id="verification" class="verification" aria-live="polite"></p>
+        <h3 class="trace-label">Host trace points</h3>
         <ul id="writes" aria-label="Selected replay writes"></ul>
         <div class="run-controls">
           <button id="export" type="button" disabled>Export input log</button>
@@ -56,6 +53,14 @@
         </div>
       </aside>
     </div>
+    <section class="showcase" aria-labelledby="showcase-title">
+      <h2 id="showcase-title">Pocket cartridges</h2>
+      <p>The guest draws the pixels. Change one input, and replay the consequences.</p>
+      <div id="gallery" class="gallery"></div>
+      <label class="host-loader">Host · Load local manifest and WASM
+        <input id="host-cartridge-files" type="file" multiple accept=".json,.wasm">
+      </label>
+    </section>
   </main>
   <script type="module" src="./pocket-ui.mjs"></script>
 </body>

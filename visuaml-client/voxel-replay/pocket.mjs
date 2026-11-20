@@ -36,7 +36,7 @@ export function createPresenter(canvas) {
   };
 }
 
-export async function createPocket(raw, expectedHash) {
+export async function createPocket(raw, expectedHash, manifest = {}) {
   const hash = await digest(raw);
   if (hash !== expectedHash) throw Error('Pocket binary hash mismatch');
   const { instance } = await WebAssembly.instantiate(raw);
@@ -45,14 +45,18 @@ export async function createPocket(raw, expectedHash) {
   const page = new Uint8Array(memory.buffer);
   const state = new DataView(memory.buffer);
   const get = offset => state.getInt32(BASE + offset, true);
+  const commands = new Set([-1, 0, ...(manifest.controls?.map(control => control.code) ?? [1])]);
+  const accepts = code => commands.has(code) || (manifest.keyboard === 'ascii'
+    && Number.isInteger(code) && (code === 8 || code === 13 || (code >= 32 && code <= 126)));
+  const readouts = () => Object.fromEntries((manifest.readouts ?? []).map(item => [item.id, get(item.offset)]));
   const put = (offset, value) => state.setInt32(BASE + offset, value, true);
   return {
-    hash,
+    hash, accepts,
     checkpoint: () => page.slice(),
     step(button, present, audit = false) {
-      if (![-1, 0, 1].includes(button)) throw Error('Invalid Pocket button');
+      if (!accepts(button)) throw Error('Invalid Pocket button');
       const began = performance.now();
-      const before = { block: get(12), crossed: get(16) };
+      const before = readouts();
       put(0, button);
       put(4, 0);
       const updateStart = performance.now();
@@ -68,7 +72,7 @@ export async function createPocket(raw, expectedHash) {
       present?.(frame);
       const presented = performance.now();
       if (update !== draw) throw Error('Drawing changed the scene state');
-      return { frame, before, block: get(12), crossed: get(16), simulationPage,
+      return { frame, before, fields: readouts(), simulationPage,
         timing: { input_ms: updateStart - began + drawStart - updateEnd,
           simulation_ms: updateEnd - updateStart, drawing_ms: drawEnd - drawStart,
           publication_ms: publicationEnd - drawEnd, presentation_ms: presented - publicationEnd } };

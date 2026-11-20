@@ -1,0 +1,86 @@
+{
+  "id": "passage",
+  "name": "Passage Relay",
+  "binary": "pocket.wasm",
+  "guide": "Dig to open the passage. On the next tick, the second agent can cross.",
+  "controls": [
+    {
+      "id": "dig",
+      "label": "Dig",
+      "key": "x",
+      "code": 1,
+      "keyLabel": "X",
+      "primary": true
+    }
+  ],
+  "readouts": [
+    {
+      "id": "terrain",
+      "label": "Passage",
+      "offset": 12,
+      "values": {
+        "0": "Open",
+        "1": "Blocked"
+      }
+    },
+    {
+      "id": "agent",
+      "label": "Second agent",
+      "offset": 16,
+      "values": {
+        "0": "Waiting",
+        "1": "Crossed"
+      }
+    }
+  ],
+  "notices": [
+    {
+      "changed": [
+        "terrain"
+      ],
+      "text": "Block cleared \u00b7 passage pixels changed"
+    },
+    {
+      "changed": [
+        "agent"
+      ],
+      "text": "Agent crossed \u00b7 two tiles changed"
+    }
+  ],
+  "idleNotice": "No terrain or agent change",
+  "replays": [
+    {
+      "id": "edit",
+      "label": "Replay with edit",
+      "proof": "pocket-edit.proof.json",
+      "frames": [
+        "Boot",
+        "Edit tick",
+        "Next tick"
+      ]
+    },
+    {
+      "id": "omit",
+      "label": "Replay without edit",
+      "proof": "pocket-omitted.proof.json",
+      "frames": [
+        "Boot",
+        "Edit omitted",
+        "Next tick"
+      ]
+    }
+  ],
+  "gif": "playing.gif",
+  "gallery": [
+    [
+      "Playthrough",
+      "playing.gif"
+    ],
+    [
+      "Edit versus no edit",
+      "edit-vs-omitted.gif"
+    ]
+  ],
+  "binary_sha256": "b23659ce79af74a18127460b4bfc1197f846f0be0db0d2d8856004b9e35bb199",
+  "order": 0
+}

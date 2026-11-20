@@ -31,7 +31,7 @@ PALETTE = np.array([[220, 235, 179, 255], [147, 171, 112, 255],
 SHIFTS = np.array([6, 4, 2, 0], dtype=np.uint8)
 
 
-def drive(graph, rows, state, audit=False):
+def drive(graph, rows, state, audit=False, fuel=5000):
     events, count = [], 0
     while int(state.vm.status) == 0:
         pc = int(state.vm.pc) if audit else 0
@@ -44,7 +44,7 @@ def drive(graph, rows, state, audit=False):
                 events.append({"pc": pc, "address": address, "before": before, "after": after})
         count += 1
     assert int(state.vm.status) == 1
-    return 5000 - int(state.vm.fuel), count, int(state.vm.stack[0]), events
+    return fuel - int(state.vm.fuel), count, int(state.vm.stack[0]), events
 
 
 def oracle(raw):
@@ -71,14 +71,14 @@ def check_art(frame, block, crossed):
     assert pixel(frame, 114, 70) == (0 if crossed else 2)
 
 
-def player(graph, image):
-    state = initialize(image, BASE, bytes(65536), 5000)
+def player(graph, image, fuel=5000):
+    state = initialize(image, BASE, bytes(65536), fuel)
     page = state.vm.page.numpy()
 
     def phase(value, mode, audit=False, write_inputs=True):
         if write_inputs:
             struct.pack_into("<2i", page, BASE, value, mode)
-        return drive(graph, image.rows, state, audit)
+        return drive(graph, image.rows, state, audit, fuel)
 
     return page, phase
 

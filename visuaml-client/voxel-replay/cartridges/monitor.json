@@ -1,0 +1,68 @@
+{
+  "id": "monitor",
+  "name": "Machine Monitor",
+  "binary": "pocket_monitor.wasm",
+  "guide": "Type HELP, STATUS, MAP, DIG, STEP or RESET. Press Enter to run a command.",
+  "keyboard": "ascii",
+  "controls": [],
+  "readouts": [
+    {
+      "id": "world-tick",
+      "label": "World tick",
+      "offset": 72
+    },
+    {
+      "id": "world-block",
+      "label": "Passage",
+      "offset": 64,
+      "values": {
+        "0": "Open",
+        "1": "Blocked"
+      }
+    },
+    {
+      "id": "world-agent",
+      "label": "Second agent",
+      "offset": 68,
+      "values": {
+        "0": "Waiting",
+        "1": "Crossed"
+      }
+    }
+  ],
+  "notices": [
+    {
+      "changed": [
+        "world-block"
+      ],
+      "text": "Passage changed"
+    },
+    {
+      "changed": [
+        "world-agent"
+      ],
+      "text": "Second agent moved"
+    }
+  ],
+  "idleNotice": "Monitor keyboard ready",
+  "replays": [
+    {
+      "id": "typed",
+      "label": "Replay with DIG",
+      "proof": "monitor-play.proof.json"
+    },
+    {
+      "id": "typed-omit",
+      "label": "Replay without DIG",
+      "proof": "monitor-omitted.proof.json"
+    }
+  ],
+  "gallery": [
+    [
+      "Typing at the monitor",
+      "monitor.gif"
+    ]
+  ],
+  "binary_sha256": "5d183cbc6846e1d214333327ef52f752271b040ece8221a65055a346e17e97bd",
+  "order": 2
+}

@@ -1,0 +1,102 @@
+{
+  "id": "rail-crate",
+  "name": "Rail Crate",
+  "binary": "rail_crate.wasm",
+  "guide": "Move along the rail and push the crate onto its marked bay.",
+  "controls": [
+    {
+      "id": "left",
+      "label": "Left",
+      "key": "ArrowLeft",
+      "code": 2,
+      "keyLabel": "\u2190"
+    },
+    {
+      "id": "right",
+      "label": "Right",
+      "key": "ArrowRight",
+      "code": 1,
+      "keyLabel": "\u2192"
+    }
+  ],
+  "readouts": [
+    {
+      "id": "player",
+      "label": "Player",
+      "offset": 12,
+      "values": {
+        "0": "1",
+        "4": "2",
+        "8": "3",
+        "12": "4",
+        "16": "5"
+      }
+    },
+    {
+      "id": "crate",
+      "label": "Crate",
+      "offset": 16,
+      "values": {
+        "0": "1",
+        "4": "2",
+        "8": "3",
+        "12": "4",
+        "16": "5"
+      }
+    }
+  ],
+  "notices": [
+    {
+      "changed": [
+        "crate"
+      ],
+      "text": "Legal push \u00b7 crate advanced"
+    },
+    {
+      "changed": [
+        "player"
+      ],
+      "text": "Player moved"
+    },
+    {
+      "commands": [
+        1,
+        2
+      ],
+      "text": "Blocked move \u00b7 positions held"
+    }
+  ],
+  "idleNotice": "Waiting for a direction",
+  "replays": [
+    {
+      "id": "push",
+      "label": "Replay legal pushes",
+      "proof": "rail-crate-play.proof.json",
+      "frames": [
+        "Boot",
+        "Push",
+        "Goal",
+        "Blocked"
+      ]
+    },
+    {
+      "id": "skip-push",
+      "label": "Replay with left first",
+      "proof": "rail-crate-omitted.proof.json",
+      "frames": [
+        "Boot",
+        "Move left",
+        "Walk right",
+        "Push"
+      ]
+    }
+  ],
+  "gallery": [
+    [
+      "Playthrough",
+      "rail-crate.gif"
+    ]
+  ],
+  "binary_sha256": "c3b9f5f8c330b582f199710a7019851280294341875d106a70de760e47fd555a",
+  "order": 1
+}
