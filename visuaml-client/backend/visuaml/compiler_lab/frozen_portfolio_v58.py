@@ -1,10 +1,19 @@
 """Frozen lowering for a checked portfolio of two-source-step regions."""
+from typing import NamedTuple
+
 import torch
 from torch import Tensor
 
 from .frozen_calls_v58 import CallState, CallStep
 from .frozen_recurrent_v58 import MAX_STACK, MachineState
-from .frozen_region_v58 import RegionTick
+
+
+class PortfolioTick(NamedTuple):
+    state: CallState
+    access: Tensor
+    fused_pairs: int
+    fused_loads: int
+    fused_arithmetic: int
 
 
 class PortfolioStep(torch.nn.Module):
@@ -16,12 +25,13 @@ class PortfolioStep(torch.nn.Module):
         self.register_buffer("byte_offsets", torch.arange(4, dtype=torch.int64))
         self.register_buffer("shifts", torch.arange(4, dtype=torch.int64) * 8)
 
-    def forward(self, image: Tensor, state: CallState, budget: int) -> RegionTick:
+    def forward(self, image: Tensor, state: CallState, budget: int) -> PortfolioTick:
         if budget < 0 or budget > 64:
             raise RuntimeError("Expected a transition budget from 0 to 64")
         access = torch.zeros(4, dtype=torch.int64)
         pairs = 0
-        others = 0
+        loads = 0
+        arithmetic = 0
         while budget > 0 and bool(state.vm.status == 0):
             vm = state.vm
             if not bool(vm.fuel > 0):
@@ -56,7 +66,7 @@ class PortfolioStep(torch.nn.Module):
                         state = CallState(vm, state.depth, state.frames)
                         access = torch.stack((torch.ones_like(word), address, word, word))
                         budget -= 2
-                        others += 1
+                        loads += 1
                         continue
                 if kind == -3 and bool(vm.height > 0):
                     index = (vm.height - 1).reshape(1)
@@ -69,12 +79,12 @@ class PortfolioStep(torch.nn.Module):
                     state = CallState(vm, state.depth, state.frames)
                     access = torch.zeros_like(access)
                     budget -= 2
-                    others += 1
+                    arithmetic += 1
                     continue
             tick = self.step.step_row(image, state, row)
             state, access = tick.state, tick.access
             budget -= 1
-        return RegionTick(state, access, pairs, others)
+        return PortfolioTick(state, access, pairs, loads, arithmetic)
 
 
 def freeze_portfolio():

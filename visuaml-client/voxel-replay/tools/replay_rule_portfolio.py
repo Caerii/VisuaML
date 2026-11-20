@@ -15,10 +15,10 @@ import terrain_verify as terrain
 from prove_rule_portfolio import OUT, VERSION, bindings
 from replay_frozen_calls import run
 from replay_frozen_multistep import CALLS, state_equal
-from replay_frozen_recurrent import ARCHIVE, PACKED, graph_case, sha, wasmtime_run
+from replay_frozen_recurrent import ARCHIVE, PACKED, graph_case, sha, signed, wasmtime_run
 from replay_guest_rewrite import EXECUTOR, invoke
 from replay_reusable_region_rules import (
-    OUT as PRIOR, PAIR, admit, audit, checked_certificate, compare_access, execute, with_rows,
+    OUT as PRIOR, PAIR, admit, audit, checked_certificate, compare_access, with_rows,
 )
 from visuaml.compiler_lab.frozen_calls_v58 import initialize, load_call_image
 from visuaml.compiler_lab.frozen_recurrent_v58 import OPCODES
@@ -121,7 +121,7 @@ def kernel_profile(old, fast, images, candidates, argument, page, sites):
         assert int(state.vm.status) == 0
     first = old(images["prior_all"].rows, state, 2)
     fused = fast(images["portfolio"].rows, state, 2)
-    assert fused.fused_loads == 1
+    assert fused.fused_arithmetic == 1
     state_equal(first.state, fused.state)
     counts, samples = {}, {}
     for name, graph, image in (("existing", old, images["prior_all"]),
@@ -143,6 +143,26 @@ def kernel_profile(old, fast, images, candidates, argument, page, sites):
             "median_ns": {k: statistics.median(v) for k, v in samples.items()}}
 
 
+def execute(graph, image, argument, page):
+    state = initialize(image, argument, page, 100_000)
+    calls = pair = load = arithmetic = 0
+    started = perf_counter_ns()
+    while int(state.vm.status) == 0:
+        tick = graph(image.rows, state, 64)
+        state = tick.state
+        calls += 1
+        pair += tick.fused_pairs
+        load += tick.fused_loads
+        arithmetic += getattr(tick, "fused_arithmetic", 0)
+    elapsed = perf_counter_ns() - started
+    assert int(state.vm.status) == 1
+    return state.vm.page.numpy().tobytes(), {"execution_ns": elapsed, "host_calls": calls,
+                                            "fused_pairs": pair, "fused_loads": load,
+                                            "fused_arithmetic": arithmetic,
+                                            "source_steps": 100_000 - int(state.vm.fuel),
+                                            "return_i32": signed(state.vm.stack[0])}
+
+
 def benchmark(graphs, images, raw, argument, page, ticks, source_steps):
     rows = {mode: [] for mode in graphs}
     names = tuple(graphs)
@@ -152,7 +172,7 @@ def benchmark(graphs, images, raw, argument, page, ticks, source_steps):
         result, oracle = wasmtime_run(raw, argument, page)
         pivot = i % len(names)
         for mode in names[pivot:] + names[:pivot]:
-            rebuilt, metrics = execute(graphs[mode], images[mode], argument, page, "both")
+            rebuilt, metrics = execute(graphs[mode], images[mode], argument, page)
             assert rebuilt == oracle and metrics["return_i32"] == result
             assert metrics["source_steps"] == source_steps
             rows[mode].append({**metrics, "page_sha256": sha(rebuilt)})
@@ -160,7 +180,7 @@ def benchmark(graphs, images, raw, argument, page, ticks, source_steps):
             page = bytearray(oracle)
     values = {}
     for mode, samples in rows.items():
-        warm = sorted(r["execution_ns"] for r in samples[1:] if r) if len(ticks) > 8 else [
+        warm = sorted(r["execution_ns"] for r in samples[1:]) if len(ticks) > 8 else [
             r["execution_ns"] for r in samples]
         values[mode] = {"warm_samples": len(warm), "median_ns": statistics.median(warm), "samples": samples}
         if len(warm) > 8:
@@ -177,7 +197,7 @@ def verify_histories(graph, image, raw):
         for inputs, saved in zip(fixture["session"]["inputs"], fixture["ticks"], strict=True):
             terrain.write(page, 4, [int(inputs["edit"])])
             terrain.write(page, 320, [4 * m for m in inputs["moves"]])
-            after, result = execute(graph, image, terrain.BASE, page, "both")
+            after, result = execute(graph, image, terrain.BASE, page)
             assert wasmtime_run(raw, terrain.BASE, page) == (result["return_i32"], after)
             assert sha(after) == saved["page_sha256"] and result["source_steps"] == saved["steps"]
             evidence[label].append({**result, "page_sha256": sha(after)})
@@ -210,13 +230,13 @@ def composition(one, fast, plain, planned, sites, raw, argument, page):
             actual = fast(planned.rows, cut_b, 64)
             state_equal(stopped.state, actual.state)
             compare_access(stopped.access, actual.access)
-            assert int(actual.state.vm.status) == 2 and not (actual.fused_pairs or actual.fused_loads)
+            assert int(actual.state.vm.status) == 2 and not (actual.fused_pairs or actual.fused_loads or actual.fused_arithmetic)
             if previous is not None:
                 edges.append([previous, kind])
             previous = kind
             transitions.append({"pc": pc, "rule": kind, "prefix_fuel": int(prefix.state.vm.fuel),
                                 "end_fuel": int(result.state.vm.fuel), "status": int(result.state.vm.status),
-                                "actual_fused": result.fused_pairs + result.fused_loads})
+                                "actual_fused": result.fused_pairs + result.fused_loads + result.fused_arithmetic})
             a, b = second.state, result.state
         else:
             a, b = first.state, prefix.state
@@ -280,8 +300,8 @@ def main():
             prior_row = json.loads((OUT / "training.json").read_text())[name] if not args.train_only else None
             if prior_row is None:
                 (_, warmed), _ = admit(image, plain, planners)
-                execute(old, warmed, arg, page, "both")
-                times = [execute(old, warmed, arg, page, "both")[1] for _ in range(2)]
+                execute(old, warmed, arg, page)
+                times = [execute(old, warmed, arg, page)[1] for _ in range(2)]
                 _, data = profile(one, image, arg, page)
                 output[name] = {**data, "warm_existing": times, "binary_sha256": sha(raw)}
                 continue
@@ -323,7 +343,7 @@ def main():
             normal = composition(one, fast, image, images["portfolio"], sites, raw, 8, page)
             trapped = composition(one, fast, image, images["portfolio"], sites, raw, 65532, page)
             assert [2, 3] in normal["adjacent_rule_ids"] and trapped["status"] == 3
-            final, metrics = execute(fast, images["portfolio"], 8, page, "both")
+            final, metrics = execute(fast, images["portfolio"], 8, page)
             assert wasmtime_run(raw, 8, page) == (metrics["return_i32"], final)
             assert wasmtime_run(raw, 65532, page, trap_expected=True) == (None, bytes(page))
             output["after_freeze"] = {"binary_sha256": sha(raw), "training": training,
