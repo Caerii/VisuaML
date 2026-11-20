@@ -1,0 +1,74 @@
+{
+  "case": "crowded",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu_count": 5,
+    "numpy": "2.1.3",
+    "wasmtime": "36.0.0",
+    "thread_controls": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": null
+    }
+  },
+  "profile_s": 1.2707468799999988,
+  "retain": "copy",
+  "compact": true,
+  "hotspots": {
+    "local_const_add": {
+      "calls": 144,
+      "self_s": 0.00024646,
+      "cumulative_s": 0.026902603
+    },
+    "const_add": {
+      "calls": 68,
+      "self_s": 0.000147118,
+      "cumulative_s": 0.006165696
+    },
+    "alu": {
+      "calls": 720,
+      "self_s": 0.002024644,
+      "cumulative_s": 0.096115159
+    },
+    "adder": {
+      "calls": 572,
+      "self_s": 0.041530973000000006,
+      "cumulative_s": 0.041786676
+    },
+    "compare": {
+      "calls": 164,
+      "self_s": 0.000336216,
+      "cumulative_s": 0.046367817000000006
+    },
+    "local_read": {
+      "calls": 2008,
+      "self_s": 0.006843194,
+      "cumulative_s": 0.046338265000000003
+    },
+    "operand_move": {
+      "calls": 3600,
+      "self_s": 0.040579471000000006,
+      "cumulative_s": 0.294764173
+    },
+    "frame_equations": {
+      "calls": 528,
+      "self_s": 0.023648253,
+      "cumulative_s": 0.075674895
+    },
+    "route": {
+      "calls": 4656,
+      "self_s": 0.038347965000000005,
+      "cumulative_s": 0.31484706300000004
+    },
+    "driver": {
+      "calls": 4,
+      "self_s": 0.061888954,
+      "cumulative_s": 1.275060601
+    }
+  },
+  "memory_body_line_trace_ns": 19264661
+}

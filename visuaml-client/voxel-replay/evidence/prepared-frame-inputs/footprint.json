@@ -1,0 +1,41 @@
+{
+  "source_instructions": 4096,
+  "compile_and_load_ns": 1072604606,
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "measurements": {
+    "copy": {
+      "setup_ns": [
+        35899315,
+        35754087,
+        36217325,
+        36545079,
+        37407768,
+        37317642,
+        35883002,
+        35778493
+      ],
+      "row_payload_bytes": 262144,
+      "pointer_table_shallow_bytes": 32808,
+      "pointer_integers_bytes": 114688,
+      "lookup_payload_bytes": 0,
+      "median_setup_ns": 36058320.0
+    },
+    "prepared": {
+      "setup_ns": [
+        37042548,
+        36846973,
+        36240960,
+        36626351,
+        37074026,
+        37632677,
+        36331787,
+        36281331
+      ],
+      "row_payload_bytes": 294912,
+      "pointer_table_shallow_bytes": 32808,
+      "pointer_integers_bytes": 114688,
+      "lookup_payload_bytes": 5296,
+      "median_setup_ns": 36736662.0
+    }
+  }
+}

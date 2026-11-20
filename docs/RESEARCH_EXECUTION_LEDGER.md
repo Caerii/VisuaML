@@ -408,3 +408,12 @@ Paired terrain, full BFS, and Sudoku replays preserve exact pages and
 steps. The resident arm removes the frame copy but adds little to the
 terrain median gain from eliminating checked retain materialization.
 [Profiles, ownership checks, and staged replay timings](../visuaml-client/voxel-replay/evidence/fused-frame-retain/README.md)
+
+## v58 prepared frame inputs
+
+The canonical fused-copy path can bind lexical else data so the compiled
+event gate accepts three live predicates. Reusable token rows and a
+compact v53 entry eliminate frame token constructions without changing
+the fixed contractions. Paired terrain, full BFS, and Sudoku runs retain
+exact replay and show limited median savings at this boundary.
+[Staged profiles, preparation footprint, and exact replay](../visuaml-client/voxel-replay/evidence/prepared-frame-inputs/README.md)
