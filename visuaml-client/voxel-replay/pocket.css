@@ -62,3 +62,7 @@ select, input { border: 1px solid #647468; border-radius: 6px; background: #2030
 .trace-label { font-size: .83rem; margin: 12px 0 2px; }
 .host-loader { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; color: var(--muted); font-size: .85rem; margin-top: 14px; }
 .host-loader input { max-width: 100%; }
+
+#module-inspector { margin-top: 1rem; border-top: 1px solid #414c49; padding-top: .75rem; }
+#module-inspector label { display: block; margin-top: .6rem; }
+#module-inspector pre { max-height: 9rem; overflow: auto; font-size: .78rem; margin-bottom: 0; }

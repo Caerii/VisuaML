@@ -1,0 +1,55 @@
+{
+  "id": "compile-monitor",
+  "name": "Compiler Monitor",
+  "binary": "pocket_compile.wasm",
+  "guide": "Type 10 SET 7, 20 ADD 6 and 30 PRINT. Press Enter after each line. Type COMPILE, then use Run emitted WASM in the inspector.",
+  "keyboard": "ascii",
+  "controls": [],
+  "readouts": [
+    {
+      "id": "accumulator",
+      "label": "Accumulator",
+      "offset": 92
+    },
+    {
+      "id": "program-counter",
+      "label": "Next line",
+      "offset": 96,
+      "values": {
+        "1": "10",
+        "2": "20",
+        "3": "30",
+        "4": "40",
+        "5": "Halted"
+      }
+    },
+    {
+      "id": "moduleLength",
+      "label": "Module bytes",
+      "offset": 144
+    }
+  ],
+  "notices": [],
+  "idleNotice": "Program keyboard ready",
+  "replays": [
+    {
+      "id": "compile-5",
+      "label": "Compile ADD 5",
+      "proof": "pocket-compile-add-5.proof.json"
+    },
+    {
+      "id": "compile-6",
+      "label": "Compile ADD 6",
+      "proof": "pocket-compile-add-6.proof.json"
+    }
+  ],
+  "gallery": [
+    [
+      "Type, compile, and run",
+      "pocket-compile.gif"
+    ]
+  ],
+  "binary_sha256": "f145fb99011e0e67397756fb6b49a5e87b0a3b344ea923d43dc08dc7fa4f846b",
+  "order": 2.2,
+  "moduleOutput": true
+}

@@ -97,3 +97,7 @@ filesystem.
 
 For the typed language and renderer comparison, see the
 [Programmable Pocket Monitor](evidence/monitor-program/README.md).
+
+The [Compiler Monitor](evidence/pocket-compile/README.md) adds a manifest-gated
+inspector for modules and source maps emitted by a guest. Open
+`?cartridge=compile-monitor` to try it.
