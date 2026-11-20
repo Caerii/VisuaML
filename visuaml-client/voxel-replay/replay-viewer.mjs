@@ -1,3 +1,5 @@
+import acquisition from './evidence/tool-acquisition/replay.json';
+import acquisitionUrl from './evidence/tool-acquisition/replay.json?url';
 import composed from './evidence/composed-inference/replay.json';
 import composedUrl from './evidence/composed-inference/replay.json?url';
 import toolFailure from './evidence/two-call-controller/failure.json';
@@ -10,6 +12,20 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.format_version === 1 && data.profile === 'visuaml-tool-acquisition-v1') {
+    const normal = data.cases.original.events;
+    const substitute = data.cases.substitution.events;
+    get('title').textContent = 'Saved tool acquisition replay';
+    get('status').textContent = `First intervention difference at event ${data.first_intervention_difference}`;
+    get('detail').textContent = [
+      `First result: ${normal[1]?.reported ?? "—"} → ${substitute[1]?.reported ?? "—"}`,
+      `Second request: ${normal[2]?.tokens?.join(' ') ?? "—"} → ${substitute[2]?.tokens?.join(' ') ?? "—"}`,
+      ...Object.entries(data.cases).map(([name, run]) => run.failure
+        ? `${name} · event ${run.failure.event} · ${run.failure.category} · ${JSON.stringify(run.failure)}`
+        : `${name} · matched expected replay`),
+    ].join('\n');
+    return;
+  }
   if (data?.format_version === 1 && data.conditional?.substitute && data.first_difference) {
     const { conditional: runs, first_difference: first } = data;
     const left = first.expected[0], right = first.actual[0];
@@ -97,3 +113,6 @@ get('tool-failure-download').href = toolFailureUrl;
 
 get('composed-failure').onclick = () => show(composed);
 get('composed-download').href = composedUrl;
+
+get('acquisition').onclick = () => show(acquisition);
+get('acquisition-download').href = acquisitionUrl;

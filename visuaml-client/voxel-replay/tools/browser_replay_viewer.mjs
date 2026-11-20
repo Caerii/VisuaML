@@ -31,4 +31,13 @@ try {
   assert.equal((await intervention).suggestedFilename(), 'composed-inference.json');
   await page.locator('#file').setInputFiles('evidence/composed-inference/replay.json');
   await page.getByText('Feedback intervention at event 2 · result 10 → result 14').waitFor();
+  await page.getByRole('button', { name: 'Open tool acquisition replay' }).click();
+  const acquisition = page.getByText('First intervention difference at event 2');
+  await acquisition.waitFor();
+  assert.match(await page.locator('#detail').innerText(), /substitution · event 3 · tool_selection/);
+  const acquisitionDownload = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download tool acquisition replay' }).click();
+  assert.equal((await acquisitionDownload).suggestedFilename(), 'tool-acquisition.json');
+  await page.locator('#file').setInputFiles('evidence/tool-acquisition/replay.json');
+  await acquisition.waitFor();
 } finally { await browser.close(); }

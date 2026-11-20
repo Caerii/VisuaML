@@ -1,0 +1,3560 @@
+{
+  "format_version": 1,
+  "profile": "visuaml-tool-acquisition-v1",
+  "holdout": {
+    "programs": {
+      "offset": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          3,
+          0,
+          7
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boost": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          5
+        ],
+        [
+          3,
+          0,
+          -3
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          3,
+          1,
+          -1
+        ],
+        [
+          4,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "trim": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          -2
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          3,
+          1,
+          -1
+        ],
+        [
+          4,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "cases": {
+      "original": {
+        "prompt": "available delta does offset . epsilon does boost . zeta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+        "registry": [
+          [
+            "zeta",
+            "trim"
+          ],
+          [
+            "delta",
+            "offset"
+          ],
+          [
+            "epsilon",
+            "boost"
+          ]
+        ],
+        "calls": [
+          [
+            "delta",
+            3,
+            1,
+            10
+          ],
+          [
+            "epsilon",
+            10,
+            5,
+            20
+          ]
+        ],
+        "answer": 20
+      },
+      "substitution": {
+        "prompt": "available delta does offset . epsilon does boost . zeta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+        "registry": [
+          [
+            "zeta",
+            "trim"
+          ],
+          [
+            "delta",
+            "offset"
+          ],
+          [
+            "epsilon",
+            "boost"
+          ]
+        ],
+        "calls": [
+          [
+            "delta",
+            3,
+            1,
+            15
+          ],
+          [
+            "zeta",
+            15,
+            5,
+            5
+          ]
+        ],
+        "override": 15,
+        "answer": 5
+      },
+      "renamed": {
+        "prompt": "available gamma does offset . alpha does boost . beta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+        "registry": [
+          [
+            "alpha",
+            "boost"
+          ],
+          [
+            "beta",
+            "trim"
+          ],
+          [
+            "gamma",
+            "offset"
+          ]
+        ],
+        "calls": [
+          [
+            "gamma",
+            3,
+            1,
+            10
+          ],
+          [
+            "alpha",
+            10,
+            5,
+            20
+          ]
+        ],
+        "answer": 20
+      },
+      "shuffled_text": {
+        "prompt": "available epsilon does boost . zeta does trim . delta does offset . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+        "registry": [
+          [
+            "epsilon",
+            "boost"
+          ],
+          [
+            "delta",
+            "offset"
+          ],
+          [
+            "zeta",
+            "trim"
+          ]
+        ],
+        "calls": [
+          [
+            "delta",
+            3,
+            1,
+            10
+          ],
+          [
+            "epsilon",
+            10,
+            5,
+            20
+          ]
+        ],
+        "answer": 20
+      },
+      "new_values": {
+        "prompt": "available epsilon does offset . beta does boost . delta does trim . please first offset 6 once . then choose boost if below 12 otherwise trim . 3 times . assistant",
+        "registry": [
+          [
+            "beta",
+            "boost"
+          ],
+          [
+            "epsilon",
+            "offset"
+          ],
+          [
+            "delta",
+            "trim"
+          ]
+        ],
+        "calls": [
+          [
+            "epsilon",
+            6,
+            1,
+            13
+          ],
+          [
+            "delta",
+            13,
+            3,
+            7
+          ]
+        ],
+        "answer": 7
+      },
+      "reverse_intervention_exploratory": {
+        "prompt": "available epsilon does offset . beta does boost . delta does trim . please first offset 6 once . then choose boost if below 12 otherwise trim . 3 times . assistant",
+        "registry": [
+          [
+            "beta",
+            "boost"
+          ],
+          [
+            "epsilon",
+            "offset"
+          ],
+          [
+            "delta",
+            "trim"
+          ]
+        ],
+        "calls": [
+          [
+            "epsilon",
+            6,
+            1,
+            8
+          ],
+          [
+            "beta",
+            8,
+            3,
+            14
+          ]
+        ],
+        "override": 8,
+        "answer": 14
+      },
+      "swapped_descriptions": {
+        "prompt": "available delta does offset . zeta does boost . epsilon does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+        "registry": [
+          [
+            "epsilon",
+            "trim"
+          ],
+          [
+            "delta",
+            "offset"
+          ],
+          [
+            "zeta",
+            "boost"
+          ]
+        ],
+        "calls": [
+          [
+            "delta",
+            3,
+            1,
+            10
+          ],
+          [
+            "zeta",
+            10,
+            5,
+            20
+          ]
+        ],
+        "answer": 20
+      },
+      "disabled": {
+        "prompt": "available delta does offset . epsilon does boost . zeta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+        "registry": [
+          [
+            "delta",
+            "offset"
+          ],
+          [
+            "epsilon",
+            "boost"
+          ],
+          [
+            "zeta",
+            "trim"
+          ]
+        ],
+        "calls": [
+          [
+            "delta",
+            3,
+            1,
+            "unavailable"
+          ]
+        ],
+        "fuel": {
+          "offset": -1
+        }
+      },
+      "exhausted": {
+        "prompt": "available delta does offset . epsilon does boost . zeta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+        "registry": [
+          [
+            "delta",
+            "offset"
+          ],
+          [
+            "epsilon",
+            "boost"
+          ],
+          [
+            "zeta",
+            "trim"
+          ]
+        ],
+        "calls": [
+          [
+            "delta",
+            3,
+            1,
+            "exhausted"
+          ]
+        ],
+        "fuel": {
+          "offset": 2
+        }
+      },
+      "invalid": {
+        "prompt": "available gamma does offset . alpha does boost . beta does trim . please first offset 7 once . then choose boost if below 12 otherwise trim . 0 times . assistant",
+        "registry": [
+          [
+            "gamma",
+            "offset"
+          ],
+          [
+            "alpha",
+            "boost"
+          ],
+          [
+            "beta",
+            "trim"
+          ]
+        ],
+        "calls": [
+          [
+            "gamma",
+            7,
+            1,
+            14
+          ],
+          [
+            "beta",
+            14,
+            0,
+            "invalid"
+          ]
+        ]
+      },
+      "paraphrase_known_words": {
+        "prompt": "available delta does offset . epsilon does boost . zeta does trim . kindly offset 3 once . if below 12 then boost 5 times otherwise trim 5 times . assistant",
+        "registry": [
+          [
+            "zeta",
+            "trim"
+          ],
+          [
+            "delta",
+            "offset"
+          ],
+          [
+            "epsilon",
+            "boost"
+          ]
+        ],
+        "calls": [
+          [
+            "delta",
+            3,
+            1,
+            10
+          ],
+          [
+            "epsilon",
+            10,
+            5,
+            20
+          ]
+        ],
+        "answer": 20
+      },
+      "paraphrase_free": {
+        "prompt": "available delta does offset . epsilon does boost . zeta does trim . Take three and offset it. If the result is under twelve, boost it five times. If it is twelve or more, trim it five times. assistant",
+        "registry": [
+          [
+            "zeta",
+            "trim"
+          ],
+          [
+            "delta",
+            "offset"
+          ],
+          [
+            "epsilon",
+            "boost"
+          ]
+        ],
+        "calls": [
+          [
+            "delta",
+            3,
+            1,
+            10
+          ],
+          [
+            "epsilon",
+            10,
+            5,
+            20
+          ]
+        ],
+        "answer": 20
+      }
+    }
+  },
+  "graph_sha256": "6c7518a46fbe4464fa196fdee56b0f5a1e01adb1bbba66132001394292129b6b",
+  "controller_sha256": "c896714cc3f07694696414edcb05e1e7a546682fbfb30414c750b1d3307ce451",
+  "cases": {
+    "original": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "delta",
+            "3",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 10,
+          "reported": 10,
+          "trace": [
+            [
+              1,
+              1,
+              3,
+              1,
+              3,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              3,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              4,
+              1,
+              10,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              1,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              0,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "epsilon",
+            "10",
+            "5",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 20,
+          "reported": 20,
+          "trace": [
+            [
+              1,
+              1,
+              10,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              15,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              12,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              12,
+              5,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              12,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              12,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              12,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              17,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              14,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              14,
+              4,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              14,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              14,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              14,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              19,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              16,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              16,
+              3,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              16,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              16,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              16,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              21,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              18,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              18,
+              2,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              18,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              18,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              18,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              23,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              20,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              20,
+              1,
+              20,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              20,
+              0,
+              20,
+              0,
+              0,
+              0
+            ],
+            [
+              6,
+              1,
+              20,
+              0,
+              20,
+              0,
+              0,
+              0
+            ],
+            [
+              6,
+              0,
+              20,
+              0,
+              20,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "answer",
+            "20",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 0,
+          "answer": 20
+        }
+      ],
+      "selection": [
+        true,
+        true
+      ],
+      "binding": [
+        true,
+        true
+      ],
+      "exact_execution": [
+        true,
+        true
+      ],
+      "feedback_correct": [
+        true,
+        true
+      ],
+      "correct_outcome": true,
+      "failure": null
+    },
+    "substitution": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "delta",
+            "3",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 10,
+          "reported": 15,
+          "trace": [
+            [
+              1,
+              1,
+              3,
+              1,
+              3,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              3,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              4,
+              1,
+              10,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              1,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              0,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "epsilon",
+            "15",
+            "5",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 25,
+          "reported": 25,
+          "trace": [
+            [
+              1,
+              1,
+              15,
+              5,
+              15,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              20,
+              5,
+              15,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              17,
+              5,
+              15,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              17,
+              5,
+              17,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              17,
+              4,
+              17,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              17,
+              4,
+              17,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              17,
+              4,
+              17,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              22,
+              4,
+              17,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              19,
+              4,
+              17,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              19,
+              4,
+              19,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              19,
+              3,
+              19,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              19,
+              3,
+              19,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              19,
+              3,
+              19,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              24,
+              3,
+              19,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              21,
+              3,
+              19,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              21,
+              3,
+              21,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              21,
+              2,
+              21,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              21,
+              2,
+              21,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              21,
+              2,
+              21,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              26,
+              2,
+              21,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              23,
+              2,
+              21,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              23,
+              2,
+              23,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              23,
+              1,
+              23,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              23,
+              1,
+              23,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              23,
+              1,
+              23,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              28,
+              1,
+              23,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              25,
+              1,
+              23,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              25,
+              1,
+              25,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              25,
+              0,
+              25,
+              0,
+              0,
+              0
+            ],
+            [
+              6,
+              1,
+              25,
+              0,
+              25,
+              0,
+              0,
+              0
+            ],
+            [
+              6,
+              0,
+              25,
+              0,
+              25,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "answer",
+            "25",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 0,
+          "answer": 25
+        }
+      ],
+      "selection": [
+        true,
+        false
+      ],
+      "binding": [
+        true,
+        true
+      ],
+      "exact_execution": [
+        true,
+        true
+      ],
+      "feedback_correct": [
+        true,
+        false
+      ],
+      "correct_outcome": false,
+      "failure": {
+        "category": "tool_selection",
+        "event": 3,
+        "expected": "zeta",
+        "actual": {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "epsilon",
+            "15",
+            "5",
+            "."
+          ]
+        }
+      }
+    },
+    "renamed": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "gamma",
+            "3",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 10,
+          "reported": 10,
+          "trace": [
+            [
+              1,
+              1,
+              3,
+              1,
+              3,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              3,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              4,
+              1,
+              10,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              1,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              0,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "beta",
+            "10",
+            "5",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 0,
+          "reported": 0,
+          "trace": [
+            [
+              1,
+              1,
+              10,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              8,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              8,
+              5,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              8,
+              4,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              8,
+              4,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              8,
+              4,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              6,
+              4,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              6,
+              4,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              6,
+              3,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              6,
+              3,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              6,
+              3,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              4,
+              3,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              4,
+              3,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              4,
+              2,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              4,
+              2,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              4,
+              2,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              2,
+              2,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              2,
+              2,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              0,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "answer",
+            "0",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 0,
+          "answer": 0
+        }
+      ],
+      "selection": [
+        true,
+        false
+      ],
+      "binding": [
+        true,
+        true
+      ],
+      "exact_execution": [
+        true,
+        true
+      ],
+      "feedback_correct": [
+        true,
+        false
+      ],
+      "correct_outcome": false,
+      "failure": {
+        "category": "tool_selection",
+        "event": 3,
+        "expected": "alpha",
+        "actual": {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "beta",
+            "10",
+            "5",
+            "."
+          ]
+        }
+      }
+    },
+    "shuffled_text": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "delta",
+            "3",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 10,
+          "reported": 10,
+          "trace": [
+            [
+              1,
+              1,
+              3,
+              1,
+              3,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              3,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              4,
+              1,
+              10,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              1,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              0,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "zeta",
+            "10",
+            "5",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 0,
+          "reported": 0,
+          "trace": [
+            [
+              1,
+              1,
+              10,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              8,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              8,
+              5,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              8,
+              4,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              8,
+              4,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              8,
+              4,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              6,
+              4,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              6,
+              4,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              6,
+              3,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              6,
+              3,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              6,
+              3,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              4,
+              3,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              4,
+              3,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              4,
+              2,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              4,
+              2,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              4,
+              2,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              2,
+              2,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              2,
+              2,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              0,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "answer",
+            "0",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 0,
+          "answer": 0
+        }
+      ],
+      "selection": [
+        true,
+        false
+      ],
+      "binding": [
+        true,
+        true
+      ],
+      "exact_execution": [
+        true,
+        true
+      ],
+      "feedback_correct": [
+        true,
+        false
+      ],
+      "correct_outcome": false,
+      "failure": {
+        "category": "tool_selection",
+        "event": 3,
+        "expected": "epsilon",
+        "actual": {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "zeta",
+            "10",
+            "5",
+            "."
+          ]
+        }
+      }
+    },
+    "new_values": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "epsilon",
+            "6",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 13,
+          "reported": 13,
+          "trace": [
+            [
+              1,
+              1,
+              6,
+              1,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              6,
+              1,
+              6,
+              0,
+              6,
+              0
+            ],
+            [
+              3,
+              1,
+              6,
+              1,
+              6,
+              0,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              13,
+              1,
+              6,
+              0,
+              6,
+              0
+            ],
+            [
+              5,
+              1,
+              13,
+              1,
+              13,
+              0,
+              6,
+              0
+            ],
+            [
+              5,
+              0,
+              13,
+              1,
+              13,
+              0,
+              6,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "delta",
+            "13",
+            "3",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 7,
+          "reported": 7,
+          "trace": [
+            [
+              1,
+              1,
+              13,
+              3,
+              13,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              11,
+              3,
+              13,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              11,
+              3,
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              11,
+              2,
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              11,
+              2,
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              11,
+              2,
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              9,
+              2,
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              9,
+              2,
+              9,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              9,
+              1,
+              9,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              9,
+              1,
+              9,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              9,
+              1,
+              9,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              7,
+              1,
+              9,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              7,
+              1,
+              7,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              7,
+              0,
+              7,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              7,
+              0,
+              7,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              0,
+              7,
+              0,
+              7,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "answer",
+            "7",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 0,
+          "answer": 7
+        }
+      ],
+      "selection": [
+        true,
+        true
+      ],
+      "binding": [
+        true,
+        true
+      ],
+      "exact_execution": [
+        true,
+        true
+      ],
+      "feedback_correct": [
+        true,
+        true
+      ],
+      "correct_outcome": true,
+      "failure": null
+    },
+    "reverse_intervention_exploratory": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "epsilon",
+            "6",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 13,
+          "reported": 8,
+          "trace": [
+            [
+              1,
+              1,
+              6,
+              1,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              6,
+              1,
+              6,
+              0,
+              6,
+              0
+            ],
+            [
+              3,
+              1,
+              6,
+              1,
+              6,
+              0,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              13,
+              1,
+              6,
+              0,
+              6,
+              0
+            ],
+            [
+              5,
+              1,
+              13,
+              1,
+              13,
+              0,
+              6,
+              0
+            ],
+            [
+              5,
+              0,
+              13,
+              1,
+              13,
+              0,
+              6,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "delta",
+            "8",
+            "3",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 2,
+          "reported": 2,
+          "trace": [
+            [
+              1,
+              1,
+              8,
+              3,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              6,
+              3,
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              6,
+              3,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              6,
+              2,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              6,
+              2,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              6,
+              2,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              4,
+              2,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              4,
+              2,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              4,
+              1,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              4,
+              1,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              4,
+              1,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              2,
+              1,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              2,
+              0,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              0,
+              2,
+              0,
+              2,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "answer",
+            "2",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 0,
+          "answer": 2
+        }
+      ],
+      "selection": [
+        true,
+        false
+      ],
+      "binding": [
+        true,
+        true
+      ],
+      "exact_execution": [
+        true,
+        true
+      ],
+      "feedback_correct": [
+        true,
+        false
+      ],
+      "correct_outcome": false,
+      "failure": {
+        "category": "tool_selection",
+        "event": 3,
+        "expected": "beta",
+        "actual": {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "delta",
+            "8",
+            "3",
+            "."
+          ]
+        }
+      }
+    },
+    "swapped_descriptions": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "delta",
+            "3",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 10,
+          "reported": 10,
+          "trace": [
+            [
+              1,
+              1,
+              3,
+              1,
+              3,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              3,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              4,
+              1,
+              10,
+              1,
+              3,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              1,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ],
+            [
+              5,
+              0,
+              10,
+              1,
+              10,
+              0,
+              3,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "zeta",
+            "10",
+            "5",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 20,
+          "reported": 20,
+          "trace": [
+            [
+              1,
+              1,
+              10,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              15,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              12,
+              5,
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              12,
+              5,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              12,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              12,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              12,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              17,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              14,
+              4,
+              12,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              14,
+              4,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              14,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              14,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              14,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              19,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              16,
+              3,
+              14,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              16,
+              3,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              16,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              16,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              16,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              21,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              18,
+              2,
+              16,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              18,
+              2,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              18,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              18,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              18,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              23,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              20,
+              1,
+              18,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              20,
+              1,
+              20,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              20,
+              0,
+              20,
+              0,
+              0,
+              0
+            ],
+            [
+              6,
+              1,
+              20,
+              0,
+              20,
+              0,
+              0,
+              0
+            ],
+            [
+              6,
+              0,
+              20,
+              0,
+              20,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "answer",
+            "20",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 0,
+          "answer": 20
+        }
+      ],
+      "selection": [
+        true,
+        true
+      ],
+      "binding": [
+        true,
+        true
+      ],
+      "exact_execution": [
+        true,
+        true
+      ],
+      "feedback_correct": [
+        true,
+        true
+      ],
+      "correct_outcome": true,
+      "failure": null
+    },
+    "disabled": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "delta",
+            "3",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "unavailable",
+          "computed": -1,
+          "reported": -1,
+          "trace": []
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "stop",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 1,
+          "answer": -1
+        }
+      ],
+      "selection": [
+        true
+      ],
+      "binding": [
+        true
+      ],
+      "exact_execution": [],
+      "feedback_correct": [
+        true
+      ],
+      "correct_outcome": true,
+      "failure": null
+    },
+    "exhausted": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "delta",
+            "3",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "exhausted",
+          "computed": -1,
+          "reported": -1,
+          "trace": [
+            [
+              1,
+              1,
+              3,
+              1,
+              3,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              3,
+              1,
+              3,
+              0,
+              3,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "stop",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 1,
+          "answer": -1
+        }
+      ],
+      "selection": [
+        true
+      ],
+      "binding": [
+        true
+      ],
+      "exact_execution": [
+        true
+      ],
+      "feedback_correct": [
+        true
+      ],
+      "correct_outcome": true,
+      "failure": null
+    },
+    "invalid": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "gamma",
+            "7",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "result",
+          "computed": 14,
+          "reported": 14,
+          "trace": [
+            [
+              1,
+              1,
+              7,
+              1,
+              7,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              7,
+              1,
+              7,
+              0,
+              7,
+              0
+            ],
+            [
+              3,
+              1,
+              7,
+              1,
+              7,
+              0,
+              7,
+              0
+            ],
+            [
+              4,
+              1,
+              14,
+              1,
+              7,
+              0,
+              7,
+              0
+            ],
+            [
+              5,
+              1,
+              14,
+              1,
+              14,
+              0,
+              7,
+              0
+            ],
+            [
+              5,
+              0,
+              14,
+              1,
+              14,
+              0,
+              7,
+              0
+            ]
+          ]
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "alpha",
+            "14",
+            "0",
+            "."
+          ]
+        },
+        {
+          "kind": "feedback",
+          "status": "invalid",
+          "computed": -1,
+          "reported": -1,
+          "trace": []
+        },
+        {
+          "kind": "request",
+          "tokens": [
+            "stop",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 1,
+          "answer": -1
+        }
+      ],
+      "selection": [
+        true,
+        false
+      ],
+      "binding": [
+        true,
+        true
+      ],
+      "exact_execution": [
+        true
+      ],
+      "feedback_correct": [
+        true,
+        true
+      ],
+      "correct_outcome": true,
+      "failure": {
+        "category": "tool_selection",
+        "event": 3,
+        "expected": "beta",
+        "actual": {
+          "kind": "request",
+          "tokens": [
+            "call",
+            "alpha",
+            "14",
+            "0",
+            "."
+          ]
+        }
+      }
+    },
+    "paraphrase_known_words": {
+      "events": [
+        {
+          "kind": "request",
+          "tokens": [
+            "5",
+            "1",
+            "5",
+            "6",
+            "1",
+            "."
+          ]
+        },
+        {
+          "kind": "outcome",
+          "status": 2,
+          "answer": -1
+        }
+      ],
+      "selection": [
+        false
+      ],
+      "binding": [
+        false
+      ],
+      "exact_execution": [],
+      "feedback_correct": [],
+      "correct_outcome": false,
+      "failure": {
+        "category": "tool_selection",
+        "event": 1,
+        "expected": "delta",
+        "actual": {
+          "kind": "request",
+          "tokens": [
+            "5",
+            "1",
+            "5",
+            "6",
+            "1",
+            "."
+          ]
+        }
+      }
+    },
+    "paraphrase_free": {
+      "failure": {
+        "category": "input_vocabulary",
+        "event": 0,
+        "tokens": [
+          "If",
+          "Take",
+          "and",
+          "five",
+          "is",
+          "it",
+          "it.",
+          "more,",
+          "or",
+          "the",
+          "three",
+          "times.",
+          "twelve",
+          "twelve,",
+          "under"
+        ]
+      }
+    }
+  },
+  "first_intervention_difference": 2,
+  "same_first_execution": true
+}

@@ -1,0 +1,484 @@
+{
+  "programs": {
+    "offset": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        2
+      ],
+      [
+        1,
+        0,
+        2
+      ],
+      [
+        3,
+        0,
+        7
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "boost": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        5
+      ],
+      [
+        3,
+        0,
+        -3
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        3,
+        1,
+        -1
+      ],
+      [
+        4,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "trim": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        -2
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        3,
+        1,
+        -1
+      ],
+      [
+        4,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "cases": {
+    "original": {
+      "prompt": "available delta does offset . epsilon does boost . zeta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+      "registry": [
+        [
+          "zeta",
+          "trim"
+        ],
+        [
+          "delta",
+          "offset"
+        ],
+        [
+          "epsilon",
+          "boost"
+        ]
+      ],
+      "calls": [
+        [
+          "delta",
+          3,
+          1,
+          10
+        ],
+        [
+          "epsilon",
+          10,
+          5,
+          20
+        ]
+      ],
+      "answer": 20
+    },
+    "substitution": {
+      "prompt": "available delta does offset . epsilon does boost . zeta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+      "registry": [
+        [
+          "zeta",
+          "trim"
+        ],
+        [
+          "delta",
+          "offset"
+        ],
+        [
+          "epsilon",
+          "boost"
+        ]
+      ],
+      "calls": [
+        [
+          "delta",
+          3,
+          1,
+          15
+        ],
+        [
+          "zeta",
+          15,
+          5,
+          5
+        ]
+      ],
+      "override": 15,
+      "answer": 5
+    },
+    "renamed": {
+      "prompt": "available gamma does offset . alpha does boost . beta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+      "registry": [
+        [
+          "alpha",
+          "boost"
+        ],
+        [
+          "beta",
+          "trim"
+        ],
+        [
+          "gamma",
+          "offset"
+        ]
+      ],
+      "calls": [
+        [
+          "gamma",
+          3,
+          1,
+          10
+        ],
+        [
+          "alpha",
+          10,
+          5,
+          20
+        ]
+      ],
+      "answer": 20
+    },
+    "shuffled_text": {
+      "prompt": "available epsilon does boost . zeta does trim . delta does offset . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+      "registry": [
+        [
+          "epsilon",
+          "boost"
+        ],
+        [
+          "delta",
+          "offset"
+        ],
+        [
+          "zeta",
+          "trim"
+        ]
+      ],
+      "calls": [
+        [
+          "delta",
+          3,
+          1,
+          10
+        ],
+        [
+          "epsilon",
+          10,
+          5,
+          20
+        ]
+      ],
+      "answer": 20
+    },
+    "new_values": {
+      "prompt": "available epsilon does offset . beta does boost . delta does trim . please first offset 6 once . then choose boost if below 12 otherwise trim . 3 times . assistant",
+      "registry": [
+        [
+          "beta",
+          "boost"
+        ],
+        [
+          "epsilon",
+          "offset"
+        ],
+        [
+          "delta",
+          "trim"
+        ]
+      ],
+      "calls": [
+        [
+          "epsilon",
+          6,
+          1,
+          13
+        ],
+        [
+          "delta",
+          13,
+          3,
+          7
+        ]
+      ],
+      "answer": 7
+    },
+    "reverse_intervention_exploratory": {
+      "prompt": "available epsilon does offset . beta does boost . delta does trim . please first offset 6 once . then choose boost if below 12 otherwise trim . 3 times . assistant",
+      "registry": [
+        [
+          "beta",
+          "boost"
+        ],
+        [
+          "epsilon",
+          "offset"
+        ],
+        [
+          "delta",
+          "trim"
+        ]
+      ],
+      "calls": [
+        [
+          "epsilon",
+          6,
+          1,
+          8
+        ],
+        [
+          "beta",
+          8,
+          3,
+          14
+        ]
+      ],
+      "override": 8,
+      "answer": 14
+    },
+    "swapped_descriptions": {
+      "prompt": "available delta does offset . zeta does boost . epsilon does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+      "registry": [
+        [
+          "epsilon",
+          "trim"
+        ],
+        [
+          "delta",
+          "offset"
+        ],
+        [
+          "zeta",
+          "boost"
+        ]
+      ],
+      "calls": [
+        [
+          "delta",
+          3,
+          1,
+          10
+        ],
+        [
+          "zeta",
+          10,
+          5,
+          20
+        ]
+      ],
+      "answer": 20
+    },
+    "disabled": {
+      "prompt": "available delta does offset . epsilon does boost . zeta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+      "registry": [
+        [
+          "delta",
+          "offset"
+        ],
+        [
+          "epsilon",
+          "boost"
+        ],
+        [
+          "zeta",
+          "trim"
+        ]
+      ],
+      "calls": [
+        [
+          "delta",
+          3,
+          1,
+          "unavailable"
+        ]
+      ],
+      "fuel": {
+        "offset": -1
+      }
+    },
+    "exhausted": {
+      "prompt": "available delta does offset . epsilon does boost . zeta does trim . please first offset 3 once . then choose boost if below 12 otherwise trim . 5 times . assistant",
+      "registry": [
+        [
+          "delta",
+          "offset"
+        ],
+        [
+          "epsilon",
+          "boost"
+        ],
+        [
+          "zeta",
+          "trim"
+        ]
+      ],
+      "calls": [
+        [
+          "delta",
+          3,
+          1,
+          "exhausted"
+        ]
+      ],
+      "fuel": {
+        "offset": 2
+      }
+    },
+    "invalid": {
+      "prompt": "available gamma does offset . alpha does boost . beta does trim . please first offset 7 once . then choose boost if below 12 otherwise trim . 0 times . assistant",
+      "registry": [
+        [
+          "gamma",
+          "offset"
+        ],
+        [
+          "alpha",
+          "boost"
+        ],
+        [
+          "beta",
+          "trim"
+        ]
+      ],
+      "calls": [
+        [
+          "gamma",
+          7,
+          1,
+          14
+        ],
+        [
+          "beta",
+          14,
+          0,
+          "invalid"
+        ]
+      ]
+    },
+    "paraphrase_known_words": {
+      "prompt": "available delta does offset . epsilon does boost . zeta does trim . kindly offset 3 once . if below 12 then boost 5 times otherwise trim 5 times . assistant",
+      "registry": [
+        [
+          "zeta",
+          "trim"
+        ],
+        [
+          "delta",
+          "offset"
+        ],
+        [
+          "epsilon",
+          "boost"
+        ]
+      ],
+      "calls": [
+        [
+          "delta",
+          3,
+          1,
+          10
+        ],
+        [
+          "epsilon",
+          10,
+          5,
+          20
+        ]
+      ],
+      "answer": 20
+    },
+    "paraphrase_free": {
+      "prompt": "available delta does offset . epsilon does boost . zeta does trim . Take three and offset it. If the result is under twelve, boost it five times. If it is twelve or more, trim it five times. assistant",
+      "registry": [
+        [
+          "zeta",
+          "trim"
+        ],
+        [
+          "delta",
+          "offset"
+        ],
+        [
+          "epsilon",
+          "boost"
+        ]
+      ],
+      "calls": [
+        [
+          "delta",
+          3,
+          1,
+          10
+        ],
+        [
+          "epsilon",
+          10,
+          5,
+          20
+        ]
+      ],
+      "answer": 20
+    }
+  }
+}
