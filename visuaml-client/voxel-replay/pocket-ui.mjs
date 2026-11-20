@@ -2,7 +2,7 @@ import { createPocket, createPresenter, digest, PERIOD_MS } from './pocket.mjs';
 const manifests = Object.values(import.meta.glob('./cartridges/*.json', { eager: true, import: 'default' }));
 const binaries = import.meta.glob('./guest/*.wasm', { eager: true, query: '?url', import: 'default' });
 const proofs = import.meta.glob('./fixtures/*.proof.json', { eager: true, import: 'default' });
-const clips = import.meta.glob('./evidence/{pocket,cartridges}/*.gif', { eager: true, query: '?url', import: 'default' });
+const clips = import.meta.glob('./evidence/{pocket,cartridges,monitor-program}/*.gif', { eager: true, query: '?url', import: 'default' });
 const get = id => document.getElementById(id);
 const present = createPresenter(get('display'));
 const actionIds = ['play', 'step', 'reset', 'export', 'checkpoint'];

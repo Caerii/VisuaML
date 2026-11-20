@@ -94,3 +94,6 @@ Use `replay_pocket.py --session` for a shipped Passage Relay log. The host
 owns cartridge loading, log export, memory checkpoints and selecting
 saved replay trace points. The Machine Monitor has no guest loader or
 filesystem.
+
+For the typed language and renderer comparison, see the
+[Programmable Pocket Monitor](evidence/monitor-program/README.md).

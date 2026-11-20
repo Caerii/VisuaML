@@ -1,0 +1,49 @@
+{
+  "id": "program-monitor",
+  "name": "Programmable Monitor",
+  "binary": "pocket_program.wasm",
+  "guide": "Type 10 SET 7, 20 ADD 5 and 30 PRINT. Press Enter after each line. Type RUN to execute or NEXT to step.",
+  "keyboard": "ascii",
+  "controls": [],
+  "readouts": [
+    {
+      "id": "accumulator",
+      "label": "Accumulator",
+      "offset": 92
+    },
+    {
+      "id": "program-counter",
+      "label": "Next line",
+      "offset": 96,
+      "values": {
+        "1": "10",
+        "2": "20",
+        "3": "30",
+        "4": "40",
+        "5": "Halted"
+      }
+    }
+  ],
+  "notices": [],
+  "idleNotice": "Program keyboard ready",
+  "replays": [
+    {
+      "id": "program-5",
+      "label": "Replay ADD 5",
+      "proof": "monitor-program-5.proof.json"
+    },
+    {
+      "id": "program-6",
+      "label": "Replay ADD 6",
+      "proof": "monitor-program-6.proof.json"
+    }
+  ],
+  "gallery": [
+    [
+      "Type and run a program",
+      "program-monitor.gif"
+    ]
+  ],
+  "binary_sha256": "355c60c319a7035252e25e2d82399e5b9a71d1b5d40c7c8987ce3a913f03a7a1",
+  "order": 2.1
+}

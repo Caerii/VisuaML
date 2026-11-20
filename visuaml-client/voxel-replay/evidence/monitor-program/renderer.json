@@ -1,0 +1,5018 @@
+{
+  "buttons": [
+    0,
+    83,
+    84,
+    88,
+    8,
+    65,
+    84,
+    85,
+    83,
+    13,
+    68,
+    73,
+    71,
+    13,
+    83,
+    84,
+    69,
+    80,
+    13,
+    77,
+    65,
+    80,
+    13,
+    77,
+    65,
+    80,
+    13,
+    77,
+    65,
+    80,
+    13,
+    77,
+    65,
+    80,
+    13,
+    77,
+    65,
+    80,
+    13,
+    77,
+    65,
+    80,
+    13,
+    72,
+    63,
+    8,
+    69,
+    76,
+    80,
+    13
+  ],
+  "both_framebuffers_exact": true,
+  "both_transcripts_exact": true,
+  "audited_store_counts": {
+    "printable": {
+      "witness_tick": 1,
+      "baseline": {
+        "framebuffer_stores": 80,
+        "source_steps": 5917
+      },
+      "dirty": {
+        "framebuffer_stores": 16,
+        "source_steps": 1985
+      }
+    },
+    "backspace": {
+      "witness_tick": 4,
+      "baseline": {
+        "framebuffer_stores": 80,
+        "source_steps": 5917
+      },
+      "dirty": {
+        "framebuffer_stores": 16,
+        "source_steps": 1985
+      }
+    },
+    "enter": {
+      "witness_tick": 9,
+      "baseline": {
+        "framebuffer_stores": 240,
+        "source_steps": 17671
+      },
+      "dirty": {
+        "framebuffer_stores": 72,
+        "source_steps": 7478
+      }
+    },
+    "scroll": {
+      "witness_tick": 42,
+      "baseline": {
+        "framebuffer_stores": 1440,
+        "source_steps": 105826
+      },
+      "dirty": {
+        "framebuffer_stores": 328,
+        "source_steps": 37667
+      }
+    }
+  },
+  "summary": {
+    "printable": {
+      "baseline": {
+        "drawing_ns": {
+          "samples": 37,
+          "median": 113846398,
+          "p95": 128875398
+        },
+        "framebuffer_stores": {
+          "samples": 37,
+          "median": 80,
+          "p95": 80
+        }
+      },
+      "dirty": {
+        "drawing_ns": {
+          "samples": 37,
+          "median": 40132900,
+          "p95": 47273126
+        },
+        "framebuffer_stores": {
+          "samples": 37,
+          "median": 16,
+          "p95": 16
+        }
+      }
+    },
+    "backspace": {
+      "baseline": {
+        "drawing_ns": {
+          "samples": 2,
+          "median": 117475423.5,
+          "p95": 121644033
+        },
+        "framebuffer_stores": {
+          "samples": 2,
+          "median": 80.0,
+          "p95": 80
+        }
+      },
+      "dirty": {
+        "drawing_ns": {
+          "samples": 2,
+          "median": 36064554.5,
+          "p95": 41967172
+        },
+        "framebuffer_stores": {
+          "samples": 2,
+          "median": 12.0,
+          "p95": 16
+        }
+      }
+    },
+    "enter": {
+      "baseline": {
+        "drawing_ns": {
+          "samples": 8,
+          "median": 334437995.0,
+          "p95": 358971218
+        },
+        "framebuffer_stores": {
+          "samples": 8,
+          "median": 240.0,
+          "p95": 240
+        }
+      },
+      "dirty": {
+        "drawing_ns": {
+          "samples": 8,
+          "median": 119676791.0,
+          "p95": 154030729
+        },
+        "framebuffer_stores": {
+          "samples": 8,
+          "median": 48.0,
+          "p95": 72
+        }
+      }
+    },
+    "scroll": {
+      "baseline": {
+        "drawing_ns": {
+          "samples": 2,
+          "median": 2053538295.0,
+          "p95": 2065831198
+        },
+        "framebuffer_stores": {
+          "samples": 2,
+          "median": 1440.0,
+          "p95": 1440
+        }
+      },
+      "dirty": {
+        "drawing_ns": {
+          "samples": 2,
+          "median": 1035060093.5,
+          "p95": 1273714075
+        },
+        "framebuffer_stores": {
+          "samples": 2,
+          "median": 520.0,
+          "p95": 712
+        }
+      }
+    }
+  },
+  "wasm_sha256": {
+    "baseline": "5d183cbc6846e1d214333327ef52f752271b040ece8221a65055a346e17e97bd",
+    "dirty": "fcbca8f53c957aef3b07ad2644e723077cea54482af3a461a27e7bbc46a1bd04"
+  },
+  "runs": {
+    "baseline": [
+      {
+        "tick": 0,
+        "button": 0,
+        "kind": "boot",
+        "first_row": 0,
+        "last_row": 2,
+        "page_sha256": "2a39f9c8662e7617584b60291f14d72cff2a43355fd12ed78b1d6ef2e5745d55",
+        "frame_sha256": "9bc9cadb5bbcbb586e374285f0042ea78de95f26b6c0d27226eb288cebe8dc9d",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 10722,
+            "host_calls": 168,
+            "page_sha256": "0dd58592eb05035f6ad0bc996ad49f68e4374fc879d6f6a44119b9876f966b44",
+            "elapsed_ns": 307313199
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 11794,
+            "host_calls": 185,
+            "page_sha256": "2a39f9c8662e7617584b60291f14d72cff2a43355fd12ed78b1d6ef2e5745d55",
+            "elapsed_ns": 232186983
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 160
+      },
+      {
+        "tick": 1,
+        "button": 83,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "544f1f7ec1729e8cf7145b6b9250a289fa09e7e5c6d79567b680094542380aea",
+        "frame_sha256": "c8b0d7523447660563aae60a54eb2c109610527f4bca51e3677ef1f233c673ae",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "35bdc03965c746d984ea1189118971cf21acc8b2bdd5c12a50dca438ff64d743",
+            "elapsed_ns": 2298647
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "544f1f7ec1729e8cf7145b6b9250a289fa09e7e5c6d79567b680094542380aea",
+            "elapsed_ns": 164394839
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">S_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 2,
+        "button": 84,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "fb0222ed00483f9221943096c4959e6ccfd8c788b14cfc0f1b998c6d11d41e23",
+        "frame_sha256": "da97e0b2ccf3e580f51e74692800f499c0aec765d771a9fcb14b7b3b4eade477",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "02933094b00a15c7be772e3513757b5e24b4867022b7dc42f5a6af804aa76c9c",
+            "elapsed_ns": 2247890
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "fb0222ed00483f9221943096c4959e6ccfd8c788b14cfc0f1b998c6d11d41e23",
+            "elapsed_ns": 114253642
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">ST_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 3,
+        "button": 88,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "5db5d53fec993cfc769de65fac1f7371627ac83925306d3b9fa7aa106ee2d66d",
+        "frame_sha256": "46639fbfe26bc4890ab02c69fe51129e90b1ef13305f6ff1096f17521d83988a",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "c28cded4573601281fc5bc7b045d4fbe8acfb39ebaf677d1f7eb1a06e32866d5",
+            "elapsed_ns": 2280709
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "5db5d53fec993cfc769de65fac1f7371627ac83925306d3b9fa7aa106ee2d66d",
+            "elapsed_ns": 113846398
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STX_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 4,
+        "button": 8,
+        "kind": "backspace",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "a87877b9f778b10df322c8a5837773323908e7d611826bcfd7e625de7875cb0b",
+        "frame_sha256": "da97e0b2ccf3e580f51e74692800f499c0aec765d771a9fcb14b7b3b4eade477",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 98,
+            "host_calls": 2,
+            "page_sha256": "4667363a8bff314d22d0d549764d8a008a0b90a64a341cf90babbff5841c6e20",
+            "elapsed_ns": 2078995
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "a87877b9f778b10df322c8a5837773323908e7d611826bcfd7e625de7875cb0b",
+            "elapsed_ns": 113306814
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">ST_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 5,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "9dc5d2276ac20482f93fc0a59d9e8448d91a9b8baebd1e3a99eda2b4bbebaf1e",
+        "frame_sha256": "8f847256cd23b6ed7f8c22ad06821d9bc8e9810c051f3fd9d4fe1e26e0849fa9",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "f33da70776cdae03ececbde6e767d96839a966be201be0ca388897bfff7b4d70",
+            "elapsed_ns": 2567633
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "9dc5d2276ac20482f93fc0a59d9e8448d91a9b8baebd1e3a99eda2b4bbebaf1e",
+            "elapsed_ns": 115229915
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STA_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 6,
+        "button": 84,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "0aaf92f600218e3218fb1e1075e7fab4430833ae80c973532c35469174023732",
+        "frame_sha256": "52041185071420f9ab820df80bb7061284ba38e4bd912b1426b68bec9912d62c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "22516b0b71588e07804083fb0ddc7ab0a3c963d29f8e4e31e4cc0672ff5afb98",
+            "elapsed_ns": 2216973
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "0aaf92f600218e3218fb1e1075e7fab4430833ae80c973532c35469174023732",
+            "elapsed_ns": 114467625
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STAT_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 7,
+        "button": 85,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "0999036af9acc6bfd6b41538fc1ccc8fdc34f69b4f8500223b1effc123c4b42f",
+        "frame_sha256": "97df723419e14de2fe873b24a0d69200411bb6e5ecdc776e6f76c1ef0ec458c9",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "0df55c0c3c32a9d27011f7e276dd920764dabdc85a0b80d2803c4b0da9ce521d",
+            "elapsed_ns": 2268381
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "0999036af9acc6bfd6b41538fc1ccc8fdc34f69b4f8500223b1effc123c4b42f",
+            "elapsed_ns": 117854763
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATU_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 8,
+        "button": 83,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "54e11ee5601ac64f1b3e914e21a215cbe2cff4ab642e5dfc239d734e8271d975",
+        "frame_sha256": "d6188fd9982908491d15bd500f0d9a26782dca5616d6fa69d08d130a1743ae9c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "22f4bea5cf698299201c2f2c33997ac376ec4b4839be13b4e710a88a304c8f30",
+            "elapsed_ns": 2414261
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "54e11ee5601ac64f1b3e914e21a215cbe2cff4ab642e5dfc239d734e8271d975",
+            "elapsed_ns": 115022722
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 9,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 1,
+        "last_row": 4,
+        "page_sha256": "988d472f04878fa26dcbf08f4d1097e03ef56b55f93a59bbf522c3a4e4ea0ecd",
+        "frame_sha256": "51a51fc688da2e2097f572ab4eb22eb69b0bf3d33db55cb112ee1045638cde47",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 777,
+            "host_calls": 13,
+            "page_sha256": "4715a8fc16c45dc714ca6fae60fbee32e370bc65e0ec9be1c69a4dfeb02e9fae",
+            "elapsed_ns": 16193851
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 17671,
+            "host_calls": 277,
+            "page_sha256": "988d472f04878fa26dcbf08f4d1097e03ef56b55f93a59bbf522c3a4e4ea0ecd",
+            "elapsed_ns": 338113858
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 240
+      },
+      {
+        "tick": 10,
+        "button": 68,
+        "kind": "printable",
+        "first_row": 3,
+        "last_row": 4,
+        "page_sha256": "3761b658dd1c12cb41864cdec4c8090c46aee3796e577865cfceb4868920bdda",
+        "frame_sha256": "ff752a38b0dbe47d34626580d7659ba1554f8fe0aa4728d91a2f840255f2b434",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "b95ebecac675a66e2e58b98b140a0d3466b59dd28354ceb9b2909256b26c5217",
+            "elapsed_ns": 2260459
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "3761b658dd1c12cb41864cdec4c8090c46aee3796e577865cfceb4868920bdda",
+            "elapsed_ns": 112109109
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">D_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 11,
+        "button": 73,
+        "kind": "printable",
+        "first_row": 3,
+        "last_row": 4,
+        "page_sha256": "4a8396c9fa9403736b755b9bd267da999e203da5dfc8d7a3a3c4013f5650bc22",
+        "frame_sha256": "a50f151a5ccafd17756d8d25dca1abc3ee05cc20821ca94f1a88e00b36543efd",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "91a487ca53edbadc690c7d6c73bd1f7e006236bc101f3542bfd3de0c8e84599e",
+            "elapsed_ns": 2529695
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "4a8396c9fa9403736b755b9bd267da999e203da5dfc8d7a3a3c4013f5650bc22",
+            "elapsed_ns": 112803796
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DI_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 12,
+        "button": 71,
+        "kind": "printable",
+        "first_row": 3,
+        "last_row": 4,
+        "page_sha256": "b9e38f9ae9ae97b66483e2c908965816d9569e1d734e920529ddd05785b0308d",
+        "frame_sha256": "f4125b793220199a1928f04bcf175c2bf2ed6945992d4b65ffba77020471284c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "2c214defdffeafda72d39a6ec72a91296d3147972092aa078cb9480fa6ad99e0",
+            "elapsed_ns": 2245376
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "b9e38f9ae9ae97b66483e2c908965816d9569e1d734e920529ddd05785b0308d",
+            "elapsed_ns": 117603274
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 13,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 3,
+        "last_row": 6,
+        "page_sha256": "5921137b904077d9895db38d9449d116dfd3cb22c686966c31b0d9560860f272",
+        "frame_sha256": "f1f05ac19160332e7416f3ee0eb2cb044fa373a8e18b6f81683bc6ca600d154d",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 551,
+            "host_calls": 9,
+            "page_sha256": "800b476974c9433fd63f2b152def372c8a978d6b81ec16649ed6049aea102c0b",
+            "elapsed_ns": 11693004
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 17671,
+            "host_calls": 277,
+            "page_sha256": "5921137b904077d9895db38d9449d116dfd3cb22c686966c31b0d9560860f272",
+            "elapsed_ns": 335636272
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 240
+      },
+      {
+        "tick": 14,
+        "button": 83,
+        "kind": "printable",
+        "first_row": 5,
+        "last_row": 6,
+        "page_sha256": "67a4f6a23da6969c396e12a5e6094e12cacdead15b690f23a023fe394f75a6d4",
+        "frame_sha256": "dd654be94b267a95fbf358df7de3855c6d0f1b72e02a19b50072551d43404af6",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "6ee1f36cc2b5a6df4cdd44a5f717ee24df549796feba189dd9a0c5954ce38a3c",
+            "elapsed_ns": 2266188
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "67a4f6a23da6969c396e12a5e6094e12cacdead15b690f23a023fe394f75a6d4",
+            "elapsed_ns": 113089096
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">S_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 15,
+        "button": 84,
+        "kind": "printable",
+        "first_row": 5,
+        "last_row": 6,
+        "page_sha256": "3a0144180f28554c848abf1c9ce6d24d09d6c3f3e77a5a3ce81ff802e0b5dad2",
+        "frame_sha256": "27bd7548b4df5bd727676a3d8aefd4b3dbd102ac03e9175ca01bfeb9c8964dfb",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "55c48d69865eb6f2d36696ecfe6933bd23e2187b80f38603e913a78f50b25415",
+            "elapsed_ns": 2255792
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "3a0144180f28554c848abf1c9ce6d24d09d6c3f3e77a5a3ce81ff802e0b5dad2",
+            "elapsed_ns": 112149508
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">ST_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 16,
+        "button": 69,
+        "kind": "printable",
+        "first_row": 5,
+        "last_row": 6,
+        "page_sha256": "748c7fae33fb1b81621443ce5de39097fb40e26011c2ab110ace66d58e6586c3",
+        "frame_sha256": "e5673621d56c10b47635ebc59c54e1248553953d8bae7f24743404d5a1e57e54",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "c02d371cfb4c8a5abd5719dd5a01e55e7eb1ad0fb8716284f75be8d4e858ca69",
+            "elapsed_ns": 2219657
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "748c7fae33fb1b81621443ce5de39097fb40e26011c2ab110ace66d58e6586c3",
+            "elapsed_ns": 122735073
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STE_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 17,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 5,
+        "last_row": 6,
+        "page_sha256": "4fe08f2c8e578e800ca7e438aee75a9c598c05b5c3d4473460aa0d408747893c",
+        "frame_sha256": "22d5d5211115f155a599f9028c6ee3938eb11196a2cef33a9f9642674490bc31",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "d08eed5373ae898f2d3034e5c190a2a5fbc3f073ad54e4ad8a94370fffd140e0",
+            "elapsed_ns": 2261210
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "4fe08f2c8e578e800ca7e438aee75a9c598c05b5c3d4473460aa0d408747893c",
+            "elapsed_ns": 111111503
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 18,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 5,
+        "last_row": 8,
+        "page_sha256": "dd471d8bb1f2ffac4fadbe260efa8e9c15cd06766993b6b52ef371ad4f8608ff",
+        "frame_sha256": "4af4d0c2ac9cc78361ac3d9c318a36bb82703c5ff6a695529670de99c36d483c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 643,
+            "host_calls": 11,
+            "page_sha256": "4c5d36d290016d4c970311839feb2039d22da80281f4d99418f4c8311042bdbd",
+            "elapsed_ns": 13518066
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 17671,
+            "host_calls": 277,
+            "page_sha256": "dd471d8bb1f2ffac4fadbe260efa8e9c15cd06766993b6b52ef371ad4f8608ff",
+            "elapsed_ns": 333239718
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 240
+      },
+      {
+        "tick": 19,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 7,
+        "last_row": 8,
+        "page_sha256": "f946342dc9c5a08ec8c34732ad24809ecf2856c97cf8b71a300fe566eb8e2d2e",
+        "frame_sha256": "8f8b9cb220b97a72851d7630dcac019939145e5cde01952d59ef1e4e0dcf877d",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "347bdb01e2f59ab7787b072c534eddf1a0562ac39632a50ec3def75b64f2dbb2",
+            "elapsed_ns": 2263544
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "f946342dc9c5a08ec8c34732ad24809ecf2856c97cf8b71a300fe566eb8e2d2e",
+            "elapsed_ns": 112316641
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">M_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 20,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 7,
+        "last_row": 8,
+        "page_sha256": "ab6528d39ea8b4c5d8b8e4947533da663fbf5d9fc9bc44b9f5d96b6e9f147d0f",
+        "frame_sha256": "3920114dc832baf2e43fdbfd31b701b598705df9cc2ee2dfaa2c3aec9d16547d",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "b719c27e6a2e59dabd65632dc3124d4daaa382e91930789f3de4e195092bbd2d",
+            "elapsed_ns": 2273028
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "ab6528d39ea8b4c5d8b8e4947533da663fbf5d9fc9bc44b9f5d96b6e9f147d0f",
+            "elapsed_ns": 111781564
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MA_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 21,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 7,
+        "last_row": 8,
+        "page_sha256": "4c5e8b76168bf3461f962d37d770451e60b253c6c69fdba3d794bcee0504e158",
+        "frame_sha256": "b96adc681890faa78cb02ca53f4d65efbdcf174084e714d68b404e60c12bebfe",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "ce3913f20bfd85f6c1dd9291f08ffcab0d3e75b2a0f608f6f4c59ffbed336301",
+            "elapsed_ns": 2224605
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "4c5e8b76168bf3461f962d37d770451e60b253c6c69fdba3d794bcee0504e158",
+            "elapsed_ns": 110939233
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 22,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 7,
+        "last_row": 10,
+        "page_sha256": "7c4d5daa0a83ecfd56df8cbe030391f5ba1d860a15e0875166f359ae0a86e8e0",
+        "frame_sha256": "ed5b0f7f500bd5a37ab51d59d676d25fd81e623c9b61029905e0f3d8464de061",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "cb650f4aa8cdbd58594b8ef24885301d9f5d340db8881acc65f96c042404bf84",
+            "elapsed_ns": 11348735
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 17671,
+            "host_calls": 277,
+            "page_sha256": "7c4d5daa0a83ecfd56df8cbe030391f5ba1d860a15e0875166f359ae0a86e8e0",
+            "elapsed_ns": 358971218
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 240
+      },
+      {
+        "tick": 23,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 9,
+        "last_row": 10,
+        "page_sha256": "e10a4baeaeca6531a32f6bef15001e31dbb13cae165c30b2446658a79c50c13d",
+        "frame_sha256": "0c141c3e3e9a9b9d85452852ad77401440d3cec9466435dff0cce093781a3762",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "bc4301aa422d42ff149b1454055b411f8ae9ff3c1470efc2dcf7f1baa666ba4d",
+            "elapsed_ns": 2612590
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "e10a4baeaeca6531a32f6bef15001e31dbb13cae165c30b2446658a79c50c13d",
+            "elapsed_ns": 116667553
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">M_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 24,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 9,
+        "last_row": 10,
+        "page_sha256": "0c8f36e724b1f9c1b2305f0d365ea119c81c088299f528180d7bf42e24904454",
+        "frame_sha256": "9280111540af35014cac9eeceecf27cd8ecf5552045e0d892783bfc421090428",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "5b346f8da60d3ee84f1ba47f0902e757da49918da90b9aece4f718cf2e535bf1",
+            "elapsed_ns": 2462344
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "0c8f36e724b1f9c1b2305f0d365ea119c81c088299f528180d7bf42e24904454",
+            "elapsed_ns": 122346227
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MA_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 25,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 9,
+        "last_row": 10,
+        "page_sha256": "4a4bc9970f973ccbe1641af8ebbdcc91adb7289a96f1988800f639459074b70b",
+        "frame_sha256": "bb825e28200089a5c4e4542f5156a2f55c7ce6b30f7361a013ccbe1e2e1e1f87",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "b9a2ef2de0e2c5e43eb6265dfef74276052f015436726f185e7fb148b71c0821",
+            "elapsed_ns": 2428082
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "4a4bc9970f973ccbe1641af8ebbdcc91adb7289a96f1988800f639459074b70b",
+            "elapsed_ns": 116591849
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 26,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 9,
+        "last_row": 12,
+        "page_sha256": "eac80cbe62a33314d5c3fc360428bff9d08f04144c8270bed33b32b8cd622723",
+        "frame_sha256": "2cdfedabc008078c72241e14265a94dbc6cc3333ffede7c673ca251b9e2202b3",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "a3495b2e9f4985474b6a6b1c7627c77acc3b603c57c7fec8f203f8c8a38dc42a",
+            "elapsed_ns": 12407602
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 17671,
+            "host_calls": 277,
+            "page_sha256": "eac80cbe62a33314d5c3fc360428bff9d08f04144c8270bed33b32b8cd622723",
+            "elapsed_ns": 331705899
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 240
+      },
+      {
+        "tick": 27,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 11,
+        "last_row": 12,
+        "page_sha256": "a7078865cc4b2ae35ccb50b24b74fdc5266ade2015937bd4f4eaeebb59228354",
+        "frame_sha256": "5a2c6ce0e00da37bdc1a180ec01de338534ac78ad9ee00b9ef25d8695065d86c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "a5cc3f1151f886863552c1b6a8491aab0f48d642c489d1bccb7a420b61f38d7c",
+            "elapsed_ns": 2410395
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "a7078865cc4b2ae35ccb50b24b74fdc5266ade2015937bd4f4eaeebb59228354",
+            "elapsed_ns": 110178326
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">M_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 28,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 11,
+        "last_row": 12,
+        "page_sha256": "85e98301f1e40c01dd647ae331274b4c9f6762429f5e4434f8654eae2c3bf9d0",
+        "frame_sha256": "8dd0b9b845986c2f83eb3aeddf9d1f026877643d3975bb62ea0e5f475bf52d32",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "3def4572d3902ab96676c52bcc71206ba226e6e9359c79ad3514b2ff1e588954",
+            "elapsed_ns": 2384556
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "85e98301f1e40c01dd647ae331274b4c9f6762429f5e4434f8654eae2c3bf9d0",
+            "elapsed_ns": 109993677
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MA_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 29,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 11,
+        "last_row": 12,
+        "page_sha256": "889a25503cfd97061da62b93262695c14349a280d87179ddd6b878d7bfb4b237",
+        "frame_sha256": "5a0ac3891070d545cd53cd1830aa5b83246d4f6b4ef9e362f2b5a97dce154ad0",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "ca94816166f8d6dfe3c24c833f20aad5d593e3bdfd0e5f7664ab4be29b0e74da",
+            "elapsed_ns": 2470256
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "889a25503cfd97061da62b93262695c14349a280d87179ddd6b878d7bfb4b237",
+            "elapsed_ns": 110037723
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 30,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 11,
+        "last_row": 14,
+        "page_sha256": "03cbeeb839466a630c4d42e6fe4d4ac1bc71a2208e2dc8fa8631e0ae11bd0923",
+        "frame_sha256": "a7b3bf4f6a77ae087a0d0c8b0734e65c87354cf7cc152a47a04e00392302a1f6",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "40a6e8c6dcab634bb53d6d51482ebca89e2ddf70e166a46c628526d7f3faa5b7",
+            "elapsed_ns": 10985898
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 17671,
+            "host_calls": 277,
+            "page_sha256": "03cbeeb839466a630c4d42e6fe4d4ac1bc71a2208e2dc8fa8631e0ae11bd0923",
+            "elapsed_ns": 332869099
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 240
+      },
+      {
+        "tick": 31,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 13,
+        "last_row": 14,
+        "page_sha256": "3cc6d4618f78ebef0efd43fe1245ebd1e65824f9bc784b7015a807b6b4569a34",
+        "frame_sha256": "f55f30fb369f401b6a248309841458abcc8e6b4278eef8732611ae8d2399b597",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "a425cee5f5ab638416ad8ecdeb0448bf6934aec3df61da18ef706c7402da65aa",
+            "elapsed_ns": 2456384
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "3cc6d4618f78ebef0efd43fe1245ebd1e65824f9bc784b7015a807b6b4569a34",
+            "elapsed_ns": 110570067
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">M_",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 32,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 13,
+        "last_row": 14,
+        "page_sha256": "cea61fb28d9254285f74bd96e3fbcfe31eacc9c379ec78d91810513c3092800b",
+        "frame_sha256": "8370878b4c04d37769d7767a6f5958b2c5f84932dabada44c63e5c8ec3821c87",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "64ee05a2584a5d1aa1be2ff29c4411ca95332dcbdf88e1fa07aa357e5b9b3407",
+            "elapsed_ns": 2525359
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "cea61fb28d9254285f74bd96e3fbcfe31eacc9c379ec78d91810513c3092800b",
+            "elapsed_ns": 116289052
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MA_",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 33,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 13,
+        "last_row": 14,
+        "page_sha256": "dc491467374bf7325ed49394d92f69a29632b92c528756517b80a644377938b1",
+        "frame_sha256": "f1b67798a61850cc713e1c8ee5aaa8b3b3f46a786d76a5fee127535a165a9ebb",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "6e94cb0bd47c15d9ee92de93880b688c3260d22787a96f8a3d08fd08d796c887",
+            "elapsed_ns": 2382733
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "dc491467374bf7325ed49394d92f69a29632b92c528756517b80a644377938b1",
+            "elapsed_ns": 112405074
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 34,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 13,
+        "last_row": 16,
+        "page_sha256": "92cd0be9f01491dd839d3197e09abfcf81ec0944e5c209a867d9dd2da2282555",
+        "frame_sha256": "2eadcb8011949c75b5462b4d056cd60022a6a765d6d8da7faa1f27e90fd92303",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "1312e7057656ce2de7ee60efd93b096981a4dfc86d0b3a66ff64a1b4fc9aedaf",
+            "elapsed_ns": 11003916
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 17671,
+            "host_calls": 277,
+            "page_sha256": "92cd0be9f01491dd839d3197e09abfcf81ec0944e5c209a867d9dd2da2282555",
+            "elapsed_ns": 343159838
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 240
+      },
+      {
+        "tick": 35,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 15,
+        "last_row": 16,
+        "page_sha256": "023e941d3f27fd4c37974d9cb3992d4ee82a9066fc1d5276c8666464d2957ef0",
+        "frame_sha256": "453d28b1ac99c3253963aa81038eb2ead107cc7aaa821926f95eb6f8f564f233",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "61abe68e45a8680f19b42ba8615dbbf109f886d6ec8c2507199fa77c353cc518",
+            "elapsed_ns": 2420730
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "023e941d3f27fd4c37974d9cb3992d4ee82a9066fc1d5276c8666464d2957ef0",
+            "elapsed_ns": 110801896
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">M_",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 36,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 15,
+        "last_row": 16,
+        "page_sha256": "23bcb60f42ede9e2b9b78d581908d6dcf980f5397acd472a089ab20cf1bb0919",
+        "frame_sha256": "2ae47f4c586040a7d1fe32aa865cf817919a7e3c8f2b716ce2d50671dd4d42ce",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "60048942ba77ad9e11826c7e46f0153b53fe67398ad397753be810e184806816",
+            "elapsed_ns": 2377095
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "23bcb60f42ede9e2b9b78d581908d6dcf980f5397acd472a089ab20cf1bb0919",
+            "elapsed_ns": 110519387
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MA_",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 37,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 15,
+        "last_row": 16,
+        "page_sha256": "7ccd073e32ab3900835f71075f11c763ee85e25d4dda7f72998c860a4da81a48",
+        "frame_sha256": "157dd92be3b35db73727da0fc1ff36193a1276198af79f3d74d667abaaa4f1a2",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "a87165001248a7e65dc11b09e15f90932335599d0b9c114aa94028b88a3c883b",
+            "elapsed_ns": 2470195
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "7ccd073e32ab3900835f71075f11c763ee85e25d4dda7f72998c860a4da81a48",
+            "elapsed_ns": 110302019
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 38,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 15,
+        "last_row": 18,
+        "page_sha256": "ce96e84f76f6db8278435d4da2b12de251499e0275fb5b26442d6da89c1a3ccc",
+        "frame_sha256": "dd28e419a3386ababd5e50484ac0b6c90f10047d9fa342f3702996c05784f95c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "dc543937f2f14e8b2d36faad1e95c31beaeb53fe435c78ef99161002be8a0cb3",
+            "elapsed_ns": 11140170
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 17671,
+            "host_calls": 277,
+            "page_sha256": "ce96e84f76f6db8278435d4da2b12de251499e0275fb5b26442d6da89c1a3ccc",
+            "elapsed_ns": 332854224
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 240
+      },
+      {
+        "tick": 39,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "695a0605016dd764f13db3bd12d3cd5933c97cfc86d4a9fe71ea815fdfce043f",
+        "frame_sha256": "6badfb695ea4a6680027fd706e91860aa0aed2d03d5d0721507393d1f268a063",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "aa1eb4411c3cf9fb485e472e2521830b88712ef8f3887c777f29a315583fb709",
+            "elapsed_ns": 2404276
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "695a0605016dd764f13db3bd12d3cd5933c97cfc86d4a9fe71ea815fdfce043f",
+            "elapsed_ns": 114201459
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">M_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 40,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "887e4507a6bbbe0ed275fbdb777034d2b3e153a20b13e95a3991e467cd41f0cf",
+        "frame_sha256": "d30e3d63ddfcfc23ef2973b8f8af07cc2ff7e669c22516748adb3848fc27b957",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "37711aed0dbdff2f944428b41770480100cefd3d34a8262c2869985d3bd391a6",
+            "elapsed_ns": 2375362
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "887e4507a6bbbe0ed275fbdb777034d2b3e153a20b13e95a3991e467cd41f0cf",
+            "elapsed_ns": 112415656
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MA_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 41,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "b473ec1f8ce6da72fb9aee092c2a475e7e094e89fe7abd8ce0758fd91d47a07d",
+        "frame_sha256": "89eeb404996e9d88af44f9473c120d5d66e2b92e11a991eb8ff3805193ffa385",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "bb09c97024feca0cf485cc3d91e53399110424219f9cdc141d213b2969735c6a",
+            "elapsed_ns": 2483496
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "b473ec1f8ce6da72fb9aee092c2a475e7e094e89fe7abd8ce0758fd91d47a07d",
+            "elapsed_ns": 128875398
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 42,
+        "button": 13,
+        "kind": "scroll",
+        "first_row": 0,
+        "last_row": 18,
+        "page_sha256": "eb912f05738ffc948fda1e9418a65fe83b36db3f499d8182b8230aebd18cf8db",
+        "frame_sha256": "9e258b36f3bf41fa50d7a9bda3aba91adc87c4d81b9a0c583ad79da7d2a8399a",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 23135,
+            "host_calls": 362,
+            "page_sha256": "90d5bdac6b611c4604fe167b8797d51d0e853b701f4053466ea7ad08cdfc59c5",
+            "elapsed_ns": 442571922
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 105826,
+            "host_calls": 1654,
+            "page_sha256": "eb912f05738ffc948fda1e9418a65fe83b36db3f499d8182b8230aebd18cf8db",
+            "elapsed_ns": 2065831198
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 1440
+      },
+      {
+        "tick": 43,
+        "button": 72,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "73107bf3645b6e47bcdc537065969fbb73659ad99cc7cc4859d9ec1440edfe99",
+        "frame_sha256": "761e0ea681e36a60f5e0879a0cca6b94624c9589a7a3b4aa6d6d83412cd784f3",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "d001c1337fda25e8ed2444ad9471138d8713913a05bc3554a32a0f42b5ab1b44",
+            "elapsed_ns": 2572860
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "73107bf3645b6e47bcdc537065969fbb73659ad99cc7cc4859d9ec1440edfe99",
+            "elapsed_ns": 115335569
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">H_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 44,
+        "button": 63,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "a6275b14e2a6e8ea7087d7290afbd5500b7112cde0905715eadad9d1fa8c3847",
+        "frame_sha256": "7675e96425f7d586f9b53a8843d46c05ee994755174e3b928ede78daa8e9f972",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "37cde8820594252d0306b37099e440915c9fa4e260439beee3a66eedac49f718",
+            "elapsed_ns": 2456504
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "a6275b14e2a6e8ea7087d7290afbd5500b7112cde0905715eadad9d1fa8c3847",
+            "elapsed_ns": 115848262
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">H?_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 45,
+        "button": 8,
+        "kind": "backspace",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "f1314ab54d563690109b9cb6a295665ef5e348a9625abf74f585d79433ea350c",
+        "frame_sha256": "761e0ea681e36a60f5e0879a0cca6b94624c9589a7a3b4aa6d6d83412cd784f3",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 98,
+            "host_calls": 2,
+            "page_sha256": "b497a97658927ae973ce080444a6a86b1d42a8bc6d66d22cca803e2c4741e380",
+            "elapsed_ns": 2747012
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "f1314ab54d563690109b9cb6a295665ef5e348a9625abf74f585d79433ea350c",
+            "elapsed_ns": 121644033
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">H_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 46,
+        "button": 69,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "918867d870ab63e8b1faddea900704a674959b9452b0fd0ccdf6f033fcd37f1d",
+        "frame_sha256": "80c0ea4fb7fa7e36dc26e9ab4cda10d9343c4577fa4d3988b48c5027ed65d60a",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "27c0ccf36df91ec34ea3186ccbc5383198e0156362bdc2ee273bbad29d025992",
+            "elapsed_ns": 2277144
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "918867d870ab63e8b1faddea900704a674959b9452b0fd0ccdf6f033fcd37f1d",
+            "elapsed_ns": 111685095
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">HE_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 47,
+        "button": 76,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "f1d70c84c16c3f87ccbad74e01a0239cf3bc4c8baa9c8896a966cd89700feb92",
+        "frame_sha256": "79504a005230b767bf6d0afbdbbecbce36d7988b348763cba77e5e6de68a2b53",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "b8e5837c1bb4897f68a70a8117e99d7bf69f7b00caf537515e37502800fc8dd6",
+            "elapsed_ns": 2349353
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "f1d70c84c16c3f87ccbad74e01a0239cf3bc4c8baa9c8896a966cd89700feb92",
+            "elapsed_ns": 114368482
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">HEL_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 48,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "d960465dbacfe7f8edb9ba095b4d4a8d48587a7202b81ff12c3782d88ea74d09",
+        "frame_sha256": "85c7cd92356236f9925e28ce4d883f25c63bfd7799d44402d30179f1dd29ff4c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "52ca304cd10ee4121c2ca85c998fcb5425607ed3c1d3b159432e5c253227f677",
+            "elapsed_ns": 2313689
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5917,
+            "host_calls": 93,
+            "page_sha256": "d960465dbacfe7f8edb9ba095b4d4a8d48587a7202b81ff12c3782d88ea74d09",
+            "elapsed_ns": 116790894
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">HELP_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 80
+      },
+      {
+        "tick": 49,
+        "button": 13,
+        "kind": "scroll",
+        "first_row": 0,
+        "last_row": 18,
+        "page_sha256": "699b956abd8a8396368b3d4536ed230e218e2360e85986f7cda4c358982cc6e7",
+        "frame_sha256": "e903162a33847c918941634f77bed445e4b7cc15a125fefe5f284da5cd803170",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 34567,
+            "host_calls": 541,
+            "page_sha256": "2a08c79049074f1bdee1a913e5fc2ccf3611f800cc0228de9152bc5b001d89ef",
+            "elapsed_ns": 643927833
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 105826,
+            "host_calls": 1654,
+            "page_sha256": "699b956abd8a8396368b3d4536ed230e218e2360e85986f7cda4c358982cc6e7",
+            "elapsed_ns": 2041245392
+          }
+        ],
+        "transcript": [
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">HELP",
+          "HELP STATUS MAP",
+          "DIG STEP RESET",
+          ">_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 1440
+      }
+    ],
+    "dirty": [
+      {
+        "tick": 0,
+        "button": 0,
+        "kind": "boot",
+        "first_row": 0,
+        "last_row": 2,
+        "page_sha256": "8cf5d22085cb8b6436d128f9555c7ecd894f20599d74c2fe7b61c0363d5139e4",
+        "frame_sha256": "9bc9cadb5bbcbb586e374285f0042ea78de95f26b6c0d27226eb288cebe8dc9d",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 10722,
+            "host_calls": 168,
+            "page_sha256": "0dd58592eb05035f6ad0bc996ad49f68e4374fc879d6f6a44119b9876f966b44",
+            "elapsed_ns": 236073029
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 6074,
+            "host_calls": 95,
+            "page_sha256": "8cf5d22085cb8b6436d128f9555c7ecd894f20599d74c2fe7b61c0363d5139e4",
+            "elapsed_ns": 123701238
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 64
+      },
+      {
+        "tick": 1,
+        "button": 83,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "fcf82cdd20554e76d3af441896474f336498595cf339efa2d4e30fedb23555ec",
+        "frame_sha256": "c8b0d7523447660563aae60a54eb2c109610527f4bca51e3677ef1f233c673ae",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "156cf35aafe5ad62adc1e1a18e787706fd57b3bd24c1be19311d30fa84d08a31",
+            "elapsed_ns": 2289883
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "fcf82cdd20554e76d3af441896474f336498595cf339efa2d4e30fedb23555ec",
+            "elapsed_ns": 42286103
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">S_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 2,
+        "button": 84,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "10e6b28600219ffe7e4fdadc47d29bb25aaaaca2499d070b9c9125ca9920d350",
+        "frame_sha256": "da97e0b2ccf3e580f51e74692800f499c0aec765d771a9fcb14b7b3b4eade477",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "9f26124142ff982fab239d78c002b502e87b6a339c7ec41e19f592715c5c7a4b",
+            "elapsed_ns": 2214620
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "10e6b28600219ffe7e4fdadc47d29bb25aaaaca2499d070b9c9125ca9920d350",
+            "elapsed_ns": 30130922
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">ST_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 3,
+        "button": 88,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "0a5181e8b18d829eede770b1dc1c61bbcb1659325db796045a73ab13627706bb",
+        "frame_sha256": "46639fbfe26bc4890ab02c69fe51129e90b1ef13305f6ff1096f17521d83988a",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "d1034d9c8f234d09cc3b54f82648e1e5e476a50ff95929578dcc5df3bd14bcc9",
+            "elapsed_ns": 2399428
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "0a5181e8b18d829eede770b1dc1c61bbcb1659325db796045a73ab13627706bb",
+            "elapsed_ns": 41889234
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STX_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 4,
+        "button": 8,
+        "kind": "backspace",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "c55fd115e9cb722cd0a49892aa174d480aba5770a13ad498fa10ccabf4dda4c7",
+        "frame_sha256": "da97e0b2ccf3e580f51e74692800f499c0aec765d771a9fcb14b7b3b4eade477",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 98,
+            "host_calls": 2,
+            "page_sha256": "5ce9ff4817accc1509befaedf4f81c78d1325247439b337b4f40c4345d53083d",
+            "elapsed_ns": 2242171
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "c55fd115e9cb722cd0a49892aa174d480aba5770a13ad498fa10ccabf4dda4c7",
+            "elapsed_ns": 41967172
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">ST_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 5,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "e9c9e81d25a9f956ef35d2501021338a40819c844327fcdeceb2eeecc86fa241",
+        "frame_sha256": "8f847256cd23b6ed7f8c22ad06821d9bc8e9810c051f3fd9d4fe1e26e0849fa9",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "4705a2c828dbdacbbfa55b12b6de4d1b08a003c66a0905e20b78aea7586bac40",
+            "elapsed_ns": 2275622
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "e9c9e81d25a9f956ef35d2501021338a40819c844327fcdeceb2eeecc86fa241",
+            "elapsed_ns": 42274826
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STA_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 6,
+        "button": 84,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "895eb2bd30000175022c372e99c64dcc17405caf2b86165e3076de59c2fb82ee",
+        "frame_sha256": "52041185071420f9ab820df80bb7061284ba38e4bd912b1426b68bec9912d62c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "d3638f98b99058d1652c3a166b7f00287debbcd653d494d81cac55e654acf198",
+            "elapsed_ns": 2280019
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "895eb2bd30000175022c372e99c64dcc17405caf2b86165e3076de59c2fb82ee",
+            "elapsed_ns": 31877355
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STAT_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 7,
+        "button": 85,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "048dfc8fdfdff58b94804917089aab562476a8ff467e505d8bc8602a0160722b",
+        "frame_sha256": "97df723419e14de2fe873b24a0d69200411bb6e5ecdc776e6f76c1ef0ec458c9",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "00046a013bd98db4957d3eb44438f98eb5915e198e2886bdf162e2fcd7a4a57c",
+            "elapsed_ns": 2409604
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "048dfc8fdfdff58b94804917089aab562476a8ff467e505d8bc8602a0160722b",
+            "elapsed_ns": 41567829
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATU_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 8,
+        "button": 83,
+        "kind": "printable",
+        "first_row": 1,
+        "last_row": 2,
+        "page_sha256": "dd5c82dbe8362353642e891b0b15f1e2b693eeed4746d234bca56802735ed397",
+        "frame_sha256": "d6188fd9982908491d15bd500f0d9a26782dca5616d6fa69d08d130a1743ae9c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "8d6ee07b69a327ae940b81695d3f5919c058fa152bb48133cb97f7123ca7d784",
+            "elapsed_ns": 2267119
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "dd5c82dbe8362353642e891b0b15f1e2b693eeed4746d234bca56802735ed397",
+            "elapsed_ns": 30586248
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 9,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 1,
+        "last_row": 4,
+        "page_sha256": "8ffbce05405194a2ed1a24b7f88dc12b21f2e66c8cf538317bd100f5d1bf17da",
+        "frame_sha256": "51a51fc688da2e2097f572ab4eb22eb69b0bf3d33db55cb112ee1045638cde47",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 777,
+            "host_calls": 13,
+            "page_sha256": "49a6925d4a5900942060be91f8c220f7e6c01110fe83c42ed27da005fe2bbd07",
+            "elapsed_ns": 16845175
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 7478,
+            "host_calls": 117,
+            "page_sha256": "8ffbce05405194a2ed1a24b7f88dc12b21f2e66c8cf538317bd100f5d1bf17da",
+            "elapsed_ns": 154030729
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 72
+      },
+      {
+        "tick": 10,
+        "button": 68,
+        "kind": "printable",
+        "first_row": 3,
+        "last_row": 4,
+        "page_sha256": "ef3fa454e51089533e98bc5176549301cf4446ad57fc23380050188ec95964b6",
+        "frame_sha256": "ff752a38b0dbe47d34626580d7659ba1554f8fe0aa4728d91a2f840255f2b434",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "7aacac31a13f2721e311f598afb307e6f7eb6798ba84889c39705e94049488c9",
+            "elapsed_ns": 3194178
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "ef3fa454e51089533e98bc5176549301cf4446ad57fc23380050188ec95964b6",
+            "elapsed_ns": 41274297
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">D_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 11,
+        "button": 73,
+        "kind": "printable",
+        "first_row": 3,
+        "last_row": 4,
+        "page_sha256": "c30ddf7d32d9b79787e3452aa19c258afe5d5caf4c6cf497569571a540528b97",
+        "frame_sha256": "a50f151a5ccafd17756d8d25dca1abc3ee05cc20821ca94f1a88e00b36543efd",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "8271cb8cab758aae3b96711390b9912067e3fda1e5291695cf404f159e3ebbd7",
+            "elapsed_ns": 2657558
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "c30ddf7d32d9b79787e3452aa19c258afe5d5caf4c6cf497569571a540528b97",
+            "elapsed_ns": 29974816
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DI_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 12,
+        "button": 71,
+        "kind": "printable",
+        "first_row": 3,
+        "last_row": 4,
+        "page_sha256": "8144f1ba96e92741ad7ef1d194f61bd76ae30edb4e64396fd9c02bc3a26d7ffe",
+        "frame_sha256": "f4125b793220199a1928f04bcf175c2bf2ed6945992d4b65ffba77020471284c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "20254b149c1bda5bd0cc7cff9c304c43729cfb725c59b80fd2d1510c01676077",
+            "elapsed_ns": 2267860
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "8144f1ba96e92741ad7ef1d194f61bd76ae30edb4e64396fd9c02bc3a26d7ffe",
+            "elapsed_ns": 40018093
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 13,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 3,
+        "last_row": 6,
+        "page_sha256": "c4a76af1f136aabb86530755b4eb962d66931cd817dc9b4e13fa62fbf360834e",
+        "frame_sha256": "f1f05ac19160332e7416f3ee0eb2cb044fa373a8e18b6f81683bc6ca600d154d",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 551,
+            "host_calls": 9,
+            "page_sha256": "eaf0172a735379c549299349c1b8713bf6ee2b25305bbbd1d56d64dc1d552dcf",
+            "elapsed_ns": 11249015
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 6941,
+            "host_calls": 109,
+            "page_sha256": "c4a76af1f136aabb86530755b4eb962d66931cd817dc9b4e13fa62fbf360834e",
+            "elapsed_ns": 146780841
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 64
+      },
+      {
+        "tick": 14,
+        "button": 83,
+        "kind": "printable",
+        "first_row": 5,
+        "last_row": 6,
+        "page_sha256": "8a45261c21c21111a0a5d871af70ed843aff72cde8bce8e3a960b892f7b483b7",
+        "frame_sha256": "dd654be94b267a95fbf358df7de3855c6d0f1b72e02a19b50072551d43404af6",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "10f9e73116a51a52145d1a8eea3e73c7bc8d5cdc15819715bde7677d1706dfe8",
+            "elapsed_ns": 2367199
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "8a45261c21c21111a0a5d871af70ed843aff72cde8bce8e3a960b892f7b483b7",
+            "elapsed_ns": 42087757
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">S_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 15,
+        "button": 84,
+        "kind": "printable",
+        "first_row": 5,
+        "last_row": 6,
+        "page_sha256": "edfac565530af6b65cee0c810d392768f082b37fe7b964adf37636eebce5d4ce",
+        "frame_sha256": "27bd7548b4df5bd727676a3d8aefd4b3dbd102ac03e9175ca01bfeb9c8964dfb",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "c95ce310ffe5f9c5be33000c10666f701b3d939b01588b255882927eac09fa82",
+            "elapsed_ns": 2205535
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "edfac565530af6b65cee0c810d392768f082b37fe7b964adf37636eebce5d4ce",
+            "elapsed_ns": 31086941
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">ST_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 16,
+        "button": 69,
+        "kind": "printable",
+        "first_row": 5,
+        "last_row": 6,
+        "page_sha256": "ec4adc3ef4643438aa1cc53dfd9709855738579bdd5e15c68e1e3481af00f940",
+        "frame_sha256": "e5673621d56c10b47635ebc59c54e1248553953d8bae7f24743404d5a1e57e54",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "9da159b578dc1d73bb6c60a03b0592d5c7919bba9b0666774ec77851ca5d1a3e",
+            "elapsed_ns": 2386938
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "ec4adc3ef4643438aa1cc53dfd9709855738579bdd5e15c68e1e3481af00f940",
+            "elapsed_ns": 41016872
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STE_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 17,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 5,
+        "last_row": 6,
+        "page_sha256": "fd3639555b80ac2ad038ad7a59e607d21f042011781cc3368a65b0ce859b0e86",
+        "frame_sha256": "22d5d5211115f155a599f9028c6ee3938eb11196a2cef33a9f9642674490bc31",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "039368d1420f4323794fd25fd02a122b9da1ff7dccc4118975565a22b0ec8205",
+            "elapsed_ns": 2360919
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "fd3639555b80ac2ad038ad7a59e607d21f042011781cc3368a65b0ce859b0e86",
+            "elapsed_ns": 32442124
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 18,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 5,
+        "last_row": 8,
+        "page_sha256": "0f0f6e17477fea6478bf1baa03f44d8613783a6943c069702fda9ad8ca58ecfc",
+        "frame_sha256": "4af4d0c2ac9cc78361ac3d9c318a36bb82703c5ff6a695529670de99c36d483c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 643,
+            "host_calls": 11,
+            "page_sha256": "fbe5cfbee2b1d29332d25d63b60307087f3eb4d72ee3c34d2a7fd18275e05b53",
+            "elapsed_ns": 13230729
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 7478,
+            "host_calls": 117,
+            "page_sha256": "0f0f6e17477fea6478bf1baa03f44d8613783a6943c069702fda9ad8ca58ecfc",
+            "elapsed_ns": 150104438
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 72
+      },
+      {
+        "tick": 19,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 7,
+        "last_row": 8,
+        "page_sha256": "d4ca32af15adb98cd8728103a3e26358b91eb261f135f40c529f3c51f8de2689",
+        "frame_sha256": "8f8b9cb220b97a72851d7630dcac019939145e5cde01952d59ef1e4e0dcf877d",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "4f266b15dbadaf6cd44dc4a9d5c6fe0babd252b366f6f06d84c7b28b4d01328f",
+            "elapsed_ns": 2230643
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "d4ca32af15adb98cd8728103a3e26358b91eb261f135f40c529f3c51f8de2689",
+            "elapsed_ns": 40564030
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">M_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 20,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 7,
+        "last_row": 8,
+        "page_sha256": "8469b41f19bfcba2a1c80f5788dc65bc9fdf7a43deebddd4796fab6b4576d797",
+        "frame_sha256": "3920114dc832baf2e43fdbfd31b701b598705df9cc2ee2dfaa2c3aec9d16547d",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "c42b7a862eab79a26d7296d6b2a6c67139e364479827060b0053ea4a45678fbf",
+            "elapsed_ns": 2267319
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "8469b41f19bfcba2a1c80f5788dc65bc9fdf7a43deebddd4796fab6b4576d797",
+            "elapsed_ns": 29818278
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MA_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 21,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 7,
+        "last_row": 8,
+        "page_sha256": "87ef10222c12bf2e139b1a6bae90ba9bac06a7450b0400192c58bfb55e164008",
+        "frame_sha256": "b96adc681890faa78cb02ca53f4d65efbdcf174084e714d68b404e60c12bebfe",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "fcf86fb68e47d4381a96517f5263b0dbc975813d8e794bef5c0b4ac15aebb13f",
+            "elapsed_ns": 2365527
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "87ef10222c12bf2e139b1a6bae90ba9bac06a7450b0400192c58bfb55e164008",
+            "elapsed_ns": 40196235
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 22,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 7,
+        "last_row": 10,
+        "page_sha256": "45f9b9a8040a93b86c8fa6032f60f7d2c15fde9fe58e5bdcb8ec02df429e7d59",
+        "frame_sha256": "ed5b0f7f500bd5a37ab51d59d676d25fd81e623c9b61029905e0f3d8464de061",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "d0ff3da9616ea84cb640872b750bdcacb89c65b3d45822a5c69fca8b16f9a3cd",
+            "elapsed_ns": 11408631
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5867,
+            "host_calls": 92,
+            "page_sha256": "45f9b9a8040a93b86c8fa6032f60f7d2c15fde9fe58e5bdcb8ec02df429e7d59",
+            "elapsed_ns": 118932889
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 48
+      },
+      {
+        "tick": 23,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 9,
+        "last_row": 10,
+        "page_sha256": "e0ed8688879cfbf6121a14dd021c8763da536ed8796f2848a06d996e06a8fc4b",
+        "frame_sha256": "0c141c3e3e9a9b9d85452852ad77401440d3cec9466435dff0cce093781a3762",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "2d01dc98ab736a7789ffc2e69c15c2fc623d0c7298d0e5ed425e39f4e0ba91d1",
+            "elapsed_ns": 2554762
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "e0ed8688879cfbf6121a14dd021c8763da536ed8796f2848a06d996e06a8fc4b",
+            "elapsed_ns": 40132900
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">M_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 24,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 9,
+        "last_row": 10,
+        "page_sha256": "7d1d0fed8f4a5b03122cff929d3c888a718b5044748684ee89c225936f15494a",
+        "frame_sha256": "9280111540af35014cac9eeceecf27cd8ecf5552045e0d892783bfc421090428",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "4427687c5d7ce2ec586ff532372deacaeea0f33d13ab3e6167cdd989b89f8831",
+            "elapsed_ns": 2277914
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "7d1d0fed8f4a5b03122cff929d3c888a718b5044748684ee89c225936f15494a",
+            "elapsed_ns": 31126731
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MA_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 25,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 9,
+        "last_row": 10,
+        "page_sha256": "b3c9accacc479f79ce14cd01d89bb2100330051c7728c07d40f5dc3ffc6e1429",
+        "frame_sha256": "bb825e28200089a5c4e4542f5156a2f55c7ce6b30f7361a013ccbe1e2e1e1f87",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "d8b3256113f52ae217aa85daa64d5f664397abdc65d5db571f7831f7c243b0d6",
+            "elapsed_ns": 2536164
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "b3c9accacc479f79ce14cd01d89bb2100330051c7728c07d40f5dc3ffc6e1429",
+            "elapsed_ns": 40532948
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 26,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 9,
+        "last_row": 12,
+        "page_sha256": "9c19160c91881ba4abdb41dd380c57940241e3dbe104fa3811895dc52bca8650",
+        "frame_sha256": "2cdfedabc008078c72241e14265a94dbc6cc3333ffede7c673ca251b9e2202b3",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "1b51310b729ed4949d0193c2f78a9f07b5b8d7be9ade612a27ee3a5c89e581c0",
+            "elapsed_ns": 11062229
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5867,
+            "host_calls": 92,
+            "page_sha256": "9c19160c91881ba4abdb41dd380c57940241e3dbe104fa3811895dc52bca8650",
+            "elapsed_ns": 120420693
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 48
+      },
+      {
+        "tick": 27,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 11,
+        "last_row": 12,
+        "page_sha256": "fef00f8d4bd9c463b26a7e37a4f634b9cf190e7f9302b1debbf93da30921b01a",
+        "frame_sha256": "5a2c6ce0e00da37bdc1a180ec01de338534ac78ad9ee00b9ef25d8695065d86c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "b2fb4e875bee2b297c9a3721d4ce243fd21f707454f43d37e63ea9f027a7c5c3",
+            "elapsed_ns": 2345317
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "fef00f8d4bd9c463b26a7e37a4f634b9cf190e7f9302b1debbf93da30921b01a",
+            "elapsed_ns": 39984847
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">M_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 28,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 11,
+        "last_row": 12,
+        "page_sha256": "6eb652e2c1e5c8c6001fbbe13044ede71dc3999c9be3a30c9d914f5ddd1b5c86",
+        "frame_sha256": "8dd0b9b845986c2f83eb3aeddf9d1f026877643d3975bb62ea0e5f475bf52d32",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "f749f84c567003a046516d33122b8b97264b6b1bc0a9d1aabe570bd5d001bc08",
+            "elapsed_ns": 2407409
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "6eb652e2c1e5c8c6001fbbe13044ede71dc3999c9be3a30c9d914f5ddd1b5c86",
+            "elapsed_ns": 30340195
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MA_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 29,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 11,
+        "last_row": 12,
+        "page_sha256": "954eda0fa81a34a426dbf7c61f310e2937fd77870a29e703661823afd2b517a5",
+        "frame_sha256": "5a0ac3891070d545cd53cd1830aa5b83246d4f6b4ef9e362f2b5a97dce154ad0",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "1caae6abb6bbbd0306b12c8478c2862b425daf199824060c0ec6f98063fdb78d",
+            "elapsed_ns": 2548041
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "954eda0fa81a34a426dbf7c61f310e2937fd77870a29e703661823afd2b517a5",
+            "elapsed_ns": 40939316
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 30,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 11,
+        "last_row": 14,
+        "page_sha256": "73733af5a2f5a95f9468449ba8cd015649dd21b4918ede36322cad861c2188cf",
+        "frame_sha256": "a7b3bf4f6a77ae087a0d0c8b0734e65c87354cf7cc152a47a04e00392302a1f6",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "9e25e9d02c9595ce4433241d108752f67a2c3e3520b783aa91eea7d1be84d719",
+            "elapsed_ns": 11054667
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5867,
+            "host_calls": 92,
+            "page_sha256": "73733af5a2f5a95f9468449ba8cd015649dd21b4918ede36322cad861c2188cf",
+            "elapsed_ns": 118920822
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 48
+      },
+      {
+        "tick": 31,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 13,
+        "last_row": 14,
+        "page_sha256": "4268971a0d3adc3686793342d327afaf832413b59599d912d783bd33e49b3b7a",
+        "frame_sha256": "f55f30fb369f401b6a248309841458abcc8e6b4278eef8732611ae8d2399b597",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "65ca382f6b760943250023fe11564d1ec0530d6a6aee80e432080cbf89b7fc02",
+            "elapsed_ns": 2444516
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "4268971a0d3adc3686793342d327afaf832413b59599d912d783bd33e49b3b7a",
+            "elapsed_ns": 40791463
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">M_",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 32,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 13,
+        "last_row": 14,
+        "page_sha256": "fe08ac5f789dd52376d989cc02fba9dddcd51fafb5f25dfebf09e9431c7fc302",
+        "frame_sha256": "8370878b4c04d37769d7767a6f5958b2c5f84932dabada44c63e5c8ec3821c87",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "09858bece279cf29a7a3e85356a5c8772a956e21e74a971fcb6ec80230e9e390",
+            "elapsed_ns": 2437795
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "fe08ac5f789dd52376d989cc02fba9dddcd51fafb5f25dfebf09e9431c7fc302",
+            "elapsed_ns": 30122798
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MA_",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 33,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 13,
+        "last_row": 14,
+        "page_sha256": "1f734117cf54b4e4d78d7e4af56532555bfb9cd48d8cb9339385b206eae1b87a",
+        "frame_sha256": "f1b67798a61850cc713e1c8ee5aaa8b3b3f46a786d76a5fee127535a165a9ebb",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "06bfa453a782551bc1b5b1d4f70018d0548893612c620e277a8299c0ce2c80ae",
+            "elapsed_ns": 2290694
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "1f734117cf54b4e4d78d7e4af56532555bfb9cd48d8cb9339385b206eae1b87a",
+            "elapsed_ns": 41691239
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 34,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 13,
+        "last_row": 16,
+        "page_sha256": "e92181468802eae9290bf99d1aefba6fa1c7fc6c3287cf18db64ac171fbd4628",
+        "frame_sha256": "2eadcb8011949c75b5462b4d056cd60022a6a765d6d8da7faa1f27e90fd92303",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "d1468b192012243b386476a29f8d32d34bbca5ec8f3f002bdfdffe5529239d24",
+            "elapsed_ns": 11103171
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5867,
+            "host_calls": 92,
+            "page_sha256": "e92181468802eae9290bf99d1aefba6fa1c7fc6c3287cf18db64ac171fbd4628",
+            "elapsed_ns": 118927662
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 48
+      },
+      {
+        "tick": 35,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 15,
+        "last_row": 16,
+        "page_sha256": "43184c4094a8f287bada5bd0e131643f29175ed81ff5640f7e3484c6993bb757",
+        "frame_sha256": "453d28b1ac99c3253963aa81038eb2ead107cc7aaa821926f95eb6f8f564f233",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "25ed9c7098ee3529bdd2632e536593c858781acedcc1cf6f83c9f9cd22d017e4",
+            "elapsed_ns": 2292046
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "43184c4094a8f287bada5bd0e131643f29175ed81ff5640f7e3484c6993bb757",
+            "elapsed_ns": 47273126
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">M_",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 36,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 15,
+        "last_row": 16,
+        "page_sha256": "5b0e04a42db263befce380a1a175e123598c2cfee8a30baf13a9a09348ecbdd0",
+        "frame_sha256": "2ae47f4c586040a7d1fe32aa865cf817919a7e3c8f2b716ce2d50671dd4d42ce",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "031aee5c8d9712f9656612d3bf25a959ae2c09cada4add76dbc42e290cdf2a71",
+            "elapsed_ns": 2845941
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "5b0e04a42db263befce380a1a175e123598c2cfee8a30baf13a9a09348ecbdd0",
+            "elapsed_ns": 29372285
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MA_",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 37,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 15,
+        "last_row": 16,
+        "page_sha256": "358fe208aff59189ff588ac42f037a4443fe27c303d02e3a9d946b4b651d48b3",
+        "frame_sha256": "157dd92be3b35db73727da0fc1ff36193a1276198af79f3d74d667abaaa4f1a2",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "4cbe71a8288b01b01aceb71d7de5cdf2ec8b7998282627d7e690dfdece5f2dcf",
+            "elapsed_ns": 2423274
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "358fe208aff59189ff588ac42f037a4443fe27c303d02e3a9d946b4b651d48b3",
+            "elapsed_ns": 39267465
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_",
+          "",
+          ""
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 38,
+        "button": 13,
+        "kind": "enter",
+        "first_row": 15,
+        "last_row": 18,
+        "page_sha256": "27d0cf7cef6cf676c49126a5a6ba86d196b0a3e0d1230be68be347725b6aa557",
+        "frame_sha256": "dd28e419a3386ababd5e50484ac0b6c90f10047d9fa342f3702996c05784f95c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 537,
+            "host_calls": 9,
+            "page_sha256": "c019bb897d90836de5a9949c3ce91649fef16818ba4d621e759a174d256b4123",
+            "elapsed_ns": 10964441
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 5867,
+            "host_calls": 92,
+            "page_sha256": "27d0cf7cef6cf676c49126a5a6ba86d196b0a3e0d1230be68be347725b6aa557",
+            "elapsed_ns": 115629670
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 48
+      },
+      {
+        "tick": 39,
+        "button": 77,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "3731cf474c4c45a0c6f1a673c3167ee95c10fff15c85830a05ad14cd954074ee",
+        "frame_sha256": "6badfb695ea4a6680027fd706e91860aa0aed2d03d5d0721507393d1f268a063",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "0bf6bd08bd6801ca944d5ad4f25a6b89549c4624509c7ca9f8df2a09790f2c47",
+            "elapsed_ns": 2296022
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "3731cf474c4c45a0c6f1a673c3167ee95c10fff15c85830a05ad14cd954074ee",
+            "elapsed_ns": 46494201
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">M_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 40,
+        "button": 65,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "a124ab15985ebaceb85e9634c66e0eebe59b7e2be61310fe60013d512bd4b415",
+        "frame_sha256": "d30e3d63ddfcfc23ef2973b8f8af07cc2ff7e669c22516748adb3848fc27b957",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "c5e5b1901079057a7b848848efd429dbee9ae8fae4f1d0ff1f8a90b9e2b8ed78",
+            "elapsed_ns": 4329578
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "a124ab15985ebaceb85e9634c66e0eebe59b7e2be61310fe60013d512bd4b415",
+            "elapsed_ns": 52421103
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MA_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 41,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "5f65aee7a46b76f704ad9a54883118e97f6f26b5c4be8919133d7d1a4cb6e8b4",
+        "frame_sha256": "89eeb404996e9d88af44f9473c120d5d66e2b92e11a991eb8ff3805193ffa385",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "8afb5a4115e7ede7ea04fb47c6b84e2ff0abfb10085e4a1019e008949dc4077d",
+            "elapsed_ns": 2276602
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "5f65aee7a46b76f704ad9a54883118e97f6f26b5c4be8919133d7d1a4cb6e8b4",
+            "elapsed_ns": 39884625
+          }
+        ],
+        "transcript": [
+          "POCKET MONITOR",
+          ">STATUS",
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 42,
+        "button": 13,
+        "kind": "scroll",
+        "first_row": 0,
+        "last_row": 18,
+        "page_sha256": "e4ea9a85078afa800ec2409db7395e58361d7980f5fbcce14ffbd2310c9d34a9",
+        "frame_sha256": "9e258b36f3bf41fa50d7a9bda3aba91adc87c4d81b9a0c583ad79da7d2a8399a",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 23135,
+            "host_calls": 362,
+            "page_sha256": "bfc1134118359f6e1426c5322f57c2b7af484aad5291f88020d68d43e644f919",
+            "elapsed_ns": 444175179
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 37667,
+            "host_calls": 589,
+            "page_sha256": "e4ea9a85078afa800ec2409db7395e58361d7980f5fbcce14ffbd2310c9d34a9",
+            "elapsed_ns": 796406112
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 328
+      },
+      {
+        "tick": 43,
+        "button": 72,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "3c70ebe3be5fbde7ff4c476801a0fa4600438a0b6fe8d1c1ee7ea48a9ed6334a",
+        "frame_sha256": "761e0ea681e36a60f5e0879a0cca6b94624c9589a7a3b4aa6d6d83412cd784f3",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "7e2b742fed18996930f9e14d72f8641c6a8b0c604335c7bc2f88a4fa389da961",
+            "elapsed_ns": 2352697
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "3c70ebe3be5fbde7ff4c476801a0fa4600438a0b6fe8d1c1ee7ea48a9ed6334a",
+            "elapsed_ns": 40885795
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">H_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 44,
+        "button": 63,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "1da285defe7f7b7dcc5c83c65e492b1a1768551b1453435a3d9755e03289d3a8",
+        "frame_sha256": "7675e96425f7d586f9b53a8843d46c05ee994755174e3b928ede78daa8e9f972",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "0d90465b85264981414d893ad11e76a3ead69b69d40750c648ac3c1e63f81df2",
+            "elapsed_ns": 2314530
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "1da285defe7f7b7dcc5c83c65e492b1a1768551b1453435a3d9755e03289d3a8",
+            "elapsed_ns": 29782684
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">H?_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 45,
+        "button": 8,
+        "kind": "backspace",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "f774bc76ea17b575d7bd2f8b688d70429f725844bf6ee26cde1980f99bae80b9",
+        "frame_sha256": "761e0ea681e36a60f5e0879a0cca6b94624c9589a7a3b4aa6d6d83412cd784f3",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 98,
+            "host_calls": 2,
+            "page_sha256": "65d0364bc8397198c7fa620fbf0d884c96191026742c06c2769135ad8b4c3eb7",
+            "elapsed_ns": 2174088
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "f774bc76ea17b575d7bd2f8b688d70429f725844bf6ee26cde1980f99bae80b9",
+            "elapsed_ns": 30161937
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">H_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 46,
+        "button": 69,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "1275fd2f644b10d3ad78650235f2062587800527d89e02a96fc79ec02dd8f16e",
+        "frame_sha256": "80c0ea4fb7fa7e36dc26e9ab4cda10d9343c4577fa4d3988b48c5027ed65d60a",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "2dd6f4c892f15b4a71c27dedcab85cd2a89b1b592e4e1f622b498d033ce8ee9d",
+            "elapsed_ns": 2414550
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "1275fd2f644b10d3ad78650235f2062587800527d89e02a96fc79ec02dd8f16e",
+            "elapsed_ns": 30265392
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">HE_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 47,
+        "button": 76,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "570600e9c792de1c7b02d424b5164aef903d27e70f18bedf6e5e70a8ff0a0b5b",
+        "frame_sha256": "79504a005230b767bf6d0afbdbbecbce36d7988b348763cba77e5e6de68a2b53",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "2df58e8ae34d220d90627e62c67373bc92f20b831bd7a8017bd55fd088280d6e",
+            "elapsed_ns": 2387590
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1985,
+            "host_calls": 32,
+            "page_sha256": "570600e9c792de1c7b02d424b5164aef903d27e70f18bedf6e5e70a8ff0a0b5b",
+            "elapsed_ns": 45121504
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">HEL_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 16
+      },
+      {
+        "tick": 48,
+        "button": 80,
+        "kind": "printable",
+        "first_row": 17,
+        "last_row": 18,
+        "page_sha256": "317e2f02778bd8b3a4f8a004693537286520b78c564e99972ce31b04c2191c87",
+        "frame_sha256": "85c7cd92356236f9925e28ce4d883f25c63bfd7799d44402d30179f1dd29ff4c",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 111,
+            "host_calls": 2,
+            "page_sha256": "b9bbbbc322ed0881d006552400ef62fc1521075f1bf1004e892f2a9343a7d1eb",
+            "elapsed_ns": 2238025
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 1448,
+            "host_calls": 23,
+            "page_sha256": "317e2f02778bd8b3a4f8a004693537286520b78c564e99972ce31b04c2191c87",
+            "elapsed_ns": 31620717
+          }
+        ],
+        "transcript": [
+          "T:000 A:0 B:2",
+          ">DIG",
+          "PASSAGE OPEN",
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">HELP_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 8
+      },
+      {
+        "tick": 49,
+        "button": 13,
+        "kind": "scroll",
+        "first_row": 0,
+        "last_row": 18,
+        "page_sha256": "be438d01fd05729e381e03452d97addbef00a466e812c31300e957bd5333f294",
+        "frame_sha256": "e903162a33847c918941634f77bed445e4b7cc15a125fefe5f284da5cd803170",
+        "phases": [
+          {
+            "stage": "simulation",
+            "source_steps": 34567,
+            "host_calls": 541,
+            "page_sha256": "eb9bd7c2708751194757ab9f0a40d9c0a9dca948551d3ed640051dfed9be5d33",
+            "elapsed_ns": 669094845
+          },
+          {
+            "stage": "drawing",
+            "source_steps": 63443,
+            "host_calls": 992,
+            "page_sha256": "be438d01fd05729e381e03452d97addbef00a466e812c31300e957bd5333f294",
+            "elapsed_ns": 1273714075
+          }
+        ],
+        "transcript": [
+          ">STEP",
+          "STEP COMPLETE",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">MAP",
+          "MAP AB.",
+          ">HELP",
+          "HELP STATUS MAP",
+          "DIG STEP RESET",
+          ">_"
+        ],
+        "acc": 0,
+        "pc": 0,
+        "framebuffer_stores": 712
+      }
+    ]
+  }
+}

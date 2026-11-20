@@ -4,7 +4,7 @@ import test from 'node:test';
 import { createPocket, digest, shade } from './pocket.mjs';
 
 const readJson = async path => JSON.parse(await readFile(new URL(path, import.meta.url)));
-for (const name of ['rail-crate-play', 'rail-crate-omitted', 'monitor-play', 'monitor-omitted']) {
+for (const name of ['rail-crate-play', 'rail-crate-omitted', 'monitor-play', 'monitor-omitted', 'monitor-program-5', 'monitor-program-6']) {
   test(`${name} reproduces full memory and all framebuffer bytes`, async () => {
     const proof = await readJson(`./fixtures/${name}.proof.json`);
     const manifest = await readJson(`./cartridges/${proof.session.cartridge}.json`);

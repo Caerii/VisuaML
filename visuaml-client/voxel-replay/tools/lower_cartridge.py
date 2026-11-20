@@ -18,18 +18,34 @@ REPLACEMENTS = {
 
 def lower_body(data, remap=None):
     groups, pos = _read_u32(data, 0)
+    locals_count = 0
     for _ in range(groups):
-        _, pos = _read_u32(data, pos)
+        count, pos = _read_u32(data, pos)
+        locals_count += count
         pos += 1
     prefix = data[:pos]
     instructions = []
+    control = []
+    result_loop = False
     while pos < len(data):
         start = pos
         op = data[pos]
         pos += 1
         immediate = None
         if op in (2, 3, 4):
+            signature = data[pos]
             pos += 1
+            typed_loop = op == 3 and signature == 0x7f
+            control.append(typed_loop)
+            if typed_loop:
+                result_loop = True
+                instructions.append((op, None, b"\x03\x40"))
+                continue
+        elif op == 0x0b and control:
+            if control.pop():
+                scratch = _u32(locals_count + 1)
+                instructions.append((op, None, b"\x21" + scratch + b"\x0b\x20" + scratch))
+                continue
         elif op in (0x0c, 0x0d, 0x20, 0x21, 0x22):
             _, pos = _read_u32(data, pos)
         elif op == 0x10:
@@ -49,6 +65,16 @@ def lower_body(data, remap=None):
         elif op in _MEMORY_CODES:
             _, pos = _read_u32(data, pos)
             _, pos = _read_u32(data, pos)
+        elif op in (0x49, 0x4b, 0x4d, 0x4f):
+            if not instructions or instructions[-1][0] != 0x41:
+                raise ValueError(f"Nonconstant unsigned comparison at byte {start}")
+            constant = instructions.pop()[1]
+            biased = constant - (1 << 31) if constant >= 0 else constant + (1 << 31)
+            comparison = {0x49: b"\x48", 0x4b: b"\x4a",
+                          0x4d: b"\x4a\x45", 0x4f: b"\x48\x45"}[op]
+            instructions.append((op, None, b"\x41" + _s32(-(1 << 31)) + b"\x6a\x41" +
+                                 _s32(biased) + comparison))
+            continue
         elif op == 0x74:
             if not instructions or instructions[-1][0] != 0x41:
                 raise ValueError(f"Dynamic shift at byte {start}")
@@ -59,6 +85,12 @@ def lower_body(data, remap=None):
         elif op not in _CODES and op not in REPLACEMENTS:
             raise ValueError(f"Unadmitted opcode 0x{op:02x} at body byte {start}")
         instructions.append((op, immediate, REPLACEMENTS.get(op, data[start:pos])))
+    if result_loop:
+        # A result-only loop has no branch parameters. Materialize its one
+        # fall-through result outside the now-empty loop via a private local.
+        if groups != 1 or prefix[-1] != 0x7f or locals_count >= 4:
+            raise ValueError("No i32 local available for loop result")
+        prefix = b"\x01" + _u32(locals_count + 1) + b"\x7f"
     return prefix + b"".join(encoded for _, _, encoded in instructions)
 
 
