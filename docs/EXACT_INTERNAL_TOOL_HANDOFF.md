@@ -36,3 +36,9 @@ The internal-tool artifact is a bounded recurrent hard-attention prototype. Its 
 4. Move from positional token routing to an independently trained language controller. Check unseen programs, rejected operands, execution-disabled and result-perturbation cases. Compare against a conventional external exact tool and pinned Meridian weights once accessible.
 
 [Local frozen circuit, held-out program and measurements](../visuaml-client/voxel-replay/evidence/internal-tool) · [Replay release](../visuaml-client/voxel-replay/release)
+
+## Synthesized executor follow-up
+
+The first affine/ReLU lowering and fixed Q/K/V hard-attention projections are now archived with a recurrent-state executor. It runs an independent program authored after freeze, matches every logical boundary against a scalar oracle, matches ordered stores against the frozen WASM graph, and passes learned-router output interventions. This closes the bounded hard-attention synthesis gate. A conventional causal transformer lowering and free-form tool selection remain separate research gates.
+
+[Synthesized weights, holdout and replay](../visuaml-client/voxel-replay/evidence/synthesized-attention)
