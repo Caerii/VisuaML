@@ -53,16 +53,28 @@ def compile_transition():
     slots = [Affine({i: 1}) for i in range(width)]
     relus = []
     levels = dict.fromkeys(range(width), 0)
+    # Magnitudes under the logical state and admitted image invariants.
+    bounds = dict(enumerate([CAPACITY-1, 1, *([U32-1]*6), 4, 1, 1 << 31,
+                             U32-1, U32-1]))
+    affine_limits = []
+
+    def magnitude(x):
+        return abs(x.bias) + sum(abs(c)*bounds[i] for i, c in x.terms.items())
 
     def relu(x):
         index = width + len(relus)
         levels[index] = 1 + max((levels[i] for i in x.terms), default=0)
         relus.append(x)
+        bounds[index] = magnitude(x)
+        affine_limits.append(bounds[index])
         return Affine({index: 1})
 
     def step(x):
         # Indicator x >= 0 on integer inputs.
-        return relu(relu(x+1) - relu(x))
+        indicator = relu(relu(x+1) - relu(x))
+        # The difference is exactly 0 or 1 for integer x.
+        bounds[next(iter(indicator.terms))] = 1
+        return indicator
 
     def eq(x, k):
         return step(x-k) - step(x-k-1)
@@ -112,8 +124,10 @@ def compile_transition():
         layers.append(ResidualFFN(*matrix([relus[i-width] for i in nodes], mapping)))
         for i in nodes:
             mapping[i] = len(mapping)
+    limit = max(*affine_limits, *(magnitude(x) for x in output))
+    assert limit < 1 << 53
     return nn.ModuleList(layers), matrix(output, mapping), dict(
-        inputs=width, relu_nodes=len(relus), layer_widths=[len(x.bias) for x in layers])
+        inputs=width, affine_magnitude_bound=limit, relu_nodes=len(relus), layer_widths=[len(x.bias) for x in layers])
 
 
 class HardHead(nn.Module):
