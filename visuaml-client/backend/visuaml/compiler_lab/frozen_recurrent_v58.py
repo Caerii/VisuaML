@@ -47,11 +47,14 @@ class ProgramImage:
     binary_sha256: str
     image_sha256: str
     local_count: int
+    memory_pages: int
 
 
-def load_program(raw: bytes) -> ProgramImage:
+def load_program(raw: bytes, *, memory_pages: int = 1) -> ProgramImage:
     """Admit unchanged WASM and resolve lexical edges and branch restore heights."""
-    program = decode_control(raw, scaled=True)
+    if type(memory_pages) is not int or not 1 <= memory_pages <= 256:
+        raise ControlAdmissionError("Fixed memory must have between 1 and 256 pages")
+    program = decode_control(raw, scaled=True, memory_pages=memory_pages)
     try:
         wasmtime.Module.validate(wasmtime.Engine(), raw)
     except wasmtime.WasmtimeError as error:
@@ -111,27 +114,38 @@ def load_program(raw: bytes) -> ProgramImage:
     image = torch.tensor(rows, dtype=torch.int64)
     return ProgramImage(image, sha256(raw).hexdigest(),
                         sha256(image.numpy().astype("<i8", copy=False).tobytes()).hexdigest(),
-                        program.local_count)
+                        program.local_count, memory_pages)
 
 
-def initial_state(argument: int, page: bytes | bytearray, fuel: int) -> MachineState:
+def initial_state(argument: int, page: bytes | bytearray, fuel: int, *,
+                  memory_pages: int = 1) -> MachineState:
+    """Allocate new invocation-private live memory, including for mutable inputs."""
     if (type(argument) is not int or not -(1 << 31) <= argument < 1 << 31
             or type(fuel) is not int or not 0 <= fuel <= SCALED_MAX_FUEL
-            or type(page) not in (bytes, bytearray) or len(page) != MEMORY_BYTES):
+            or type(memory_pages) is not int or not 1 <= memory_pages <= 256
+            or type(page) not in (bytes, bytearray) or len(page) != MEMORY_BYTES * memory_pages):
         raise ControlAdmissionError("Invalid initial recurrent state")
     zero = torch.zeros((), dtype=torch.int64)
     locals_ = torch.zeros(MAX_LOCALS + 1, dtype=torch.int64)
     locals_[0] = argument & 0xffffffff
     return MachineState(zero, zero.clone(), torch.zeros(MAX_STACK, dtype=torch.int64),
-                        locals_, torch.tensor(list(page), dtype=torch.uint8),
+                        locals_, torch.frombuffer(bytearray(page), dtype=torch.uint8),
                         torch.tensor(fuel, dtype=torch.int64), zero.clone())
+
+
+def snapshot_page(state: MachineState) -> bytes:
+    """Publish an immutable byte copy, independently of later live stores."""
+    return state.page.numpy().tobytes()
 
 
 class RecurrentStep(torch.nn.Module):
     """All instruction/state decisions are in the scripted graph."""
 
-    def __init__(self):
+    __constants__ = ["bounded_store"]
+
+    def __init__(self, bounded_store: bool = False):
         super().__init__()
+        self.bounded_store = bounded_store
         self.register_buffer("opcodes", torch.arange(len(OPCODES), dtype=torch.int64))
         self.register_buffer("pops", torch.tensor(POPS, dtype=torch.int64))
         self.register_buffer("pushes", torch.tensor(PUSHES, dtype=torch.int64))
@@ -178,10 +192,12 @@ class RecurrentStep(torch.nn.Module):
         commit = running & has_fuel & ~fault
         store = commit & (gates[21] == 1)
         page = state.page
-        # VM control in the frozen graph. Reads gather four bytes, while a
-        # committed store returns a new page via functional exact scatter.
         if bool(store):
-            page = torch.scatter(page, 0, indices, ((right >> self.shifts) & 255).to(torch.uint8))
+            value = ((right >> self.shifts) & 255).to(torch.uint8)
+            if self.bounded_store:
+                page.scatter_(0, indices, value)
+            else:
+                page = torch.scatter(page, 0, indices, value)
         status = torch.where(
             running,
             torch.where(~has_fuel, 2, torch.where(fault, 3, (next_pc == image.size(0) - 1).to(torch.int64))),
@@ -197,6 +213,6 @@ class RecurrentStep(torch.nn.Module):
         ), access)
 
 
-def freeze_machine():
+def freeze_machine(*, bounded_store: bool = False):
     """Freeze one graph and its constant tensors without any guest input."""
-    return torch.jit.freeze(torch.jit.script(RecurrentStep().eval()))
+    return torch.jit.freeze(torch.jit.script(RecurrentStep(bounded_store).eval()))

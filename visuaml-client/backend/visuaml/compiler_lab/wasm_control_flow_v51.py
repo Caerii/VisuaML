@@ -62,7 +62,6 @@ MEMORY_BYTES = 65536
 MEMORY_OPCODES = ("i32.load", "i32.store")
 _MEMORY_CODES = {0x28: MEMORY_OPCODES[0], 0x36: MEMORY_OPCODES[1]}
 _MEMORY_ENCODING = {name: code for code, name in _MEMORY_CODES.items()}
-_MEMORY_SECTION = b"\x01\x01\x01\x01"  # one memory, minimum and maximum one page
 _MEMORY_ENTRY = b"\x06memory\x02\x00"
 _MEMORY_EXPORT = b"\x02" + _EXPORT_PAYLOAD[1:] + _MEMORY_ENTRY
 _MEMORY_FIRST_EXPORT = b"\x02" + _MEMORY_ENTRY + _EXPORT_PAYLOAD[1:]
@@ -218,7 +217,14 @@ def _syntax(program: ControlProgram) -> dict[int, tuple[int, int | None]]:
     return links
 
 
-def encode_control(program: ControlProgram) -> bytes:
+def _memory_section(pages: int) -> bytes:
+    if type(pages) is not int or not 1 <= pages <= 256:
+        raise ControlAdmissionError("Fixed memory must have between 1 and 256 pages")
+    limit = _u32(pages)
+    return b"\x01\x01" + limit + limit
+
+
+def encode_control(program: ControlProgram, *, memory_pages: int = 1) -> bytes:
     """Canonical one-function actual WASM binary with structural controls."""
     _syntax(program)
     body = bytearray()
@@ -253,12 +259,13 @@ def encode_control(program: ControlProgram) -> bytes:
         exports = _MEMORY_EXPORT
     return (MAGIC + section(1, _TYPE_PAYLOAD)
             + section(3, _FUNCTION_PAYLOAD)
-            + (section(5, _MEMORY_SECTION) if memory else b"")
+            + (section(5, _memory_section(memory_pages)) if memory else b"")
             + section(7, exports)
             + section(10, code))
 
 
-def decode_control(raw: bytes, *, scaled: bool = False) -> ControlProgram:
+def decode_control(raw: bytes, *, scaled: bool = False,
+                   memory_pages: int = 1) -> ControlProgram:
     """Parse the canonical opcode subset with optional packed-scale bounds."""
     if type(scaled) is not bool:
         raise ControlAdmissionError("scaled must be a boolean")
@@ -274,8 +281,8 @@ def decode_control(raw: bytes, *, scaled: bool = False) -> ControlProgram:
         exports = _MEMORY_FIRST_EXPORT if memory_first else (_MEMORY_EXPORT if memory else _EXPORT_PAYLOAD)
         if (payloads[1] != _TYPE_PAYLOAD or payloads[3] != _FUNCTION_PAYLOAD
                 or payloads[7] != exports
-                or (memory and payloads[5] != _MEMORY_SECTION)):
-            raise ControlAdmissionError("Expected reviewed run export and optional one-page memory")
+                or (memory and payloads[5] != _memory_section(memory_pages))):
+            raise ControlAdmissionError("Expected reviewed run export and optional fixed-size memory")
         data = payloads[10]
         n, pos = _read_u32(data, 0)
         length, pos = _read_u32(data, pos)
@@ -317,7 +324,7 @@ def decode_control(raw: bytes, *, scaled: bool = False) -> ControlProgram:
                 raise ControlAdmissionError("Instruction count exceeded")
         program = ControlProgram(count, tuple(ops), SCALED_SCHEMA if scaled else SCHEMA, memory_first)
         _syntax(program)
-        if encode_control(program) != raw:
+        if encode_control(program, memory_pages=memory_pages) != raw:
             raise ControlAdmissionError("Noncanonical or unreviewed WASM encoding")
         return program
     except (WasmBinaryError, IndexError, TypeError) as exc:
