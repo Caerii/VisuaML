@@ -108,3 +108,7 @@ cross-language call and a saved source-step trace.
 The [Tape Compiler](evidence/pocket-tape-compiler/README.md) links a program
 typed into Pocket to the Rust tape interpreter. Open
 `?cartridge=tape-compiler` to compile rules and step the resulting tape.
+
+[Universal Tape](evidence/pocket-universal/README.md) runs a fixed table that
+interprets machines encoded on its tape. Open `pocket-universal.html` to
+step either execution level.

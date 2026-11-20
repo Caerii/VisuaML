@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket · Universal tape</title>
+  <link rel="stylesheet" href="./pocket.css">
+  <style>
+    .machine-form { display: grid; gap: .75rem; }
+    .machine-form label { display: grid; gap: .3rem; }
+    .machine-form textarea { background: #101917; color: var(--accent); min-height: 9rem; padding: .65rem; font: 1rem ui-monospace, monospace; }
+    .tape-row { display: flex; flex-wrap: wrap; gap: .25rem; margin: .55rem 0 1rem; }
+    .tape-row span { text-align: center; width: 1.5rem; padding: .22rem 0; border: 1px solid var(--line); border-radius: 4px; font: .9rem ui-monospace, monospace; }
+    .tape-row [aria-current="true"] { background: var(--accent); color: #19271f; }
+    .console h3 { margin-bottom: 0; font-size: .88rem; }
+  </style>
+</head>
+<body>
+<main>
+  <header class="masthead"><a href="./pocket.html">Pocket</a><span>Virtual console</span></header>
+  <div class="page-title"><h1>Universal tape</h1></div>
+  <div class="layout">
+    <section class="console" aria-labelledby="machine-title">
+      <div class="display-header"><h2 id="machine-title">Two levels of execution</h2><span>Browser linked WASM</span></div>
+      <div class="screen">
+        <p id="phase" role="status">Loading…</p>
+        <h3>Encoded tape</h3>
+        <div id="physical" class="tape-row" aria-label="Encoded tape and universal head"></div>
+        <h3>Simulated tape at the last boundary</h3>
+        <div id="simulated" class="tape-row" aria-label="Simulated tape and head"></div>
+        <p id="boundary"></p>
+        <p id="verify" class="verification"></p>
+      </div>
+      <div class="device-controls">
+        <button id="micro" disabled>Step universal machine</button>
+        <button id="macro" class="primary" disabled>Step simulated machine</button>
+      </div>
+    </section>
+    <section class="panel machine-form" aria-labelledby="editor">
+      <h2 id="editor">Machine encoded on the tape</h2>
+      <label>Example <select id="preset"></select></label>
+      <label>Program <textarea id="program" spellcheck="false"></textarea></label>
+      <label>Input bits <input id="bits" type="text" inputmode="numeric"></label>
+      <button id="load" disabled>Encode and reset</button>
+      <p class="guide">One instruction per line. L and R move. M writes 1. E writes 0. J n jumps on a 1. G n always jumps. Targets are zero-based. H halts.</p>
+      <p id="error" class="event" role="alert"></p>
+    </section>
+  </div>
+</main>
+<script type="module" src="./pocket-universal-ui.mjs"></script>
+</body>
+</html>
