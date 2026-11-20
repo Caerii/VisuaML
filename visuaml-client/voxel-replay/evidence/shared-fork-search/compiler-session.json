@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "checkpoint_sha256": "314c999503ce6a1f8e8ed1659fbe5c48fa6c8ccaac8062d64b37c5511c327a75",
+  "identities": {
+    "graph_sha256": "f48971db1e02f610685803d650a0a5017e732ac4f222a84f7323ef53c75f93ec",
+    "wasm_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24",
+    "image_sha256": "9439502dcb0247d1dcc070f44594ca53419f200553e6ad527bf2eb47a1de2f0b"
+  },
+  "planner_sha256": "8ed39053fc10453a47d2fd7d3e941def022a507c1a6b4f042890076e70f3f15c",
+  "source_slots": [
+    0,
+    2
+  ],
+  "accepted_plan": [
+    1,
+    0,
+    2,
+    0,
+    1,
+    2
+  ],
+  "rejected_plan": [
+    1,
+    0,
+    2,
+    2,
+    1,
+    2
+  ],
+  "proof_results": [
+    [
+      "unsat",
+      "unsat"
+    ],
+    [
+      "sat",
+      "unsat"
+    ]
+  ],
+  "first_source_pc": 160,
+  "source_boundary": 1,
+  "reference": [
+    {
+      "next_pc": 161,
+      "stack": [
+        256
+      ],
+      "fuel": 4973,
+      "state_sha256": "b7f0068cb0c7fa1384e84f77f4fa30dc015682aed442f29e633e3ccbc9c314ce"
+    },
+    {
+      "next_pc": 162,
+      "stack": [
+        256,
+        0
+      ],
+      "fuel": 4972,
+      "state_sha256": "da0aadf129e033b8cbfb0939398e4690cab1a47536d1c50f8a956104ef575a26"
+    }
+  ],
+  "candidate": [
+    {
+      "next_pc": 161,
+      "stack": [
+        0
+      ],
+      "fuel": 4973,
+      "state_sha256": "f65d7d22cb00218386ae062ee25abe082c838a4c1527ac763f84b538cf2fd15d"
+    },
+    {
+      "next_pc": 162,
+      "stack": [
+        256,
+        0
+      ],
+      "fuel": 4972,
+      "state_sha256": "da0aadf129e033b8cbfb0939398e4690cab1a47536d1c50f8a956104ef575a26"
+    }
+  ]
+}

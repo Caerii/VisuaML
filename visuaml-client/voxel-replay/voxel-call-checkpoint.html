@@ -50,6 +50,17 @@
     <a id="session" hidden download="winning-session.json">Download winning session</a>
     <a id="search-checkpoint" download="fork-checkpoint.json">Download input-log checkpoint</a>
   </section>
+  <section class="showcase" aria-labelledby="compiler-heading">
+    <h2 id="compiler-heading">Compiler fork regression</h2>
+    <p>Compare the reference with a deliberately rejected plan at the original instruction boundary.</p>
+    <div class="run-controls">
+      <button id="open-compiler">Open first compiler difference</button>
+      <button id="compiler-exit" disabled>Compare region exit</button>
+    </div>
+    <p id="compiler-state" role="status"></p>
+    <a id="compiler-checkpoint" download="compiler-checkpoint.json">Download compiler checkpoint</a>
+    <a id="compiler-session" download="compiler-session.json">Download compiler session</a>
+  </section>
 </main>
 <script type="module" src="./voxel-call-checkpoint-ui.mjs"></script>
 </body>

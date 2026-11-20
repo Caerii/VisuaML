@@ -14,7 +14,7 @@ try {
   const shot = i => page.screenshot({ path: join(out, `fork-search-${i}.png`) });
   await shot(0);
   await page.getByRole('button', { name: 'Find a way through' }).click();
-  await page.getByText(/Live VisuaML search · 32 branches/).waitFor();
+  await page.getByText(/Live VisuaML search · 32 branches · 62 shared-prefix ticks/).waitFor();
   await shot(1);
   await page.getByRole('button', { name: 'Open winning write' }).click();
   await page.getByText(/Winning tick 1 · i32.store at PC 28 · byte 65520: 0 → 1/).waitFor();
@@ -26,6 +26,17 @@ try {
   const read = async path => JSON.parse(await readFile(path, 'utf8'));
   assert.deepEqual(await read(join(out, 'winning-session.json')),
     await read(new URL('../evidence/voxel-fork-search/winning-session.json', import.meta.url)));
+  await page.getByRole('button', { name: 'Open first compiler difference' }).click();
+  await page.getByText('First difference after local.get at PC 160 · reference stack [256] · rejected plan [0]').waitFor();
+  await shot(3);
+  await page.getByRole('button', { name: 'Compare region exit' }).click();
+  await page.getByText('Region exits agree after local.get at PC 161 · reference stack [256, 0] · rejected plan [256, 0]').waitFor();
+  await shot(4);
+  const artifact = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download compiler session' }).click();
+  await (await artifact).saveAs(join(out, 'compiler-session.json'));
+  assert.deepEqual(await read(join(out, 'compiler-session.json')),
+    await read(new URL('../evidence/shared-fork-search/compiler-session.json', import.meta.url)));
   assert.deepEqual(errors, []);
 } finally {
   await browser.close();

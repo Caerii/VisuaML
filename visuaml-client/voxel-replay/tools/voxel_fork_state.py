@@ -49,15 +49,19 @@ class Run:
     def begin_tick(self):
         if self.next_event != len(self.outputs) or self.next_event >= len(self.inputs):
             raise ValueError("Input cannot be presented at this boundary")
-        memory = bytearray(page(self.vm))
-        struct.pack_into("<i", memory, CELL + 4, 0)
-        struct.pack_into("<i", memory, CELL + 12, self.inputs[self.next_event])
-        self.vm = self.witness.start(memory)
+        self.vm = begin_from_page(self.witness, page(self.vm), self.inputs[self.next_event])
         self.next_event += 1
 
     def tick(self, trace=False):
         self.begin_tick()
         return self.finish_tick(trace)
+
+
+def begin_from_page(witness, saved, action):
+    memory = bytearray(saved)
+    struct.pack_into("<i", memory, CELL + 4, 0)
+    struct.pack_into("<i", memory, CELL + 12, action)
+    return witness.start(memory)
 
 
 def seal(payload):

@@ -4,14 +4,16 @@ from itertools import product
 import json
 from pathlib import Path
 import statistics
+import tracemalloc
 import struct
 from time import perf_counter_ns
 from unittest.mock import patch
 
+from fork_divergence import first_divergence
 from frozen_call_checkpoint import canonical, digest, encode
 from replay_frozen_recurrent import PACKED, wasmtime_run
 from replay_voxel_call_checkpoint import CELL, OUT as PASSAGE, Witness, page
-from voxel_fork_state import Run, export_state, fork, restore, seal
+from voxel_fork_state import Run, begin_from_page, export_state, fork, restore, seal
 
 OUT = PASSAGE.parent / "voxel-fork-search"
 HORIZON = 5
@@ -53,17 +55,11 @@ def verify_branch(witness, checkpoint, changes, detailed_tick):
     return run.outputs, detail
 
 
-def search(witness, checkpoint):
-    branches = []
-    fork_ns, run_ns = [], []
-    for actions in product((0, 1), repeat=HORIZON):
-        start = perf_counter_ns()
-        run = fork(witness, checkpoint, edits(actions))
-        ready = perf_counter_ns()
-        outputs = finish_branch(run)
-        elapsed = perf_counter_ns()
-        fork_ns.append(ready-start)
-        run_ns.append(elapsed-ready)
+def enumerate_branches(witness, checkpoint, shared):
+    branches, fork_ns, run_ns = [], [], []
+    ticks = held = peak_pages = peak_checkpoints = 0
+
+    def collect(actions, outputs):
         crossing = next((r["tick"] for r in outputs if r["world"][1] == 1), None)
         for n, result in enumerate(outputs):
             position = int(any(actions[:n]))
@@ -72,12 +68,67 @@ def search(witness, checkpoint):
         branches.append(dict(actions=actions, edit_count=sum(actions), crossing_tick=crossing,
                              outputs=outputs))
 
+    def visit(prefix, run):
+        nonlocal ticks, peak_pages, peak_checkpoints
+        if len(prefix) == HORIZON:
+            collect(prefix, run.outputs)
+            return
+        # The halted invocation has no continuation registers for the next
+        # tick. The tick ABI starts it from this immutable page and input.
+        saved = page(run.vm)
+        peak_checkpoints = max(peak_checkpoints, len(prefix) + 2)
+        for action in (0, 1):
+            child_prefix = (*prefix, action)
+            inputs = (0, *child_prefix, *((0,) * (HORIZON-len(child_prefix))))
+            start = perf_counter_ns()
+            child = Run(witness, begin_from_page(witness, saved, action), inputs, run.next_event + 1,
+                        run.retired, list(run.outputs))
+            ready = perf_counter_ns()
+            child.finish_tick()
+            fork_ns.append(ready-start)
+            run_ns.append(perf_counter_ns()-ready)
+            ticks += 1
+            peak_pages = max(peak_pages, 2 * len(prefix) + 4)
+            visit(child_prefix, child)
+            del child
+
+    if shared:
+        start = perf_counter_ns()
+        root = restore(witness, checkpoint)
+        ready = perf_counter_ns()
+        root.finish_tick()
+        fork_ns.append(ready-start)
+        run_ns.append(perf_counter_ns()-ready)
+        held = 1
+        visit((), root)
+    else:
+        for actions in product((0, 1), repeat=HORIZON):
+            start = perf_counter_ns()
+            run = fork(witness, checkpoint, edits(actions))
+            ready = perf_counter_ns()
+            collect(actions, finish_branch(run))
+            fork_ns.append(ready-start)
+            run_ns.append(perf_counter_ns()-ready)
+            ticks += HORIZON
+            held += 1
+            del run
+        peak_pages = 4
+        peak_checkpoints = 1
+    return branches, dict(future_ticks=ticks, suspended_suffixes=held,
+                          peak_retained_checkpoints=peak_checkpoints,
+                          peak_page_buffer_bound_bytes=peak_pages*65536,
+                          fork_ns=fork_ns, execution_ns=run_ns)
+
+
+def search(witness, checkpoint):
+    branches, traversal = enumerate_branches(witness, checkpoint, True)
+    fork_ns, run_ns = traversal["fork_ns"], traversal["execution_ns"]
     baseline = branches[0]
     winner = min((b for b in branches if b["crossing_tick"] is not None),
                  key=lambda b: (b["edit_count"], b["crossing_tick"], b["actions"]))
     first_input = next(iter(edits(winner["actions"])))
-    first_effect = next(a["tick"] for a, b in zip(winner["outputs"], baseline["outputs"])
-                        if a["world"] != b["world"])
+    first_effect = first_divergence([r["world"] for r in baseline["outputs"]],
+                                    [r["world"] for r in winner["outputs"]])
     _, wait = verify_branch(witness, checkpoint, {}, first_effect)
     checked, walk = verify_branch(witness, checkpoint, edits(winner["actions"]), first_effect)
     assert checked == winner["outputs"]
@@ -101,11 +152,11 @@ def search(witness, checkpoint):
         assert copy.data_ptr() != recovered.vm.vm.page.data_ptr()
     sample = dict(export_ns=exported, restore_ns=restored, copy_page_ns=copied,
                   fork_ns=fork_ns, branch_execution_ns=run_ns)
-    metrics = dict(checkpoint_bytes=len(canonical(checkpoint))+1,
+    metrics = dict(traversal=traversal, checkpoint_bytes=len(canonical(checkpoint))+1,
                    private_linear_memory_bytes_per_branch=copy.numel()*copy.element_size(),
-                   completed_future_branch_ticks=len(branches)*HORIZON,
+                   completed_future_branch_ticks=traversal["future_ticks"],
                    # The denominator includes restoring each branch and finishing its held tick.
-                   future_branch_ticks_per_second=len(branches)*HORIZON*1e9/(sum(fork_ns)+sum(run_ns)),
+                   future_branch_ticks_per_second=traversal["future_ticks"]*1e9/(sum(fork_ns)+sum(run_ns)),
                    median_ns={key: statistics.median(values) for key, values in sample.items()},
                    samples_ns=sample)
     session = dict(version=1, checkpoint_sha256=checkpoint["sha256"],
@@ -145,6 +196,7 @@ def check_checkpoint(witness, checkpoint):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--benchmark", action="store_true")
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--export", type=Path)
     parser.add_argument("--checkpoint", type=Path)
@@ -172,6 +224,27 @@ def main():
             print(json.dumps(session))
             return
         check_checkpoint(witness, checkpoint)
+        if args.benchmark:
+            samples = {"flat": [], "tree": []}
+            for order in ((False, True), (True, False), (False, True)):
+                for shared in order:
+                    start = perf_counter_ns()
+                    outputs, metrics = enumerate_branches(witness, checkpoint, shared)
+                    elapsed = perf_counter_ns() - start
+                    samples["tree" if shared else "flat"].append(dict(elapsed_ns=elapsed, **metrics))
+                    if shared:
+                        assert canonical(outputs) == canonical(reference)
+                    else:
+                        reference = outputs
+            for shared, label in ((False, "flat"), (True, "tree")):
+                tracemalloc.start()
+                enumerate_branches(witness, checkpoint, shared)
+                _, peak = tracemalloc.get_traced_memory()
+                tracemalloc.stop()
+                samples[label + "_peak_python_bytes"] = peak
+            print(json.dumps(samples, indent=2))
+            return
+
         result = search(witness, checkpoint)
         if args.write:
             (OUT / "checkpoint.json").write_bytes(canonical(checkpoint)+b"\n")

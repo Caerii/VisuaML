@@ -1,3 +1,6 @@
+import compilerFork from './evidence/shared-fork-search/compiler-session.json';
+import compilerCheckpoint from './evidence/shared-fork-search/compiler-checkpoint.json?url';
+import compilerSession from './evidence/shared-fork-search/compiler-session.json?url';
 import savedWinner from './evidence/voxel-fork-search/winning-session.json';
 import searchCheckpoint from './evidence/voxel-fork-search/checkpoint.json?url';
 import proof from './evidence/voxel-call-checkpoint/replay.json';
@@ -78,7 +81,7 @@ find.onclick = async () => {
   sessionUrl = URL.createObjectURL(new Blob([JSON.stringify(winner, null, 2)], { type: 'application/json' }));
   session.href = sessionUrl;
   session.hidden = false;
-  text('search-status', `${label} · 32 branches · change Wait to Walk at tick ${winner.first_input_tick} · first world effect at tick ${winner.first_world_effect_tick}`);
+  text('search-status', `${label} · 32 branches · 62 shared-prefix ticks · change Wait to Walk at tick ${winner.first_input_tick} · first world effect at tick ${winner.first_world_effect_tick}`);
   find.disabled = openWinner.disabled = false;
 };
 
@@ -95,3 +98,17 @@ openWinner.onclick = () => {
   render();
   get('where').scrollIntoView({ block: 'nearest' });
 };
+
+get('compiler-checkpoint').href = compilerCheckpoint;
+get('compiler-session').href = compilerSession;
+
+function showCompilerBoundary(index) {
+  const reference = compilerFork.reference[index], candidate = compilerFork.candidate[index];
+  const pc = compilerFork.first_source_pc + index;
+  const detail = index === 0 ? 'First difference' : 'Region exits agree';
+  text('compiler-state', `${detail} after local.get at PC ${pc} · reference stack [${reference.stack.join(', ')}] · rejected plan [${candidate.stack.join(', ')}]`);
+  get('compiler-exit').disabled = false;
+}
+
+get('open-compiler').onclick = () => showCompilerBoundary(0);
+get('compiler-exit').onclick = () => showCompilerBoundary(1);
