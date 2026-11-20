@@ -288,40 +288,7 @@ def decode_control(raw: bytes, *, scaled: bool = False,
         length, pos = _read_u32(data, pos)
         if n != 1 or pos + length != len(data):
             raise ControlAdmissionError("One exact-length function body required")
-        nlocals, pos = _read_u32(data, pos)
-        if nlocals == 0:
-            count = 0
-        elif nlocals == 1:
-            count, pos = _read_u32(data, pos)
-            if (not 1 <= count <= MAX_LOCALS or pos >= len(data)
-                    or data[pos] != 0x7f):
-                raise ControlAdmissionError("Only bounded i32 local group admitted")
-            pos += 1
-        else:
-            raise ControlAdmissionError("Unadmitted local declaration groups")
-        ops = []
-        while pos < len(data):
-            code = data[pos]
-            pos += 1
-            name = _CODES.get(code) or (_MEMORY_CODES.get(code) if memory else None)
-            if name is None:
-                raise ControlAdmissionError("Unknown or excluded WASM instruction byte")
-            imm = None
-            if name in _BLOCKS:
-                if pos >= len(data) or data[pos] != 0x40:
-                    raise ControlAdmissionError("Unadmitted nonempty block type")
-                pos += 1
-            elif name in (*_LOCALS, "br", "br_if"):
-                imm, pos = _read_u32(data, pos)
-            elif name == "i32.const":
-                imm, pos = _read_s32(data, pos)
-            elif name in MEMORY_OPCODES:
-                align, pos = _read_u32(data, pos)
-                offset, pos = _read_u32(data, pos)
-                imm = MemoryArgument(offset, align)
-            ops.append(ControlOperation(name, imm))
-            if len(ops) > max_operations:
-                raise ControlAdmissionError("Instruction count exceeded")
+        count, ops = _decode_control_body(data[pos:], memory, max_operations)
         program = ControlProgram(count, tuple(ops), SCALED_SCHEMA if scaled else SCHEMA, memory_first)
         _syntax(program)
         if encode_control(program, memory_pages=memory_pages) != raw:
@@ -329,6 +296,58 @@ def decode_control(raw: bytes, *, scaled: bool = False,
         return program
     except (WasmBinaryError, IndexError, TypeError) as exc:
         raise ControlAdmissionError("Invalid canonical WASM structured encoding") from exc
+
+
+def _decode_control_body(data, memory, max_operations, *, direct_calls=False):
+    nlocals, pos = _read_u32(data, 0)
+    if nlocals == 0:
+        count = 0
+    elif nlocals == 1:
+        count, pos = _read_u32(data, pos)
+        if (not 1 <= count <= MAX_LOCALS or pos >= len(data)
+                or data[pos] != 0x7f):
+            raise ControlAdmissionError("Only bounded i32 local group admitted")
+        pos += 1
+    else:
+        raise ControlAdmissionError("Unadmitted local declaration groups")
+    ops = []
+    while pos < len(data):
+        code = data[pos]
+        pos += 1
+        name = _CODES.get(code) or (_MEMORY_CODES.get(code) if memory else None)
+        if code == 0x10 and direct_calls:
+            name = "call"
+        if name is None:
+            raise ControlAdmissionError("Unknown or excluded WASM instruction byte")
+        imm = None
+        if name in _BLOCKS:
+            if pos >= len(data) or data[pos] != 0x40:
+                raise ControlAdmissionError("Unadmitted nonempty block type")
+            pos += 1
+        elif name == "call":
+            # rust-lld leaves padded relocation immediates. The caller has
+            # already validated the complete original module with Wasmtime.
+            imm = 0
+            for shift in range(0, 35, 7):
+                byte = data[pos]
+                pos += 1
+                imm |= (byte & 0x7f) << shift
+                if byte < 0x80:
+                    break
+            else:
+                raise ControlAdmissionError("Unterminated direct-call index")
+        elif name in (*_LOCALS, "br", "br_if"):
+            imm, pos = _read_u32(data, pos)
+        elif name == "i32.const":
+            imm, pos = _read_s32(data, pos)
+        elif name in MEMORY_OPCODES:
+            align, pos = _read_u32(data, pos)
+            offset, pos = _read_u32(data, pos)
+            imm = MemoryArgument(offset, align)
+        ops.append(ControlOperation(name, imm))
+        if len(ops) > max_operations:
+            raise ControlAdmissionError("Instruction count exceeded")
+    return count, ops
 
 
 def _pop(stack: list[np.ndarray]) -> np.ndarray:

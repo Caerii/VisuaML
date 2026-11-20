@@ -59,6 +59,13 @@ def load_program(raw: bytes, *, memory_pages: int = 1) -> ProgramImage:
         wasmtime.Module.validate(wasmtime.Engine(), raw)
     except wasmtime.WasmtimeError as error:
         raise ControlAdmissionError("Invalid WASM operand types") from error
+    image = _function_rows(program)
+    return ProgramImage(image, sha256(raw).hexdigest(),
+                        sha256(image.numpy().astype("<i8", copy=False).tobytes()).hexdigest(),
+                        program.local_count, memory_pages)
+
+
+def _function_rows(program, call_sites=frozenset()) -> Tensor:
     ops = program.operations
     count = len(ops)
     coordinates, guards = compile_route_coordinates(program, count)
@@ -84,7 +91,7 @@ def load_program(raw: bytes, *, memory_pages: int = 1) -> ProgramImage:
             continue
         op = ops[pc]
         code = indexed[pc]
-        required = max(POPS[code], int(op.opcode == "local.tee"))
+        required = max(POPS[code], int(op.opcode == "local.tee" or pc in call_sites))
         after = height - POPS[code] + PUSHES[code]
         if height < required or after > MAX_STACK:
             raise ControlAdmissionError("Operand height outside the frozen stack")
@@ -111,11 +118,7 @@ def load_program(raw: bytes, *, memory_pages: int = 1) -> ProgramImage:
             *map(int, coordinates[pc]), *map(int, guards[pc]), restore.get(pc, 0),
         ])
     rows.append([0, 0, 0, count, count, 0, 0, 0, 0])
-    image = torch.tensor(rows, dtype=torch.int64)
-    return ProgramImage(image, sha256(raw).hexdigest(),
-                        sha256(image.numpy().astype("<i8", copy=False).tobytes()).hexdigest(),
-                        program.local_count, memory_pages)
-
+    return torch.tensor(rows, dtype=torch.int64)
 
 def initial_state(argument: int, page: bytes | bytearray, fuel: int, *,
                   memory_pages: int = 1) -> MachineState:
