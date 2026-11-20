@@ -144,12 +144,14 @@ def snapshot_page(state: MachineState) -> bytes:
 class RecurrentStep(torch.nn.Module):
     """All instruction/state decisions are in the scripted graph."""
 
-    __constants__ = ["bounded_store", "reuse_state"]
+    __constants__ = ["bounded_store", "reuse_state", "select_result"]
 
-    def __init__(self, bounded_store: bool = False, reuse_state: bool = False):
+    def __init__(self, bounded_store: bool = False, reuse_state: bool = False,
+                 select_result: bool = False):
         super().__init__()
         self.bounded_store = bounded_store
         self.reuse_state = reuse_state
+        self.select_result = select_result
         self.register_buffer("opcodes", torch.arange(len(OPCODES), dtype=torch.int64))
         self.register_buffer("pops", torch.tensor(POPS, dtype=torch.int64))
         self.register_buffer("pushes", torch.tensor(PUSHES, dtype=torch.int64))
@@ -166,21 +168,24 @@ class RecurrentStep(torch.nn.Module):
         gates = (self.opcodes == row[0]).to(torch.int64)
         right = torch.gather(state.stack, 0, (state.height - 1).clamp(min=0).reshape(1))[0]
         left = torch.gather(state.stack, 0, (state.height - 2).clamp(min=0).reshape(1))[0]
-        signed_left = (left ^ 2147483648) - 2147483648
-        signed_right = (right ^ 2147483648) - 2147483648
         address = torch.where(gates[21] == 1, left, right) + row[2]
         indices = (address + self.lanes).clamp(max=state.page.numel() - 1)
         loaded = (torch.gather(state.page, 0, indices).to(torch.int64) << self.shifts).sum()
         local_index = row[1].clamp(max=self.local_slots.numel() - 1)
         local = torch.gather(state.locals, 0, local_index.reshape(1))[0]
         z = torch.zeros_like(right)
-        candidates = torch.stack((
-            z, z, z, z, z, z, z, z, z, z, local, z, z, row[1],
-            (right == 0).to(torch.int64), (signed_left < signed_right).to(torch.int64),
-            (signed_left > signed_right).to(torch.int64), (left + right) & 4294967295,
-            (left - right) & 4294967295, (signed_left * signed_right) & 4294967295, loaded, z,
-        ))
-        result = (gates * candidates).sum()
+        if self.select_result:
+            result = self.selected_result(int(row[0]), row[1], left, right, local, loaded, z)
+        else:
+            signed_left = (left ^ 2147483648) - 2147483648
+            signed_right = (right ^ 2147483648) - 2147483648
+            candidates = torch.stack((
+                z, z, z, z, z, z, z, z, z, z, local, z, z, row[1],
+                (right == 0).to(torch.int64), (signed_left < signed_right).to(torch.int64),
+                (signed_left > signed_right).to(torch.int64), (left + right) & 4294967295,
+                (left - right) & 4294967295, (signed_left * signed_right) & 4294967295, loaded, z,
+            ))
+            result = (gates * candidates).sum()
         take = (row[5] + row[6] * (right != 0).to(torch.int64)
                 + row[7] * (right == 0).to(torch.int64)) != 0
         next_pc = torch.where(take, row[4], row[3])
@@ -227,6 +232,31 @@ class RecurrentStep(torch.nn.Module):
             torch.where(commit, cells, state.stack), torch.where(commit, locals_, state.locals),
             page, state.fuel - commit.to(torch.int64), status,
         ), access)
+
+
+    def selected_result(self, op: int, immediate: Tensor, left: Tensor, right: Tensor,
+                        local: Tensor, loaded: Tensor, zero: Tensor) -> Tensor:
+        if op == 10:
+            return local
+        if op == 13:
+            return immediate
+        if op == 14:
+            return (right == 0).to(torch.int64)
+        if 15 <= op <= 16 or op == 19:
+            signed_left = (left ^ 2147483648) - 2147483648
+            signed_right = (right ^ 2147483648) - 2147483648
+            if op == 15:
+                return (signed_left < signed_right).to(torch.int64)
+            if op == 16:
+                return (signed_left > signed_right).to(torch.int64)
+            return (signed_left * signed_right) & 4294967295
+        if op == 17:
+            return (left + right) & 4294967295
+        if op == 18:
+            return (left - right) & 4294967295
+        if op == 20:
+            return loaded
+        return zero
 
 
 def freeze_machine(*, bounded_store: bool = False):

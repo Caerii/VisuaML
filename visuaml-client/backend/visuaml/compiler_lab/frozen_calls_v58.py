@@ -120,10 +120,11 @@ class CallStep(torch.nn.Module):
 
     __constants__ = ["reuse_row"]
 
-    def __init__(self, reuse_row: bool = False, reuse_state: bool = False):
+    def __init__(self, reuse_row: bool = False, reuse_state: bool = False,
+                 select_result: bool = False):
         super().__init__()
         self.reuse_row = reuse_row
-        self.base = RecurrentStep(bounded_store=True, reuse_state=reuse_state)
+        self.base = RecurrentStep(bounded_store=True, reuse_state=reuse_state, select_result=select_result)
         self.register_buffer("stack_slots", torch.arange(MAX_STACK))
         self.stack_width = MAX_STACK
 
