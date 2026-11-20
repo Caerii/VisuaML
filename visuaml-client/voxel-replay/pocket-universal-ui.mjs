@@ -1,3 +1,6 @@
+import { startResumeComparison } from './pocket-tape-resume.mjs';
+import resumeFixture from './fixtures/pocket-tape-resume.json';
+import resumeProof from './evidence/pocket-tape-resume/replay.json';
 import { digest } from './pocket.mjs';
 import { loadUniversal } from './pocket-universal.mjs';
 import cases from './fixtures/pocket-universal.json';
@@ -77,6 +80,63 @@ function preset() {
   void load();
 }
 
+function setupResume() {
+  const start = get('resume-start'), advance = get('resume-advance'), extend = get('resume-extend');
+  let comparison, stamp = 0;
+  const status = message => { get('resume-status').textContent = message; };
+  const display = ({ short, wide }) => {
+    for (const [id, state] of [['resume-short', short], ['resume-wide', wide]]) {
+      get(id).textContent = `Tape ${state.decoded.tape.join('')} · simulated head ${state.decoded.head} · ${state.count} universal transitions`;
+    }
+  };
+  start.disabled = false;
+  start.onclick = async () => {
+    const token = ++stamp;
+    advance.disabled = extend.disabled = true;
+    const next = await startResumeComparison(wasm, table, resumeFixture);
+    if (token !== stamp) return;
+    comparison = next;
+    display(comparison.current());
+    advance.disabled = false;
+    status('Simulated steps completed: 0');
+  };
+  advance.onclick = async () => {
+    const token = ++stamp;
+    advance.disabled = true;
+    try {
+      let result;
+      do {
+        result = comparison.advance();
+      } while (!result.stopped && !done(result.short) && result.short.phase !== 'boundary');
+      display(result);
+      if (result.stopped) {
+        const hash = await digest(comparison.checkpoint());
+        if (token !== stamp) return;
+        extend.disabled = false;
+        status(hash === resumeProof.checkpoint.checkpoint_sha256
+          ? 'Right edge reached. Pre-attempt checkpoint matches VisuaML.'
+          : 'Right edge reached. Checkpoint hash differs.');
+        return;
+      }
+      const actual = await Promise.all(comparison.pages().map(digest));
+      if (token !== stamp) return;
+      const expected = resumeProof.transitions[result.short.count - 1];
+      const matches = actual[0] === expected.short_sha256 && actual[1] === expected.wide_sha256;
+      status(`Simulated steps completed: ${result.boundary} · ${matches ? 'Both pages match saved VisuaML' : 'Replay differs'}`);
+      advance.disabled = done(result.short);
+    } catch (error) { if (token === stamp) status(error.message); }
+  };
+  extend.onclick = async () => {
+    const token = ++stamp;
+    extend.disabled = true;
+    await comparison.resume();
+    if (token !== stamp) return;
+    display(comparison.current());
+    advance.disabled = false;
+    status('Restored checkpoint and appended 3 blanks. The guest will retry the move.');
+  };
+}
+
 async function boot() {
   try {
     const response = await fetch(wasmUrl);
@@ -90,6 +150,7 @@ async function boot() {
     micro.onclick = () => void step(false);
     macro.onclick = () => void step(true);
     preset();
+    setupResume();
   } catch (error) { get('phase').textContent = error.message; }
 }
 

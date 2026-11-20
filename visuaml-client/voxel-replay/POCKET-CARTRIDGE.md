@@ -112,3 +112,7 @@ typed into Pocket to the Rust tape interpreter. Open
 [Universal Tape](evidence/pocket-universal/README.md) runs a fixed table that
 interprets machines encoded on its tape. Open `pocket-universal.html` to
 step either execution level.
+
+The [tape resume experiment](evidence/pocket-tape-resume/README.md)
+restores a pre-attempt checkpoint into a longer logical tape window and
+compares it with a run that started with the wider window.

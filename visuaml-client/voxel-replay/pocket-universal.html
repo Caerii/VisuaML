@@ -46,6 +46,20 @@
       <p id="error" class="event" role="alert"></p>
     </section>
   </div>
+  <section class="showcase" aria-labelledby="resume-title">
+    <h2 id="resume-title">Checkpoint and extend</h2>
+    <p>Run the same program with two tape windows. The short run pauses when it attempts to move past the right edge.</p>
+    <div class="run-controls">
+      <button id="resume-start" disabled>Start tape comparison</button>
+      <button id="resume-advance" disabled>Advance both runs</button>
+      <button id="resume-extend" disabled>Extend and resume</button>
+    </div>
+    <p id="resume-status" role="status"></p>
+    <div class="layout">
+      <section class="panel"><h2>Short window</h2><p id="resume-short"></p></section>
+      <section class="panel"><h2>Wide from start</h2><p id="resume-wide"></p></section>
+    </div>
+  </section>
 </main>
 <script type="module" src="./pocket-universal-ui.mjs"></script>
 </body>

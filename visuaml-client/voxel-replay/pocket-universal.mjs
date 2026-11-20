@@ -1,6 +1,6 @@
-import { inspectTape, loadTape, TAPE_BASE } from './pocket-tape.mjs';
+import { inspectTape, loadTape, MAX_WORDS, TAPE_BASE } from './pocket-tape.mjs';
 
-export function encode(program, input, symbols) {
+export function encode(program, input, symbols, blankCells = 24) {
   const lines = program.trim().split(/\r?\n/).map(line => line.trim().split(/\s+/));
   if (lines.length > 64 || lines.at(-1)?.[0] !== 'H') throw Error('End the program with H (up to 64 instructions).');
   if (!/^[01]{1,128}$/.test(input)) throw Error('Enter 1–128 input bits.');
@@ -12,7 +12,7 @@ export function encode(program, input, symbols) {
     }
     return `;${i === 0 ? '*' : '-'}${op}${jump ? 'u'.repeat(Number(arg)) : ''}`;
   });
-  return [...`#${records.join('')}|${input[0] === '1' ? 'b' : 'a'}${input.slice(1)}${'_'.repeat(24)}`]
+  return [...`#${records.join('')}|${input[0] === '1' ? 'b' : 'a'}${input.slice(1)}${'_'.repeat(blankCells)}`]
     .map(symbol => symbols.indexOf(symbol));
 }
 
@@ -25,15 +25,40 @@ export function decode(symbols) {
     head, tape: data.map(s => Number(s === 'b' || s === '1')) };
 }
 
-export async function loadUniversal(wasm, table, program, input) {
+export async function loadUniversal(wasm, table, program, input, blankCells = 24) {
   const { instance: { exports: { memory, run } } } = await WebAssembly.instantiate(wasm);
-  const tape = encode(program, input, table.symbols);
+  const tape = encode(program, input, table.symbols, blankCells);
   const index = loadTape(memory, { tape, states: table.states.length, symbols: table.symbols.length,
     head: 0, rules: table.rules });
+  return universalInstance(memory, run, table, index);
+}
+
+function universalInstance(memory, run, table, index) {
   const current = () => {
     const state = inspectTape(memory, index);
     const encoded = state.tape.map(i => table.symbols[i]);
     return { ...state, encoded, decoded: decode(encoded), phase: table.states[state.state] };
   };
   return { current, step() { run(TAPE_BASE); return current(); }, page: () => memory.buffer.slice(0) };
+}
+
+
+// Restore a clean instruction-boundary checkpoint and extend its logical window.
+export async function extendUniversal(wasm, table, checkpoint, extra) {
+  if (checkpoint.byteLength !== 65536) throw Error("Cannot extend tape checkpoint");
+  const page = new DataView(checkpoint);
+  const word = i => page.getInt32(TAPE_BASE + 4 * i, true);
+  const index = 8 + 3 * table.states.length * table.symbols.length;
+  const length = word(2);
+  if (word(0) !== table.states.length || word(1) !== table.symbols.length
+      || word(5) !== 0 || length < 1 || !Number.isInteger(extra) || extra < 1
+      || index + length + extra > MAX_WORDS + 8) throw Error('Cannot extend tape checkpoint');
+  const { instance: { exports: { memory, run } } } = await WebAssembly.instantiate(wasm);
+  new Uint8Array(memory.buffer).set(new Uint8Array(checkpoint));
+  const live = new DataView(memory.buffer);
+  live.setInt32(TAPE_BASE + 8, length + extra, true);
+  for (let i = 0; i < extra; i++) {
+    live.setInt32(TAPE_BASE + 4 * (index + length + i), table.symbols.indexOf('_'), true);
+  }
+  return universalInstance(memory, run, table, index);
 }
