@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VisuaML · Suspended passage</title>
+  <link rel="stylesheet" href="./pocket.css">
+  <style>
+    .passage { display: flex; gap: .5rem; margin: 1rem 0; }
+    .passage span { padding: .6rem; min-width: 5.5rem; text-align: center; background: #17231e; border: 1px solid var(--line); border-radius: 5px; }
+    .passage [aria-current] { background: var(--accent); color: #19271f; }
+    #stack { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+<main>
+  <header class="masthead"><a href="./index.html">VisuaML</a><span>Saved VisuaML trace</span></header>
+  <div class="page-title"><h1>Suspended passage</h1></div>
+  <div class="layout">
+    <section class="console">
+      <h2>Terrain and second agent</h2>
+      <div class="passage" aria-label="Passage and agent"><span id="near">Near side</span><span id="cell">Opening</span><span id="far">Far side</span></div>
+      <p id="world"></p>
+      <div class="run-controls">
+        <button id="rewind">Restore checkpoint</button>
+        <button id="step" class="primary">Step source instruction</button>
+        <button id="finish">Finish suspended tick</button>
+      </div>
+      <div class="device-controls">
+        <button id="wait" disabled>Next tick · Wait</button>
+        <button id="walk" disabled>Next tick · Walk</button>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>Continuation</h2>
+      <p id="where" role="status"></p>
+      <p id="stack"></p>
+      <p id="effect"></p>
+      <a id="download" download="voxel-call-checkpoint.json">Download checkpoint</a>
+    </section>
+  </div>
+</main>
+<script type="module" src="./voxel-call-checkpoint-ui.mjs"></script>
+</body>
+</html>
