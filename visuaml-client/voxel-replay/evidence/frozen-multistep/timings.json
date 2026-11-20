@@ -1,0 +1,2972 @@
+{
+  "torch": "2.9.1+cpu",
+  "reference_load_ns": 16252901,
+  "loop_load_ns": 10114784,
+  "cases": [
+    {
+      "pages": 1,
+      "agents": 2,
+      "image_preparation_ns": 4413919,
+      "binary_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24",
+      "timings": {
+        "1": {
+          "warm_samples": 16,
+          "median_ns": 163349204.5,
+          "p95_ns": 217729666,
+          "median_initialize_ns": 86245.0,
+          "rows": [
+            {
+              "host_calls": 450,
+              "execution_ns": 219962300,
+              "initialize_ns": 213542,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 163371681,
+              "initialize_ns": 81293,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 163265532,
+              "initialize_ns": 83876,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 167416835,
+              "initialize_ns": 77747,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 217729666,
+              "initialize_ns": 96966,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 167375621,
+              "initialize_ns": 95183,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 162252177,
+              "initialize_ns": 85338,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 164911507,
+              "initialize_ns": 99480,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 166685441,
+              "initialize_ns": 104858,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 163326728,
+              "initialize_ns": 78388,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 161968951,
+              "initialize_ns": 84357,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 162882557,
+              "initialize_ns": 86610,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 162914386,
+              "initialize_ns": 120752,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 162864601,
+              "initialize_ns": 86791,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 168341848,
+              "initialize_ns": 80732,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 163502256,
+              "initialize_ns": 85880,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 160859043,
+              "initialize_ns": 105348,
+              "source_steps": 450
+            }
+          ]
+        },
+        "4": {
+          "warm_samples": 16,
+          "median_ns": 89936310.5,
+          "p95_ns": 92019537,
+          "median_initialize_ns": 93120.5,
+          "rows": [
+            {
+              "host_calls": 113,
+              "execution_ns": 117445257,
+              "initialize_ns": 97728,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 90311207,
+              "initialize_ns": 108103,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 90959294,
+              "initialize_ns": 97417,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 90518169,
+              "initialize_ns": 83646,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 89190135,
+              "initialize_ns": 95344,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 90725886,
+              "initialize_ns": 99089,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 90010457,
+              "initialize_ns": 182486,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 91791262,
+              "initialize_ns": 85769,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 88988687,
+              "initialize_ns": 88494,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 89635001,
+              "initialize_ns": 97917,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 88010773,
+              "initialize_ns": 90776,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 89354739,
+              "initialize_ns": 120832,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 90508219,
+              "initialize_ns": 88153,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 89862164,
+              "initialize_ns": 104939,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 92019537,
+              "initialize_ns": 90897,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 88000888,
+              "initialize_ns": 90136,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 87582607,
+              "initialize_ns": 84777,
+              "source_steps": 450
+            }
+          ]
+        },
+        "16": {
+          "warm_samples": 16,
+          "median_ns": 67922198.0,
+          "p95_ns": 71438842,
+          "median_initialize_ns": 87762.5,
+          "rows": [
+            {
+              "host_calls": 29,
+              "execution_ns": 76442278,
+              "initialize_ns": 86120,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 69295003,
+              "initialize_ns": 86260,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 71438842,
+              "initialize_ns": 182455,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68231250,
+              "initialize_ns": 80200,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 69006672,
+              "initialize_ns": 86020,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 67877901,
+              "initialize_ns": 88884,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68685268,
+              "initialize_ns": 112039,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 66611072,
+              "initialize_ns": 109945,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68834623,
+              "initialize_ns": 83105,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 67966495,
+              "initialize_ns": 83706,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 67676087,
+              "initialize_ns": 114893,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 66858905,
+              "initialize_ns": 84368,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 66957834,
+              "initialize_ns": 88944,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68528692,
+              "initialize_ns": 85789,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 66690802,
+              "initialize_ns": 112630,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 66475607,
+              "initialize_ns": 86641,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 66439822,
+              "initialize_ns": 89886,
+              "source_steps": 450
+            }
+          ]
+        },
+        "64": {
+          "warm_samples": 16,
+          "median_ns": 61866047.5,
+          "p95_ns": 70578902,
+          "median_initialize_ns": 86876.0,
+          "rows": [
+            {
+              "host_calls": 8,
+              "execution_ns": 65066323,
+              "initialize_ns": 89635,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62679118,
+              "initialize_ns": 87472,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 61387192,
+              "initialize_ns": 85499,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 63389558,
+              "initialize_ns": 107041,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 64045163,
+              "initialize_ns": 87332,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62153552,
+              "initialize_ns": 82865,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 63387151,
+              "initialize_ns": 84748,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 61655691,
+              "initialize_ns": 102324,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 61873159,
+              "initialize_ns": 82374,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 61735882,
+              "initialize_ns": 76816,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 60914594,
+              "initialize_ns": 82915,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 61014835,
+              "initialize_ns": 113111,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 61375578,
+              "initialize_ns": 116956,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 63149372,
+              "initialize_ns": 86420,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 61858936,
+              "initialize_ns": 76024,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 70578902,
+              "initialize_ns": 138759,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 60657738,
+              "initialize_ns": 106411,
+              "source_steps": 450
+            }
+          ]
+        }
+      },
+      "diagnostic": {
+        "profiled_transitions": 64,
+        "boundary_proxy_ns": 120628.161,
+        "snapshot_ns": 13168.625,
+        "trace_prefix_rows": 65,
+        "trace_prefix_ns_with_initialization": 26319206,
+        "baseline_full_execution_ns": 165107075,
+        "baseline_full_source_steps": 450,
+        "operators": [
+          {
+            "name": "forward",
+            "self_cpu_us": 7674.918999999968,
+            "count": 64
+          },
+          {
+            "name": "aten::reshape",
+            "self_cpu_us": 698.7280000000717,
+            "count": 320
+          },
+          {
+            "name": "aten::view",
+            "self_cpu_us": 377.8539999999322,
+            "count": 320
+          },
+          {
+            "name": "aten::index_select",
+            "self_cpu_us": 656.8869999999699,
+            "count": 128
+          },
+          {
+            "name": "aten::empty",
+            "self_cpu_us": 512.1550000000701,
+            "count": 1223
+          },
+          {
+            "name": "aten::select",
+            "self_cpu_us": 1687.3109999999822,
+            "count": 1664
+          },
+          {
+            "name": "aten::as_strided",
+            "self_cpu_us": 1325.6809999999289,
+            "count": 3584
+          },
+          {
+            "name": "aten::eq",
+            "self_cpu_us": 1164.8670000000866,
+            "count": 768
+          },
+          {
+            "name": "aten::gt",
+            "self_cpu_us": 470.43800000005376,
+            "count": 320
+          },
+          {
+            "name": "aten::__and__",
+            "self_cpu_us": 906.1020000001212,
+            "count": 903
+          },
+          {
+            "name": "aten::bitwise_and",
+            "self_cpu_us": 1274.382999999922,
+            "count": 903
+          },
+          {
+            "name": "aten::item",
+            "self_cpu_us": 152.60299999998392,
+            "count": 256
+          },
+          {
+            "name": "aten::_local_scalar_dense",
+            "self_cpu_us": 96.72100000002354,
+            "count": 256
+          },
+          {
+            "name": "aten::ge",
+            "self_cpu_us": 131.74800000000027,
+            "count": 64
+          },
+          {
+            "name": "aten::ne",
+            "self_cpu_us": 291.83400000000677,
+            "count": 192
+          },
+          {
+            "name": "aten::to",
+            "self_cpu_us": 533.6389999999844,
+            "count": 1230
+          },
+          {
+            "name": "aten::_to_copy",
+            "self_cpu_us": 1411.094999999931,
+            "count": 519
+          },
+          {
+            "name": "aten::empty_strided",
+            "self_cpu_us": 347.6169999999663,
+            "count": 583
+          },
+          {
+            "name": "aten::copy_",
+            "self_cpu_us": 493.007000000041,
+            "count": 519
+          },
+          {
+            "name": "aten::sub",
+            "self_cpu_us": 810.1909999998908,
+            "count": 448
+          },
+          {
+            "name": "aten::clamp",
+            "self_cpu_us": 463.3890000000408,
+            "count": 256
+          },
+          {
+            "name": "aten::gather",
+            "self_cpu_us": 558.642999999993,
+            "count": 256
+          },
+          {
+            "name": "aten::__xor__",
+            "self_cpu_us": 104.85299999998438,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_xor",
+            "self_cpu_us": 327.35500000000604,
+            "count": 128
+          },
+          {
+            "name": "aten::where",
+            "self_cpu_us": 2480.81299999998,
+            "count": 1216
+          },
+          {
+            "name": "aten::add",
+            "self_cpu_us": 747.7100000000191,
+            "count": 640
+          },
+          {
+            "name": "aten::__lshift__",
+            "self_cpu_us": 127.8620000000086,
+            "count": 64
+          },
+          {
+            "name": "aten::sum",
+            "self_cpu_us": 1054.9080000000004,
+            "count": 256
+          },
+          {
+            "name": "aten::fill_",
+            "self_cpu_us": 82.42299999996953,
+            "count": 256
+          },
+          {
+            "name": "aten::zeros_like",
+            "self_cpu_us": 160.37700000000518,
+            "count": 64
+          },
+          {
+            "name": "aten::empty_like",
+            "self_cpu_us": 51.34400000002552,
+            "count": 64
+          },
+          {
+            "name": "aten::zero_",
+            "self_cpu_us": 25.060000000001537,
+            "count": 64
+          },
+          {
+            "name": "aten::lt",
+            "self_cpu_us": 177.3010000000222,
+            "count": 128
+          },
+          {
+            "name": "aten::mul",
+            "self_cpu_us": 603.5089999999884,
+            "count": 448
+          },
+          {
+            "name": "aten::stack",
+            "self_cpu_us": 1789.4919999999672,
+            "count": 128
+          },
+          {
+            "name": "aten::unsqueeze",
+            "self_cpu_us": 1013.1840000000329,
+            "count": 1664
+          },
+          {
+            "name": "aten::cat",
+            "self_cpu_us": 337.5010000000327,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_not",
+            "self_cpu_us": 168.4279999999685,
+            "count": 128
+          },
+          {
+            "name": "aten::scalar_tensor",
+            "self_cpu_us": 106.74300000001062,
+            "count": 192
+          },
+          {
+            "name": "aten::__rshift__",
+            "self_cpu_us": 13.538999999987936,
+            "count": 7
+          },
+          {
+            "name": "aten::scatter_",
+            "self_cpu_us": 30.605999999998858,
+            "count": 7
+          }
+        ]
+      },
+      "process_peak_rss_kib": 354260
+    },
+    {
+      "pages": 1,
+      "agents": 8,
+      "image_preparation_ns": 4413919,
+      "binary_sha256": "f43859bb6cb5eeb04258ab93f3de23baf49dde888865a38b7ef28c21f4f68c24",
+      "timings": {
+        "1": {
+          "warm_samples": 16,
+          "median_ns": 616227812.0,
+          "p95_ns": 840118997,
+          "median_initialize_ns": 92694.5,
+          "rows": [
+            {
+              "host_calls": 1650,
+              "execution_ns": 615706190,
+              "initialize_ns": 113401,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 636950197,
+              "initialize_ns": 91467,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 616570888,
+              "initialize_ns": 128504,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 613975608,
+              "initialize_ns": 89314,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 616130142,
+              "initialize_ns": 109075,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 840118997,
+              "initialize_ns": 93821,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 620197205,
+              "initialize_ns": 86781,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 616325482,
+              "initialize_ns": 90727,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 618505595,
+              "initialize_ns": 106561,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 625675845,
+              "initialize_ns": 89665,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 609604075,
+              "initialize_ns": 117427,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 613354656,
+              "initialize_ns": 89364,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 615245435,
+              "initialize_ns": 109855,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 620137107,
+              "initialize_ns": 91568,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 601922375,
+              "initialize_ns": 90056,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 606288902,
+              "initialize_ns": 118158,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 583238360,
+              "initialize_ns": 107342,
+              "source_steps": 1650
+            }
+          ]
+        },
+        "4": {
+          "warm_samples": 16,
+          "median_ns": 336286712.0,
+          "p95_ns": 431043606,
+          "median_initialize_ns": 90922.0,
+          "rows": [
+            {
+              "host_calls": 413,
+              "execution_ns": 331323603,
+              "initialize_ns": 91297,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 328036408,
+              "initialize_ns": 110957,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 334524146,
+              "initialize_ns": 89044,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 332362403,
+              "initialize_ns": 90336,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 338509279,
+              "initialize_ns": 89996,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 348069216,
+              "initialize_ns": 136296,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 349039417,
+              "initialize_ns": 89825,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 336199462,
+              "initialize_ns": 94332,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 332967372,
+              "initialize_ns": 91888,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 338154749,
+              "initialize_ns": 108453,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 334110821,
+              "initialize_ns": 89835,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 337010462,
+              "initialize_ns": 91167,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 336373962,
+              "initialize_ns": 89946,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 327318606,
+              "initialize_ns": 106691,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 327712972,
+              "initialize_ns": 90646,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 431043606,
+              "initialize_ns": 90677,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 339115943,
+              "initialize_ns": 91599,
+              "source_steps": 1650
+            }
+          ]
+        },
+        "16": {
+          "warm_samples": 16,
+          "median_ns": 254729155.0,
+          "p95_ns": 282281031,
+          "median_initialize_ns": 90291.0,
+          "rows": [
+            {
+              "host_calls": 104,
+              "execution_ns": 248633569,
+              "initialize_ns": 123146,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 247290064,
+              "initialize_ns": 89695,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 260024888,
+              "initialize_ns": 150918,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 248784781,
+              "initialize_ns": 90577,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 248275854,
+              "initialize_ns": 89866,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 251927065,
+              "initialize_ns": 90676,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 267753327,
+              "initialize_ns": 109034,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 253128633,
+              "initialize_ns": 88002,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 256329677,
+              "initialize_ns": 123326,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 256780588,
+              "initialize_ns": 120822,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 270142323,
+              "initialize_ns": 108904,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 257471421,
+              "initialize_ns": 89144,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 252466478,
+              "initialize_ns": 88984,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 248870570,
+              "initialize_ns": 88634,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 282281031,
+              "initialize_ns": 120822,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 244548680,
+              "initialize_ns": 88434,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 266792183,
+              "initialize_ns": 90005,
+              "source_steps": 1650
+            }
+          ]
+        },
+        "64": {
+          "warm_samples": 16,
+          "median_ns": 225614543.0,
+          "p95_ns": 246171363,
+          "median_initialize_ns": 89520.0,
+          "rows": [
+            {
+              "host_calls": 26,
+              "execution_ns": 222204348,
+              "initialize_ns": 89154,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 245994703,
+              "initialize_ns": 88634,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 224681511,
+              "initialize_ns": 89124,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 221557973,
+              "initialize_ns": 104748,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 223248199,
+              "initialize_ns": 118899,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 225047360,
+              "initialize_ns": 92839,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 246171363,
+              "initialize_ns": 90606,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 231131677,
+              "initialize_ns": 106080,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 237463168,
+              "initialize_ns": 88513,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 233608018,
+              "initialize_ns": 85989,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 233706266,
+              "initialize_ns": 87992,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 236125137,
+              "initialize_ns": 108583,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 221706372,
+              "initialize_ns": 87752,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 223468889,
+              "initialize_ns": 88113,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 221797570,
+              "initialize_ns": 89916,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 225902332,
+              "initialize_ns": 101223,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 225326754,
+              "initialize_ns": 88163,
+              "source_steps": 1650
+            }
+          ]
+        }
+      },
+      "diagnostic": {
+        "profiled_transitions": 64,
+        "boundary_proxy_ns": 117219.324,
+        "snapshot_ns": 12763.0,
+        "trace_prefix_rows": 65,
+        "trace_prefix_ns_with_initialization": 26369549,
+        "baseline_full_execution_ns": 618560263,
+        "baseline_full_source_steps": 1650,
+        "operators": [
+          {
+            "name": "forward",
+            "self_cpu_us": 3209.491999999936,
+            "count": 64
+          },
+          {
+            "name": "aten::reshape",
+            "self_cpu_us": 296.7229999999456,
+            "count": 320
+          },
+          {
+            "name": "aten::view",
+            "self_cpu_us": 368.37300000000505,
+            "count": 320
+          },
+          {
+            "name": "aten::index_select",
+            "self_cpu_us": 606.9210000000733,
+            "count": 128
+          },
+          {
+            "name": "aten::empty",
+            "self_cpu_us": 499.406000000036,
+            "count": 1223
+          },
+          {
+            "name": "aten::select",
+            "self_cpu_us": 1675.9520000000996,
+            "count": 1664
+          },
+          {
+            "name": "aten::as_strided",
+            "self_cpu_us": 1354.0339999999983,
+            "count": 3584
+          },
+          {
+            "name": "aten::eq",
+            "self_cpu_us": 1160.1819999999739,
+            "count": 768
+          },
+          {
+            "name": "aten::gt",
+            "self_cpu_us": 517.3100000000102,
+            "count": 320
+          },
+          {
+            "name": "aten::__and__",
+            "self_cpu_us": 593.5979999999497,
+            "count": 903
+          },
+          {
+            "name": "aten::bitwise_and",
+            "self_cpu_us": 1227.7720000000704,
+            "count": 903
+          },
+          {
+            "name": "aten::item",
+            "self_cpu_us": 147.40800000001116,
+            "count": 256
+          },
+          {
+            "name": "aten::_local_scalar_dense",
+            "self_cpu_us": 85.79300000000626,
+            "count": 256
+          },
+          {
+            "name": "aten::ge",
+            "self_cpu_us": 154.9569999999859,
+            "count": 64
+          },
+          {
+            "name": "aten::ne",
+            "self_cpu_us": 282.24099999996406,
+            "count": 192
+          },
+          {
+            "name": "aten::to",
+            "self_cpu_us": 547.3929999999818,
+            "count": 1230
+          },
+          {
+            "name": "aten::_to_copy",
+            "self_cpu_us": 540.7940000000119,
+            "count": 519
+          },
+          {
+            "name": "aten::empty_strided",
+            "self_cpu_us": 330.8099999999878,
+            "count": 583
+          },
+          {
+            "name": "aten::copy_",
+            "self_cpu_us": 458.3530000000243,
+            "count": 519
+          },
+          {
+            "name": "aten::sub",
+            "self_cpu_us": 740.6530000000115,
+            "count": 448
+          },
+          {
+            "name": "aten::clamp",
+            "self_cpu_us": 443.24299999998533,
+            "count": 256
+          },
+          {
+            "name": "aten::gather",
+            "self_cpu_us": 496.39500000000754,
+            "count": 256
+          },
+          {
+            "name": "aten::__xor__",
+            "self_cpu_us": 86.35199999999583,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_xor",
+            "self_cpu_us": 317.0780000000066,
+            "count": 128
+          },
+          {
+            "name": "aten::where",
+            "self_cpu_us": 2035.0709999999517,
+            "count": 1216
+          },
+          {
+            "name": "aten::add",
+            "self_cpu_us": 743.4060000000037,
+            "count": 640
+          },
+          {
+            "name": "aten::__lshift__",
+            "self_cpu_us": 143.87199999999228,
+            "count": 64
+          },
+          {
+            "name": "aten::sum",
+            "self_cpu_us": 701.6630000000312,
+            "count": 256
+          },
+          {
+            "name": "aten::fill_",
+            "self_cpu_us": 79.75800000001232,
+            "count": 256
+          },
+          {
+            "name": "aten::zeros_like",
+            "self_cpu_us": 113.33799999999201,
+            "count": 64
+          },
+          {
+            "name": "aten::empty_like",
+            "self_cpu_us": 77.00599999999741,
+            "count": 64
+          },
+          {
+            "name": "aten::zero_",
+            "self_cpu_us": 24.211000000010415,
+            "count": 64
+          },
+          {
+            "name": "aten::lt",
+            "self_cpu_us": 170.15000000000038,
+            "count": 128
+          },
+          {
+            "name": "aten::mul",
+            "self_cpu_us": 622.4970000000231,
+            "count": 448
+          },
+          {
+            "name": "aten::stack",
+            "self_cpu_us": 685.9579999999781,
+            "count": 128
+          },
+          {
+            "name": "aten::unsqueeze",
+            "self_cpu_us": 775.0349999999327,
+            "count": 1664
+          },
+          {
+            "name": "aten::cat",
+            "self_cpu_us": 291.5739999999904,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_not",
+            "self_cpu_us": 165.61800000000733,
+            "count": 128
+          },
+          {
+            "name": "aten::scalar_tensor",
+            "self_cpu_us": 102.57100000000776,
+            "count": 192
+          },
+          {
+            "name": "aten::__rshift__",
+            "self_cpu_us": 13.108999999994012,
+            "count": 7
+          },
+          {
+            "name": "aten::scatter_",
+            "self_cpu_us": 28.27399999999807,
+            "count": 7
+          }
+        ]
+      },
+      "process_peak_rss_kib": 357544
+    },
+    {
+      "pages": 256,
+      "agents": 2,
+      "image_preparation_ns": 1944553,
+      "binary_sha256": "087f9f75538e20b9767a6b8dfe95c675849859fdba2a09fec20bcc2ac1aefe29",
+      "timings": {
+        "1": {
+          "warm_samples": 16,
+          "median_ns": 168843620.0,
+          "p95_ns": 356827989,
+          "median_initialize_ns": 1255659.0,
+          "rows": [
+            {
+              "host_calls": 450,
+              "execution_ns": 173872326,
+              "initialize_ns": 4837998,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 168355349,
+              "initialize_ns": 1036392,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 168631645,
+              "initialize_ns": 1396305,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 178462903,
+              "initialize_ns": 1063472,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 171827402,
+              "initialize_ns": 1254721,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 169852196,
+              "initialize_ns": 1302996,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 167399965,
+              "initialize_ns": 1343538,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 169055595,
+              "initialize_ns": 1058668,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 183525174,
+              "initialize_ns": 1313903,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 167459504,
+              "initialize_ns": 1085408,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 167756492,
+              "initialize_ns": 1410960,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 170105088,
+              "initialize_ns": 1138118,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 178176931,
+              "initialize_ns": 1206931,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 167181575,
+              "initialize_ns": 1133812,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 356827989,
+              "initialize_ns": 1339321,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 167594298,
+              "initialize_ns": 1256597,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 450,
+              "execution_ns": 159030867,
+              "initialize_ns": 1404136,
+              "source_steps": 450
+            }
+          ]
+        },
+        "4": {
+          "warm_samples": 16,
+          "median_ns": 92380777.0,
+          "p95_ns": 118902041,
+          "median_initialize_ns": 1216956.0,
+          "rows": [
+            {
+              "host_calls": 113,
+              "execution_ns": 96997180,
+              "initialize_ns": 1193890,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 92155224,
+              "initialize_ns": 1208231,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 95530571,
+              "initialize_ns": 1171235,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 94447448,
+              "initialize_ns": 1304385,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 92171157,
+              "initialize_ns": 1147700,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 93330024,
+              "initialize_ns": 1250695,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 91342934,
+              "initialize_ns": 1116356,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 92590397,
+              "initialize_ns": 1359222,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 118902041,
+              "initialize_ns": 1120512,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 95861393,
+              "initialize_ns": 1225681,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 91022019,
+              "initialize_ns": 1144067,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 93592960,
+              "initialize_ns": 1397029,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 92745040,
+              "initialize_ns": 1126721,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 92058674,
+              "initialize_ns": 1233592,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 89176323,
+              "initialize_ns": 1327484,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 89137821,
+              "initialize_ns": 1400214,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 113,
+              "execution_ns": 90345384,
+              "initialize_ns": 1117174,
+              "source_steps": 450
+            }
+          ]
+        },
+        "16": {
+          "warm_samples": 16,
+          "median_ns": 68780816.0,
+          "p95_ns": 81798207,
+          "median_initialize_ns": 1184737.5,
+          "rows": [
+            {
+              "host_calls": 29,
+              "execution_ns": 77303189,
+              "initialize_ns": 1387882,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68338878,
+              "initialize_ns": 1155932,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68656237,
+              "initialize_ns": 1164545,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 69030090,
+              "initialize_ns": 1130143,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68468373,
+              "initialize_ns": 1298377,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68822967,
+              "initialize_ns": 1108310,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68608148,
+              "initialize_ns": 1239931,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68676231,
+              "initialize_ns": 1202105,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 81798207,
+              "initialize_ns": 1363728,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68738665,
+              "initialize_ns": 1099860,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68852536,
+              "initialize_ns": 1231840,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 69327253,
+              "initialize_ns": 1135013,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 72379741,
+              "initialize_ns": 1365861,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 69358280,
+              "initialize_ns": 1136325,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 68433373,
+              "initialize_ns": 1293793,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 67645435,
+              "initialize_ns": 1167370,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 29,
+              "execution_ns": 69547584,
+              "initialize_ns": 1304737,
+              "source_steps": 450
+            }
+          ]
+        },
+        "64": {
+          "warm_samples": 16,
+          "median_ns": 62944694.0,
+          "p95_ns": 72623358,
+          "median_initialize_ns": 1252630.5,
+          "rows": [
+            {
+              "host_calls": 8,
+              "execution_ns": 62430984,
+              "initialize_ns": 1084014,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62641711,
+              "initialize_ns": 1355052,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62947722,
+              "initialize_ns": 1042021,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 63987040,
+              "initialize_ns": 1300089,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 63225361,
+              "initialize_ns": 1069442,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 68106634,
+              "initialize_ns": 1436576,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62941154,
+              "initialize_ns": 1095604,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62771308,
+              "initialize_ns": 1329687,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 72623358,
+              "initialize_ns": 1127421,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62422871,
+              "initialize_ns": 1355536,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 63700400,
+              "initialize_ns": 1028603,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62470724,
+              "initialize_ns": 1317288,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 63421088,
+              "initialize_ns": 1219561,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 61571817,
+              "initialize_ns": 1446183,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62450353,
+              "initialize_ns": 1067221,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 63382981,
+              "initialize_ns": 1285700,
+              "source_steps": 450
+            },
+            {
+              "host_calls": 8,
+              "execution_ns": 62941666,
+              "initialize_ns": 1109493,
+              "source_steps": 450
+            }
+          ]
+        }
+      },
+      "diagnostic": {
+        "profiled_transitions": 64,
+        "boundary_proxy_ns": 114903.562,
+        "snapshot_ns": 815836.0,
+        "trace_prefix_rows": 65,
+        "trace_prefix_ns_with_initialization": 28652881,
+        "baseline_full_execution_ns": 176654764,
+        "baseline_full_source_steps": 450,
+        "operators": [
+          {
+            "name": "forward",
+            "self_cpu_us": 3682.6389999997764,
+            "count": 64
+          },
+          {
+            "name": "aten::reshape",
+            "self_cpu_us": 281.9859999999054,
+            "count": 320
+          },
+          {
+            "name": "aten::view",
+            "self_cpu_us": 373.7660000000483,
+            "count": 320
+          },
+          {
+            "name": "aten::index_select",
+            "self_cpu_us": 605.4319999999932,
+            "count": 128
+          },
+          {
+            "name": "aten::empty",
+            "self_cpu_us": 533.6569999999693,
+            "count": 1223
+          },
+          {
+            "name": "aten::select",
+            "self_cpu_us": 1709.0560000000842,
+            "count": 1664
+          },
+          {
+            "name": "aten::as_strided",
+            "self_cpu_us": 1521.3070000000355,
+            "count": 3584
+          },
+          {
+            "name": "aten::eq",
+            "self_cpu_us": 1223.481999999992,
+            "count": 768
+          },
+          {
+            "name": "aten::gt",
+            "self_cpu_us": 449.4260000000146,
+            "count": 320
+          },
+          {
+            "name": "aten::__and__",
+            "self_cpu_us": 715.4159999999958,
+            "count": 903
+          },
+          {
+            "name": "aten::bitwise_and",
+            "self_cpu_us": 1264.2920000000215,
+            "count": 903
+          },
+          {
+            "name": "aten::item",
+            "self_cpu_us": 152.73100000003367,
+            "count": 256
+          },
+          {
+            "name": "aten::_local_scalar_dense",
+            "self_cpu_us": 90.52500000002482,
+            "count": 256
+          },
+          {
+            "name": "aten::ge",
+            "self_cpu_us": 161.3200000000051,
+            "count": 64
+          },
+          {
+            "name": "aten::ne",
+            "self_cpu_us": 290.70500000001294,
+            "count": 192
+          },
+          {
+            "name": "aten::to",
+            "self_cpu_us": 544.2030000000528,
+            "count": 1230
+          },
+          {
+            "name": "aten::_to_copy",
+            "self_cpu_us": 607.642000000003,
+            "count": 519
+          },
+          {
+            "name": "aten::empty_strided",
+            "self_cpu_us": 349.22399999997197,
+            "count": 583
+          },
+          {
+            "name": "aten::copy_",
+            "self_cpu_us": 999.1080000000179,
+            "count": 519
+          },
+          {
+            "name": "aten::sub",
+            "self_cpu_us": 879.9859999999475,
+            "count": 448
+          },
+          {
+            "name": "aten::clamp",
+            "self_cpu_us": 563.8520000000439,
+            "count": 256
+          },
+          {
+            "name": "aten::gather",
+            "self_cpu_us": 535.3609999999253,
+            "count": 256
+          },
+          {
+            "name": "aten::__xor__",
+            "self_cpu_us": 89.91300000003548,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_xor",
+            "self_cpu_us": 330.1069999999802,
+            "count": 128
+          },
+          {
+            "name": "aten::where",
+            "self_cpu_us": 1932.6420000000994,
+            "count": 1216
+          },
+          {
+            "name": "aten::add",
+            "self_cpu_us": 738.1040000000273,
+            "count": 640
+          },
+          {
+            "name": "aten::__lshift__",
+            "self_cpu_us": 129.51299999999043,
+            "count": 64
+          },
+          {
+            "name": "aten::sum",
+            "self_cpu_us": 829.1189999999849,
+            "count": 256
+          },
+          {
+            "name": "aten::fill_",
+            "self_cpu_us": 82.11899999998917,
+            "count": 256
+          },
+          {
+            "name": "aten::zeros_like",
+            "self_cpu_us": 119.93799999998498,
+            "count": 64
+          },
+          {
+            "name": "aten::empty_like",
+            "self_cpu_us": 50.45700000000579,
+            "count": 64
+          },
+          {
+            "name": "aten::zero_",
+            "self_cpu_us": 24.219000000003803,
+            "count": 64
+          },
+          {
+            "name": "aten::lt",
+            "self_cpu_us": 283.27700000001215,
+            "count": 128
+          },
+          {
+            "name": "aten::mul",
+            "self_cpu_us": 2061.0580000000364,
+            "count": 448
+          },
+          {
+            "name": "aten::stack",
+            "self_cpu_us": 763.5150000000167,
+            "count": 128
+          },
+          {
+            "name": "aten::unsqueeze",
+            "self_cpu_us": 803.2730000000023,
+            "count": 1664
+          },
+          {
+            "name": "aten::cat",
+            "self_cpu_us": 306.6090000000131,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_not",
+            "self_cpu_us": 168.132999999964,
+            "count": 128
+          },
+          {
+            "name": "aten::scalar_tensor",
+            "self_cpu_us": 104.39799999994773,
+            "count": 192
+          },
+          {
+            "name": "aten::__rshift__",
+            "self_cpu_us": 13.613000000004376,
+            "count": 7
+          },
+          {
+            "name": "aten::scatter_",
+            "self_cpu_us": 30.687000000006265,
+            "count": 7
+          }
+        ]
+      },
+      "process_peak_rss_kib": 455996
+    },
+    {
+      "pages": 256,
+      "agents": 8,
+      "image_preparation_ns": 1944553,
+      "binary_sha256": "087f9f75538e20b9767a6b8dfe95c675849859fdba2a09fec20bcc2ac1aefe29",
+      "timings": {
+        "1": {
+          "warm_samples": 16,
+          "median_ns": 618025881.5,
+          "p95_ns": 794945272,
+          "median_initialize_ns": 1202755.0,
+          "rows": [
+            {
+              "host_calls": 1650,
+              "execution_ns": 647008149,
+              "initialize_ns": 1186268,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 639798296,
+              "initialize_ns": 1072667,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 653273330,
+              "initialize_ns": 1468405,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 692810014,
+              "initialize_ns": 1181001,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 625476676,
+              "initialize_ns": 1175973,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 794945272,
+              "initialize_ns": 1035873,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 593076269,
+              "initialize_ns": 1276646,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 601075865,
+              "initialize_ns": 1266070,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 597723709,
+              "initialize_ns": 1398078,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 604591280,
+              "initialize_ns": 1145839,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 628759230,
+              "initialize_ns": 1411439,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 604107786,
+              "initialize_ns": 1036673,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 628397090,
+              "initialize_ns": 1217307,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 610575087,
+              "initialize_ns": 1188203,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 610100587,
+              "initialize_ns": 1404038,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 721612139,
+              "initialize_ns": 1049483,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 1650,
+              "execution_ns": 604033836,
+              "initialize_ns": 1354243,
+              "source_steps": 1650
+            }
+          ]
+        },
+        "4": {
+          "warm_samples": 16,
+          "median_ns": 331743177.0,
+          "p95_ns": 369407777,
+          "median_initialize_ns": 1210570.5,
+          "rows": [
+            {
+              "host_calls": 413,
+              "execution_ns": 350208142,
+              "initialize_ns": 1126738,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 342770481,
+              "initialize_ns": 5233901,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 369407777,
+              "initialize_ns": 1196945,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 333515327,
+              "initialize_ns": 1330757,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 331939431,
+              "initialize_ns": 1095432,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 333170388,
+              "initialize_ns": 1224196,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 329862252,
+              "initialize_ns": 1180370,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 334101145,
+              "initialize_ns": 1355455,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 330679564,
+              "initialize_ns": 1075803,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 331546923,
+              "initialize_ns": 3252155,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 338100340,
+              "initialize_ns": 1091956,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 329879279,
+              "initialize_ns": 1342665,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 326099928,
+              "initialize_ns": 1082132,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 330366767,
+              "initialize_ns": 1255634,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 329172225,
+              "initialize_ns": 1149974,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 334053906,
+              "initialize_ns": 1332700,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 413,
+              "execution_ns": 327925645,
+              "initialize_ns": 1083795,
+              "source_steps": 1650
+            }
+          ]
+        },
+        "16": {
+          "warm_samples": 16,
+          "median_ns": 249867580.0,
+          "p95_ns": 261202303,
+          "median_initialize_ns": 1233825.5,
+          "rows": [
+            {
+              "host_calls": 104,
+              "execution_ns": 258936002,
+              "initialize_ns": 1476375,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 258645254,
+              "initialize_ns": 1095622,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 258984942,
+              "initialize_ns": 1444859,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 251255787,
+              "initialize_ns": 1128531,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 250219624,
+              "initialize_ns": 1267000,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 249539458,
+              "initialize_ns": 1330306,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 258970796,
+              "initialize_ns": 1407412,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 246726661,
+              "initialize_ns": 1182924,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 245846312,
+              "initialize_ns": 1396105,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 246008097,
+              "initialize_ns": 1064355,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 249087340,
+              "initialize_ns": 1268133,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 249040620,
+              "initialize_ns": 1102243,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 245883987,
+              "initialize_ns": 1460854,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 250195702,
+              "initialize_ns": 1163816,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 246782383,
+              "initialize_ns": 1200651,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 251476526,
+              "initialize_ns": 1148312,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 104,
+              "execution_ns": 261202303,
+              "initialize_ns": 1382585,
+              "source_steps": 1650
+            }
+          ]
+        },
+        "64": {
+          "warm_samples": 16,
+          "median_ns": 225584938.0,
+          "p95_ns": 252162504,
+          "median_initialize_ns": 1128557.0,
+          "rows": [
+            {
+              "host_calls": 26,
+              "execution_ns": 232034922,
+              "initialize_ns": 1249213,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 231105653,
+              "initialize_ns": 1380865,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 239304634,
+              "initialize_ns": 1126970,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 252162504,
+              "initialize_ns": 1202303,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 240823715,
+              "initialize_ns": 1107710,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 229219507,
+              "initialize_ns": 1396866,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 231926849,
+              "initialize_ns": 1130144,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 225188565,
+              "initialize_ns": 1093048,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 225981311,
+              "initialize_ns": 1372601,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 224087074,
+              "initialize_ns": 1411569,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 229362335,
+              "initialize_ns": 1042873,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 224392331,
+              "initialize_ns": 1124916,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 224141979,
+              "initialize_ns": 1071267,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 221951084,
+              "initialize_ns": 1364579,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 221934538,
+              "initialize_ns": 1058498,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 222961524,
+              "initialize_ns": 1169623,
+              "source_steps": 1650
+            },
+            {
+              "host_calls": 26,
+              "execution_ns": 222810556,
+              "initialize_ns": 1054851,
+              "source_steps": 1650
+            }
+          ]
+        }
+      },
+      "diagnostic": {
+        "profiled_transitions": 64,
+        "boundary_proxy_ns": 119177.521,
+        "snapshot_ns": 964917.75,
+        "trace_prefix_rows": 65,
+        "trace_prefix_ns_with_initialization": 34784202,
+        "baseline_full_execution_ns": 629084062,
+        "baseline_full_source_steps": 1650,
+        "operators": [
+          {
+            "name": "forward",
+            "self_cpu_us": 3296.45599999992,
+            "count": 64
+          },
+          {
+            "name": "aten::reshape",
+            "self_cpu_us": 264.3180000000161,
+            "count": 320
+          },
+          {
+            "name": "aten::view",
+            "self_cpu_us": 360.0750000000136,
+            "count": 320
+          },
+          {
+            "name": "aten::index_select",
+            "self_cpu_us": 636.8889999999939,
+            "count": 128
+          },
+          {
+            "name": "aten::empty",
+            "self_cpu_us": 545.8969999999829,
+            "count": 1223
+          },
+          {
+            "name": "aten::select",
+            "self_cpu_us": 1618.1189999999106,
+            "count": 1664
+          },
+          {
+            "name": "aten::as_strided",
+            "self_cpu_us": 1336.1670000001345,
+            "count": 3584
+          },
+          {
+            "name": "aten::eq",
+            "self_cpu_us": 1151.2309999999884,
+            "count": 768
+          },
+          {
+            "name": "aten::gt",
+            "self_cpu_us": 463.20199999998056,
+            "count": 320
+          },
+          {
+            "name": "aten::__and__",
+            "self_cpu_us": 592.4689999999792,
+            "count": 903
+          },
+          {
+            "name": "aten::bitwise_and",
+            "self_cpu_us": 1205.3660000000082,
+            "count": 903
+          },
+          {
+            "name": "aten::item",
+            "self_cpu_us": 148.57500000000493,
+            "count": 256
+          },
+          {
+            "name": "aten::_local_scalar_dense",
+            "self_cpu_us": 109.34600000000373,
+            "count": 256
+          },
+          {
+            "name": "aten::ge",
+            "self_cpu_us": 123.74200000000224,
+            "count": 64
+          },
+          {
+            "name": "aten::ne",
+            "self_cpu_us": 307.0299999999932,
+            "count": 192
+          },
+          {
+            "name": "aten::to",
+            "self_cpu_us": 513.1669999999522,
+            "count": 1230
+          },
+          {
+            "name": "aten::_to_copy",
+            "self_cpu_us": 536.9889999999574,
+            "count": 519
+          },
+          {
+            "name": "aten::empty_strided",
+            "self_cpu_us": 336.43300000003956,
+            "count": 583
+          },
+          {
+            "name": "aten::copy_",
+            "self_cpu_us": 461.71700000001397,
+            "count": 519
+          },
+          {
+            "name": "aten::sub",
+            "self_cpu_us": 789.9280000000376,
+            "count": 448
+          },
+          {
+            "name": "aten::clamp",
+            "self_cpu_us": 439.99300000003615,
+            "count": 256
+          },
+          {
+            "name": "aten::gather",
+            "self_cpu_us": 523.2810000000129,
+            "count": 256
+          },
+          {
+            "name": "aten::__xor__",
+            "self_cpu_us": 87.33599999999666,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_xor",
+            "self_cpu_us": 320.9279999999902,
+            "count": 128
+          },
+          {
+            "name": "aten::where",
+            "self_cpu_us": 1878.316999999996,
+            "count": 1216
+          },
+          {
+            "name": "aten::add",
+            "self_cpu_us": 714.5290000000118,
+            "count": 640
+          },
+          {
+            "name": "aten::__lshift__",
+            "self_cpu_us": 123.92399999998253,
+            "count": 64
+          },
+          {
+            "name": "aten::sum",
+            "self_cpu_us": 699.73200000003,
+            "count": 256
+          },
+          {
+            "name": "aten::fill_",
+            "self_cpu_us": 77.79700000000327,
+            "count": 256
+          },
+          {
+            "name": "aten::zeros_like",
+            "self_cpu_us": 113.85299999996596,
+            "count": 64
+          },
+          {
+            "name": "aten::empty_like",
+            "self_cpu_us": 48.89799999998263,
+            "count": 64
+          },
+          {
+            "name": "aten::zero_",
+            "self_cpu_us": 28.043000000017457,
+            "count": 64
+          },
+          {
+            "name": "aten::lt",
+            "self_cpu_us": 165.62500000000927,
+            "count": 128
+          },
+          {
+            "name": "aten::mul",
+            "self_cpu_us": 616.4730000000377,
+            "count": 448
+          },
+          {
+            "name": "aten::stack",
+            "self_cpu_us": 733.0020000000798,
+            "count": 128
+          },
+          {
+            "name": "aten::unsqueeze",
+            "self_cpu_us": 783.0319999998699,
+            "count": 1664
+          },
+          {
+            "name": "aten::cat",
+            "self_cpu_us": 293.7520000000141,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_not",
+            "self_cpu_us": 215.11400000001322,
+            "count": 128
+          },
+          {
+            "name": "aten::scalar_tensor",
+            "self_cpu_us": 138.29500000001644,
+            "count": 192
+          },
+          {
+            "name": "aten::__rshift__",
+            "self_cpu_us": 13.497999999997319,
+            "count": 7
+          },
+          {
+            "name": "aten::scatter_",
+            "self_cpu_us": 30.56400000000258,
+            "count": 7
+          }
+        ]
+      },
+      "process_peak_rss_kib": 473148
+    },
+    {
+      "workload": "full BFS",
+      "page_sha256": "c7c4668273b51fb0f578fd2672c6e17d22439e20ff2ca1a20d3352144fb17744",
+      "binary_sha256": "7726937328d9d66462c3ff4838e732549bd983b23f4e8cd26eeae0edf696b63f",
+      "image_preparation_ns": 1212549,
+      "timings": {
+        "1": {
+          "warm_samples": 2,
+          "median_ns": 15897955863.5,
+          "p95_ns": 16076336851,
+          "median_initialize_ns": 192790.5,
+          "rows": [
+            {
+              "host_calls": 41591,
+              "execution_ns": 16076336851,
+              "initialize_ns": 131938,
+              "source_steps": 41591
+            },
+            {
+              "host_calls": 41591,
+              "execution_ns": 15719574876,
+              "initialize_ns": 253643,
+              "source_steps": 41591
+            }
+          ]
+        },
+        "4": {
+          "warm_samples": 2,
+          "median_ns": 8408734316.5,
+          "p95_ns": 8523377582,
+          "median_initialize_ns": 238369.5,
+          "rows": [
+            {
+              "host_calls": 10398,
+              "execution_ns": 8523377582,
+              "initialize_ns": 382186,
+              "source_steps": 41591
+            },
+            {
+              "host_calls": 10398,
+              "execution_ns": 8294091051,
+              "initialize_ns": 94553,
+              "source_steps": 41591
+            }
+          ]
+        },
+        "16": {
+          "warm_samples": 2,
+          "median_ns": 6412573178.5,
+          "p95_ns": 6565880685,
+          "median_initialize_ns": 120622.0,
+          "rows": [
+            {
+              "host_calls": 2600,
+              "execution_ns": 6565880685,
+              "initialize_ns": 122745,
+              "source_steps": 41591
+            },
+            {
+              "host_calls": 2600,
+              "execution_ns": 6259265672,
+              "initialize_ns": 118499,
+              "source_steps": 41591
+            }
+          ]
+        },
+        "64": {
+          "warm_samples": 2,
+          "median_ns": 5875398135.5,
+          "p95_ns": 5937874858,
+          "median_initialize_ns": 126355.5,
+          "rows": [
+            {
+              "host_calls": 650,
+              "execution_ns": 5812921413,
+              "initialize_ns": 92870,
+              "source_steps": 41591
+            },
+            {
+              "host_calls": 650,
+              "execution_ns": 5937874858,
+              "initialize_ns": 159841,
+              "source_steps": 41591
+            }
+          ]
+        }
+      },
+      "diagnostic": {
+        "profiled_transitions": 64,
+        "boundary_proxy_ns": 125702.489,
+        "snapshot_ns": 12453.75,
+        "trace_prefix_rows": 65,
+        "trace_prefix_ns_with_initialization": 27220214,
+        "baseline_full_execution_ns": 16128919714,
+        "baseline_full_source_steps": 41591,
+        "operators": [
+          {
+            "name": "forward",
+            "self_cpu_us": 3125.9129999999573,
+            "count": 64
+          },
+          {
+            "name": "aten::reshape",
+            "self_cpu_us": 278.8900000000386,
+            "count": 320
+          },
+          {
+            "name": "aten::view",
+            "self_cpu_us": 360.29799999997334,
+            "count": 320
+          },
+          {
+            "name": "aten::index_select",
+            "self_cpu_us": 585.1100000000035,
+            "count": 128
+          },
+          {
+            "name": "aten::empty",
+            "self_cpu_us": 526.7840000000236,
+            "count": 1218
+          },
+          {
+            "name": "aten::select",
+            "self_cpu_us": 1642.112000000083,
+            "count": 1664
+          },
+          {
+            "name": "aten::as_strided",
+            "self_cpu_us": 1362.1970000000515,
+            "count": 3584
+          },
+          {
+            "name": "aten::eq",
+            "self_cpu_us": 1117.8010000000397,
+            "count": 768
+          },
+          {
+            "name": "aten::gt",
+            "self_cpu_us": 462.185999999981,
+            "count": 320
+          },
+          {
+            "name": "aten::__and__",
+            "self_cpu_us": 587.7170000000373,
+            "count": 898
+          },
+          {
+            "name": "aten::bitwise_and",
+            "self_cpu_us": 1264.9559999999592,
+            "count": 898
+          },
+          {
+            "name": "aten::item",
+            "self_cpu_us": 147.68900000000983,
+            "count": 256
+          },
+          {
+            "name": "aten::_local_scalar_dense",
+            "self_cpu_us": 83.9410000000147,
+            "count": 256
+          },
+          {
+            "name": "aten::ge",
+            "self_cpu_us": 125.34899999998012,
+            "count": 64
+          },
+          {
+            "name": "aten::ne",
+            "self_cpu_us": 281.46199999997964,
+            "count": 192
+          },
+          {
+            "name": "aten::to",
+            "self_cpu_us": 516.1960000000626,
+            "count": 1220
+          },
+          {
+            "name": "aten::_to_copy",
+            "self_cpu_us": 554.7300000000618,
+            "count": 514
+          },
+          {
+            "name": "aten::empty_strided",
+            "self_cpu_us": 353.72999999998,
+            "count": 578
+          },
+          {
+            "name": "aten::copy_",
+            "self_cpu_us": 430.33299999993835,
+            "count": 514
+          },
+          {
+            "name": "aten::sub",
+            "self_cpu_us": 779.5600000000248,
+            "count": 448
+          },
+          {
+            "name": "aten::clamp",
+            "self_cpu_us": 439.0419999999988,
+            "count": 256
+          },
+          {
+            "name": "aten::gather",
+            "self_cpu_us": 530.0979999999411,
+            "count": 256
+          },
+          {
+            "name": "aten::__xor__",
+            "self_cpu_us": 88.35599999998868,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_xor",
+            "self_cpu_us": 405.5030000000145,
+            "count": 128
+          },
+          {
+            "name": "aten::where",
+            "self_cpu_us": 1863.1939999999108,
+            "count": 1216
+          },
+          {
+            "name": "aten::add",
+            "self_cpu_us": 725.2780000000007,
+            "count": 640
+          },
+          {
+            "name": "aten::__lshift__",
+            "self_cpu_us": 126.1140000000193,
+            "count": 64
+          },
+          {
+            "name": "aten::sum",
+            "self_cpu_us": 724.7190000000282,
+            "count": 256
+          },
+          {
+            "name": "aten::fill_",
+            "self_cpu_us": 78.83299999995558,
+            "count": 256
+          },
+          {
+            "name": "aten::zeros_like",
+            "self_cpu_us": 110.54499999999513,
+            "count": 64
+          },
+          {
+            "name": "aten::empty_like",
+            "self_cpu_us": 54.59300000000718,
+            "count": 64
+          },
+          {
+            "name": "aten::zero_",
+            "self_cpu_us": 24.320000000006246,
+            "count": 64
+          },
+          {
+            "name": "aten::lt",
+            "self_cpu_us": 198.7890000000092,
+            "count": 128
+          },
+          {
+            "name": "aten::mul",
+            "self_cpu_us": 609.9949999999972,
+            "count": 448
+          },
+          {
+            "name": "aten::stack",
+            "self_cpu_us": 695.8579999999924,
+            "count": 128
+          },
+          {
+            "name": "aten::unsqueeze",
+            "self_cpu_us": 851.5439999999294,
+            "count": 1664
+          },
+          {
+            "name": "aten::cat",
+            "self_cpu_us": 269.34900000001676,
+            "count": 128
+          },
+          {
+            "name": "aten::bitwise_not",
+            "self_cpu_us": 163.69300000000248,
+            "count": 128
+          },
+          {
+            "name": "aten::scalar_tensor",
+            "self_cpu_us": 101.11799999999789,
+            "count": 192
+          },
+          {
+            "name": "aten::__rshift__",
+            "self_cpu_us": 3.994999999999436,
+            "count": 2
+          },
+          {
+            "name": "aten::scatter_",
+            "self_cpu_us": 8.471999999999753,
+            "count": 2
+          }
+        ]
+      },
+      "process_peak_rss_kib": 473148
+    }
+  ]
+}

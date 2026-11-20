@@ -1,0 +1,2983 @@
+{
+  "frozen_sha256": "440afc077ec4559dbfe998bcdbee363afb3b3c8f7d223cc1382a6a94906b421e",
+  "operators": [
+    "aten::Bool.Tensor",
+    "aten::__and__.Scalar",
+    "aten::__and__.Tensor",
+    "aten::__lshift__.Tensor",
+    "aten::__rshift__.Tensor",
+    "aten::__xor__.Scalar",
+    "aten::add.Scalar",
+    "aten::add.Tensor",
+    "aten::bitwise_not",
+    "aten::cat",
+    "aten::clamp",
+    "aten::eq.Scalar",
+    "aten::eq.Tensor",
+    "aten::gather",
+    "aten::ge.Scalar",
+    "aten::gt.Scalar",
+    "aten::gt.Tensor",
+    "aten::gt.int",
+    "aten::index_copy",
+    "aten::index_select",
+    "aten::lt.Tensor",
+    "aten::lt.int",
+    "aten::mul.Scalar",
+    "aten::mul.Tensor",
+    "aten::ne.Scalar",
+    "aten::numel",
+    "aten::reshape",
+    "aten::scatter_.src",
+    "aten::select.int",
+    "aten::size.int",
+    "aten::slice.Tensor",
+    "aten::stack",
+    "aten::sub.Scalar",
+    "aten::sub.Tensor",
+    "aten::sub.int",
+    "aten::sum",
+    "aten::to.dtype",
+    "aten::unsqueeze",
+    "aten::where.ScalarSelf",
+    "aten::where.self",
+    "aten::zeros_like"
+  ],
+  "witnesses": {
+    "nested-return": {
+      "binary_sha256": "fc9d0223791a9a4d1277340683f1963f81c4cc46d98b0904878ecc3de7c64011",
+      "image_sha256": "2d8dc75038be245c901d9af70f297b4be19491381fcc6ddd69eb54bfc795f89b",
+      "argument": 0,
+      "fuel": 100,
+      "status": 1,
+      "input_page_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "full_page_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "trace": [
+        {
+          "function": 2,
+          "pc": 0,
+          "opcode": "i32.const",
+          "next_image_pc": 8,
+          "depth": 0,
+          "fuel": 99,
+          "status": 0,
+          "stack": [
+            17
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 1,
+          "opcode": "local.set",
+          "next_image_pc": 9,
+          "depth": 0,
+          "fuel": 98,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            17,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 2,
+          "opcode": "i32.const",
+          "next_image_pc": 10,
+          "depth": 0,
+          "fuel": 97,
+          "status": 0,
+          "stack": [
+            9
+          ],
+          "locals": [
+            0,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 3,
+          "opcode": "local.get",
+          "next_image_pc": 11,
+          "depth": 0,
+          "fuel": 96,
+          "status": 0,
+          "stack": [
+            9,
+            0
+          ],
+          "locals": [
+            0,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            9,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 4,
+          "opcode": "call",
+          "next_image_pc": 4,
+          "depth": 1,
+          "fuel": 95,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 0,
+          "opcode": "local.get",
+          "next_image_pc": 5,
+          "depth": 1,
+          "fuel": 94,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 1,
+          "opcode": "call",
+          "next_image_pc": 0,
+          "depth": 2,
+          "fuel": 93,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 0,
+          "opcode": "local.get",
+          "next_image_pc": 1,
+          "depth": 2,
+          "fuel": 92,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 1,
+          "opcode": "i32.load",
+          "next_image_pc": 2,
+          "depth": 2,
+          "fuel": 91,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 2,
+          "opcode": "return",
+          "next_image_pc": 6,
+          "depth": 1,
+          "fuel": 90,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 2,
+          "opcode": "end",
+          "next_image_pc": 12,
+          "depth": 0,
+          "fuel": 89,
+          "status": 0,
+          "stack": [
+            9,
+            0
+          ],
+          "locals": [
+            0,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 5,
+          "opcode": "i32.add",
+          "next_image_pc": 13,
+          "depth": 0,
+          "fuel": 88,
+          "status": 0,
+          "stack": [
+            9
+          ],
+          "locals": [
+            0,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 6,
+          "opcode": "local.get",
+          "next_image_pc": 14,
+          "depth": 0,
+          "fuel": 87,
+          "status": 0,
+          "stack": [
+            9,
+            17
+          ],
+          "locals": [
+            0,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            9,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 7,
+          "opcode": "i32.add",
+          "next_image_pc": 15,
+          "depth": 0,
+          "fuel": 86,
+          "status": 0,
+          "stack": [
+            26
+          ],
+          "locals": [
+            0,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            17,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 8,
+          "opcode": "end",
+          "next_image_pc": 16,
+          "depth": 0,
+          "fuel": 85,
+          "status": 1,
+          "stack": [
+            26
+          ],
+          "locals": [
+            0,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            26,
+            0,
+            0
+          ]
+        }
+      ],
+      "source_steps": 15
+    },
+    "nested-trap": {
+      "binary_sha256": "fc9d0223791a9a4d1277340683f1963f81c4cc46d98b0904878ecc3de7c64011",
+      "image_sha256": "2d8dc75038be245c901d9af70f297b4be19491381fcc6ddd69eb54bfc795f89b",
+      "argument": 65533,
+      "fuel": 100,
+      "status": 3,
+      "input_page_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "full_page_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "trace": [
+        {
+          "function": 2,
+          "pc": 0,
+          "opcode": "i32.const",
+          "next_image_pc": 8,
+          "depth": 0,
+          "fuel": 99,
+          "status": 0,
+          "stack": [
+            17
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 1,
+          "opcode": "local.set",
+          "next_image_pc": 9,
+          "depth": 0,
+          "fuel": 98,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            65533,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            17,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 2,
+          "opcode": "i32.const",
+          "next_image_pc": 10,
+          "depth": 0,
+          "fuel": 97,
+          "status": 0,
+          "stack": [
+            9
+          ],
+          "locals": [
+            65533,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 3,
+          "opcode": "local.get",
+          "next_image_pc": 11,
+          "depth": 0,
+          "fuel": 96,
+          "status": 0,
+          "stack": [
+            9,
+            65533
+          ],
+          "locals": [
+            65533,
+            17,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            9,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 2,
+          "pc": 4,
+          "opcode": "call",
+          "next_image_pc": 4,
+          "depth": 1,
+          "fuel": 95,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 0,
+          "opcode": "local.get",
+          "next_image_pc": 5,
+          "depth": 1,
+          "fuel": 94,
+          "status": 0,
+          "stack": [
+            65533
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 1,
+          "opcode": "call",
+          "next_image_pc": 0,
+          "depth": 2,
+          "fuel": 93,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 0,
+          "opcode": "local.get",
+          "next_image_pc": 1,
+          "depth": 2,
+          "fuel": 92,
+          "status": 0,
+          "stack": [
+            65533
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 1,
+          "opcode": "i32.load",
+          "next_image_pc": 1,
+          "depth": 2,
+          "fuel": 92,
+          "status": 3,
+          "stack": [
+            65533
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            3,
+            65533,
+            0,
+            0
+          ]
+        }
+      ],
+      "source_steps": 8
+    },
+    "new-call-return": {
+      "binary_sha256": "d10d982ac9c2785aba470f05dd0dcae8f9e1b134bcc808ddcb4d259a391b812d",
+      "image_sha256": "d49dc1818c45e6d20462cf0fde8547388e93d6d15aa6cf3e113b348eb2002869",
+      "argument": 4,
+      "fuel": 100,
+      "status": 1,
+      "input_page_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "full_page_sha256": "e719b4bd8666f5f2ed6a43eba097c27972fd0777600ad6bf1ab4806739c7a338",
+      "trace": [
+        {
+          "function": 1,
+          "pc": 0,
+          "opcode": "i32.const",
+          "next_image_pc": 7,
+          "depth": 0,
+          "fuel": 99,
+          "status": 0,
+          "stack": [
+            5
+          ],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 1,
+          "opcode": "local.get",
+          "next_image_pc": 8,
+          "depth": 0,
+          "fuel": 98,
+          "status": 0,
+          "stack": [
+            5,
+            4
+          ],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            5,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 2,
+          "opcode": "call",
+          "next_image_pc": 0,
+          "depth": 1,
+          "fuel": 97,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 0,
+          "opcode": "i32.const",
+          "next_image_pc": 1,
+          "depth": 1,
+          "fuel": 96,
+          "status": 0,
+          "stack": [
+            4
+          ],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 1,
+          "opcode": "i32.const",
+          "next_image_pc": 2,
+          "depth": 1,
+          "fuel": 95,
+          "status": 0,
+          "stack": [
+            4,
+            77
+          ],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            4,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 2,
+          "opcode": "i32.store",
+          "next_image_pc": 3,
+          "depth": 1,
+          "fuel": 94,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            2,
+            4,
+            0,
+            77
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 3,
+          "opcode": "local.get",
+          "next_image_pc": 4,
+          "depth": 1,
+          "fuel": 93,
+          "status": 0,
+          "stack": [
+            4
+          ],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 4,
+          "opcode": "i32.load",
+          "next_image_pc": 5,
+          "depth": 1,
+          "fuel": 92,
+          "status": 0,
+          "stack": [
+            77
+          ],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            1,
+            4,
+            77,
+            77
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 5,
+          "opcode": "end",
+          "next_image_pc": 9,
+          "depth": 0,
+          "fuel": 91,
+          "status": 0,
+          "stack": [
+            5,
+            77
+          ],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 3,
+          "opcode": "i32.add",
+          "next_image_pc": 10,
+          "depth": 0,
+          "fuel": 90,
+          "status": 0,
+          "stack": [
+            82
+          ],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            77,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 4,
+          "opcode": "end",
+          "next_image_pc": 11,
+          "depth": 0,
+          "fuel": 89,
+          "status": 1,
+          "stack": [
+            82
+          ],
+          "locals": [
+            4,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            82,
+            0,
+            0
+          ]
+        }
+      ],
+      "source_steps": 11
+    },
+    "new-call-store-then-trap": {
+      "binary_sha256": "d10d982ac9c2785aba470f05dd0dcae8f9e1b134bcc808ddcb4d259a391b812d",
+      "image_sha256": "d49dc1818c45e6d20462cf0fde8547388e93d6d15aa6cf3e113b348eb2002869",
+      "argument": 65533,
+      "fuel": 100,
+      "status": 3,
+      "input_page_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "full_page_sha256": "e719b4bd8666f5f2ed6a43eba097c27972fd0777600ad6bf1ab4806739c7a338",
+      "trace": [
+        {
+          "function": 1,
+          "pc": 0,
+          "opcode": "i32.const",
+          "next_image_pc": 7,
+          "depth": 0,
+          "fuel": 99,
+          "status": 0,
+          "stack": [
+            5
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 1,
+          "opcode": "local.get",
+          "next_image_pc": 8,
+          "depth": 0,
+          "fuel": 98,
+          "status": 0,
+          "stack": [
+            5,
+            65533
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            5,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 2,
+          "opcode": "call",
+          "next_image_pc": 0,
+          "depth": 1,
+          "fuel": 97,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 0,
+          "opcode": "i32.const",
+          "next_image_pc": 1,
+          "depth": 1,
+          "fuel": 96,
+          "status": 0,
+          "stack": [
+            4
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 1,
+          "opcode": "i32.const",
+          "next_image_pc": 2,
+          "depth": 1,
+          "fuel": 95,
+          "status": 0,
+          "stack": [
+            4,
+            77
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            4,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 2,
+          "opcode": "i32.store",
+          "next_image_pc": 3,
+          "depth": 1,
+          "fuel": 94,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            2,
+            4,
+            0,
+            77
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 3,
+          "opcode": "local.get",
+          "next_image_pc": 4,
+          "depth": 1,
+          "fuel": 93,
+          "status": 0,
+          "stack": [
+            65533
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 4,
+          "opcode": "i32.load",
+          "next_image_pc": 4,
+          "depth": 1,
+          "fuel": 93,
+          "status": 3,
+          "stack": [
+            65533
+          ],
+          "locals": [
+            65533,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            3,
+            65533,
+            0,
+            0
+          ]
+        }
+      ],
+      "source_steps": 7
+    },
+    "rollback": {
+      "binary_sha256": "8dd6c6a7c32a293921d32e64b9e6635163bc0d641406dffc751e8ce17e47b357",
+      "image_sha256": "4e3c6ead0ef44a94f931aea43fa82a0cc0c72cdca8f30837494ac0a65956f932",
+      "argument": 0,
+      "fuel": 100,
+      "status": 1,
+      "input_page_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+      "full_page_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+      "trace": [
+        {
+          "function": 0,
+          "pc": 0,
+          "opcode": "local.get",
+          "next_image_pc": 1,
+          "depth": 0,
+          "fuel": 99,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 1,
+          "opcode": "i32.load",
+          "next_image_pc": 2,
+          "depth": 0,
+          "fuel": 98,
+          "status": 0,
+          "stack": [
+            2147483649
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            1,
+            1,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 2,
+          "opcode": "local.tee",
+          "next_image_pc": 3,
+          "depth": 0,
+          "fuel": 97,
+          "status": 0,
+          "stack": [
+            2147483649
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            2147483649,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 3,
+          "opcode": "if",
+          "next_image_pc": 4,
+          "depth": 0,
+          "fuel": 96,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            2147483649,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 4,
+          "opcode": "local.get",
+          "next_image_pc": 5,
+          "depth": 0,
+          "fuel": 95,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 5,
+          "opcode": "i32.const",
+          "next_image_pc": 6,
+          "depth": 0,
+          "fuel": 94,
+          "status": 0,
+          "stack": [
+            0,
+            7
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 6,
+          "opcode": "i32.add",
+          "next_image_pc": 7,
+          "depth": 0,
+          "fuel": 93,
+          "status": 0,
+          "stack": [
+            7
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 7,
+          "opcode": "i32.const",
+          "next_image_pc": 8,
+          "depth": 0,
+          "fuel": 92,
+          "status": 0,
+          "stack": [
+            7,
+            305419896
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 8,
+          "opcode": "i32.store",
+          "next_image_pc": 9,
+          "depth": 0,
+          "fuel": 91,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            2,
+            7,
+            2147483649,
+            305419896
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 9,
+          "opcode": "i32.const",
+          "next_image_pc": 10,
+          "depth": 0,
+          "fuel": 90,
+          "status": 0,
+          "stack": [
+            2
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 10,
+          "opcode": "local.set",
+          "next_image_pc": 11,
+          "depth": 0,
+          "fuel": 89,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            2,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            2,
+            8388608,
+            8388608
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 11,
+          "opcode": "loop",
+          "next_image_pc": 12,
+          "depth": 0,
+          "fuel": 88,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            2,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 12,
+          "opcode": "local.get",
+          "next_image_pc": 13,
+          "depth": 0,
+          "fuel": 87,
+          "status": 0,
+          "stack": [
+            2
+          ],
+          "locals": [
+            0,
+            2147483649,
+            2,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 13,
+          "opcode": "i32.const",
+          "next_image_pc": 14,
+          "depth": 0,
+          "fuel": 86,
+          "status": 0,
+          "stack": [
+            2,
+            1
+          ],
+          "locals": [
+            0,
+            2147483649,
+            2,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            2,
+            8388608,
+            8388608
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 14,
+          "opcode": "i32.sub",
+          "next_image_pc": 15,
+          "depth": 0,
+          "fuel": 85,
+          "status": 0,
+          "stack": [
+            1
+          ],
+          "locals": [
+            0,
+            2147483649,
+            2,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            1,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 15,
+          "opcode": "local.tee",
+          "next_image_pc": 16,
+          "depth": 0,
+          "fuel": 84,
+          "status": 0,
+          "stack": [
+            1
+          ],
+          "locals": [
+            0,
+            2147483649,
+            1,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            1,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 16,
+          "opcode": "br_if",
+          "next_image_pc": 12,
+          "depth": 0,
+          "fuel": 83,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            1,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            1,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 12,
+          "opcode": "local.get",
+          "next_image_pc": 13,
+          "depth": 0,
+          "fuel": 82,
+          "status": 0,
+          "stack": [
+            1
+          ],
+          "locals": [
+            0,
+            2147483649,
+            1,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 13,
+          "opcode": "i32.const",
+          "next_image_pc": 14,
+          "depth": 0,
+          "fuel": 81,
+          "status": 0,
+          "stack": [
+            1,
+            1
+          ],
+          "locals": [
+            0,
+            2147483649,
+            1,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            1,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 14,
+          "opcode": "i32.sub",
+          "next_image_pc": 15,
+          "depth": 0,
+          "fuel": 80,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            2147483649,
+            1,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            1,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 15,
+          "opcode": "local.tee",
+          "next_image_pc": 16,
+          "depth": 0,
+          "fuel": 79,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 16,
+          "opcode": "br_if",
+          "next_image_pc": 17,
+          "depth": 0,
+          "fuel": 78,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 17,
+          "opcode": "local.get",
+          "next_image_pc": 18,
+          "depth": 0,
+          "fuel": 77,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 18,
+          "opcode": "i32.const",
+          "next_image_pc": 19,
+          "depth": 0,
+          "fuel": 76,
+          "status": 0,
+          "stack": [
+            0,
+            7
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 19,
+          "opcode": "i32.add",
+          "next_image_pc": 20,
+          "depth": 0,
+          "fuel": 75,
+          "status": 0,
+          "stack": [
+            7
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            305419896,
+            305419896
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 20,
+          "opcode": "local.get",
+          "next_image_pc": 21,
+          "depth": 0,
+          "fuel": 74,
+          "status": 0,
+          "stack": [
+            7,
+            2147483649
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            305419896,
+            305419896
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 21,
+          "opcode": "i32.store",
+          "next_image_pc": 22,
+          "depth": 0,
+          "fuel": 73,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            2,
+            7,
+            305419896,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 22,
+          "opcode": "end",
+          "next_image_pc": 23,
+          "depth": 0,
+          "fuel": 72,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 23,
+          "opcode": "end",
+          "next_image_pc": 24,
+          "depth": 0,
+          "fuel": 71,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 24,
+          "opcode": "local.get",
+          "next_image_pc": 25,
+          "depth": 0,
+          "fuel": 70,
+          "status": 0,
+          "stack": [
+            2147483649
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 25,
+          "opcode": "end",
+          "next_image_pc": 26,
+          "depth": 0,
+          "fuel": 69,
+          "status": 1,
+          "stack": [
+            2147483649
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            2147483649,
+            0,
+            0
+          ]
+        }
+      ],
+      "source_steps": 31
+    },
+    "before-write": {
+      "binary_sha256": "8dd6c6a7c32a293921d32e64b9e6635163bc0d641406dffc751e8ce17e47b357",
+      "image_sha256": "4e3c6ead0ef44a94f931aea43fa82a0cc0c72cdca8f30837494ac0a65956f932",
+      "argument": 0,
+      "fuel": 8,
+      "status": 2,
+      "input_page_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+      "full_page_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+      "trace": [
+        {
+          "function": 0,
+          "pc": 0,
+          "opcode": "local.get",
+          "next_image_pc": 1,
+          "depth": 0,
+          "fuel": 7,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 1,
+          "opcode": "i32.load",
+          "next_image_pc": 2,
+          "depth": 0,
+          "fuel": 6,
+          "status": 0,
+          "stack": [
+            2147483649
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            1,
+            1,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 2,
+          "opcode": "local.tee",
+          "next_image_pc": 3,
+          "depth": 0,
+          "fuel": 5,
+          "status": 0,
+          "stack": [
+            2147483649
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            2147483649,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 3,
+          "opcode": "if",
+          "next_image_pc": 4,
+          "depth": 0,
+          "fuel": 4,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            2147483649,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 4,
+          "opcode": "local.get",
+          "next_image_pc": 5,
+          "depth": 0,
+          "fuel": 3,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 5,
+          "opcode": "i32.const",
+          "next_image_pc": 6,
+          "depth": 0,
+          "fuel": 2,
+          "status": 0,
+          "stack": [
+            0,
+            7
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 6,
+          "opcode": "i32.add",
+          "next_image_pc": 7,
+          "depth": 0,
+          "fuel": 1,
+          "status": 0,
+          "stack": [
+            7
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 7,
+          "opcode": "i32.const",
+          "next_image_pc": 8,
+          "depth": 0,
+          "fuel": 0,
+          "status": 0,
+          "stack": [
+            7,
+            305419896
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 8,
+          "opcode": "i32.store",
+          "next_image_pc": 8,
+          "depth": 0,
+          "fuel": 0,
+          "status": 2,
+          "stack": [
+            7,
+            305419896
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            2147483649,
+            2147483649
+          ]
+        }
+      ],
+      "source_steps": 8
+    },
+    "after-write-before-reversal": {
+      "binary_sha256": "8dd6c6a7c32a293921d32e64b9e6635163bc0d641406dffc751e8ce17e47b357",
+      "image_sha256": "4e3c6ead0ef44a94f931aea43fa82a0cc0c72cdca8f30837494ac0a65956f932",
+      "argument": 0,
+      "fuel": 9,
+      "status": 2,
+      "input_page_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+      "full_page_sha256": "44591f30da75f6b49c311f759f957d79d20fd3b2d38be21c4bb4410751dc2563",
+      "trace": [
+        {
+          "function": 0,
+          "pc": 0,
+          "opcode": "local.get",
+          "next_image_pc": 1,
+          "depth": 0,
+          "fuel": 8,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 1,
+          "opcode": "i32.load",
+          "next_image_pc": 2,
+          "depth": 0,
+          "fuel": 7,
+          "status": 0,
+          "stack": [
+            2147483649
+          ],
+          "locals": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            1,
+            1,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 2,
+          "opcode": "local.tee",
+          "next_image_pc": 3,
+          "depth": 0,
+          "fuel": 6,
+          "status": 0,
+          "stack": [
+            2147483649
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            2147483649,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 3,
+          "opcode": "if",
+          "next_image_pc": 4,
+          "depth": 0,
+          "fuel": 5,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            2147483649,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 4,
+          "opcode": "local.get",
+          "next_image_pc": 5,
+          "depth": 0,
+          "fuel": 4,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 5,
+          "opcode": "i32.const",
+          "next_image_pc": 6,
+          "depth": 0,
+          "fuel": 3,
+          "status": 0,
+          "stack": [
+            0,
+            7
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 6,
+          "opcode": "i32.add",
+          "next_image_pc": 7,
+          "depth": 0,
+          "fuel": 2,
+          "status": 0,
+          "stack": [
+            7
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 7,
+          "opcode": "i32.const",
+          "next_image_pc": 8,
+          "depth": 0,
+          "fuel": 1,
+          "status": 0,
+          "stack": [
+            7,
+            305419896
+          ],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            2147483649,
+            2147483649
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 8,
+          "opcode": "i32.store",
+          "next_image_pc": 9,
+          "depth": 0,
+          "fuel": 0,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            2,
+            7,
+            2147483649,
+            305419896
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 9,
+          "opcode": "i32.const",
+          "next_image_pc": 9,
+          "depth": 0,
+          "fuel": 0,
+          "status": 2,
+          "stack": [],
+          "locals": [
+            0,
+            2147483649,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            256,
+            256
+          ]
+        }
+      ],
+      "source_steps": 9
+    },
+    "rust-edit-and-return": {
+      "binary_sha256": "b6cf3547d6d2134f9fcf111630475028fbddb6f83492a9fd0a3f87252f8fc989",
+      "image_sha256": "73b8c9cf88cce5d5de9f4a4b102b382049c0d16737e8d06a4c384f0d02606436",
+      "argument": 16777204,
+      "fuel": 100,
+      "status": 1,
+      "input_page_sha256": "9f20c8b644731bf7090d2e97d15516a3655a4af9c76d27288aae73a36b50da53",
+      "full_page_sha256": "215bcc0fe88cd3d50e4d04d5989769697f7b948fa47e384e2c9e9df5582d07af",
+      "trace": [
+        {
+          "function": 1,
+          "pc": 0,
+          "opcode": "block",
+          "next_image_pc": 15,
+          "depth": 0,
+          "fuel": 99,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 1,
+          "opcode": "local.get",
+          "next_image_pc": 16,
+          "depth": 0,
+          "fuel": 98,
+          "status": 0,
+          "stack": [
+            16777204
+          ],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 2,
+          "opcode": "call",
+          "next_image_pc": 0,
+          "depth": 1,
+          "fuel": 97,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 0,
+          "opcode": "local.get",
+          "next_image_pc": 1,
+          "depth": 1,
+          "fuel": 96,
+          "status": 0,
+          "stack": [
+            16777204
+          ],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 1,
+          "opcode": "i32.load",
+          "next_image_pc": 2,
+          "depth": 1,
+          "fuel": 95,
+          "status": 0,
+          "stack": [
+            7
+          ],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            1,
+            16777204,
+            7,
+            7
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 2,
+          "opcode": "local.set",
+          "next_image_pc": 3,
+          "depth": 1,
+          "fuel": 94,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 3,
+          "opcode": "block",
+          "next_image_pc": 4,
+          "depth": 1,
+          "fuel": 93,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 4,
+          "opcode": "local.get",
+          "next_image_pc": 5,
+          "depth": 1,
+          "fuel": 92,
+          "status": 0,
+          "stack": [
+            16777204
+          ],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 5,
+          "opcode": "i32.load",
+          "next_image_pc": 6,
+          "depth": 1,
+          "fuel": 91,
+          "status": 0,
+          "stack": [
+            1
+          ],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            1,
+            16777208,
+            1,
+            1
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 6,
+          "opcode": "i32.eqz",
+          "next_image_pc": 7,
+          "depth": 1,
+          "fuel": 90,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 7,
+          "opcode": "br_if",
+          "next_image_pc": 8,
+          "depth": 1,
+          "fuel": 89,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 8,
+          "opcode": "local.get",
+          "next_image_pc": 9,
+          "depth": 1,
+          "fuel": 88,
+          "status": 0,
+          "stack": [
+            16777204
+          ],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 9,
+          "opcode": "i32.const",
+          "next_image_pc": 10,
+          "depth": 1,
+          "fuel": 87,
+          "status": 0,
+          "stack": [
+            16777204,
+            0
+          ],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            16777204,
+            7,
+            7
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 10,
+          "opcode": "i32.store",
+          "next_image_pc": 11,
+          "depth": 1,
+          "fuel": 86,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            2,
+            16777204,
+            7,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 11,
+          "opcode": "end",
+          "next_image_pc": 12,
+          "depth": 1,
+          "fuel": 85,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 12,
+          "opcode": "local.get",
+          "next_image_pc": 13,
+          "depth": 1,
+          "fuel": 84,
+          "status": 0,
+          "stack": [
+            7
+          ],
+          "locals": [
+            16777204,
+            7,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 0,
+          "pc": 13,
+          "opcode": "end",
+          "next_image_pc": 17,
+          "depth": 0,
+          "fuel": 83,
+          "status": 0,
+          "stack": [
+            7
+          ],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 3,
+          "opcode": "br_if",
+          "next_image_pc": 22,
+          "depth": 0,
+          "fuel": 82,
+          "status": 0,
+          "stack": [],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            7,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 8,
+          "opcode": "local.get",
+          "next_image_pc": 23,
+          "depth": 0,
+          "fuel": 81,
+          "status": 0,
+          "stack": [
+            16777204
+          ],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 9,
+          "opcode": "i32.load",
+          "next_image_pc": 24,
+          "depth": 0,
+          "fuel": 80,
+          "status": 0,
+          "stack": [
+            0
+          ],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            1,
+            16777212,
+            0,
+            0
+          ]
+        },
+        {
+          "function": 1,
+          "pc": 10,
+          "opcode": "end",
+          "next_image_pc": 25,
+          "depth": 0,
+          "fuel": 79,
+          "status": 1,
+          "stack": [
+            0
+          ],
+          "locals": [
+            16777204,
+            0,
+            0,
+            0,
+            0
+          ],
+          "access": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "source_steps": 21
+    }
+  },
+  "terrain_histories": {
+    "terrain": [
+      {
+        "page_sha256": "1be31cb3bd43e9c34e66be6acf8e16d40f6c47a6f997ee62ea83fb0c45ee54de",
+        "source_steps": 377,
+        "result": 0,
+        "budget_64_host_calls": 6
+      },
+      {
+        "page_sha256": "0da60ecd619f1a10d7e6749b1490cbd7e309c55c123835cc890710cb929b7751",
+        "source_steps": 370,
+        "result": 0,
+        "budget_64_host_calls": 6
+      }
+    ],
+    "terrain-omitted": [
+      {
+        "page_sha256": "45218c449257b6af32b4c1e1eda6faa1588d5e5d56fb9bcac9cfd6bdf2257310",
+        "source_steps": 370,
+        "result": 0,
+        "budget_64_host_calls": 6
+      },
+      {
+        "page_sha256": "61eee0fd236605d98c714103450f78a11d65c096cf344fb7a5855102bc15c45a",
+        "source_steps": 365,
+        "result": 0,
+        "budget_64_host_calls": 6
+      }
+    ]
+  }
+}
