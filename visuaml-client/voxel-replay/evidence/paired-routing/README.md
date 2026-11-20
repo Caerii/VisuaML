@@ -38,3 +38,19 @@ PYTHONPATH=.:../backend python tools/replay_paired_routing.py --open evidence/pa
 ```
 
 The downloadable JSON includes exact requests, states, candidate scores and first failure events. Graph SHA-256 is `5550d44c8b4f3a43cad5aa7b7e065b1c5338aaafb32ca9f14cf1b00ee3b24910`. `timings.json` records six single-thread CPU calls per structured case. The original and feedback-substituted cases took about 5.86 and 5.79 ms median over the last four calls, including graph-side trace collection. The original first invocation was 55.1 ms. Program preparation, input tokenization and JSON publication are outside those timers.
+
+## Description-only probe
+
+The frozen graph scores the first registry selection before validating its
+arguments. A separate probe supplies schemas that reject every entry, so
+only that learned choice is observed. No second call, live feedback, or
+tool execution occurs. Both existing novel-description cases again select
+handle 860 instead of the seed-transform handle 1441. A new held-out
+meaning-preserving paraphrase retains handle 1441. Exchanging the seed
+and boost descriptions moves the prediction to handle 70. This small
+probe records logits and exact wording for a future width or activation
+study. [Description-only replay](description-only.json)
+
+```sh
+PYTHONPATH=.:../backend python tools/probe_routing_descriptions.py
+```

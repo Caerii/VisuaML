@@ -1,0 +1,80 @@
+{
+  "graph_sha256": "5550d44c8b4f3a43cad5aa7b7e065b1c5338aaafb32ca9f14cf1b00ee3b24910",
+  "cases": {
+    "original": {
+      "descriptions": {
+        "1441": "offset the value",
+        "70": "raise each repeat",
+        "860": "repeat a trim"
+      },
+      "expected": 1441,
+      "selected": 1441,
+      "correct": true,
+      "logits": {
+        "1441": 1.737886,
+        "70": -6.882362,
+        "860": -7.323485
+      }
+    },
+    "new_description_compositions": {
+      "descriptions": {
+        "1441": "shift the seed value",
+        "70": "raise the input value",
+        "860": "reduce the input value"
+      },
+      "expected": 1441,
+      "selected": 860,
+      "correct": false,
+      "logits": {
+        "1441": -1.221777,
+        "70": -0.833238,
+        "860": 0.047944
+      }
+    },
+    "new_description_switch": {
+      "descriptions": {
+        "70": "raise the input value",
+        "860": "reduce the input value",
+        "1441": "shift the seed value"
+      },
+      "expected": 1441,
+      "selected": 860,
+      "correct": false,
+      "logits": {
+        "70": -0.833238,
+        "860": 0.047944,
+        "1441": -1.221777
+      }
+    },
+    "meaning_preserving_paraphrase": {
+      "descriptions": {
+        "1441": "shift the input",
+        "70": "raise the value each repeat",
+        "860": "lower the value each repeat"
+      },
+      "expected": 1441,
+      "selected": 1441,
+      "correct": true,
+      "logits": {
+        "1441": 4.854448,
+        "70": -5.163104,
+        "860": -5.566676
+      }
+    },
+    "meaning_changing_exchange": {
+      "descriptions": {
+        "1441": "raise the value each repeat",
+        "70": "shift the input",
+        "860": "lower the value each repeat"
+      },
+      "expected": 70,
+      "selected": 70,
+      "correct": true,
+      "logits": {
+        "1441": -5.163104,
+        "70": 4.854448,
+        "860": -5.566676
+      }
+    }
+  }
+}

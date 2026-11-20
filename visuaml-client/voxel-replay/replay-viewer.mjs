@@ -1,3 +1,5 @@
+import vocabulary from './evidence/vocabulary-tensor-assembly/replay.json';
+import vocabularyUrl from './evidence/vocabulary-tensor-assembly/replay.json?url';
 import paired from './evidence/paired-routing/replay.json';
 import pairedUrl from './evidence/paired-routing/replay.json?url';
 import causal from './evidence/causal-tensor-assembly/replay.json';
@@ -16,6 +18,22 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.profile === 'visuaml-vocabulary-tensor-assembly-v1') {
+    const run = data.cases.find(entry => entry.write_audit);
+    const { store_tokens: [start, end], load_tokens: [loadStart, loadEnd],
+      committed_read: read, replaced_write_read: replaced } = run.write_audit;
+    const word = value => `0x${value.toString(16).padStart(8, '0')}`;
+    get('title').textContent = 'Saved vocabulary-token replay';
+    get('status').textContent = `Store commits at emitted token ${end}`;
+    get('detail').textContent = [
+      `Store tokens ${start + 1}–${end}: ${run.emitted_tokens.slice(start, end).join(' ')}`,
+      `Following load tokens ${loadStart + 1}–${loadEnd}: ${run.emitted_tokens.slice(loadStart, loadEnd).join(' ')}`,
+      `Committed store read: ${word(read)}. Replacing its payload changes the read to ${word(replaced)}.`,
+      'All 20 partial store payload lengths remained invisible.',
+      ...data.cases.map(entry => `${entry.name} · ${entry.source_steps} source steps · ${entry.emitted_tokens.length} generated tokens`),
+    ].join('\n');
+    return;
+  }
   if (data?.profile === 'visuaml-paired-routing-v1' && data.cases?.substitute_at_boundary && data.sweep) {
     const { original, substitute_at_boundary: switched } = data.cases;
     const first = original.events[0].call;
@@ -156,3 +174,6 @@ get('causal-download').href = causalUrl;
 
 get('paired-routing').onclick = () => show(paired);
 get('paired-routing-download').href = pairedUrl;
+
+get('vocabulary').onclick = () => show(vocabulary);
+get('vocabulary-download').href = vocabularyUrl;

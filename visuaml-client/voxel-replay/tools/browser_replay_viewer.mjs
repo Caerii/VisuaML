@@ -58,4 +58,13 @@ try {
   assert.equal((await pairedDownload).suggestedFilename(), 'paired-routing.json');
   await page.locator('#file').setInputFiles('evidence/paired-routing/replay.json');
   await paired.waitFor();
+  await page.getByRole('button', { name: 'Open vocabulary-token replay' }).click();
+  const tokenCommit = page.getByText('Store commits at emitted token 84');
+  await tokenCommit.waitFor();
+  assert.match(await page.locator('#detail').innerText(), /0xfffffffe.*0xffffffff/);
+  const tokenDownload = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download vocabulary-token replay' }).click();
+  assert.equal((await tokenDownload).suggestedFilename(), 'vocabulary-tensor-assembly.json');
+  await page.locator('#file').setInputFiles('evidence/vocabulary-tensor-assembly/replay.json');
+  await tokenCommit.waitFor();
 } finally { await browser.close(); }
