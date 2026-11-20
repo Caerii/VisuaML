@@ -1,0 +1,317 @@
+graph(%self : __torch__.___torch_mangle_0.VocabularyDecoder,
+      %tokens.1 : Tensor):
+  %2 : int[] = prim::Constant[value=[20, 8]]()
+  %3 : int[] = prim::Constant[value=[16]]()
+  %4 : int[] = prim::Constant[value=[27]]()
+  %5 : int[] = prim::Constant[value=[1]]()
+  %6 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %7 : int = prim::Constant[value=75]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:48:25
+  %8 : int = prim::Constant[value=91]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:48:28
+  %9 : int = prim::Constant[value=16]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:49:50
+  %10 : int = prim::Constant[value=768]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:26:17
+  %11 : float = prim::Constant[value=0.25]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:28:36
+  %12 : float = prim::Constant[value=0.75]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:28:60
+  %13 : int = prim::Constant[value=2]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:66:46
+  %14 : int = prim::Constant[value=5]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:50:37
+  %15 : int = prim::Constant[value=11]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:51:51
+  %16 : int = prim::Constant[value=43]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:51:71
+  %17 : int = prim::Constant[value=59]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:51:91
+  %18 : int = prim::Constant[value=123]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:52:32
+  %19 : int = prim::Constant[value=155]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:52:54
+  %20 : int = prim::Constant[value=159]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:54:53
+  %21 : int = prim::Constant[value=27]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:54:70
+  %22 : int = prim::Constant[value=-2]() # :0:0
+  %23 : int = prim::Constant[value=-4]() # :0:0
+  %24 : int = prim::Constant[value=-8]() # :0:0
+  %25 : int = prim::Constant[value=-16]() # :0:0
+  %26 : int = prim::Constant[value=3]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:56:65
+  %27 : int[] = prim::Constant[value=[-1, 160]]()
+  %28 : int[] = prim::Constant[value=[-1, 21]]()
+  %29 : str = prim::Constant[value="AssertionError: Missing commit marker"]()
+  %30 : int = prim::Constant[value=256]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:28:40
+  %31 : int = prim::Constant[value=258]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:39:50
+  %32 : int = prim::Constant[value=8]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:38:40
+  %33 : int = prim::Constant[value=257]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:36:20
+  %34 : int = prim::Constant[value=20]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:35:20
+  %35 : int = prim::Constant[value=1344]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:32:45
+  %36 : int = prim::Constant[value=21]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:32:22
+  %37 : bool = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:32:22
+  %38 : NoneType = prim::Constant()
+  %39 : str = prim::Constant[value="AssertionError: Token context exhausted"]()
+  %40 : int = prim::Constant[value=-1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:36:33
+  %41 : int = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:36:26
+  %42 : int = prim::Constant[value=4]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:36:26
+  %43 : int = prim::Constant[value=1]()
+  %44 : int = prim::Constant[value=7]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:39:58
+  %self.weights : Long(8, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=   1    2    4    8   16   32   64  128 [ CPULongType{8} ]]()
+  %self.embedding : Double(256, 8, strides=[8, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %47 : int = aten::numel(%tokens.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:32:28
+  %48 : bool = aten::le(%36, %47) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:32:22
+  %49 : bool = prim::If(%48) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:32:22
+    block0():
+      %50 : bool = aten::lt(%47, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:32:28
+      -> (%50)
+    block1():
+      -> (%37)
+   = prim::If(%49) # <string>:8:2
+    block0():
+      -> ()
+    block1():
+       = prim::RaiseException(%39, %38) # <string>:8:2
+      -> ()
+  %phase.1 : int = aten::remainder(%47, %36) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:33:16
+  %52 : int = aten::floordiv(%47, %36) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:26:25
+  %53 : int = aten::mul(%52, %36) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:26:25
+  %54 : Tensor = aten::slice(%tokens.1, %41, %38, %53, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:26:17
+  %frames.1 : Tensor = aten::reshape(%54, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:26:17
+  %56 : Tensor = aten::slice(%frames.1, %41, %38, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:27:18
+  %markers.1 : Tensor = aten::select(%56, %43, %40) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:27:18
+  %58 : Tensor = aten::eq(%markers.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:28:29
+  %59 : Tensor = aten::eq(%markers.1, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:28:48
+  %60 : Tensor = aten::__or__(%58, %59) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:28:29
+  %61 : Tensor = aten::all(%60) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:28:29
+  %62 : bool = aten::Bool(%61) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:28:22
+   = prim::If(%62) # <string>:8:2
+    block0():
+      -> ()
+    block1():
+       = prim::RaiseException(%29, %38) # <string>:8:2
+      -> ()
+  %63 : Tensor = aten::slice(%56, %43, %38, %34, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:29:30
+  %64 : Tensor?[] = prim::ListConstruct(%63)
+  %65 : Tensor = aten::index(%self.embedding, %64) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:29:15
+  %66 : Tensor = aten::reshape(%65, %27) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:29:15
+  %67 : Tensor = aten::select(%66, %41, %40) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:48:13
+  %pc.1 : Tensor = aten::slice(%67, %41, %7, %8, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:48:13
+  %69 : Tensor = aten::slice(%66, %41, %38, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:49:38
+  %70 : Tensor = aten::slice(%69, %43, %38, %9, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:49:38
+  %71 : Tensor = aten::slice(%69, %43, %9, %7, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:49:55
+  %72 : Tensor = aten::matmul(%70, %pc.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:26:24
+  %73 : Tensor = aten::mul(%72, %10) # <string>:3:9
+  %74 : int = aten::size(%70, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:26:57
+  %75 : Tensor = aten::slice(%6, %41, %38, %74, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:26:40
+  %scores.1 : Tensor = aten::add(%73, %75, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:26:17
+  %77 : Tensor = aten::softmax(%scores.1, %41, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:27:19
+  %weighted.1 : Tensor = aten::matmul(%77, %71) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:27:19
+  %79 : Tensor = aten::sub(%weighted.1, %11, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:28:25
+  %result.1 : Tensor = aten::relu(%79) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %81 : Tensor = aten::sub(%weighted.1, %12, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:28:49
+  %result0.1 : Tensor = aten::relu(%81) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %83 : Tensor = aten::sub(%result.1, %result0.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:28:20
+  %instruction.1 : Tensor = aten::mul(%83, %13) # <string>:3:9
+  %op.1 : Tensor = aten::slice(%instruction.1, %41, %38, %14, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:50:24
+  %registers.1 : Tensor = aten::slice(%instruction.1, %41, %14, %44, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:50:41
+  %address.1 : Tensor = aten::slice(%instruction.1, %41, %44, %15, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:51:37
+  %immediate.1 : Tensor = aten::slice(%instruction.1, %41, %15, %16, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:51:56
+  %target.1 : Tensor = aten::slice(%instruction.1, %41, %16, %17, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:51:76
+  %r0.1 : Tensor = aten::slice(%67, %41, %8, %18, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:52:17
+  %r1.1 : Tensor = aten::slice(%67, %41, %18, %19, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:52:38
+  %92 : Tensor = aten::select(%registers.1, %41, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:53:33
+  %93 : Tensor = aten::add(%r0.1, %92, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %94 : Tensor = aten::sub(%93, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result1.1 : Tensor = aten::relu(%94) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %96 : Tensor = aten::select(%registers.1, %41, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:53:63
+  %97 : Tensor = aten::add(%r1.1, %96, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %98 : Tensor = aten::sub(%97, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result2.1 : Tensor = aten::relu(%98) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %previous.1 : Tensor = aten::add(%result1.1, %result2.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:53:19
+  %101 : Tensor = aten::slice(%69, %43, %19, %20, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:54:38
+  %102 : Tensor = aten::slice(%69, %43, %21, %17, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:54:59
+  %103 : Tensor = aten::matmul(%101, %address.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:26:24
+  %104 : Tensor = aten::mul(%103, %10) # <string>:3:9
+  %105 : int = aten::size(%101, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:26:57
+  %106 : Tensor = aten::slice(%6, %41, %38, %105, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:26:40
+  %scores0.1 : Tensor = aten::add(%104, %106, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:26:17
+  %108 : Tensor = aten::softmax(%scores0.1, %41, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:27:19
+  %weighted0.1 : Tensor = aten::matmul(%108, %102) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:27:19
+  %110 : Tensor = aten::sub(%weighted0.1, %11, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:28:25
+  %result3.1 : Tensor = aten::relu(%110) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %112 : Tensor = aten::sub(%weighted0.1, %12, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:28:49
+  %result4.1 : Tensor = aten::relu(%112) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %114 : Tensor = aten::sub(%result3.1, %result4.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:28:20
+  %loaded.1 : Tensor = aten::mul(%114, %13) # <string>:3:9
+  %116 : Tensor = aten::add(%previous.1, %immediate.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %117 : Tensor = aten::sub(%116, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %carry.1 : Tensor = aten::relu(%117) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %119 : Tensor = aten::mul(%carry.1, %13) # <string>:3:9
+  %propagate.1 : Tensor = aten::sub(%116, %119, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:36:20
+  %121 : Tensor = aten::slice(%propagate.1, %41, %43, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:30
+  %122 : Tensor = aten::slice(%carry.1, %41, %38, %40, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:49
+  %123 : Tensor = aten::add(%121, %122, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %124 : Tensor = aten::sub(%123, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %cross.1 : Tensor = aten::relu(%124) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %126 : Tensor = aten::slice(%carry.1, %41, %38, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:31
+  %127 : Tensor = aten::slice(%carry.1, %41, %43, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %128 : Tensor = aten::add(%127, %cross.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %129 : Tensor[] = prim::ListConstruct(%126, %128)
+  %carry0.1 : Tensor = aten::cat(%129, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:20
+  %131 : Tensor = aten::slice(%propagate.1, %41, %38, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:32
+  %132 : Tensor = aten::slice(%propagate.1, %41, %38, %40, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:80
+  %133 : Tensor = aten::add(%121, %132, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %134 : Tensor = aten::sub(%133, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result5.1 : Tensor = aten::relu(%134) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %136 : Tensor[] = prim::ListConstruct(%131, %result5.1)
+  %prefix.1 : Tensor = aten::cat(%136, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:21
+  %138 : Tensor = aten::slice(%prefix.1, %41, %13, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:30
+  %139 : Tensor = aten::slice(%carry0.1, %41, %38, %22, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:49
+  %140 : Tensor = aten::add(%138, %139, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %141 : Tensor = aten::sub(%140, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %cross0.1 : Tensor = aten::relu(%141) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %143 : Tensor = aten::slice(%carry0.1, %41, %38, %13, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:31
+  %144 : Tensor = aten::slice(%carry0.1, %41, %13, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %145 : Tensor = aten::add(%144, %cross0.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %146 : Tensor[] = prim::ListConstruct(%143, %145)
+  %carry1.1 : Tensor = aten::cat(%146, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:20
+  %148 : Tensor = aten::slice(%prefix.1, %41, %38, %13, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:32
+  %149 : Tensor = aten::slice(%prefix.1, %41, %38, %22, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:80
+  %150 : Tensor = aten::add(%138, %149, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %151 : Tensor = aten::sub(%150, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result6.1 : Tensor = aten::relu(%151) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %153 : Tensor[] = prim::ListConstruct(%148, %result6.1)
+  %prefix0.1 : Tensor = aten::cat(%153, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:21
+  %155 : Tensor = aten::slice(%prefix0.1, %41, %42, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:30
+  %156 : Tensor = aten::slice(%carry1.1, %41, %38, %23, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:49
+  %157 : Tensor = aten::add(%155, %156, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %158 : Tensor = aten::sub(%157, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %cross1.1 : Tensor = aten::relu(%158) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %160 : Tensor = aten::slice(%carry1.1, %41, %38, %42, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:31
+  %161 : Tensor = aten::slice(%carry1.1, %41, %42, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %162 : Tensor = aten::add(%161, %cross1.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %163 : Tensor[] = prim::ListConstruct(%160, %162)
+  %carry2.1 : Tensor = aten::cat(%163, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:20
+  %165 : Tensor = aten::slice(%prefix0.1, %41, %38, %42, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:32
+  %166 : Tensor = aten::slice(%prefix0.1, %41, %38, %23, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:80
+  %167 : Tensor = aten::add(%155, %166, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %168 : Tensor = aten::sub(%167, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result7.1 : Tensor = aten::relu(%168) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %170 : Tensor[] = prim::ListConstruct(%165, %result7.1)
+  %prefix1.1 : Tensor = aten::cat(%170, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:21
+  %172 : Tensor = aten::slice(%prefix1.1, %41, %32, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:30
+  %173 : Tensor = aten::slice(%carry2.1, %41, %38, %24, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:49
+  %174 : Tensor = aten::add(%172, %173, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %175 : Tensor = aten::sub(%174, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %cross2.1 : Tensor = aten::relu(%175) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %177 : Tensor = aten::slice(%carry2.1, %41, %38, %32, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:31
+  %178 : Tensor = aten::slice(%carry2.1, %41, %32, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %179 : Tensor = aten::add(%178, %cross2.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %180 : Tensor[] = prim::ListConstruct(%177, %179)
+  %carry3.1 : Tensor = aten::cat(%180, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:20
+  %182 : Tensor = aten::slice(%prefix1.1, %41, %38, %32, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:32
+  %183 : Tensor = aten::slice(%prefix1.1, %41, %38, %24, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:80
+  %184 : Tensor = aten::add(%172, %183, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %185 : Tensor = aten::sub(%184, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result8.1 : Tensor = aten::relu(%185) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %187 : Tensor[] = prim::ListConstruct(%182, %result8.1)
+  %prefix2.1 : Tensor = aten::cat(%187, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:41:21
+  %189 : Tensor = aten::slice(%prefix2.1, %41, %9, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:30
+  %190 : Tensor = aten::slice(%carry3.1, %41, %38, %25, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:39:49
+  %191 : Tensor = aten::add(%189, %190, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %192 : Tensor = aten::sub(%191, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %cross3.1 : Tensor = aten::relu(%192) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %194 : Tensor = aten::slice(%carry3.1, %41, %38, %9, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:31
+  %195 : Tensor = aten::slice(%carry3.1, %41, %9, %38, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %196 : Tensor = aten::add(%195, %cross3.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:49
+  %197 : Tensor[] = prim::ListConstruct(%194, %196)
+  %carry4.1 : Tensor = aten::cat(%197, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:40:20
+  %199 : Tensor = aten::new_zeros(%previous.1, %5, %38, %38, %38, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:42:30
+  %200 : Tensor = aten::slice(%carry4.1, %41, %38, %40, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:42:49
+  %201 : Tensor[] = prim::ListConstruct(%199, %200)
+  %incoming.1 : Tensor = aten::cat(%201, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:42:19
+  %203 : Tensor = aten::add(%propagate.1, %incoming.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:43:15
+  %204 : Tensor = aten::sub(%203, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result9.1 : Tensor = aten::relu(%204) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %206 : Tensor = aten::mul(%result9.1, %13) # <string>:3:9
+  %added.1 : Tensor = aten::sub(%203, %206, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:43:15
+  %208 : Tensor = aten::select(%op.1, %41, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:56:36
+  %209 : Tensor = aten::add(%loaded.1, %208, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %210 : Tensor = aten::sub(%209, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result10.1 : Tensor = aten::relu(%210) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %212 : Tensor = aten::select(%op.1, %41, %26) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:56:62
+  %213 : Tensor = aten::add(%added.1, %212, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %214 : Tensor = aten::sub(%213, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result11.1 : Tensor = aten::relu(%214) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %updated.1 : Tensor = aten::add(%result10.1, %result11.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:56:18
+  %changed.1 : Tensor = aten::add(%208, %212, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:57:18
+  %218 : Tensor = aten::add(%92, %changed.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %219 : Tensor = aten::sub(%218, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %write_r0.1 : Tensor = aten::relu(%219) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %221 : Tensor = aten::add(%96, %changed.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %222 : Tensor = aten::sub(%221, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %write_r1.1 : Tensor = aten::relu(%222) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %224 : Tensor = aten::add(%updated.1, %write_r0.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %225 : Tensor = aten::sub(%224, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result12.1 : Tensor = aten::relu(%225) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %227 : Tensor = aten::neg(%write_r0.1) # <string>:11:9
+  %228 : Tensor = aten::add(%227, %43, %43) # <string>:11:9
+  %229 : Tensor = aten::add(%r0.1, %228, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %230 : Tensor = aten::sub(%229, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result13.1 : Tensor = aten::relu(%230) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %next_r0.1 : Tensor = aten::add(%result12.1, %result13.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:60:18
+  %233 : Tensor = aten::add(%updated.1, %write_r1.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %234 : Tensor = aten::sub(%233, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result14.1 : Tensor = aten::relu(%234) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %236 : Tensor = aten::neg(%write_r1.1) # <string>:11:9
+  %237 : Tensor = aten::add(%236, %43, %43) # <string>:11:9
+  %238 : Tensor = aten::add(%r1.1, %237, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %239 : Tensor = aten::sub(%238, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result15.1 : Tensor = aten::relu(%239) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %next_r1.1 : Tensor = aten::add(%result14.1, %result15.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:61:18
+  %242 : Tensor = aten::sum(%previous.1, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:62:18
+  %243 : Tensor = aten::sub(%242, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:62:40
+  %result16.1 : Tensor = aten::relu(%243) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %nonzero.1 : Tensor = aten::sub(%242, %result16.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:62:18
+  %246 : Tensor = aten::select(%op.1, %41, %42) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:63:35
+  %247 : Tensor = aten::add(%nonzero.1, %246, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %248 : Tensor = aten::sub(%247, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %taken.1 : Tensor = aten::relu(%248) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %250 : Tensor = aten::new_zeros(%pc.1, %5, %38, %38, %38, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:64:32
+  %251 : Tensor = aten::slice(%pc.1, %41, %38, %40, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:64:49
+  %252 : Tensor[] = prim::ListConstruct(%250, %251)
+  %sequential.1 : Tensor = aten::cat(%252, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:64:21
+  %254 : Tensor = aten::neg(%taken.1) # <string>:11:9
+  %255 : Tensor = aten::add(%254, %43, %43) # <string>:11:9
+  %256 : Tensor = aten::select(%op.1, %41, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:65:52
+  %257 : Tensor = aten::sub(%255, %256, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:65:40
+  %258 : Tensor = aten::add(%sequential.1, %257, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %259 : Tensor = aten::sub(%258, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result17.1 : Tensor = aten::relu(%259) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %261 : Tensor = aten::add(%target.1, %taken.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %262 : Tensor = aten::sub(%261, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result18.1 : Tensor = aten::relu(%262) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %264 : Tensor = aten::add(%result17.1, %result18.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:65:18
+  %265 : Tensor = aten::add(%pc.1, %256, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %266 : Tensor = aten::sub(%265, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %result19.1 : Tensor = aten::relu(%266) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %next_pc.1 : Tensor = aten::add(%264, %result19.1, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:65:18
+  %269 : Tensor = aten::select(%op.1, %41, %13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:66:43
+  %270 : Tensor = aten::add(%address.1, %269, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %271 : Tensor = aten::sub(%270, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %write_address.1 : Tensor = aten::relu(%271) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %273 : Tensor = aten::add(%previous.1, %269, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %274 : Tensor = aten::sub(%273, %43, %43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:31:20
+  %write_value.1 : Tensor = aten::relu(%274) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+  %276 : Tensor = aten::new_zeros(%pc.1, %4, %38, %38, %38, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:68:26
+  %277 : Tensor = aten::new_zeros(%pc.1, %3, %38, %38, %38, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:68:57
+  %278 : Tensor = aten::neg(%256) # <string>:11:9
+  %279 : Tensor = aten::add(%278, %43, %43) # <string>:11:9
+  %280 : Tensor = aten::reshape(%279, %5) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:69:60
+  %281 : Tensor[] = prim::ListConstruct(%276, %write_value.1, %277, %next_pc.1, %next_r0.1, %next_r1.1, %write_address.1, %280)
+  %record.1 : Tensor = aten::cat(%281, %41) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_tensor_assembly.py:68:15
+  %283 : bool = aten::eq(%phase.1, %34) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:35:11
+  %token : Tensor = prim::If(%283) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:35:8
+    block0():
+      %285 : Tensor = aten::select(%record.1, %41, %40) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:36:26
+      %286 : Tensor = aten::to(%285, %42, %37, %37, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:36:26
+      %287 : Tensor = aten::neg(%286) # <string>:11:9
+      %token.1 : Tensor = aten::add(%287, %33, %43) # <string>:11:9
+      -> (%token.1)
+    block1():
+      %289 : Tensor = aten::reshape(%record.1, %2) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:38:21
+      %290 : Tensor = aten::select(%289, %41, %phase.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:38:21
+      %291 : Tensor = aten::to(%290, %42, %37, %37, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:38:21
+      %292 : Tensor = aten::mul(%291, %self.weights) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:38:21
+      %token.3 : Tensor = aten::sum(%292, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:38:21
+      -> (%token.3)
+  %294 : Tensor = aten::one_hot(%token, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:39:15
+  %295 : Tensor = aten::to(%294, %44, %37, %37, %38) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/vocabulary_tensor_assembly.py:39:15
+  return (%295)
