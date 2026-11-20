@@ -70,25 +70,29 @@ function selectExample() {
   load(example);
 }
 
-try {
-  const bytes = await (await fetch(wasmUrl)).arrayBuffer();
-  if (await digest(bytes) !== evidence.wasm_sha256) throw Error('Tape guest hash differs from saved evidence');
-  const { instance } = await WebAssembly.instantiate(bytes);
-  ({ memory, run } = instance.exports);
-  get('example').append(...examples.map((example, i) => new Option(example.name, i)));
-  get('example').onchange = selectExample;
-  reset.onclick = () => load();
-  stepButton.onclick = () => { stop(); void step(); };
-  runButton.onclick = () => {
-    if (timer) stop();
-    else {
-      runButton.textContent = 'Pause';
-      timer = setInterval(step, 280);
-      void step();
-    }
-  };
-  reset.disabled = false;
-  selectExample();
-} catch (error) {
-  get('tape-state').textContent = error.message;
+async function boot() {
+  try {
+    const bytes = await (await fetch(wasmUrl)).arrayBuffer();
+    if (await digest(bytes) !== evidence.wasm_sha256) throw Error('Tape guest hash differs from saved evidence');
+    const { instance } = await WebAssembly.instantiate(bytes);
+    ({ memory, run } = instance.exports);
+    get('example').append(...examples.map((example, i) => new Option(example.name, i)));
+    get('example').onchange = selectExample;
+    reset.onclick = () => load();
+    stepButton.onclick = () => { stop(); void step(); };
+    runButton.onclick = () => {
+      if (timer) stop();
+      else {
+        runButton.textContent = 'Pause';
+        timer = setInterval(step, 280);
+        void step();
+      }
+    };
+    reset.disabled = false;
+    selectExample();
+  } catch (error) {
+    get('tape-state').textContent = error.message;
+  }
 }
+
+void boot();
