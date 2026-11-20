@@ -22,8 +22,10 @@ LOCAL_GET = OPCODES.index("local.get")
 PAGE_SIZE = 65536
 
 
-def propose(machine, planner, source, challenge=False):
-    description = [word for opcode, slot in source for word in (int(opcode != "local.get"), slot)]
+def propose(machine, planner, source, challenge=False, *, second_kind="local.get"):
+    description = [word for expected, (opcode, immediate) in
+                   zip(("local.get", second_kind), source, strict=True)
+                   for word in (int(opcode != expected), immediate)]
     words = [*description, int(challenge), *([-1] * 6)]
     page = bytearray(PAGE_SIZE)
     struct.pack_into("<11i", page, 512, *words)
