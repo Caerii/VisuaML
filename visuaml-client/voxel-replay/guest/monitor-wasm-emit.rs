@@ -11,6 +11,11 @@ const BYTE_WORDS: usize = 5000;
 const SOURCE_MAP: usize = 24000;  // byte 24000
 const MODULE: usize = 6080;      // byte 24576
 
+#[cfg(pocket_rust_call)]
+const IMPORT_SIZE: usize = 21;
+#[cfg(not(pocket_rust_call))]
+const IMPORT_SIZE: usize = 0;
+
 macro_rules! bytes {
     ($p:expr, $($byte:expr),+ $(,)?) => {{
         $(
@@ -44,42 +49,84 @@ macro_rules! compile_wasm {
             write($p.add(BYTE_WORDS + 13), 127);
             write($p.add(BYTE_WORDS + 14), 1);
             write($p.add(BYTE_WORDS + 15), 127);
-            write($p.add(BYTE_WORDS + 16), 3);
-            write($p.add(BYTE_WORDS + 17), 2);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 16), 2);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 17), 19);
+            #[cfg(pocket_rust_call)]
             write($p.add(BYTE_WORDS + 18), 1);
-            write($p.add(BYTE_WORDS + 19), 0);
-            write($p.add(BYTE_WORDS + 20), 5);
-            write($p.add(BYTE_WORDS + 21), 4);
-            write($p.add(BYTE_WORDS + 22), 1);
-            write($p.add(BYTE_WORDS + 23), 1);
-            write($p.add(BYTE_WORDS + 24), 1);
-            write($p.add(BYTE_WORDS + 25), 1);
-            write($p.add(BYTE_WORDS + 26), 7);
-            write($p.add(BYTE_WORDS + 27), 16);
-            write($p.add(BYTE_WORDS + 28), 2);
-            write($p.add(BYTE_WORDS + 29), 6);
-            write($p.add(BYTE_WORDS + 30), 109);
-            write($p.add(BYTE_WORDS + 31), 101);
-            write($p.add(BYTE_WORDS + 32), 109);
-            write($p.add(BYTE_WORDS + 33), 111);
-            write($p.add(BYTE_WORDS + 34), 114);
-            write($p.add(BYTE_WORDS + 35), 121);
-            write($p.add(BYTE_WORDS + 36), 2);
-            write($p.add(BYTE_WORDS + 37), 0);
-            write($p.add(BYTE_WORDS + 38), 3);
-            write($p.add(BYTE_WORDS + 39), 114);
-            write($p.add(BYTE_WORDS + 40), 117);
-            write($p.add(BYTE_WORDS + 41), 110);
-            write($p.add(BYTE_WORDS + 42), 0);
-            write($p.add(BYTE_WORDS + 43), 0);
-            write($p.add(BYTE_WORDS + 44), 10);
-            write($p.add(BYTE_WORDS + 45), 0);
-            write($p.add(BYTE_WORDS + 46), 1);
-            write($p.add(BYTE_WORDS + 47), 0);
-            write($p.add(BYTE_WORDS + 48), 1);
-            write($p.add(BYTE_WORDS + 49), 1);
-            write($p.add(BYTE_WORDS + 50), 127);
-            write($p.add(EMIT_POS), 51);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 19), 6);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 20), 112);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 21), 111);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 22), 99);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 23), 107);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 24), 101);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 25), 116);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 26), 8);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 27), 112);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 28), 97);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 29), 115);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 30), 115);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 31), 97);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 32), 98);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 33), 108);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 34), 101);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 35), 0);
+            #[cfg(pocket_rust_call)]
+            write($p.add(BYTE_WORDS + 36), 0);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 16), 3);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 17), 2);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 18), 1);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 19), 0);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 20), 5);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 21), 4);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 22), 1);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 23), 1);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 24), 1);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 25), 1);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 26), 7);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 27), 16);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 28), 2);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 29), 6);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 30), 109);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 31), 101);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 32), 109);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 33), 111);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 34), 114);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 35), 121);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 36), 2);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 37), 0);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 38), 3);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 39), 114);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 40), 117);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 41), 110);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 42), 0);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 43), if IMPORT_SIZE > 0 { 1 } else { 0 });
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 44), 10);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 45), 0);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 46), 1);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 47), 0);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 48), 1);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 49), 1);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 50), 127);
+            write($p.add(EMIT_POS), 51 + IMPORT_SIZE as i32);
             write($p.add(SLOT), 0);
             write($p.add(OUTPUTS), 0);
             while read($p.add(SLOT)) < 4 {
@@ -114,6 +161,8 @@ macro_rules! compile_wasm {
                             write($p.add(OUTPUTS), read($p.add(OUTPUTS)) + 1);
                         }
                     }
+                    #[cfg(pocket_rust_call)]
+                    if op > 4 { bytes!($p, 0x20, 1, 0x10, 0, 0x21, 1); }
                     // Keep the accumulator after each source line in a separate slot.
                     bytes!($p, 0x41, 32 + 4 * read($p.add(SLOT)), 0x20, 1, 0x36, 2, 0);
                     write(core::ptr::without_provenance_mut::<i32>(SOURCE_MAP).offset((3 * read($p.add(SOURCE_COUNT))) as isize),
@@ -123,13 +172,16 @@ macro_rules! compile_wasm {
                     write(core::ptr::without_provenance_mut::<i32>(SOURCE_MAP).offset((3 * read($p.add(SOURCE_COUNT)) + 2) as isize),
                           read($p.add(EMIT_POS)));
                     write($p.add(SOURCE_COUNT), read($p.add(SOURCE_COUNT)) + 1);
+                    #[cfg(pocket_rust_call)]
+                    if op == 4 { break; }
+                    #[cfg(not(pocket_rust_call))]
                     if op > 3 { break; }
                 }
                 write($p.add(SLOT), read($p.add(SLOT)) + 1);
             }
             bytes!($p, 0x41, read($p.add(OUTPUTS)), 0x0b);
-            write($p.add(BYTE_WORDS + 45), read($p.add(EMIT_POS)) - 46);
-            write($p.add(BYTE_WORDS + 47), read($p.add(EMIT_POS)) - 48);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 45), read($p.add(EMIT_POS)) - 46 - IMPORT_SIZE as i32);
+            write($p.add(BYTE_WORDS + IMPORT_SIZE + 47), read($p.add(EMIT_POS)) - 48 - IMPORT_SIZE as i32);
             write($p.add(COMMAND), 15);
         }
     }};

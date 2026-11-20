@@ -101,3 +101,6 @@ For the typed language and renderer comparison, see the
 The [Compiler Monitor](evidence/pocket-compile/README.md) adds a manifest-gated
 inspector for modules and source maps emitted by a guest. Open
 `?cartridge=compile-monitor` to try it.
+
+The [Rust Call Monitor](evidence/pocket-rust-call/README.md) adds a unary
+cross-language call and a saved source-step trace.

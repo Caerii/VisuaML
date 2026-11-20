@@ -1,0 +1,872 @@
+{
+  "binary_sha256": "eb328270504b7068e6dc00fdaf5bd4bb24e67b01d5b25523ec888c236cb59a97",
+  "page_sha256": "697f06624747e18c5c08d80597f404c1072d3863bdc7c22a7ba356f80e950cc9",
+  "emitted_sha256": "31807e5ad3fdc931b879e8c85b49cce0a1d3d9f7e9c092201ac354be41ce4117",
+  "rust_sha256": "cdfb8dfcff612b3cfa2eb80f80f5627480c812f8e5b331ac6eaf08ecfb02e40f",
+  "printed": [
+    1
+  ],
+  "graph_sha256": "41586e82580ae9b30bc1758a324b06ffb51402fbaabb34fbe535709b01ca2275",
+  "packed_fallback": false,
+  "source_steps": 34,
+  "source_map": [
+    {
+      "line": 10,
+      "emitted_start": 72,
+      "emitted_end": 83,
+      "linked_start": 84,
+      "linked_end": 95
+    },
+    {
+      "line": 20,
+      "emitted_start": 83,
+      "emitted_end": 96,
+      "linked_start": 95,
+      "linked_end": 108
+    },
+    {
+      "line": 30,
+      "emitted_start": 96,
+      "emitted_end": 110,
+      "linked_start": 108,
+      "linked_end": 122
+    }
+  ],
+  "call_step": 6,
+  "return_step": 21,
+  "trace": [
+    {
+      "function": 1,
+      "pc": 0,
+      "opcode": "i32.const",
+      "next_image_pc": 16,
+      "depth": 0,
+      "fuel": 1999,
+      "status": 0,
+      "stack": [
+        3
+      ],
+      "locals": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 1,
+      "opcode": "local.set",
+      "next_image_pc": 17,
+      "depth": 0,
+      "fuel": 1998,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 2,
+      "opcode": "i32.const",
+      "next_image_pc": 18,
+      "depth": 0,
+      "fuel": 1997,
+      "status": 0,
+      "stack": [
+        32
+      ],
+      "locals": [
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 3,
+      "opcode": "local.get",
+      "next_image_pc": 19,
+      "depth": 0,
+      "fuel": 1996,
+      "status": 0,
+      "stack": [
+        32,
+        3
+      ],
+      "locals": [
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        32,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 4,
+      "opcode": "i32.store",
+      "next_image_pc": 20,
+      "depth": 0,
+      "fuel": 1995,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        2,
+        32,
+        0,
+        3
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 5,
+      "opcode": "local.get",
+      "next_image_pc": 21,
+      "depth": 0,
+      "fuel": 1994,
+      "status": 0,
+      "stack": [
+        3
+      ],
+      "locals": [
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 6,
+      "opcode": "call",
+      "next_image_pc": 0,
+      "depth": 1,
+      "fuel": 1993,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 0,
+      "opcode": "i32.const",
+      "next_image_pc": 1,
+      "depth": 1,
+      "fuel": 1992,
+      "status": 0,
+      "stack": [
+        0
+      ],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 1,
+      "opcode": "local.set",
+      "next_image_pc": 2,
+      "depth": 1,
+      "fuel": 1991,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 2,
+      "opcode": "block",
+      "next_image_pc": 3,
+      "depth": 1,
+      "fuel": 1990,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 3,
+      "opcode": "local.get",
+      "next_image_pc": 4,
+      "depth": 1,
+      "fuel": 1989,
+      "status": 0,
+      "stack": [
+        3
+      ],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 4,
+      "opcode": "i32.const",
+      "next_image_pc": 5,
+      "depth": 1,
+      "fuel": 1988,
+      "status": 0,
+      "stack": [
+        3,
+        3
+      ],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 5,
+      "opcode": "i32.lt_s",
+      "next_image_pc": 6,
+      "depth": 1,
+      "fuel": 1987,
+      "status": 0,
+      "stack": [
+        0
+      ],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 6,
+      "opcode": "br_if",
+      "next_image_pc": 7,
+      "depth": 1,
+      "fuel": 1986,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 7,
+      "opcode": "i32.const",
+      "next_image_pc": 8,
+      "depth": 1,
+      "fuel": 1985,
+      "status": 0,
+      "stack": [
+        0
+      ],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 8,
+      "opcode": "local.get",
+      "next_image_pc": 9,
+      "depth": 1,
+      "fuel": 1984,
+      "status": 0,
+      "stack": [
+        0,
+        3
+      ],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 9,
+      "opcode": "i32.store",
+      "next_image_pc": 10,
+      "depth": 1,
+      "fuel": 1983,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        2,
+        64,
+        0,
+        3
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 10,
+      "opcode": "i32.const",
+      "next_image_pc": 11,
+      "depth": 1,
+      "fuel": 1982,
+      "status": 0,
+      "stack": [
+        1
+      ],
+      "locals": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 11,
+      "opcode": "local.set",
+      "next_image_pc": 12,
+      "depth": 1,
+      "fuel": 1981,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        3,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 12,
+      "opcode": "end",
+      "next_image_pc": 13,
+      "depth": 1,
+      "fuel": 1980,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        3,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 13,
+      "opcode": "local.get",
+      "next_image_pc": 14,
+      "depth": 1,
+      "fuel": 1979,
+      "status": 0,
+      "stack": [
+        1
+      ],
+      "locals": [
+        3,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 0,
+      "pc": 14,
+      "opcode": "end",
+      "next_image_pc": 22,
+      "depth": 0,
+      "fuel": 1978,
+      "status": 0,
+      "stack": [
+        1
+      ],
+      "locals": [
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 7,
+      "opcode": "local.set",
+      "next_image_pc": 23,
+      "depth": 0,
+      "fuel": 1977,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 8,
+      "opcode": "i32.const",
+      "next_image_pc": 24,
+      "depth": 0,
+      "fuel": 1976,
+      "status": 0,
+      "stack": [
+        36
+      ],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 9,
+      "opcode": "local.get",
+      "next_image_pc": 25,
+      "depth": 0,
+      "fuel": 1975,
+      "status": 0,
+      "stack": [
+        36,
+        1
+      ],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        36,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 10,
+      "opcode": "i32.store",
+      "next_image_pc": 26,
+      "depth": 0,
+      "fuel": 1974,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        2,
+        36,
+        0,
+        1
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 11,
+      "opcode": "i32.const",
+      "next_image_pc": 27,
+      "depth": 0,
+      "fuel": 1973,
+      "status": 0,
+      "stack": [
+        16
+      ],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 12,
+      "opcode": "local.get",
+      "next_image_pc": 28,
+      "depth": 0,
+      "fuel": 1972,
+      "status": 0,
+      "stack": [
+        16,
+        1
+      ],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        16,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 13,
+      "opcode": "i32.store",
+      "next_image_pc": 29,
+      "depth": 0,
+      "fuel": 1971,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        2,
+        16,
+        0,
+        1
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 14,
+      "opcode": "i32.const",
+      "next_image_pc": 30,
+      "depth": 0,
+      "fuel": 1970,
+      "status": 0,
+      "stack": [
+        40
+      ],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 15,
+      "opcode": "local.get",
+      "next_image_pc": 31,
+      "depth": 0,
+      "fuel": 1969,
+      "status": 0,
+      "stack": [
+        40,
+        1
+      ],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        40,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 16,
+      "opcode": "i32.store",
+      "next_image_pc": 32,
+      "depth": 0,
+      "fuel": 1968,
+      "status": 0,
+      "stack": [],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        2,
+        40,
+        0,
+        1
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 17,
+      "opcode": "i32.const",
+      "next_image_pc": 33,
+      "depth": 0,
+      "fuel": 1967,
+      "status": 0,
+      "stack": [
+        1
+      ],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "function": 1,
+      "pc": 18,
+      "opcode": "end",
+      "next_image_pc": 34,
+      "depth": 0,
+      "fuel": 1966,
+      "status": 1,
+      "stack": [
+        1
+      ],
+      "locals": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "access": [
+        0,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "delta": 12,
+  "helper_start": 49,
+  "helper_length": 31
+}

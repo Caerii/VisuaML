@@ -1,10 +1,13 @@
+import { linkPassable } from './pocket-link.mjs';
+import passableUrl from './evidence/pocket-rust-call/passable.wasm?url';
 import { inspectModule, runEmitted } from './pocket-module.mjs';
 import { createPocket, createPresenter, digest, PERIOD_MS } from './pocket.mjs';
 const manifests = Object.values(import.meta.glob('./cartridges/*.json', { eager: true, import: 'default' }));
 const binaries = import.meta.glob('./guest/*.wasm', { eager: true, query: '?url', import: 'default' });
 const proofs = import.meta.glob('./fixtures/*.proof.json', { import: 'default' });
+const rustProofs = Object.values(import.meta.glob('./evidence/pocket-rust-call/*.map.json', { eager: true, import: 'default' }));
 const compiledProofs = Object.values(import.meta.glob('./evidence/pocket-compile/*.map.json', { eager: true, import: 'default' }));
-const clips = import.meta.glob('./evidence/{pocket,cartridges,monitor-program,pocket-compile}/*.gif', { eager: true, query: '?url', import: 'default' });
+const clips = import.meta.glob('./evidence/{pocket,cartridges,monitor-program,pocket-compile,pocket-rust-call}/*.gif', { eager: true, query: '?url', import: 'default' });
 const get = id => document.getElementById(id);
 const present = createPresenter(get('display'));
 const actionIds = ['play', 'step', 'reset', 'export', 'checkpoint'];
@@ -250,12 +253,16 @@ function download(name, blob) {
   setTimeout(() => URL.revokeObjectURL(link.href), 100);
 }
 let emitted = null, emittedResult = null, inspectedSerial = 0;
+let callProof = null, callCursor = 0;
 
 function showModuleLine() {
   const index = Number(get('module-line').value);
   const row = emitted?.rows[index];
   get('module-instructions').textContent = row?.instructions.map(({ byte, name, args }) =>
     [String(byte).padStart(3, ' '), name, ...args].join(' ')).join('\n') ?? '';
+  const showCall = row?.source === 'CALL' && callProof;
+  get('call-step').hidden = !showCall;
+  if (!showCall) get('call-trace').textContent = '';
   const current = emittedResult?.accumulators;
   get('module-effect').textContent = row && current
     ? `Accumulator ${index === 0 ? 0 : current[emitted.rows[index - 1].line / 10 - 1]} → ${current[row.line / 10 - 1]}`
@@ -268,7 +275,8 @@ function refreshModule(fields) {
   if (!enabled) return;
   if (log.length === 1 || fields.moduleLength !== emitted?.wasm.length || log.at(-1) === 13) {
     ++inspectedSerial;
-    emitted = fields.moduleLength ? inspectModule(pocket.checkpoint()) : null;
+    callProof = null;
+    emitted = fields.moduleLength ? inspectModule(pocket.checkpoint(), cartridge.rustLink ? 72 : 51) : null;
     emittedResult = null;
     get('module-save').disabled = get('module-run').disabled = !emitted;
     get('module-line').replaceChildren(...(emitted?.rows ?? []).map(({ line, source }, index) =>
@@ -287,15 +295,36 @@ get('module-save').onclick = () => {
 get('module-run').onclick = () => void safely(async () => {
   if (!emitted) return;
   const snapshot = inspectedSerial, candidate = emitted;
-  const result = await runEmitted(candidate.wasm);
+  const linked = cartridge.rustLink
+    ? linkPassable(candidate.wasm, new Uint8Array(await (await fetch(passableUrl)).arrayBuffer()))
+    : null;
+  const result = await runEmitted(linked?.wasm ?? candidate.wasm);
   if (snapshot !== inspectedSerial) return;
   emittedResult = result;
-  const verified = compiledProofs.some(saved => saved.binary_sha256 === result.binaryHash
+  const verified = (linked ? rustProofs : compiledProofs).find(saved => saved.binary_sha256 === result.binaryHash
     && saved.page_sha256 === result.pageHash);
-  get('module-status').textContent = `Browser emitted WASM · ${result.printed.join(' ') || 'No PRINT output'}`
+  callProof = linked ? verified : null;
+  callCursor = callProof?.call_step ?? 0;
+  get('call-trace').textContent = '';
+  get('module-status').textContent = `Browser ${linked ? "linked" : "emitted"} WASM · ${result.printed.join(' ') || 'No PRINT output'}`
     + (verified ? ' · matches saved VisuaML execution' : ' · verify offline with the compiler replay tool');
   showModuleLine();
 });
+
+get('call-step').onclick = () => {
+  if (!callProof) return;
+  const row = callProof.trace[callCursor];
+  const entry = callCursor === callProof.call_step;
+  const exit = callCursor === callProof.return_step;
+  const print = callCursor > callProof.return_step && row.access[0] === 2 && row.access[1] === 16;
+  const body = row.function === 0 ? 'Rust passable' : 'Pocket';
+  const detail = entry ? `Pocket call 0 → Rust passable(${row.locals[0]})`
+    : exit ? `Rust ${row.opcode} → Pocket · returned ${row.stack.at(-1)}`
+      : print ? `Pocket PRINT → ${row.access[3]} at memory byte 16`
+        : `${body} · PC ${row.pc} · ${row.opcode}${row.access[0] === 2 ? ` · wrote ${row.access[3]} at byte ${row.access[1]}` : ''}`;
+  get('call-trace').textContent = `Saved VisuaML · step ${callCursor + 1} · ${detail}`;
+  callCursor = print || callCursor + 1 === callProof.trace.length ? callProof.call_step : callCursor + 1;
+};
 
 get('export').onclick = () => {
   if (!pocket) return;

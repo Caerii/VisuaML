@@ -2,19 +2,19 @@ import { digest } from './pocket.mjs';
 
 const ops = new Map([
   [0x20, ['local.get', 1]], [0x21, ['local.set', 1]], [0x22, ['local.tee', 1]],
-  [0x41, ['i32.const', 1]], [0x36, ['i32.store', 2]],
+  [0x10, ['call', 1]], [0x41, ['i32.const', 1]], [0x36, ['i32.store', 2]],
   [0x6a, ['i32.add', 0]], [0x6c, ['i32.mul', 0]], [0x4a, ['i32.gt_s', 0]],
 ]);
 
-export function inspectModule(page) {
+export function inspectModule(page, bodyStart = 51) {
   const word = new DataView(page.buffer, page.byteOffset, page.byteLength);
   const length = word.getInt32(400, true);
   if (length === 0) return null;
   const count = word.getInt32(404, true);
-  if (length < 54 || length > 174 || count < 0 || count > 4) throw Error('Invalid guest compiler output');
+  if (length < 54 || length > 174 + (bodyStart - 51) || count < 0 || count > 4) throw Error('Invalid guest compiler output');
   const wasm = page.slice(24576, 24576 + length);
   const rows = [];
-  let next = 51, previousLine = 0;
+  let next = bodyStart, previousLine = 0;
   for (let i = 0; i < count; i++) {
     const offset = 24000 + 12 * i;
     const line = word.getInt32(offset, true);
@@ -43,7 +43,7 @@ export function inspectModule(page) {
       instructions.push({ byte, name: op[0], args });
     }
     const names = instructions.map(item => item.name);
-    const source = names.includes('i32.add') ? `ADD ${instructions[1].args[0]}`
+    const source = names.includes('call') ? 'CALL' : names.includes('i32.add') ? `ADD ${instructions[1].args[0]}`
       : names.includes('local.set') ? `SET ${instructions[0].args[0]}`
         : names.filter(name => name === 'i32.store').length === 2 ? 'PRINT' : 'HALT';
     rows.push({ line, start, end, source, instructions });

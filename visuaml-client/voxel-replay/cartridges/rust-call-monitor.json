@@ -1,0 +1,56 @@
+{
+  "id": "rust-call-monitor",
+  "name": "Rust Call Monitor",
+  "binary": "pocket_rust_call.wasm",
+  "guide": "Enter 10 SET 3, 20 CALL, 30 PRINT, then COMPILE. Run the linked WASM and select 20 CALL to step through Rust.",
+  "keyboard": "ascii",
+  "controls": [],
+  "readouts": [
+    {
+      "id": "accumulator",
+      "label": "Accumulator",
+      "offset": 92
+    },
+    {
+      "id": "program-counter",
+      "label": "Next line",
+      "offset": 96,
+      "values": {
+        "1": "10",
+        "2": "20",
+        "3": "30",
+        "4": "40",
+        "5": "Halted"
+      }
+    },
+    {
+      "id": "moduleLength",
+      "label": "Module bytes",
+      "offset": 144
+    }
+  ],
+  "notices": [],
+  "idleNotice": "Program keyboard ready",
+  "replays": [
+    {
+      "id": "rust-cell-2",
+      "label": "Replay cell 2",
+      "proof": "pocket-rust-cell-2.proof.json"
+    },
+    {
+      "id": "rust-cell-3",
+      "label": "Replay cell 3",
+      "proof": "pocket-rust-cell-3.proof.json"
+    }
+  ],
+  "gallery": [
+    [
+      "Call into Rust",
+      "pocket-rust-call.gif"
+    ]
+  ],
+  "binary_sha256": "6216ec2e8aa85052eb19b033750f359f47f7f8b3c35dd33c2643d22b1ecce566",
+  "order": 2.3,
+  "moduleOutput": true,
+  "rustLink": true
+}

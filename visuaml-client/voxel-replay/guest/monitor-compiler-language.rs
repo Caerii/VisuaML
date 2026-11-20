@@ -86,6 +86,11 @@ unsafe extern "C" fn program(p: *mut i32) -> i32 {
                 write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(841)); if read(p.add(TMP)) == 0 { write(p.add(OP), 2); }
                 write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(8864309)); if read(p.add(TMP)) == 0 { write(p.add(OP), 3); }
                 write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(158537)); if read(p.add(TMP)) == 0 { write(p.add(OP), 4); }
+                #[cfg(pocket_rust_call)]
+                {
+                    write(p.add(TMP), read(p.add(TOKEN)) - 60114);
+                    if read(p.add(TMP)) == 0 { write(p.add(OP), 5); }
+                }
                 write(p.add(VALUE), 0);
                 if read(p.add(OP)) > 0 && read(p.add(OP)) < 3 {
                     write(p.add(TMP), read(cell(p, row, read(p.add(INPUT_COL)))) - 32);
@@ -144,6 +149,18 @@ unsafe extern "C" fn program(p: *mut i32) -> i32 {
                     write(p.add(VALUES).offset(read(p.add(OUTPUTS)) as isize), read(p.add(ACC)));
                     write(p.add(OUTPUTS), read(p.add(OUTPUTS)) + 1);
                 }
+                #[cfg(pocket_rust_call)]
+                if read(p.add(OP)) > 4 {
+                    write(p.add(TMP), 0);
+                    if read(p.add(ACC)) > 2 { write(p.add(TMP), 1); }
+                    write(p.add(ACC), read(p.add(TMP)));
+                }
+                #[cfg(pocket_rust_call)]
+                {
+                    write(p.add(TMP), read(p.add(OP)) - 4);
+                    if read(p.add(TMP)) == 0 { write(p.add(PC), 5); }
+                }
+                #[cfg(not(pocket_rust_call))]
                 if read(p.add(OP)) > 3 { write(p.add(PC), 5); }
             }
         }
