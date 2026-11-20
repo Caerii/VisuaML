@@ -17,11 +17,12 @@ class PortfolioTick(NamedTuple):
 
 
 class OrdinaryPortfolio(torch.nn.Module):
-    __constants__ = ["lazy_fields"]
-    def __init__(self, lazy_fields: bool = False):
+    __constants__ = ["lazy_fields", "native_runs"]
+    def __init__(self, lazy_fields: bool = False, native_runs: bool = False):
         super().__init__()
         self.capacity = MAX_STACK
         self.lazy_fields = lazy_fields
+        self.native_runs = native_runs
         self.register_buffer("stack_slots", torch.arange(MAX_STACK))
         self.register_buffer("local_slots", torch.arange(MAX_LOCALS + 1))
         self.step = CallStep(reuse_row=True, reuse_state=True, select_result=True, select_memory=True)
@@ -45,6 +46,15 @@ class OrdinaryPortfolio(torch.nn.Module):
                 access = torch.zeros_like(access)
                 break
             row = torch.index_select(image, 0, vm.pc.reshape(1))[0]
+            if self.native_runs and bool(row[17]):
+                pc, height, stack, locals_, fuel, status, steps = torch.ops.visuaml_ordinary.run(
+                    image, vm.pc, vm.height, vm.stack, vm.locals, vm.fuel, budget)
+                if steps > 0:
+                    vm = MachineState(pc, height, stack, locals_, vm.page, fuel, status)
+                    state = CallState(vm, state.depth, state.frames)
+                    access = torch.zeros_like(access)
+                    budget -= steps
+                    continue
             if (budget >= 2 and bool(row[11] >= 0)
                     and bool((vm.fuel >= 2) & (vm.height <= self.capacity - 2))):
                 kind = int(row[12])
@@ -149,5 +159,5 @@ class OrdinaryPortfolio(torch.nn.Module):
         return CallTick(CallState(next_vm, state.depth, state.frames), access)
 
 
-def freeze_ordinary(*, lazy_fields: bool = False):
-    return torch.jit.freeze(torch.jit.script(OrdinaryPortfolio(lazy_fields).eval()))
+def freeze_ordinary(*, lazy_fields: bool = False, native_runs: bool = False):
+    return torch.jit.freeze(torch.jit.script(OrdinaryPortfolio(lazy_fields, native_runs).eval()))
