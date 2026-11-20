@@ -24,7 +24,7 @@ def reserved(seed, repeat):
     return (3 * seed + repeat) % 7 == 0
 
 
-def prompt(polite, offset, boost, seed, repeat):
+def prompt(polite, offset, seed, repeat):
     return (f"available alpha does {'offset' if offset == 'alpha' else 'boost'} . "
             f"beta does {'offset' if offset == 'beta' else 'boost'} . "
             f"{polite} first offset {seed} once then boost {repeat} times . assistant")
@@ -55,9 +55,9 @@ def training_examples():
         for repeat in range(6):
             if reserved(seed, repeat):
                 continue
-            for offset, boost in (("alpha", "beta"), ("beta", "alpha")):
+            for offset in ("alpha", "beta"):
                 for polite in ("please", "kindly"):
-                    prefix = prompt(polite, offset, boost, seed, repeat)
+                    prefix = prompt(polite, offset, seed, repeat)
                     for case in range(8):
                         first, second = torch.randint(32, (2,), generator=rng).tolist()
                         begin = f" call {offset} {seed} 1 ."

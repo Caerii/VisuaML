@@ -1,3 +1,5 @@
+import toolFailure from './evidence/two-call-controller/failure.json';
+import toolFailureUrl from './evidence/two-call-controller/failure.json?url';
 import discovered from './evidence/counterexample-search/terrain-session.json';
 import counterexampleUrl from './evidence/counterexample-search/terrain-session.json?url';
 import voxel from './release/examples/terrain-comparison.json';
@@ -6,6 +8,19 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.format_version === 1 && data.replay?.first_substitution_difference) {
+    const { runs, first_substitution_difference: first } = data.replay;
+    const left = first.expected[0], right = first.actual[0];
+    get('title').textContent = 'Saved two-call replay';
+    get('status').textContent = `First difference at event ${first.event} · ${left.feedback} → ${right.feedback}`;
+    get('detail').textContent = [
+      `Prompt: ${data.replay.prompt}`,
+      `First tool: ${left.slot}(${left.arguments.join(', ')}) returned ${left.computed}`,
+      `Second call: ${runs.normal.events[2].tokens.join(' ')} → ${runs.substitute.events[2].tokens.join(' ')}`,
+      `Answer: ${runs.normal.answer} → ${runs.substitute.answer}`,
+    ].join('\n');
+    return;
+  }
   if (data?.format_version !== 1 || data.profile !== profile) throw Error('Unsupported replay version');
   let status, detail;
   if (data.checkpoint?.registers) {
@@ -59,3 +74,6 @@ get('find-counterexample').onclick = async () => {
   get('counterexample').textContent = `${label} · ${result.executed_prefixes.length} prefixes · input Right · PC ${first.pc} · [${first.reference.stack}] → [${first.candidate.stack}]`;
   button.disabled = false;
 };
+
+get('tool-failure').onclick = () => show(toolFailure);
+get('tool-failure-download').href = toolFailureUrl;

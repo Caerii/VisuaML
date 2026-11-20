@@ -15,4 +15,12 @@ try {
   const downloaded = page.waitForEvent('download');
   await page.getByRole('link', { name: 'Download replayable counterexample' }).click();
   assert.equal((await downloaded).suggestedFilename(), 'terrain-counterexample.json');
+  await page.getByRole('button', { name: 'Open two-call failure' }).click();
+  await page.getByText('First difference at event 2 · result 6 → result 8').waitFor();
+  assert.match(await page.locator('#detail').innerText(), /call beta 6 1 \. → call beta 8 1/);
+  const failure = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download two-call failure' }).click();
+  assert.equal((await failure).suggestedFilename(), 'two-call-failure.json');
+  await page.locator('#file').setInputFiles('evidence/two-call-controller/failure.json');
+  await page.getByText('First difference at event 2 · result 6 → result 8').waitFor();
 } finally { await browser.close(); }

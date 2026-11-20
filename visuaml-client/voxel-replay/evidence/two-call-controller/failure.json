@@ -1,0 +1,576 @@
+{
+  "format_version": 1,
+  "holdout_sha256": "9a86bfce6d4f01feee3f6a5f654c471a26a84c0b447bc5b8ef9fe2db20472b52",
+  "case": 0,
+  "replay": {
+    "prompt": "available alpha does offset . beta does boost . kindly first offset 2 once then boost 1 times . assistant",
+    "runs": {
+      "normal": {
+        "events": [
+          {
+            "kind": "generated",
+            "tokens": [
+              "call",
+              "alpha",
+              "2",
+              "1",
+              "."
+            ]
+          },
+          {
+            "kind": "tool",
+            "slot": "alpha",
+            "role": "offset",
+            "arguments": [
+              2,
+              1
+            ],
+            "trace": [
+              [
+                1,
+                1,
+                2,
+                1,
+                2,
+                0,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                2,
+                1,
+                2,
+                0,
+                0,
+                2
+              ],
+              [
+                3,
+                1,
+                2,
+                1,
+                2,
+                0,
+                0,
+                2
+              ],
+              [
+                4,
+                1,
+                6,
+                1,
+                2,
+                0,
+                0,
+                2
+              ],
+              [
+                5,
+                1,
+                6,
+                1,
+                6,
+                0,
+                0,
+                2
+              ],
+              [
+                5,
+                0,
+                6,
+                1,
+                6,
+                0,
+                0,
+                2
+              ]
+            ],
+            "computed": 6,
+            "feedback": "result 6"
+          },
+          {
+            "kind": "generated",
+            "tokens": [
+              "call",
+              "beta",
+              "6",
+              "1",
+              "."
+            ]
+          },
+          {
+            "kind": "tool",
+            "slot": "beta",
+            "role": "boost",
+            "arguments": [
+              6,
+              1
+            ],
+            "trace": [
+              [
+                1,
+                1,
+                6,
+                1,
+                6,
+                0,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                7,
+                1,
+                6,
+                0,
+                0,
+                0
+              ],
+              [
+                3,
+                1,
+                9,
+                1,
+                6,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                1,
+                9,
+                1,
+                9,
+                0,
+                0,
+                0
+              ],
+              [
+                5,
+                1,
+                9,
+                0,
+                9,
+                0,
+                0,
+                0
+              ],
+              [
+                6,
+                1,
+                9,
+                0,
+                9,
+                0,
+                0,
+                0
+              ],
+              [
+                6,
+                0,
+                9,
+                0,
+                9,
+                0,
+                0,
+                0
+              ]
+            ],
+            "computed": 9,
+            "feedback": "result 9"
+          },
+          {
+            "kind": "generated",
+            "tokens": [
+              "answer",
+              "9",
+              "."
+            ]
+          }
+        ],
+        "outcome": "answered",
+        "answer": 9
+      },
+      "disabled": {
+        "events": [
+          {
+            "kind": "generated",
+            "tokens": [
+              "call",
+              "alpha",
+              "2",
+              "1",
+              "."
+            ]
+          },
+          {
+            "kind": "tool",
+            "slot": "alpha",
+            "role": "offset",
+            "arguments": [
+              2,
+              1
+            ],
+            "trace": [],
+            "feedback": "unavailable"
+          },
+          {
+            "kind": "generated",
+            "tokens": [
+              "stop",
+              "."
+            ]
+          }
+        ],
+        "outcome": "stopped"
+      },
+      "substitute": {
+        "events": [
+          {
+            "kind": "generated",
+            "tokens": [
+              "call",
+              "alpha",
+              "2",
+              "1",
+              "."
+            ]
+          },
+          {
+            "kind": "tool",
+            "slot": "alpha",
+            "role": "offset",
+            "arguments": [
+              2,
+              1
+            ],
+            "trace": [
+              [
+                1,
+                1,
+                2,
+                1,
+                2,
+                0,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                2,
+                1,
+                2,
+                0,
+                0,
+                2
+              ],
+              [
+                3,
+                1,
+                2,
+                1,
+                2,
+                0,
+                0,
+                2
+              ],
+              [
+                4,
+                1,
+                6,
+                1,
+                2,
+                0,
+                0,
+                2
+              ],
+              [
+                5,
+                1,
+                6,
+                1,
+                6,
+                0,
+                0,
+                2
+              ],
+              [
+                5,
+                0,
+                6,
+                1,
+                6,
+                0,
+                0,
+                2
+              ]
+            ],
+            "computed": 6,
+            "feedback": "result 8"
+          },
+          {
+            "kind": "generated",
+            "tokens": [
+              "call",
+              "beta",
+              "8",
+              "1",
+              "."
+            ]
+          },
+          {
+            "kind": "tool",
+            "slot": "beta",
+            "role": "boost",
+            "arguments": [
+              8,
+              1
+            ],
+            "trace": [
+              [
+                1,
+                1,
+                8,
+                1,
+                8,
+                0,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                9,
+                1,
+                8,
+                0,
+                0,
+                0
+              ],
+              [
+                3,
+                1,
+                11,
+                1,
+                8,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                1,
+                11,
+                1,
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                5,
+                1,
+                11,
+                0,
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                6,
+                1,
+                11,
+                0,
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                6,
+                0,
+                11,
+                0,
+                11,
+                0,
+                0,
+                0
+              ]
+            ],
+            "computed": 11,
+            "feedback": "result 11"
+          },
+          {
+            "kind": "generated",
+            "tokens": [
+              "answer",
+              "11",
+              "."
+            ]
+          }
+        ],
+        "outcome": "answered",
+        "answer": 11
+      }
+    },
+    "first_substitution_difference": {
+      "event": 2,
+      "expected": [
+        {
+          "kind": "tool",
+          "slot": "alpha",
+          "role": "offset",
+          "arguments": [
+            2,
+            1
+          ],
+          "trace": [
+            [
+              1,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              2
+            ],
+            [
+              3,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              2
+            ],
+            [
+              4,
+              1,
+              6,
+              1,
+              2,
+              0,
+              0,
+              2
+            ],
+            [
+              5,
+              1,
+              6,
+              1,
+              6,
+              0,
+              0,
+              2
+            ],
+            [
+              5,
+              0,
+              6,
+              1,
+              6,
+              0,
+              0,
+              2
+            ]
+          ],
+          "computed": 6,
+          "feedback": "result 6"
+        }
+      ],
+      "actual": [
+        {
+          "kind": "tool",
+          "slot": "alpha",
+          "role": "offset",
+          "arguments": [
+            2,
+            1
+          ],
+          "trace": [
+            [
+              1,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              2
+            ],
+            [
+              3,
+              1,
+              2,
+              1,
+              2,
+              0,
+              0,
+              2
+            ],
+            [
+              4,
+              1,
+              6,
+              1,
+              2,
+              0,
+              0,
+              2
+            ],
+            [
+              5,
+              1,
+              6,
+              1,
+              6,
+              0,
+              0,
+              2
+            ],
+            [
+              5,
+              0,
+              6,
+              1,
+              6,
+              0,
+              0,
+              2
+            ]
+          ],
+          "computed": 6,
+          "feedback": "result 8"
+        }
+      ]
+    }
+  }
+}
