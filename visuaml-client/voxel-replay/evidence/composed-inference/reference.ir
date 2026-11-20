@@ -1,0 +1,628 @@
+graph(%self : __torch__.___torch_mangle_0.Inference,
+      %prompt.1 : Tensor,
+      %programs.1 : Tensor,
+      %roles.1 : Tensor,
+      %fuel.1 : Tensor,
+      %override.1 : int):
+  %6 : int[] = prim::Constant[value=[4, 1]]()
+  %7 : Double(1, 1, strides=[1, 1], requires_grad=0, device=cpu) = prim::Constant[value={1}]()
+  %8 : int[] = prim::Constant[value=[2, 1]]()
+  %9 : Double(3, 3, strides=[1, 3], requires_grad=0, device=cpu) = prim::Constant[value= 1  0  0  0  1  0  0  0  1 [ CPUDoubleType{3,3} ]]()
+  %10 : Double(3, 2, strides=[1, 3], requires_grad=0, device=cpu) = prim::Constant[value= 0  0  2  0  0 -1 [ CPUDoubleType{3,2} ]]()
+  %11 : Double(3, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0  0  0 [ CPUDoubleType{3} ]]()
+  %12 : Double(3, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0  1  0 [ CPUDoubleType{3} ]]()
+  %13 : int[] = prim::Constant[value=[2, 3, 54]]()
+  %14 : int[] = prim::Constant[value=[1]]()
+  %15 : int[] = prim::Constant[value=[2, 0, 1, 3]]()
+  %16 : int[] = prim::Constant[value=[48]]()
+  %17 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %18 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %19 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %20 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %21 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %22 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %23 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %24 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %25 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %26 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %27 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %28 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %29 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %30 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %31 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %32 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %33 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %34 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %35 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %36 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %37 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %38 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %39 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %40 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %41 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %42 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %43 : str = prim::Constant[value="trunc"]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+  %44 : Tensor = prim::Constant[value={4}]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+  %45 : float = prim::Constant[value=1.0000000000000001e-05]()
+  %46 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %47 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %48 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %49 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %50 : Device = prim::Constant[value="cpu"]()
+  %51 : int = prim::Constant[value=-2]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+  %52 : float = prim::Constant[value=0.]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+  %53 : int[] = prim::Constant[value=[2, 48, 8]]()
+  %54 : int[] = prim::Constant[value=[2, 4]]()
+  %55 : int[] = prim::Constant[value=[3, 6]]()
+  %56 : bool = prim::Constant[value=1]()
+  %57 : bool = prim::Constant[value=0]()
+  %58 : int = prim::Constant[value=13]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:78:81
+  %59 : int = prim::Constant[value=15]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:74:37
+  %60 : int = prim::Constant[value=19]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:62:33
+  %61 : int = prim::Constant[value=17]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:60:33
+  %62 : int = prim::Constant[value=9]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:113
+  %63 : int = prim::Constant[value=31]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:92
+  %64 : int = prim::Constant[value=18]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:55:43
+  %65 : int = prim::Constant[value=14]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:51
+  %66 : int = prim::Constant[value=5]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:38
+  %67 : int = prim::Constant[value=54]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:66
+  %68 : int = prim::Constant[value=22]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:46
+  %69 : int = prim::Constant[value=16]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:39
+  %70 : int = prim::Constant[value=20]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:43:39
+  %71 : int = prim::Constant[value=7]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:39:36
+  %72 : int = prim::Constant[value=64]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:33:37
+  %73 : int = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:31:21
+  %74 : int = prim::Constant[value=48]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:28:33
+  %75 : int = prim::Constant[value=4]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:27:34
+  %outcome.1 : int = prim::Constant[value=2]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:27:31
+  %77 : int = prim::Constant[value=1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:25:39
+  %78 : int = prim::Constant[value=6]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:25:34
+  %79 : int = prim::Constant[value=3]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:25:31
+  %80 : int = prim::Constant[value=-1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:25:38
+  %81 : NoneType = prim::Constant()
+  %82 : int = prim::Constant[value=9223372036854775807]()
+  %self.executor.output_bias : Double(8, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0  0  0  0  0  0  0  0 [ CPUDoubleType{8} ]]()
+  %self.executor.output_weight : Double(8, 127, strides=[127, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.layers.4.bias : Double(2, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=-2.1475e+09 -4.7000e+01 [ CPUDoubleType{2} ]]()
+  %self.executor.layers.4.weight : Double(2, 125, strides=[125, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.layers.3.bias : Double(16, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.layers.3.weight : Double(16, 109, strides=[109, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.layers.2.bias : Double(9, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0 -2 -2 -2 -2 -2 -2 -2 -2 [ CPUDoubleType{9} ]]()
+  %self.executor.layers.2.weight : Double(9, 100, strides=[100, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.layers.1.bias : Double(29, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.layers.1.weight : Double(29, 71, strides=[71, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.layers.0.bias : Double(58, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.layers.0.weight : Double(58, 13, strides=[13, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.mem_read.positions : Double(4, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0  1  2  3 [ CPUDoubleType{4} ]]()
+  %self.executor.mem_read.key_basis : Double(4, 3, strides=[3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.reg_read.positions : Double(2, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0  1 [ CPUDoubleType{2} ]]()
+  %self.executor.reg_read.key_basis : Double(2, 3, strides=[3, 1], requires_grad=0, device=cpu) = prim::Constant[value= 1  0  0  1  1  1 [ CPUDoubleType{2,3} ]]()
+  %self.executor.fetch.positions : Double(48, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.fetch.key_basis : Double(48, 3, strides=[3, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.executor.fetch.query_projection : Double(2, 2, strides=[2, 1], requires_grad=0, device=cpu) = prim::Constant[value= 1  0  0  1 [ CPUDoubleType{2,2} ]]()
+  %102 : Tensor = prim::Uninitialized()
+  %103 : int = prim::Uninitialized()
+  %104 : bool = prim::Uninitialized()
+  %requests.1 : Tensor = aten::full(%55, %80, %75, %81, %81, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:25:19
+  %feedback.1 : Tensor = aten::full(%54, %80, %75, %81, %81, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:27:19
+  %traces.1 : Tensor = aten::zeros(%53, %75, %81, %81, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:28:17
+  %outcome : int, %answer : int, %prefix : Tensor, %111 : int = prim::Loop(%82, %56, %outcome.1, %80, %prompt.1, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:30:8
+    block0(%112 : int, %outcome.29 : int, %answer.19 : int, %prefix.39 : Tensor, %116 : int):
+      %length : int, %prefix.35 : Tensor, %119 : int = prim::Loop(%82, %56, %73, %prefix.39, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:32:12
+        block0(%120 : int, %length.17 : int, %prefix.33 : Tensor, %123 : int):
+          %124 : int = aten::numel(%prefix.33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:33:19
+          %125 : bool = aten::ge(%124, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:33:19
+          %126 : bool, %127 : bool, %128 : int, %129 : Tensor, %130 : bool, %131 : int, %132 : Tensor = prim::If(%125) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:33:16
+            block0():
+              -> (%56, %57, %length.17, %prefix.33, %104, %103, %102)
+            block1():
+              %133 : Tensor = aten::unsqueeze(%prefix.33, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:35:40
+              %134 : int = aten::size(%133, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/two_call_controller.py:44:0
+              %pos.1 : Tensor = aten::arange(%134, %81, %81, %50, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/two_call_controller.py:45:0
+              %136 : Tensor = aten::embedding(%49, %133, %80, %57, %57) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2542:0
+              %137 : Tensor = aten::embedding(%48, %pos.1, %80, %57, %57) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2542:0
+              %src.1 : Tensor = aten::add(%136, %137, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/two_call_controller.py:47:0
+              %query.1 : Tensor = aten::layer_norm(%src.1, %16, %47, %46, %45, %56) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %query0.1 : Tensor = aten::transpose(%query.1, %77, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1454:0
+              %141 : int = aten::size(%query0.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %tgt_len.1 : Tensor = prim::NumToTensor(%141) # :0:0
+              %143 : int = aten::size(%query0.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %bsz.1 : Tensor = prim::NumToTensor(%143) # :0:0
+              %145 : int = aten::size(%query0.1, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %embed_dim.1 : Tensor = prim::NumToTensor(%145) # :0:0
+              %head_dim.1 : Tensor = aten::div(%embed_dim.1, %44, %43) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+              %148 : int = aten::Int(%head_dim.1) # :0:0
+              %149 : int = aten::size(%query0.1, %80) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5695:0
+              %150 : Tensor = aten::linear(%query0.1, %42, %41) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5699:0
+              %151 : int[] = prim::ListConstruct(%79, %149)
+              %152 : Tensor = aten::unflatten(%150, %80, %151) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/_tensor.py:1418:0
+              %153 : Tensor = aten::unsqueeze(%152, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5703:0
+              %154 : Tensor = aten::transpose(%153, %73, %51) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+              %155 : Tensor = aten::squeeze(%154, %51) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5705:0
+              %proj.1 : Tensor = aten::contiguous(%155, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5706:0
+              %q.3 : Tensor = aten::select(%proj.1, %73, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %k.1 : Tensor = aten::select(%proj.1, %73, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %v.1 : Tensor = aten::select(%proj.1, %73, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %160 : Tensor = aten::mul(%bsz.1, %44) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %161 : int = aten::Int(%160) # :0:0
+              %162 : int[] = prim::ListConstruct(%141, %161, %148)
+              %163 : Tensor = aten::view(%q.3, %162) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %q0.1 : Tensor = aten::transpose(%163, %73, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %165 : int = aten::size(%k.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %166 : int[] = prim::ListConstruct(%165, %161, %148)
+              %167 : Tensor = aten::view(%k.1, %166) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %k0.1 : Tensor = aten::transpose(%167, %73, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %169 : int = aten::size(%v.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %170 : int[] = prim::ListConstruct(%169, %161, %148)
+              %171 : Tensor = aten::view(%v.1, %170) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %v0.1 : Tensor = aten::transpose(%171, %73, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %173 : int = aten::size(%k0.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6412:0
+              %174 : int[] = prim::ListConstruct(%143, %75, %141, %148)
+              %q1.1 : Tensor = aten::view(%q0.1, %174) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6483:0
+              %176 : int[] = prim::ListConstruct(%143, %75, %173, %148)
+              %k1.1 : Tensor = aten::view(%k0.1, %176) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6484:0
+              %v1.1 : Tensor = aten::view(%v0.1, %176) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6485:0
+              %attn_output.1 : Tensor = aten::scaled_dot_product_attention(%q1.1, %k1.1, %v1.1, %81, %52, %56, %81, %57) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+              %180 : Tensor = aten::permute(%attn_output.1, %15) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %181 : Tensor = aten::contiguous(%180, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %182 : Tensor = aten::mul(%bsz.1, %tgt_len.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %183 : int = aten::Int(%182) # :0:0
+              %184 : int[] = prim::ListConstruct(%183, %145)
+              %attn_output0.1 : Tensor = aten::view(%181, %184) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %attn_output1.1 : Tensor = aten::linear(%attn_output0.1, %40, %39) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6494:0
+              %187 : int = aten::size(%attn_output1.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %188 : int[] = prim::ListConstruct(%141, %143, %187)
+              %attn_output2.1 : Tensor = aten::view(%attn_output1.1, %188) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %input.1 : Tensor = aten::transpose(%attn_output2.1, %77, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1510:0
+              %input0.1 : Tensor = aten::add(%src.1, %input.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:928:0
+              %input1.1 : Tensor = aten::layer_norm(%input0.1, %16, %38, %37, %45, %56) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %input2.1 : Tensor = aten::linear(%input1.1, %36, %35) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input3.1 : Tensor = aten::relu(%input2.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:0
+              %input4.1 : Tensor = aten::linear(%input3.1, %34, %33) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input5.1 : Tensor = aten::add(%input0.1, %input4.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:931:0
+              %query1.1 : Tensor = aten::layer_norm(%input5.1, %16, %32, %31, %45, %56) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %query2.1 : Tensor = aten::transpose(%query1.1, %77, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1454:0
+              %199 : int = aten::size(%query2.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %tgt_len0.1 : Tensor = prim::NumToTensor(%199) # :0:0
+              %201 : int = aten::size(%query2.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %bsz0.1 : Tensor = prim::NumToTensor(%201) # :0:0
+              %203 : int = aten::size(%query2.1, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %embed_dim0.1 : Tensor = prim::NumToTensor(%203) # :0:0
+              %head_dim0.1 : Tensor = aten::div(%embed_dim0.1, %44, %43) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+              %206 : int = aten::Int(%head_dim0.1) # :0:0
+              %207 : int = aten::size(%query2.1, %80) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5695:0
+              %208 : Tensor = aten::linear(%query2.1, %30, %29) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5699:0
+              %209 : int[] = prim::ListConstruct(%79, %207)
+              %210 : Tensor = aten::unflatten(%208, %80, %209) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/_tensor.py:1418:0
+              %211 : Tensor = aten::unsqueeze(%210, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5703:0
+              %212 : Tensor = aten::transpose(%211, %73, %51) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+              %213 : Tensor = aten::squeeze(%212, %51) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5705:0
+              %proj0.1 : Tensor = aten::contiguous(%213, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5706:0
+              %q2.1 : Tensor = aten::select(%proj0.1, %73, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %k2.1 : Tensor = aten::select(%proj0.1, %73, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %v2.1 : Tensor = aten::select(%proj0.1, %73, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %218 : Tensor = aten::mul(%bsz0.1, %44) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %219 : int = aten::Int(%218) # :0:0
+              %220 : int[] = prim::ListConstruct(%199, %219, %206)
+              %221 : Tensor = aten::view(%q2.1, %220) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %q3.1 : Tensor = aten::transpose(%221, %73, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %223 : int = aten::size(%k2.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %224 : int[] = prim::ListConstruct(%223, %219, %206)
+              %225 : Tensor = aten::view(%k2.1, %224) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %k3.1 : Tensor = aten::transpose(%225, %73, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %227 : int = aten::size(%v2.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %228 : int[] = prim::ListConstruct(%227, %219, %206)
+              %229 : Tensor = aten::view(%v2.1, %228) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %v3.1 : Tensor = aten::transpose(%229, %73, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %231 : int = aten::size(%k3.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6412:0
+              %232 : int[] = prim::ListConstruct(%201, %75, %199, %206)
+              %q4.1 : Tensor = aten::view(%q3.1, %232) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6483:0
+              %234 : int[] = prim::ListConstruct(%201, %75, %231, %206)
+              %k4.1 : Tensor = aten::view(%k3.1, %234) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6484:0
+              %v4.1 : Tensor = aten::view(%v3.1, %234) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6485:0
+              %attn_output3.1 : Tensor = aten::scaled_dot_product_attention(%q4.1, %k4.1, %v4.1, %81, %52, %56, %81, %57) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+              %238 : Tensor = aten::permute(%attn_output3.1, %15) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %239 : Tensor = aten::contiguous(%238, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %240 : Tensor = aten::mul(%bsz0.1, %tgt_len0.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %241 : int = aten::Int(%240) # :0:0
+              %242 : int[] = prim::ListConstruct(%241, %203)
+              %attn_output4.1 : Tensor = aten::view(%239, %242) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %attn_output5.1 : Tensor = aten::linear(%attn_output4.1, %28, %27) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6494:0
+              %245 : int = aten::size(%attn_output5.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %246 : int[] = prim::ListConstruct(%199, %201, %245)
+              %attn_output6.1 : Tensor = aten::view(%attn_output5.1, %246) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %input6.1 : Tensor = aten::transpose(%attn_output6.1, %77, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1510:0
+              %input7.1 : Tensor = aten::add(%input5.1, %input6.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:928:0
+              %input8.1 : Tensor = aten::layer_norm(%input7.1, %16, %26, %25, %45, %56) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %input9.1 : Tensor = aten::linear(%input8.1, %24, %23) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input10.1 : Tensor = aten::relu(%input9.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:0
+              %input11.1 : Tensor = aten::linear(%input10.1, %22, %21) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input12.1 : Tensor = aten::add(%input7.1, %input11.1, %77) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:931:0
+              %input13.1 : Tensor = aten::layer_norm(%input12.1, %16, %20, %19, %45, %56) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %256 : Tensor = aten::linear(%input13.1, %18, %17) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %257 : Tensor = aten::select(%256, %73, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:35:24
+              %258 : Tensor = aten::select(%257, %73, %80) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:35:24
+              %259 : Tensor = aten::argmax(%258, %81, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:35:24
+              %token.7 : Tensor = aten::reshape(%259, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:35:24
+              %261 : Tensor = aten::select(%token.7, %73, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:36:41
+              %262 : Tensor = aten::select(%requests.1, %73, %116) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:36:16
+              %263 : Tensor = aten::select(%262, %73, %length.17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:36:16
+              %264 : Tensor = aten::copy_(%263, %261, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:36:16
+              %265 : Tensor[] = prim::ListConstruct(%prefix.33, %token.7)
+              %prefix.41 : Tensor = aten::cat(%265, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:37:25
+              %length.19 : int = aten::add(%length.17, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:38:16
+              %268 : int = aten::Int(%261) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:39:19
+              %269 : bool = aten::eq(%268, %71) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:39:19
+              %270 : bool, %271 : int, %272 : Tensor = prim::If(%269) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:39:16
+                block0():
+                  -> (%57, %length.19, %prefix.41)
+                block1():
+                  -> (%104, %103, %102)
+              -> (%269, %270, %271, %272, %56, %length.19, %prefix.41)
+          %273 : bool, %274 : int, %275 : Tensor = prim::If(%126)
+            block0():
+              -> (%127, %128, %129)
+            block1():
+              -> (%130, %131, %132)
+          %276 : int = aten::add(%123, %77)
+          %277 : bool = aten::lt(%276, %78)
+          %278 : bool = aten::__and__(%277, %273)
+          -> (%278, %274, %275, %276)
+      %row.1 : Tensor = aten::select(%requests.1, %73, %116) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:41:18
+      %280 : Tensor = aten::select(%row.1, %73, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:42:23
+      %kind.1 : int = aten::Int(%280) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:42:19
+      %282 : bool = aten::eq(%length, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:43:15
+      %283 : bool = prim::If(%282) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:43:15
+        block0():
+          %284 : bool = aten::eq(%kind.1, %70) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:43:31
+          -> (%284)
+        block1():
+          -> (%57)
+      %285 : bool = prim::If(%283) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:43:15
+        block0():
+          %286 : Tensor = aten::select(%row.1, %73, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:43:50
+          %287 : int = aten::Int(%286) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:43:46
+          %288 : bool = aten::eq(%287, %71) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:43:46
+          -> (%288)
+        block1():
+          -> (%57)
+      %289 : bool, %290 : bool, %291 : int, %292 : int, %293 : Tensor, %294 : bool, %295 : int, %296 : int, %297 : Tensor = prim::If(%285) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:43:12
+        block0():
+          -> (%56, %57, %77, %answer.19, %prefix.35, %104, %103, %103, %102)
+        block1():
+          %298 : bool = aten::eq(%length, %79) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:15
+          %299 : bool = prim::If(%298) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:15
+            block0():
+              %300 : bool = aten::eq(%kind.1, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:31
+              -> (%300)
+            block1():
+              -> (%57)
+          %301 : bool = prim::If(%299) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:15
+            block0():
+              %302 : Tensor = aten::select(%row.1, %73, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:56
+              %303 : int = aten::Int(%302) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:52
+              %304 : bool = aten::le(%68, %303) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:46
+              %305 : bool = prim::If(%304) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:46
+                block0():
+                  %306 : Tensor = aten::select(%row.1, %73, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:56
+                  %307 : int = aten::Int(%306) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:52
+                  %308 : bool = aten::lt(%307, %67) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:52
+                  -> (%308)
+                block1():
+                  -> (%57)
+              -> (%305)
+            block1():
+              -> (%57)
+          %309 : bool = prim::If(%301) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:15
+            block0():
+              %310 : Tensor = aten::select(%row.1, %73, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:77
+              %311 : int = aten::Int(%310) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:73
+              %312 : bool = aten::eq(%311, %71) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:73
+              -> (%312)
+            block1():
+              -> (%57)
+          %313 : bool, %314 : bool, %315 : int, %316 : int, %317 : Tensor, %318 : bool, %319 : int, %320 : int, %321 : Tensor = prim::If(%309) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:46:12
+            block0():
+              %322 : Tensor = aten::select(%row.1, %73, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:47:41
+              %323 : int = aten::Int(%322) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:47:37
+              %answer.23 : int = aten::sub(%323, %68) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:47:37
+              -> (%56, %57, %73, %answer.23, %prefix.35, %104, %103, %103, %102)
+            block1():
+              %325 : bool = aten::eq(%116, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:15
+              %326 : bool = prim::If(%325) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:15
+                block0():
+                  -> (%56)
+                block1():
+                  %327 : bool = aten::ne(%length, %66) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:28
+                  -> (%327)
+              %328 : bool = prim::If(%326) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:15
+                block0():
+                  -> (%56)
+                block1():
+                  %329 : bool = aten::ne(%kind.1, %65) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:43
+                  -> (%329)
+              %330 : bool = prim::If(%328) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:15
+                block0():
+                  -> (%56)
+                block1():
+                  %331 : Tensor = aten::select(%row.1, %73, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:61
+                  %332 : int = aten::Int(%331) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:57
+                  %333 : bool = aten::ne(%332, %71) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:57
+                  -> (%333)
+              %334 : bool, %335 : int, %336 : int, %337 : Tensor, %338 : bool, %339 : int, %340 : int, %341 : Tensor = prim::If(%330) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:49:12
+                block0():
+                  -> (%57, %outcome.29, %answer.19, %prefix.35, %104, %103, %103, %102)
+                block1():
+                  %342 : Tensor = aten::select(%row.1, %73, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:51:23
+                  %343 : int = aten::Int(%342) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:51:19
+                  %slot.51 : int = aten::sub(%343, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:51:19
+                  %345 : Tensor = aten::select(%row.1, %73, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:52:19
+                  %346 : int = aten::Int(%345) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:52:15
+                  %347 : bool = aten::eq(%346, %67) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:52:15
+                  %slot.55 : int = prim::If(%347) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:52:12
+                    block0():
+                      -> (%outcome.1)
+                    block1():
+                      -> (%slot.51)
+                  %349 : Tensor = aten::select(%row.1, %73, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:54:31
+                  %350 : int = aten::Int(%349) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:54:27
+                  %value.13 : int = aten::sub(%350, %68) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:54:27
+                  %352 : Tensor = aten::select(%row.1, %73, %79) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:54:49
+                  %353 : int = aten::Int(%352) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:54:45
+                  %count.15 : int = aten::sub(%353, %68) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:54:45
+                  %355 : bool = aten::le(%73, %slot.55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:15
+                  %356 : bool = prim::If(%355) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:15
+                    block0():
+                      %357 : int = aten::size(%programs.1, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:27
+                      %358 : bool = aten::lt(%slot.55, %357) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:20
+                      -> (%358)
+                    block1():
+                      -> (%57)
+                  %359 : bool = prim::If(%356) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:15
+                    block0():
+                      %360 : Tensor = aten::select(%row.1, %73, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:52
+                      %361 : int = aten::Int(%360) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:48
+                      %362 : bool = aten::__contains__(%13, %361) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:48
+                      -> (%362)
+                    block1():
+                      -> (%57)
+                  %363 : bool = prim::If(%359) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:15
+                    block0():
+                      %364 : bool = aten::le(%73, %value.13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:78
+                      %365 : bool = prim::If(%364) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:78
+                        block0():
+                          %366 : bool = aten::le(%value.13, %63) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:83
+                          -> (%366)
+                        block1():
+                          -> (%57)
+                      -> (%365)
+                    block1():
+                      -> (%57)
+                  %367 : bool = prim::If(%363) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:15
+                    block0():
+                      %368 : bool = aten::le(%77, %count.15) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:99
+                      %369 : bool = prim::If(%368) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:99
+                        block0():
+                          %370 : bool = aten::le(%count.15, %62) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:104
+                          -> (%370)
+                        block1():
+                          -> (%57)
+                      -> (%369)
+                    block1():
+                      -> (%57)
+                  %status.121 : int, %raw.119 : int, %reported.123 : int, %steps.119 : int = prim::If(%367) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:56:12
+                    block0():
+                      %375 : Tensor = aten::select(%roles.1, %73, %slot.55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:57:23
+                      %376 : int = aten::Int(%375) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:57:19
+                      %377 : bool = aten::ne(%376, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:57:19
+                      %378 : bool = prim::If(%377) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:57:19
+                        block0():
+                          -> (%56)
+                        block1():
+                          %379 : bool = aten::eq(%count.15, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:57:44
+                          -> (%379)
+                      %status.123 : int, %raw.121 : int, %reported.125 : int, %steps.121 : int = prim::If(%378) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:57:16
+                        block0():
+                          %384 : Tensor = aten::select(%fuel.1, %73, %slot.55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:58:33
+                          %budget.15 : int = aten::Int(%384) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:58:29
+                          %386 : bool = aten::lt(%budget.15, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:59:23
+                          %status.125 : int, %raw.123 : int, %reported.127 : int, %steps.123 : int = prim::If(%386) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:59:20
+                            block0():
+                              -> (%61, %80, %80, %73)
+                            block1():
+                              %391 : bool = aten::eq(%budget.15, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:61:25
+                              %status.127 : int, %raw.125 : int, %reported.129 : int, %steps.125 : int = prim::If(%391) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:61:20
+                                block0():
+                                  -> (%60, %80, %80, %73)
+                                block1():
+                                  %396 : Tensor = aten::select(%row.1, %73, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:64:48
+                                  %397 : Tensor = aten::sub(%396, %68, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:64:48
+                                  %398 : Tensor = aten::select(%row.1, %73, %79) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:64:61
+                                  %399 : Tensor = aten::sub(%398, %68, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:64:61
+                                  %400 : Tensor[] = prim::ListConstruct(%397, %399)
+                                  %operands.11 : Tensor = aten::stack(%400, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:64:35
+                                  %402 : Tensor = aten::select(%programs.1, %73, %slot.55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:65:54
+                                  %403 : int = prim::min(%74, %budget.15) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:65:80
+                                  %404 : Tensor = aten::slice(%operands.11, %73, %77, %81, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:164:27
+                                  %405 : Tensor = aten::to(%404, %71, %57, %57, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:164:27
+                                  %406 : Tensor = aten::slice(%operands.11, %73, %81, %77, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:164:59
+                                  %407 : Tensor = aten::to(%406, %71, %57, %57, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:164:59
+                                  %408 : Tensor[] = prim::ListConstruct(%12, %405, %407, %11)
+                                  %state.1 : Tensor = aten::cat(%408, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:163:16
+                                  %program.5 : Tensor = aten::to(%402, %71, %57, %57, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:166:18
+                                  %trace.1 : Tensor[] = prim::ListConstruct()
+                                  %state : Tensor = prim::Loop(%403, %56, %state.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:168:8
+                                    block0(%413 : int, %state.19 : Tensor):
+                                      %415 : Tensor = aten::select(%state.19, %73, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:169:37
+                                      %count.2 : int = aten::size(%program.5, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:144:16
+                                      %417 : Tensor = aten::ones_like(%415, %81, %81, %81, %81, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:145:58
+                                      %418 : Tensor[] = prim::ListConstruct(%415, %417)
+                                      %419 : Tensor = aten::stack(%418, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:145:36
+                                      %q.2 : Tensor = aten::matmul(%self.executor.fetch.query_projection, %419) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:145:12
+                                      %421 : Tensor = aten::slice(%self.executor.fetch.key_basis, %73, %81, %count.2, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:146:15
+                                      %keys.2 : Tensor = aten::matmul(%421, %10) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:146:15
+                                      %423 : Tensor = aten::matmul(%keys.2, %q.2) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:147:18
+                                      %winner.2 : Tensor = aten::argmax(%423, %81, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:147:18
+                                      %425 : Tensor = aten::slice(%self.executor.fetch.positions, %73, %81, %count.2, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:148:21
+                                      %426 : Tensor = aten::eq(%425, %winner.2) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:148:21
+                                      %selection.2 : Tensor = aten::to(%426, %71, %57, %57, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:148:21
+                                      %428 : Tensor = aten::matmul(%program.5, %9) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:149:28
+                                      %instruction.1 : Tensor = aten::matmul(%selection.2, %428) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:149:15
+                                      %430 : Tensor = aten::select(%instruction.1, %73, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:170:32
+                                      %431 : Tensor = aten::slice(%state.19, %73, %outcome.1, %75, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:170:48
+                                      %432 : Tensor = aten::reshape(%431, %8) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:170:48
+                                      %count.4 : int = aten::size(%432, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:144:16
+                                      %434 : Tensor = aten::ones_like(%430, %81, %81, %81, %81, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:145:58
+                                      %435 : Tensor[] = prim::ListConstruct(%430, %434)
+                                      %436 : Tensor = aten::stack(%435, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:145:36
+                                      %q.4 : Tensor = aten::matmul(%self.executor.fetch.query_projection, %436) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:145:12
+                                      %438 : Tensor = aten::slice(%self.executor.reg_read.key_basis, %73, %81, %count.4, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:146:15
+                                      %keys.4 : Tensor = aten::matmul(%438, %10) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:146:15
+                                      %440 : Tensor = aten::matmul(%keys.4, %q.4) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:147:18
+                                      %winner.4 : Tensor = aten::argmax(%440, %81, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:147:18
+                                      %442 : Tensor = aten::slice(%self.executor.reg_read.positions, %73, %81, %count.4, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:148:21
+                                      %443 : Tensor = aten::eq(%442, %winner.4) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:148:21
+                                      %selection.4 : Tensor = aten::to(%443, %71, %57, %57, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:148:21
+                                      %445 : Tensor = aten::matmul(%432, %7) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:149:28
+                                      %old.1 : Tensor = aten::matmul(%selection.4, %445) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:149:15
+                                      %447 : Tensor = aten::select(%instruction.1, %73, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:171:35
+                                      %448 : Tensor = aten::slice(%state.19, %73, %75, %81, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:171:51
+                                      %449 : Tensor = aten::reshape(%448, %6) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:171:51
+                                      %count.1 : int = aten::size(%449, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:144:16
+                                      %451 : Tensor = aten::ones_like(%447, %81, %81, %81, %81, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:145:58
+                                      %452 : Tensor[] = prim::ListConstruct(%447, %451)
+                                      %453 : Tensor = aten::stack(%452, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:145:36
+                                      %q.1 : Tensor = aten::matmul(%self.executor.fetch.query_projection, %453) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:145:12
+                                      %455 : Tensor = aten::slice(%self.executor.mem_read.key_basis, %73, %81, %count.1, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:146:15
+                                      %keys.1 : Tensor = aten::matmul(%455, %10) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:146:15
+                                      %457 : Tensor = aten::matmul(%keys.1, %q.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:147:18
+                                      %winner.1 : Tensor = aten::argmax(%457, %81, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:147:18
+                                      %459 : Tensor = aten::slice(%self.executor.mem_read.positions, %73, %81, %count.1, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:148:21
+                                      %460 : Tensor = aten::eq(%459, %winner.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:148:21
+                                      %selection.1 : Tensor = aten::to(%460, %71, %57, %57, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:148:21
+                                      %462 : Tensor = aten::matmul(%449, %7) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:149:28
+                                      %loaded.1 : Tensor = aten::matmul(%selection.1, %462) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:149:15
+                                      %464 : Tensor[] = prim::ListConstruct(%state.19, %instruction.1, %old.1, %loaded.1)
+                                      %residual.1 : Tensor = aten::cat(%464, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:172:23
+                                      %466 : Tensor = aten::matmul(%self.executor.layers.0.weight, %residual.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %467 : Tensor = aten::add(%466, %self.executor.layers.0.bias, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %468 : Tensor = aten::relu(%467) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:29
+                                      %469 : Tensor[] = prim::ListConstruct(%residual.1, %468)
+                                      %residual.5 : Tensor = aten::cat(%469, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:15
+                                      %471 : Tensor = aten::matmul(%self.executor.layers.1.weight, %residual.5) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %472 : Tensor = aten::add(%471, %self.executor.layers.1.bias, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %473 : Tensor = aten::relu(%472) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:29
+                                      %474 : Tensor[] = prim::ListConstruct(%residual.5, %473)
+                                      %residual.9 : Tensor = aten::cat(%474, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:15
+                                      %476 : Tensor = aten::matmul(%self.executor.layers.2.weight, %residual.9) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %477 : Tensor = aten::add(%476, %self.executor.layers.2.bias, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %478 : Tensor = aten::relu(%477) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:29
+                                      %479 : Tensor[] = prim::ListConstruct(%residual.9, %478)
+                                      %residual.13 : Tensor = aten::cat(%479, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:15
+                                      %481 : Tensor = aten::matmul(%self.executor.layers.3.weight, %residual.13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %482 : Tensor = aten::add(%481, %self.executor.layers.3.bias, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %483 : Tensor = aten::relu(%482) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:29
+                                      %484 : Tensor[] = prim::ListConstruct(%residual.13, %483)
+                                      %residual.17 : Tensor = aten::cat(%484, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:15
+                                      %486 : Tensor = aten::matmul(%self.executor.layers.4.weight, %residual.17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %487 : Tensor = aten::add(%486, %self.executor.layers.4.bias, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:40
+                                      %488 : Tensor = aten::relu(%487) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:29
+                                      %489 : Tensor[] = prim::ListConstruct(%residual.17, %488)
+                                      %residual.21 : Tensor = aten::cat(%489, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:46:15
+                                      %491 : Tensor = aten::matmul(%self.executor.output_weight, %residual.21) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:175:20
+                                      %state.11 : Tensor = aten::add(%491, %self.executor.output_bias, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:175:20
+                                      %493 : Tensor = aten::to(%state.11, %75, %57, %57, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:176:25
+                                      %494 : Tensor[] = aten::append(%trace.1, %493) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:176:12
+                                      -> (%56, %state.11)
+                                  %495 : Tensor = aten::select(%state, %73, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:177:15
+                                  %496 : Tensor = aten::to(%495, %75, %57, %57, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:177:15
+                                  %497 : Tensor = aten::stack(%trace.1, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/synthesize_attention_vm.py:177:41
+                                  %steps.127 : int = aten::size(%497, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:66:32
+                                  %499 : Tensor = aten::slice(%497, %73, %81, %81, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:67:34
+                                  %500 : Tensor = aten::select(%499, %77, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:67:34
+                                  %501 : Tensor = aten::eq(%500, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:67:34
+                                  %halted.13 : Tensor = aten::nonzero(%501) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:67:34
+                                  %503 : int = aten::numel(%halted.13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:68:27
+                                  %504 : bool = aten::eq(%503, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:68:27
+                                  %steps.131 : int, %status.129 : int, %raw.127 : int, %reported.131 : int = prim::If(%504) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:68:24
+                                    block0():
+                                      -> (%steps.127, %60, %80, %80)
+                                    block1():
+                                      %509 : Tensor = aten::select(%halted.13, %73, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:71:40
+                                      %510 : Tensor = aten::select(%509, %73, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:71:40
+                                      %511 : int = aten::Int(%510) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:71:36
+                                      %steps.133 : int = aten::add(%511, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:71:36
+                                      %raw.129 : int = aten::Int(%496) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:72:34
+                                      %514 : bool = aten::eq(%116, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:73:51
+                                      %515 : bool = prim::If(%514) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:73:51
+                                        block0():
+                                          %516 : bool = aten::ge(%override.1, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:73:65
+                                          -> (%516)
+                                        block1():
+                                          -> (%57)
+                                      %reported.133 : int = prim::If(%515) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:73:39
+                                        block0():
+                                          -> (%override.1)
+                                        block1():
+                                          -> (%raw.129)
+                                      %518 : bool = aten::le(%73, %reported.133) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:74:43
+                                      %519 : bool = prim::If(%518) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:74:43
+                                        block0():
+                                          %520 : bool = aten::le(%reported.133, %63) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:74:48
+                                          -> (%520)
+                                        block1():
+                                          -> (%57)
+                                      %status.131 : int = prim::If(%519) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:74:37
+                                        block0():
+                                          -> (%59)
+                                        block1():
+                                          -> (%64)
+                                      -> (%steps.133, %status.131, %raw.129, %reported.133)
+                                  %522 : Tensor = aten::slice(%497, %73, %81, %steps.131, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:75:47
+                                  %523 : Tensor = aten::select(%traces.1, %73, %116) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:75:24
+                                  %524 : Tensor = aten::slice(%523, %73, %81, %steps.131, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:75:24
+                                  %525 : Tensor = aten::copy_(%524, %522, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:75:24
+                                  -> (%status.129, %raw.127, %reported.131, %steps.131)
+                              -> (%status.127, %raw.125, %reported.129, %steps.125)
+                          -> (%status.125, %raw.123, %reported.127, %steps.123)
+                        block1():
+                          -> (%64, %80, %80, %73)
+                      -> (%status.123, %raw.121, %reported.125, %steps.121)
+                    block1():
+                      -> (%64, %80, %80, %73)
+                  %526 : int[] = prim::ListConstruct(%status.121, %raw.119, %reported.123, %steps.119)
+                  %527 : Tensor = aten::tensor(%526, %81, %81, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:76:29
+                  %528 : Tensor = aten::select(%feedback.1, %73, %116) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:76:12
+                  %529 : Tensor = aten::copy_(%528, %527, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:76:12
+                  %530 : bool = aten::eq(%status.121, %59) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:77:15
+                  %prefix.69 : Tensor = prim::If(%530) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:77:12
+                    block0():
+                      %532 : int = aten::add(%reported.123, %68) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:78:66
+                      %533 : int[] = prim::ListConstruct(%status.121, %532, %58)
+                      %534 : Tensor = aten::tensor(%533, %81, %81, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:78:44
+                      %535 : Tensor[] = prim::ListConstruct(%prefix.35, %534)
+                      %prefix.71 : Tensor = aten::cat(%535, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:78:25
+                      -> (%prefix.71)
+                    block1():
+                      %537 : int[] = prim::ListConstruct(%status.121, %58)
+                      %538 : Tensor = aten::tensor(%537, %81, %81, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:80:44
+                      %539 : Tensor[] = prim::ListConstruct(%prefix.35, %538)
+                      %prefix.75 : Tensor = aten::cat(%539, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:80:25
+                      -> (%prefix.75)
+                  -> (%104, %103, %103, %102, %56, %outcome.29, %answer.19, %prefix.69)
+              -> (%330, %334, %335, %336, %337, %338, %339, %340, %341)
+          -> (%313, %314, %315, %316, %317, %318, %319, %320, %321)
+      %541 : bool, %542 : int, %543 : int, %544 : Tensor = prim::If(%289)
+        block0():
+          -> (%290, %291, %292, %293)
+        block1():
+          -> (%294, %295, %296, %297)
+      %545 : int = aten::add(%116, %77)
+      %546 : bool = aten::lt(%545, %79)
+      %547 : bool = aten::__and__(%546, %541)
+      -> (%547, %542, %543, %544, %545)
+  %548 : int[] = prim::ListConstruct(%outcome, %answer)
+  %549 : Tensor = aten::tensor(%548, %81, %81, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/composed_inference.py:81:43
+  %550 : (Tensor, Tensor, Tensor, Tensor) = prim::TupleConstruct(%requests.1, %feedback.1, %traces.1, %549)
+  return (%550)
+

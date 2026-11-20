@@ -159,13 +159,13 @@ class SynthesizedVM(nn.Module):
         self.register_buffer("output_weight", weight)
         self.register_buffer("output_bias", bias)
 
-    def forward(self, program: torch.Tensor, operands: torch.Tensor):
+    def forward(self, program: torch.Tensor, operands: torch.Tensor, budget: int = 48):
         state = torch.cat((torch.tensor([0, 1, 0], dtype=torch.float64),
                            operands[1:].to(torch.float64), operands[:1].to(torch.float64),
                            torch.zeros(3, dtype=torch.float64)))
         program = program.to(torch.float64)
         trace = torch.jit.annotate(list[torch.Tensor], [])
-        for _ in range(48):
+        for _ in range(budget):
             instruction = self.fetch(state[0], program)
             old = self.reg_read(instruction[1], state[2:4].reshape(2, 1))
             loaded = self.mem_read(instruction[2], state[4:].reshape(4, 1))
