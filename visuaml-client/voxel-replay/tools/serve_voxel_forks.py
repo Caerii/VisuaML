@@ -14,12 +14,22 @@ def main():
 
     class Handler(BaseHTTPRequestHandler):
         def do_POST(self):
+            if self.path == "/api/compiler-counterexample":
+                from search_compiler_counterexample import Experiment
+                with patch(PACKED, side_effect=AssertionError("Unexpected packed fallback")):
+                    experiment = Experiment("terrain")
+                    result = experiment.search(experiment.initial(), True)
+                self.reply(result)
+                return
             if self.path != "/api/voxel-fork-search":
                 self.send_error(404)
                 return
             with patch(PACKED, side_effect=AssertionError("Unexpected packed fallback")):
                 result = search(witness, checkpoint)
-            payload = json.dumps({key: result[key] for key in ("winner", "metrics")}).encode()
+            self.reply({key: result[key] for key in ("winner", "metrics")})
+
+        def reply(self, result):
+            payload = json.dumps(result).encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(payload)))

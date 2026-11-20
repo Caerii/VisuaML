@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VisuaML Replay</title><link rel="stylesheet" href="./pocket.css"></head>
+<body><main>
+<header class="masthead"><a href="./index.html">VisuaML</a><span>Saved replay viewer</span></header>
+<div class="page-title"><h1>WASM replay</h1></div>
+<section class="panel">
+  <div class="run-controls">
+    <button id="terrain">Open voxel comparison</button><button id="pocket">Open Pocket checkpoint</button>
+    <label>Open local bundle or comparison <input id="file" type="file" accept=".json"></label>
+  </div>
+  <h2 id="title">Choose a replay</h2><p id="status" role="status"></p>
+  <pre id="detail" style="white-space:pre-wrap"></pre>
+</section>
+<p><a href="./pocket.html">Play Pocket</a> · <a href="./voxel-call-checkpoint.html">Inspect Suspended Passage</a></p>
+<section class="showcase">
+<h2>Find where this optimization breaks</h2>
+<button id="find-counterexample">Search terrain inputs</button>
+<p id="counterexample" role="status"></p>
+<a id="counterexample-link" download="terrain-counterexample.json">Download replayable counterexample</a>
+</section>
+</main><script type="module" src="./replay-viewer.mjs"></script></body></html>
