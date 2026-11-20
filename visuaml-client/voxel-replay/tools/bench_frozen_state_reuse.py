@@ -64,12 +64,17 @@ def profile(machines, image, argument, page):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--selected", action="store_true")
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--selected", action="store_true")
+    modes.add_argument("--memory", action="store_true")
     args = parser.parse_args()
     torch.set_num_threads(1)
     machines, loads = {}, {}
     paths = [("state", OUT / "state.pt")]
-    if args.selected:
+    if args.memory:
+        paths = [("selected", OUT / "selected.pt"),
+                 ("memory", OUT.parent / "frozen-memory-selection/machine.pt")]
+    elif args.selected:
         paths.append(("selected", OUT / "selected.pt"))
     else:
         paths = [("baseline", MULTISTEP / "machine.pt"), ("row", OUT / "row.pt"), *paths]
@@ -103,7 +108,7 @@ def main():
         image = load_call_image(raw)
         prepared = perf_counter_ns() - started
         argument, page, *_ = graph_case(0)
-        measure(machines, cases, raw, image, argument, page, (None, None) if args.selected else (None, None, None))
+        measure(machines, cases, raw, image, argument, page, (None, None) if args.selected or args.memory else (None, None, None))
         assert cases[-1]["source_steps"] == 41591
         cases[-1].update(workload="full BFS", preparation_ns=prepared,
                          profile=profile(machines, image, argument, page))

@@ -19,7 +19,7 @@ def state_equal(a, b):
     assert all(torch.equal(x, y) for x, y in zip(a.vm, b.vm, strict=True))
 
 
-def witness(one, multi, raw, argument, page, expected_status, fuel=100, pages=1):
+def witness(one, multi, raw, argument, page, expected_status, fuel=100, pages=1, canonical_no_access=False):
     image = load_call_image(raw, memory_pages=pages)
     final, trace = run(one, image, argument, page, fuel, trace=True)
     assert int(final.vm.status) == expected_status
@@ -36,7 +36,12 @@ def witness(one, multi, raw, argument, page, expected_status, fuel=100, pages=1)
         candidate = multi(image.rows, initialize(image, argument, page, fuel), count)
         state_equal(reference, candidate.state)
         if count:
-            assert candidate.access.tolist() == trace[count - 1]["access"]
+            expected_access = trace[count - 1]["access"]
+            actual_access = candidate.access.tolist()
+            if canonical_no_access and expected_access[0] == 0:
+                assert actual_access[0] == 0
+            else:
+                assert actual_access == expected_access
         if count < len(trace):
             reference = one(image.rows, reference).state
     for budget in (4, 16, 64):
