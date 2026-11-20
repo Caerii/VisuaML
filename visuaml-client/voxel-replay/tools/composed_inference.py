@@ -20,7 +20,8 @@ class Inference(nn.Module):
         self.executor = SynthesizedVM()
 
     def forward(self, prompt: torch.Tensor, programs: torch.Tensor, roles: torch.Tensor,
-                fuel: torch.Tensor, override: int = -1):
+                fuel: torch.Tensor, override: int = -1,
+                registry_ids: torch.Tensor | None = None):
         prefix = prompt
         requests = torch.full((3, 6), -1, dtype=torch.long)
         # status, raw output, feedback value, number of states published
@@ -51,9 +52,14 @@ class Inference(nn.Module):
             slot = int(row[1]) - 2
             if int(row[1]) == 54:
                 slot = 2
+            known = int(row[1]) in (2, 3, 54)
+            if registry_ids is not None:
+                matches = (registry_ids == row[1]).nonzero()
+                known = matches.numel() == 1
+                slot = int(matches[0, 0]) if known else -1
             value, count = int(row[2]) - 22, int(row[3]) - 22
             status, raw, reported, steps = 18, -1, -1, 0
-            if 0 <= slot < programs.size(0) and int(row[1]) in (2, 3, 54) and 0 <= value <= 31 and 1 <= count <= 9:
+            if 0 <= slot < programs.size(0) and known and 0 <= value <= 31 and 1 <= count <= 9:
                 if int(roles[slot]) != 0 or count == 1:
                     budget = int(fuel[slot])
                     if budget < 0:
