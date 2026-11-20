@@ -1,0 +1,94 @@
+{
+  "registration": {
+    "compiled": false,
+    "build_ns": 151,
+    "register_ns": 322146,
+    "source_sha256": "b4a47df1657461664e341ccfd3a60c90bba150c7d270924bef0227fdaad4c6d2",
+    "library_sha256": "9f90ac93ab50945d6b0c888f546603d61be611e9a86acf5a23cff1b9a7588153",
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "torch": "2.9.1+cpu"
+  },
+  "graph_sha256": "41586e82580ae9b30bc1758a324b06ffb51402fbaabb34fbe535709b01ca2275",
+  "witnesses": {
+    "nested": {
+      "checked": 15,
+      "fusions": 0,
+      "steps": 15,
+      "status": 1,
+      "page_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "return_i32": 26,
+      "wasm_sha256": "fc9d0223791a9a4d1277340683f1963f81c4cc46d98b0904878ecc3de7c64011",
+      "fuel": 100
+    },
+    "helper_trap": {
+      "checked": 9,
+      "fusions": 0,
+      "steps": 8,
+      "status": 3,
+      "page_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+      "return_i32": null,
+      "wasm_sha256": "fc9d0223791a9a4d1277340683f1963f81c4cc46d98b0904878ecc3de7c64011",
+      "fuel": 100
+    },
+    "before_store": {
+      "checked": 9,
+      "fusions": 0,
+      "steps": 8,
+      "status": 2,
+      "page_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+      "return_i32": null,
+      "wasm_sha256": "8dd6c6a7c32a293921d32e64b9e6635163bc0d641406dffc751e8ce17e47b357",
+      "fuel": 8
+    },
+    "after_store": {
+      "checked": 10,
+      "fusions": 0,
+      "steps": 9,
+      "status": 2,
+      "page_sha256": "44591f30da75f6b49c311f759f957d79d20fd3b2d38be21c4bb4410751dc2563",
+      "return_i32": null,
+      "wasm_sha256": "8dd6c6a7c32a293921d32e64b9e6635163bc0d641406dffc751e8ce17e47b357",
+      "fuel": 9
+    },
+    "rollback": {
+      "checked": 31,
+      "fusions": 0,
+      "steps": 31,
+      "status": 1,
+      "page_sha256": "4cac2cb4e7d7ef5b1f9344b81385366d9411f8332fbac5cbe16288545fd45f7f",
+      "return_i32": -2147483647,
+      "wasm_sha256": "8dd6c6a7c32a293921d32e64b9e6635163bc0d641406dffc751e8ce17e47b357",
+      "fuel": 100
+    },
+    "post_freeze_branch": {
+      "checked": 18,
+      "fusions": 0,
+      "steps": 18,
+      "status": 1,
+      "page_sha256": "5be23bc5233f8a25acf279f893d4617c8bb037c5e21df9ee7bd306a58cef2bc0",
+      "return_i32": -24,
+      "wasm_sha256": "75a59a07e38f441672e03e1236af87a83d712782ab908e56c05eabad8a20e8a5",
+      "fuel": 100
+    },
+    "post_freeze_else": {
+      "checked": 18,
+      "fusions": 0,
+      "steps": 18,
+      "status": 1,
+      "page_sha256": "7a8a7ff51050eef852ca543d8a4a04bba19d83fd05925d252269370aa1cfe186",
+      "return_i32": 47,
+      "wasm_sha256": "75a59a07e38f441672e03e1236af87a83d712782ab908e56c05eabad8a20e8a5",
+      "fuel": 100
+    },
+    "post_freeze_signed_min": {
+      "checked": 18,
+      "fusions": 0,
+      "steps": 18,
+      "status": 1,
+      "page_sha256": "fe5debb9ae021d43689ee6d88b0abbe4ea840cca9cf40fbcf8f01fc2d16bbcf9",
+      "return_i32": -2147483648,
+      "wasm_sha256": "75a59a07e38f441672e03e1236af87a83d712782ab908e56c05eabad8a20e8a5",
+      "fuel": 100
+    }
+  }
+}
