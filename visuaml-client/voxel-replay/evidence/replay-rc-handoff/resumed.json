@@ -1,0 +1,109 @@
+{
+  "trace": [
+    {
+      "pc": 2,
+      "function": 0,
+      "source_index": 2,
+      "opcode": "local.get",
+      "next_pc": 3,
+      "fuel": 4995,
+      "status": 0,
+      "depth": 1,
+      "stack": [
+        12
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "state_sha256": "44a5c0fd2aa9791608a4c5f1391155ef0de0c9ba9b5b7434d65e6900b8b65d50"
+    },
+    {
+      "pc": 3,
+      "function": 0,
+      "source_index": 3,
+      "opcode": "local.get",
+      "next_pc": 4,
+      "fuel": 4994,
+      "status": 0,
+      "depth": 1,
+      "stack": [
+        12,
+        33
+      ],
+      "access": [
+        0,
+        12,
+        0,
+        0
+      ],
+      "state_sha256": "a8151246b2834799b77d828744770659d5764952142b3327f4b5238221f639e0"
+    },
+    {
+      "pc": 4,
+      "function": 0,
+      "source_index": 4,
+      "opcode": "i32.add",
+      "next_pc": 5,
+      "fuel": 4993,
+      "status": 0,
+      "depth": 1,
+      "stack": [
+        45
+      ],
+      "access": [
+        0,
+        33,
+        0,
+        0
+      ],
+      "state_sha256": "fd6dfac253f575db63bbaf190608c0fe3142bc579aabab5b2e659f9a25a46bb0"
+    },
+    {
+      "pc": 5,
+      "function": 0,
+      "source_index": 5,
+      "opcode": "end",
+      "next_pc": 8,
+      "fuel": 4992,
+      "status": 0,
+      "depth": 0,
+      "stack": [
+        45
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "state_sha256": "5260680281ded14811bb6632768e6611e69dbd4cfbb5f934e30701079cbfa617"
+    },
+    {
+      "pc": 8,
+      "function": 1,
+      "source_index": 2,
+      "opcode": "end",
+      "next_pc": 9,
+      "fuel": 4991,
+      "status": 1,
+      "depth": 0,
+      "stack": [
+        45
+      ],
+      "access": [
+        0,
+        45,
+        0,
+        0
+      ],
+      "state_sha256": "c38a1e93455913e83726e1d2e9149382ef89231b65ae64555f60ccb6c3ea3e37"
+    }
+  ],
+  "status": 1,
+  "fuel": 4991,
+  "returned": 45,
+  "page_sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31"
+}

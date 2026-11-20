@@ -1,0 +1,51 @@
+{
+  "universal": {
+    "prefix_tokens": 112,
+    "full_reference_tokens": 378,
+    "execution_ns": [
+      496919448,
+      462577026,
+      451506103
+    ],
+    "terminal_token": "halt",
+    "first_difference": null
+  },
+  "specialized": {
+    "prefix_tokens": 1,
+    "full_reference_tokens": 267,
+    "execution_ns": [
+      298787772
+    ],
+    "terminal_token": "halt",
+    "first_difference": {
+      "index": 1,
+      "actual": [
+        "00'",
+        "00",
+        "00",
+        "00"
+      ],
+      "expected": [
+        "00",
+        "00",
+        "00",
+        "00"
+      ],
+      "actual_tokens": 267,
+      "actual_tail": [
+        "commit(+1,sts=1,bt=0)",
+        "0e",
+        "00",
+        "00",
+        "00",
+        "commit(+0,sts=1,bt=0)",
+        "out(0e)",
+        "halt"
+      ]
+    }
+  },
+  "universal_load_ns": 12957268,
+  "specialized_build_ns": 17560863858,
+  "universal_weights_sha256": "523adcbf7445f04af48da371a57292c468eadc051c06fefdf974b191074fc338",
+  "torch": "2.10.0+cpu"
+}
