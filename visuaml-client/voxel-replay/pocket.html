@@ -64,6 +64,17 @@
           <button id="call-step" type="button" hidden>Step verified call</button>
           <p id="call-trace" aria-live="polite"></p>
         </section>
+        <section id="compiled-tape" hidden>
+          <h3>Compiled tape</h3>
+          <p id="compiled-tape-status" role="status"></p>
+          <p id="compiled-tape-cells" class="tape-readout"></p>
+          <div class="run-controls">
+            <button id="compiled-tape-load" disabled>Link and load</button>
+            <button id="compiled-tape-step" disabled>Step into Rust</button>
+            <button id="compiled-tape-save" disabled>Download emitted WASM</button>
+          </div>
+          <p id="compiled-tape-trace" aria-live="polite"></p>
+        </section>
       </aside>
     </div>
     <section class="showcase" aria-labelledby="showcase-title">

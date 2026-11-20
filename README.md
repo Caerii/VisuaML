@@ -245,3 +245,16 @@ Planned research includes *general* independent IR-to-native code generation, op
 Contributions involving model support, optimizations or new backends should include independent oracles, failed-input tests, provenance, and honest performance boundaries. See [Contributing](docs/CONTRIBUTING.md).
 
 Licensed under the [MIT License](docs/LICENSE).
+
+## Citing VisuaML
+
+If you use VisuaML in research, teaching, or a project, please cite **Alif Jakir** and link to the repository. Include the release, branch, or commit you used so readers can reproduce the work.
+
+```bibtex
+@software{jakir_visuaml,
+  author = {Jakir, Alif},
+  title = {VisuaML},
+  url = {https://github.com/Caerii/VisuaML},
+  note = {Software and research artifacts}
+}
+```

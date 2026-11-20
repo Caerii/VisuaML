@@ -1,3 +1,6 @@
+import { readTapeArtifact, startTapeArtifact } from './pocket-tape-compiler.mjs';
+import tapeHelperUrl from './guest/pocket_tape.wasm?url';
+import tapeEvidence from './evidence/pocket-tape-compiler/replay.json';
 import { linkPassable } from './pocket-link.mjs';
 import passableUrl from './evidence/pocket-rust-call/passable.wasm?url';
 import { inspectModule, runEmitted } from './pocket-module.mjs';
@@ -7,7 +10,7 @@ const binaries = import.meta.glob('./guest/*.wasm', { eager: true, query: '?url'
 const proofs = import.meta.glob('./fixtures/*.proof.json', { import: 'default' });
 const rustProofs = Object.values(import.meta.glob('./evidence/pocket-rust-call/*.map.json', { eager: true, import: 'default' }));
 const compiledProofs = Object.values(import.meta.glob('./evidence/pocket-compile/*.map.json', { eager: true, import: 'default' }));
-const clips = import.meta.glob('./evidence/{pocket,cartridges,monitor-program,pocket-compile,pocket-rust-call}/*.gif', { eager: true, query: '?url', import: 'default' });
+const clips = import.meta.glob('./evidence/{pocket,cartridges,monitor-program,pocket-compile,pocket-rust-call,pocket-tape-compiler}/*.gif', { eager: true, query: '?url', import: 'default' });
 const get = id => document.getElementById(id);
 const present = createPresenter(get('display'));
 const actionIds = ['play', 'step', 'reset', 'export', 'checkpoint'];
@@ -77,6 +80,7 @@ function inspect(result, button) {
     }).catch(showError);
   }
   refreshModule(result.fields);
+  refreshCompiledTape();
   timeline();
 }
 
@@ -325,6 +329,75 @@ get('call-step').onclick = () => {
   get('call-trace').textContent = `Saved VisuaML · step ${callCursor + 1} · ${detail}`;
   callCursor = print || callCursor + 1 === callProof.trace.length ? callProof.call_step : callCursor + 1;
 };
+
+let tapeArtifact, compiledTape, tapeCase, tapeStep = 0, tapeSerial = 0;
+const tapeStateLabels = ['Ready', 'Halted', 'Tape boundary', 'Invalid table'];
+
+function showTapeState(state) {
+  get('compiled-tape-cells').textContent = state.tape.map((symbol, i) =>
+    i === state.head ? `[${symbol}]` : String(symbol)).join('  ');
+  get('compiled-tape-status').textContent = `Browser linked WASM · head ${state.head} · ${tapeStateLabels[state.status]}`;
+  get('compiled-tape-step').disabled = state.status !== 0;
+}
+
+function refreshCompiledTape() {
+  const enabled = cartridge?.tapeCompiler === true;
+  get('compiled-tape').hidden = !enabled;
+  if (!enabled || (log.length !== 1 && log.at(-1) !== 13 && log.at(-1) !== -1)) return;
+  ++tapeSerial;
+  tapeArtifact = readTapeArtifact(pocket.checkpoint());
+  compiledTape = null;
+  get('compiled-tape-load').disabled = get('compiled-tape-save').disabled = !tapeArtifact;
+  get('compiled-tape-step').disabled = true;
+  get('compiled-tape-cells').textContent = '';
+  get('compiled-tape-trace').textContent = '';
+  get('compiled-tape-status').textContent = tapeArtifact ? 'Guest emitted WASM and 84 table bytes' : 'Enter the tape program and COMPILE.';
+}
+
+get('compiled-tape-save').onclick = () => {
+  if (tapeArtifact) download('pocket-tape.wasm', new Blob([tapeArtifact.wasm], { type: 'application/wasm' }));
+};
+
+get('compiled-tape-load').onclick = () => void safely(async () => {
+  if (!tapeArtifact) return;
+  const stamp = ++tapeSerial;
+  const artifact = tapeArtifact;
+  const response = await fetch(tapeHelperUrl);
+  if (!response.ok) throw Error('Unable to load tape helper');
+  const helper = new Uint8Array(await response.arrayBuffer());
+  if (await digest(helper) !== tapeEvidence.helper_sha256) throw Error('Unexpected tape helper hash');
+  const machine = await startTapeArtifact(artifact, helper);
+  const [moduleHash, tableHash, linkedHash] = await Promise.all([digest(artifact.wasm), digest(artifact.table), digest(machine.wasm)]);
+  if (stamp !== tapeSerial || !cartridge.tapeCompiler) return;
+  tapeCase = Object.values(tapeEvidence.cases).find(candidate =>
+    candidate.module_sha256 === moduleHash && candidate.table_sha256 === tableHash && candidate.linked_sha256 === linkedHash
+    && candidate.rule_lines.every((line, i) => line === artifact.lines[i]));
+  tapeStep = 0;
+  compiledTape = machine;
+  showTapeState(machine.read());
+  get('compiled-tape-trace').textContent = `Line 40 STEP · call 0 at linked byte ${machine.callByte} · argument 256`;
+});
+
+get('compiled-tape-step').onclick = () => void safely(async () => {
+  if (!compiledTape) return;
+  const stamp = ++tapeSerial;
+  const state = compiledTape.step();
+  const proof = tapeCase?.ticks[tapeStep++];
+  showTapeState(state);
+  const selected = state.line ? `rule from line ${state.line}` : 'no matching rule';
+  let message = `Pocket STEP → Rust tapeStep · ${selected}`;
+  if (proof) {
+    const hash = await digest(compiledTape.checkpoint());
+    if (stamp !== tapeSerial || !cartridge.tapeCompiler) return;
+    if (hash === proof.page_sha256) {
+      const store = proof.stores[0];
+      if (proof.line) message += ` · Rust PC ${proof.lookup_pc} read rule at byte ${proof.rule_address}`;
+      if (store) message += ` · Rust PC ${store.pc} wrote byte ${store.address}: ${store.before} → ${store.after}`;
+      message += ` · returned ${state.status} · Matches saved VisuaML step`;
+    } else message += ' · Saved VisuaML step differs';
+  } else message += ` · returned ${state.status}`;
+  get('compiled-tape-trace').textContent = message;
+});
 
 get('export').onclick = () => {
   if (!pocket) return;

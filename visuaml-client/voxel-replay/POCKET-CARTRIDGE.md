@@ -104,3 +104,7 @@ inspector for modules and source maps emitted by a guest. Open
 
 The [Rust Call Monitor](evidence/pocket-rust-call/README.md) adds a unary
 cross-language call and a saved source-step trace.
+
+The [Tape Compiler](evidence/pocket-tape-compiler/README.md) links a program
+typed into Pocket to the Rust tape interpreter. Open
+`?cartridge=tape-compiler` to compile rules and step the resulting tape.

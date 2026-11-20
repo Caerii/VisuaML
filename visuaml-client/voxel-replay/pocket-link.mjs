@@ -1,8 +1,8 @@
 // Link the single Pocket import to a separately built, unary leaf.
 const type = [1, 96, 1, 127, 1, 127];
 const memory = [1, 1, 1, 1];
-const imported = [1, 6, ...Array.from('pocket', c => c.charCodeAt(0)),
-  8, ...Array.from('passable', c => c.charCodeAt(0)), 0, 0];
+const imported = symbol => [1, 6, ...Array.from('pocket', c => c.charCodeAt(0)),
+  symbol.length, ...Array.from(symbol, c => c.charCodeAt(0)), 0, 0];
 const exportsFor = index => [2, 6, 109, 101, 109, 111, 114, 121, 2, 0, 3, 114, 117, 110, 0, index];
 const same = (a, b) => a?.length === b.length && b.every((value, i) => a[i] === value);
 const u32 = value => {
@@ -61,7 +61,7 @@ function checkCalls(body, allowImport) {
       while (body[pc++] & 128) { /* continuation */ }
     } else if ([0x0c, 0x0d, 0x20, 0x21, 0x22].includes(op)) {
       [, pc] = readWord(body, pc);
-    } else if (op === 0x36) {
+    } else if (op === 0x28 || op === 0x36) {
       [, pc] = readWord(body, pc);
       [, pc] = readWord(body, pc);
     } else if (![5, 11, 15, 0x45, 0x48, 0x4a, 0x6a, 0x6b, 0x6c].includes(op)) {
@@ -70,9 +70,9 @@ function checkCalls(body, allowImport) {
   }
 }
 
-export function linkPassable(guest, helper) {
+export function linkUnary(guest, helper, symbol) {
   const caller = parse(guest, [1, 2, 3, 5, 7, 10], 1);
-  if (!same(caller.sections.get(2), imported)) throw Error('Expected declaration pocket.passable with type 0');
+  if (!same(caller.sections.get(2), imported(symbol))) throw Error(`Expected declaration pocket.${symbol} with type 0`);
   const rust = parse(helper, [1, 3, 5, 7, 10], 0);
   checkCalls(caller.body, true);
   checkCalls(rust.body, false);
@@ -85,3 +85,5 @@ export function linkPassable(guest, helper) {
   return { wasm, delta, helperBody: rust.body, helperStart: wasm.length - caller.body.length
     - u32(caller.body.length).length - rust.body.length };
 }
+
+export const linkPassable = (guest, helper) => linkUnary(guest, helper, "passable");

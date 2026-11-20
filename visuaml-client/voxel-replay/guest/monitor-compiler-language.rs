@@ -1,4 +1,6 @@
 include!("monitor-wasm-emit.rs");
+#[cfg(pocket_tape_compiler)]
+include!("monitor-tape-emit.rs");
 
 // Four source slots at lines 10, 20, 30 and 40. All values wrap modulo 1000.
 const ACC: usize = 23;
@@ -82,14 +84,26 @@ unsafe extern "C" fn program(p: *mut i32) -> i32 {
                     write(p.add(INPUT_COL), read(p.add(INPUT_COL)) + 1);
                 }
                 write(p.add(OP), 0);
-                write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(14006)); if read(p.add(TMP)) == 0 { write(p.add(OP), 1); }
-                write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(841)); if read(p.add(TMP)) == 0 { write(p.add(OP), 2); }
-                write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(8864309)); if read(p.add(TMP)) == 0 { write(p.add(OP), 3); }
-                write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(158537)); if read(p.add(TMP)) == 0 { write(p.add(OP), 4); }
-                #[cfg(pocket_rust_call)]
+                #[cfg(not(pocket_tape_compiler))]
                 {
-                    write(p.add(TMP), read(p.add(TOKEN)) - 60114);
-                    if read(p.add(TMP)) == 0 { write(p.add(OP), 5); }
+                    write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(14006)); if read(p.add(TMP)) == 0 { write(p.add(OP), 1); }
+                    write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(841)); if read(p.add(TMP)) == 0 { write(p.add(OP), 2); }
+                    write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(8864309)); if read(p.add(TMP)) == 0 { write(p.add(OP), 3); }
+                    write(p.add(TMP), read(p.add(TOKEN)).wrapping_sub(158537)); if read(p.add(TMP)) == 0 { write(p.add(OP), 4); }
+                    #[cfg(pocket_rust_call)]
+                    {
+                        write(p.add(TMP), read(p.add(TOKEN)) - 60114);
+                        if read(p.add(TMP)) == 0 { write(p.add(OP), 5); }
+                    }
+                }
+                #[cfg(pocket_tape_compiler)]
+                {
+                    write(p.add(TMP), read(p.add(TOKEN)) - 394826);
+                    if read(p.add(TMP)) == 0 { write(p.add(OP), 1); }
+                    write(p.add(TMP), read(p.add(TOKEN)) - 369932);
+                    if read(p.add(TMP)) == 0 { write(p.add(OP), 2); }
+                    write(p.add(TMP), read(p.add(TOKEN)) - 388708);
+                    if read(p.add(TMP)) == 0 { write(p.add(OP), 3); }
                 }
                 write(p.add(VALUE), 0);
                 if read(p.add(OP)) > 0 && read(p.add(OP)) < 3 {
@@ -172,6 +186,9 @@ unsafe extern "C" fn program(p: *mut i32) -> i32 {
 
 #[inline(never)]
 unsafe extern "C" fn compile_program(p: *mut i32) -> i32 {
+    #[cfg(not(pocket_tape_compiler))]
     compile_wasm!(p);
+    #[cfg(pocket_tape_compiler)]
+    compile_tape!(p);
     read(p.add(TICK))
 }

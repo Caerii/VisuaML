@@ -1,0 +1,28 @@
+{
+  "id": "tape-compiler",
+  "name": "Tape Compiler",
+  "binary": "pocket_tape_compiler.wasm",
+  "guide": "Enter 10 TAPE 112, 20 RULE 112, 30 RULE 202, 40 STEP, and COMPILE. Use Link and load, then Step into Rust. RULE digits are read, write, and direction (0 left, 1 stay, 2 right).",
+  "keyboard": "ascii",
+  "controls": [],
+  "readouts": [
+    {
+      "id": "moduleLength",
+      "label": "Module bytes",
+      "offset": 144
+    }
+  ],
+  "notices": [],
+  "idleNotice": "Program keyboard ready",
+  "replays": [],
+  "gallery": [
+    [
+      "Compile a tape machine",
+      "tape-compiler.gif"
+    ]
+  ],
+  "binary_sha256": "8d0d8d6752e9914b39e6af0e92b276207c377e76fd4d08f183d9dd2979c90f86",
+  "order": 2.4,
+  "moduleOutput": false,
+  "tapeCompiler": true
+}
