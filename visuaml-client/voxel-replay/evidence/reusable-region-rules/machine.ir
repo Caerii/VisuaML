@@ -1,0 +1,605 @@
+graph(%self : __torch__.visuaml.compiler_lab.frozen_region_v58.___torch_mangle_0.RegionStep,
+      %image.1 : Tensor,
+      %state.1 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor),
+      %budget.1 : int):
+  %4 : int = prim::Constant[value=26]()
+  %5 : int = prim::Constant[value=9]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:139:32
+  %6 : int = prim::Constant[value=10]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:147:33
+  %7 : int = prim::Constant[value=14]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:252:17
+  %8 : int = prim::Constant[value=15]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:254:11
+  %9 : int = prim::Constant[value=16]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:254:23
+  %10 : int = prim::Constant[value=19]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:254:35
+  %11 : int = prim::Constant[value=2147483648]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:255:34
+  %12 : int = prim::Constant[value=4294967295]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:261:50
+  %13 : int = prim::Constant[value=17]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:262:17
+  %14 : int = prim::Constant[value=18]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:264:17
+  %15 : int = prim::Constant[value=255]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:209:46
+  %16 : int = prim::Constant[value=8]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:200:70
+  %17 : int = prim::Constant[value=7]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:196:22
+  %18 : int = prim::Constant[value=21]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:177:55
+  %19 : int = prim::Constant[value=20]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:177:43
+  %20 : int = prim::Constant[value=22]()
+  %21 : int[] = prim::Constant[value=[1]]()
+  %22 : Long(4, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0  0  0  0 [ CPULongType{4} ]]()
+  %23 : int[] = prim::Constant[value=[4]]()
+  %24 : bool = prim::Constant[value=1]()
+  %25 : bool = prim::Constant[value=0]()
+  %26 : int = prim::Constant[value=13]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:43:42
+  %27 : int = prim::Constant[value=12]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:41:50
+  %28 : int = prim::Constant[value=11]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:39:41
+  %29 : int = prim::Constant[value=2]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:39:26
+  %30 : int = prim::Constant[value=1]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:38:61
+  %31 : int = prim::Constant[value=9223372036854775807]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:8
+  %32 : int = prim::Constant[value=4]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:33:29
+  %33 : int = prim::Constant[value=64]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:31:34
+  %fused.1 : int = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:31:20
+  %35 : str = prim::Constant[value="Expected a transition budget from 0 to 64"]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:32:31
+  %36 : str = prim::Constant[value="builtins.RuntimeError"]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:32:18
+  %37 : NoneType = prim::Constant()
+  %38 : int = prim::Constant[value=6]()
+  %39 : int = prim::Constant[value=5]()
+  %40 : int = prim::Constant[value=-2]() # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:41:57
+  %41 : int = prim::Constant[value=3]()
+  %self.pair_offsets : Long(2, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0  1 [ CPULongType{2} ]]()
+  %self.step.base.shifts : Long(4, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=  0   8  16  24 [ CPULongType{4} ]]()
+  %self.step.base.stack_slots : Long(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.step.base.pushes : Long(22, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.step.base.pops : Long(22, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.step.base.lanes : Long(4, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0  1  2  3 [ CPULongType{4} ]]()
+  %self.step.base.opcodes : Long(22, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %49 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor) = prim::Uninitialized()
+  %50 : int = prim::Uninitialized()
+  %51 : Tensor = prim::Uninitialized()
+  %52 : bool = prim::Uninitialized()
+  %53 : bool = aten::lt(%budget.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:31:11
+  %54 : bool = prim::If(%53) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:31:11
+    block0():
+      -> (%24)
+    block1():
+      %55 : bool = aten::gt(%budget.1, %33) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:31:25
+      -> (%55)
+   = prim::If(%54) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:31:8
+    block0():
+       = prim::RaiseException(%35, %36) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:32:12
+      -> ()
+    block1():
+      -> ()
+  %56 : bool = aten::gt(%budget.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:14
+  %57 : bool = prim::If(%56) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:14
+    block0():
+      %58 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleIndex(%state.1, %fused.1)
+      %59 : Tensor = prim::TupleIndex(%58, %38)
+      %60 : Tensor = aten::eq(%59, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:34
+      %61 : bool = aten::Bool(%60) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:29
+      -> (%61)
+    block1():
+      -> (%25)
+  %state : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), %access.2 : Tensor, %fused : int, %loaded.4 : int, %budget : int = prim::Loop(%31, %57, %state.1, %22, %fused.1, %fused.1, %budget.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:8
+    block0(%67 : int, %state.63 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), %access.51 : Tensor, %fused.31 : int, %loaded.39 : int, %budget.61 : int):
+      %vm.2 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleIndex(%state.63, %fused.1)
+      %74 : Tensor = prim::TupleIndex(%vm.2, %fused.1)
+      %75 : Tensor = aten::reshape(%74, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:38:47
+      %76 : Tensor = aten::index_select(%image.1, %fused.1, %75) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:38:18
+      %row.1 : Tensor = aten::select(%76, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:38:18
+      %78 : bool = aten::ge(%budget.61, %29) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:39:16
+      %79 : bool = prim::If(%78) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:39:16
+        block0():
+          %80 : Tensor = aten::select(%row.1, %fused.1, %28) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:39:37
+          %81 : Tensor = aten::ge(%80, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:39:37
+          %82 : bool = aten::Bool(%81) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:39:32
+          -> (%82)
+        block1():
+          -> (%25)
+      %83 : bool = prim::If(%79) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:39:16
+        block0():
+          %84 : Tensor = prim::TupleIndex(%vm.2, %39)
+          %85 : Tensor = aten::ge(%84, %29) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:40:30
+          %86 : Tensor = prim::TupleIndex(%vm.2, %30)
+          %87 : Tensor = aten::le(%86, %20) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:40:47
+          %88 : Tensor = aten::__and__(%85, %87) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:40:30
+          %89 : bool = aten::Bool(%88) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:40:24
+          -> (%89)
+        block1():
+          -> (%25)
+      %90 : bool, %91 : bool, %92 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), %93 : Tensor, %94 : int, %95 : int, %96 : int, %state.61 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), %budget.59 : int, %fused.29 : int, %loaded.37 : int = prim::If(%83) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:39:12
+        block0():
+          %101 : Tensor = aten::select(%row.1, %fused.1, %27) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:41:46
+          %102 : Tensor = aten::eq(%101, %40) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:41:46
+          %103 : bool = aten::Bool(%102) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:41:41
+          %104 : bool, %105 : bool, %106 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), %107 : Tensor, %108 : int, %109 : int, %110 : int, %state.59 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), %budget.57 : int, %fused.27 : int, %loaded.35 : int = prim::If(%103) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:41:16
+            block0():
+              %115 : Tensor = prim::TupleIndex(%vm.2, %41)
+              %116 : Tensor = aten::slice(%row.1, %fused.1, %28, %27, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:42:55
+              %117 : Tensor = aten::gather(%115, %fused.1, %116, %25) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:42:28
+              %local.2 : Tensor = aten::select(%117, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:42:28
+              %119 : Tensor = aten::select(%row.1, %fused.1, %26) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:43:38
+              %address.2 : Tensor = aten::add(%local.2, %119, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:43:30
+              %121 : Tensor = prim::TupleIndex(%vm.2, %32)
+              %122 : int = aten::numel(%121) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:44:39
+              %123 : int = aten::sub(%122, %32) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:44:39
+              %124 : Tensor = aten::le(%address.2, %123) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:44:28
+              %125 : bool = aten::Bool(%124) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:44:23
+              %126 : bool, %127 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), %128 : Tensor, %129 : int, %130 : int, %131 : int, %state.57 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), %budget.55 : int, %loaded.33 : int = prim::If(%125) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:44:20
+                block0():
+                  %135 : Tensor = prim::TupleIndex(%vm.2, %32)
+                  %136 : Tensor = aten::add(%address.2, %self.step.base.lanes, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:45:58
+                  %bytes_.1 : Tensor = aten::gather(%135, %fused.1, %136, %25) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:45:33
+                  %138 : Tensor = aten::to(%bytes_.1, %32, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:46:32
+                  %139 : Tensor = aten::__lshift__(%138, %self.step.base.shifts) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:46:32
+                  %word.1 : Tensor = aten::sum(%139, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:46:32
+                  %141 : Tensor = prim::TupleIndex(%vm.2, %29)
+                  %142 : Tensor = prim::TupleIndex(%vm.2, %30)
+                  %143 : Tensor = aten::reshape(%142, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:47:59
+                  %144 : Tensor = aten::reshape(%word.1, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:47:81
+                  %stack.1 : Tensor = aten::scatter(%141, %fused.1, %143, %144) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:47:32
+                  %146 : Tensor = prim::TupleIndex(%vm.2, %fused.1)
+                  %147 : Tensor = aten::add(%146, %29, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:48:42
+                  %148 : Tensor = prim::TupleIndex(%vm.2, %30)
+                  %149 : Tensor = aten::add(%148, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:48:53
+                  %150 : Tensor = prim::TupleIndex(%vm.2, %41)
+                  %151 : Tensor = prim::TupleIndex(%vm.2, %32)
+                  %152 : Tensor = prim::TupleIndex(%vm.2, %39)
+                  %153 : Tensor = aten::sub(%152, %29, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:49:51
+                  %154 : Tensor = prim::TupleIndex(%vm.2, %38)
+                  %vm.31 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleConstruct(%147, %149, %stack.1, %150, %151, %153, %154) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:48:29
+                  %156 : Tensor = prim::TupleIndex(%state.63, %30)
+                  %157 : Tensor = prim::TupleIndex(%state.63, %29)
+                  %state.11 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor) = prim::TupleConstruct(%vm.31, %156, %157) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:50:32
+                  %159 : Tensor = aten::ones_like(%word.1, %37, %37, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:51:46
+                  %160 : Tensor[] = prim::ListConstruct(%159, %address.2, %word.1, %word.1)
+                  %access.6 : Tensor = aten::stack(%160, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:51:33
+                  %budget.13 : int = aten::sub(%budget.61, %29) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:52:24
+                  %loaded.3 : int = aten::add(%loaded.39, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:53:24
+                  %164 : bool = aten::gt(%budget.13, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:14
+                  %165 : bool = prim::If(%164) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:14
+                    block0():
+                      %166 : Tensor = aten::eq(%154, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:34
+                      %167 : bool = aten::Bool(%166) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:29
+                      -> (%167)
+                    block1():
+                      -> (%25)
+                  -> (%165, %state.11, %access.6, %fused.31, %loaded.3, %budget.13, %state.11, %budget.13, %loaded.3)
+                block1():
+                  -> (%52, %49, %51, %50, %50, %50, %state.63, %budget.61, %loaded.39)
+              -> (%125, %126, %127, %128, %129, %130, %131, %state.57, %budget.55, %fused.31, %loaded.33)
+            block1():
+              %168 : Tensor = prim::TupleIndex(%vm.2, %41)
+              %169 : Tensor = aten::slice(%row.1, %fused.1, %28, %26, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:56:56
+              %values.1 : Tensor = aten::gather(%168, %fused.1, %169, %25) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:56:29
+              %171 : Tensor = prim::TupleIndex(%vm.2, %29)
+              %172 : Tensor = prim::TupleIndex(%vm.2, %30)
+              %173 : Tensor = aten::add(%172, %self.pair_offsets, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:57:55
+              %stack.5 : Tensor = aten::scatter(%171, %fused.1, %173, %values.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:57:28
+              %175 : Tensor = prim::TupleIndex(%vm.2, %fused.1)
+              %176 : Tensor = aten::add(%175, %29, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:58:38
+              %177 : Tensor = prim::TupleIndex(%vm.2, %30)
+              %178 : Tensor = aten::add(%177, %29, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:58:49
+              %179 : Tensor = prim::TupleIndex(%vm.2, %41)
+              %180 : Tensor = prim::TupleIndex(%vm.2, %32)
+              %181 : Tensor = prim::TupleIndex(%vm.2, %39)
+              %182 : Tensor = aten::sub(%181, %29, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:59:47
+              %183 : Tensor = prim::TupleIndex(%vm.2, %38)
+              %vm.63 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleConstruct(%176, %178, %stack.5, %179, %180, %182, %183) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:58:25
+              %185 : Tensor = prim::TupleIndex(%state.63, %30)
+              %186 : Tensor = prim::TupleIndex(%state.63, %29)
+              %state.27 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor) = prim::TupleConstruct(%vm.63, %185, %186) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:60:28
+              %access.17 : Tensor = aten::zeros_like(%access.51, %37, %37, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:61:29
+              %budget.27 : int = aten::sub(%budget.61, %29) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:62:20
+              %fused.5 : int = aten::add(%fused.31, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:63:20
+              %191 : bool = aten::gt(%budget.27, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:14
+              %192 : bool = prim::If(%191) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:14
+                block0():
+                  %193 : Tensor = aten::eq(%183, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:34
+                  %194 : bool = aten::Bool(%193) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:29
+                  -> (%194)
+                block1():
+                  -> (%25)
+              -> (%24, %192, %state.27, %access.17, %fused.5, %loaded.39, %budget.27, %state.27, %budget.27, %fused.5, %loaded.39)
+          -> (%104, %105, %106, %107, %108, %109, %110, %state.59, %budget.57, %fused.27, %loaded.35)
+        block1():
+          -> (%25, %52, %49, %51, %50, %50, %50, %state.63, %budget.61, %fused.31, %loaded.39)
+      %195 : bool, %196 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), %197 : Tensor, %198 : int, %199 : int, %200 : int = prim::If(%90)
+        block0():
+          -> (%91, %92, %93, %94, %95, %96)
+        block1():
+          %vm.1 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleIndex(%state.61, %fused.1)
+          %202 : Tensor = prim::TupleIndex(%vm.1, %38)
+          %203 : Tensor = aten::eq(%202, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:138:24
+          %204 : Tensor = prim::TupleIndex(%vm.1, %39)
+          %205 : Tensor = aten::gt(%204, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:138:43
+          %206 : Tensor = aten::__and__(%203, %205) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:138:24
+          %enabled.1 : bool = aten::Bool(%206) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:138:18
+          %208 : bool = prim::If(%enabled.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:139:11
+            block0():
+              %209 : Tensor = aten::select(%row.1, %fused.1, %5) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:139:28
+              %210 : Tensor = aten::ge(%209, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:139:28
+              %211 : bool = aten::Bool(%210) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:139:23
+              -> (%211)
+            block1():
+              -> (%25)
+          %tick.1 : NamedTuple(state : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), access : Tensor) = prim::If(%208) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:139:8
+            block0():
+              %213 : Tensor = prim::TupleIndex(%vm.1, %29)
+              %214 : Tensor = prim::TupleIndex(%vm.1, %30)
+              %215 : Tensor = aten::sub(%214, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:140:45
+              %216 : Tensor = aten::reshape(%215, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:140:45
+              %top.1 : Tensor = aten::gather(%213, %fused.1, %216, %25) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:140:18
+              %218 : Tensor = aten::select(%row.1, %fused.1, %41) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:141:31
+              %219 : Tensor = aten::reshape(%218, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:141:31
+              %220 : Tensor = prim::TupleIndex(%vm.1, %30)
+              %221 : Tensor = aten::reshape(%220, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:141:50
+              %222 : Tensor = prim::TupleIndex(%vm.1, %29)
+              %223 : Tensor = prim::TupleIndex(%vm.1, %41)
+              %224 : Tensor[] = prim::ListConstruct(%219, %221, %222, %223)
+              %frame.1 : Tensor = aten::cat(%224, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:141:20
+              %226 : Tensor = prim::TupleIndex(%state.61, %29)
+              %227 : Tensor = prim::TupleIndex(%state.61, %30)
+              %228 : Tensor = aten::reshape(%227, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:142:55
+              %229 : Tensor = aten::unsqueeze(%frame.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:142:79
+              %frames.1 : Tensor = aten::index_copy(%226, %fused.1, %228, %229) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:142:21
+              %231 : Tensor = prim::TupleIndex(%vm.1, %41)
+              %232 : Tensor = aten::slice(%231, %fused.1, %30, %37, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:143:55
+              %233 : Tensor = aten::zeros_like(%232, %37, %37, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:143:38
+              %234 : Tensor[] = prim::ListConstruct(%top.1, %233)
+              %locals_.2 : Tensor = aten::cat(%234, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:143:22
+              %236 : Tensor = aten::select(%row.1, %fused.1, %5) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:144:34
+              %237 : Tensor = prim::TupleIndex(%vm.1, %30)
+              %238 : Tensor = aten::zeros_like(%237, %37, %37, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:144:42
+              %239 : Tensor = prim::TupleIndex(%vm.1, %29)
+              %240 : Tensor = aten::zeros_like(%239, %37, %37, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:144:71
+              %241 : Tensor = prim::TupleIndex(%vm.1, %32)
+              %242 : Tensor = prim::TupleIndex(%vm.1, %39)
+              %243 : Tensor = aten::sub(%242, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:145:52
+              %244 : Tensor = prim::TupleIndex(%vm.1, %38)
+              %callee.1 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleConstruct(%236, %238, %240, %locals_.2, %241, %243, %244) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:144:21
+              %246 : Tensor = prim::TupleIndex(%state.61, %30)
+              %247 : Tensor = aten::add(%246, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:146:46
+              %248 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor) = prim::TupleConstruct(%callee.1, %247, %frames.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:146:28
+              %249 : Tensor = aten::slice(%row.1, %fused.1, %37, %32, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:146:89
+              %250 : Tensor = aten::zeros_like(%249, %37, %37, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:146:72
+              %251 : NamedTuple(state : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), access : Tensor) = prim::TupleConstruct(%248, %250) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:146:19
+              -> (%251)
+            block1():
+              %252 : bool = prim::If(%enabled.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:147:11
+                block0():
+                  %253 : Tensor = aten::select(%row.1, %fused.1, %6) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:147:29
+                  %254 : Tensor = aten::ne(%253, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:147:29
+                  %255 : Tensor = prim::TupleIndex(%state.61, %30)
+                  %256 : Tensor = aten::gt(%255, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:147:46
+                  %257 : Tensor = aten::__and__(%254, %256) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:147:29
+                  %258 : bool = aten::Bool(%257) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:147:23
+                  -> (%258)
+                block1():
+                  -> (%25)
+              %259 : NamedTuple(state : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), access : Tensor) = prim::If(%252) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:147:8
+                block0():
+                  %260 : Tensor = prim::TupleIndex(%state.61, %30)
+                  %depth.7 : Tensor = aten::sub(%260, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:148:20
+                  %262 : Tensor = prim::TupleIndex(%state.61, %29)
+                  %263 : Tensor = aten::reshape(%depth.7, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:149:56
+                  %264 : Tensor = aten::index_select(%262, %fused.1, %263) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:149:20
+                  %frame.17 : Tensor = aten::select(%264, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:149:20
+                  %266 : Tensor = prim::TupleIndex(%vm.1, %29)
+                  %267 : Tensor = prim::TupleIndex(%vm.1, %30)
+                  %268 : Tensor = aten::sub(%267, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:150:48
+                  %269 : Tensor = aten::reshape(%268, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:150:48
+                  %270 : Tensor = aten::gather(%266, %fused.1, %269, %25) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:150:21
+                  %result.3 : Tensor = aten::select(%270, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:150:21
+                  %272 : Tensor = aten::select(%frame.17, %fused.1, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:151:52
+                  %273 : Tensor = aten::sub(%272, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:151:52
+                  %274 : Tensor = aten::eq(%self.step.base.stack_slots, %273) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:151:32
+                  %275 : Tensor = aten::slice(%frame.17, %fused.1, %29, %4, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:152:32
+                  %stack.3 : Tensor = aten::where(%274, %result.3, %275) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:151:20
+                  %277 : Tensor = aten::select(%frame.17, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:153:34
+                  %278 : Tensor = aten::select(%frame.17, %fused.1, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:153:44
+                  %279 : Tensor = aten::slice(%frame.17, %fused.1, %4, %37, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:153:61
+                  %280 : Tensor = prim::TupleIndex(%vm.1, %32)
+                  %281 : Tensor = prim::TupleIndex(%vm.1, %39)
+                  %282 : Tensor = aten::sub(%281, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:154:43
+                  %283 : Tensor = prim::TupleIndex(%vm.1, %38)
+                  %caller.3 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleConstruct(%277, %278, %stack.3, %279, %280, %282, %283) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:153:21
+                  %285 : Tensor = prim::TupleIndex(%state.61, %29)
+                  %286 : Tensor = aten::reshape(%depth.7, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:155:55
+                  %287 : Tensor = aten::zeros_like(%frame.17, %37, %37, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:156:38
+                  %288 : Tensor = aten::unsqueeze(%287, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:156:38
+                  %frames.7 : Tensor = aten::index_copy(%285, %fused.1, %286, %288) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:155:21
+                  %290 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor) = prim::TupleConstruct(%caller.3, %depth.7, %frames.7) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:157:28
+                  %291 : Tensor = aten::slice(%row.1, %fused.1, %37, %32, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:157:79
+                  %292 : Tensor = aten::zeros_like(%291, %37, %37, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:157:62
+                  %293 : NamedTuple(state : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), access : Tensor) = prim::TupleConstruct(%290, %292) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:157:19
+                  -> (%293)
+                block1():
+                  %294 : Tensor = aten::select(%row.1, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:169:33
+                  %295 : Tensor = aten::eq(%self.step.base.opcodes, %294) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:169:17
+                  %gates.1 : Tensor = aten::to(%295, %32, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:169:17
+                  %297 : Tensor = prim::TupleIndex(%vm.1, %29)
+                  %298 : Tensor = prim::TupleIndex(%vm.1, %30)
+                  %299 : Tensor = aten::sub(%298, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:170:46
+                  %300 : Tensor = aten::clamp(%299, %fused.1, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:170:46
+                  %301 : Tensor = aten::reshape(%300, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:170:46
+                  %302 : Tensor = aten::gather(%297, %fused.1, %301, %25) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:170:16
+                  %right.1 : Tensor = aten::select(%302, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:170:16
+                  %304 : Tensor = prim::TupleIndex(%vm.1, %29)
+                  %305 : Tensor = prim::TupleIndex(%vm.1, %30)
+                  %306 : Tensor = aten::sub(%305, %29, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:171:45
+                  %307 : Tensor = aten::clamp(%306, %fused.1, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:171:45
+                  %308 : Tensor = aten::reshape(%307, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:171:45
+                  %309 : Tensor = aten::gather(%304, %fused.1, %308, %25) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:171:15
+                  %left.1 : Tensor = aten::select(%309, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:171:15
+                  %z.1 : Tensor = aten::zeros_like(%right.1, %37, %37, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:172:12
+                  %312 : Tensor = aten::select(%row.1, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:175:21
+                  %op.3 : int = aten::Int(%312) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:175:17
+                  %314 : bool = aten::eq(%op.3, %19) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:177:37
+                  %315 : bool = prim::If(%314) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:177:11
+                    block0():
+                      -> (%24)
+                    block1():
+                      %316 : bool = aten::eq(%op.3, %18) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:177:49
+                      -> (%316)
+                  %loaded : Tensor, %address : Tensor, %indices : Tensor = prim::If(%315) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:177:8
+                    block0():
+                      %320 : Tensor = aten::select(%gates.1, %fused.1, %18) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:178:34
+                      %321 : Tensor = aten::eq(%320, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:178:34
+                      %322 : Tensor = aten::where(%321, %left.1, %right.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:178:22
+                      %323 : Tensor = aten::select(%row.1, %fused.1, %29) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:178:65
+                      %address.1 : Tensor = aten::add(%322, %323, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:178:22
+                      %325 : Tensor = aten::add(%address.1, %self.step.base.lanes, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:179:23
+                      %326 : Tensor = prim::TupleIndex(%vm.1, %32)
+                      %327 : int = aten::numel(%326) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:179:55
+                      %328 : int = aten::sub(%327, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:179:55
+                      %indices.1 : Tensor = aten::clamp(%325, %37, %328) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:179:23
+                      %330 : Tensor = prim::TupleIndex(%vm.1, %32)
+                      %331 : Tensor = aten::gather(%330, %fused.1, %indices.1, %25) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:180:22
+                      %332 : Tensor = aten::to(%331, %32, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:180:22
+                      %333 : Tensor = aten::__lshift__(%332, %self.step.base.shifts) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:180:22
+                      %loaded.1 : Tensor = aten::sum(%333, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:180:22
+                      -> (%loaded.1, %address.1, %indices.1)
+                    block1():
+                      -> (%z.1, %z.1, %self.step.base.lanes)
+                  %335 : Tensor = aten::select(%row.1, %fused.1, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:181:22
+                  %local_index.1 : Tensor = aten::clamp(%335, %37, %32) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:181:22
+                  %337 : Tensor = prim::TupleIndex(%vm.1, %41)
+                  %338 : Tensor = aten::reshape(%local_index.1, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:182:46
+                  %339 : Tensor = aten::gather(%337, %fused.1, %338, %25) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:182:16
+                  %local.1 : Tensor = aten::select(%339, %fused.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:182:16
+                  %341 : Tensor = aten::select(%row.1, %fused.1, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:184:46
+                  %342 : bool = aten::eq(%op.3, %6) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:248:11
+                  %result.1 : Tensor = prim::If(%342) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:248:8
+                    block0():
+                      -> (%local.1)
+                    block1():
+                      %344 : bool = aten::eq(%op.3, %26) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:250:11
+                      %345 : Tensor = prim::If(%344) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:250:8
+                        block0():
+                          -> (%341)
+                        block1():
+                          %346 : bool = aten::eq(%op.3, %7) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:252:11
+                          %347 : Tensor = prim::If(%346) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:252:8
+                            block0():
+                              %348 : Tensor = aten::eq(%right.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:253:20
+                              %349 : Tensor = aten::to(%348, %32, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:253:20
+                              -> (%349)
+                            block1():
+                              %350 : bool = aten::le(%8, %op.3) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:254:11
+                              %351 : bool = prim::If(%350) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:254:11
+                                block0():
+                                  %352 : bool = aten::le(%op.3, %9) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:254:17
+                                  -> (%352)
+                                block1():
+                                  -> (%25)
+                              %353 : bool = prim::If(%351) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:254:11
+                                block0():
+                                  -> (%24)
+                                block1():
+                                  %354 : bool = aten::eq(%op.3, %10) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:254:29
+                                  -> (%354)
+                              %355 : Tensor = prim::If(%353) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:254:8
+                                block0():
+                                  %356 : Tensor = aten::__xor__(%left.1, %11) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:255:27
+                                  %signed_left.15 : Tensor = aten::sub(%356, %11, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:255:27
+                                  %358 : Tensor = aten::__xor__(%right.1, %11) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:256:28
+                                  %signed_right.15 : Tensor = aten::sub(%358, %11, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:256:28
+                                  %360 : bool = aten::eq(%op.3, %8) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:257:15
+                                  %361 : Tensor = prim::If(%360) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:257:12
+                                    block0():
+                                      %362 : Tensor = aten::lt(%signed_left.15, %signed_right.15) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:258:24
+                                      %363 : Tensor = aten::to(%362, %32, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:258:24
+                                      -> (%363)
+                                    block1():
+                                      %364 : bool = aten::eq(%op.3, %9) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:259:15
+                                      %365 : Tensor = prim::If(%364) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:259:12
+                                        block0():
+                                          %366 : Tensor = aten::gt(%signed_left.15, %signed_right.15) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:260:24
+                                          %367 : Tensor = aten::to(%366, %32, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:260:24
+                                          -> (%367)
+                                        block1():
+                                          %368 : Tensor = aten::mul(%signed_left.15, %signed_right.15) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:261:20
+                                          %369 : Tensor = aten::__and__(%368, %12) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:261:20
+                                          -> (%369)
+                                      -> (%365)
+                                  -> (%361)
+                                block1():
+                                  %370 : bool = aten::eq(%op.3, %13) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:262:11
+                                  %371 : Tensor = prim::If(%370) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:262:8
+                                    block0():
+                                      %372 : Tensor = aten::add(%left.1, %right.1, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:263:20
+                                      %373 : Tensor = aten::__and__(%372, %12) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:263:20
+                                      -> (%373)
+                                    block1():
+                                      %374 : bool = aten::eq(%op.3, %14) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:264:11
+                                      %375 : Tensor = prim::If(%374) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:264:8
+                                        block0():
+                                          %376 : Tensor = aten::sub(%left.1, %right.1, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:265:20
+                                          %377 : Tensor = aten::__and__(%376, %12) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:265:20
+                                          -> (%377)
+                                        block1():
+                                          %378 : Tensor = prim::If(%314) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:266:8
+                                            block0():
+                                              -> (%loaded)
+                                            block1():
+                                              -> (%z.1)
+                                          -> (%378)
+                                      -> (%375)
+                                  -> (%371)
+                              -> (%355)
+                          -> (%347)
+                      -> (%345)
+                  %379 : Tensor = aten::select(%row.1, %fused.1, %39) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:195:16
+                  %380 : Tensor = aten::select(%row.1, %fused.1, %38) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:195:25
+                  %381 : Tensor = aten::ne(%right.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:195:35
+                  %382 : Tensor = aten::to(%381, %32, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:195:35
+                  %383 : Tensor = aten::mul(%380, %382) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:195:25
+                  %384 : Tensor = aten::add(%379, %383, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:195:16
+                  %385 : Tensor = aten::select(%row.1, %fused.1, %17) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:196:18
+                  %386 : Tensor = aten::eq(%right.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:196:28
+                  %387 : Tensor = aten::to(%386, %32, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:196:28
+                  %388 : Tensor = aten::mul(%385, %387) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:196:18
+                  %389 : Tensor = aten::add(%384, %388, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:195:16
+                  %take.1 : Tensor = aten::ne(%389, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:195:16
+                  %391 : Tensor = aten::select(%row.1, %fused.1, %32) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:197:36
+                  %392 : Tensor = aten::select(%row.1, %fused.1, %41) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:197:44
+                  %next_pc.1 : Tensor = aten::where(%take.1, %391, %392) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:197:18
+                  %394 : Tensor = prim::TupleIndex(%vm.1, %30)
+                  %395 : Tensor = aten::mul(%gates.1, %self.step.base.pops) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:198:31
+                  %396 : Tensor = aten::sum(%395, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:198:31
+                  %base.1 : Tensor = aten::sub(%394, %396, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:198:15
+                  %398 : Tensor = aten::mul(%gates.1, %self.step.base.pushes) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:199:18
+                  %pushes.3 : Tensor = aten::sum(%398, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:199:18
+                  %400 : Tensor = aten::select(%gates.1, %fused.1, %38) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:200:38
+                  %401 : Tensor = aten::select(%gates.1, %fused.1, %17) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:200:49
+                  %402 : Tensor = aten::add(%400, %401, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:200:38
+                  %403 : Tensor = aten::eq(%402, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:200:38
+                  %404 : Tensor = aten::__and__(%take.1, %403) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:200:29
+                  %405 : Tensor = aten::select(%row.1, %fused.1, %16) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:200:66
+                  %406 : Tensor = aten::add(%base.1, %pushes.3, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:200:74
+                  %height.1 : Tensor = aten::where(%404, %405, %406) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:200:17
+                  %408 : Tensor = prim::TupleIndex(%vm.1, %38)
+                  %running.1 : Tensor = aten::eq(%408, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:201:18
+                  %410 : Tensor = prim::TupleIndex(%vm.1, %39)
+                  %has_fuel.1 : Tensor = aten::gt(%410, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:202:19
+                  %412 : Tensor = aten::select(%gates.1, %fused.1, %19) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:203:18
+                  %413 : Tensor = aten::select(%gates.1, %fused.1, %18) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:203:30
+                  %414 : Tensor = aten::add(%412, %413, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:203:18
+                  %memory.1 : Tensor = aten::eq(%414, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:203:18
+                  %416 : Tensor = prim::TupleIndex(%vm.1, %32)
+                  %417 : int = aten::numel(%416) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:204:36
+                  %418 : int = aten::sub(%417, %32) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:204:36
+                  %419 : Tensor = aten::gt(%address, %418) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:204:26
+                  %fault.1 : Tensor = aten::__and__(%memory.1, %419) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:204:16
+                  %421 : Tensor = aten::__and__(%running.1, %has_fuel.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:205:17
+                  %422 : Tensor = aten::bitwise_not(%fault.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:205:38
+                  %commit.1 : Tensor = aten::__and__(%421, %422) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:205:17
+                  %424 : Tensor = aten::eq(%413, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:206:26
+                  %store.1 : Tensor = aten::__and__(%commit.1, %424) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:206:16
+                  %page.1 : Tensor = prim::TupleIndex(%vm.1, %32)
+                  %427 : bool = aten::Bool(%store.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:208:11
+                   = prim::If(%427) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:208:8
+                    block0():
+                      %428 : Tensor = aten::__rshift__(%right.1, %self.step.base.shifts) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:209:22
+                      %429 : Tensor = aten::__and__(%428, %15) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:209:22
+                      %value.1 : Tensor = aten::to(%429, %fused.1, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:209:22
+                      %431 : Tensor = aten::scatter_(%page.1, %fused.1, %indices, %value.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:211:16
+                      -> ()
+                    block1():
+                      -> ()
+                  %432 : Tensor = aten::bitwise_not(%has_fuel.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:216:24
+                  %433 : int = aten::size(%image.1, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:216:72
+                  %434 : int = aten::sub(%433, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:216:72
+                  %435 : Tensor = aten::eq(%next_pc.1, %434) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:216:61
+                  %436 : Tensor = aten::to(%435, %32, %25, %25, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:216:61
+                  %437 : Tensor = aten::where(%fault.1, %41, %436) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:216:38
+                  %438 : Tensor = aten::where(%432, %29, %437) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:216:12
+                  %439 : Tensor = prim::TupleIndex(%vm.1, %38)
+                  %status.1 : Tensor = aten::where(%running.1, %438, %439) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:214:17
+                  %441 : Tensor = aten::__and__(%421, %fault.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:219:34
+                  %442 : Tensor = aten::__and__(%commit.1, %memory.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:220:46
+                  %443 : Tensor = aten::mul(%413, %29) # <string>:3:9
+                  %444 : Tensor = aten::add(%412, %443, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:220:63
+                  %445 : Tensor = aten::where(%442, %444, %z.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:220:34
+                  %access_kind.1 : Tensor = aten::where(%441, %41, %445) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:219:22
+                  %447 : bool = aten::ne(%op.3, %19) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:221:34
+                  %448 : bool = prim::If(%447) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:221:11
+                    block0():
+                      %449 : bool = aten::ne(%op.3, %18) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:221:47
+                      -> (%449)
+                    block1():
+                      -> (%25)
+                  %access : Tensor = prim::If(%448) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:221:8
+                    block0():
+                      %access.1 : Tensor = aten::zeros(%23, %32, %37, %37, %37) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:222:21
+                      -> (%access.1)
+                    block1():
+                      %452 : Tensor = aten::where(%store.1, %right.1, %loaded) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:224:64
+                      %453 : Tensor[] = prim::ListConstruct(%access_kind.1, %address, %loaded, %452)
+                      %access.3 : Tensor = aten::stack(%453, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:224:21
+                      -> (%access.3)
+                  %cells.1 : Tensor = prim::TupleIndex(%vm.1, %29)
+                  %locals_.1 : Tensor = prim::TupleIndex(%vm.1, %41)
+                  %457 : bool = aten::Bool(%commit.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:227:15
+                  %tick.9 : NamedTuple(state : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), access : Tensor) = prim::If(%457) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:227:12
+                    block0():
+                      %459 : Tensor = aten::ne(%pushes.3, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:228:25
+                      %460 : Tensor = prim::TupleIndex(%vm.1, %30)
+                      %461 : Tensor = aten::lt(%height.1, %460) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:228:41
+                      %462 : Tensor = aten::__or__(%459, %461) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:228:25
+                      %463 : bool = aten::Bool(%462) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:228:19
+                      %cells.33 : Tensor = prim::If(%463) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:228:16
+                        block0():
+                          %465 : Tensor = aten::eq(%self.step.base.stack_slots, %base.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:229:41
+                          %466 : Tensor = aten::eq(%pushes.3, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:229:70
+                          %467 : Tensor = aten::__and__(%465, %466) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:229:41
+                          %cells.5 : Tensor = aten::where(%467, %result.1, %cells.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:229:28
+                          %469 : Tensor = aten::lt(%self.step.base.stack_slots, %height.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:230:40
+                          %cells.11 : Tensor = aten::where(%469, %cells.5, %z.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:230:28
+                          -> (%cells.11)
+                        block1():
+                          -> (%cells.1)
+                      %471 : Tensor = aten::select(%gates.1, %fused.1, %28) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:231:25
+                      %472 : Tensor = aten::select(%gates.1, %fused.1, %27) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:231:37
+                      %473 : Tensor = aten::add(%471, %472, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:231:25
+                      %474 : Tensor = aten::eq(%473, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:231:25
+                      %475 : bool = aten::Bool(%474) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:231:19
+                      %locals_.27 : Tensor = prim::If(%475) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:231:16
+                        block0():
+                          %477 : Tensor = aten::reshape(%right.1, %21) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:232:83
+                          %locals_.5 : Tensor = aten::index_copy(%locals_.1, %fused.1, %338, %477) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:232:30
+                          -> (%locals_.5)
+                        block1():
+                          -> (%locals_.1)
+                      %479 : Tensor = prim::TupleIndex(%vm.1, %39)
+                      %480 : Tensor = aten::sub(%479, %30, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:233:80
+                      %481 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleConstruct(%next_pc.1, %height.1, %cells.33, %locals_.27, %page.1, %480, %status.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:233:28
+                      %482 : NamedTuple(state : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), access : Tensor) = prim::TupleConstruct(%481, %access) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:233:23
+                      -> (%482)
+                    block1():
+                      %483 : Tensor = prim::TupleIndex(%vm.1, %fused.1)
+                      %484 : Tensor = prim::TupleIndex(%vm.1, %30)
+                      %485 : Tensor = prim::TupleIndex(%vm.1, %39)
+                      %486 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleConstruct(%483, %484, %cells.1, %locals_.1, %page.1, %485, %status.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:234:24
+                      %487 : NamedTuple(state : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), access : Tensor) = prim::TupleConstruct(%486, %access) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_recurrent_v58.py:234:19
+                      -> (%487)
+                  %488 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleIndex(%tick.9, %fused.1)
+                  %489 : Tensor = prim::TupleIndex(%state.61, %30)
+                  %490 : Tensor = prim::TupleIndex(%state.61, %29)
+                  %491 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor) = prim::TupleConstruct(%488, %489, %490) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:159:24
+                  %492 : Tensor = prim::TupleIndex(%tick.9, %30)
+                  %493 : NamedTuple(state : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), access : Tensor) = prim::TupleConstruct(%491, %492) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_calls_v58.py:159:15
+                  -> (%493)
+              -> (%259)
+          %state.51 : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor) = prim::TupleIndex(%tick.1, %fused.1)
+          %access.39 : Tensor = prim::TupleIndex(%tick.1, %30)
+          %budget.51 : int = aten::sub(%budget.59, %30) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:67:12
+          %497 : bool = aten::gt(%budget.51, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:14
+          %498 : bool = prim::If(%497) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:14
+            block0():
+              %499 : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor) = prim::TupleIndex(%state.51, %fused.1)
+              %500 : Tensor = prim::TupleIndex(%499, %38)
+              %501 : Tensor = aten::eq(%500, %fused.1) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:34
+              %502 : bool = aten::Bool(%501) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:36:29
+              -> (%502)
+            block1():
+              -> (%25)
+          -> (%498, %state.51, %access.39, %fused.29, %loaded.37, %budget.51)
+      -> (%195, %196, %197, %198, %199, %200)
+  %503 : NamedTuple(state : NamedTuple(vm : NamedTuple(pc : Tensor, height : Tensor, stack : Tensor, locals : Tensor, page : Tensor, fuel : Tensor, status : Tensor), depth : Tensor, frames : Tensor), access : Tensor, fused_pairs : int, fused_loads : int) = prim::TupleConstruct(%state, %access.2, %fused, %loaded.4) # /workspace/VisuaML/visuaml-client/backend/visuaml/compiler_lab/frozen_region_v58.py:68:15
+  return (%503)
