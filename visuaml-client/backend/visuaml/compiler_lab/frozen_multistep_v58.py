@@ -6,9 +6,9 @@ from .frozen_calls_v58 import CallState, CallStep, CallTick
 
 
 class MultiStep(torch.nn.Module):
-    def __init__(self):
+    def __init__(self, reuse_row: bool = False, reuse_state: bool = False):
         super().__init__()
-        self.step = CallStep()
+        self.step = CallStep(reuse_row, reuse_state)
 
     def forward(self, image: Tensor, state: CallState, budget: int) -> CallTick:
         if budget < 0 or budget > 64:
@@ -23,5 +23,5 @@ class MultiStep(torch.nn.Module):
         return CallTick(state, access)
 
 
-def freeze_multistep():
-    return torch.jit.freeze(torch.jit.script(MultiStep().eval()))
+def freeze_multistep(*, reuse_row: bool = False, reuse_state: bool = False):
+    return torch.jit.freeze(torch.jit.script(MultiStep(reuse_row, reuse_state).eval()))

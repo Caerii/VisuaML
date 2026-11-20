@@ -118,9 +118,12 @@ def initialize(image: CallImage, argument: int, page: bytes | bytearray, fuel: i
 class CallStep(torch.nn.Module):
     """Recurrent call and return transitions own both caller and callee state."""
 
-    def __init__(self):
+    __constants__ = ["reuse_row"]
+
+    def __init__(self, reuse_row: bool = False, reuse_state: bool = False):
         super().__init__()
-        self.base = RecurrentStep(bounded_store=True)
+        self.reuse_row = reuse_row
+        self.base = RecurrentStep(bounded_store=True, reuse_state=reuse_state)
         self.register_buffer("stack_slots", torch.arange(MAX_STACK))
         self.stack_width = MAX_STACK
 
@@ -147,7 +150,7 @@ class CallStep(torch.nn.Module):
             frames = torch.index_copy(state.frames, 0, depth.reshape(1),
                                       torch.zeros_like(frame).unsqueeze(0))
             return CallTick(CallState(caller, depth, frames), torch.zeros_like(row[:4]))
-        tick = self.base(image, vm)
+        tick = self.base.step_row(image, vm, row) if self.reuse_row else self.base(image, vm)
         return CallTick(CallState(tick.state, state.depth, state.frames), tick.access)
 
 

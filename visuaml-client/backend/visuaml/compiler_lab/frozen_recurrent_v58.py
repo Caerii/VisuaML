@@ -144,11 +144,12 @@ def snapshot_page(state: MachineState) -> bytes:
 class RecurrentStep(torch.nn.Module):
     """All instruction/state decisions are in the scripted graph."""
 
-    __constants__ = ["bounded_store"]
+    __constants__ = ["bounded_store", "reuse_state"]
 
-    def __init__(self, bounded_store: bool = False):
+    def __init__(self, bounded_store: bool = False, reuse_state: bool = False):
         super().__init__()
         self.bounded_store = bounded_store
+        self.reuse_state = reuse_state
         self.register_buffer("opcodes", torch.arange(len(OPCODES), dtype=torch.int64))
         self.register_buffer("pops", torch.tensor(POPS, dtype=torch.int64))
         self.register_buffer("pushes", torch.tensor(PUSHES, dtype=torch.int64))
@@ -159,6 +160,9 @@ class RecurrentStep(torch.nn.Module):
 
     def forward(self, image: Tensor, state: MachineState) -> Tick:
         row = torch.index_select(image, 0, state.pc.reshape(1))[0]
+        return self.step_row(image, state, row)
+
+    def step_row(self, image: Tensor, state: MachineState, row: Tensor) -> Tick:
         gates = (self.opcodes == row[0]).to(torch.int64)
         right = torch.gather(state.stack, 0, (state.height - 1).clamp(min=0).reshape(1))[0]
         left = torch.gather(state.stack, 0, (state.height - 2).clamp(min=0).reshape(1))[0]
@@ -183,11 +187,6 @@ class RecurrentStep(torch.nn.Module):
         base = state.height - (gates * self.pops).sum()
         pushes = (gates * self.pushes).sum()
         height = torch.where(take & ((gates[6] + gates[7]) == 1), row[8], base + pushes)
-        cells = torch.where((self.stack_slots == base) & (pushes == 1), result, state.stack)
-        cells = torch.where(self.stack_slots < height, cells, z)
-        locals_ = torch.where((self.local_slots == local_index) & ((gates[11] + gates[12]) == 1),
-                              right, state.locals)
-
         running = state.status == 0
         has_fuel = state.fuel > 0
         memory = (gates[20] + gates[21]) == 1
@@ -209,6 +208,20 @@ class RecurrentStep(torch.nn.Module):
         access_kind = torch.where(running & has_fuel & fault, 3,
                                   torch.where(commit & memory, gates[20] + 2 * gates[21], z))
         access = torch.stack((access_kind, address, loaded, torch.where(store, right, loaded)))
+        if self.reuse_state:
+            cells, locals_ = state.stack, state.locals
+            if bool(commit):
+                if bool((pushes != 0) | (height < state.height)):
+                    cells = torch.where((self.stack_slots == base) & (pushes == 1), result, cells)
+                    cells = torch.where(self.stack_slots < height, cells, z)
+                if bool((gates[11] + gates[12]) == 1):
+                    locals_ = torch.index_copy(locals_, 0, local_index.reshape(1), right.reshape(1))
+                return Tick(MachineState(next_pc, height, cells, locals_, page, state.fuel - 1, status), access)
+            return Tick(MachineState(state.pc, state.height, cells, locals_, page, state.fuel, status), access)
+        cells = torch.where((self.stack_slots == base) & (pushes == 1), result, state.stack)
+        cells = torch.where(self.stack_slots < height, cells, z)
+        locals_ = torch.where((self.local_slots == local_index) & ((gates[11] + gates[12]) == 1),
+                              right, state.locals)
         return Tick(MachineState(
             torch.where(commit, next_pc, state.pc), torch.where(commit, height, state.height),
             torch.where(commit, cells, state.stack), torch.where(commit, locals_, state.locals),
