@@ -144,14 +144,15 @@ def snapshot_page(state: MachineState) -> bytes:
 class RecurrentStep(torch.nn.Module):
     """All instruction/state decisions are in the scripted graph."""
 
-    __constants__ = ["bounded_store", "reuse_state", "select_result"]
+    __constants__ = ["bounded_store", "reuse_state", "select_result", "select_memory"]
 
     def __init__(self, bounded_store: bool = False, reuse_state: bool = False,
-                 select_result: bool = False):
+                 select_result: bool = False, select_memory: bool = False):
         super().__init__()
         self.bounded_store = bounded_store
         self.reuse_state = reuse_state
         self.select_result = select_result
+        self.select_memory = select_memory
         self.register_buffer("opcodes", torch.arange(len(OPCODES), dtype=torch.int64))
         self.register_buffer("pops", torch.tensor(POPS, dtype=torch.int64))
         self.register_buffer("pushes", torch.tensor(PUSHES, dtype=torch.int64))
@@ -168,14 +169,19 @@ class RecurrentStep(torch.nn.Module):
         gates = (self.opcodes == row[0]).to(torch.int64)
         right = torch.gather(state.stack, 0, (state.height - 1).clamp(min=0).reshape(1))[0]
         left = torch.gather(state.stack, 0, (state.height - 2).clamp(min=0).reshape(1))[0]
-        address = torch.where(gates[21] == 1, left, right) + row[2]
-        indices = (address + self.lanes).clamp(max=state.page.numel() - 1)
-        loaded = (torch.gather(state.page, 0, indices).to(torch.int64) << self.shifts).sum()
+        z = torch.zeros_like(right)
+        op = 0
+        if self.select_result or self.select_memory:
+            op = int(row[0])
+        address, indices, loaded = z, self.lanes, z
+        if not self.select_memory or op == 20 or op == 21:
+            address = torch.where(gates[21] == 1, left, right) + row[2]
+            indices = (address + self.lanes).clamp(max=state.page.numel() - 1)
+            loaded = (torch.gather(state.page, 0, indices).to(torch.int64) << self.shifts).sum()
         local_index = row[1].clamp(max=self.local_slots.numel() - 1)
         local = torch.gather(state.locals, 0, local_index.reshape(1))[0]
-        z = torch.zeros_like(right)
         if self.select_result:
-            result = self.selected_result(int(row[0]), row[1], left, right, local, loaded, z)
+            result = self.selected_result(op, row[1], left, right, local, loaded, z)
         else:
             signed_left = (left ^ 2147483648) - 2147483648
             signed_right = (right ^ 2147483648) - 2147483648
@@ -212,7 +218,10 @@ class RecurrentStep(torch.nn.Module):
         )
         access_kind = torch.where(running & has_fuel & fault, 3,
                                   torch.where(commit & memory, gates[20] + 2 * gates[21], z))
-        access = torch.stack((access_kind, address, loaded, torch.where(store, right, loaded)))
+        if self.select_memory and op != 20 and op != 21:
+            access = torch.zeros(4, dtype=torch.int64)
+        else:
+            access = torch.stack((access_kind, address, loaded, torch.where(store, right, loaded)))
         if self.reuse_state:
             cells, locals_ = state.stack, state.locals
             if bool(commit):
