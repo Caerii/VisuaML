@@ -6,11 +6,27 @@ from pathlib import Path
 
 import torch
 
+from composed_inference import Inference
 from frozen_call_checkpoint import digest
 from replay_tool_acquisition import OUT as BASELINE, invoke
-from replay_internal_tool import oracle
 
 OUTPUT = BASELINE.parent / "frozen-routing-diagnostic" / "replay.json"
+
+
+class ForceOneHandle(torch.nn.Module):
+    """Change one greedy decision at an exact prompt and feedback prefix."""
+    def __init__(self, controller, prefix, handle):
+        super().__init__()
+        self.controller = controller
+        self.register_buffer("prefix", prefix)
+        self.handle = handle
+
+    def forward(self, tokens: torch.Tensor):
+        logits = self.controller(tokens)
+        if torch.equal(tokens, self.prefix):
+            logits = logits.clone()
+            logits[0, -1, self.handle] = logits[0, -1].max() + 1
+        return logits
 
 
 def replay():
@@ -45,10 +61,20 @@ def replay():
         text_order.append(dict(order=order, observed=text_result))
         physical_order.append(dict(order=order, exact_match=baseline == physical_result))
     assert all(row["exact_match"] for row in physical_order)
+    forced_prefix = original["prompt"] + " call delta 3 1 . result 15 assistant call"
+    forced_controller = ForceOneHandle(controller, torch.tensor([[ids[word] for word in
+                                      forced_prefix.split()]]), ids["zeta"])
+    forced_graph = torch.jit.freeze(torch.jit.script(Inference(forced_controller).eval()))
+    expected = dict(original, override=15, calls=[["delta", 3, 1, 15], ["zeta", 15, 5, 5]], answer=5)
+    forced, _ = invoke(forced_graph, vocabulary, expected, programs)
+    unforced = sweep[15]["observed"]
+    assert forced["events"][:2] == unforced["events"][:2]
+    assert forced["events"][2]["tokens"] == ["call", "zeta", "15", "5", "."]
+    assert forced["failure"] is None
     return dict(profile="visuaml-frozen-routing-diagnostic-v1", graph_sha256=digest(graph_path.read_bytes()),
                 controller_sha256=digest(controller_path.read_bytes()), prompt=original["prompt"],
                 feedback_sweep=sweep, text_order=text_order, physical_order=physical_order,
-                correct_handle_reference=dict(arguments=[15, 5], value=oracle(programs["trim"], [15, 5])[-1][4]))
+                forced_correct_handle=forced)
 
 
 if __name__ == "__main__":

@@ -217,3 +217,18 @@ checked in both variants. Operand transitions now account for the
 largest measured share of the terrain sample, at about 24%.
 
 [Scale proofs and raw timing samples](evidence/terrain)
+
+## Tensor assembly and learned routing
+
+The [causal tensor assembly](evidence/causal-tensor-assembly) lowers the
+bounded tool ISA to a fixed softmax decoder that appends structured records.
+The [paired routing experiment](evidence/paired-routing) uses a learned
+controller over a typed registry with the frozen synthesized executor.
+The [original router diagnostic](evidence/frozen-routing-diagnostic) replays
+the full feedback sweep, separates text order from physical order, and
+forces one handle to isolate its effect. The
+[Tensor Programs research note](evidence/tensor-programs-research.md)
+describes a separate scaling and activation-patching study.
+
+Run the local viewer and open `/replay-viewer.html` to inspect or download
+the saved causal and paired-routing replays.

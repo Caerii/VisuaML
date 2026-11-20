@@ -1,3 +1,7 @@
+import paired from './evidence/paired-routing/replay.json';
+import pairedUrl from './evidence/paired-routing/replay.json?url';
+import causal from './evidence/causal-tensor-assembly/replay.json';
+import causalUrl from './evidence/causal-tensor-assembly/replay.json?url';
 import acquisition from './evidence/tool-acquisition/replay.json';
 import acquisitionUrl from './evidence/tool-acquisition/replay.json?url';
 import composed from './evidence/composed-inference/replay.json';
@@ -12,6 +16,36 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.profile === 'visuaml-paired-routing-v1' && data.cases?.substitute_at_boundary && data.sweep) {
+    const { original, substitute_at_boundary: switched } = data.cases;
+    const first = original.events[0].call;
+    const next = run => {
+      const [handle, value, count, , result] = run.events[1].call;
+      return `handle ${handle}(${value}, ${count}) → ${result}`;
+    };
+    get('title').textContent = 'Saved paired routing replay';
+    get('status').textContent = `Feedback ${first[5]} → ${switched.events[0].call[5]} switched the second handle`;
+    get('detail').textContent = [
+      `First tool computed ${first[4]} in both runs.`,
+      `${next(original)} · ${next(switched)}`,
+      ...Object.entries(data.cases).map(([name, run]) => run.first_failure
+        ? `${name} · event ${run.first_failure.event} · ${run.first_failure.category}`
+        : `${name} · matched expected replay`),
+    ].join('\n');
+    return;
+  }
+  if (typeof data?.decoder_sha256 === 'string' && Array.isArray(data.cases)) {
+    get('title').textContent = 'Saved causal tensor assembly replay';
+    const boundaryCount = data.cases.reduce((sum, run) => sum + run.generated_records, 0);
+    get('status').textContent = `${data.cases.length} cases · ${boundaryCount} compared source boundaries`;
+    get('detail').textContent = data.cases.map(run => [
+      `${run.name} · ${run.generated_records} emitted records`,
+      ...run.emitted.map(({ next_pc, live, write }, index) =>
+        `  Step ${index + 1} · next PC ${next_pc}${live ? '' : ' · halt'}${write
+          ? ` · M[${write[0]}] = 0x${write[1].toString(16).padStart(8, '0')}` : ''}`),
+    ].join('\n')).join('\n\n');
+    return;
+  }
   if (data?.format_version === 1 && data.profile === 'visuaml-tool-acquisition-v1') {
     const normal = data.cases.original.events;
     const substitute = data.cases.substitution.events;
@@ -116,3 +150,9 @@ get('composed-download').href = composedUrl;
 
 get('acquisition').onclick = () => show(acquisition);
 get('acquisition-download').href = acquisitionUrl;
+
+get('causal').onclick = () => show(causal);
+get('causal-download').href = causalUrl;
+
+get('paired-routing').onclick = () => show(paired);
+get('paired-routing-download').href = pairedUrl;

@@ -1,0 +1,102 @@
+{
+  "decoder_sha256": "06d3cfc2e3d22f953586f02493c9740f23bb66346e9f0a41464deeeeab0b184d",
+  "load_ns": 13439420,
+  "intraop_threads": 1,
+  "cases": {
+    "overwrite-wrap-taken": {
+      "raw_ns": [
+        2049204,
+        1807720,
+        1712926,
+        1775401,
+        1735010,
+        1785115,
+        1713006,
+        1787598,
+        1744073,
+        2069414,
+        1742361,
+        1706056
+      ],
+      "initial_records": 16,
+      "emitted_records": 9,
+      "final_history_bytes": 32000
+    },
+    "overwrite-wrap-not-taken": {
+      "raw_ns": [
+        2195515,
+        2176185,
+        2148253,
+        2154473,
+        2173101,
+        2119289,
+        2228004,
+        2167904,
+        2158038,
+        2160392,
+        2113160,
+        2648088
+      ],
+      "initial_records": 16,
+      "emitted_records": 11,
+      "final_history_bytes": 34560
+    },
+    "fuel-before-second-store": {
+      "raw_ns": [
+        786027,
+        586686,
+        646416,
+        666066,
+        557762,
+        600847,
+        585003,
+        564171,
+        594207,
+        556370,
+        626376,
+        748771
+      ],
+      "initial_records": 16,
+      "emitted_records": 3,
+      "final_history_bytes": 24320
+    },
+    "fuel-after-second-store": {
+      "raw_ns": [
+        859908,
+        805426,
+        816973,
+        795010,
+        779878,
+        775550,
+        838546,
+        783182,
+        777243,
+        781600,
+        838115,
+        796753
+      ],
+      "initial_records": 16,
+      "emitted_records": 4,
+      "final_history_bytes": 25600
+    },
+    "full-context-overwrites": {
+      "raw_ns": [
+        9840197,
+        9207611,
+        9018496,
+        9664481,
+        8996172,
+        9576989,
+        9052678,
+        9716869,
+        9161122,
+        9035731,
+        9265389,
+        9201522
+      ],
+      "initial_records": 18,
+      "emitted_records": 46,
+      "final_history_bytes": 81920
+    }
+  }
+}

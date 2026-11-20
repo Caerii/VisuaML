@@ -40,4 +40,22 @@ try {
   assert.equal((await acquisitionDownload).suggestedFilename(), 'tool-acquisition.json');
   await page.locator('#file').setInputFiles('evidence/tool-acquisition/replay.json');
   await acquisition.waitFor();
+  await page.getByRole('button', { name: 'Open causal assembly replay' }).click();
+  const causal = page.getByText('5 cases · 73 compared source boundaries');
+  await causal.waitFor();
+  assert.match(await page.locator('#detail').innerText(), /M\[1\] = 0xfffffffe/);
+  const causalDownload = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download causal assembly replay' }).click();
+  assert.equal((await causalDownload).suggestedFilename(), 'causal-tensor-assembly.json');
+  await page.locator('#file').setInputFiles('evidence/causal-tensor-assembly/replay.json');
+  await causal.waitFor();
+  await page.getByRole('button', { name: 'Open paired routing replay' }).click();
+  const paired = page.getByText('Feedback 10 → 12 switched the second handle');
+  await paired.waitFor();
+  assert.match(await page.locator('#detail').innerText(), /handle 70\(10, 2\) → 16 · handle 860\(12, 2\) → 8/);
+  const pairedDownload = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download paired routing replay' }).click();
+  assert.equal((await pairedDownload).suggestedFilename(), 'paired-routing.json');
+  await page.locator('#file').setInputFiles('evidence/paired-routing/replay.json');
+  await paired.waitFor();
 } finally { await browser.close(); }

@@ -1,0 +1,3343 @@
+{
+  "programs": {
+    "offset": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        7
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "boost": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        5
+      ],
+      [
+        2,
+        0,
+        2
+      ],
+      [
+        1,
+        0,
+        2
+      ],
+      [
+        3,
+        0,
+        -2
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        3,
+        1,
+        -1
+      ],
+      [
+        4,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "trim": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        -3
+      ],
+      [
+        3,
+        0,
+        1
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        3,
+        1,
+        -1
+      ],
+      [
+        4,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "cases": {
+    "original": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": null,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          10
+        ],
+        [
+          70,
+          10,
+          2,
+          0,
+          16,
+          16
+        ]
+      ]
+    },
+    "substitute_at_boundary": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 12,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          12
+        ],
+        [
+          860,
+          12,
+          2,
+          0,
+          8,
+          8
+        ]
+      ]
+    },
+    "reorder": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": null,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          10
+        ],
+        [
+          70,
+          10,
+          2,
+          0,
+          16,
+          16
+        ]
+      ]
+    },
+    "fresh_handles": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 604,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 12112,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 987,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 12,
+      "forced_handle": null,
+      "expected": [
+        [
+          987,
+          3,
+          1,
+          0,
+          10,
+          12
+        ],
+        [
+          604,
+          12,
+          2,
+          0,
+          8,
+          8
+        ]
+      ]
+    },
+    "reverse_relation": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 1,
+      "override": 12,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          12
+        ],
+        [
+          70,
+          12,
+          2,
+          0,
+          18,
+          18
+        ]
+      ]
+    },
+    "new_threshold_and_choice_order": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "lower each repeat",
+        "increase value"
+      ],
+      "seed": 9,
+      "repeat": 2,
+      "threshold": 15,
+      "relation": 0,
+      "override": null,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          9,
+          1,
+          0,
+          16,
+          16
+        ],
+        [
+          70,
+          16,
+          2,
+          0,
+          22,
+          22
+        ]
+      ]
+    },
+    "new_description_compositions": {
+      "category": "new_description_compositions",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "shift the seed value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise the input value",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "reduce the input value",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "boost the input",
+        "lower the input"
+      ],
+      "seed": 4,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": null,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          4,
+          1,
+          0,
+          11,
+          11
+        ],
+        [
+          70,
+          11,
+          2,
+          0,
+          17,
+          17
+        ]
+      ]
+    },
+    "new_description_switch": {
+      "category": "new_description_compositions",
+      "registry": [
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise the input value",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "reduce the input value",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "shift the seed value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "boost the input",
+        "lower the input"
+      ],
+      "seed": 4,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 13,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          4,
+          1,
+          0,
+          11,
+          13
+        ],
+        [
+          860,
+          13,
+          2,
+          0,
+          9,
+          9
+        ]
+      ]
+    },
+    "invalid_argument": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 0,
+      "threshold": 12,
+      "relation": 0,
+      "override": 12,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          12
+        ],
+        [
+          860,
+          12,
+          0,
+          1,
+          -1,
+          -1
+        ]
+      ]
+    },
+    "disabled": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": -1
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": null,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          2,
+          -1,
+          -1
+        ]
+      ]
+    },
+    "exhausted": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 2
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": null,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          3,
+          -1,
+          -1
+        ]
+      ]
+    },
+    "unknown_handle_probe": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": null,
+      "forced_handle": 641,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          10
+        ],
+        [
+          641,
+          10,
+          2,
+          1,
+          -1,
+          -1
+        ]
+      ]
+    },
+    "forced_correct_handle_probe": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 12,
+      "forced_handle": 860,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          12
+        ],
+        [
+          860,
+          12,
+          2,
+          0,
+          8,
+          8
+        ]
+      ]
+    },
+    "free_paraphrase": {
+      "category": "free_paraphrase",
+      "prompt": "Give the seed some lift. If it comes in under a dozen, ramp it up twice; otherwise dial it down twice.",
+      "expected_admission": false
+    }
+  },
+  "sweep": {
+    "0": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 0,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          0
+        ],
+        [
+          70,
+          0,
+          2,
+          0,
+          6,
+          6
+        ]
+      ]
+    },
+    "1": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 1,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          1
+        ],
+        [
+          70,
+          1,
+          2,
+          0,
+          7,
+          7
+        ]
+      ]
+    },
+    "2": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 2,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          2
+        ],
+        [
+          70,
+          2,
+          2,
+          0,
+          8,
+          8
+        ]
+      ]
+    },
+    "3": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 3,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          3
+        ],
+        [
+          70,
+          3,
+          2,
+          0,
+          9,
+          9
+        ]
+      ]
+    },
+    "4": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 4,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          4
+        ],
+        [
+          70,
+          4,
+          2,
+          0,
+          10,
+          10
+        ]
+      ]
+    },
+    "5": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 5,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          5
+        ],
+        [
+          70,
+          5,
+          2,
+          0,
+          11,
+          11
+        ]
+      ]
+    },
+    "6": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 6,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          6
+        ],
+        [
+          70,
+          6,
+          2,
+          0,
+          12,
+          12
+        ]
+      ]
+    },
+    "7": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 7,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          7
+        ],
+        [
+          70,
+          7,
+          2,
+          0,
+          13,
+          13
+        ]
+      ]
+    },
+    "8": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 8,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          8
+        ],
+        [
+          70,
+          8,
+          2,
+          0,
+          14,
+          14
+        ]
+      ]
+    },
+    "9": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 9,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          9
+        ],
+        [
+          70,
+          9,
+          2,
+          0,
+          15,
+          15
+        ]
+      ]
+    },
+    "10": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 10,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          10
+        ],
+        [
+          70,
+          10,
+          2,
+          0,
+          16,
+          16
+        ]
+      ]
+    },
+    "11": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 11,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          11
+        ],
+        [
+          70,
+          11,
+          2,
+          0,
+          17,
+          17
+        ]
+      ]
+    },
+    "12": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 12,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          12
+        ],
+        [
+          860,
+          12,
+          2,
+          0,
+          8,
+          8
+        ]
+      ]
+    },
+    "13": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 13,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          13
+        ],
+        [
+          860,
+          13,
+          2,
+          0,
+          9,
+          9
+        ]
+      ]
+    },
+    "14": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 14,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          14
+        ],
+        [
+          860,
+          14,
+          2,
+          0,
+          10,
+          10
+        ]
+      ]
+    },
+    "15": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 15,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          15
+        ],
+        [
+          860,
+          15,
+          2,
+          0,
+          11,
+          11
+        ]
+      ]
+    },
+    "16": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 16,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          16
+        ],
+        [
+          860,
+          16,
+          2,
+          0,
+          12,
+          12
+        ]
+      ]
+    },
+    "17": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 17,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          17
+        ],
+        [
+          860,
+          17,
+          2,
+          0,
+          13,
+          13
+        ]
+      ]
+    },
+    "18": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 18,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          18
+        ],
+        [
+          860,
+          18,
+          2,
+          0,
+          14,
+          14
+        ]
+      ]
+    },
+    "19": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 19,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          19
+        ],
+        [
+          860,
+          19,
+          2,
+          0,
+          15,
+          15
+        ]
+      ]
+    },
+    "20": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 20,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          20
+        ],
+        [
+          860,
+          20,
+          2,
+          0,
+          16,
+          16
+        ]
+      ]
+    },
+    "21": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 21,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          21
+        ],
+        [
+          860,
+          21,
+          2,
+          0,
+          17,
+          17
+        ]
+      ]
+    },
+    "22": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 22,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          22
+        ],
+        [
+          860,
+          22,
+          2,
+          0,
+          18,
+          18
+        ]
+      ]
+    },
+    "23": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 23,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          23
+        ],
+        [
+          860,
+          23,
+          2,
+          0,
+          19,
+          19
+        ]
+      ]
+    },
+    "24": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 24,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          24
+        ],
+        [
+          860,
+          24,
+          2,
+          0,
+          20,
+          20
+        ]
+      ]
+    },
+    "25": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 25,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          25
+        ],
+        [
+          860,
+          25,
+          2,
+          0,
+          21,
+          21
+        ]
+      ]
+    },
+    "26": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 26,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          26
+        ],
+        [
+          860,
+          26,
+          2,
+          0,
+          22,
+          22
+        ]
+      ]
+    },
+    "27": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 27,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          27
+        ],
+        [
+          860,
+          27,
+          2,
+          0,
+          23,
+          23
+        ]
+      ]
+    },
+    "28": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 28,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          28
+        ],
+        [
+          860,
+          28,
+          2,
+          0,
+          24,
+          24
+        ]
+      ]
+    },
+    "29": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 29,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          29
+        ],
+        [
+          860,
+          29,
+          2,
+          0,
+          25,
+          25
+        ]
+      ]
+    },
+    "30": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 30,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          30
+        ],
+        [
+          860,
+          30,
+          2,
+          0,
+          26,
+          26
+        ]
+      ]
+    },
+    "31": {
+      "category": "familiar_descriptions_new_programs",
+      "registry": [
+        {
+          "handle": 1441,
+          "label": "Ibis",
+          "family": "offset",
+          "description": "offset the value",
+          "schema": [
+            0,
+            31,
+            1,
+            1
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 70,
+          "label": "Orbit",
+          "family": "boost",
+          "description": "raise each repeat",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        },
+        {
+          "handle": 860,
+          "label": "Saffron",
+          "family": "trim",
+          "description": "repeat a trim",
+          "schema": [
+            0,
+            31,
+            1,
+            5
+          ],
+          "fuel": 48
+        }
+      ],
+      "choices": [
+        "increase value",
+        "lower each repeat"
+      ],
+      "seed": 3,
+      "repeat": 2,
+      "threshold": 12,
+      "relation": 0,
+      "override": 31,
+      "forced_handle": null,
+      "expected": [
+        [
+          1441,
+          3,
+          1,
+          0,
+          10,
+          31
+        ],
+        [
+          860,
+          31,
+          2,
+          0,
+          27,
+          27
+        ]
+      ]
+    }
+  }
+}
