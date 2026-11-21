@@ -2,6 +2,7 @@
 import base64
 from hashlib import sha256
 import json
+from time import perf_counter_ns
 
 import torch
 
@@ -30,17 +31,22 @@ def encode(state, identity):
     return dict(payload, checkpoint_sha256=digest(canonical(payload)))
 
 
-def restore(doc, identity, image):
+def restore(doc, identity, image, profile=None):
+    started = perf_counter_ns()
     payload = {key: value for key, value in doc.items() if key != "checkpoint_sha256"}
     if payload.get("version") != 1 or payload.get("identities") != identity:
         raise ValueError("Checkpoint version or execution identity mismatch")
     if digest(canonical(payload)) != doc.get("checkpoint_sha256"):
         raise ValueError("Checkpoint integrity mismatch")
+    checked = perf_counter_ns()
     length = image.memory_pages * 65536
     page = base64.b64decode(payload["page"], validate=True)
     if len(page) != length:
         raise ValueError("Checkpoint page length mismatch")
+    decoded = perf_counter_ns()
     prototype = initialize(image, 0, page, 0)
+
+    allocated = perf_counter_ns()
 
     def tensor(value, expected):
         actual = torch.as_tensor(value)
@@ -61,4 +67,7 @@ def restore(doc, identity, image):
     for pc, height in frames[:int(depth), :2].tolist():
         if not (0 <= pc < end and 1 <= height <= vm.stack.numel()):
             raise ValueError("Checkpoint caller frame is invalid")
+    if profile is not None:
+        profile.update(integrity_ns=checked-started, page_decode_ns=decoded-checked,
+                       page_initialize_ns=allocated-decoded, registers_ns=perf_counter_ns()-allocated)
     return CallState(vm, depth, frames)

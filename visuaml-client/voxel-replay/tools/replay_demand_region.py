@@ -108,7 +108,7 @@ def recover(source, ledger, coord, tick, dimensions, profile=None):
                                       cells_recomputed=recomputed, applied_edits=edits)
 
 
-def pause(relay, complete):
+def pause_live(relay, complete):
     state = relay.start(complete)
     prefix = []
     while int(state.vm.pc) != LOAD_PC:
@@ -117,14 +117,24 @@ def pause(relay, complete):
         assert entry["access"][:2] != [1,MAILBOX+16]
         assert entry["access"][0] != 2
         prefix.append(entry)
-    return encode(state,relay.identity), prefix
+    return state, prefix
 
 
-def supply(relay, pending, prefix, complete, value, requested_at):
-    state = restore(pending,relay.identity,relay.image)
+def supply(relay, pending, prefix, complete, value, requested_at, profile=None):
+    began = perf_counter_ns()
+    state = restore(pending,relay.identity,relay.image,profile)
+    if profile is not None:
+        profile["restore_ns"] = perf_counter_ns()-began
+    return finish_read(relay,state,prefix,complete,value,requested_at,profile)
+
+
+def finish_read(relay, state, prefix, complete, value, requested_at, profile=None):
+    began = perf_counter_ns()
     assert int(state.vm.pc) == LOAD_PC
     state.vm.page.numpy()[MAILBOX+16:MAILBOX+20] = list(struct.pack("<i",value))
     resumed_at = perf_counter_ns()
+    if profile is not None:
+        profile["delivery_ns"] = resumed_at-began
     suspended = resumed_at-requested_at
     state, suffix = relay.finish(state)
     resumed_execution = perf_counter_ns()-resumed_at
@@ -138,7 +148,7 @@ def supply(relay, pending, prefix, complete, value, requested_at):
 
 
 def execute(relay, shared, choice, *, full=None, source_available=True, events_available=True, stale_tick_control=False, dig=True, edits_by_tick=None,
-            resolver=recover, horizon=HORIZON):
+            resolver=recover, horizon=HORIZON, broker=None):
     small = shared["local"]
     body = {key:value for key,value in small.items() if key != "checkpoint_sha256"}
     assert digest(canonical(body)) == small["checkpoint_sha256"]
@@ -175,9 +185,16 @@ def execute(relay, shared, choice, *, full=None, source_available=True, events_a
             if ox <= x < ox+width and oy <= y < oy+height:
                 walls[0,0,y-oy,x-ox] = edit.get("wall", 0)
         signal = relay.rule(walls,signal)
-        pending, prefix = pause(relay,complete)
+        resident, prefix = pause_live(relay,complete)
+        pending, export_ns = None, 0
+        if broker is None:
+            export_start = perf_counter_ns()
+            pending = encode(resident,relay.identity)
+            export_ns = perf_counter_ns()-export_start
         begin = perf_counter_ns()
-        read = dict(coordinate=coord,tick=tick,source_pc=LOAD_PC, checkpoint_sha256=pending["checkpoint_sha256"])
+        read = dict(coordinate=coord,tick=tick,source_pc=LOAD_PC, checkpoint_sha256=(pending["checkpoint_sha256"] if pending else prefix[-1]["state_sha256"]))
+        waiting = (broker.wait(resident,read,ledger if events_available else None)
+                   if broker is not None else None)
         try:
             if full is not None or coord == region["target"]:
                 value = int(signal[0,0,coord[1]-oy,coord[0]-ox])
@@ -186,15 +203,24 @@ def execute(relay, shared, choice, *, full=None, source_available=True, events_a
                 replay_tick = 4 if stale_tick_control and tick == 5 else tick
                 value, detail = resolver(source,ledger if events_available else None,coord,replay_tick,dimensions)
         except Unavailable as exc:
+            if pending is None:
+                pending = encode(resident,relay.identity)
             stopped = dict(pending_read=read, reason=str(exc), vm=pending, prefix=prefix)
             break
         elapsed = perf_counter_ns()-begin
-        complete, trace, suspended, resumed_execution = supply(relay,pending,prefix,complete,value,begin)
+        phases = dict(restore_ns=0, integrity_ns=0, page_decode_ns=0, page_initialize_ns=0,
+                      registers_ns=0, delivery_ns=0, export_ns=export_ns)
+        if broker is None:
+            outcome = supply(relay,pending,prefix,complete,value,begin,phases)
+        else:
+            response = broker.certify(waiting,value)
+            outcome = broker.resume(relay,waiting,response,prefix,complete,begin,phases)
+        complete, trace, suspended, resumed_execution = outcome
         branch = next(row for row in trace[len(prefix)+1:] if row["opcode"] == "br_if")
         observations.append(dict(request=read, value=value, action=mailbox(complete)[5],
                                  trace=trace, page_sha256=digest(complete), branch=branch,
                                  recovery=detail))
-        metrics.append(dict(tick=tick,suspended_ns=suspended,recovery_ns=elapsed, guest_execution_ns=resumed_execution, **(detail or {})))
+        metrics.append(dict(tick=tick,suspended_ns=suspended,recovery_ns=elapsed, guest_execution_ns=resumed_execution, **phases, **(detail or {})))
     return dict(helper=helper, gate_store=store, observations=observations, stopped=stopped,
                 source_bytes=source.bytes, clock=len(ledger), ledger=ledger), metrics
 
