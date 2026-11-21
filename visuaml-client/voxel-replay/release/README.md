@@ -1,10 +1,10 @@
-# VisuaML Replay 0.2 release candidate
+# VisuaML Replay 0.3 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
 ## Install and try
 
-Use Python 3.12 and install PyTorch CPU 2.9.1 NumPy 2.1.3, and Wasmtime 36.0.0. The live counterexample demo additionally uses z3-solver 4.15.3.0.
+Use Python 3.12 and install PyTorch CPU 2.9.1, NumPy 2.1.3, and Wasmtime 36.0.0. The live counterexample demo additionally uses z3-solver 4.15.3.0.
 
 ```sh
 python -m pip install torch==2.9.1 --index-url https://download.pytorch.org/whl/cpu
@@ -33,6 +33,37 @@ python tools/visuaml_replay.py open report.json --output result.json
 ```
 
 Use `--memory` with exactly 65,536 initial bytes and `--fuel` to set the initial allowance. The capture boundary must be a running source boundary. For a supported compiler preview at a `local.get` pair, use `pack --preview-local N`. A recipient needs only one file and the repository revision. Earlier checkpoint bundles still open through the same CLI.
+
+## Try the compiled runner
+
+The reference runner is the default. On Linux with a C++17 compiler and the
+CPU PyTorch install above, try the handoff from the same directory:
+
+```sh
+python tools/visuaml_replay.py demo --output /tmp/passage-report.json
+python tools/visuaml_replay.py open /tmp/passage-report.json
+```
+
+The demo writes one report after the compiled runner stops inside the Rust
+helper. It checks the resulting checkpoint against the shipped reference
+and also runs the continuation in the reverse direction. The second
+command starts a separate process, verifies the report digest, and
+prints the original source trace. A recipient can use the reference
+runner without a compiler. The compiled path builds its CPU operator on
+first use and caches it in the current user's private temporary directory.
+Use `CXX` to select an alternative compatible compiler.
+
+- Use `capture --runner compiled` to reach a checkpoint on your own guest.
+- Use `resume REPORT.json --runner compiled` for final status, fuel, result,
+  and memory digest. This checks the imported checkpoint and produces a
+  summary. Use `open REPORT.json` to verify the report's ordered trace and
+  expected result digest.
+- Use `Replay.run(state, steps=N, runner="compiled")` from Python to stop at
+  a source-instruction budget. The runner bounds execution batches to at
+  most 64 steps and shortens the last batch to reach the requested cut.
+  For the trace from any imported boundary, use `Replay.finish(checkpoint)`.
+
+[Read the executable handoff chapter](chapters/runner-handoff.md).
 
 ## Read and run the library
 

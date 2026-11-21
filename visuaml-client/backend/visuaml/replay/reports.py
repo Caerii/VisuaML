@@ -11,14 +11,11 @@ PROFILE = "visuaml-direct-call-i32-v1"
 REPORT_KIND = "visuaml-runnable-report"
 
 
-def make_bundle(replay, argument, initial, fuel, count):
+def make_bundle(replay, argument, initial, fuel, count, *, runner="reference"):
     if not 0 <= count < fuel:
         raise ValueError("Checkpoint step must be within the initial fuel allowance")
     state = replay.start(argument, initial, fuel)
-    for _ in range(count):
-        if int(state.vm.status) != 0:
-            raise ValueError("Guest stopped before requested checkpoint")
-        state = replay.advance(state)
+    state = replay.run(state, count, runner=runner)
     if int(state.vm.status) != 0:
         raise ValueError("Requested checkpoint is terminal")
     bundle = dict(format_version=1, profile=PROFILE, wasm=base64.b64encode(replay.raw).decode(),
@@ -77,9 +74,9 @@ def check_report(report):
         raise ValueError("Runnable report failed to reproduce the recorded result")
     return result
 
-def capture(replay, argument, initial, fuel, count):
+def capture(replay, argument, initial, fuel, count, *, runner="reference"):
     """Capture the requested boundary and verify successful completion independently."""
-    bundle = make_bundle(replay, argument, initial, fuel, count)
+    bundle = make_bundle(replay, argument, initial, fuel, count, runner=runner)
     completed = replay.finish(bundle["checkpoint"])
     if completed["status"] == 1:
         store = wasmtime.Store()
