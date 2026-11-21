@@ -1,4 +1,4 @@
-# VisuaML Replay 0.14 release candidate
+# VisuaML Replay 0.15 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
@@ -46,6 +46,9 @@ activation edit and executes both resulting WASM tool choices.
 
 The [crossed-rule study](chapters/crossed-routing.md) checks whether the
 patch transfers a comparison outcome across different recipient rules.
+
+The [delayed-rule study](chapters/delayed-rules.md) reuses one donor
+activation under three rules and verifies the two resulting WASM calls.
 
 ## Capture a failing test in CI
 

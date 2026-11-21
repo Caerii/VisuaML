@@ -1,5 +1,9 @@
 # VisuaML Replay changes
 
+## 0.15.0rc1
+
+- Added a delayed-rule intervention with runnable follow-ups and an abstention branch.
+
 ## 0.14.0rc1
 
 - Added a crossed-rule intervention study with a factorized control and runnable tool consequences.
