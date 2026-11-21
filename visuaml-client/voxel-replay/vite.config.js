@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: { rollupOptions: { input: {
     terrain: fileURLToPath(new URL('./index.html', import.meta.url)),
+    worldStatistics: fileURLToPath(new URL("./pocket-world-statistics.html", import.meta.url)),
     world: fileURLToPath(new URL("./pocket-world-inference.html", import.meta.url)),
     coupled: fileURLToPath(new URL("./pocket-coupled.html", import.meta.url)),
     cellular: fileURLToPath(new URL("./pocket-cellular.html", import.meta.url)),

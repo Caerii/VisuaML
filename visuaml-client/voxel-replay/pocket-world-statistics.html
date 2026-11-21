@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pocket Paired Worlds</title><link rel="stylesheet" href="./pocket.css"></head>
+<body><main>
+<header class="masthead"><a href="./pocket-world-inference.html">World inference</a><span>Held-out pairs</span></header>
+<div class="page-title"><h1>Which fact changes the next call?</h1></div>
+<section class="panel">
+<img id="plot" alt="Second-call selection follows feedback in four families" style="width:100%;max-width:800px">
+<div class="run-controls">
+  <label>Example <select id="example"><option value="switch">Correct switch</option><option value="irrelevant">Irrelevant edit</option><option value="failure">Free-language failure</option></select></label>
+  <button id="reconstruct">Reconstruct forecast</button>
+  <a id="example-link" download>Download example</a>
+  <a id="outcomes" download="paired-world-outcomes.json">Download all outcomes</a>
+</div>
+<p id="status" role="status"></p>
+<pre id="detail" style="white-space:pre-wrap"></pre>
+<p id="forecast" role="status"></p>
+</section>
+</main><script type="module" src="./pocket-world-statistics.mjs"></script></body></html>
