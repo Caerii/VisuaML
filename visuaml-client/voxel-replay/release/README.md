@@ -238,3 +238,6 @@ an actual first WASM return through the controller's second request.
 
 The [rank-one comparison study](chapters/comparison-direction.md) tests local
 calibration and raw-coordinate transfer across matched-training controllers.
+
+The [comparison alignment study](chapters/comparison-alignment.md) tests
+calibration-only transfer with feedback and threshold varied independently.
