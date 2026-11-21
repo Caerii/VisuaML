@@ -50,7 +50,9 @@ function show(data) {
     get('title').textContent = 'Runnable WASM report';
     const recipe = data.recipe.kind === 'local.get-preview'
       ? `Compare local.get preview using local ${data.recipe.local}`
-      : 'Resume to completion';
+      : data.recipe.kind === 'expect-return'
+        ? `Check expected return ${data.recipe.value}`
+        : 'Resume to completion';
     get('detail').textContent += `\n\n${recipe}\nExpected result SHA-256 ${data.expected_result_sha256}\nRun the CLI to verify this report.`;
     return;
   }

@@ -50,6 +50,14 @@ def compare(bundle, preview_local):
 def execute_report(bundle, recipe):
     if not isinstance(bundle, dict) or not isinstance(recipe, dict):
         raise ValueError("Expected a checkpoint bundle and a report recipe")
+    if recipe.get("kind") == "expect-return":
+        expected = recipe.get("value")
+        if set(recipe) != {"kind", "value"} or type(expected) is not int or not -2**31 <= expected < 2**32:
+            raise ValueError("Expected return must be an i32 value")
+        replay, checkpoint = open_bundle(bundle)
+        result = replay.finish(checkpoint)
+        return dict(result, expected_return=expected, expectation_met=(
+            result["status"] == 1 and result["returned"] == expected & 0xffffffff))
     if recipe == {"kind": "resume"}:
         replay, checkpoint = open_bundle(bundle)
         return replay.finish(checkpoint)

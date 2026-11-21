@@ -1,8 +1,52 @@
-# VisuaML Replay 0.4 release candidate
+# VisuaML Replay 0.5 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
-## Install and try
+## Install the CLI
+
+From the repository root, with Python 3.12:
+
+```sh
+python -m venv .venv
+. .venv/bin/activate
+python -m pip install torch==2.9.1 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install .
+visuaml-replay doctor
+visuaml-replay example passage-report.json
+visuaml-replay inspect passage-report.json --after-step 16 --steps 3
+```
+
+The package bundles the reference graph and Passage report. The CLI works
+outside the checkout and the reference path requires no C++ compiler.
+To hand the installed tool to someone, build a wheel with
+`python -m pip wheel . --no-deps -w dist` and share the wheel and the report.
+The release candidate is installable from this source tree or its wheel.
+See [changes and compatibility](CHANGELOG.md) and the [contributor guide](CONTRIBUTING.md).
+
+## Capture a failing test in CI
+
+[The runnable test example](examples/ci/check_guest.py) exits with status 1
+because the test expects 43 and the WASM guest returns 42. It writes a single
+report from inside the helper. Run the sender from the repository root, then
+run the recipient command in any directory with the CLI installed.
+
+```sh
+python visuaml-client/voxel-replay/release/examples/ci/check_guest.py --report failure.json
+visuaml-replay open failure.json --output reproduced.json
+```
+
+Configure your CI runner to upload `failure.json` on test failure. A
+successful `open` means it reproduced the report. Read
+`expectation_met`, `expected_return`, and `returned` in its result to see
+the failing assertion. Try the passing control with `--expected 42`.
+For your own guest, `visuaml-replay pack CHECKPOINT REPORT --expect-return N`
+records a return expectation in the recipe.
+
+A report embeds the guest binary and its entire 64 KiB memory page.
+Use synthetic inputs for publicly shared examples. Check your team's
+artifact access controls before uploading a report containing real data.
+
+## Run the source-tree examples
 
 Use Python 3.12 and install PyTorch CPU 2.9.1, NumPy 2.1.3, and Wasmtime 36.0.0. The live counterexample demo additionally uses z3-solver 4.15.3.0.
 

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=78"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "visuaml-replay"
+version = "0.5.0rc1"
+description = "Portable checkpoint and replay tools for bounded WebAssembly programs"
+readme = "visuaml-client/voxel-replay/release/README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["docs/LICENSE"]
+dependencies = ["torch==2.9.1", "numpy>=2.1,<3", "wasmtime==36.0.0"]
+
+[project.urls]
+Repository = "https://github.com/Caerii/VisuaML"
+
+[project.scripts]
+visuaml-replay = "visuaml.replay.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["visuaml-client/backend"]
+include = ["visuaml", "visuaml.replay*", "visuaml.compiler_lab*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+"visuaml.replay" = ["assets/*.pt", "assets/*.json"]
+"visuaml.compiler_lab" = ["native/*.cpp"]

@@ -36,6 +36,21 @@ class RunnableReportTests(unittest.TestCase):
         self.assertEqual(first["candidate"]["stack"], [0])
         self.assertEqual(comparison["reference"]["trace"][1:], comparison["candidate"]["trace"][1:])
 
+    def test_ci_failure_recipe(self):
+        script = EXAMPLES / "ci/check_guest.py"
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "failure.json"
+            failed = subprocess.run([sys.executable, str(script), "--report", str(path)],
+                                    capture_output=True, text=True)
+            self.assertEqual(failed.returncode, 1, failed.stderr)
+            result = json.loads(command("open", path).stdout)
+            self.assertEqual((result["expected_return"], result["returned"], result["expectation_met"]),
+                             (43, 42, False))
+            path.unlink()
+            subprocess.run([sys.executable, str(script), "--expected", "42", "--report", str(path)],
+                           check=True, capture_output=True)
+            self.assertFalse(path.exists())
+
     def test_new_guest_and_corrupt_claim(self):
         source = """(module
           (memory (export "memory") 1 1)

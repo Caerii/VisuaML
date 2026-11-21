@@ -8,7 +8,7 @@ from visuaml.compiler_lab.frozen_calls_v58 import CallState, initialize, load_ca
 from .compiled import MAX_BATCH, CompiledRunner
 from .checkpoint import digest, encode, identities, restore
 
-GRAPH = Path(__file__).resolve().parents[3] / "voxel-replay/evidence/frozen-calls/machine.pt"
+GRAPH = Path(__file__).with_name("assets") / "reference.pt"
 PAGE_BYTES = 65536
 
 

@@ -7,7 +7,7 @@ import torch
 from visuaml.compiler_lab.frozen_recurrent_v58 import POPS, PUSHES
 from visuaml.compiler_lab.ordinary_native_v58 import register
 
-GRAPH = Path(__file__).resolve().parents[3] / "voxel-replay/evidence/compiled-ordinary-cpu/machine.pt"
+GRAPH = Path(__file__).with_name("assets") / "compiled.pt"
 MAX_BATCH = 64
 
 
