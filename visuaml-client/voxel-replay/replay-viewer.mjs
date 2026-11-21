@@ -37,6 +37,21 @@ function showComparison(data) {
 
 function show(data) {
   get('candidate-picker').hidden = true;
+  if (data?.profile === 'visuaml-activation-intervention-v1') {
+    const row = data.selected_case;
+    const donor = row.scenarios.donor_patch;
+    const swap = row.scenarios.feedback_swap;
+    get('title').textContent = 'Recorded activation intervention';
+    get('status').textContent = `Tool returned ${row.tool_result} · patch at ${data.site.module}`;
+    get('detail').textContent = [
+      `Baseline · feedback ${row.baseline.feedback} · next registry slot ${row.baseline.second}`,
+      `Donor patch · feedback ${donor.feedback} · next registry slot ${donor.second}`,
+      `Feedback substitution · feedback ${swap.feedback} · next registry slot ${swap.second}`,
+      ...Object.entries(data.selected_comparisons).map(([name, comparison]) =>
+        `${name} · ${comparison.first_difference?.reference?.boundary ?? 'same observed choices'}`),
+    ].join('\n');
+    return;
+  }
   const batch = Array.isArray(data) && data.length && data.every(row =>
     row?.profile === 'visuaml-pipeline-comparison-v1');
   if (batch) {

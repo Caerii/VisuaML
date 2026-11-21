@@ -1,5 +1,9 @@
 # VisuaML Replay changes
 
+## 0.12.0rc1
+
+- Added checked PyTorch activation hooks and an executable WASM-feedback intervention study.
+
 ## 0.11.0rc1
 
 - Reduced direct capture overhead while preserving canonical hashes and row provenance.
