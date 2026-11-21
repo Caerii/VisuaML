@@ -232,3 +232,6 @@ An independent contributor and recipient have yet to complete the external trial
 The [intervention diagnosis](chapters/intervention-diagnosis.md) replays the
 original failed switches and tests the calibrated patch on two independent
 checkpoints.
+
+The [live-tool intervention replay](chapters/live-tool-interventions.md) traces
+an actual first WASM return through the controller's second request.

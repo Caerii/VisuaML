@@ -45,7 +45,7 @@ def design(thresholds):
                 thresholds, (0, 1), (0, 1), (0, 2), range(3), range(3)) if rule != other]
 
 
-def investigate(model, rows):
+def investigate(model, rows, *, include_logits=False):
     source = torch.tensor(rows)
     args = source[:, [0, 2, 3]].unbind(1)
     donor_args = source[:, [1, 2, 4]].unbind(1)
@@ -69,7 +69,10 @@ def investigate(model, rows):
 
         def record(logits):
             rivals = torch.cat((logits[:target], logits[target+1:]))
-            return dict(action=int(logits.argmax()), target_margin=float(logits[target]-rivals.max()))
+            result = dict(action=int(logits.argmax()), target_margin=float(logits[target]-rivals.max()))
+            if include_logits:
+                result["logits"] = logits.tolist()
+            return result
 
         observations.append(dict(feedback=feedback, donor=donated, limit=limit, rule=rule, donor_rule=other,
                                  target=target, baseline_target=original_target, donor_target=donor_target,
