@@ -34,7 +34,7 @@ def cases():
         yield "feedback_only", live, (limit - int(high), limit, donor_rule)
 
 
-def evaluate(source, source_axis, recipient, axis):
+def evaluate(source, source_axis, recipient, axis, *, design=None, strengths=()):
     calibration = [(limit + offset, limit, rule) for limit, offset, rule in
                    product(CALIBRATION, (-2, -1, 0, 1), range(3))]
     _, source_cal = activations(source, calibration)
@@ -44,7 +44,7 @@ def evaluate(source, source_axis, recipient, axis):
     xc, yc = x - x.mean(), y - y.mean()
     slope = (xc @ yc) / (xc @ xc)
 
-    design = list(cases())
+    design = list(cases() if design is None else design)
     live = [row[1] for row in design]
     donor = [row[2] for row in design]
     baseline, current = activations(recipient, live)
@@ -63,10 +63,12 @@ def evaluate(source, source_axis, recipient, axis):
         assert torch.equal(applied[:, 2:], current[:, 2:])
         return logits
 
+    aligned = (source_delta @ source_axis)[:, None] * slope * axis
     outputs = dict(baseline=baseline, joint=patch(local_delta),
                    local=patch((local_delta @ axis)[:, None] * axis),
                    raw=patch((local_delta @ source_axis)[:, None] * source_axis),
-                   aligned=patch((source_delta @ source_axis)[:, None] * slope * axis))
+                   aligned=patch(aligned))
+    outputs.update((f"strength_{gain:g}", patch(gain * aligned)) for gain in strengths)
     records = []
     for i, (family, (v, t, r), (dv, dt, dr)) in enumerate(design):
         desired = RULES[r][int(dv >= dt)]

@@ -241,3 +241,6 @@ calibration and raw-coordinate transfer across matched-training controllers.
 
 The [comparison alignment study](chapters/comparison-alignment.md) tests
 calibration-only transfer with feedback and threshold varied independently.
+
+The [comparison strength sweep](chapters/comparison-strength.md) measures
+switch recovery and unwanted changes under a stronger aligned edit.
