@@ -244,3 +244,6 @@ calibration-only transfer with feedback and threshold varied independently.
 
 The [comparison strength sweep](chapters/comparison-strength.md) measures
 switch recovery and unwanted changes under a stronger aligned edit.
+
+The [comparison mapping study](chapters/comparison-mappings.md) separates
+additional source coordinates from additional recipient edit directions.
