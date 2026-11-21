@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pocket Goal Planning</title><link rel="stylesheet" href="./pocket.css"></head>
+<body><main>
+<header class="masthead"><a href="./pocket-world-statistics.html">Paired worlds</a><span>Goal planning</span></header>
+<div class="page-title"><h1>Can the agent get through?</h1></div>
+<section class="panel">
+  <p>Saved inference replay</p>
+  <p id="prompt"></p>
+  <div class="run-controls">
+    <label>Run <select id="mode"><option value="actual">Original world</option>
+      <option value="swap_wait">Show a successful Wait forecast</option>
+      <option value="swap_open">Show a failed Open forecast</option>
+      <option value="missing">Checkpoint unavailable</option></select></label>
+    <button id="next" type="button">Next event</button>
+    <button id="reset" type="button">Restart</button>
+    <a id="examples" download="pocket-planning-replays.json">Download replays</a>
+    <a id="outcomes" download="pocket-planning-outcomes.json">Download holdout outcomes</a>
+  </div>
+  <ol id="events" aria-live="polite"></ol>
+</section>
+</main><script type="module" src="./pocket-goal-planning.mjs"></script></body></html>

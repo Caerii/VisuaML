@@ -126,7 +126,7 @@ def verification_frames(scene, packet, action, n, observed):
     return True
 
 
-def run(model,pair,bit,mode):
+def run(model,pair,bit,mode,prompt_override=None):
     scene = pair["worlds"][bit]
     horizon,low,high = pair["horizon"],pair["low"],pair["high"]
     prompt = words(1,horizon,low,high,"kindly" if mode=="polite" else "please")
@@ -138,6 +138,8 @@ def run(model,pair,bit,mode):
           f"Try digging the barrier, run the world for {horizon} beats, and call {low} if the signal hasn't reached the target or {high} if it has.",
         )
         prompt = prompts[(int(pair["id"].rsplit("-",1)[-1])+bit)%len(prompts)]
+    if prompt_override is not None:
+        prompt = prompt_override
     # The actual tokenizer is the frozen whitespace vocabulary codec.
     unknown = sorted(set(prompt.split())-set(VOCAB))
     if unknown:
