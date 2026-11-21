@@ -93,7 +93,7 @@ def recover(source, ledger, coord, tick, dimensions):
         for change in row["edits"]:
             cell = tuple(change["coordinate"])
             if cell in walls:
-                walls[cell] = 0
+                walls[cell] = change.get("wall", 0)
                 edits.append(dict(tick=now, **change))
         next_cells = cone(coord,tick-now,*dimensions)
         signal = {p:int(not walls[p] and any(signal.get((p[0]+dx,p[1]+dy),0)
@@ -130,12 +130,15 @@ def supply(relay, pending, prefix, complete, value, requested_at):
     return completed, trace, suspended
 
 
-def execute(relay, shared, choice, *, full=None, source_available=True, events_available=True, stale_tick_control=False):
+def execute(relay, shared, choice, *, full=None, source_available=True, events_available=True, stale_tick_control=False, dig=True, edits_by_tick=None,
+            resolver=recover, horizon=HORIZON):
     small = shared["local"]
     body = {key:value for key,value in small.items() if key != "checkpoint_sha256"}
     assert digest(canonical(body)) == small["checkpoint_sha256"]
     assert small["rule_sha256"] == relay.rule_hash and small["cursor"] == 0
     state = restore(small["vm"],relay.identity,relay.image)
+    if not dig:
+        state.vm.page.numpy()[MAILBOX+4:MAILBOX+8] = 0
     state.vm.page.numpy()[MAILBOX+28:MAILBOX+32] = list(struct.pack("<i",choice))
     state, helper = relay.finish(state)
     complete = page(state)
@@ -145,8 +148,10 @@ def execute(relay, shared, choice, *, full=None, source_available=True, events_a
     walls = tensor(region["walls"],height,width)
     signal = tensor(region["signal"],height,width)
     gate = region["gate"]
-    store = next(e for e in helper if e["access"][:2] == [2,MAILBOX])
-    assert store["access"] == [2,MAILBOX,7,0]
+    store = next((e for e in helper if e["access"][:2] == [2,MAILBOX]), None)
+    assert (store is not None) == dig
+    if store is not None:
+        assert store["access"] == [2,MAILBOX,7,0]
     dimensions = small["world_size"]
     flat = mailbox(complete)[3]
     assert 0 <= flat < dimensions[0]*dimensions[1]
@@ -154,11 +159,14 @@ def execute(relay, shared, choice, *, full=None, source_available=True, events_a
     source = RowSource(shared, relay, source_available)
     ledger, observations, metrics = [], [], []
     stopped = None
-    for tick in range(1,HORIZON+1):
-        edits = [dict(coordinate=gate, pc=store["pc"])] if tick == 1 else []
+    for tick in range(1,horizon+1):
+        edits = [dict(coordinate=gate, pc=store["pc"])] if tick == 1 and store else []
+        edits.extend((edits_by_tick or {}).get(tick, ()))
         ledger.append(dict(tick=tick,edits=edits))
-        if edits:
-            walls[0,0,gate[1]-oy,gate[0]-ox] = 0
+        for edit in edits:
+            x,y = edit["coordinate"]
+            if ox <= x < ox+width and oy <= y < oy+height:
+                walls[0,0,y-oy,x-ox] = edit.get("wall", 0)
         signal = relay.rule(walls,signal)
         pending, prefix = pause(relay,complete)
         begin = perf_counter_ns()
@@ -169,7 +177,7 @@ def execute(relay, shared, choice, *, full=None, source_available=True, events_a
                 detail = None
             else:
                 replay_tick = 4 if stale_tick_control and tick == 5 else tick
-                value, detail = recover(source,ledger if events_available else None,coord,replay_tick,dimensions)
+                value, detail = resolver(source,ledger if events_available else None,coord,replay_tick,dimensions)
         except Unavailable as exc:
             stopped = dict(pending_read=read, reason=str(exc), vm=pending, prefix=prefix)
             break

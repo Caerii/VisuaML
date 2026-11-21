@@ -1,3 +1,4 @@
+import sharedReplayUrl from './evidence/pocket-shared-recovery/replay.json?url';
 import demandReplayUrl from './evidence/pocket-demand-region/replay.json?url';
 import replayUrl from './evidence/pocket-coupled-checkpoint/replay.json?url';
 import digUrl from './evidence/pocket-coupled-checkpoint/checkpoint-dig.json?url';
@@ -105,5 +106,28 @@ get('demand-load').onclick = async () => {
       : 'Observation was covered by the shared regional checkpoint.';
   } catch (error) {
     get('demand-status').textContent = error.message;
+  }
+};
+
+get('shared-download').href = sharedReplayUrl;
+get('shared-load').onclick = async () => {
+  try {
+    const response = await fetch(sharedReplayUrl);
+    if (!response.ok) throw Error('Could not load the saved shared recovery replay');
+    const archive = await response.json();
+    const mode = get('shared-case').value;
+    const fork = archive.strategies.dependencies[mode];
+    const observations = fork.consumer.observations;
+    const hits = observations.filter(row => row.recovery.hit).length;
+    get('shared-status').textContent = `${hits} of ${observations.length} reads shared in this fork`;
+    get('shared-detail').textContent = [
+      ...observations.map(({ request, recovery, value }) => {
+        const events = recovery.proof.relevant_events.length;
+        return `Tick ${request.tick} · ${recovery.hit ? 'reuse' : 'recompute'} · value ${value} · ${events} relevant edit${events === 1 ? '' : 's'}`;
+      }),
+      ...(mode === 'shortcut_on' ? ['Rust read (2, 8) at tick 1 and opened the gate before tick 2. The materialized edit changed the cache key.'] : []),
+    ].join('\n');
+  } catch (error) {
+    get('shared-status').textContent = error.message;
   }
 };

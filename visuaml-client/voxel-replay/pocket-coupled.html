@@ -37,4 +37,19 @@
 <p id="demand-status" role="status"></p>
 <pre id="demand-detail" style="white-space:pre-wrap"></pre>
 </section>
+<section class="panel">
+<h2>Share recovered observations across forks</h2>
+<div class="run-controls">
+  <label>Fork
+    <select id="shared-case"><option value="far_edit">Far edit</option>
+      <option value="gate_closed">Gate closed</option>
+      <option value="shortcut_on">Guest-mediated gate edit</option>
+    </select>
+  </label>
+  <button id="shared-load">Explain cache decision</button>
+  <a id="shared-download" download="shared-recovery.json">Download shared recovery replay</a>
+</div>
+<p id="shared-status" role="status"></p>
+<pre id="shared-detail" style="white-space:pre-wrap"></pre>
+</section>
 </main><script type="module" src="./pocket-coupled.mjs"></script></body></html>
