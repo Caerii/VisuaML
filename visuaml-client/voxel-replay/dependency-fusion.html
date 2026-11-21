@@ -16,4 +16,33 @@
 <p id="effect" role="status"></p>
 <p id="scope"></p>
 </section>
+<section class="panel">
+<h2>Which messages must be rebuilt?</h2>
+<div class="run-controls">
+<label>Factor layout <select id="tree-case"></select></label>
+<label>Edited factor <input type="range" id="factor-edit" min="0" value="0"></label>
+<a id="inference-download" download="v66-inference.json">Download inference replay</a>
+</div>
+<p id="message-summary" role="status"></p>
+<div id="message-list" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
+</section>
+<section class="panel">
+<h2>How wide is the decomposition?</h2>
+<div class="run-controls">
+<label>Cyclic graph <select id="cycle-case"></select></label>
+<label>Elimination plan <select id="cycle-method"></select></label>
+</div>
+<p id="cycle-result" role="status"></p>
+<ol id="cycle-bags"></ol>
+</section>
+<section class="panel">
+<h2>Where can execution safely resume?</h2>
+<div class="run-controls">
+<label>Record boundary <select id="record-boundary"></select></label>
+<a id="checkpoint-download" download="v66-checkpoints.json">Download checkpoint proof</a>
+</div>
+<p id="checkpoint-result" role="status"></p>
+<p>Staged, fused and reordered record schedules preserve the page and original carry here.</p>
+<p id="checkpoint-page"></p>
+</section>
 </main><script type="module" src="./dependency-fusion.mjs"></script></body></html>
