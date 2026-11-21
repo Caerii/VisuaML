@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pocket Paired Goals</title><link rel="stylesheet" href="./pocket.css"></head>
+<body><main>
+<header class="masthead"><a href="./pocket-goal-planning.html">Goal planning</a><span>Paired goals</span></header>
+<div class="page-title"><h1>One checkpoint, two goals</h1></div>
+<section class="panel">
+<p id="world"></p>
+<div class="run-controls">
+<label>Call budget <select id="budget"><option value="2">Two forecasts</option><option value="1">One forecast</option></select></label>
+<label><input id="override" type="checkbox"> Replace the first forecast with no arrival</label>
+<a id="download" download="pocket-paired-goals.json">Download saved replays</a>
+</div>
+<div id="runs" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1rem"></div>
+</section>
+</main><script type="module" src="./pocket-paired-goals.mjs"></script></body></html>
