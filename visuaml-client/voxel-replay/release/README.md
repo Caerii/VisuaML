@@ -1,6 +1,6 @@
-# VisuaML Replay 0.1 release candidate
+# VisuaML Replay 0.2 release candidate
 
-Send a JSON checkpoint with the exact WASM bytes embedded. A recipient can reopen it with the pinned graph in this repository. The CLI executes imported bundles and the browser shows exported traces and checkpoint registers. The browser is a saved-record viewer.
+Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
 ## Install and try
 
@@ -11,23 +11,28 @@ python -m pip install torch==2.9.1 --index-url https://download.pytorch.org/whl/
 python -m pip install numpy==2.1.3 wasmtime==36.0.0
 cd visuaml-client/voxel-replay
 export PYTHONPATH=.:../backend OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
-python tools/visuaml_replay.py open release/examples/pocket-checkpoint.json
-python tools/visuaml_replay.py compare release/examples/terrain-checkpoint.json \
-  --preview-local 2 --output comparison.json
+python tools/visuaml_replay.py open release/examples/suspended-passage-report.json \
+  --output passage-result.json
+python tools/visuaml_replay.py open release/examples/compiler-divergence-report.json \
+  --output comparison.json
 npm ci
 npm run dev -- --port 4180
 ```
+
+In the first report, the passage is already open at import. The helper returns the original material `7` to its caller, and the saved continuation takes 17 source steps without repeating the terrain store. In the second report, the preview first differs after PC `160` with stacks `[256]` and `[0]`. The suffixes then agree.
 
 Open [WASM Replay](http://localhost:4180/replay-viewer.html) and load the comparison or either shipped example. The [Pocket console](http://localhost:4180/pocket.html) and [Suspended Passage](http://localhost:4180/voxel-call-checkpoint.html) remain playable separately.
 
 To bring your own module:
 
 ```sh
-python tools/visuaml_replay.py capture guest.wasm report.json --argument 0 --after-step 3
-python tools/visuaml_replay.py open report.json
+python tools/visuaml_replay.py capture guest.wasm checkpoint.json --argument 0 --after-step 3
+python tools/visuaml_replay.py pack checkpoint.json report.json
+# Send report.json and the producing repository commit.
+python tools/visuaml_replay.py open report.json --output result.json
 ```
 
-Use `--memory` with exactly 65,536 initial bytes and `--fuel` to set the initial allowance. The capture boundary must be a running source boundary. Carry the bundle, the release commit, and the exact commands when filing a report.
+Use `--memory` with exactly 65,536 initial bytes and `--fuel` to set the initial allowance. The capture boundary must be a running source boundary. For a supported compiler preview at a `local.get` pair, use `pack --preview-local N`. A recipient needs only one file and the repository revision. Earlier checkpoint bundles still open through the same CLI.
 
 ## Supported semantics
 
@@ -35,10 +40,16 @@ The maintained entry point uses the frozen source-step direct-call profile. Its 
 
 The graph owns live PC, operand and caller state, checked memory access and fuel. The host validates and prepares bytes, supplies initial memory, drives source transitions, and serializes observations. The optimized runtime remains a research path, while this release uses the single-step graph as its execution contract. Packed fallback is blocked. Capture verifies a normally completed run against Wasmtime on return and full page. Interior source boundaries use the VisuaML reference path.
 
-Version 1 binds the embedded program, retired source count and nested continuation with a canonical JSON hash. The nested continuation separately binds the graph, WASM and prepared image, and stores remaining fuel, stack, locals, frames and memory. The comparison mode models one proposed observation for a `local.get` pair. It reports the first ordered divergence and keeps both suffix traces. It is a test harness for a bounded execution-plan family. General program-fix comparison and external-effect replay are outside this profile.
+The version 1 checkpoint binds the embedded program, retired source count and nested continuation with a canonical JSON hash. The nested continuation separately binds the graph, WASM and prepared image, and stores remaining fuel, stack, locals, frames and memory. The outer runnable report has its own version 1 schema. Its expected digest covers the ordered replay, final status, and page identity, or both runs and the first divergence for a comparison. Matching it confirms reproduction with the supplied artifact. It does not authenticate the sender. The comparison mode models one proposed observation for a `local.get` pair. It reports the first ordered divergence and keeps both suffix traces. It is a test harness for a bounded execution-plan family. General program-fix comparison and external-effect replay are outside this profile.
 
 ## Outside trial
 
 The handoff task is to bring an independent small unary i32 module, capture inside a direct call, send the resulting bundle to another reader, then ask that reader to open it in a new process. Record the producing commit, guest binary, exact command, expected boundary and outcome. If admission fails, include the first loader error and the smallest build that reproduces it. If execution disagrees, include the original bytes and evidence from Wasmtime.
 
-The fresh-process checks here use repository examples. An independent contributor and recipient have yet to complete this trial.
+The automated smoke test opens both release examples and constructs a new WAT module after loading the pinned graph from the repository. It captures inside a call, packages the report, removes the sender's separate guest and checkpoint files, and opens the report in a fresh process. It also verifies rejection of a wrong expected result digest.
+
+```sh
+python tools/test_runnable_report.py
+```
+
+An independent contributor and recipient have yet to complete the external trial.

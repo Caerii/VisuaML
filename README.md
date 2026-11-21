@@ -110,6 +110,10 @@ The resulting JSON includes exact source bytes, per-instruction traces, SHA-256 
 
 The browser can show bundled demo networks without Python; custom Python-backed model analysis requires the API. **Arbitrary uploaded Python is not sandboxed**: untrusted upload execution is disabled by default and the API restricts imported models to trusted allowlists. See [security](docs/SECURITY_AND_BOUNDARIES.md) before enabling developer import flags.
 
+### Share a runnable WebAssembly report
+
+Capture a continuation from the supported unary i32 WASM profile and send one JSON file that embeds the guest, checkpoint, and replay recipe. The recipient can verify a suspended Rust call or reproduce the first source-level difference in a compiler preview. [Replay release and examples](visuaml-client/voxel-replay/release/README.md)
+
 ### Compile, inspect and verify bounded neural computation
 
 The Compiler Lab represents a supported computation in a typed Semantic IR, explicitly recording tensor types, operations, state effects, and checkpoint identity. The most developed validated real-checkpoint workload is a restricted small Llama decoder: local safetensors, SentencePiece, independent numerical oracles, CPU TorchScript and a second independent scalar C++17 CPU execution implementation. The native implementation is model-specific, not general IR code generation or production-competitive inference.

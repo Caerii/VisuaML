@@ -16,6 +16,7 @@ from visuaml.compiler_lab.frozen_calls_v58 import initialize, load_call_image
 GRAPH = Path(__file__).resolve().parents[1] / "evidence/frozen-calls/machine.pt"
 PROFILE = "visuaml-direct-call-i32-v1"
 PAGE_BYTES = 65536
+REPORT_KIND = "visuaml-runnable-report"
 
 
 class Replay:
@@ -97,6 +98,34 @@ def compare(bundle, preview_local):
                 preview_local=preview_local, first_difference=first, reference=baseline, candidate=candidate)
 
 
+def execute_report(bundle, recipe):
+    if not isinstance(bundle, dict) or not isinstance(recipe, dict):
+        raise ValueError("Expected a checkpoint bundle and a report recipe")
+    if recipe == {"kind": "resume"}:
+        replay, checkpoint = open_bundle(bundle)
+        return replay.finish(checkpoint)
+    if set(recipe) == {"kind", "local"} and recipe["kind"] == "local.get-preview":
+        if type(recipe["local"]) is not int:
+            raise ValueError("Preview local must be an integer")
+        return compare(bundle, recipe["local"])
+    raise ValueError("Unsupported report recipe")
+
+
+def seal_report(bundle, recipe):
+    result = execute_report(bundle, recipe)
+    return dict(report_kind=REPORT_KIND, report_version=1, bundle=bundle, recipe=recipe,
+                expected_result_sha256=digest(canonical(result)))
+
+
+def check_report(report):
+    if type(report.get("report_version")) is not int or report["report_version"] != 1:
+        raise ValueError("Unsupported runnable report version")
+    result = execute_report(report["bundle"], report["recipe"])
+    if digest(canonical(result)) != report["expected_result_sha256"]:
+        raise ValueError("Runnable report failed to reproduce the recorded result")
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(prog="visuaml_replay")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -109,6 +138,11 @@ def main():
     capture.add_argument("--after-step", type=int, required=True)
     opening = sub.add_parser("open", help="Resume a portable bundle")
     opening.add_argument("bundle", type=Path)
+    opening.add_argument("--output", type=Path, help="Save executable result as JSON")
+    packing = sub.add_parser("pack", help="Package a checkpoint and reproduction recipe")
+    packing.add_argument("bundle", type=Path)
+    packing.add_argument("output", type=Path)
+    packing.add_argument("--preview-local", type=int)
     comparison = sub.add_parser("compare", help="Compare ordinary execution with a local.get preview candidate")
     comparison.add_argument("bundle", type=Path)
     comparison.add_argument("--preview-local", type=int, required=True)
@@ -128,13 +162,22 @@ def main():
                 args.output.write_bytes(canonical(bundle)+b"\n")
                 return
             bundle = json.loads(args.bundle.read_text())
+            if not isinstance(bundle, dict):
+                raise ValueError("Expected a JSON object")
+            if args.command == "pack":
+                recipe = ({"kind": "resume"} if args.preview_local is None else
+                          {"kind": "local.get-preview", "local": args.preview_local})
+                args.output.write_bytes(canonical(seal_report(bundle, recipe))+b"\n")
+                return
             if args.command == "open":
-                replay, checkpoint = open_bundle(bundle)
-                result = replay.finish(checkpoint)
+                if bundle.get("report_kind") == REPORT_KIND:
+                    result = check_report(bundle)
+                else:
+                    result = execute_report(bundle, {"kind": "resume"})
             else:
                 result = compare(bundle, args.preview_local)
-                if args.output:
-                    args.output.write_text(json.dumps(result, indent=2)+"\n")
+            if args.output:
+                args.output.write_text(json.dumps(result, indent=2)+"\n")
             print(json.dumps(result, indent=2))
     except (ValueError, KeyError, OSError) as error:
         print(f"visuaml_replay: {error}", file=sys.stderr)

@@ -19,12 +19,29 @@ import toolFailure from './evidence/two-call-controller/failure.json';
 import toolFailureUrl from './evidence/two-call-controller/failure.json?url';
 import discovered from './evidence/counterexample-search/terrain-session.json';
 import counterexampleUrl from './evidence/counterexample-search/terrain-session.json?url';
+import passageReportUrl from './release/examples/suspended-passage-report.json?url';
+import compilerReportUrl from './release/examples/compiler-divergence-report.json?url';
 import voxel from './release/examples/terrain-comparison.json';
 import pocket from './release/examples/pocket-checkpoint.json';
 
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.report_kind === 'visuaml-runnable-report' && data.report_version === 1) {
+    show(data.bundle);
+    get('title').textContent = 'Runnable WASM report';
+    const recipe = data.recipe.kind === 'local.get-preview'
+      ? `Compare local.get preview using local ${data.recipe.local}`
+      : 'Resume to completion';
+    get('detail').textContent += `\n\n${recipe}\nExpected result SHA-256 ${data.expected_result_sha256}\nRun the CLI to verify this report.`;
+    return;
+  }
+  if (Array.isArray(data?.trace) && typeof data.page_sha256 === 'string') {
+    get('title').textContent = 'Saved VisuaML continuation';
+    get('status').textContent = `${data.trace.length} resumed source steps · status ${data.status}`;
+    get('detail').textContent = JSON.stringify(data, null, 2);
+    return;
+  }
   if (data?.profile === 'visuaml-checkpoint-prefix-reuse-v1') {
     const { histories, edit } = data.paired;
     const long = data.runs['rolling-519'];
@@ -208,6 +225,8 @@ function show(data) {
   get('status').textContent = status;
   get('detail').textContent = JSON.stringify(detail, null, 2);
 }
+get('passage-report-download').href = passageReportUrl;
+get('compiler-report-download').href = compilerReportUrl;
 get('terrain').onclick = () => show(voxel);
 get('pocket').onclick = () => show(pocket);
 get('file').onchange = async event => {
