@@ -41,7 +41,7 @@ def donor_activation(model, site, limit, value, family):
     return hidden
 
 
-def observe_rule(model, site, activation, limit, value, rule, family):
+def observe_rule(model, site, activation, limit, value, rule, family, *, reference_logits=None):
     relation, mapping = RULES[rule]
     args, permutation = tensor_args(limit, value, relation, family)
     baseline, _, _ = run_intervention(model, site, args)
@@ -53,8 +53,11 @@ def observe_rule(model, site, activation, limit, value, rule, family):
         role = permutation[int(logits.argmax())]
         return mapping.get(role, "unmapped")
 
-    return {"action": action(output[1]), "baseline": action(baseline[1]),
-            "activation": tensor_identity(delivered.numpy())}
+    result = {"action": action(output[1]), "baseline": action(baseline[1]),
+              "activation": tensor_identity(delivered.numpy())}
+    if reference_logits is not None:
+        result["max_logit_error"] = float((output[1]-reference_logits).abs().max())
+    return result
 
 
 def select_site(model):

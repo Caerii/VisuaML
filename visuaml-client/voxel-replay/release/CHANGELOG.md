@@ -1,5 +1,9 @@
 # VisuaML Replay changes
 
+## 0.16.0rc1
+
+- Added additive, rule-preserving feedback interventions and a dose-response control.
+
 ## 0.15.0rc1
 
 - Added a delayed-rule intervention with runnable follow-ups and an abstention branch.

@@ -37,10 +37,11 @@ function showComparison(data) {
 
 function show(data) {
   get('candidate-picker').hidden = true;
-  if (data?.profile === 'visuaml-delayed-rule-v1') {
+  if (data?.profile === 'visuaml-delayed-rule-v1' || data?.profile === 'visuaml-additive-routing-v1') {
+    const additive = data.profile === 'visuaml-additive-routing-v1';
     const {case: example, traces} = data.witness;
-    get('title').textContent = 'Recorded delayed-rule intervention';
-    get('status').textContent = `Fixed feedback ${example.feedback} · one donor activation`;
+    get('title').textContent = additive ? 'Recorded additive routing intervention' : 'Recorded delayed-rule intervention';
+    get('status').textContent = `Fixed feedback ${example.feedback} · ${additive ? 'one donor delta' : 'one donor activation'}`;
     get('detail').textContent = traces.map(branch =>
       `${branch.rule} · ${example.rules[branch.rule].action} · ${branch.result === null ? 'no follow-up call' : `WASM returned ${branch.result}`}`,
     ).join('\n');
