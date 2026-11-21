@@ -80,12 +80,15 @@ class RowSource:
         return {cell: self.cache[cell[1]][2*cell[0]:2*cell[0]+2] for cell in cells}
 
 
-def recover(source, ledger, coord, tick, dimensions):
+def recover(source, ledger, coord, tick, dimensions, profile=None):
     if ledger is None or len(ledger) < tick or [e["tick"] for e in ledger[:tick]] != list(range(1,tick+1)):
         raise Unavailable("event_history_unavailable")
     before = source.bytes
     needed = cone(coord,tick,*dimensions)
+    began = perf_counter_ns()
     loaded = source.read(needed)
+    load_ns = perf_counter_ns()-began
+    began = perf_counter_ns()
     walls = {p:data[0] for p,data in loaded.items()}
     signal = {p:data[1] for p,data in loaded.items()}
     recomputed, edits = 0, []
@@ -99,6 +102,8 @@ def recover(source, ledger, coord, tick, dimensions):
         signal = {p:int(not walls[p] and any(signal.get((p[0]+dx,p[1]+dy),0)
                                               for dx,dy in OFFSETS)) for p in next_cells}
         recomputed += len(signal)
+    if profile is not None:
+        profile.update(source_loading_ns=load_ns, recompute_ns=perf_counter_ns()-began)
     return signal[tuple(coord)], dict(checkpoint_bytes=source.bytes-before, source_cells=len(needed),
                                       cells_recomputed=recomputed, applied_edits=edits)
 
@@ -119,15 +124,17 @@ def supply(relay, pending, prefix, complete, value, requested_at):
     state = restore(pending,relay.identity,relay.image)
     assert int(state.vm.pc) == LOAD_PC
     state.vm.page.numpy()[MAILBOX+16:MAILBOX+20] = list(struct.pack("<i",value))
-    suspended = perf_counter_ns()-requested_at
+    resumed_at = perf_counter_ns()
+    suspended = resumed_at-requested_at
     state, suffix = relay.finish(state)
+    resumed_execution = perf_counter_ns()-resumed_at
     trace = prefix+suffix
     completed = page(state)
     reference_page = bytearray(complete)
     struct.pack_into("<i",reference_page,MAILBOX+16,value)
     assert wasmtime_run(relay.raw,MAILBOX,bytes(reference_page)) == (mailbox(completed)[5],completed)
     assert suffix[0]["access"][:2] == [1,MAILBOX+16]
-    return completed, trace, suspended
+    return completed, trace, suspended, resumed_execution
 
 
 def execute(relay, shared, choice, *, full=None, source_available=True, events_available=True, stale_tick_control=False, dig=True, edits_by_tick=None,
@@ -182,12 +189,12 @@ def execute(relay, shared, choice, *, full=None, source_available=True, events_a
             stopped = dict(pending_read=read, reason=str(exc), vm=pending, prefix=prefix)
             break
         elapsed = perf_counter_ns()-begin
-        complete, trace, suspended = supply(relay,pending,prefix,complete,value,begin)
+        complete, trace, suspended, resumed_execution = supply(relay,pending,prefix,complete,value,begin)
         branch = next(row for row in trace[len(prefix)+1:] if row["opcode"] == "br_if")
         observations.append(dict(request=read, value=value, action=mailbox(complete)[5],
                                  trace=trace, page_sha256=digest(complete), branch=branch,
                                  recovery=detail))
-        metrics.append(dict(tick=tick,suspended_ns=suspended,recovery_ns=elapsed, **(detail or {})))
+        metrics.append(dict(tick=tick,suspended_ns=suspended,recovery_ns=elapsed, guest_execution_ns=resumed_execution, **(detail or {})))
     return dict(helper=helper, gate_store=store, observations=observations, stopped=stopped,
                 source_bytes=source.bytes, clock=len(ledger), ledger=ledger), metrics
 
