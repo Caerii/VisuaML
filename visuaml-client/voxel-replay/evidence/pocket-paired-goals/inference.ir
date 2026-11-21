@@ -1,0 +1,527 @@
+graph(%self : __torch__.___torch_mangle_44.Planner,
+      %prompt.1 : Tensor,
+      %walls.1 : Tensor,
+      %signal.1 : Tensor,
+      %gate.1 : int,
+      %target.1 : int,
+      %coverage.1 : int,
+      %budget.1 : int,
+      %enabled.1 : bool,
+      %precomputed.1 : Tensor?,
+      %intervene_action.1 : int,
+      %replacement.1 : int):
+  %12 : int[] = prim::Constant[value=[1, 1]]()
+  %13 : Tensor = prim::Constant[value=(1,1,.,.) =   0  1  0   1  1  1   0  1  0 [ CPUFloatType{1,1,3,3} ]]() # :0:0
+  %14 : int[] = prim::Constant[value=[1]]()
+  %15 : int[] = prim::Constant[value=[2, 0, 1, 3]]()
+  %16 : int[] = prim::Constant[value=[48]]()
+  %17 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %18 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %19 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %20 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %21 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %22 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %23 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %24 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %25 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %26 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %27 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %28 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %29 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %30 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %31 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %32 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %33 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %34 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %35 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %36 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %37 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %38 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %39 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %40 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %41 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %42 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %43 : str = prim::Constant[value="trunc"]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+  %44 : Tensor = prim::Constant[value={4}]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+  %45 : float = prim::Constant[value=1.0000000000000001e-05]()
+  %46 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %47 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %48 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %49 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %50 : Device = prim::Constant[value="cpu"]()
+  %51 : int = prim::Constant[value=-2]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+  %52 : float = prim::Constant[value=0.]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+  %53 : int[] = prim::Constant[value=[2, 4]]()
+  %54 : int[] = prim::Constant[value=[3, 6]]()
+  %55 : bool = prim::Constant[value=1]()
+  %56 : bool = prim::Constant[value=0]()
+  %57 : int = prim::Constant[value=13]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:102:72
+  %58 : int = prim::Constant[value=15]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:100:29
+  %59 : int = prim::Constant[value=17]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:86:29
+  %60 : int = prim::Constant[value=18]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:81:40
+  %61 : int = prim::Constant[value=14]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:69
+  %62 : int = prim::Constant[value=5]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:56
+  %63 : int = prim::Constant[value=24]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:67
+  %64 : int = prim::Constant[value=22]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:46
+  %65 : int = prim::Constant[value=16]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:39
+  %66 : int = prim::Constant[value=20]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:72:39
+  %67 : int = prim::Constant[value=7]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:68:36
+  %68 : int = prim::Constant[value=64]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:62:37
+  %69 : int = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:60:21
+  %70 : int = prim::Constant[value=8]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:57:32
+  %71 : int = prim::Constant[value=4]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:56:33
+  %outcome.1 : int = prim::Constant[value=2]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:56:31
+  %73 : int = prim::Constant[value=1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:55:37
+  %74 : int = prim::Constant[value=6]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:55:33
+  %75 : int = prim::Constant[value=3]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:55:31
+  %76 : int = prim::Constant[value=-1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:55:36
+  %77 : NoneType = prim::Constant()
+  %78 : int = prim::Constant[value=9223372036854775807]()
+  %79 : Tensor? = prim::Uninitialized()
+  %80 : Tensor = prim::Uninitialized()
+  %81 : int = prim::Uninitialized()
+  %82 : bool = prim::Uninitialized()
+  %requests.1 : Tensor = aten::full(%54, %76, %71, %77, %77, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:55:19
+  %feedback.1 : Tensor = aten::full(%53, %76, %71, %77, %77, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:56:19
+  %85 : int = aten::size(%walls.1, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:57:34
+  %86 : int = aten::size(%walls.1, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:57:48
+  %87 : int[] = prim::ListConstruct(%outcome.1, %70, %85, %86)
+  %frames.1 : Tensor = aten::zeros(%87, %77, %77, %77, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:57:17
+  %outcome : int, %answer : int, %precomputed : Tensor?, %prefix : Tensor, %93 : int = prim::Loop(%78, %55, %outcome.1, %76, %precomputed.1, %prompt.1, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:59:8
+    block0(%94 : int, %outcome.29 : int, %answer.19 : int, %precomputed.43 : Tensor?, %prefix.21 : Tensor, %99 : int):
+      %length : int, %prefix.19 : Tensor, %102 : int = prim::Loop(%78, %55, %69, %prefix.21, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:61:12
+        block0(%103 : int, %length.17 : int, %prefix.17 : Tensor, %106 : int):
+          %107 : int = aten::numel(%prefix.17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:62:19
+          %108 : bool = aten::ge(%107, %68) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:62:19
+          %109 : bool, %110 : bool, %111 : int, %112 : Tensor, %113 : bool, %114 : int, %115 : Tensor = prim::If(%108) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:62:16
+            block0():
+              -> (%55, %56, %length.17, %prefix.17, %82, %81, %80)
+            block1():
+              %116 : Tensor = aten::unsqueeze(%prefix.17, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:64:40
+              %117 : int = aten::size(%116, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/two_call_controller.py:44:0
+              %pos.1 : Tensor = aten::arange(%117, %77, %77, %50, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/two_call_controller.py:45:0
+              %119 : Tensor = aten::embedding(%49, %116, %76, %56, %56) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2542:0
+              %120 : Tensor = aten::embedding(%48, %pos.1, %76, %56, %56) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2542:0
+              %src.1 : Tensor = aten::add(%119, %120, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/two_call_controller.py:47:0
+              %query.1 : Tensor = aten::layer_norm(%src.1, %16, %47, %46, %45, %55) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %query0.1 : Tensor = aten::transpose(%query.1, %73, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1454:0
+              %124 : int = aten::size(%query0.1, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %tgt_len.1 : Tensor = prim::NumToTensor(%124) # :0:0
+              %126 : int = aten::size(%query0.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %bsz.1 : Tensor = prim::NumToTensor(%126) # :0:0
+              %128 : int = aten::size(%query0.1, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %embed_dim.1 : Tensor = prim::NumToTensor(%128) # :0:0
+              %head_dim.1 : Tensor = aten::div(%embed_dim.1, %44, %43) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+              %131 : int = aten::Int(%head_dim.1) # :0:0
+              %132 : int = aten::size(%query0.1, %76) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5695:0
+              %133 : Tensor = aten::linear(%query0.1, %42, %41) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5699:0
+              %134 : int[] = prim::ListConstruct(%75, %132)
+              %135 : Tensor = aten::unflatten(%133, %76, %134) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/_tensor.py:1418:0
+              %136 : Tensor = aten::unsqueeze(%135, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5703:0
+              %137 : Tensor = aten::transpose(%136, %69, %51) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+              %138 : Tensor = aten::squeeze(%137, %51) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5705:0
+              %proj.1 : Tensor = aten::contiguous(%138, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5706:0
+              %q.1 : Tensor = aten::select(%proj.1, %69, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %k.1 : Tensor = aten::select(%proj.1, %69, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %v.1 : Tensor = aten::select(%proj.1, %69, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %143 : Tensor = aten::mul(%bsz.1, %44) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %144 : int = aten::Int(%143) # :0:0
+              %145 : int[] = prim::ListConstruct(%124, %144, %131)
+              %146 : Tensor = aten::view(%q.1, %145) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %q0.1 : Tensor = aten::transpose(%146, %69, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %148 : int = aten::size(%k.1, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %149 : int[] = prim::ListConstruct(%148, %144, %131)
+              %150 : Tensor = aten::view(%k.1, %149) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %k0.1 : Tensor = aten::transpose(%150, %69, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %152 : int = aten::size(%v.1, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %153 : int[] = prim::ListConstruct(%152, %144, %131)
+              %154 : Tensor = aten::view(%v.1, %153) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %v0.1 : Tensor = aten::transpose(%154, %69, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %156 : int = aten::size(%k0.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6412:0
+              %157 : int[] = prim::ListConstruct(%126, %71, %124, %131)
+              %q1.1 : Tensor = aten::view(%q0.1, %157) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6483:0
+              %159 : int[] = prim::ListConstruct(%126, %71, %156, %131)
+              %k1.1 : Tensor = aten::view(%k0.1, %159) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6484:0
+              %v1.1 : Tensor = aten::view(%v0.1, %159) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6485:0
+              %attn_output.1 : Tensor = aten::scaled_dot_product_attention(%q1.1, %k1.1, %v1.1, %77, %52, %55, %77, %56) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+              %163 : Tensor = aten::permute(%attn_output.1, %15) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %164 : Tensor = aten::contiguous(%163, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %165 : Tensor = aten::mul(%bsz.1, %tgt_len.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %166 : int = aten::Int(%165) # :0:0
+              %167 : int[] = prim::ListConstruct(%166, %128)
+              %attn_output0.1 : Tensor = aten::view(%164, %167) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %attn_output1.1 : Tensor = aten::linear(%attn_output0.1, %40, %39) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6494:0
+              %170 : int = aten::size(%attn_output1.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %171 : int[] = prim::ListConstruct(%124, %126, %170)
+              %attn_output2.1 : Tensor = aten::view(%attn_output1.1, %171) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %input.1 : Tensor = aten::transpose(%attn_output2.1, %73, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1510:0
+              %input0.1 : Tensor = aten::add(%src.1, %input.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:928:0
+              %input1.1 : Tensor = aten::layer_norm(%input0.1, %16, %38, %37, %45, %55) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %input2.1 : Tensor = aten::linear(%input1.1, %36, %35) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input3.1 : Tensor = aten::relu(%input2.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:0
+              %input4.1 : Tensor = aten::linear(%input3.1, %34, %33) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input5.1 : Tensor = aten::add(%input0.1, %input4.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:931:0
+              %query1.1 : Tensor = aten::layer_norm(%input5.1, %16, %32, %31, %45, %55) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %query2.1 : Tensor = aten::transpose(%query1.1, %73, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1454:0
+              %182 : int = aten::size(%query2.1, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %tgt_len0.1 : Tensor = prim::NumToTensor(%182) # :0:0
+              %184 : int = aten::size(%query2.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %bsz0.1 : Tensor = prim::NumToTensor(%184) # :0:0
+              %186 : int = aten::size(%query2.1, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %embed_dim0.1 : Tensor = prim::NumToTensor(%186) # :0:0
+              %head_dim0.1 : Tensor = aten::div(%embed_dim0.1, %44, %43) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+              %189 : int = aten::Int(%head_dim0.1) # :0:0
+              %190 : int = aten::size(%query2.1, %76) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5695:0
+              %191 : Tensor = aten::linear(%query2.1, %30, %29) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5699:0
+              %192 : int[] = prim::ListConstruct(%75, %190)
+              %193 : Tensor = aten::unflatten(%191, %76, %192) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/_tensor.py:1418:0
+              %194 : Tensor = aten::unsqueeze(%193, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5703:0
+              %195 : Tensor = aten::transpose(%194, %69, %51) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+              %196 : Tensor = aten::squeeze(%195, %51) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5705:0
+              %proj0.1 : Tensor = aten::contiguous(%196, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5706:0
+              %q2.1 : Tensor = aten::select(%proj0.1, %69, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %k2.1 : Tensor = aten::select(%proj0.1, %69, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %v2.1 : Tensor = aten::select(%proj0.1, %69, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %201 : Tensor = aten::mul(%bsz0.1, %44) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %202 : int = aten::Int(%201) # :0:0
+              %203 : int[] = prim::ListConstruct(%182, %202, %189)
+              %204 : Tensor = aten::view(%q2.1, %203) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %q3.1 : Tensor = aten::transpose(%204, %69, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %206 : int = aten::size(%k2.1, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %207 : int[] = prim::ListConstruct(%206, %202, %189)
+              %208 : Tensor = aten::view(%k2.1, %207) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %k3.1 : Tensor = aten::transpose(%208, %69, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %210 : int = aten::size(%v2.1, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %211 : int[] = prim::ListConstruct(%210, %202, %189)
+              %212 : Tensor = aten::view(%v2.1, %211) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %v3.1 : Tensor = aten::transpose(%212, %69, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %214 : int = aten::size(%k3.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6412:0
+              %215 : int[] = prim::ListConstruct(%184, %71, %182, %189)
+              %q4.1 : Tensor = aten::view(%q3.1, %215) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6483:0
+              %217 : int[] = prim::ListConstruct(%184, %71, %214, %189)
+              %k4.1 : Tensor = aten::view(%k3.1, %217) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6484:0
+              %v4.1 : Tensor = aten::view(%v3.1, %217) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6485:0
+              %attn_output3.1 : Tensor = aten::scaled_dot_product_attention(%q4.1, %k4.1, %v4.1, %77, %52, %55, %77, %56) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+              %221 : Tensor = aten::permute(%attn_output3.1, %15) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %222 : Tensor = aten::contiguous(%221, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %223 : Tensor = aten::mul(%bsz0.1, %tgt_len0.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %224 : int = aten::Int(%223) # :0:0
+              %225 : int[] = prim::ListConstruct(%224, %186)
+              %attn_output4.1 : Tensor = aten::view(%222, %225) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %attn_output5.1 : Tensor = aten::linear(%attn_output4.1, %28, %27) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6494:0
+              %228 : int = aten::size(%attn_output5.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %229 : int[] = prim::ListConstruct(%182, %184, %228)
+              %attn_output6.1 : Tensor = aten::view(%attn_output5.1, %229) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %input6.1 : Tensor = aten::transpose(%attn_output6.1, %73, %69) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1510:0
+              %input7.1 : Tensor = aten::add(%input5.1, %input6.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:928:0
+              %input8.1 : Tensor = aten::layer_norm(%input7.1, %16, %26, %25, %45, %55) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %input9.1 : Tensor = aten::linear(%input8.1, %24, %23) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input10.1 : Tensor = aten::relu(%input9.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:0
+              %input11.1 : Tensor = aten::linear(%input10.1, %22, %21) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input12.1 : Tensor = aten::add(%input7.1, %input11.1, %73) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:931:0
+              %input13.1 : Tensor = aten::layer_norm(%input12.1, %16, %20, %19, %45, %55) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %239 : Tensor = aten::linear(%input13.1, %18, %17) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %240 : Tensor = aten::select(%239, %69, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:64:24
+              %241 : Tensor = aten::select(%240, %69, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:64:24
+              %242 : Tensor = aten::argmax(%241, %77, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:64:24
+              %token.7 : Tensor = aten::reshape(%242, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:64:24
+              %244 : Tensor = aten::select(%token.7, %69, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:65:40
+              %245 : Tensor = aten::select(%requests.1, %69, %99) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:65:16
+              %246 : Tensor = aten::select(%245, %69, %length.17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:65:16
+              %247 : Tensor = aten::copy_(%246, %244, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:65:16
+              %248 : Tensor[] = prim::ListConstruct(%prefix.17, %token.7)
+              %prefix.23 : Tensor = aten::cat(%248, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:66:25
+              %length.19 : int = aten::add(%length.17, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:67:16
+              %251 : int = aten::Int(%244) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:68:19
+              %252 : bool = aten::eq(%251, %67) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:68:19
+              %253 : bool, %254 : int, %255 : Tensor = prim::If(%252) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:68:16
+                block0():
+                  -> (%56, %length.19, %prefix.23)
+                block1():
+                  -> (%82, %81, %80)
+              -> (%252, %253, %254, %255, %55, %length.19, %prefix.23)
+          %256 : bool, %257 : int, %258 : Tensor = prim::If(%109)
+            block0():
+              -> (%110, %111, %112)
+            block1():
+              -> (%113, %114, %115)
+          %259 : int = aten::add(%106, %73)
+          %260 : bool = aten::lt(%259, %74)
+          %261 : bool = aten::__and__(%260, %256)
+          -> (%261, %257, %258, %259)
+      %row.1 : Tensor = aten::select(%requests.1, %69, %99) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:70:18
+      %263 : Tensor = aten::select(%row.1, %69, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:71:23
+      %kind.1 : int = aten::Int(%263) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:71:19
+      %265 : bool = aten::eq(%length, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:72:15
+      %266 : bool = prim::If(%265) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:72:15
+        block0():
+          %267 : bool = aten::eq(%kind.1, %66) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:72:31
+          -> (%267)
+        block1():
+          -> (%56)
+      %268 : bool = prim::If(%266) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:72:15
+        block0():
+          %269 : Tensor = aten::select(%row.1, %69, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:72:50
+          %270 : int = aten::Int(%269) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:72:46
+          %271 : bool = aten::eq(%270, %67) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:72:46
+          -> (%271)
+        block1():
+          -> (%56)
+      %272 : bool, %273 : bool, %274 : int, %275 : int, %276 : Tensor?, %277 : Tensor, %278 : bool, %279 : int, %280 : int, %281 : Tensor?, %282 : Tensor = prim::If(%268) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:72:12
+        block0():
+          -> (%55, %56, %73, %answer.19, %precomputed.43, %prefix.19, %82, %81, %81, %79, %80)
+        block1():
+          %283 : bool = aten::eq(%length, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:15
+          %284 : bool = prim::If(%283) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:15
+            block0():
+              %285 : bool = aten::eq(%kind.1, %65) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:31
+              -> (%285)
+            block1():
+              -> (%56)
+          %286 : bool = prim::If(%284) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:15
+            block0():
+              %287 : Tensor = aten::select(%row.1, %69, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:56
+              %288 : int = aten::Int(%287) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:52
+              %289 : bool = aten::le(%64, %288) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:46
+              %290 : bool = prim::If(%289) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:46
+                block0():
+                  %291 : Tensor = aten::select(%row.1, %69, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:56
+                  %292 : int = aten::Int(%291) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:52
+                  %293 : bool = aten::le(%292, %63) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:52
+                  -> (%293)
+                block1():
+                  -> (%56)
+              -> (%290)
+            block1():
+              -> (%56)
+          %294 : bool = prim::If(%286) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:15
+            block0():
+              %295 : Tensor = aten::select(%row.1, %69, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:78
+              %296 : int = aten::Int(%295) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:74
+              %297 : bool = aten::eq(%296, %67) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:74
+              -> (%297)
+            block1():
+              -> (%56)
+          %298 : bool, %299 : bool, %300 : int, %301 : int, %302 : Tensor?, %303 : Tensor, %304 : bool, %305 : int, %306 : int, %307 : Tensor?, %308 : Tensor = prim::If(%294) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:75:12
+            block0():
+              %309 : Tensor = aten::select(%row.1, %69, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:76:39
+              %310 : int = aten::Int(%309) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:76:35
+              %answer.23 : int = aten::sub(%310, %64) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:76:35
+              -> (%55, %56, %69, %answer.23, %precomputed.43, %prefix.19, %82, %81, %81, %79, %80)
+            block1():
+              %312 : bool = aten::ge(%99, %budget.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:15
+              %313 : bool = prim::If(%312) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:15
+                block0():
+                  -> (%55)
+                block1():
+                  %314 : bool = aten::eq(%99, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:33
+                  -> (%314)
+              %315 : bool = prim::If(%313) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:15
+                block0():
+                  -> (%55)
+                block1():
+                  %316 : bool = aten::ne(%length, %62) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:46
+                  -> (%316)
+              %317 : bool = prim::If(%315) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:15
+                block0():
+                  -> (%55)
+                block1():
+                  %318 : bool = aten::ne(%kind.1, %61) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:61
+                  -> (%318)
+              %319 : bool = prim::If(%317) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:15
+                block0():
+                  -> (%55)
+                block1():
+                  %320 : Tensor = aten::select(%row.1, %69, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:79
+                  %321 : int = aten::Int(%320) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:75
+                  %322 : bool = aten::ne(%321, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:75
+                  -> (%322)
+              %323 : bool = prim::If(%319) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:15
+                block0():
+                  -> (%55)
+                block1():
+                  %324 : Tensor = aten::select(%row.1, %69, %71) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:99
+                  %325 : int = aten::Int(%324) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:95
+                  %326 : bool = aten::ne(%325, %67) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:95
+                  -> (%326)
+              %327 : bool, %328 : int, %329 : int, %330 : Tensor?, %331 : Tensor, %332 : bool, %333 : int, %334 : int, %335 : Tensor?, %336 : Tensor = prim::If(%323) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:78:12
+                block0():
+                  -> (%56, %outcome.29, %answer.19, %precomputed.43, %prefix.19, %82, %81, %81, %79, %80)
+                block1():
+                  %337 : Tensor = aten::select(%row.1, %69, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:80:33
+                  %338 : int = aten::Int(%337) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:80:29
+                  %action.21 : int = aten::sub(%338, %64) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:80:29
+                  %340 : Tensor = aten::select(%row.1, %69, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:80:48
+                  %341 : int = aten::Int(%340) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:80:44
+                  %horizon.29 : int = aten::sub(%341, %64) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:80:44
+                  %343 : bool = aten::le(%69, %action.21) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:82:15
+                  %344 : bool = prim::If(%343) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:82:15
+                    block0():
+                      %345 : bool = aten::le(%action.21, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:82:20
+                      -> (%345)
+                    block1():
+                      -> (%56)
+                  %346 : bool = prim::If(%344) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:82:15
+                    block0():
+                      %347 : bool = aten::le(%73, %horizon.29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:82:36
+                      %348 : bool = prim::If(%347) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:82:36
+                        block0():
+                          %349 : bool = aten::le(%horizon.29, %70) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:82:41
+                          -> (%349)
+                        block1():
+                          -> (%56)
+                      -> (%348)
+                    block1():
+                      -> (%56)
+                  %status.59 : int, %raw.133 : int, %reported.69 : int, %steps.57 : int, %precomputed.77 : Tensor? = prim::If(%346) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:82:12
+                    block0():
+                      %355 : bool = aten::__not__(%enabled.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:19
+                      %356 : bool = prim::If(%355) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:19
+                        block0():
+                          -> (%55)
+                        block1():
+                          %357 : bool = aten::lt(%coverage.1, %horizon.29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:34
+                          -> (%357)
+                      %358 : bool = prim::If(%356) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:19
+                        block0():
+                          -> (%55)
+                        block1():
+                          %359 : bool = aten::le(%69, %gate.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:61
+                          %360 : bool = prim::If(%359) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:61
+                            block0():
+                              %361 : int = aten::numel(%walls.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:73
+                              %362 : bool = aten::lt(%gate.1, %361) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:66
+                              -> (%362)
+                            block1():
+                              -> (%56)
+                          %363 : bool = prim::If(%360) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:61
+                            block0():
+                              %364 : bool = aten::le(%69, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:85:63
+                              %365 : bool = prim::If(%364) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:85:63
+                                block0():
+                                  %366 : int = aten::numel(%walls.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:85:77
+                                  %367 : bool = aten::lt(%target.1, %366) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:85:68
+                                  -> (%367)
+                                block1():
+                                  -> (%56)
+                              -> (%365)
+                            block1():
+                              -> (%56)
+                          %368 : bool = aten::__not__(%363) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:56
+                          -> (%368)
+                      %status.61 : int, %raw.135 : int, %reported.71 : int, %steps.59 : int, %precomputed.79 : Tensor? = prim::If(%358) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:84:16
+                        block0():
+                          -> (%59, %76, %76, %69, %precomputed.43)
+                        block1():
+                          %374 : bool = aten::__is__(%precomputed.43, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:88:23
+                          %raw.137 : int, %steps.61 : int, %precomputed.81 : Tensor? = prim::If(%374) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:88:20
+                            block0():
+                              %terrain.1 : Tensor = aten::clone(%walls.1, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:24:18
+                              %379 : bool = aten::eq(%action.21, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:25:11
+                               = prim::If(%379) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:25:8
+                                block0():
+                                  %380 : Tensor = aten::flatten(%terrain.1, %69, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:26:12
+                                  %381 : Tensor = aten::select(%380, %69, %gate.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:26:12
+                                  %382 : int = prim::dtype(%381) # :0:0
+                                  %383 : Device = prim::device(%381) # :0:0
+                                  %384 : Tensor = aten::tensor(%69, %382, %383, %56) # :0:0
+                                  %385 : Tensor = aten::copy_(%381, %384, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:26:12
+                                  -> ()
+                                block1():
+                                  -> ()
+                              %386 : Tensor[] = prim::ListConstruct()
+                              %signal4 : Tensor = prim::Loop(%horizon.29, %55, %signal.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:28:8
+                                block0(%388 : int, %signal4.7 : Tensor):
+                                  %390 : Tensor = aten::conv2d(%signal4.7, %13, %77, %12, %12, %12, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                                  %occupied.1 : Tensor = aten::clamp(%390, %69, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                                  %392 : Tensor = aten::neg(%terrain.1) # <string>:11:9
+                                  %393 : Tensor = aten::add(%392, %73, %73) # <string>:11:9
+                                  %signal5.1 : Tensor = aten::mul(%occupied.1, %393) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+                                  %395 : Tensor[] = aten::append(%386, %signal5.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:30:12
+                                  -> (%55, %signal5.1)
+                              %396 : Tensor = aten::cat(%386, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:46
+                              %397 : Tensor = aten::slice(%396, %69, %77, %77, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:90:48
+                              %398 : Tensor = aten::select(%397, %73, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:90:48
+                              %399 : Tensor = aten::select(%frames.1, %69, %99) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:90:24
+                              %400 : Tensor = aten::slice(%399, %69, %77, %horizon.29, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:90:24
+                              %401 : Tensor = aten::copy_(%400, %398, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:90:24
+                              %402 : bool = aten::gt(%horizon.29, %69)
+                              %raw.139 : int, %404 : int = prim::Loop(%78, %402, %69, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:93:24
+                                block0(%405 : int, %raw.53 : int, %407 : int):
+                                  %408 : Tensor = aten::select(%396, %69, %407) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:94:35
+                                  %409 : Tensor = aten::flatten(%408, %69, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:94:35
+                                  %410 : Tensor = aten::select(%409, %69, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:94:35
+                                  %411 : int = aten::Int(%410) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:94:31
+                                  %412 : bool = aten::ne(%411, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:94:31
+                                  %413 : bool, %414 : int = prim::If(%412) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:94:28
+                                    block0():
+                                      %raw.145 : int = aten::add(%407, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:95:38
+                                      -> (%56, %raw.145)
+                                    block1():
+                                      -> (%55, %raw.53)
+                                  %416 : int = aten::add(%407, %73)
+                                  %417 : bool = aten::lt(%416, %horizon.29)
+                                  %418 : bool = aten::__and__(%417, %413)
+                                  -> (%418, %414, %416)
+                              -> (%raw.139, %horizon.29, %precomputed.43)
+                            block1():
+                              %precomputed.83 : Tensor = prim::unchecked_cast(%precomputed.43)
+                              %420 : Tensor = aten::select(%precomputed.83, %69, %action.21) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:98:34
+                              %421 : Tensor = aten::select(%420, %69, %horizon.29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:98:34
+                              %raw.153 : int = aten::Int(%421) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:98:30
+                              -> (%raw.153, %69, %precomputed.83)
+                          %423 : bool = aten::eq(%action.21, %intervene_action.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:99:46
+                          %reported.73 : int = prim::If(%423) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:99:31
+                            block0():
+                              -> (%replacement.1)
+                            block1():
+                              -> (%raw.137)
+                          %425 : bool = aten::le(%69, %reported.73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:100:35
+                          %426 : bool = prim::If(%425) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:100:35
+                            block0():
+                              %427 : bool = aten::le(%reported.73, %horizon.29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:100:40
+                              -> (%427)
+                            block1():
+                              -> (%56)
+                          %status.63 : int = prim::If(%426) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:100:29
+                            block0():
+                              -> (%58)
+                            block1():
+                              -> (%60)
+                          -> (%status.63, %raw.137, %reported.73, %steps.61, %precomputed.81)
+                      -> (%status.61, %raw.135, %reported.71, %steps.59, %precomputed.79)
+                    block1():
+                      -> (%60, %76, %76, %69, %precomputed.43)
+                  %429 : int[] = prim::ListConstruct(%status.59, %raw.133, %reported.69, %steps.57)
+                  %430 : Tensor = aten::tensor(%429, %77, %77, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:101:29
+                  %431 : Tensor = aten::select(%feedback.1, %69, %99) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:101:12
+                  %432 : Tensor = aten::copy_(%431, %430, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:101:12
+                  %433 : bool = aten::eq(%status.59, %58) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:102:80
+                  %434 : Tensor = prim::If(%433) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:102:39
+                    block0():
+                      %435 : int = aten::add(%reported.69, %64) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:102:60
+                      %436 : int[] = prim::ListConstruct(%status.59, %435, %57)
+                      %437 : Tensor = aten::tensor(%436, %77, %77, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:102:39
+                      -> (%437)
+                    block1():
+                      %438 : int[] = prim::ListConstruct(%status.59, %57)
+                      %439 : Tensor = aten::tensor(%438, %77, %77, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:103:37
+                      -> (%439)
+                  %440 : Tensor[] = prim::ListConstruct(%prefix.19, %434)
+                  %prefix.35 : Tensor = aten::cat(%440, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:102:21
+                  -> (%82, %81, %81, %79, %80, %55, %outcome.29, %answer.19, %precomputed.77, %prefix.35)
+              -> (%323, %327, %328, %329, %330, %331, %332, %333, %334, %335, %336)
+          -> (%298, %299, %300, %301, %302, %303, %304, %305, %306, %307, %308)
+      %442 : bool, %443 : int, %444 : int, %445 : Tensor?, %446 : Tensor = prim::If(%272)
+        block0():
+          -> (%273, %274, %275, %276, %277)
+        block1():
+          -> (%278, %279, %280, %281, %282)
+      %447 : int = aten::add(%99, %73)
+      %448 : bool = aten::lt(%447, %75)
+      %449 : bool = aten::__and__(%448, %442)
+      -> (%449, %443, %444, %445, %446, %447)
+  %450 : int[] = prim::ListConstruct(%outcome, %answer)
+  %451 : Tensor = aten::tensor(%450, %77, %77, %56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_paired_goals.py:104:40
+  %452 : (Tensor, Tensor, Tensor, Tensor) = prim::TupleConstruct(%requests.1, %feedback.1, %frames.1, %451)
+  return (%452)
