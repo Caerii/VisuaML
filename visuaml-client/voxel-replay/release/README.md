@@ -247,3 +247,6 @@ switch recovery and unwanted changes under a stronger aligned edit.
 
 The [comparison mapping study](chapters/comparison-mappings.md) separates
 additional source coordinates from additional recipient edit directions.
+
+The [paired calibration study](chapters/paired-comparison-calibration.md)
+compares fixed and crossed threshold pairs for predicting activation changes.

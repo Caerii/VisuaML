@@ -47,7 +47,7 @@ def basis(model, axis):
     return torch.stack((axis, residual / residual.norm()), dim=1)
 
 
-def compare(source, source_axis, receiver, axis, rows):
+def compare(source, source_axis, receiver, axis, rows, *, calibration_pairs=None):
     reference = evaluate(source, source_axis, receiver, axis, design=rows)
     source_basis, receiver_basis = basis(source, source_axis), basis(receiver, axis)
     calibration = [(limit + offset, limit, rule) for limit, offset, rule in
@@ -71,11 +71,26 @@ def compare(source, source_axis, receiver, axis, rows):
     args = torch.tensor(live).unbind(1)
     _, current, _ = run_intervention(receiver, SITE, args)
     coefficients = {}
-    for name, width in (("quadratic", 1), ("two_inputs_one_direction", 1), ("rank_two", 2)):
-        matrix = features(x, name)
+    configurations = [("quadratic", 1), ("two_inputs_one_direction", 1), ("rank_two", 2)]
+    pair_data = {}
+    for name, pairs in (calibration_pairs or {}).items():
+        a, b = zip(*pairs, strict=True)
+        a_source = pair_state(source, a).double() @ source_basis.double()
+        b_source = pair_state(source, b).double() @ source_basis.double()
+        a_target = pair_state(receiver, a).double() @ axis.double()
+        b_target = pair_state(receiver, b).double() @ axis.double()
+        pair_data[name] = ((b_source - a_source) / scale, (b_target - a_target)[:, None])
+        configurations.append((name, 1))
+    for name, width in configurations:
+        if name in pair_data:
+            matrix, target = pair_data[name]
+            evaluation_delta = (donor_source - live_source) / scale
+        else:
+            matrix, target = features(x, name), y[:, :width]
+            evaluation_delta = features(donor_source, name) - features(live_source, name)
         assert torch.linalg.matrix_rank(matrix) == matrix.shape[1]
-        coeff = torch.linalg.lstsq(matrix, y[:, :width], driver="gelsd").solution
-        delta = (features(donor_source, name) - features(live_source, name)) @ coeff
+        coeff = torch.linalg.lstsq(matrix, target, driver="gelsd").solution
+        delta = evaluation_delta @ coeff
         edit = (delta @ receiver_basis[:, :width].double().T).to(current.dtype)
         replacement = current.clone()
         replacement[:, :2] += edit.reshape_as(current[:, :2])
@@ -86,7 +101,7 @@ def compare(source, source_axis, receiver, axis, rows):
             row["scores"][name] = dict(action=int(values.argmax()), logits=values.tolist())
 
     summary = {}
-    for mode in ("baseline", "aligned", "local", "quadratic", "two_inputs_one_direction", "rank_two"):
+    for mode in ("baseline", "aligned", "local", "quadratic", "two_inputs_one_direction", "rank_two", *pair_data):
         switches, preserves = [], []
         for row in reference["rows"]:
             value, limit, rule = row["live"]
