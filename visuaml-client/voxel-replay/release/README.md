@@ -235,3 +235,6 @@ checkpoints.
 
 The [live-tool intervention replay](chapters/live-tool-interventions.md) traces
 an actual first WASM return through the controller's second request.
+
+The [rank-one comparison study](chapters/comparison-direction.md) tests local
+calibration and raw-coordinate transfer across matched-training controllers.
