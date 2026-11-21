@@ -1,0 +1,135 @@
+{
+  "cold": {
+    "net": {
+      "median_ms": -9.273687,
+      "ci95_ms": [
+        -10.878191,
+        -7.8935045
+      ],
+      "positive": 1
+    },
+    "gross": {
+      "median_ms": 17.755365,
+      "ci95_ms": [
+        16.7263045,
+        19.2509175
+      ],
+      "positive": 20
+    },
+    "proof_ms": 21.0200945,
+    "rejection_ms": 0.0,
+    "deployment_ms": 5.633964
+  },
+  "shared": {
+    "net": {
+      "median_ms": 9.415425,
+      "ci95_ms": [
+        7.995792,
+        10.9394495
+      ],
+      "positive": 20
+    },
+    "gross": {
+      "median_ms": 18.6097075,
+      "ci95_ms": [
+        16.9007145,
+        20.1503455
+      ],
+      "positive": 20
+    },
+    "proof_ms": 3.570342,
+    "rejection_ms": 0.0,
+    "deployment_ms": 5.4977695
+  },
+  "edited_cold": {
+    "net": {
+      "median_ms": -7.606942,
+      "ci95_ms": [
+        -9.192233,
+        -5.595037
+      ],
+      "positive": 1
+    },
+    "gross": {
+      "median_ms": 19.099836,
+      "ci95_ms": [
+        17.789436,
+        20.513971
+      ],
+      "positive": 20
+    },
+    "proof_ms": 20.947443,
+    "rejection_ms": 0.0,
+    "deployment_ms": 5.5911455
+  },
+  "stale_repaired": {
+    "net": {
+      "median_ms": 4.217458,
+      "ci95_ms": [
+        3.468388,
+        4.739591
+      ],
+      "positive": 17
+    },
+    "gross": {
+      "median_ms": 18.7541175,
+      "ci95_ms": [
+        18.1491745,
+        19.807604
+      ],
+      "positive": 20
+    },
+    "proof_ms": 8.8111985,
+    "rejection_ms": 0.357144,
+    "deployment_ms": 5.498662
+  },
+  "edited_shared": {
+    "net": {
+      "median_ms": 9.505316,
+      "ci95_ms": [
+        9.0804485,
+        10.5264475
+      ],
+      "positive": 20
+    },
+    "gross": {
+      "median_ms": 18.870913,
+      "ci95_ms": [
+        18.2149945,
+        20.3482565
+      ],
+      "positive": 20
+    },
+    "proof_ms": 3.585279,
+    "rejection_ms": 0.0,
+    "deployment_ms": 5.5930435
+  },
+  "contrasts": {
+    "shared_minus_cold": {
+      "median_ms": 16.8337975,
+      "ci95_ms": [
+        14.685261,
+        22.3680245
+      ],
+      "positive": 19
+    },
+    "stale_minus_edited_cold": {
+      "median_ms": 10.15699,
+      "ci95_ms": [
+        8.960469,
+        13.5999895
+      ],
+      "positive": 20
+    },
+    "shared_charged_donor": {
+      "median_ms": -10.702223,
+      "ci95_ms": [
+        -12.953262,
+        -9.7174675
+      ],
+      "positive": 0
+    },
+    "same_trial_sign_flip": 19,
+    "donor_ms": 20.6475475
+  }
+}
