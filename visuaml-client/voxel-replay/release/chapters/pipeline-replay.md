@@ -175,3 +175,89 @@ under tolerance. [Raw results](../examples/pipeline/index-timings.json)
 ```sh
 PYTHONPATH=../backend python tools/benchmark_replay_shards.py --indexed
 ```
+
+## Write request trees directly
+
+```python
+from visuaml.replay.request_tree import JournalWriter
+
+with JournalWriter("worker-0.sqlite", prefix_bytes=6) as journal:
+    journal.write("00010000", "tool_request", {"argument": 4}, runtime="controller")
+    journal.write("00010000", "tool_result", 7, runtime="wasm")
+```
+
+Write in lexical request order within each worker. Each request's
+observations retain execution order. The writer serializes the value once,
+compresses bounded chunks, and computes the tree as it captures observations.
+It publishes on successful context exit. A failed capture leaves the last
+complete artifact in place. A process killed during capture may leave a
+`.partial` file. Discard it and use a complete capture.
+
+Assign workers disjoint request prefixes when you want to link them
+without copying observations. Pick a common leaf prefix width for
+the runs being compared, and a partition width that matches the harness's
+ownership rule. For arbitrary existing worker layouts, use `tree-shards`
+to import the ordered JSONL.
+
+```sh
+visuaml-replay link-trees baseline/*.sqlite --partition-bytes 3 --output baseline.json
+visuaml-replay link-trees candidate/*.sqlite --partition-bytes 3 --output candidate.json
+visuaml-replay compare-trees baseline.json candidate.json another.json --output batch.json
+```
+
+The manifest keeps relative file references, each worker's root digest
+and file identity. Keep the worker files with it. Capture provenance is
+retained separately from logical observation equality. An identical logical
+run can keep the same root across worker layouts. Use zero-padded IDs or
+another stable prefix scheme so leaves are reasonably balanced. Highly
+skewed IDs can concentrate work in one leaf.
+
+The comparator reuses the open baseline for all candidates. It starts with
+the root and visits unequal ranges in order. A missing request within one
+range leaves the later range hashes stable. Use `--audit` for ordered row
+comparison through the first mismatch. The fast path relies on trusted,
+immutable artifacts and checks the payload of chunks it reads. If a
+tolerance accepts widely different values, some unequal leaves still
+have to be opened. Open a saved multi-candidate JSON in the browser viewer
+and use the candidate picker to switch comparisons.
+
+### Request tree measurements
+
+| Rows per run | Matching roots | One late value change | First 100 requests missing |
+| --- | ---: | ---: | ---: |
+| 1 million | 1.5 µs | 1.49 ms | 1.25 ms |
+| 10 million | 2.2 µs | 1.47 ms | 1.27 ms |
+
+These are medians of 11 calls with open readers on a local CPU. The late
+change read 1,132 compressed payload bytes at either scale. The ordered
+ten-million-row audit found the same discrepancy in 43.4 s. With a
+mismatch on the first observation, the audit took about 0.10 ms.
+A fresh CLI process comparing two candidates took about 59–85 ms median,
+including process startup and opening the trees.
+
+For one million rows, direct capture took about 7.2 s per run and published
+a 7.4 MB artifact. Writing two synthetic raw JSONL logs took 0.82 s and
+building the two previous flat indexes took another 21.3 s. Their indexed
+late comparison took 3.00 ms. Direct capture trades some write CPU for a
+smaller artifact that is ready to compare immediately. On the ten-million
+fixture a direct write took about 73–75 s per run and produced about
+74 MB per tree. This workload uses short, repetitive observations.
+Compression and write costs will vary with real payloads.
+
+The same million observations linked from ten and five worker files
+produced matching roots. Linking took 5.6 ms and 2.7 ms respectively and
+wrote only the manifests.
+
+After the viewer page had loaded, importing a saved three-candidate report
+took 0.30 ms median across 20 headless Chromium samples. Selection was
+below the median timer resolution. That measures local file handling and
+DOM updates, without process startup, network transfer or rendering paint.
+[Raw timings](../examples/pipeline/request-tree-timings.json) · [Saved viewer batch](../examples/pipeline/request-tree-batch.json)
+
+```sh
+PYTHONPATH=../backend python tools/benchmark_request_tree.py
+PYTHONPATH=../backend python tools/benchmark_request_tree.py --legacy 1000000
+PYTHONPATH=../backend python tools/benchmark_request_tree.py --workers
+npm run build
+node tools/benchmark_batch_viewer.mjs release/examples/pipeline/request-tree-batch.json
+```

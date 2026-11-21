@@ -4,6 +4,7 @@ from importlib.metadata import PackageNotFoundError, version
 import json
 from pathlib import Path
 import struct
+from sqlite3 import Error as SQLiteError
 import sys
 
 from visuaml.replay._codec import canonical
@@ -11,6 +12,8 @@ from visuaml.replay.shards import compare_shards
 from visuaml.replay.journal_index import build_index, compare_indexes, verify_index
 from visuaml.replay.pipeline import compare_observations, read_observations
 
+
+from visuaml.replay.request_tree import build_tree, compare_trees, link_trees, open_tree
 
 EXAMPLE = Path(__file__).with_name("assets") / "passage-report.json"
 
@@ -102,7 +105,19 @@ def main(argv=None):
     indexed = sub.add_parser("compare-indexes", help="Compare indexed pipeline snapshots")
     indexed.add_argument("reference", type=Path)
     indexed.add_argument("candidate", type=Path)
-    for command in (pipeline, shards, indexed):
+    tree = sub.add_parser("tree-shards", help="Index shards by stable request ranges")
+    tree.add_argument("shards", type=Path, nargs="+")
+    tree.add_argument("--output", type=Path, required=True)
+    tree.add_argument("--prefix-bytes", type=int, default=6)
+    linking = sub.add_parser("link-trees", help="Assemble disjoint worker request trees without copying observations")
+    linking.add_argument("workers", type=Path, nargs="+")
+    linking.add_argument("--output", type=Path, required=True)
+    linking.add_argument("--partition-bytes", type=int, required=True)
+    tree_compare = sub.add_parser("compare-trees", help="Compare a baseline against one or more request trees")
+    tree_compare.add_argument("reference", type=Path)
+    tree_compare.add_argument("candidates", type=Path, nargs="+")
+    tree_compare.add_argument("--audit", action="store_true", help="Compare every row in the examined prefix")
+    for command in (pipeline, shards, indexed, tree_compare):
         command.add_argument("--output", type=Path)
         command.add_argument("--fail-on-difference", action="store_true", help="Exit 1 when a difference is found")
         command.add_argument("--tolerances", type=Path, help="JSON mapping boundary names to [rtol, atol]")
@@ -119,6 +134,32 @@ def main(argv=None):
     example.add_argument("output", type=Path)
     args = parser.parse_args(argv)
     try:
+        if args.command == "link-trees":
+            print(json.dumps(link_trees(args.workers, args.output, partition_bytes=args.partition_bytes), indent=2))
+            return
+        if args.command == "tree-shards":
+            result = build_tree(args.shards, args.output, prefix_bytes=args.prefix_bytes)
+            print(json.dumps(result, indent=2))
+            return
+        if args.command == "compare-trees":
+            tolerances = json.loads(args.tolerances.read_text()) if args.tolerances else None
+            with open_tree(args.reference) as left:
+                results = []
+                for path in args.candidates:
+                    with open_tree(path) as right:
+                        if args.audit:
+                            checked = compare_observations(left.all_rows(), right.all_rows(), tolerances=tolerances)
+                        else:
+                            checked = compare_trees(left, right, tolerances=tolerances)
+                        results.append(dict(candidate=path.name, **checked))
+            result = results[0] if len(results) == 1 else results
+            data = json.dumps(result, indent=2)
+            if args.output:
+                args.output.write_text(data+"\n")
+            print(data)
+            if args.fail_on_difference and any(row["first_difference"] is not None for row in results):
+                raise SystemExit(1)
+            return
         if args.command == "verify-index":
             print(json.dumps(verify_index(args.index), indent=2))
             return
@@ -223,7 +264,7 @@ def main(argv=None):
         if args.output:
             args.output.write_text(json.dumps(result, indent=2)+"\n")
         print(json.dumps(result, indent=2))
-    except (ValueError, KeyError, OSError) as error:
+    except (ValueError, KeyError, OSError, SQLiteError) as error:
         print(f"visuaml-replay: {error}", file=sys.stderr)
         raise SystemExit(2) from error
 

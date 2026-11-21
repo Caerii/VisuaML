@@ -1,5 +1,11 @@
 # VisuaML Replay changes
 
+## 0.10.0rc1
+
+- Added direct indexed journal capture and stable request-prefix comparison.
+- Added worker manifests that link disjoint ranges without copying observations.
+- Added multi-candidate comparison, row audit, and a batch picker in the viewer.
+
 ## 0.9.0rc1
 
 - Added reusable journal indexes with block checksums for repeated comparisons.

@@ -27,13 +27,35 @@ import pocket from './release/examples/pocket-checkpoint.json';
 
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
+function showComparison(data) {
+  const first = data.first_difference;
+  get('title').textContent = 'Pipeline comparison';
+  const boundary = first?.boundary ?? first?.reference?.boundary ?? first?.candidate?.boundary;
+  get('status').textContent = first ? `First difference · ${boundary}` : 'All compared observations agree';
+  get('detail').textContent = JSON.stringify(first ?? data, null, 2);
+}
+
 function show(data) {
+  get('candidate-picker').hidden = true;
+  const batch = Array.isArray(data) && data.length && data.every(row =>
+    row?.profile === 'visuaml-pipeline-comparison-v1');
+  if (batch) {
+    const select = get('candidate');
+    const options = document.createDocumentFragment();
+    data.forEach((row, index) => {
+      const option = document.createElement('option');
+      option.value = index;
+      option.textContent = row.candidate ?? `Candidate ${index + 1}`;
+      options.append(option);
+    });
+    select.replaceChildren(options);
+    select.onchange = () => showComparison(data[Number(select.value)]);
+    get('candidate-picker').hidden = false;
+    showComparison(data[0]);
+    return;
+  }
   if (data?.profile === 'visuaml-pipeline-comparison-v1' || data?.profile === 'visuaml-cross-runtime-v1') {
-    const first = data.first_difference;
-    get('title').textContent = 'Pipeline comparison';
-    const boundary = first?.boundary ?? first?.reference?.boundary ?? first?.candidate?.boundary;
-    get('status').textContent = first ? `First difference · ${boundary}` : 'All compared observations agree';
-    get('detail').textContent = JSON.stringify(first ?? data, null, 2);
+    showComparison(data);
     return;
   }
   if (data?.format_version === 1 && data.profile === 'visuaml-source-window-v1') {

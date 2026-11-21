@@ -1,4 +1,4 @@
-# VisuaML Replay 0.9 release candidate
+# VisuaML Replay 0.10 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 

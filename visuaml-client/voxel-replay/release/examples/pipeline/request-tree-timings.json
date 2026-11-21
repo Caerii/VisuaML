@@ -1,0 +1,542 @@
+{
+  "one_million": {
+    "rows": 1000000,
+    "comparisons": {
+      "reference": {
+        "samples_ns": [
+          15103,
+          4507,
+          5128,
+          1502,
+          2604,
+          1352,
+          1462,
+          2554,
+          1082,
+          1102,
+          1242
+        ],
+        "median_ns": 1502,
+        "result": {
+          "profile": "visuaml-pipeline-comparison-v1",
+          "matched_observations": 1000000,
+          "first_difference": null,
+          "tolerances": {},
+          "visited_nodes": 1,
+          "skipped_subtrees": 1,
+          "inspected_leaves": 0,
+          "chunks_read": 0,
+          "payload_bytes": 0
+        }
+      },
+      "late": {
+        "samples_ns": [
+          1766196,
+          1589860,
+          1928671,
+          1508286,
+          1477009,
+          1406293,
+          1369918,
+          1437109,
+          1489218,
+          1495006,
+          1412332
+        ],
+        "median_ns": 1489218,
+        "result": {
+          "profile": "visuaml-pipeline-comparison-v1",
+          "matched_observations": 999999,
+          "first_difference": {
+            "index": 999999,
+            "reason": "value",
+            "reference": {
+              "request": "00999999",
+              "boundary": "tool_result",
+              "value": 7,
+              "runtime": "synthetic",
+              "source": {
+                "line": 1000000,
+                "shard": 0
+              }
+            },
+            "candidate": {
+              "request": "00999999",
+              "boundary": "tool_result",
+              "value": 9,
+              "runtime": "synthetic",
+              "source": {
+                "line": 1000000,
+                "shard": 0
+              }
+            }
+          },
+          "tolerances": {},
+          "visited_nodes": 43,
+          "skipped_subtrees": 36,
+          "inspected_leaves": 1,
+          "chunks_read": 2,
+          "payload_bytes": 1132
+        }
+      },
+      "missing": {
+        "samples_ns": [
+          1348795,
+          1163706,
+          1176025,
+          1143216,
+          1135834,
+          1284979,
+          1416057,
+          1247252,
+          1432041,
+          1325079,
+          1160031
+        ],
+        "median_ns": 1247252,
+        "result": {
+          "profile": "visuaml-pipeline-comparison-v1",
+          "matched_observations": 0,
+          "first_difference": {
+            "index": 0,
+            "reason": "boundary",
+            "reference": {
+              "request": "00000000",
+              "boundary": "tool_result",
+              "value": 7,
+              "runtime": "synthetic",
+              "source": {
+                "line": 1,
+                "shard": 0
+              }
+            },
+            "candidate": {
+              "request": "00000100",
+              "boundary": "tool_result",
+              "value": 7,
+              "runtime": "synthetic",
+              "source": {
+                "line": 1,
+                "shard": 0
+              }
+            }
+          },
+          "tolerances": {},
+          "visited_nodes": 7,
+          "skipped_subtrees": 0,
+          "inspected_leaves": 1,
+          "chunks_read": 2,
+          "payload_bytes": 1115
+        }
+      }
+    },
+    "cli_two_candidate_samples_ns": [
+      85166922,
+      89906740,
+      88700305,
+      65651550,
+      59639578
+    ],
+    "cli_two_candidate_median_ns": 85166922,
+    "writes": {
+      "reference": {
+        "write_ns": 7171787478,
+        "close_ns": 22723651,
+        "bytes": 7389184
+      },
+      "late": {
+        "write_ns": 7258052581,
+        "close_ns": 28421806,
+        "bytes": 7389184
+      },
+      "missing": {
+        "write_ns": 7309545319,
+        "close_ns": 23792468,
+        "bytes": 7389184
+      }
+    }
+  },
+  "ten_million": {
+    "rows": 10000000,
+    "comparisons": {
+      "reference": {
+        "samples_ns": [
+          9995,
+          4336,
+          2594,
+          3555,
+          1683,
+          1272,
+          2233,
+          1131,
+          1132,
+          8263,
+          1112
+        ],
+        "median_ns": 2233,
+        "result": {
+          "profile": "visuaml-pipeline-comparison-v1",
+          "matched_observations": 10000000,
+          "first_difference": null,
+          "tolerances": {},
+          "visited_nodes": 1,
+          "skipped_subtrees": 1,
+          "inspected_leaves": 0,
+          "chunks_read": 0,
+          "payload_bytes": 0
+        }
+      },
+      "late": {
+        "samples_ns": [
+          2437058,
+          1481206,
+          1390048,
+          1618172,
+          1478211,
+          1385491,
+          1420764,
+          1512112,
+          1395767,
+          1469898,
+          1421605
+        ],
+        "median_ns": 1469898,
+        "result": {
+          "profile": "visuaml-pipeline-comparison-v1",
+          "matched_observations": 9999999,
+          "first_difference": {
+            "index": 9999999,
+            "reason": "value",
+            "reference": {
+              "request": "09999999",
+              "boundary": "tool_result",
+              "value": 7,
+              "runtime": "synthetic",
+              "source": {
+                "line": 10000000,
+                "shard": 0
+              }
+            },
+            "candidate": {
+              "request": "09999999",
+              "boundary": "tool_result",
+              "value": 9,
+              "runtime": "synthetic",
+              "source": {
+                "line": 10000000,
+                "shard": 0
+              }
+            }
+          },
+          "tolerances": {},
+          "visited_nodes": 52,
+          "skipped_subtrees": 45,
+          "inspected_leaves": 1,
+          "chunks_read": 2,
+          "payload_bytes": 1132
+        }
+      },
+      "missing": {
+        "samples_ns": [
+          1813106,
+          1326232,
+          1265680,
+          1310849,
+          1260292,
+          1246071,
+          1240181,
+          1302545,
+          1244238,
+          1256856,
+          1269125
+        ],
+        "median_ns": 1265680,
+        "result": {
+          "profile": "visuaml-pipeline-comparison-v1",
+          "matched_observations": 0,
+          "first_difference": {
+            "index": 0,
+            "reason": "boundary",
+            "reference": {
+              "request": "00000000",
+              "boundary": "tool_result",
+              "value": 7,
+              "runtime": "synthetic",
+              "source": {
+                "line": 1,
+                "shard": 0
+              }
+            },
+            "candidate": {
+              "request": "00000100",
+              "boundary": "tool_result",
+              "value": 7,
+              "runtime": "synthetic",
+              "source": {
+                "line": 1,
+                "shard": 0
+              }
+            }
+          },
+          "tolerances": {},
+          "visited_nodes": 7,
+          "skipped_subtrees": 0,
+          "inspected_leaves": 1,
+          "chunks_read": 2,
+          "payload_bytes": 1115
+        }
+      }
+    },
+    "cli_two_candidate_samples_ns": [
+      58383524,
+      62076007,
+      58108970,
+      59045052,
+      58998683
+    ],
+    "cli_two_candidate_median_ns": 58998683,
+    "writes": {
+      "reference": {
+        "write_ns": 73411592088,
+        "close_ns": 152412198,
+        "bytes": 73609216
+      },
+      "late": {
+        "write_ns": 74284678443,
+        "close_ns": 238904707,
+        "bytes": 73609216
+      },
+      "missing": {
+        "write_ns": 74542104924,
+        "close_ns": 163559160,
+        "bytes": 73609216
+      }
+    },
+    "write_sample_note": "Captured before file-identity metadata was added; the same stored rows were retimed with the final reader."
+  },
+  "legacy_one_million": {
+    "rows": 1000000,
+    "jsonl_write_ns": 820590024,
+    "scan_ns": 11025973265,
+    "index_build_ns": 21301485798,
+    "index_median_ns": 2995563,
+    "index_samples_ns": [
+      4869240,
+      3146029,
+      3118538,
+      3073169,
+      2995563,
+      2997405,
+      2924785,
+      2984725,
+      2925106,
+      2951065,
+      2931966
+    ],
+    "jsonl_bytes": 160000000,
+    "index_bytes": 230403024,
+    "first_difference": {
+      "index": 999999,
+      "reason": "value",
+      "reference": {
+        "request": "00999999",
+        "boundary": "tool_result",
+        "runtime": "synthetic",
+        "value": 7,
+        "source": {
+          "shard": 0,
+          "line": 1000000
+        }
+      },
+      "candidate": {
+        "request": "00999999",
+        "boundary": "tool_result",
+        "runtime": "synthetic",
+        "value": 9,
+        "source": {
+          "shard": 0,
+          "line": 1000000
+        }
+      }
+    }
+  },
+  "audit_ten_million": {
+    "late": {
+      "ns": 43397349667,
+      "result": {
+        "profile": "visuaml-pipeline-comparison-v1",
+        "matched_observations": 9999999,
+        "first_difference": {
+          "index": 9999999,
+          "reason": "value",
+          "reference": {
+            "request": "09999999",
+            "boundary": "tool_result",
+            "value": 7,
+            "runtime": "synthetic",
+            "source": {
+              "line": 10000000,
+              "shard": 0
+            }
+          },
+          "candidate": {
+            "request": "09999999",
+            "boundary": "tool_result",
+            "value": 9,
+            "runtime": "synthetic",
+            "source": {
+              "line": 10000000,
+              "shard": 0
+            }
+          }
+        },
+        "tolerances": {}
+      }
+    },
+    "missing": {
+      "ns": 95134,
+      "result": {
+        "profile": "visuaml-pipeline-comparison-v1",
+        "matched_observations": 0,
+        "first_difference": {
+          "index": 0,
+          "reason": "boundary",
+          "reference": {
+            "request": "00000000",
+            "boundary": "tool_result",
+            "value": 7,
+            "runtime": "synthetic",
+            "source": {
+              "line": 1,
+              "shard": 0
+            }
+          },
+          "candidate": {
+            "request": "00000100",
+            "boundary": "tool_result",
+            "value": 7,
+            "runtime": "synthetic",
+            "source": {
+              "line": 1,
+              "shard": 0
+            }
+          }
+        },
+        "tolerances": {}
+      }
+    }
+  },
+  "viewer_samples": [
+    {
+      "import_ms": 0.800000011920929,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 4.9000000059604645,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.30000001192092896,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.7000000178813934,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.7000000178813934,
+      "select_ms": 0.09999999403953552
+    },
+    {
+      "import_ms": 1.2000000178813934,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.30000001192092896,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.30000001192092896,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.20000001788139343,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.30000001192092896,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.29999998211860657,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.29999998211860657,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.29999998211860657,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.30000001192092896,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.20000001788139343,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.30000001192092896,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.4000000059604645,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.5999999940395355,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 1.2999999821186066,
+      "select_ms": 0
+    },
+    {
+      "import_ms": 0.29999998211860657,
+      "select_ms": 0.10000002384185791
+    }
+  ],
+  "worker_layouts": {
+    "runs": [
+      {
+        "write_ns": 7225160399,
+        "link_ns": 5597837,
+        "manifest_bytes": 1532,
+        "observations": 1000000,
+        "workers": 10,
+        "owned_ranges": 10
+      },
+      {
+        "write_ns": 6956668955,
+        "link_ns": 2698953,
+        "manifest_bytes": 797,
+        "observations": 1000000,
+        "workers": 5,
+        "owned_ranges": 10
+      }
+    ],
+    "comparison": {
+      "profile": "visuaml-pipeline-comparison-v1",
+      "matched_observations": 1000000,
+      "first_difference": null,
+      "tolerances": {},
+      "visited_nodes": 1,
+      "skipped_subtrees": 1,
+      "inspected_leaves": 0,
+      "chunks_read": 0,
+      "payload_bytes": 0
+    }
+  }
+}

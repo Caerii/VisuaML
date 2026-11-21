@@ -1,0 +1,84 @@
+[
+  {
+    "candidate": "reference",
+    "profile": "visuaml-pipeline-comparison-v1",
+    "matched_observations": 1000000,
+    "first_difference": null,
+    "tolerances": {},
+    "visited_nodes": 1,
+    "skipped_subtrees": 1,
+    "inspected_leaves": 0,
+    "chunks_read": 0,
+    "payload_bytes": 0
+  },
+  {
+    "candidate": "late",
+    "profile": "visuaml-pipeline-comparison-v1",
+    "matched_observations": 999999,
+    "first_difference": {
+      "index": 999999,
+      "reason": "value",
+      "reference": {
+        "request": "00999999",
+        "boundary": "tool_result",
+        "value": 7,
+        "runtime": "synthetic",
+        "source": {
+          "line": 1000000,
+          "shard": 0
+        }
+      },
+      "candidate": {
+        "request": "00999999",
+        "boundary": "tool_result",
+        "value": 9,
+        "runtime": "synthetic",
+        "source": {
+          "line": 1000000,
+          "shard": 0
+        }
+      }
+    },
+    "tolerances": {},
+    "visited_nodes": 43,
+    "skipped_subtrees": 36,
+    "inspected_leaves": 1,
+    "chunks_read": 2,
+    "payload_bytes": 1132
+  },
+  {
+    "candidate": "missing",
+    "profile": "visuaml-pipeline-comparison-v1",
+    "matched_observations": 0,
+    "first_difference": {
+      "index": 0,
+      "reason": "boundary",
+      "reference": {
+        "request": "00000000",
+        "boundary": "tool_result",
+        "value": 7,
+        "runtime": "synthetic",
+        "source": {
+          "line": 1,
+          "shard": 0
+        }
+      },
+      "candidate": {
+        "request": "00000100",
+        "boundary": "tool_result",
+        "value": 7,
+        "runtime": "synthetic",
+        "source": {
+          "line": 1,
+          "shard": 0
+        }
+      }
+    },
+    "tolerances": {},
+    "visited_nodes": 7,
+    "skipped_subtrees": 0,
+    "inspected_leaves": 1,
+    "chunks_read": 2,
+    "payload_bytes": 1115
+  }
+]
