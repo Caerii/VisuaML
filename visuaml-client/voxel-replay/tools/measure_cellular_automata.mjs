@@ -3,7 +3,7 @@ import { writeFile } from 'node:fs/promises';
 import { performance } from 'node:perf_hooks';
 import { denseTick, SparseWorld } from '../cellular-automata.mjs';
 
-function trial(size, seeds, sparse) {
+function initialGrid(size, seeds) {
   const walls = new Uint8Array(size*size);
   const initial = new Uint8Array(walls.length);
   // Seeds expand into a sealed, otherwise stationary world.
@@ -12,6 +12,11 @@ function trial(size, seeds, sparse) {
     const y = 8+Math.floor(i/8)*14;
     initial[y*size+x] = 1;
   }
+  return { walls, initial };
+}
+
+function trial(size, seeds, sparse) {
+  const { walls, initial } = initialGrid(size, seeds);
   const world = sparse ? new SparseWorld(walls, initial, size, size) : null;
   let signal = initial, evaluated = 0;
   const start = performance.now();
@@ -24,8 +29,30 @@ function trial(size, seeds, sparse) {
   }
   return { signal: world?.signal ?? signal, evaluated, ms: performance.now()-start };
 }
+function verifyEveryTick(size, seeds) {
+  const {walls, initial} = initialGrid(size, seeds);
+  const sources = [];
+  initial.forEach((value, i) => { if (value) sources.push([i % size, Math.floor(i / size)]); });
+  const distance = initial.map((_, i) => {
+    const x = i % size, y = Math.floor(i / size);
+    let closest = 255;
+    for (const [a,b] of sources) closest = Math.min(closest, Math.abs(a-x)+Math.abs(b-y));
+    return closest;
+  });
+  const sparse = new SparseWorld(walls, initial, size, size);
+  let dense = initial;
+  for (let tick = 1; tick <= 12; tick++) {
+    const expected = distance.map(d => Number(d <= tick));
+    dense = denseTick(walls,dense,size,size);
+    sparse.tick();
+    assert.deepEqual(dense,expected);
+    assert.deepEqual(sparse.signal,expected);
+  }
+}
+
 const rows = [];
 for (const [size,seeds] of [[32,1],[128,1],[384,1],[128,16],[128,64]]) {
+  verifyEveryTick(size,seeds);
   trial(size,seeds,false);
   trial(size,seeds,true);
   const dense = [], sparse = [];

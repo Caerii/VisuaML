@@ -1,4 +1,6 @@
 import { passage, SparseWorld } from './cellular-automata.mjs';
+import regionSixUrl from './evidence/pocket-cellular-automata/region-halo-6.json?url';
+import regionFiveUrl from './evidence/pocket-cellular-automata/region-halo-5.json?url';
 import evidenceUrl from './evidence/pocket-cellular-automata/replay.json?url';
 
 const get = id => document.getElementById(id);
@@ -67,3 +69,24 @@ window.addEventListener('keydown', event => {
   if (event.key === 'ArrowRight') step();
 });
 reset();
+
+get('region-six').href = regionSixUrl;
+get('region-five').href = regionFiveUrl;
+get('halo').onclick = async () => {
+  try {
+    const response = await fetch(evidenceUrl);
+    if (!response.ok) throw Error('Could not load the saved halo comparison');
+    const { halo } = await response.json();
+    const six = halo.cropped['6'], five = halo.cropped['5'];
+    const first = five.first_different_tick;
+    get('halo-status').textContent =
+      `Target (${halo.target.join(', ')}) first differs at tick ${first}. Six-cell halo: ${six.target_with_edit[first]}. Five-cell halo: ${five.target_with_edit[first]}. Gate left closed: ${six.target_without_edit[first]}.`;
+    get('dependency').replaceChildren(...halo.dependency.map(({cell, tick}) => {
+      const row = document.createElement('li');
+      row.textContent = `Tick ${tick} · cell (${cell.join(', ')})${tick === 0 ? ' · outside the five-cell halo' : ''}`;
+      return row;
+    }));
+  } catch (error) {
+    get('halo-status').textContent = error.message;
+  }
+};
