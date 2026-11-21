@@ -67,4 +67,13 @@ try {
   assert.equal((await tokenDownload).suggestedFilename(), 'vocabulary-tensor-assembly.json');
   await page.locator('#file').setInputFiles('evidence/vocabulary-tensor-assembly/replay.json');
   await tokenCommit.waitFor();
+  await page.getByRole('button', { name: 'Open decoder execution replay' }).click();
+  const executionCommit = page.getByText('Generated store commits at token 24');
+  await executionCommit.waitFor();
+  assert.match(await page.locator('#detail').innerText(), /Branch chooses PC 8 → 6/);
+  const executionDownload = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download decoder execution replay' }).click();
+  assert.equal((await executionDownload).suggestedFilename(), 'decoder-execution-loop.json');
+  await page.locator('#file').setInputFiles('evidence/decoder-execution-loop/replay.json');
+  await executionCommit.waitFor();
 } finally { await browser.close(); }

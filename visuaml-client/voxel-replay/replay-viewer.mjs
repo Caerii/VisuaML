@@ -1,3 +1,5 @@
+import executionLoop from './evidence/decoder-execution-loop/replay.json';
+import executionLoopUrl from './evidence/decoder-execution-loop/replay.json?url';
 import vocabulary from './evidence/vocabulary-tensor-assembly/replay.json';
 import vocabularyUrl from './evidence/vocabulary-tensor-assembly/replay.json?url';
 import paired from './evidence/paired-routing/replay.json';
@@ -18,6 +20,22 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.profile === 'visuaml-decoder-execution-loop-v1') {
+    const { taken, fallthrough } = data.cases;
+    const changed = data.intervention;
+    const write = taken.writes.find(event => event.step === data.holdout.intervention.source_step);
+    get('title').textContent = 'Saved decoder execution replay';
+    get('status').textContent = `Generated store commits at token ${write.token}`;
+    get('detail').textContent = [
+      `Store tokens: ${taken.tokens.slice(write.token - 6, write.token).join(' ')}`,
+      `Change payload token ${changed.changed_token}: load ${taken.states[4][2]} → ${changed.states[4][2]}`,
+      `Branch chooses PC ${taken.states[5][0]} → ${changed.next_pc}`,
+      `Intervention then writes address ${changed.writes.at(-1).address} and halts.`,
+      `Taken: ${taken.states.length} instructions · ${taken.tokens.length} tokens`,
+      `Fallthrough: ${fallthrough.states.length} instructions · ${fallthrough.tokens.length} tokens`,
+    ].join('\n');
+    return;
+  }
   if (data?.profile === 'visuaml-vocabulary-tensor-assembly-v1') {
     const run = data.cases.find(entry => entry.write_audit);
     const { store_tokens: [start, end], load_tokens: [loadStart, loadEnd],
@@ -177,3 +195,6 @@ get('paired-routing-download').href = pairedUrl;
 
 get('vocabulary').onclick = () => show(vocabulary);
 get('vocabulary-download').href = vocabularyUrl;
+
+get('execution-loop').onclick = () => show(executionLoop);
+get('execution-loop-download').href = executionLoopUrl;
