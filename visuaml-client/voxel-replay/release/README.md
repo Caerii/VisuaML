@@ -253,3 +253,6 @@ compares fixed and crossed threshold pairs for predicting activation changes.
 
 The [matched threshold study](chapters/matched-threshold-calibration.md) tests
 small threshold changes with paired feedback changes held fixed.
+
+The [live preservation replay](chapters/live-preservation-replay.md) opens
+the four v98 routing failures and checks a separate learned argument readout.

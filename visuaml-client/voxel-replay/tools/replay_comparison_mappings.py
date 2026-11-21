@@ -47,7 +47,7 @@ def basis(model, axis):
     return torch.stack((axis, residual / residual.norm()), dim=1)
 
 
-def compare(source, source_axis, receiver, axis, rows, *, calibration_pairs=None):
+def compare(source, source_axis, receiver, axis, rows, *, calibration_pairs=None, observe=None):
     reference = evaluate(source, source_axis, receiver, axis, design=rows)
     source_basis, receiver_basis = basis(source, source_axis), basis(receiver, axis)
     calibration = [(limit + offset, limit, rule) for limit, offset, rule in
@@ -96,6 +96,8 @@ def compare(source, source_axis, receiver, axis, rows, *, calibration_pairs=None
         replacement[:, :2] += edit.reshape_as(current[:, :2])
         logits, _, applied = run_intervention(receiver, SITE, args, replacement=replacement)
         assert torch.equal(applied[:, 2:], current[:, 2:])
+        if observe is not None:
+            observe(name, applied)
         coefficients[name] = coeff.tolist()
         for row, values in zip(reference["rows"], logits, strict=True):
             row["scores"][name] = dict(action=int(values.argmax()), logits=values.tolist())
