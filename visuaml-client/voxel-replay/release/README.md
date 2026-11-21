@@ -265,3 +265,6 @@ WASM result records and emits the byte used in the follow-up call.
 
 The [computed argument replay](chapters/computed-argument.md) uses a
 WASM-computed delay to choose and supply the next request.
+
+The [composed delay graph](chapters/composed-delay.md) runs the tagged handoff
+and both downstream WASM stages in one executable invocation.
