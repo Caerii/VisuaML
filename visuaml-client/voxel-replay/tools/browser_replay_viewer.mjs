@@ -85,4 +85,13 @@ try {
   assert.equal((await wordDownload).suggestedFilename(), 'word-decoder.json');
   await page.locator('#file').setInputFiles('evidence/word-decoder/replay.json');
   await wordCountdown.waitFor();
+  await page.getByRole('button', { name: 'Open rolling context replay' }).click();
+  const rolling = page.getByText('6,228 generated tokens · 504 peak active');
+  await rolling.waitFor();
+  assert.match(await page.locator('#detail').innerText(), /Missing counter: load 3 recovered 0 instead of 64/);
+  const rollingDownload = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download rolling context replay' }).click();
+  assert.equal((await rollingDownload).suggestedFilename(), 'rolling-context.json');
+  await page.locator('#file').setInputFiles('evidence/rolling-context/replay.json');
+  await rolling.waitFor();
 } finally { await browser.close(); }

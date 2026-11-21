@@ -1,3 +1,4 @@
+import rollingUrl from './evidence/rolling-context/replay.json?url';
 import wordDecoder from './evidence/word-decoder/replay.json';
 import wordDecoderUrl from './evidence/word-decoder/replay.json?url';
 import executionLoop from './evidence/decoder-execution-loop/replay.json';
@@ -22,6 +23,22 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.profile === 'visuaml-rolling-context-v1') {
+    const run = data.runs['live-4-countdown-128'];
+    const peak = Math.max(...run.chunks.map(chunk => chunk.peak_active_tokens));
+    const edited = data.negatives.retained_value_intervention.first_observed_effect;
+    const omitted = data.negatives.incomplete_checkpoint.first_observed_effect;
+    get('title').textContent = 'Saved rolling context replay';
+    get('status').textContent = `${run.generated_tokens.toLocaleString('en-US')} generated tokens · ${peak} peak active`;
+    get('detail').textContent = [
+      `${run.trace.length} instructions · ${run.chunks.length - 1} resumptions`,
+      `Early write: address 2 held ${run.chunks.at(-1).end.words[2]} through the final checkpoint.`,
+      `Edited checkpoint: load ${edited.retired} recovered ${edited.actual_word} instead of ${edited.expected_word}, then the branch chose PC ${edited.next_branch_pc}.`,
+      `Missing counter: load ${omitted.retired} recovered ${omitted.actual_word} instead of ${omitted.expected_word}.`,
+      `${data.short_controls.partial_store_lengths.length} unfinished store cuts preserved the old word.`,
+    ].join('\n');
+    return;
+  }
   if (data?.profile === 'visuaml-word-decoder-v1') {
     const { cases, intervention } = data;
     const before = cases.countdown;
@@ -218,3 +235,14 @@ get('execution-loop-download').href = executionLoopUrl;
 
 get('word-decoder').onclick = () => show(wordDecoder);
 get('word-decoder-download').href = wordDecoderUrl;
+
+get('rolling-context').onclick = async () => {
+  try {
+    const response = await fetch(rollingUrl);
+    if (!response.ok) throw Error('Could not load the saved rolling context replay');
+    show(await response.json());
+  } catch (error) {
+    get('status').textContent = error.message;
+  }
+};
+get('rolling-context-download').href = rollingUrl;

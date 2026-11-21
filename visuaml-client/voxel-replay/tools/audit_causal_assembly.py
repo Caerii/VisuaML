@@ -32,8 +32,8 @@ def cases():
         yield code, rng.choice(words), index % 10, rng.randrange(49)
 
 
-def reference(code, initial, count, fuel):
-    pc, registers, live = 0, [0, count], 1
+def reference(code, initial, count, fuel, *, next_pc=0, register=0):
+    pc, registers, live = next_pc, [register, count], 1
     memory = initial.copy()
     trace = []
     for _ in range(fuel):
