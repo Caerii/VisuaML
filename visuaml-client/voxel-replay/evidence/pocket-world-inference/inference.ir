@@ -1,0 +1,610 @@
+graph(%self : __torch__.pocket_world_inference.___torch_mangle_0.WorldInference,
+      %prompt.1 : Tensor,
+      %walls.1 : Tensor,
+      %signal.1 : Tensor,
+      %gate.1 : int,
+      %target.1 : int,
+      %provided.1 : bool,
+      %coverage.1 : int,
+      %disabled.1 : bool,
+      %substitute.1 : int,
+      %precomputed.1 : int):
+  %11 : int[] = prim::Constant[value=[3, 54]]()
+  %12 : int[] = prim::Constant[value=[1, 1]]()
+  %13 : int[] = prim::Constant[value=[1]]()
+  %14 : int[] = prim::Constant[value=[2, 0, 1, 3]]()
+  %15 : int[] = prim::Constant[value=[48]]()
+  %16 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %17 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %18 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %19 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %20 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %21 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %22 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %23 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %24 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %25 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %26 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %27 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %28 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %29 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %30 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %31 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %32 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %33 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %34 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %35 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %36 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %37 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %38 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %39 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %40 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %41 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %42 : str = prim::Constant[value="trunc"]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+  %43 : Tensor = prim::Constant[value={4}]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+  %44 : float = prim::Constant[value=1.0000000000000001e-05]()
+  %45 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %46 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %47 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %48 : Tensor = prim::Constant[value=<Tensor>]() # :0:0
+  %49 : Device = prim::Constant[value="cpu"]()
+  %50 : int = prim::Constant[value=-2]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+  %51 : float = prim::Constant[value=0.]() # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+  %52 : int[] = prim::Constant[value=[2, 4]]()
+  %53 : int[] = prim::Constant[value=[3, 6]]()
+  %54 : bool = prim::Constant[value=1]()
+  %55 : bool = prim::Constant[value=0]()
+  %56 : int = prim::Constant[value=13]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:97:76
+  %57 : int = prim::Constant[value=15]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:78:29
+  %58 : int = prim::Constant[value=17]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:68:29
+  %59 : int = prim::Constant[value=18]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:65:40
+  %60 : int = prim::Constant[value=14]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:51
+  %61 : int = prim::Constant[value=5]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:38
+  %62 : int = prim::Constant[value=23]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:67
+  %63 : int = prim::Constant[value=22]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:46
+  %64 : int = prim::Constant[value=16]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:39
+  %65 : int = prim::Constant[value=20]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:56:39
+  %66 : int = prim::Constant[value=7]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:52:36
+  %67 : int = prim::Constant[value=64]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:46:37
+  %observed_horizon.1 : int = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:40:46
+  %69 : int = prim::Constant[value=8]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:39:32
+  %70 : int = prim::Constant[value=4]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:38:33
+  %outcome.1 : int = prim::Constant[value=2]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:38:31
+  %72 : int = prim::Constant[value=1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:37:37
+  %73 : int = prim::Constant[value=6]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:37:33
+  %74 : int = prim::Constant[value=3]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:37:31
+  %75 : int = prim::Constant[value=-1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:37:36
+  %76 : NoneType = prim::Constant()
+  %77 : int = prim::Constant[value=9223372036854775807]()
+  %self.rule.rule : Float(1, 1, 3, 3, strides=[9, 9, 3, 1], requires_grad=0, device=cpu) = prim::Constant[value=(1,1,.,.) =   0  1  0   1  1  1   0  1  0 [ CPUFloatType{1,1,3,3} ]]()
+  %79 : Tensor = prim::Uninitialized()
+  %80 : int = prim::Uninitialized()
+  %81 : bool = prim::Uninitialized()
+  %requests.1 : Tensor = aten::full(%53, %75, %70, %76, %76, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:37:19
+  %feedback.1 : Tensor = aten::full(%52, %75, %70, %76, %76, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:38:19
+  %84 : int = aten::size(%walls.1, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:39:34
+  %85 : int = aten::size(%walls.1, %74) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:39:48
+  %86 : int[] = prim::ListConstruct(%outcome.1, %69, %84, %85)
+  %frames.1 : Tensor = aten::zeros(%86, %76, %76, %76, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:39:17
+  %size.1 : int = aten::numel(%walls.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:42:15
+  %outcome : int, %answer : int, %observed_action : int, %observed_horizon : int, %prefix : Tensor, %94 : int = prim::Loop(%77, %54, %outcome.1, %75, %75, %observed_horizon.1, %prompt.1, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:43:8
+    block0(%95 : int, %outcome.29 : int, %answer.19 : int, %observed_action.27 : int, %observed_horizon.31 : int, %prefix.39 : Tensor, %101 : int):
+      %length : int, %prefix.35 : Tensor, %104 : int = prim::Loop(%77, %54, %observed_horizon.1, %prefix.39, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:45:12
+        block0(%105 : int, %length.17 : int, %prefix.33 : Tensor, %108 : int):
+          %109 : int = aten::numel(%prefix.33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:46:19
+          %110 : bool = aten::ge(%109, %67) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:46:19
+          %111 : bool, %112 : bool, %113 : int, %114 : Tensor, %115 : bool, %116 : int, %117 : Tensor = prim::If(%110) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:46:16
+            block0():
+              -> (%54, %55, %length.17, %prefix.33, %81, %80, %79)
+            block1():
+              %118 : Tensor = aten::unsqueeze(%prefix.33, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:48:40
+              %119 : int = aten::size(%118, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/two_call_controller.py:44:0
+              %pos.1 : Tensor = aten::arange(%119, %76, %76, %49, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/two_call_controller.py:45:0
+              %121 : Tensor = aten::embedding(%48, %118, %75, %55, %55) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2542:0
+              %122 : Tensor = aten::embedding(%47, %pos.1, %75, %55, %55) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2542:0
+              %src.1 : Tensor = aten::add(%121, %122, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/two_call_controller.py:47:0
+              %query.1 : Tensor = aten::layer_norm(%src.1, %15, %46, %45, %44, %54) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %query0.1 : Tensor = aten::transpose(%query.1, %72, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1454:0
+              %126 : int = aten::size(%query0.1, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %tgt_len.1 : Tensor = prim::NumToTensor(%126) # :0:0
+              %128 : int = aten::size(%query0.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %bsz.1 : Tensor = prim::NumToTensor(%128) # :0:0
+              %130 : int = aten::size(%query0.1, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %embed_dim.1 : Tensor = prim::NumToTensor(%130) # :0:0
+              %head_dim.1 : Tensor = aten::div(%embed_dim.1, %43, %42) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+              %133 : int = aten::Int(%head_dim.1) # :0:0
+              %134 : int = aten::size(%query0.1, %75) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5695:0
+              %135 : Tensor = aten::linear(%query0.1, %41, %40) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5699:0
+              %136 : int[] = prim::ListConstruct(%74, %134)
+              %137 : Tensor = aten::unflatten(%135, %75, %136) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/_tensor.py:1418:0
+              %138 : Tensor = aten::unsqueeze(%137, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5703:0
+              %139 : Tensor = aten::transpose(%138, %observed_horizon.1, %50) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+              %140 : Tensor = aten::squeeze(%139, %50) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5705:0
+              %proj.1 : Tensor = aten::contiguous(%140, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5706:0
+              %q.1 : Tensor = aten::select(%proj.1, %observed_horizon.1, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %k.1 : Tensor = aten::select(%proj.1, %observed_horizon.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %v.1 : Tensor = aten::select(%proj.1, %observed_horizon.1, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %145 : Tensor = aten::mul(%bsz.1, %43) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %146 : int = aten::Int(%145) # :0:0
+              %147 : int[] = prim::ListConstruct(%126, %146, %133)
+              %148 : Tensor = aten::view(%q.1, %147) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %q0.1 : Tensor = aten::transpose(%148, %observed_horizon.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %150 : int = aten::size(%k.1, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %151 : int[] = prim::ListConstruct(%150, %146, %133)
+              %152 : Tensor = aten::view(%k.1, %151) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %k0.1 : Tensor = aten::transpose(%152, %observed_horizon.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %154 : int = aten::size(%v.1, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %155 : int[] = prim::ListConstruct(%154, %146, %133)
+              %156 : Tensor = aten::view(%v.1, %155) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %v0.1 : Tensor = aten::transpose(%156, %observed_horizon.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %158 : int = aten::size(%k0.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6412:0
+              %159 : int[] = prim::ListConstruct(%128, %70, %126, %133)
+              %q1.1 : Tensor = aten::view(%q0.1, %159) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6483:0
+              %161 : int[] = prim::ListConstruct(%128, %70, %158, %133)
+              %k1.1 : Tensor = aten::view(%k0.1, %161) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6484:0
+              %v1.1 : Tensor = aten::view(%v0.1, %161) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6485:0
+              %attn_output.1 : Tensor = aten::scaled_dot_product_attention(%q1.1, %k1.1, %v1.1, %76, %51, %54, %76, %55) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+              %165 : Tensor = aten::permute(%attn_output.1, %14) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %166 : Tensor = aten::contiguous(%165, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %167 : Tensor = aten::mul(%bsz.1, %tgt_len.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %168 : int = aten::Int(%167) # :0:0
+              %169 : int[] = prim::ListConstruct(%168, %130)
+              %attn_output0.1 : Tensor = aten::view(%166, %169) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %attn_output1.1 : Tensor = aten::linear(%attn_output0.1, %39, %38) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6494:0
+              %172 : int = aten::size(%attn_output1.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %173 : int[] = prim::ListConstruct(%126, %128, %172)
+              %attn_output2.1 : Tensor = aten::view(%attn_output1.1, %173) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %input.1 : Tensor = aten::transpose(%attn_output2.1, %72, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1510:0
+              %input0.1 : Tensor = aten::add(%src.1, %input.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:928:0
+              %input1.1 : Tensor = aten::layer_norm(%input0.1, %15, %37, %36, %44, %54) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %input2.1 : Tensor = aten::linear(%input1.1, %35, %34) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input3.1 : Tensor = aten::relu(%input2.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:0
+              %input4.1 : Tensor = aten::linear(%input3.1, %33, %32) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input5.1 : Tensor = aten::add(%input0.1, %input4.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:931:0
+              %query1.1 : Tensor = aten::layer_norm(%input5.1, %15, %31, %30, %44, %54) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %query2.1 : Tensor = aten::transpose(%query1.1, %72, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1454:0
+              %184 : int = aten::size(%query2.1, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %tgt_len0.1 : Tensor = prim::NumToTensor(%184) # :0:0
+              %186 : int = aten::size(%query2.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %bsz0.1 : Tensor = prim::NumToTensor(%186) # :0:0
+              %188 : int = aten::size(%query2.1, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+              %embed_dim0.1 : Tensor = prim::NumToTensor(%188) # :0:0
+              %head_dim0.1 : Tensor = aten::div(%embed_dim0.1, %43, %42) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+              %191 : int = aten::Int(%head_dim0.1) # :0:0
+              %192 : int = aten::size(%query2.1, %75) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5695:0
+              %193 : Tensor = aten::linear(%query2.1, %29, %28) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5699:0
+              %194 : int[] = prim::ListConstruct(%74, %192)
+              %195 : Tensor = aten::unflatten(%193, %75, %194) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/_tensor.py:1418:0
+              %196 : Tensor = aten::unsqueeze(%195, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5703:0
+              %197 : Tensor = aten::transpose(%196, %observed_horizon.1, %50) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+              %198 : Tensor = aten::squeeze(%197, %50) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5705:0
+              %proj0.1 : Tensor = aten::contiguous(%198, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5706:0
+              %q2.1 : Tensor = aten::select(%proj0.1, %observed_horizon.1, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %k2.1 : Tensor = aten::select(%proj0.1, %observed_horizon.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %v2.1 : Tensor = aten::select(%proj0.1, %observed_horizon.1, %outcome.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+              %203 : Tensor = aten::mul(%bsz0.1, %43) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %204 : int = aten::Int(%203) # :0:0
+              %205 : int[] = prim::ListConstruct(%184, %204, %191)
+              %206 : Tensor = aten::view(%q2.1, %205) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %q3.1 : Tensor = aten::transpose(%206, %observed_horizon.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+              %208 : int = aten::size(%k2.1, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %209 : int[] = prim::ListConstruct(%208, %204, %191)
+              %210 : Tensor = aten::view(%k2.1, %209) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %k3.1 : Tensor = aten::transpose(%210, %observed_horizon.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+              %212 : int = aten::size(%v2.1, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %213 : int[] = prim::ListConstruct(%212, %204, %191)
+              %214 : Tensor = aten::view(%v2.1, %213) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %v3.1 : Tensor = aten::transpose(%214, %observed_horizon.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+              %216 : int = aten::size(%k3.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6412:0
+              %217 : int[] = prim::ListConstruct(%186, %70, %184, %191)
+              %q4.1 : Tensor = aten::view(%q3.1, %217) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6483:0
+              %219 : int[] = prim::ListConstruct(%186, %70, %216, %191)
+              %k4.1 : Tensor = aten::view(%k3.1, %219) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6484:0
+              %v4.1 : Tensor = aten::view(%v3.1, %219) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6485:0
+              %attn_output3.1 : Tensor = aten::scaled_dot_product_attention(%q4.1, %k4.1, %v4.1, %76, %51, %54, %76, %55) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+              %223 : Tensor = aten::permute(%attn_output3.1, %14) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %224 : Tensor = aten::contiguous(%223, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %225 : Tensor = aten::mul(%bsz0.1, %tgt_len0.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %226 : int = aten::Int(%225) # :0:0
+              %227 : int[] = prim::ListConstruct(%226, %188)
+              %attn_output4.1 : Tensor = aten::view(%224, %227) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+              %attn_output5.1 : Tensor = aten::linear(%attn_output4.1, %27, %26) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6494:0
+              %230 : int = aten::size(%attn_output5.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %231 : int[] = prim::ListConstruct(%184, %186, %230)
+              %attn_output6.1 : Tensor = aten::view(%attn_output5.1, %231) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+              %input6.1 : Tensor = aten::transpose(%attn_output6.1, %72, %observed_horizon.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1510:0
+              %input7.1 : Tensor = aten::add(%input5.1, %input6.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:928:0
+              %input8.1 : Tensor = aten::layer_norm(%input7.1, %15, %25, %24, %44, %54) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %input9.1 : Tensor = aten::linear(%input8.1, %23, %22) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input10.1 : Tensor = aten::relu(%input9.1) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:0
+              %input11.1 : Tensor = aten::linear(%input10.1, %21, %20) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %input12.1 : Tensor = aten::add(%input7.1, %input11.1, %72) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:931:0
+              %input13.1 : Tensor = aten::layer_norm(%input12.1, %15, %19, %18, %44, %54) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+              %241 : Tensor = aten::linear(%input13.1, %17, %16) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+              %242 : Tensor = aten::select(%241, %observed_horizon.1, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:48:24
+              %243 : Tensor = aten::select(%242, %observed_horizon.1, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:48:24
+              %244 : Tensor = aten::argmax(%243, %76, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:48:24
+              %token.7 : Tensor = aten::reshape(%244, %13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:48:24
+              %246 : Tensor = aten::select(%token.7, %observed_horizon.1, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:49:40
+              %247 : Tensor = aten::select(%requests.1, %observed_horizon.1, %101) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:49:16
+              %248 : Tensor = aten::select(%247, %observed_horizon.1, %length.17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:49:16
+              %249 : Tensor = aten::copy_(%248, %246, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:49:16
+              %250 : Tensor[] = prim::ListConstruct(%prefix.33, %token.7)
+              %prefix.41 : Tensor = aten::cat(%250, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:50:25
+              %length.19 : int = aten::add(%length.17, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:51:16
+              %253 : int = aten::Int(%246) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:52:19
+              %254 : bool = aten::eq(%253, %66) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:52:19
+              %255 : bool, %256 : int, %257 : Tensor = prim::If(%254) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:52:16
+                block0():
+                  -> (%55, %length.19, %prefix.41)
+                block1():
+                  -> (%81, %80, %79)
+              -> (%254, %255, %256, %257, %54, %length.19, %prefix.41)
+          %258 : bool, %259 : int, %260 : Tensor = prim::If(%111)
+            block0():
+              -> (%112, %113, %114)
+            block1():
+              -> (%115, %116, %117)
+          %261 : int = aten::add(%108, %72)
+          %262 : bool = aten::lt(%261, %73)
+          %263 : bool = aten::__and__(%262, %258)
+          -> (%263, %259, %260, %261)
+      %row.1 : Tensor = aten::select(%requests.1, %observed_horizon.1, %101) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:54:18
+      %265 : Tensor = aten::select(%row.1, %observed_horizon.1, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:55:23
+      %kind.1 : int = aten::Int(%265) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:55:19
+      %267 : bool = aten::eq(%length, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:56:15
+      %268 : bool = prim::If(%267) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:56:15
+        block0():
+          %269 : bool = aten::eq(%kind.1, %65) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:56:31
+          -> (%269)
+        block1():
+          -> (%55)
+      %270 : bool = prim::If(%268) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:56:15
+        block0():
+          %271 : Tensor = aten::select(%row.1, %observed_horizon.1, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:56:50
+          %272 : int = aten::Int(%271) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:56:46
+          %273 : bool = aten::eq(%272, %66) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:56:46
+          -> (%273)
+        block1():
+          -> (%55)
+      %274 : bool, %275 : bool, %276 : int, %277 : int, %278 : int, %279 : int, %280 : Tensor, %281 : bool, %282 : int, %283 : int, %284 : int, %285 : int, %286 : Tensor = prim::If(%270) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:56:12
+        block0():
+          -> (%54, %55, %72, %answer.19, %observed_action.27, %observed_horizon.31, %prefix.35, %81, %80, %80, %80, %80, %79)
+        block1():
+          %287 : bool = aten::eq(%length, %74) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:15
+          %288 : bool = prim::If(%287) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:15
+            block0():
+              %289 : bool = aten::eq(%kind.1, %64) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:31
+              -> (%289)
+            block1():
+              -> (%55)
+          %290 : bool = prim::If(%288) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:15
+            block0():
+              %291 : Tensor = aten::select(%row.1, %observed_horizon.1, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:56
+              %292 : int = aten::Int(%291) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:52
+              %293 : bool = aten::le(%63, %292) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:46
+              %294 : bool = prim::If(%293) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:46
+                block0():
+                  %295 : Tensor = aten::select(%row.1, %observed_horizon.1, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:56
+                  %296 : int = aten::Int(%295) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:52
+                  %297 : bool = aten::le(%296, %62) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:52
+                  -> (%297)
+                block1():
+                  -> (%55)
+              -> (%294)
+            block1():
+              -> (%55)
+          %298 : bool = prim::If(%290) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:15
+            block0():
+              %299 : Tensor = aten::select(%row.1, %observed_horizon.1, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:78
+              %300 : int = aten::Int(%299) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:74
+              %301 : bool = aten::eq(%300, %66) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:74
+              -> (%301)
+            block1():
+              -> (%55)
+          %302 : bool, %303 : bool, %304 : int, %305 : int, %306 : int, %307 : int, %308 : Tensor, %309 : bool, %310 : int, %311 : int, %312 : int, %313 : int, %314 : Tensor = prim::If(%298) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:59:12
+            block0():
+              %315 : Tensor = aten::select(%row.1, %observed_horizon.1, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:60:39
+              %316 : int = aten::Int(%315) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:60:35
+              %answer.23 : int = aten::sub(%316, %63) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:60:35
+              -> (%54, %55, %observed_horizon.1, %answer.23, %observed_action.27, %observed_horizon.31, %prefix.35, %81, %80, %80, %80, %80, %79)
+            block1():
+              %318 : bool = aten::eq(%101, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:15
+              %319 : bool = prim::If(%318) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:15
+                block0():
+                  -> (%54)
+                block1():
+                  %320 : bool = aten::ne(%length, %61) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:28
+                  -> (%320)
+              %321 : bool = prim::If(%319) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:15
+                block0():
+                  -> (%54)
+                block1():
+                  %322 : bool = aten::ne(%kind.1, %60) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:43
+                  -> (%322)
+              %323 : bool = prim::If(%321) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:15
+                block0():
+                  -> (%54)
+                block1():
+                  %324 : Tensor = aten::select(%row.1, %observed_horizon.1, %70) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:61
+                  %325 : int = aten::Int(%324) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:57
+                  %326 : bool = aten::ne(%325, %66) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:57
+                  -> (%326)
+              %327 : bool, %328 : int, %329 : int, %330 : int, %331 : int, %332 : Tensor, %333 : bool, %334 : int, %335 : int, %336 : int, %337 : int, %338 : Tensor = prim::If(%323) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:62:12
+                block0():
+                  -> (%55, %outcome.29, %answer.19, %observed_action.27, %observed_horizon.31, %prefix.35, %81, %80, %80, %80, %80, %79)
+                block1():
+                  %339 : Tensor = aten::select(%row.1, %observed_horizon.1, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:64:34
+                  %tool.15 : int = aten::Int(%339) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:64:30
+                  %341 : Tensor = aten::select(%row.1, %observed_horizon.1, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:64:46
+                  %342 : int = aten::Int(%341) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:64:42
+                  %left.21 : int = aten::sub(%342, %63) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:64:42
+                  %344 : Tensor = aten::select(%row.1, %observed_horizon.1, %74) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:64:61
+                  %345 : int = aten::Int(%344) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:64:57
+                  %right.23 : int = aten::sub(%345, %63) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:64:57
+                  %347 : bool = aten::eq(%101, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:15
+                  %348 : bool = prim::If(%347) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:15
+                    block0():
+                      %349 : bool = aten::eq(%tool.15, %outcome.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:29
+                      -> (%349)
+                    block1():
+                      -> (%55)
+                  %350 : bool = prim::If(%348) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:15
+                    block0():
+                      %351 : bool = aten::le(%observed_horizon.1, %left.21) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:43
+                      %352 : bool = prim::If(%351) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:43
+                        block0():
+                          %353 : bool = aten::le(%left.21, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:48
+                          -> (%353)
+                        block1():
+                          -> (%55)
+                      -> (%352)
+                    block1():
+                      -> (%55)
+                  %354 : bool = prim::If(%350) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:15
+                    block0():
+                      %355 : bool = aten::le(%72, %right.23) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:62
+                      %356 : bool = prim::If(%355) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:62
+                        block0():
+                          %357 : bool = aten::le(%right.23, %69) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:67
+                          -> (%357)
+                        block1():
+                          -> (%55)
+                      -> (%356)
+                    block1():
+                      -> (%55)
+                  %status.81 : int, %raw.153 : int, %reported.91 : int, %steps.101 : int, %observed_action.45 : int, %observed_horizon.49 : int = prim::If(%354) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:66:12
+                    block0():
+                      %364 : bool = aten::__not__(%provided.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:19
+                      %365 : bool = prim::If(%364) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:19
+                        block0():
+                          -> (%54)
+                        block1():
+                          -> (%disabled.1)
+                      %366 : bool = prim::If(%365) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:19
+                        block0():
+                          -> (%54)
+                        block1():
+                          %367 : bool = aten::gt(%right.23, %coverage.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:47
+                          -> (%367)
+                      %368 : bool = prim::If(%366) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:19
+                        block0():
+                          -> (%54)
+                        block1():
+                          %369 : bool = aten::le(%observed_horizon.1, %gate.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:72
+                          %370 : bool = prim::If(%369) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:72
+                            block0():
+                              %371 : bool = aten::lt(%gate.1, %size.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:77
+                              -> (%371)
+                            block1():
+                              -> (%55)
+                          %372 : bool = prim::If(%370) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:72
+                            block0():
+                              %373 : bool = aten::le(%observed_horizon.1, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:93
+                              %374 : bool = prim::If(%373) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:93
+                                block0():
+                                  %375 : bool = aten::lt(%target.1, %size.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:98
+                                  -> (%375)
+                                block1():
+                                  -> (%55)
+                              -> (%374)
+                            block1():
+                              -> (%55)
+                          %376 : bool = aten::__not__(%372) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:67
+                          -> (%376)
+                      %status.83 : int, %raw.155 : int, %reported.93 : int, %steps.103 : int, %observed_action.47 : int, %observed_horizon.51 : int = prim::If(%368) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:67:16
+                        block0():
+                          -> (%58, %75, %75, %observed_horizon.1, %observed_action.27, %observed_horizon.31)
+                        block1():
+                          %383 : bool = aten::ge(%precomputed.1, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:71:23
+                          %raw.157 : int, %steps.105 : int = prim::If(%383) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:71:20
+                            block0():
+                              -> (%precomputed.1, %observed_horizon.1)
+                            block1():
+                              %terrain.2 : Tensor = aten::clone(%walls.1, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:24:18
+                              %387 : bool = aten::eq(%left.21, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:25:11
+                               = prim::If(%387) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:25:8
+                                block0():
+                                  %388 : Tensor = aten::flatten(%terrain.2, %observed_horizon.1, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:26:12
+                                  %389 : Tensor = aten::select(%388, %observed_horizon.1, %gate.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:26:12
+                                  %390 : int = prim::dtype(%389)
+                                  %391 : Device = prim::device(%389)
+                                  %392 : Tensor = aten::tensor(%observed_horizon.1, %390, %391, %55)
+                                  %393 : Tensor = aten::copy_(%389, %392, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:26:12
+                                  -> ()
+                                block1():
+                                  -> ()
+                              %394 : Tensor[] = prim::ListConstruct()
+                              %signal.2 : Tensor = prim::Loop(%right.23, %54, %signal.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:28:8
+                                block0(%396 : int, %signal.14 : Tensor):
+                                  %398 : Tensor = aten::conv2d(%signal.14, %self.rule.rule, %76, %12, %12, %12, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                                  %occupied.2 : Tensor = aten::clamp(%398, %observed_horizon.1, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                                  %400 : Tensor = aten::neg(%terrain.2) # <string>:11:9
+                                  %401 : Tensor = aten::add(%400, %72, %72) # <string>:11:9
+                                  %signal.16 : Tensor = aten::mul(%occupied.2, %401) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+                                  %403 : Tensor[] = aten::append(%394, %signal.16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:30:12
+                                  -> (%54, %signal.16)
+                              %404 : Tensor = aten::flatten(%signal.2, %observed_horizon.1, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:19
+                              %405 : Tensor = aten::select(%404, %observed_horizon.1, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:19
+                              %406 : int = aten::Int(%405) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:15
+                              %407 : Tensor = aten::cat(%394, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:46
+                              %408 : Tensor = aten::slice(%407, %observed_horizon.1, %76, %76, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:76:46
+                              %409 : Tensor = aten::select(%408, %72, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:76:46
+                              %410 : Tensor = aten::select(%frames.1, %observed_horizon.1, %101) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:76:24
+                              %411 : Tensor = aten::slice(%410, %observed_horizon.1, %76, %right.23, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:76:24
+                              %412 : Tensor = aten::copy_(%411, %409, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:76:24
+                              -> (%406, %right.23)
+                          %413 : bool = aten::ge(%substitute.1, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:77:45
+                          %reported.95 : int = prim::If(%413) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:77:31
+                            block0():
+                              -> (%substitute.1)
+                            block1():
+                              -> (%raw.157)
+                          %415 : bool = aten::le(%observed_horizon.1, %reported.95) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:78:35
+                          %416 : bool = prim::If(%415) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:78:35
+                            block0():
+                              %417 : bool = aten::le(%reported.95, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:78:40
+                              -> (%417)
+                            block1():
+                              -> (%55)
+                          %status.85 : int = prim::If(%416) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:78:29
+                            block0():
+                              -> (%57)
+                            block1():
+                              -> (%59)
+                          -> (%status.85, %raw.157, %reported.95, %steps.105, %left.21, %right.23)
+                      -> (%status.83, %raw.155, %reported.93, %steps.103, %observed_action.47, %observed_horizon.51)
+                    block1():
+                      %419 : bool = aten::eq(%101, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:17
+                      %420 : bool = prim::If(%419) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:17
+                        block0():
+                          %421 : bool = aten::__contains__(%11, %tool.15) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:31
+                          -> (%421)
+                        block1():
+                          -> (%55)
+                      %422 : bool = prim::If(%420) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:17
+                        block0():
+                          %423 : bool = aten::le(%observed_horizon.1, %left.21) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:50
+                          %424 : bool = prim::If(%423) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:50
+                            block0():
+                              %425 : bool = aten::le(%left.21, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:55
+                              -> (%425)
+                            block1():
+                              -> (%55)
+                          -> (%424)
+                        block1():
+                          -> (%55)
+                      %426 : bool = prim::If(%422) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:17
+                        block0():
+                          %427 : bool = aten::eq(%right.23, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:69
+                          -> (%427)
+                        block1():
+                          -> (%55)
+                      %428 : bool = prim::If(%426) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:17
+                        block0():
+                          %429 : bool = aten::gt(%observed_horizon.31, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:84
+                          -> (%429)
+                        block1():
+                          -> (%55)
+                      %status.91 : int, %raw.167 : int, %reported.101 : int, %steps.111 : int = prim::If(%428) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:79:12
+                        block0():
+                          %434 : bool = aten::eq(%tool.15, %74) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:80:19
+                          %raw.169 : int, %steps.113 : int = prim::If(%434) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:80:16
+                            block0():
+                              %terrain.1 : Tensor = aten::clone(%walls.1, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:24:18
+                              %438 : Tensor[] = prim::ListConstruct()
+                              %signal : Tensor = prim::Loop(%observed_horizon.31, %54, %signal.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:28:8
+                                block0(%440 : int, %signal.13 : Tensor):
+                                  %442 : Tensor = aten::conv2d(%signal.13, %self.rule.rule, %76, %12, %12, %12, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                                  %occupied.1 : Tensor = aten::clamp(%442, %observed_horizon.1, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                                  %444 : Tensor = aten::neg(%terrain.1) # <string>:11:9
+                                  %445 : Tensor = aten::add(%444, %72, %72) # <string>:11:9
+                                  %signal.5 : Tensor = aten::mul(%occupied.1, %445) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+                                  %447 : Tensor[] = aten::append(%438, %signal.5) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:30:12
+                                  -> (%54, %signal.5)
+                              %448 : Tensor = aten::flatten(%signal, %observed_horizon.1, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:19
+                              %449 : Tensor = aten::select(%448, %observed_horizon.1, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:19
+                              %450 : int = aten::Int(%449) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:15
+                              %451 : Tensor = aten::cat(%438, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:46
+                              %452 : Tensor = aten::slice(%451, %observed_horizon.1, %76, %76, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:84:42
+                              %453 : Tensor = aten::select(%452, %72, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:84:42
+                              %454 : Tensor = aten::select(%frames.1, %observed_horizon.1, %101) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:84:20
+                              %455 : Tensor = aten::slice(%454, %observed_horizon.1, %76, %observed_horizon.31, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:84:20
+                              %456 : Tensor = aten::copy_(%455, %453, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:84:20
+                              -> (%450, %observed_horizon.31)
+                            block1():
+                              %terrain.15 : Tensor = aten::clone(%walls.1, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:87:30
+                              %458 : bool = aten::eq(%observed_action.27, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:88:23
+                               = prim::If(%458) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:88:20
+                                block0():
+                                  %459 : Tensor = aten::flatten(%terrain.15, %observed_horizon.1, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:89:24
+                                  %460 : Tensor = aten::select(%459, %observed_horizon.1, %gate.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:89:24
+                                  %461 : int = prim::dtype(%460)
+                                  %462 : Device = prim::device(%460)
+                                  %463 : Tensor = aten::tensor(%observed_horizon.1, %461, %462, %55)
+                                  %464 : Tensor = aten::copy_(%460, %463, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:89:24
+                                  -> ()
+                                block1():
+                                  -> ()
+                              %width.13 : int = aten::size(%terrain.15, %74) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:90:28
+                              %466 : int = aten::floordiv(%gate.1, %width.13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:91:30
+                              %467 : int = aten::floordiv(%target.1, %width.13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:91:45
+                              %468 : bool = aten::eq(%466, %467) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:91:30
+                              %469 : bool = prim::If(%468) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:91:30
+                                block0():
+                                  %470 : bool = aten::le(%gate.1, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:91:63
+                                  -> (%470)
+                                block1():
+                                  -> (%55)
+                              %471 : bool = prim::If(%469) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:91:30
+                                block0():
+                                  %472 : Tensor = aten::flatten(%terrain.15, %observed_horizon.1, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:92:36
+                                  %473 : int = aten::add(%target.1, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:92:59
+                                  %474 : Tensor = aten::slice(%472, %observed_horizon.1, %gate.1, %473, %72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:92:36
+                                  %475 : Tensor = aten::eq(%474, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:92:36
+                                  %476 : Tensor = aten::all(%475) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:92:36
+                                  %477 : bool = aten::Bool(%476) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:92:30
+                                  -> (%477)
+                                block1():
+                                  -> (%55)
+                              %raw.175 : int = aten::Int(%471) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:91:26
+                              -> (%raw.175, %observed_horizon.1)
+                          -> (%57, %raw.169, %raw.169, %steps.113)
+                        block1():
+                          -> (%59, %75, %75, %observed_horizon.1)
+                      -> (%status.91, %raw.167, %reported.101, %steps.111, %observed_action.27, %observed_horizon.31)
+                  %479 : int[] = prim::ListConstruct(%status.81, %raw.153, %reported.91, %steps.101)
+                  %480 : Tensor = aten::tensor(%479, %76, %76, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:95:29
+                  %481 : Tensor = aten::select(%feedback.1, %observed_horizon.1, %101) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:95:12
+                  %482 : Tensor = aten::copy_(%481, %480, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:95:12
+                  %483 : bool = aten::eq(%status.81, %57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:96:15
+                  %prefix.69 : Tensor = prim::If(%483) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:96:12
+                    block0():
+                      %485 : int = aten::add(%reported.91, %63) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:97:64
+                      %486 : int[] = prim::ListConstruct(%status.81, %485, %56)
+                      %487 : Tensor = aten::tensor(%486, %76, %76, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:97:43
+                      %488 : Tensor[] = prim::ListConstruct(%prefix.35, %487)
+                      %prefix.71 : Tensor = aten::cat(%488, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:97:25
+                      -> (%prefix.71)
+                    block1():
+                      %490 : int[] = prim::ListConstruct(%status.81, %56)
+                      %491 : Tensor = aten::tensor(%490, %76, %76, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:99:43
+                      %492 : Tensor[] = prim::ListConstruct(%prefix.35, %491)
+                      %prefix.75 : Tensor = aten::cat(%492, %observed_horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:99:25
+                      -> (%prefix.75)
+                  -> (%81, %80, %80, %80, %80, %79, %54, %outcome.29, %answer.19, %observed_action.45, %observed_horizon.49, %prefix.69)
+              -> (%323, %327, %328, %329, %330, %331, %332, %333, %334, %335, %336, %337, %338)
+          -> (%302, %303, %304, %305, %306, %307, %308, %309, %310, %311, %312, %313, %314)
+      %494 : bool, %495 : int, %496 : int, %497 : int, %498 : int, %499 : Tensor = prim::If(%274)
+        block0():
+          -> (%275, %276, %277, %278, %279, %280)
+        block1():
+          -> (%281, %282, %283, %284, %285, %286)
+      %500 : int = aten::add(%101, %72)
+      %501 : bool = aten::lt(%500, %74)
+      %502 : bool = aten::__and__(%501, %494)
+      -> (%502, %495, %496, %497, %498, %499, %500)
+  %503 : int[] = prim::ListConstruct(%outcome, %answer)
+  %504 : Tensor = aten::tensor(%503, %76, %76, %55) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:100:40
+  %505 : (Tensor, Tensor, Tensor, Tensor) = prim::TupleConstruct(%requests.1, %feedback.1, %frames.1, %504)
+  return (%505)
