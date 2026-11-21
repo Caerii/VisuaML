@@ -61,6 +61,17 @@ function show(data) {
     ).join('\n');
     return;
   }
+  if (data?.profile === 'visuaml-token-intervention-v1') {
+    const failure = data.first_failed_prediction.verified_followups;
+    get('title').textContent = 'Recorded transformer intervention';
+    get('status').textContent = `${data.summary.edit}/${data.summary.assigned} held-out decisions matched`;
+    get('detail').textContent = [
+      ...data.composition.map(branch => branch.first_result === null ? 'Abstain · no follow-up' :
+        `${branch.first_request} returned ${branch.first_result} · ${branch.next_request} returned ${branch.next_result}`),
+      `First failed prediction · expected ${failure.expected.action}, observed ${failure.observed.action}`,
+    ].join('\n');
+    return;
+  }
   if (data?.profile === 'visuaml-routing-subspace-v1') {
     const witness = data.witness;
     get('title').textContent = 'Recorded routing subspace experiment';

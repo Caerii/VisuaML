@@ -1,5 +1,9 @@
 # VisuaML Replay changes
 
+## 0.18.0rc1
+
+- Added a portable token intervention specification and a two-decision transformer replay with a verified failure.
+
 ## 0.17.0rc1
 
 - Added calibrated threshold-side transfer and a matched-margin test across feedback and threshold edits.

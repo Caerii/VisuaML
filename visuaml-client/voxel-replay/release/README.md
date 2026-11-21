@@ -1,4 +1,4 @@
-# VisuaML Replay 0.17 release candidate
+# VisuaML Replay 0.18 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
@@ -55,6 +55,9 @@ calibrated numeric feedback edit while preserving the recipient's rule.
 
 The [margin-transfer study](chapters/margin-transfer.md) uses only the
 donor's threshold side and infers the edit magnitude from the recipient.
+
+The [transformer intervention study](chapters/compositional-interventions.md)
+freezes a token edit on calibration cases and replays a second tool decision.
 
 ## Capture a failing test in CI
 

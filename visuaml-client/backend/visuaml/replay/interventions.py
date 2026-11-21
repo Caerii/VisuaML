@@ -72,3 +72,15 @@ def split_donor_delta(recipient, donor, basis):
     delta = donor-recipient
     projected = (delta @ basis) @ basis.T
     return recipient+projected, donor-projected
+
+
+def replace_activation_token(recipient, donor, token):
+    """Copy one token per batch item while preserving other recipient positions."""
+    if (recipient.ndim != 3 or donor.shape != recipient.shape
+            or donor.dtype != recipient.dtype or donor.device != recipient.device):
+        raise ValueError("Donor and recipient must match in [batch, token, feature] layout")
+    if type(token) is not int or not 0 <= token < recipient.shape[1]:
+        raise ValueError("Token is outside the activation sequence")
+    result = recipient.clone()
+    result[:, token] = donor[:, token]
+    return result

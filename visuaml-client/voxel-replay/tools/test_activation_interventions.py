@@ -4,7 +4,7 @@ import unittest
 import torch
 from torch import nn
 
-from visuaml.replay.interventions import ActivationSite, fit_delta_basis, run_intervention, split_donor_delta
+from visuaml.replay.interventions import ActivationSite, fit_delta_basis, replace_activation_token, run_intervention, split_donor_delta
 
 
 class InterventionTests(unittest.TestCase):
@@ -33,6 +33,16 @@ class InterventionTests(unittest.TestCase):
             split_donor_delta(recipient, donor, 2*basis)
         with self.assertRaisesRegex(ValueError, "numerical rank"):
             fit_delta_basis(torch.zeros(2, 2), 1)
+
+    def test_token_replacement_preserves_other_positions(self):
+        recipient = torch.zeros(2, 4, 3)
+        donor = torch.ones_like(recipient)
+        result = replace_activation_token(recipient, donor, 1)
+        self.assertTrue(torch.equal(result[:, 1], donor[:, 1]))
+        self.assertTrue(torch.equal(result[:, [0, 2, 3]], recipient[:, [0, 2, 3]]))
+        self.assertEqual(int(recipient.count_nonzero()), 0)
+        with self.assertRaisesRegex(ValueError, "outside"):
+            replace_activation_token(recipient, donor, 4)
 
     def test_repeated_module_is_rejected(self):
         class Reused(nn.Module):
