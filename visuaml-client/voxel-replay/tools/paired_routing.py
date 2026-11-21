@@ -27,11 +27,11 @@ def description_ids(text):
 
 
 class Router(nn.Module):
-    def __init__(self):
+    def __init__(self, width=16):
         super().__init__()
-        self.words = nn.Embedding(len(VOCAB), 16, padding_idx=0)
-        self.condition = nn.Sequential(nn.Linear(3, 24), nn.Tanh(), nn.Linear(24, 1))
-        self.first_query = nn.Parameter(torch.randn(16))
+        self.words = nn.Embedding(len(VOCAB), width, padding_idx=0)
+        self.condition = nn.Sequential(nn.Linear(3, width*3//2), nn.Tanh(), nn.Linear(width*3//2, 1))
+        self.first_query = nn.Parameter(torch.randn(width))
 
     def encode(self, words: torch.Tensor):
         attributes = self.words(words) * (words != 0).unsqueeze(-1)

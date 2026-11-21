@@ -1,0 +1,9377 @@
+{
+  "executor_sha256": "7efedc2d47e3fc3450db9eb7a608fbdb9c0b2aee92ca81c11d5cec3623a2860f",
+  "train_rows": 12410,
+  "withheld_thresholds": [
+    7,
+    13,
+    21,
+    27
+  ],
+  "description_heldout": [
+    "shift the input",
+    "raise the value each repeat",
+    "lower the value each repeat"
+  ],
+  "results": [
+    {
+      "width": 8,
+      "seed": 82,
+      "stages": [
+        {
+          "step": 0,
+          "sha256": "5ab078551c477c6ef9e8eb49a4f507f67c83b89b206e45c9a43f0751fed30f0e",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 0,
+            "high_correct": 0,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 50,
+          "sha256": "404faff02899b022bd673d0c49d4ac1c079232efc1b6d186e5738db55c6b5da1",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 200,
+          "sha256": "789d4e345add91b21e06153e7f38ba5e5c86d5090d95d2d5bf6f32b7dfa41a18",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 600,
+          "sha256": "8dfaa56839e2f93cd218085ecfee4a6df2242c62a396309d57fa4dc61e096b22",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 32,
+            "correct_both": 32,
+            "donor_switches": 32,
+            "random_switches": 3,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 30,
+            "correct_both": 30,
+            "donor_switches": 30,
+            "random_switches": 7,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        }
+      ],
+      "three_call_holdout": [
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        }
+      ]
+    },
+    {
+      "width": 8,
+      "seed": 514,
+      "stages": [
+        {
+          "step": 0,
+          "sha256": "4a37ae132a6a30671b6ec723e5e1789b7b68ff891e628c66cf3d0e84097548f5",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 50,
+          "sha256": "0104eefbaba5fccaa971c169b0473e6649596d905a5ca045452da36499d8bf19",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 200,
+          "sha256": "35fbe04462de0ead428142c09a0d295886462dd2e78d392c8911fafa28cf645c",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 8,
+            "high_correct": 26,
+            "correct_both": 2,
+            "donor_switches": 2,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 600,
+          "sha256": "a90e1a9e049b4f73e2c8faec4a4d07384d70edf8b77b58682777eddf855492a2",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 32,
+            "correct_both": 32,
+            "donor_switches": 32,
+            "random_switches": 4,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 28,
+            "high_correct": 28,
+            "correct_both": 24,
+            "donor_switches": 24,
+            "random_switches": 8,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        }
+      ],
+      "three_call_holdout": [
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        }
+      ]
+    },
+    {
+      "width": 16,
+      "seed": 82,
+      "stages": [
+        {
+          "step": 0,
+          "sha256": "51ee4af0463ce6736fd3ba284864c3b1629bc793419caedfd33f8313658cfb12",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 10,
+            "high_correct": 22,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 50,
+          "sha256": "33c18b75c524ab1967961ba4a5c3d2cc3686a1aebf1264e982f45590bc982cdb",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 200,
+          "sha256": "7e66625e5f00d9a6e0bc6122118009152c6a624295761cc0bfa5893e6779fb4a",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 20,
+            "high_correct": 16,
+            "correct_both": 4,
+            "donor_switches": 4,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 600,
+          "sha256": "de6063110a8f905e2c14177c7321c5dae30e48f091f582d584686970eeb2193c",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 32,
+            "correct_both": 32,
+            "donor_switches": 32,
+            "random_switches": 2,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 24,
+            "high_correct": 28,
+            "correct_both": 20,
+            "donor_switches": 20,
+            "random_switches": 3,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        }
+      ],
+      "three_call_holdout": [
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        }
+      ]
+    },
+    {
+      "width": 16,
+      "seed": 514,
+      "stages": [
+        {
+          "step": 0,
+          "sha256": "50194d69c9678e51c1442c8abda98724143e4233c09e3c8ea322adc50206c31d",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 50,
+          "sha256": "f039ed9adc0e046a43ad852ee0711492a63b4a4a444c1c7e3b1c4f4cc11e1914",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 200,
+          "sha256": "a5e8a9a5d1dfcc4f082bae6f96e4b8c97c9467d274d41ba20b033bf752b00c88",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 18,
+            "high_correct": 14,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 600,
+          "sha256": "2b16f12e8fec024efc2c1c04946c7cf154b39dc318a08325fc51044331ac88a1",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 32,
+            "correct_both": 32,
+            "donor_switches": 32,
+            "random_switches": 1,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 32,
+            "correct_both": 32,
+            "donor_switches": 32,
+            "random_switches": 3,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        }
+      ],
+      "three_call_holdout": [
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        }
+      ]
+    },
+    {
+      "width": 32,
+      "seed": 82,
+      "stages": [
+        {
+          "step": 0,
+          "sha256": "322bd7f81aa88621dfc6659adebf0d0bbaa6f045095304cc82051dcfde919f82",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 8,
+            "high_correct": 24,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 50,
+          "sha256": "24386aaf2f2edfffbe0bec7b059df3ea9d66cd9c0639a58d58240af4ca234172",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 200,
+          "sha256": "c1eea9a915458f00e63624e51fce7fb6839832c26f49cda6b63d67db5e041ba6",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 18,
+            "high_correct": 18,
+            "correct_both": 4,
+            "donor_switches": 4,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 18,
+            "high_correct": 16,
+            "correct_both": 2,
+            "donor_switches": 2,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 600,
+          "sha256": "e180ee9ecd3870567244029e725ba01a634ee344bf20eb281431c93ec149570a",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 32,
+            "correct_both": 32,
+            "donor_switches": 32,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 32,
+            "correct_both": 32,
+            "donor_switches": 32,
+            "random_switches": 1,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        }
+      ],
+      "three_call_holdout": [
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        }
+      ]
+    },
+    {
+      "width": 32,
+      "seed": 514,
+      "stages": [
+        {
+          "step": 0,
+          "sha256": "6cc66f7281c3590a3d9fd2718c484471a6e3e3544c4a11703544cb1b729b0065",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 50,
+          "sha256": "b8d7c98b19beb0cd404cf08e06b07cc380f7d288c7b5b0da37a3337146c58f20",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 14,
+            "high_correct": 18,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 200,
+          "sha256": "6f416b30b290ed9ffeac7c669d42cd4f8168fb24da0da9304695b427985605f9",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 18,
+            "correct_both": 2,
+            "donor_switches": 2,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 16,
+            "high_correct": 16,
+            "correct_both": 0,
+            "donor_switches": 0,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        },
+        {
+          "step": 600,
+          "sha256": "060870e028faf4c24bcf99de8d84f49d7061297787cc6ef0433f8d5354c754e2",
+          "familiar": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 32,
+            "correct_both": 32,
+            "donor_switches": 32,
+            "random_switches": 0,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          },
+          "paraphrased": {
+            "pairs": 32,
+            "low_correct": 32,
+            "high_correct": 32,
+            "correct_both": 32,
+            "donor_switches": 32,
+            "random_switches": 1,
+            "same_side_switches": 0,
+            "first_choice_unchanged": 32
+          }
+        }
+      ],
+      "three_call_holdout": [
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            7,
+            10,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 0,
+          "threshold": 7,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            7,
+            5,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            12,
+            10,
+            8
+          ],
+          "expected_answer": 8,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            13,
+            16,
+            19
+          ],
+          "expected_answer": 19,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 5,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            12,
+            15,
+            13
+          ],
+          "expected_answer": 13,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 6,
+          "threshold": 13,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            13,
+            11,
+            14
+          ],
+          "expected_answer": 14,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            20,
+            18,
+            16
+          ],
+          "expected_answer": 16,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            1
+          ],
+          "choices": [
+            0,
+            1,
+            1
+          ],
+          "outputs": [
+            21,
+            24,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 13,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            20,
+            23,
+            21
+          ],
+          "expected_answer": 21,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 14,
+          "threshold": 21,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            21,
+            19,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 0,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            0,
+            1,
+            2
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 1,
+          "expected_choices": [
+            0,
+            2,
+            2
+          ],
+          "choices": [
+            0,
+            2,
+            2
+          ],
+          "outputs": [
+            26,
+            24,
+            22
+          ],
+          "expected_answer": 22,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 19,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            1,
+            2
+          ],
+          "choices": [
+            0,
+            1,
+            2
+          ],
+          "outputs": [
+            26,
+            29,
+            27
+          ],
+          "expected_answer": 27,
+          "first_wrong_call": null
+        },
+        {
+          "seed": 20,
+          "threshold": 27,
+          "relation": 1,
+          "order": [
+            2,
+            0,
+            1
+          ],
+          "first": 2,
+          "expected_choices": [
+            0,
+            2,
+            1
+          ],
+          "choices": [
+            0,
+            2,
+            1
+          ],
+          "outputs": [
+            27,
+            25,
+            28
+          ],
+          "expected_answer": 28,
+          "first_wrong_call": null
+        }
+      ]
+    }
+  ]
+}
