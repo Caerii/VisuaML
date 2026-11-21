@@ -268,3 +268,6 @@ WASM-computed delay to choose and supply the next request.
 
 The [composed delay graph](chapters/composed-delay.md) runs the tagged handoff
 and both downstream WASM stages in one executable invocation.
+
+The [Pocket forecast handoff](chapters/pocket-forecast-handoff.md) runs the
+world forecast, learned stop decision and conditional follow-up in one graph.

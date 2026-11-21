@@ -1,0 +1,502 @@
+graph(%self : __torch__.___torch_mangle_96.ForecastHandoff,
+      %walls.1 : Tensor,
+      %signal.1 : Tensor,
+      %gate.1 : int,
+      %target.1 : int,
+      %deadline.1 : int,
+      %coverage.1 : int,
+      %override.1 : int):
+  %8 : int[] = prim::Constant[value=[24]]()
+  %9 : int[] = prim::Constant[value=[2, 0, 1, 3]]()
+  %10 : Bool(4, 4, strides=[4, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %11 : Long(8, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0  1  2  3  4  5  6  7 [ CPULongType{8} ]]()
+  %12 : Tensor = prim::Constant[value={2}]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+  %13 : Tensor = prim::Constant[value={1}]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+  %14 : Tensor = prim::Constant[value={15.5}]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:34:0
+  %15 : float = prim::Constant[value=1.0000000000000001e-05](), scope: __module.blocks.0/__module.blocks.0.norm1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+  %16 : Tensor = prim::Constant[value={3}](), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+  %17 : str = prim::Constant[value="trunc"](), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+  %18 : int = prim::Constant[value=-2](), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+  %19 : float = prim::Constant[value=0.](), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+  %20 : float = prim::Constant[value=-inf](), scope: __module.blocks.0 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6049:0
+  %21 : int[] = prim::Constant[value=[1]]()
+  %22 : int = prim::Constant[value=9223372036854775807]()
+  %23 : int[] = prim::Constant[value=[1, 1]]()
+  %24 : Tensor = prim::Constant[value=(1,1,.,.) =   0  1  0   1  1  1   0  1  0 [ CPUFloatType{1,1,3,3} ]]() # :0:0
+  %25 : int[] = prim::Constant[value=[9]]()
+  %26 : int = prim::Constant[value=6]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:58:16
+  %27 : int = prim::Constant[value=7]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:42:53
+  %28 : int = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:32
+  %29 : int = prim::Constant[value=3]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:40:62
+  %30 : int = prim::Constant[value=8]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:40:33
+  %31 : int = prim::Constant[value=2]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:40:30
+  %32 : int = prim::Constant[value=1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:39:35
+  %33 : int = prim::Constant[value=-1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:39:34
+  %34 : int = prim::Constant[value=4]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:39:44
+  %35 : NoneType = prim::Constant()
+  %36 : bool = prim::Constant[value=1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:11
+  %37 : bool = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:32
+  %self.controller.head.weight : Float(3, 24, strides=[24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.head.bias : Float(3, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 0.2069 -0.0188 -0.2355 [ CPUFloatType{3} ]]()
+  %self.controller.blocks.1.norm2.weight : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.norm2.bias : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.linear2.weight : Float(24, 48, strides=[48, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.linear2.bias : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.linear1.weight : Float(48, 24, strides=[24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.linear1.bias : Float(48, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.norm1.weight : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.norm1.bias : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.self_attn.in_proj_weight : Float(72, 24, strides=[24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.self_attn.in_proj_bias : Float(72, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.self_attn.out_proj.weight : Float(24, 24, strides=[24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.1.self_attn.out_proj.bias : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.norm2.weight : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.norm2.bias : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.linear2.weight : Float(24, 48, strides=[48, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.linear2.bias : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.linear1.weight : Float(48, 24, strides=[24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.linear1.bias : Float(48, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.norm1.weight : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.norm1.bias : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.self_attn.in_proj_weight : Float(72, 24, strides=[24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.self_attn.in_proj_bias : Float(72, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.self_attn.out_proj.weight : Float(24, 24, strides=[24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.blocks.0.self_attn.out_proj.bias : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.number.weight : Float(24, 1, strides=[1, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.number.bias : Float(24, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.position : Float(4, 24, strides=[24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %events.1 : Tensor = aten::full(%25, %33, %34, %35, %35, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:39:17
+  %68 : int = aten::size(%walls.1, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:40:36
+  %69 : int = aten::size(%walls.1, %29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:40:51
+  %70 : int[] = prim::ListConstruct(%31, %30, %68, %69)
+  %frames.1 : Tensor = aten::zeros(%70, %35, %35, %35, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:40:17
+  %72 : bool = aten::lt(%coverage.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:11
+  %73 : bool = prim::If(%72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:11
+    block0():
+      -> (%36)
+    block1():
+      %74 : bool = aten::le(%28, %gate.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:32
+      %75 : bool = prim::If(%74) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:32
+        block0():
+          %76 : int = aten::numel(%walls.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:44
+          %77 : bool = aten::lt(%gate.1, %76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:37
+          -> (%77)
+        block1():
+          -> (%37)
+      %78 : bool = prim::If(%75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:32
+        block0():
+          %79 : bool = aten::le(%28, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:62
+          %80 : bool = prim::If(%79) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:62
+            block0():
+              %81 : int = aten::numel(%walls.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:76
+              %82 : bool = aten::lt(%target.1, %81) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:67
+              -> (%82)
+            block1():
+              -> (%37)
+          -> (%80)
+        block1():
+          -> (%37)
+      %83 : bool = prim::If(%78) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:32
+        block0():
+          %84 : bool = aten::le(%32, %deadline.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:42:36
+          %85 : bool = prim::If(%84) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:42:36
+            block0():
+              %86 : bool = aten::le(%deadline.1, %27) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:42:41
+              -> (%86)
+            block1():
+              -> (%37)
+          -> (%85)
+        block1():
+          -> (%37)
+      %87 : bool = prim::If(%83) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:32
+        block0():
+          %88 : bool = aten::le(%33, %override.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:42:59
+          %89 : bool = prim::If(%88) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:42:59
+            block0():
+              %90 : bool = aten::le(%override.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:42:65
+              -> (%90)
+            block1():
+              -> (%37)
+          -> (%89)
+        block1():
+          -> (%37)
+      %91 : bool = aten::__not__(%87) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:27
+      -> (%91)
+  %92 : (Tensor, Tensor) = prim::If(%73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:41:8
+    block0():
+      %93 : Tensor = aten::select(%events.1, %28, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:43:12
+      %94 : int = prim::dtype(%93)
+      %95 : Device = prim::device(%93)
+      %96 : Tensor = aten::tensor(%32, %94, %95, %37)
+      %97 : Tensor = aten::copy_(%93, %96, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:43:12
+      %98 : (Tensor, Tensor) = prim::TupleConstruct(%events.1, %frames.1)
+      -> (%98)
+    block1():
+      %terrain.2 : Tensor = aten::clone(%walls.1, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:24:18
+      %100 : Tensor = aten::conv2d(%signal.1, %24, %35, %23, %23, %23, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %occupied.2 : Tensor = aten::clamp(%100, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %102 : Tensor = aten::neg(%terrain.2) # <string>:11:9
+      %103 : Tensor = aten::add(%102, %32, %32) # <string>:11:9
+      %signal5.2 : Tensor = aten::mul(%occupied.2, %103) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+      %105 : Tensor = aten::conv2d(%signal5.2, %24, %35, %23, %23, %23, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %occupied.4 : Tensor = aten::clamp(%105, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %107 : Tensor = aten::neg(%terrain.2) # <string>:11:9
+      %108 : Tensor = aten::add(%107, %32, %32) # <string>:11:9
+      %signal5.4 : Tensor = aten::mul(%occupied.4, %108) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+      %110 : Tensor = aten::conv2d(%signal5.4, %24, %35, %23, %23, %23, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %occupied.6 : Tensor = aten::clamp(%110, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %112 : Tensor = aten::neg(%terrain.2) # <string>:11:9
+      %113 : Tensor = aten::add(%112, %32, %32) # <string>:11:9
+      %signal5.6 : Tensor = aten::mul(%occupied.6, %113) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+      %115 : Tensor = aten::conv2d(%signal5.6, %24, %35, %23, %23, %23, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %occupied.8 : Tensor = aten::clamp(%115, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %117 : Tensor = aten::neg(%terrain.2) # <string>:11:9
+      %118 : Tensor = aten::add(%117, %32, %32) # <string>:11:9
+      %signal5.8 : Tensor = aten::mul(%occupied.8, %118) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+      %120 : Tensor = aten::conv2d(%signal5.8, %24, %35, %23, %23, %23, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %occupied.10 : Tensor = aten::clamp(%120, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %122 : Tensor = aten::neg(%terrain.2) # <string>:11:9
+      %123 : Tensor = aten::add(%122, %32, %32) # <string>:11:9
+      %signal5.10 : Tensor = aten::mul(%occupied.10, %123) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+      %125 : Tensor = aten::conv2d(%signal5.10, %24, %35, %23, %23, %23, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %occupied.12 : Tensor = aten::clamp(%125, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %127 : Tensor = aten::neg(%terrain.2) # <string>:11:9
+      %128 : Tensor = aten::add(%127, %32, %32) # <string>:11:9
+      %signal5.12 : Tensor = aten::mul(%occupied.12, %128) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+      %130 : Tensor = aten::conv2d(%signal5.12, %24, %35, %23, %23, %23, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %occupied.14 : Tensor = aten::clamp(%130, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %132 : Tensor = aten::neg(%terrain.2) # <string>:11:9
+      %133 : Tensor = aten::add(%132, %32, %32) # <string>:11:9
+      %signal5.14 : Tensor = aten::mul(%occupied.14, %133) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+      %135 : Tensor = aten::conv2d(%signal5.14, %24, %35, %23, %23, %23, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %occupied.16 : Tensor = aten::clamp(%135, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+      %137 : Tensor = aten::neg(%terrain.2) # <string>:11:9
+      %138 : Tensor = aten::add(%137, %32, %32) # <string>:11:9
+      %signal5.16 : Tensor = aten::mul(%occupied.16, %138) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+      %140 : Tensor[] = prim::ListConstruct(%signal5.2, %signal5.4, %signal5.6, %signal5.8, %signal5.10, %signal5.12, %signal5.14, %signal5.16)
+      %141 : Tensor = aten::cat(%140, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:46
+      %142 : Tensor = aten::slice(%141, %28, %35, %35, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:46:20
+      %143 : Tensor = aten::select(%142, %32, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:46:20
+      %144 : Tensor = aten::select(%frames.1, %28, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:46:8
+      %145 : Tensor = aten::copy_(%144, %143, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:46:8
+      %146 : int = prim::Uninitialized()
+      %147 : int = aten::size(%141, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:32:26
+      %148 : bool = aten::gt(%147, %28)
+      %149 : bool, %150 : int, %151 : int = prim::Loop(%22, %148, %37, %146, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:32:8
+        block0(%152 : int, %153 : bool, %154 : int, %155 : int):
+          %156 : Tensor = aten::select(%141, %28, %155) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:20
+          %157 : Tensor = aten::flatten(%156, %28, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:20
+          %158 : Tensor = aten::select(%157, %28, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:20
+          %159 : bool = aten::Bool(%158) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:15
+          %160 : bool, %161 : int = prim::If(%159) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:12
+            block0():
+              %162 : int = aten::add(%155, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:34:23
+              -> (%37, %162)
+            block1():
+              -> (%36, %146)
+          %163 : int = aten::add(%155, %32)
+          %164 : bool = aten::lt(%163, %147)
+          %165 : bool = aten::__and__(%164, %160)
+          -> (%165, %159, %161, %163)
+      %raw.5 : int = prim::If(%149)
+        block0():
+          -> (%150)
+        block1():
+          -> (%28)
+      %167 : bool = aten::lt(%override.1, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:48:23
+      %shown.11 : int = prim::If(%167) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:48:16
+        block0():
+          -> (%raw.5)
+        block1():
+          -> (%override.1)
+      %169 : bool = aten::Bool(%shown.11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:51:29
+      %score.5 : int = prim::If(%169) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:51:16
+        block0():
+          %171 : int = aten::sub(%30, %shown.11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:51:16
+          -> (%171)
+        block1():
+          -> (%28)
+      %horizon.3 : int = prim::If(%169) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:52:18
+        block0():
+          %173 : int = aten::sub(%shown.11, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:52:25
+          %174 : int = prim::max(%32, %173) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:52:18
+          -> (%174)
+        block1():
+          -> (%deadline.1)
+      %175 : int[] = prim::ListConstruct(%28, %score.5)
+      %176 : int[] = prim::ListConstruct(%32, %horizon.3)
+      %177 : int[][] = prim::ListConstruct(%175, %176)
+      %178 : int[][][] = prim::ListConstruct(%177)
+      %tags.5 : Tensor = aten::tensor(%178, %35, %35, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:53:15
+      %180 : int = aten::sub(%30, %deadline.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:55:62
+      %181 : int[] = prim::ListConstruct(%180)
+      %182 : Tensor = aten::tensor(%181, %35, %35, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:55:48
+      %183 : Tensor[] = aten::unbind(%tags.5, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:32:0
+      %tags.1 : Tensor, %values.1 : Tensor = prim::ListUnpack(%183)
+      %186 : Float(1, 2, strides=[2, 1], requires_grad=0, device=cpu) = prim::Constant[value= 2.6350 -2.8052 [ CPUFloatType{1,2} ]]()
+      %187 : Tensor = aten::gather(%186, %32, %tags.1, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:33:0
+      %weights.1 : Tensor = aten::softmax(%187, %32, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:33:0
+      %189 : Tensor = aten::unsqueeze(%values.1, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:34:0
+      %190 : Tensor = aten::__rshift__(%189, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:34:0
+      %191 : Tensor = aten::__and__(%190, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:34:0
+      %bits.1 : Tensor = aten::to(%191, %26, %37, %37, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:34:0
+      %193 : Tensor = aten::mul(%bits.1, %12) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %194 : Tensor = aten::sub(%193, %13, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %195 : Tensor = aten::unsqueeze(%weights.1, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %196 : Tensor = aten::mul(%194, %195) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %logits.1 : Tensor = aten::sum(%196, %21, %37, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %198 : Tensor = aten::gt(%logits.1, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:36:0
+      %199 : Tensor = aten::to(%198, %34, %37, %37, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:36:0
+      %200 : Tensor = aten::__lshift__(%199, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:36:0
+      %feedback : Tensor = aten::sum(%200, %21, %37, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:36:0
+      %202 : Tensor[] = prim::ListConstruct(%feedback, %182)
+      %203 : Tensor = aten::stack(%202, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:34:0
+      %204 : Tensor = aten::to(%203, %26, %37, %37, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:34:0
+      %205 : Tensor = aten::unsqueeze(%204, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:34:0
+      %206 : Tensor = aten::div(%205, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:34:0
+      %input.3 : Tensor = aten::sub(%206, %13, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:34:0
+      %208 : Float(1, 1, 24, strides=[24, 24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+      %209 : Tensor = aten::linear(%input.3, %self.controller.number.weight, %self.controller.number.bias), scope: __module.number # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+      %210 : Float(1, 1, 24, strides=[24, 24, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+      %211 : Tensor[] = prim::ListConstruct(%209, %208, %210)
+      %212 : Tensor = aten::cat(%211, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:36:0
+      %query.1 : Tensor = aten::add(%212, %self.controller.position, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:36:0
+      %214 : Tensor = aten::zeros_like(%10, %26, %35, %35, %37, %35), scope: __module.blocks.0 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6049:0
+      %attn_mask.1 : Tensor = aten::masked_fill_(%214, %10, %20), scope: __module.blocks.0 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6049:0
+      %query.3 : Tensor = aten::transpose(%query.1, %32, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1454:0
+      %217 : int = aten::size(%query.3, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+      %tgt_len.1 : Tensor = prim::NumToTensor(%217), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %219 : int = aten::size(%query.3, %32), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+      %bsz.1 : Tensor = prim::NumToTensor(%219), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %221 : int = aten::size(%query.3, %31), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+      %embed_dim.1 : Tensor = prim::NumToTensor(%221), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %head_dim.1 : Tensor = aten::div(%embed_dim.1, %16, %17), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+      %224 : int = aten::Int(%head_dim.1), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %225 : int = aten::size(%query.3, %33), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5695:0
+      %226 : Tensor = aten::linear(%query.3, %self.controller.blocks.0.self_attn.in_proj_weight, %self.controller.blocks.0.self_attn.in_proj_bias), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5699:0
+      %227 : int[] = prim::ListConstruct(%29, %225), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %228 : Tensor = aten::unflatten(%226, %33, %227), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/_tensor.py:1418:0
+      %229 : Tensor = aten::unsqueeze(%228, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5703:0
+      %230 : Tensor = aten::transpose(%229, %28, %18), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+      %231 : Tensor = aten::squeeze(%230, %18), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5705:0
+      %proj.1 : Tensor = aten::contiguous(%231, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5706:0
+      %q.1 : Tensor = aten::select(%proj.1, %28, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+      %k.1 : Tensor = aten::select(%proj.1, %28, %32), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+      %v.1 : Tensor = aten::select(%proj.1, %28, %31), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+      %attn_mask.3 : Tensor = aten::unsqueeze(%attn_mask.1, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6344:0
+      %237 : Tensor = aten::mul(%bsz.1, %16), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+      %238 : int = aten::Int(%237), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %239 : int[] = prim::ListConstruct(%217, %238, %224), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %240 : Tensor = aten::view(%q.1, %239), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+      %q.3 : Tensor = aten::transpose(%240, %28, %32), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+      %242 : int = aten::size(%k.1, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+      %243 : int[] = prim::ListConstruct(%242, %238, %224), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %244 : Tensor = aten::view(%k.1, %243), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+      %k.3 : Tensor = aten::transpose(%244, %28, %32), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+      %246 : int = aten::size(%v.1, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+      %247 : int[] = prim::ListConstruct(%246, %238, %224), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %248 : Tensor = aten::view(%v.1, %247), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+      %v.3 : Tensor = aten::transpose(%248, %28, %32), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+      %250 : int = aten::size(%k.3, %32), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6412:0
+      %attn_mask.5 : Tensor = aten::unsqueeze(%attn_mask.3, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6479:0
+      %252 : int[] = prim::ListConstruct(%219, %29, %217, %224), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %q.5 : Tensor = aten::view(%q.3, %252), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6483:0
+      %254 : int[] = prim::ListConstruct(%219, %29, %250, %224), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %k.5 : Tensor = aten::view(%k.3, %254), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6484:0
+      %v.5 : Tensor = aten::view(%v.3, %254), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6485:0
+      %attn_output.1 : Tensor = aten::scaled_dot_product_attention(%q.5, %k.5, %v.5, %attn_mask.5, %19, %37, %35, %37), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+      %258 : Tensor = aten::permute(%attn_output.1, %9), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+      %259 : Tensor = aten::contiguous(%258, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+      %260 : Tensor = aten::mul(%bsz.1, %tgt_len.1), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+      %261 : int = aten::Int(%260), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %262 : int[] = prim::ListConstruct(%261, %221), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %attn_output.3 : Tensor = aten::view(%259, %262), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+      %attn_output.5 : Tensor = aten::linear(%attn_output.3, %self.controller.blocks.0.self_attn.out_proj.weight, %self.controller.blocks.0.self_attn.out_proj.bias), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6494:0
+      %265 : int = aten::size(%attn_output.5, %32), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+      %266 : int[] = prim::ListConstruct(%217, %219, %265), scope: __module.blocks.0/__module.blocks.0.self_attn
+      %attn_output.7 : Tensor = aten::view(%attn_output.5, %266), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+      %input.5 : Tensor = aten::transpose(%attn_output.7, %32, %28), scope: __module.blocks.0/__module.blocks.0.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1510:0
+      %input.7 : Tensor = aten::add(%query.1, %input.5, %32), scope: __module.blocks.0 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:934:0
+      %input.9 : Tensor = aten::layer_norm(%input.7, %8, %self.controller.blocks.0.norm1.weight, %self.controller.blocks.0.norm1.bias, %15, %36), scope: __module.blocks.0/__module.blocks.0.norm1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+      %input.11 : Tensor = aten::linear(%input.9, %self.controller.blocks.0.linear1.weight, %self.controller.blocks.0.linear1.bias), scope: __module.blocks.0/__module.blocks.0.linear1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+      %input.13 : Tensor = aten::relu(%input.11), scope: __module.blocks.0 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:0
+      %input.17 : Tensor = aten::linear(%input.13, %self.controller.blocks.0.linear2.weight, %self.controller.blocks.0.linear2.bias), scope: __module.blocks.0/__module.blocks.0.linear2 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+      %input.19 : Tensor = aten::add(%input.9, %input.17, %32), scope: __module.blocks.0 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:937:0
+      %query.5 : Tensor = aten::layer_norm(%input.19, %8, %self.controller.blocks.0.norm2.weight, %self.controller.blocks.0.norm2.bias, %15, %36), scope: __module.blocks.0/__module.blocks.0.norm2 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+      %276 : Tensor = aten::zeros_like(%10, %26, %35, %35, %37, %35), scope: __module.blocks.1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6049:0
+      %attn_mask.7 : Tensor = aten::masked_fill_(%276, %10, %20), scope: __module.blocks.1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6049:0
+      %query : Tensor = aten::transpose(%query.5, %32, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1454:0
+      %279 : int = aten::size(%query, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+      %tgt_len : Tensor = prim::NumToTensor(%279), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %281 : int = aten::size(%query, %32), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+      %bsz : Tensor = prim::NumToTensor(%281), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %283 : int = aten::size(%query, %31), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6240:0
+      %embed_dim : Tensor = prim::NumToTensor(%283), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %head_dim : Tensor = aten::div(%embed_dim, %16, %17), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6284:0
+      %286 : int = aten::Int(%head_dim), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %287 : int = aten::size(%query, %33), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5695:0
+      %288 : Tensor = aten::linear(%query, %self.controller.blocks.1.self_attn.in_proj_weight, %self.controller.blocks.1.self_attn.in_proj_bias), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5699:0
+      %289 : int[] = prim::ListConstruct(%29, %287), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %290 : Tensor = aten::unflatten(%288, %33, %289), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/_tensor.py:1418:0
+      %291 : Tensor = aten::unsqueeze(%290, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5703:0
+      %292 : Tensor = aten::transpose(%291, %28, %18), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5704:0
+      %293 : Tensor = aten::squeeze(%292, %18), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5705:0
+      %proj : Tensor = aten::contiguous(%293, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5706:0
+      %q.7 : Tensor = aten::select(%proj, %28, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+      %k.7 : Tensor = aten::select(%proj, %28, %32), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+      %v.7 : Tensor = aten::select(%proj, %28, %31), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:5708:0
+      %attn_mask.9 : Tensor = aten::unsqueeze(%attn_mask.7, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6344:0
+      %299 : Tensor = aten::mul(%bsz, %16), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+      %300 : int = aten::Int(%299), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %301 : int[] = prim::ListConstruct(%279, %300, %286), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %302 : Tensor = aten::view(%q.7, %301), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+      %q.9 : Tensor = aten::transpose(%302, %28, %32), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6373:0
+      %304 : int = aten::size(%k.7, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+      %305 : int[] = prim::ListConstruct(%304, %300, %286), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %306 : Tensor = aten::view(%k.7, %305), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+      %k.9 : Tensor = aten::transpose(%306, %28, %32), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6375:0
+      %308 : int = aten::size(%v.7, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+      %309 : int[] = prim::ListConstruct(%308, %300, %286), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %310 : Tensor = aten::view(%v.7, %309), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+      %v.9 : Tensor = aten::transpose(%310, %28, %32), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6386:0
+      %312 : int = aten::size(%k.9, %32), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6412:0
+      %attn_mask : Tensor = aten::unsqueeze(%attn_mask.9, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6479:0
+      %314 : int[] = prim::ListConstruct(%281, %29, %279, %286), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %q : Tensor = aten::view(%q.9, %314), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6483:0
+      %316 : int[] = prim::ListConstruct(%281, %29, %312, %286), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %k : Tensor = aten::view(%k.9, %316), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6484:0
+      %v : Tensor = aten::view(%v.9, %316), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6485:0
+      %attn_output.9 : Tensor = aten::scaled_dot_product_attention(%q, %k, %v, %attn_mask, %19, %37, %35, %37), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6487:0
+      %320 : Tensor = aten::permute(%attn_output.9, %9), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+      %321 : Tensor = aten::contiguous(%320, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+      %322 : Tensor = aten::mul(%bsz, %tgt_len), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+      %323 : int = aten::Int(%322), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %324 : int[] = prim::ListConstruct(%323, %283), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %attn_output.11 : Tensor = aten::view(%321, %324), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6491:0
+      %attn_output.13 : Tensor = aten::linear(%attn_output.11, %self.controller.blocks.1.self_attn.out_proj.weight, %self.controller.blocks.1.self_attn.out_proj.bias), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6494:0
+      %327 : int = aten::size(%attn_output.13, %32), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+      %328 : int[] = prim::ListConstruct(%279, %281, %327), scope: __module.blocks.1/__module.blocks.1.self_attn
+      %attn_output : Tensor = aten::view(%attn_output.13, %328), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:6495:0
+      %input.21 : Tensor = aten::transpose(%attn_output, %32, %28), scope: __module.blocks.1/__module.blocks.1.self_attn # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/activation.py:1510:0
+      %input.23 : Tensor = aten::add(%query.5, %input.21, %32), scope: __module.blocks.1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:934:0
+      %input.25 : Tensor = aten::layer_norm(%input.23, %8, %self.controller.blocks.1.norm1.weight, %self.controller.blocks.1.norm1.bias, %15, %36), scope: __module.blocks.1/__module.blocks.1.norm1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+      %input.27 : Tensor = aten::linear(%input.25, %self.controller.blocks.1.linear1.weight, %self.controller.blocks.1.linear1.bias), scope: __module.blocks.1/__module.blocks.1.linear1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+      %input.29 : Tensor = aten::relu(%input.27), scope: __module.blocks.1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:0
+      %input.33 : Tensor = aten::linear(%input.29, %self.controller.blocks.1.linear2.weight, %self.controller.blocks.1.linear2.bias), scope: __module.blocks.1/__module.blocks.1.linear2 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+      %input.35 : Tensor = aten::add(%input.25, %input.33, %32), scope: __module.blocks.1 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:937:0
+      %state : Tensor = aten::layer_norm(%input.35, %8, %self.controller.blocks.1.norm2.weight, %self.controller.blocks.1.norm2.bias, %15, %36), scope: __module.blocks.1/__module.blocks.1.norm2 # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:2901:0
+      %338 : Tensor = aten::slice(%state, %28, %28, %22, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:40:0
+      %input : Tensor = aten::select(%338, %32, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_compositional_interventions.py:40:0
+      %340 : Tensor = aten::linear(%input, %self.controller.head.weight, %self.controller.head.bias), scope: __module.head # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:0
+      %341 : Tensor = aten::select(%340, %28, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:56:21
+      %342 : Tensor = aten::argmax(%341, %35, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:56:21
+      %choice.7 : int = aten::Int(%342) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:56:17
+      %344 : Tensor[] = aten::unbind(%tags.5, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:32:0
+      %tags : Tensor, %values : Tensor = prim::ListUnpack(%344)
+      %347 : Float(1, 2, strides=[2, 1], requires_grad=0, device=cpu) = prim::Constant[value=-0.4425  2.1831 [ CPUFloatType{1,2} ]]()
+      %348 : Tensor = aten::gather(%347, %32, %tags, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:33:0
+      %weights : Tensor = aten::softmax(%348, %32, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:33:0
+      %350 : Tensor = aten::unsqueeze(%values, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:34:0
+      %351 : Tensor = aten::__rshift__(%350, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:34:0
+      %352 : Tensor = aten::__and__(%351, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:34:0
+      %bits : Tensor = aten::to(%352, %26, %37, %37, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:34:0
+      %354 : Tensor = aten::mul(%bits, %12) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %355 : Tensor = aten::sub(%354, %13, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %356 : Tensor = aten::unsqueeze(%weights, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %357 : Tensor = aten::mul(%355, %356) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %logits : Tensor = aten::sum(%357, %21, %37, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:35:0
+      %359 : Tensor = aten::gt(%logits, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:36:0
+      %360 : Tensor = aten::to(%359, %34, %37, %37, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:36:0
+      %361 : Tensor = aten::__lshift__(%360, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:36:0
+      %362 : Tensor = aten::sum(%361, %21, %37, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_tagged_byte_requests.py:36:0
+      %363 : Tensor = aten::select(%362, %28, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:57:27
+      %horizon_byte.13 : int = aten::Int(%363) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:57:23
+      %365 : int[] = prim::ListConstruct(%28, %raw.5, %shown.11, %score.5, %choice.7, %horizon_byte.13)
+      %366 : Tensor = aten::tensor(%365, %35, %35, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:58:21
+      %367 : Tensor = aten::slice(%events.1, %28, %35, %26, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:58:8
+      %368 : Tensor = aten::copy_(%367, %366, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:58:8
+      %369 : bool = aten::eq(%choice.7, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:59:11
+      %370 : (Tensor, Tensor) = prim::If(%369) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:59:8
+        block0():
+          %371 : (Tensor, Tensor) = prim::TupleConstruct(%events.1, %frames.1)
+          -> (%371)
+        block1():
+          %372 : bool = aten::ne(%choice.7, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:61:11
+          %373 : bool = prim::If(%372) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:61:11
+            block0():
+              -> (%36)
+            block1():
+              %374 : bool = aten::le(%32, %horizon_byte.13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:61:30
+              %375 : bool = prim::If(%374) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:61:30
+                block0():
+                  %376 : bool = aten::le(%horizon_byte.13, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:61:35
+                  -> (%376)
+                block1():
+                  -> (%37)
+              %377 : bool = aten::__not__(%375) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:61:26
+              -> (%377)
+          %378 : (Tensor, Tensor) = prim::If(%373) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:61:8
+            block0():
+              %379 : Tensor = aten::select(%events.1, %28, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:62:12
+              %380 : int = prim::dtype(%379)
+              %381 : Device = prim::device(%379)
+              %382 : Tensor = aten::tensor(%31, %380, %381, %37)
+              %383 : Tensor = aten::copy_(%379, %382, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:62:12
+              %384 : (Tensor, Tensor) = prim::TupleConstruct(%events.1, %frames.1)
+              -> (%384)
+            block1():
+              %terrain.1 : Tensor = aten::clone(%walls.1, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:24:18
+              %386 : Tensor = aten::flatten(%terrain.1, %28, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:26:12
+              %387 : Tensor = aten::select(%386, %28, %gate.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:26:12
+              %388 : int = prim::dtype(%387) # :0:0
+              %389 : Device = prim::device(%387) # :0:0
+              %390 : Tensor = aten::tensor(%28, %388, %389, %37) # :0:0
+              %391 : Tensor = aten::copy_(%387, %390, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:26:12
+              %392 : Tensor[] = prim::ListConstruct()
+              %signal4 : Tensor = prim::Loop(%horizon_byte.13, %36, %signal.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:28:8
+                block0(%394 : int, %signal4.7 : Tensor):
+                  %396 : Tensor = aten::conv2d(%signal4.7, %24, %35, %23, %23, %23, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                  %occupied.1 : Tensor = aten::clamp(%396, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                  %398 : Tensor = aten::neg(%terrain.1) # <string>:11:9
+                  %399 : Tensor = aten::add(%398, %32, %32) # <string>:11:9
+                  %signal5.1 : Tensor = aten::mul(%occupied.1, %399) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+                  %401 : Tensor[] = aten::append(%392, %signal5.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:30:12
+                  -> (%36, %signal5.1)
+              %402 : Tensor = aten::cat(%392, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:46
+              %403 : Tensor = aten::slice(%402, %28, %35, %35, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:65:35
+              %404 : Tensor = aten::select(%403, %32, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:65:35
+              %405 : Tensor = aten::select(%frames.1, %28, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:65:8
+              %406 : Tensor = aten::slice(%405, %28, %35, %horizon_byte.13, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:65:8
+              %407 : Tensor = aten::copy_(%406, %404, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:65:8
+              %408 : int = aten::size(%402, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:32:26
+              %409 : bool = aten::gt(%408, %28)
+              %410 : bool, %411 : int, %412 : int = prim::Loop(%22, %409, %37, %146, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:32:8
+                block0(%413 : int, %414 : bool, %415 : int, %416 : int):
+                  %417 : Tensor = aten::select(%402, %28, %416) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:20
+                  %418 : Tensor = aten::flatten(%417, %28, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:20
+                  %419 : Tensor = aten::select(%418, %28, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:20
+                  %420 : bool = aten::Bool(%419) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:15
+                  %421 : bool, %422 : int = prim::If(%420) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:33:12
+                    block0():
+                      %423 : int = aten::add(%416, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:34:23
+                      -> (%37, %423)
+                    block1():
+                      -> (%36, %146)
+                  %424 : int = aten::add(%416, %32)
+                  %425 : bool = aten::lt(%424, %408)
+                  %426 : bool = aten::__and__(%425, %421)
+                  -> (%426, %420, %422, %424)
+              %result.11 : int = prim::If(%410)
+                block0():
+                  -> (%411)
+                block1():
+                  -> (%28)
+              %428 : int[] = prim::ListConstruct(%32, %horizon_byte.13, %result.11)
+              %429 : Tensor = aten::tensor(%428, %35, %35, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:67:21
+              %430 : Tensor = aten::slice(%events.1, %28, %26, %35, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:67:8
+              %431 : Tensor = aten::copy_(%430, %429, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_pocket_forecast_handoff.py:67:8
+              %432 : (Tensor, Tensor) = prim::TupleConstruct(%events.1, %frames.1)
+              -> (%432)
+          -> (%378)
+      -> (%370)
+  return (%92)
