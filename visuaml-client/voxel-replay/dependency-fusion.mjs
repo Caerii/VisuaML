@@ -1,3 +1,7 @@
+import uncertain from "./evidence/uncertain-optimization-v69/outcomes.json";
+import measuredV69 from "./evidence/uncertain-optimization-v69/performance.json";
+import uncertaintyUrl from "./evidence/uncertain-optimization-v69/outcomes.json?url";
+import measurementsUrl from "./evidence/uncertain-optimization-v69/performance.json?url";
 import optimization from "./evidence/optimization-histories-v68/histories.json";
 import optimizationTimes from "./evidence/optimization-histories-v68/timings.json";
 import historiesUrl from "./evidence/optimization-histories-v68/histories.json?url";
@@ -218,3 +222,36 @@ function showBranch() {
 }
 branchEvent.addEventListener("input",showBranch);
 showBranch();
+
+get("uncertainty-download").href = uncertaintyUrl;
+get("uncertainty-evidence").href = measurementsUrl;
+const uncertaintyHistory = get("uncertainty-history");
+const uncertaintyPolicy = get("uncertainty-policy");
+const uncertaintyStep = get("uncertainty-step");
+for (const [i, history] of uncertain.rows.entries()) {
+  uncertaintyHistory.add(new Option(`${history.family.replace("_", " ")} · case ${history.index + 1}`, i));
+}
+for (const policy of Object.keys(uncertain.rows[0].runs)) {
+  uncertaintyPolicy.add(new Option(policy.replaceAll("_", " "), policy));
+}
+uncertaintyPolicy.value = "robust";
+
+function showUncertainty() {
+  const history = uncertain.rows[Number(uncertaintyHistory.value)];
+  const decision = history.runs[uncertaintyPolicy.value].events[Number(uncertaintyStep.value)];
+  const observation = measuredV69[decision.observation];
+  const action = decision.action === "keep" ? "Keep baseline" : `Deploy ${decision.action}`;
+  const benchmark = decision.benchmark ? "Benchmark requested." : "No benchmark requested.";
+  get("uncertainty-result").textContent = `${action}. ${benchmark} Predicted net ${decision.expected_net_us.toFixed(1)} µs. ` +
+    `Replayed net ${decision.realized_net_us.toFixed(1)} µs.`;
+  const limits = decision.interval_us ? `Forecast interval ${decision.interval_us.map(x => x.toFixed(3)).join(" to ")} µs per call. ` : "";
+  get("uncertainty-forecast").textContent = `Cranelift ${observation.hardware.optimization} · ${observation.n} records. ` +
+    limits + (decision.action === "keep" ? "Baseline retained." : `Measured saving ${decision.observed_saving_us.toFixed(3)} µs per call.`) +
+    (decision.benchmark ? ` Without measuring, this policy proposed ${decision.without_benchmark}.` : "");
+  get("uncertainty-proof").textContent = `Measurement ${decision.observation} · ${decision.forecast_scope}` +
+    (decision.root ? ` · ${decision.reused ? "Reused proof" : "Checked proof"} ${decision.root}` : "");
+}
+uncertaintyHistory.addEventListener("change", () => { uncertaintyStep.value = 0; showUncertainty(); });
+uncertaintyPolicy.addEventListener("change", showUncertainty);
+uncertaintyStep.addEventListener("input", showUncertainty);
+showUncertainty();

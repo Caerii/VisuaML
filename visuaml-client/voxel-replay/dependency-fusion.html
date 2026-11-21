@@ -80,4 +80,17 @@
 <p id="branch-result" role="status"></p>
 <p id="branch-identity" style="overflow-wrap:anywhere"></p>
 </section>
+<section class="panel">
+<h2>When does the forecast justify deployment?</h2>
+<div class="run-controls">
+<label>Workload history <select id="uncertainty-history"></select></label>
+<label>Deployment policy <select id="uncertainty-policy"></select></label>
+<label>Revision <input id="uncertainty-step" type="range" min="0" max="5" value="0"></label>
+<a id="uncertainty-download" download="v69-decisions.json">Download decisions</a>
+<a id="uncertainty-evidence" download="v69-performance.json">Download measurements</a>
+</div>
+<p id="uncertainty-result" role="status"></p>
+<p id="uncertainty-forecast"></p>
+<p id="uncertainty-proof" style="overflow-wrap:anywhere"></p>
+</section>
 </main><script type="module" src="./dependency-fusion.mjs"></script></body></html>
