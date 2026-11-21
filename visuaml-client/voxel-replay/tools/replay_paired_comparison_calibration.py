@@ -46,16 +46,15 @@ def evaluation():
             yield family, live, (feedback, threshold, other)
 
 
-def main():
-    parser = ArgumentParser(description=__doc__)
+def run_study(output, profile, rows, pairs, prior_designs):
+    parser = ArgumentParser(description=profile)
     parser.add_argument("--record", action="store_true")
     args = parser.parse_args()
     torch.set_num_threads(1)
-    rows = list(evaluation())
-    pairs = calibration()
+    rows = list(rows)
     identities = {(live, donor) for _, live, donor in rows}
     assert len(identities) == len(rows)
-    assert identities.isdisjoint((live, donor) for _, live, donor in [*cases(), *fresh_cases(), *design()])
+    assert identities.isdisjoint((live, donor) for _, live, donor in prior_designs)
     models = []
     with torch.inference_mode():
         for seed in (*SEEDS, NEW_SEED):
@@ -69,9 +68,9 @@ def main():
             result = compare(*models[0][2:], model, axis, rows, calibration_pairs=pairs)
             studies.append(dict(seed=seed, weights_sha256=identity, **result))
             print(seed, result["summary"])
-    payload = canonical(dict(profile="visuaml-paired-comparison-calibration-v1",
+    payload = canonical(dict(profile=profile,
                              calibration=pairs, source_sha256=models[0][1], studies=studies)) + b"\n"
-    path = OUT / "replay.json"
+    path = output / "replay.json"
     if args.record:
         path.write_bytes(payload)
     else:
@@ -79,4 +78,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run_study(OUT, "visuaml-paired-comparison-calibration-v1", evaluation(), calibration(),
+              [*cases(), *fresh_cases(), *design()])

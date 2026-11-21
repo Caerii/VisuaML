@@ -250,3 +250,6 @@ additional source coordinates from additional recipient edit directions.
 
 The [paired calibration study](chapters/paired-comparison-calibration.md)
 compares fixed and crossed threshold pairs for predicting activation changes.
+
+The [matched threshold study](chapters/matched-threshold-calibration.md) tests
+small threshold changes with paired feedback changes held fixed.
