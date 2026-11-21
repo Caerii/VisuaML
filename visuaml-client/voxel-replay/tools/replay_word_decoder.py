@@ -38,7 +38,7 @@ def audit(tokens, initial):
         assert row[0] == EXEC and row[-1] in (COMMIT, HALT)
         address = row[6]
         if address != NONE:
-            assert address in range(4) and row[-1] == COMMIT
+            assert address in range(len(memory)) and row[-1] == COMMIT
             value = int.from_bytes(bytes(row[7:11]), "little")
             memory[address] = value
             writes.append(dict(step=len(states)+1, token=index+FRAME, address=address, value=value))
