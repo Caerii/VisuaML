@@ -1,5 +1,9 @@
 # VisuaML Replay changes
 
+## 0.14.0rc1
+
+- Added a crossed-rule intervention study with a factorized control and runnable tool consequences.
+
 ## 0.13.0rc1
 
 - Added calibrated subspace interventions with exact follow-up tool replay.

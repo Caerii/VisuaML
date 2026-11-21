@@ -37,6 +37,15 @@ function showComparison(data) {
 
 function show(data) {
   get('candidate-picker').hidden = true;
+  if (data?.profile === 'visuaml-crossed-routing-v1') {
+    get('title').textContent = 'Recorded crossed-rule intervention';
+    get('status').textContent = 'Same WASM feedback · different follow-up calls';
+    const tools = {1: 'Boost', 2: 'Trim'};
+    get('detail').textContent = data.witnesses.map(({traces}) =>
+      `Input feedback ${traces.factorized[1].value} · joint patch ${tools[traces.joint[2].value]} returned ${traces.joint[3].value} · factorized patch ${tools[traces.factorized[2].value]} returned ${traces.factorized[3].value}`,
+    ).join('\n');
+    return;
+  }
   if (data?.profile === 'visuaml-routing-subspace-v1') {
     const witness = data.witness;
     get('title').textContent = 'Recorded routing subspace experiment';
