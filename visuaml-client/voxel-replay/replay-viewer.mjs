@@ -1,3 +1,5 @@
+import wordDecoder from './evidence/word-decoder/replay.json';
+import wordDecoderUrl from './evidence/word-decoder/replay.json?url';
 import executionLoop from './evidence/decoder-execution-loop/replay.json';
 import executionLoopUrl from './evidence/decoder-execution-loop/replay.json?url';
 import vocabulary from './evidence/vocabulary-tensor-assembly/replay.json';
@@ -20,6 +22,21 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.profile === 'visuaml-word-decoder-v1') {
+    const { cases, intervention } = data;
+    const before = cases.countdown;
+    get('title').textContent = 'Saved word decoder replay';
+    get('status').textContent = `One payload byte changes countdown from ${before.states.length} to ${intervention.states.length} instructions`;
+    get('detail').textContent = [
+      `0xfffffffe + 3 → ${cases['wrap-one'].writes[0].value} · branch PC ${cases['wrap-one'].states[4][0]}`,
+      `0xffffffff + 1 → ${cases['wrap-zero'].writes[0].value} · branch PC ${cases['wrap-zero'].states[4][0]}`,
+      `Token ${intervention.changed_token}: first committed decrement ${before.writes[0].value} → ${intervention.writes[0].value}`,
+      `Next add: ${before.states[5][2]} → ${intervention.states[5][2]}`,
+      `Next branch PC: ${before.states[7][0]} → ${intervention.states[7][0]}`,
+      `Checked all ${data.partial_store_lengths} partial store lengths.`,
+    ].join('\n');
+    return;
+  }
   if (data?.profile === 'visuaml-decoder-execution-loop-v1') {
     const { taken, fallthrough } = data.cases;
     const changed = data.intervention;
@@ -198,3 +215,6 @@ get('vocabulary-download').href = vocabularyUrl;
 
 get('execution-loop').onclick = () => show(executionLoop);
 get('execution-loop-download').href = executionLoopUrl;
+
+get('word-decoder').onclick = () => show(wordDecoder);
+get('word-decoder-download').href = wordDecoderUrl;

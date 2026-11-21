@@ -76,4 +76,13 @@ try {
   assert.equal((await executionDownload).suggestedFilename(), 'decoder-execution-loop.json');
   await page.locator('#file').setInputFiles('evidence/decoder-execution-loop/replay.json');
   await executionCommit.waitFor();
+  await page.getByRole('button', { name: 'Open word decoder replay' }).click();
+  const wordCountdown = page.getByText('One payload byte changes countdown from 13 to 9 instructions');
+  await wordCountdown.waitFor();
+  assert.match(await page.locator('#detail').innerText(), /Next branch PC: 0 → 4/);
+  const wordDownload = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download word decoder replay' }).click();
+  assert.equal((await wordDownload).suggestedFilename(), 'word-decoder.json');
+  await page.locator('#file').setInputFiles('evidence/word-decoder/replay.json');
+  await wordCountdown.waitFor();
 } finally { await browser.close(); }

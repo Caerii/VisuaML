@@ -1,0 +1,9 @@
+{
+  "cases": {
+    "wrap-one": {"program": [[1,0,0],[3,0,3],[2,0,1],[1,0,1],[4,0,7],[2,0,2],[0,0,0],[0,0,0]], "memory": [4294967294,0,0,0]},
+    "wrap-zero": {"program": [[1,0,0],[3,0,1],[2,0,1],[1,0,1],[4,0,7],[2,0,2],[0,0,0],[0,0,0]], "memory": [4294967295,0,0,0]},
+    "countdown": {"program": [[1,0,0],[3,0,-1],[2,0,0],[4,0,0],[0,0,0]], "memory": [3,0,0,0]}
+  },
+  "intervention": {"case": "countdown", "store_step": 3, "original": 2, "replacement": 1,
+                   "next_add_step": 6, "next_add_result": 0, "branch_step": 8, "exit_pc": 4}
+}

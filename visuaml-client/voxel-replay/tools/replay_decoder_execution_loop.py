@@ -30,7 +30,7 @@ def pack(program, memory):
     return torch.tensor(tokens + [28, 0, 21, 23, 21, 26])
 
 
-def run(model, prefix, incremental, budget=150, substitute=None):
+def run(model, prefix, incremental, budget=150, substitute=None, halt_token=27):
     if not 0 <= budget <= 512-prefix.numel():
         raise ValueError("Token budget exceeds context")
     tokens = []
@@ -43,7 +43,7 @@ def run(model, prefix, incremental, budget=150, substitute=None):
         if substitute is not None and len(tokens) == substitute[0]:
             token = substitute[1]
         tokens.append(token)
-        if token == 27:
+        if token == halt_token:
             break
         next_token = torch.tensor([token])
         if incremental:
