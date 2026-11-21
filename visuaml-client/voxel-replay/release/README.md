@@ -1,4 +1,4 @@
-# VisuaML Replay 0.18 release candidate
+# VisuaML Replay 0.19 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
@@ -228,3 +228,7 @@ python tools/test_runnable_report.py
 ```
 
 An independent contributor and recipient have yet to complete the external trial.
+
+The [intervention diagnosis](chapters/intervention-diagnosis.md) replays the
+original failed switches and tests the calibrated patch on two independent
+checkpoints.

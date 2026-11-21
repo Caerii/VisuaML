@@ -1,5 +1,9 @@
 # VisuaML Replay changes
 
+## 0.19.0rc1
+
+- Added held-out threshold intervention diagnosis, independent seed replications, and exact follow-up replays.
+
 ## 0.18.0rc1
 
 - Added a portable token intervention specification and a two-decision transformer replay with a verified failure.
