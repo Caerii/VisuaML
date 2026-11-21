@@ -259,3 +259,6 @@ the four v98 routing failures and checks a separate learned argument readout.
 
 The [tool and argument study](chapters/tool-argument-binding.md) crosses a
 comparison edit with learned selection of a live or saved argument slot.
+
+The [tagged byte request study](chapters/tagged-byte-requests.md) reads
+WASM result records and emits the byte used in the follow-up call.
