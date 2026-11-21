@@ -1,5 +1,9 @@
 # VisuaML Replay changes
 
+## 0.17.0rc1
+
+- Added calibrated threshold-side transfer and a matched-margin test across feedback and threshold edits.
+
 ## 0.16.0rc1
 
 - Added additive, rule-preserving feedback interventions and a dose-response control.

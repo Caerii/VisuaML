@@ -37,11 +37,16 @@ function showComparison(data) {
 
 function show(data) {
   get('candidate-picker').hidden = true;
-  if (data?.profile === 'visuaml-delayed-rule-v1' || data?.profile === 'visuaml-additive-routing-v1') {
-    const additive = data.profile === 'visuaml-additive-routing-v1';
+  if (['visuaml-delayed-rule-v1', 'visuaml-additive-routing-v1', 'visuaml-margin-transfer-v1'].includes(data?.profile)) {
+    const labels = {
+      'visuaml-delayed-rule-v1': ['Recorded delayed-rule intervention', 'one donor activation'],
+      'visuaml-additive-routing-v1': ['Recorded additive routing intervention', 'one donor delta'],
+      'visuaml-margin-transfer-v1': ['Recorded threshold-side intervention', 'one donor bit'],
+    };
+    const [title, edit] = labels[data.profile];
     const {case: example, traces} = data.witness;
-    get('title').textContent = additive ? 'Recorded additive routing intervention' : 'Recorded delayed-rule intervention';
-    get('status').textContent = `Fixed feedback ${example.feedback} · ${additive ? 'one donor delta' : 'one donor activation'}`;
+    get('title').textContent = title;
+    get('status').textContent = `Fixed feedback ${example.feedback} · ${edit}`;
     get('detail').textContent = traces.map(branch =>
       `${branch.rule} · ${example.rules[branch.rule].action} · ${branch.result === null ? 'no follow-up call' : `WASM returned ${branch.result}`}`,
     ).join('\n');

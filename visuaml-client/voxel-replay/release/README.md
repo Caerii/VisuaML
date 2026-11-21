@@ -1,4 +1,4 @@
-# VisuaML Replay 0.16 release candidate
+# VisuaML Replay 0.17 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
@@ -52,6 +52,9 @@ activation under three rules and verifies the two resulting WASM calls.
 
 The [additive routing study](chapters/additive-routing.md) tests a
 calibrated numeric feedback edit while preserving the recipient's rule.
+
+The [margin-transfer study](chapters/margin-transfer.md) uses only the
+donor's threshold side and infers the edit magnitude from the recipient.
 
 ## Capture a failing test in CI
 
