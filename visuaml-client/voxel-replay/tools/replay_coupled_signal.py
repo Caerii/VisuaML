@@ -27,9 +27,9 @@ def mailbox(raw):
 
 
 class Relay(Witness):
-    def __init__(self):
+    def __init__(self, wasm=OUT / "signal-relay.wasm"):
         torch.set_num_threads(1)
-        self.raw = (OUT / "signal-relay.wasm").read_bytes()
+        self.raw = wasm.read_bytes()
         self.image = load_call_image(self.raw)
         graph = CALLS / "machine.pt"
         self.machine = torch.jit.load(str(graph))

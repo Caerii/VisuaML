@@ -22,8 +22,16 @@ pub unsafe extern "C" fn run(mailbox: *mut i32) -> i32 {
     if read_volatile(mailbox.add(6)) == 0 {
         write_volatile(mailbox.add(2), gate_edit(mailbox));
         write_volatile(mailbox.add(3), 174); // (14, 8)
+        #[cfg(not(demand_region))]
         if read_volatile(mailbox.add(7)) != 0 {
             write_volatile(mailbox.add(3), 162); // (2, 8)
+        }
+        #[cfg(demand_region)]
+        {
+            let requested = read_volatile(mailbox.add(7));
+            if requested != 0 {
+                write_volatile(mailbox.add(3), requested);
+            }
         }
         write_volatile(mailbox.add(6), 1);
     } else if read_volatile(mailbox.add(4)) != 0 {

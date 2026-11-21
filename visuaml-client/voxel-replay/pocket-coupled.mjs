@@ -1,3 +1,4 @@
+import demandReplayUrl from './evidence/pocket-demand-region/replay.json?url';
 import replayUrl from './evidence/pocket-coupled-checkpoint/replay.json?url';
 import digUrl from './evidence/pocket-coupled-checkpoint/checkpoint-dig.json?url';
 import omittedUrl from './evidence/pocket-coupled-checkpoint/checkpoint-omitted.json?url';
@@ -77,3 +78,32 @@ async function loadReplay() {
 loadReplay().catch(error => {
   get('status').textContent = error.message;
 });
+
+get('demand-download').href = demandReplayUrl;
+get('demand-load').onclick = async () => {
+  try {
+    const response = await fetch(demandReplayUrl);
+    if (!response.ok) throw Error('Could not load the saved recovery replay');
+    const archive = await response.json();
+    const mode = get('demand-case').value;
+    const failure = archive.unavailable[mode];
+    if (failure) {
+      const { coordinate, tick, source_pc: pc } = failure.pending_read;
+      get('demand-status').textContent = `Pending PC ${pc} · (${coordinate.join(', ')}) at tick ${tick}`;
+      get('demand-detail').textContent = failure.reason.replaceAll('_', ' ');
+      return;
+    }
+    const row = archive.cases[mode].observations[mode === 'delayed' ? 4 : 0];
+    const { coordinate, tick, source_pc: pc } = row.request;
+    get('demand-status').textContent =
+      `Resumed PC ${pc} · (${coordinate.join(', ')}) at tick ${tick} · action ${row.action}`;
+    const recovery = row.recovery;
+    get('demand-detail').textContent = recovery
+      ? [`Recovered from tick 0 · ${recovery.source_cells} source cells · ${recovery.cells_recomputed} recomputed cell-ticks.`,
+         ...recovery.applied_edits.map(edit => `Replayed gate write at PC ${edit.pc} before tick ${edit.tick}.`),
+         ...(mode === 'delayed' ? ['Using tick 4 would return 0. The requested tick 5 returns 1.'] : [])].join('\n')
+      : 'Observation was covered by the shared regional checkpoint.';
+  } catch (error) {
+    get('demand-status').textContent = error.message;
+  }
+};

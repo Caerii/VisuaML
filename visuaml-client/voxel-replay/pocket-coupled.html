@@ -21,4 +21,20 @@
 <pre id="instruction" style="white-space:pre-wrap"></pre>
 </section>
 <p><a href="./pocket-cellular.html">Play the signal scene and inspect its automaton-only halo</a></p>
+<section class="panel">
+<h2>Recover a pending observation</h2>
+<div class="run-controls">
+  <label>Observation
+    <select id="demand-case"><option value="remote">Remote cell · tick 1</option>
+      <option value="delayed">Delayed gate signal · tick 5</option>
+      <option value="local">Local fork</option><option value="missing_checkpoint">Missing checkpoint</option>
+      <option value="missing_events">Missing events</option>
+    </select>
+  </label>
+  <button id="demand-load">Show read and recovery</button>
+  <a id="demand-download" download="signal-demand-replay.json">Download recovery replay</a>
+</div>
+<p id="demand-status" role="status"></p>
+<pre id="demand-detail" style="white-space:pre-wrap"></pre>
+</section>
 </main><script type="module" src="./pocket-coupled.mjs"></script></body></html>
