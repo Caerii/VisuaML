@@ -1,3 +1,8 @@
+import campaignEvidence from "./evidence/incremental-optimization-v67/campaigns.json";
+import campaignWall from "./evidence/incremental-optimization-v67/timings.json";
+import migration from "./evidence/incremental-optimization-v67/migration.json";
+import campaignProofUrl from "./evidence/incremental-optimization-v67/proofs.json?url";
+import migrationUrl from "./evidence/incremental-optimization-v67/migration.json?url";
 import structural from "./evidence/structural-decomposition-v66/inference.json";
 import boundaryProof from "./evidence/structural-decomposition-v66/checkpoints.json";
 import inferenceUrl from "./evidence/structural-decomposition-v66/inference.json?url";
@@ -125,3 +130,41 @@ function cycleChanged() {
 cycle.addEventListener("change", cycleChanged);
 method.addEventListener("change", showBags);
 cycleChanged();
+
+
+get("campaign-proof").href = campaignProofUrl;
+get("migration-download").href = migrationUrl;
+const family = get("campaign");
+const revision = get("revision");
+const groups = [...new Set(campaignEvidence.revisions.map(row => `${row.family} /${row.width}`))];
+for (const key of groups) {
+  const [name, width] = key.split("/");
+  family.add(new Option(`${name.trim() === "local" ? "Local edits" : "Global edits"} · ${width} lanes`, key));
+}
+
+function showRevision() {
+  const [group, width] = family.value.split("/");
+  const index = campaignEvidence.revisions.findIndex(row => row.family === group.trim() &&
+    row.width === Number(width) && row.revision === Number(revision.value));
+  const row = campaignEvidence.revisions[index];
+  const wall = campaignWall[index];
+  const reuse = row.analysis.incremental;
+  const full = row.analysis.fresh;
+  get("revision-summary").textContent = `Revision ${row.revision + 1}. Verified ${row.mode} lowering. ` +
+    `${reuse.recomputed} dependence slots rebuilt, ${reuse.fresh} new checks and ${reuse.reused} reused. ` +
+    `Full regeneration checked all ${full.fresh} obligations.`;
+  const changed = reuse.invalidated.filter(([kind]) => kind === "source").map(([, i]) => i + 1);
+  get("revision-slots").textContent = changed.length ? `Edited lanes ${changed.join(", ")}.` : "Initial revision.";
+  const extra = wall.native ? (wall.native.break_even === null
+    ? " No finite break-even was observed in this sample."
+    : ` Sampled native break-even estimate ${wall.native.break_even.toLocaleString()} calls.`) : "";
+  get("revision-runtime").textContent = `Measured proof pipeline ${(wall.timing.incremental.total_ns / 1e6).toFixed(2)} ms incremental and ${(wall.timing.fresh.total_ns / 1e6).toFixed(2)} ms fresh.` + extra;
+}
+family.addEventListener("change", () => { revision.value = 0; showRevision(); });
+revision.addEventListener("input", showRevision);
+showRevision();
+
+const saved = migration.saved;
+get("migration-summary").textContent = `The saved process captured record ${saved.state.record + 1} before committing outputs. ` +
+  `A fresh process switched to reverse-order writes using the saved original carry and ${saved.state.fuel} remaining logical charges. ` +
+  `Both schedules completed with page SHA-256 ${migration.expected[1]}.`;

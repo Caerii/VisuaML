@@ -187,6 +187,8 @@ class Campaign:
 
 
 def verify(store,root,keys,mode,cache):
+    if not 2<=len(keys)<=32 or any(type(k) is not int or not 1<=k<=12 for k in keys):
+        raise ValueError("unsupported claimed layout")
     expected_scope = semantic_node()
     sid = digest(expected_scope.bytes())
     if store.load(sid)!=expected_scope or mode not in SCHEMAS:

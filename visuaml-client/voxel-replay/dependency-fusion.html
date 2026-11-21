@@ -45,4 +45,20 @@
 <p>Staged, fused and reordered record schedules preserve the page and original carry here.</p>
 <p id="checkpoint-page"></p>
 </section>
+<section class="panel">
+<h2>What survives the next program edit?</h2>
+<div class="run-controls">
+<label>Campaign <select id="campaign"></select></label>
+<label>Revision <input id="revision" type="range" min="0" max="15" value="0"></label>
+<a id="campaign-proof" download="v67-campaign-proofs.json">Download campaign proofs</a>
+</div>
+<p id="revision-summary" role="status"></p>
+<p id="revision-slots"></p>
+<p id="revision-runtime"></p>
+</section>
+<section class="panel">
+<h2>Resume after capturing a snapshot</h2>
+<p id="migration-summary"></p>
+<a id="migration-download" download="v67-snapshot-checkpoint.json">Download snapshot checkpoint</a>
+</section>
 </main><script type="module" src="./dependency-fusion.mjs"></script></body></html>
