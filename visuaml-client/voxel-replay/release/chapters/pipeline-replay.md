@@ -138,3 +138,40 @@ generating them. [Raw result](../examples/pipeline/shard-timings.json)
 ```sh
 PYTHONPATH=../backend python tools/benchmark_replay_shards.py
 ```
+
+## Reuse an index for repeated comparisons
+
+```sh
+visuaml-replay index-shards baseline/*.jsonl --output baseline.vmi
+visuaml-replay index-shards experiment/*.jsonl --output experiment.vmi
+visuaml-replay compare-indexes baseline.vmi experiment.vmi --output difference.json
+```
+
+Indexing validates the ordered input and writes a self-contained snapshot.
+The comparison skips blocks with matching SHA-256 digests of the ordered
+request, boundary, and value. Runtime and source labels are retained for
+diagnostics and excluded from equality. Unequal blocks go through the
+same row comparison, including caller-supplied tolerances. A mismatch
+reports the same logical observation and original shard line as the scan.
+
+Indexing is a one-time scan and writes a copy of the merged observations
+with source coordinates. Reuse indexes for immutable runs and rebuild
+after any input change. For an isolated comparison of raw input, use
+`compare-shards`. Fast comparisons check the index table and each payload
+block they read. Use `visuaml-replay verify-index baseline.vmi` to read and
+verify every stored payload block. The checksums check internal integrity.
+The index should come from your trusted capture process.
+
+On the same 32-versus-48-shard fixture with one million observations per
+run, the scan took 11.81 s. The indexed API took 3.03 ms median over 11
+comparisons, skipping 3,906 blocks and reading one unequal block per side.
+A new CLI process took 74.9 ms median over five runs, with the index files
+already built and warm in the OS page cache. Constructing the two indexes
+took 11.23 s and 11.17 s and produced 227 MB total. On these samples the
+upfront cost pays back after two comparisons. Other inputs may require
+more payload reads, especially when values differ widely but compare equal
+under tolerance. [Raw results](../examples/pipeline/index-timings.json)
+
+```sh
+PYTHONPATH=../backend python tools/benchmark_replay_shards.py --indexed
+```

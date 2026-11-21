@@ -1,5 +1,10 @@
 # VisuaML Replay changes
 
+## 0.9.0rc1
+
+- Added reusable journal indexes with block checksums for repeated comparisons.
+- Added full index verification and removed PyTorch startup from journal-only CLI commands.
+
 ## 0.8.0rc1
 
 - Added streaming comparison of differently partitioned worker journals.

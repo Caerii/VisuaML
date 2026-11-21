@@ -1,7 +1,5 @@
 """Versioned, data-only checkpoint for a running frozen WASM direct-call state."""
 import base64
-from hashlib import sha256
-import json
 from time import perf_counter_ns
 
 import torch
@@ -10,12 +8,7 @@ from visuaml.compiler_lab.frozen_calls_v58 import CallState, initialize
 from visuaml.compiler_lab.frozen_recurrent_v58 import MachineState
 
 
-def digest(raw):
-    return sha256(raw).hexdigest()
-
-
-def canonical(value):
-    return json.dumps(value, sort_keys=True, separators=(",", ":")).encode()
+from ._codec import canonical, digest
 
 
 def identities(graph_bytes, image):

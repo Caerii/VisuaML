@@ -4,7 +4,7 @@ from itertools import zip_longest
 import json
 from math import isfinite
 
-from .checkpoint import canonical
+from ._codec import canonical
 
 SCHEMA = "visuaml-pipeline-comparison-v1"
 MAX_OBSERVATION_BYTES = 4096

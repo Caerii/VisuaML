@@ -1,22 +1,28 @@
 """VisuaML: PyTorch model visualization and graph export tools."""
+from importlib import import_module
 
 __version__ = "0.1.0"
 
-from .filters import FilterConfig
-from .graph_export import export_model_graph, export_model_graph_with_fallback
-from .model_loader import ModelLoadError
-from .openhypergraph_export import export_model_open_hypergraph
-from .visualization import NodeVisualProperties
+_EXPORTS = {
+    "FilterConfig": ("filters", "FilterConfig"),
+    "ModelLoadError": ("model_loader", "ModelLoadError"),
+    "NodeVisualProperties": ("visualization", "NodeVisualProperties"),
+    "export_model": ("graph_export", "export_model_graph_with_fallback"),
+    "export_model_graph": ("graph_export", "export_model_graph"),
+    "export_model_graph_with_fallback": ("graph_export", "export_model_graph_with_fallback"),
+    "export_model_open_hypergraph": ("openhypergraph_export", "export_model_open_hypergraph"),
+}
+__all__ = list(_EXPORTS)
 
-# Make the fallback function the primary export
-export_model = export_model_graph_with_fallback
 
-__all__ = [
-    "FilterConfig",
-    "ModelLoadError",
-    "NodeVisualProperties",
-    "export_model",  # Primary export with fallback behavior
-    "export_model_graph",  # Legacy function for backward compatibility
-    "export_model_graph_with_fallback",  # Explicit fallback function
-    "export_model_open_hypergraph",
-]
+def __getattr__(name):
+    if name not in _EXPORTS:
+        raise AttributeError(name)
+    module, symbol = _EXPORTS[name]
+    value = getattr(import_module(f".{module}", __name__), symbol)
+    globals()[name] = value
+    return value
+
+
+def __dir__():
+    return sorted(set(globals()) | _EXPORTS.keys())

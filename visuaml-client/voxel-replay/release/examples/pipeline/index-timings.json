@@ -1,0 +1,106 @@
+{
+  "rows_per_run": 1000000,
+  "shard_counts": [
+    32,
+    48
+  ],
+  "comparison_ns": 11808886570,
+  "input_bytes": 158000000,
+  "result": {
+    "profile": "visuaml-pipeline-comparison-v1",
+    "matched_observations": 999999,
+    "first_difference": {
+      "index": 999999,
+      "reason": "value",
+      "reference": {
+        "request": "000000999999",
+        "boundary": "tool_result",
+        "runtime": "test",
+        "value": 7,
+        "source": {
+          "shard": 31,
+          "line": 31250
+        }
+      },
+      "candidate": {
+        "request": "000000999999",
+        "boundary": "tool_result",
+        "runtime": "test",
+        "value": 9,
+        "source": {
+          "shard": 15,
+          "line": 20834
+        }
+      }
+    },
+    "tolerances": {},
+    "reference_shards": 32,
+    "candidate_shards": 48
+  },
+  "report_bytes": 481,
+  "indexed": {
+    "build_ns": [
+      11232900474,
+      11168613212
+    ],
+    "index_bytes": [
+      113644724,
+      113571188
+    ],
+    "samples_ns": [
+      3223445,
+      2990153,
+      3065267,
+      2918836,
+      3109884,
+      3028040,
+      3128612,
+      2923853,
+      2988481,
+      2924073,
+      3043635
+    ],
+    "median_ns": 3028040,
+    "cli_samples_ns": [
+      76734132,
+      75042508,
+      62441359,
+      74901361,
+      55706904
+    ],
+    "cli_median_ns": 74901361,
+    "result": {
+      "profile": "visuaml-pipeline-comparison-v1",
+      "matched_observations": 999999,
+      "first_difference": {
+        "index": 999999,
+        "reason": "value",
+        "reference": {
+          "boundary": "tool_result",
+          "request": "000000999999",
+          "runtime": "test",
+          "source": {
+            "line": 31250,
+            "shard": 31
+          },
+          "value": 7
+        },
+        "candidate": {
+          "boundary": "tool_result",
+          "request": "000000999999",
+          "runtime": "test",
+          "source": {
+            "line": 20834,
+            "shard": 15
+          },
+          "value": 9
+        }
+      },
+      "tolerances": {},
+      "skipped_blocks": 3906,
+      "inspected_blocks": 1,
+      "metadata_bytes": 1250240,
+      "payload_bytes": 14552
+    }
+  }
+}

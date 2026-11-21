@@ -6,23 +6,19 @@ from pathlib import Path
 import struct
 import sys
 
-import numpy as np
-import torch
-
-from visuaml.replay import (
-    PAGE_BYTES, REPORT_KIND, Replay, capture as capture_report, check_report, compare,
-    execute_report, inspect_window, make_bundle, open_bundle, seal_report,
-)
-from visuaml.replay.checkpoint import canonical
+from visuaml.replay._codec import canonical
 from visuaml.replay.shards import compare_shards
+from visuaml.replay.journal_index import build_index, compare_indexes, verify_index
 from visuaml.replay.pipeline import compare_observations, read_observations
-from visuaml.replay.artifacts import compare_exports, compare_onnx, describe_export, describe_onnx, describe_wasm, load_export
+
 
 EXAMPLE = Path(__file__).with_name("assets") / "passage-report.json"
 
 
 def demo(output):
     """Export the shipped passage checkpoint from the compiled runner."""
+    from visuaml.replay import PAGE_BYTES, check_report, make_bundle, open_bundle
+
     report = json.loads(EXAMPLE.read_text())
     bundle = report["bundle"]
     replay, checkpoint = open_bundle(bundle)
@@ -98,7 +94,15 @@ def main(argv=None):
     shards = sub.add_parser("compare-shards", help="Compare worker journals in logical request order")
     shards.add_argument("--reference", type=Path, nargs="+", required=True)
     shards.add_argument("--candidate", type=Path, nargs="+", required=True)
-    for command in (pipeline, shards):
+    indexing = sub.add_parser("index-shards", help="Build a reusable index from ordered JSONL shards")
+    indexing.add_argument("shards", type=Path, nargs="+")
+    indexing.add_argument("--output", type=Path, required=True)
+    audit = sub.add_parser("verify-index", help="Check all stored blocks in a journal index")
+    audit.add_argument("index", type=Path)
+    indexed = sub.add_parser("compare-indexes", help="Compare indexed pipeline snapshots")
+    indexed.add_argument("reference", type=Path)
+    indexed.add_argument("candidate", type=Path)
+    for command in (pipeline, shards, indexed):
         command.add_argument("--output", type=Path)
         command.add_argument("--fail-on-difference", action="store_true", help="Exit 1 when a difference is found")
         command.add_argument("--tolerances", type=Path, help="JSON mapping boundary names to [rtol, atol]")
@@ -114,11 +118,18 @@ def main(argv=None):
     example = sub.add_parser("example", help="Save the bundled Passage report")
     example.add_argument("output", type=Path)
     args = parser.parse_args(argv)
-    torch.set_num_threads(1)
     try:
-        if args.command in ("compare-pipelines", "compare-shards"):
+        if args.command == "verify-index":
+            print(json.dumps(verify_index(args.index), indent=2))
+            return
+        if args.command == "index-shards":
+            print(json.dumps(build_index(args.shards, args.output), indent=2))
+            return
+        if args.command in ("compare-pipelines", "compare-shards", "compare-indexes"):
             tolerances = json.loads(args.tolerances.read_text()) if args.tolerances else None
-            if args.command == "compare-shards":
+            if args.command == "compare-indexes":
+                result = compare_indexes(args.reference, args.candidate, tolerances=tolerances)
+            elif args.command == "compare-shards":
                 result = compare_shards(args.reference, args.candidate, tolerances=tolerances)
             else:
                 with args.reference.open(encoding="utf-8") as left, args.candidate.open(encoding="utf-8") as right:
@@ -131,6 +142,15 @@ def main(argv=None):
             if args.fail_on_difference and result["first_difference"] is not None:
                 raise SystemExit(1)
             return
+        import numpy as np
+        import torch
+
+        from visuaml.replay import (
+            REPORT_KIND, Replay, capture as capture_report, check_report, compare,
+            execute_report, inspect_window, open_bundle, seal_report,
+        )
+        from visuaml.replay.artifacts import compare_exports, compare_onnx, describe_export, describe_onnx, describe_wasm, load_export
+        torch.set_num_threads(1)
         if args.command == "describe":
             suffix = args.artifact.suffix
             if suffix == ".wasm":
