@@ -37,6 +37,17 @@ function showComparison(data) {
 
 function show(data) {
   get('candidate-picker').hidden = true;
+  if (data?.profile === 'visuaml-routing-subspace-v1') {
+    const witness = data.witness;
+    get('title').textContent = 'Recorded routing subspace experiment';
+    get('status').textContent = `Rank ${witness.rank} patch · fixed feedback ${witness.row.feedback}`;
+    get('detail').textContent = [
+      `Second tool return · ${witness.baseline_result} → ${witness.patched_result}`,
+      ...Object.entries(data.ranks).map(([rank, counts]) =>
+        `Rank ${rank} · donor choice reproduced by projected edit ${counts.projected}/${data.eligible}, complement ${counts.complement}/${data.eligible}, random ${counts.random}/${data.eligible}`),
+    ].join('\n');
+    return;
+  }
   if (data?.profile === 'visuaml-activation-intervention-v1') {
     const row = data.selected_case;
     const donor = row.scenarios.donor_patch;

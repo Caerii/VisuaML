@@ -1,5 +1,9 @@
 # VisuaML Replay changes
 
+## 0.13.0rc1
+
+- Added calibrated subspace interventions with exact follow-up tool replay.
+
 ## 0.12.0rc1
 
 - Added checked PyTorch activation hooks and an executable WASM-feedback intervention study.

@@ -1,4 +1,4 @@
-# VisuaML Replay 0.12 release candidate
+# VisuaML Replay 0.13 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
@@ -40,6 +40,9 @@ in a shared report. The JSONL interface is available for other harnesses.
 The [intervention walkthrough](chapters/activation-interventions.md)
 uses a checked PyTorch hook and a Rust WASM feedback value to replay a
 routing switch and its controls.
+
+The [routing subspace study](chapters/routing-subspaces.md) tests a smaller
+activation edit and executes both resulting WASM tool choices.
 
 ## Capture a failing test in CI
 
