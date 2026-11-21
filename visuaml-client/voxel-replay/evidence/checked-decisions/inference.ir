@@ -1,0 +1,727 @@
+graph(%self : __torch__.___torch_mangle_2.CheckedInference,
+      %domain.1 : int,
+      %walls.1 : Tensor,
+      %signal.1 : Tensor,
+      %edits.1 : Tensor,
+      %target.1 : int,
+      %horizon.1 : int,
+      %budget.1 : int,
+      %costly_edits.1 : bool,
+      %source_slots.1 : Tensor,
+      %plan_slots.1 : Tensor,
+      %live_locals.1 : Tensor,
+      %policy.1 : int,
+      %coverage.1 : int):
+  %14 : int[] = prim::Constant[value=[1, 1]]()
+  %15 : Tensor = prim::Constant[value=(1,1,.,.) =   0  1  0   1  1  1   0  1  0 [ CPUFloatType{1,1,3,3} ]]() # :0:0
+  %16 : int = prim::Constant[value=6]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:34:30
+  %17 : int[] = prim::Constant[value=[3, 11]]()
+  %18 : int[] = prim::Constant[value=[3]]()
+  %19 : bool = prim::Constant[value=1]()
+  %20 : bool = prim::Constant[value=0]()
+  %21 : int = prim::Constant[value=5]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:94:27
+  %22 : int = prim::Constant[value=7]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:84:27
+  %23 : int = prim::Constant[value=9]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:66:26
+  %24 : int = prim::Constant[value=8]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:35
+  %25 : int = prim::Constant[value=1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:19
+  %26 : int = prim::Constant[value=4]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:52:41
+  %27 : int = prim::Constant[value=32]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:52:18
+  %28 : int = prim::Constant[value=2]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:51:38
+  %29 : int = prim::Constant[value=3]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:51:16
+  %30 : int = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:51:31
+  %31 : NoneType = prim::Constant()
+  %32 : str = prim::Constant[value="AssertionError: "]()
+  %33 : int = prim::Constant[value=-1]()
+  %34 : int = prim::Constant[value=9223372036854775807]()
+  %35 : (int, int) = prim::Constant[value=(1, 1)]()
+  %self.controller.network.4.bias : Float(9, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=-0.0277  0.1443  0.0023  0.0383  0.0207 -0.1165 -0.1843 -0.1789 -0.0456 [ CPUFloatType{9} ]]()
+  %self.controller.network.4.weight : Float(9, 48, strides=[48, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.network.2.bias : Float(48, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.network.2.weight : Float(48, 48, strides=[48, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.network.0.bias : Float(48, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.controller.network.0.weight : Float(48, 10, strides=[10, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %42 : (Tensor, Tensor, int, bool) = prim::Uninitialized()
+  %43 : bool = prim::Uninitialized()
+  %44 : bool = aten::eq(%domain.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:51:21
+  %count.2 : int = prim::If(%44) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:51:16
+    block0():
+      -> (%29)
+    block1():
+      -> (%28)
+  %failure.1 : int = prim::If(%44) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:52:18
+    block0():
+      -> (%27)
+    block1():
+      -> (%26)
+  %lower.1 : Tensor = aten::zeros(%18, %26, %31, %31, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:53:16
+  %upper.1 : Tensor = aten::full(%18, %failure.1, %26, %31, %31, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:54:16
+  %queried.1 : Tensor = aten::zeros(%18, %26, %31, %31, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:55:18
+  %50 : bool = aten::le(%30, %budget.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:56:15
+  %51 : bool = prim::If(%50) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:56:15
+    block0():
+      %52 : bool = aten::le(%budget.1, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:56:20
+      -> (%52)
+    block1():
+      -> (%20)
+   = prim::If(%51) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:56:8
+    block0():
+      -> ()
+    block1():
+       = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:56:8
+      -> ()
+   = prim::If(%44) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:57:8
+    block0():
+      %53 : bool = aten::le(%25, %horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:19
+      %54 : bool = prim::If(%53) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:19
+        block0():
+          %55 : bool = aten::le(%horizon.1, %24) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:24
+          -> (%55)
+        block1():
+          -> (%20)
+      %56 : bool = prim::If(%54) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:19
+        block0():
+          %57 : bool = aten::le(%30, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:41
+          %58 : bool = prim::If(%57) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:41
+            block0():
+              %59 : int = aten::numel(%walls.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:55
+              %60 : bool = aten::lt(%target.1, %59) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:46
+              -> (%60)
+            block1():
+              -> (%20)
+          -> (%58)
+        block1():
+          -> (%20)
+       = prim::If(%56) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:12
+        block0():
+          -> ()
+        block1():
+           = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:58:12
+          -> ()
+      %61 : Tensor = aten::flatten(%signal.1, %30, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:59:44
+      %start_positions.1 : Tensor = aten::nonzero(%61) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:59:30
+      %63 : int = aten::numel(%start_positions.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:60:19
+      %64 : bool = aten::eq(%63, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:60:19
+       = prim::If(%64) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:60:12
+        block0():
+          -> ()
+        block1():
+           = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:60:12
+          -> ()
+      %65 : Tensor = aten::select(%start_positions.1, %30, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:61:24
+      %66 : Tensor = aten::select(%65, %30, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:61:24
+      %start.1 : int = aten::Int(%66) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:61:20
+      %68 : bool = aten::ne(%start.1, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:62:19
+       = prim::If(%68) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:62:12
+        block0():
+          -> ()
+        block1():
+           = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:62:12
+          -> ()
+      %width.1 : int = aten::size(%walls.1, %29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:63:20
+      %70 : int = aten::floordiv(%start.1, %width.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:64:27
+      %71 : int = aten::floordiv(%target.1, %width.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:64:40
+      %72 : int = aten::sub(%70, %71) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:64:27
+      %73 : int = prim::abs(%72) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:64:23
+      %74 : int = aten::remainder(%start.1, %width.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:64:59
+      %75 : int = aten::remainder(%target.1, %width.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:64:71
+      %76 : int = aten::sub(%74, %75) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:64:59
+      %77 : int = prim::abs(%76) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:64:55
+      %distance.1 : int = aten::add(%73, %77) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:64:23
+      %79 : bool = aten::le(%distance.1, %horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:52
+      %80 : int = prim::If(%79) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:32
+        block0():
+          %81 : int = aten::add(%distance.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:32
+          -> (%81)
+        block1():
+          -> (%failure.1)
+      %82 : Tensor = aten::select(%lower.1, %30, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:16
+      %83 : int = prim::dtype(%82)
+      %84 : Device = prim::device(%82)
+      %85 : Tensor = aten::tensor(%80, %83, %84, %20)
+      %86 : Tensor = aten::copy_(%82, %85, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:16
+      %87 : bool = prim::If(%costly_edits.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:66:31
+        block0():
+          -> (%19)
+        block1():
+          -> (%20)
+      %penalty.2 : int = prim::If(%87) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:66:26
+        block0():
+          -> (%23)
+        block1():
+          -> (%30)
+      %89 : int = prim::If(%79) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:32
+        block0():
+          %90 : int = aten::add(%distance.1, %penalty.2) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:32
+          -> (%90)
+        block1():
+          -> (%failure.1)
+      %91 : Tensor = aten::select(%lower.1, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:16
+      %92 : int = prim::dtype(%91)
+      %93 : Device = prim::device(%91)
+      %94 : Tensor = aten::tensor(%89, %92, %93, %20)
+      %95 : Tensor = aten::copy_(%91, %94, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:16
+      %96 : bool = prim::If(%costly_edits.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:66:31
+        block0():
+          -> (%19)
+        block1():
+          -> (%20)
+      %penalty.4 : int = prim::If(%96) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:66:26
+        block0():
+          -> (%23)
+        block1():
+          -> (%30)
+      %98 : int = prim::If(%79) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:32
+        block0():
+          %99 : int = aten::add(%distance.1, %penalty.4) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:32
+          -> (%99)
+        block1():
+          -> (%failure.1)
+      %100 : Tensor = aten::select(%lower.1, %30, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:16
+      %101 : int = prim::dtype(%100)
+      %102 : Device = prim::device(%100)
+      %103 : Tensor = aten::tensor(%98, %101, %102, %20)
+      %104 : Tensor = aten::copy_(%100, %103, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:67:16
+      -> ()
+    block1():
+      %105 : Tensor = aten::select(%lower.1, %30, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:71:12
+      %106 : int = prim::dtype(%105)
+      %107 : Device = prim::device(%105)
+      %108 : Tensor = aten::tensor(%28, %106, %107, %20)
+      %109 : Tensor = aten::copy_(%105, %108, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:71:41
+      %110 : Tensor = aten::select(%upper.1, %30, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:71:21
+      %111 : int = prim::dtype(%110)
+      %112 : Device = prim::device(%110)
+      %113 : Tensor = aten::tensor(%28, %111, %112, %20)
+      %114 : Tensor = aten::copy_(%110, %113, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:71:41
+      %115 : Tensor = aten::select(%lower.1, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:71:30
+      %116 : int = prim::dtype(%115)
+      %117 : Device = prim::device(%115)
+      %118 : Tensor = aten::tensor(%25, %116, %117, %20)
+      %119 : Tensor = aten::copy_(%115, %118, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:71:41
+      %120 : int = aten::numel(%source_slots.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:72:19
+      %121 : bool = aten::eq(%120, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:72:19
+      %122 : bool = prim::If(%121) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:72:19
+        block0():
+          %123 : int = aten::numel(%plan_slots.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:72:47
+          %124 : bool = aten::eq(%123, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:72:47
+          -> (%124)
+        block1():
+          -> (%20)
+       = prim::If(%122) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:72:12
+        block0():
+          -> ()
+        block1():
+           = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:72:12
+          -> ()
+      %125 : Tensor = aten::ge(%source_slots.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:73:26
+      %126 : int = aten::numel(%live_locals.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:73:57
+      %127 : Tensor = aten::lt(%source_slots.1, %126) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:73:44
+      %128 : Tensor = aten::__and__(%125, %127) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:73:26
+      %129 : Tensor = aten::all(%128) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:73:26
+      %130 : bool = aten::Bool(%129) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:73:19
+       = prim::If(%130) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:73:12
+        block0():
+          -> ()
+        block1():
+           = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:73:12
+          -> ()
+      %131 : Tensor = aten::ge(%plan_slots.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:74:26
+      %132 : int = aten::numel(%live_locals.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:74:53
+      %133 : Tensor = aten::lt(%plan_slots.1, %132) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:74:42
+      %134 : Tensor = aten::__and__(%131, %133) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:74:26
+      %135 : Tensor = aten::all(%134) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:74:26
+      %136 : bool = aten::Bool(%135) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:74:19
+       = prim::If(%136) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:74:12
+        block0():
+          -> ()
+        block1():
+           = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:74:12
+          -> ()
+      -> ()
+  %journal.1 : Tensor = aten::full(%17, %33, %26, %31, %31, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:76:18
+  %138 : int = aten::size(%walls.1, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:77:34
+  %139 : int = aten::size(%walls.1, %29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:77:48
+  %140 : int[] = prim::ListConstruct(%28, %24, %138, %139)
+  %frames.1 : Tensor = aten::zeros(%140, %31, %31, %31, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:77:17
+  %142 : bool, %143 : (Tensor, Tensor, int, bool), %144 : int = prim::Loop(%34, %19, %20, %42, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:78:8
+    block0(%145 : int, %146 : bool, %147 : (Tensor, Tensor, int, bool), %148 : int):
+      %remaining.1 : int = aten::sub(%budget.1, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:79:24
+      %150 : Tensor = aten::slice(%lower.1, %30, %31, %count.2, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:80:30
+      %151 : Tensor = aten::slice(%upper.1, %30, %31, %count.2, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:80:44
+      %152 : int = prim::Uninitialized()
+      %153 : int = aten::numel(%150) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:9:11
+      %154 : int = aten::numel(%151) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:9:28
+      %155 : bool = aten::eq(%153, %154) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:9:11
+       = prim::If(%155) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:9:4
+        block0():
+          -> ()
+        block1():
+           = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:9:4
+          -> ()
+      %156 : Tensor = aten::ge(%150, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:10:18
+      %157 : Tensor = aten::le(%151, %failure.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:10:33
+      %158 : Tensor = aten::__and__(%156, %157) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:10:18
+      %159 : Tensor = aten::le(%150, %151) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:10:54
+      %160 : Tensor = aten::__and__(%158, %159) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:10:18
+      %161 : Tensor = aten::all(%160) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:10:18
+      %162 : bool = aten::Bool(%161) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:10:11
+       = prim::If(%162) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:10:4
+        block0():
+          -> ()
+        block1():
+           = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:10:4
+          -> ()
+      %count.1 : int = aten::numel(%150) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:11:12
+      %164 : Tensor = aten::eq(%150, %failure.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:12:13
+      %165 : Tensor = aten::all(%164) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:12:13
+      %166 : bool = aten::Bool(%165) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:12:7
+      %verdict.1 : int = prim::If(%166) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:12:4
+        block0():
+          -> (%count.1)
+        block1():
+          %168 : bool = aten::gt(%count.1, %30)
+          %169 : bool, %170 : int, %171 : int = prim::Loop(%34, %168, %20, %152, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:14:4
+            block0(%172 : int, %173 : bool, %174 : int, %175 : int):
+              %176 : Tensor = aten::select(%151, %30, %175) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:15:15
+              %177 : int = aten::Int(%176) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:15:11
+              %178 : bool = aten::eq(%177, %failure.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:15:11
+              %179 : bool, %180 : int, %181 : bool, %182 : bool = prim::If(%178) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:15:8
+                block0():
+                  -> (%20, %152, %19, %43)
+                block1():
+                  %best.43 : bool = prim::Loop(%count.1, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:18:8
+                    block0(%j.1 : int, %best.19 : bool):
+                      %186 : bool = aten::ne(%175, %j.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:15
+                      %187 : bool = prim::If(%186) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:15
+                        block0():
+                          %188 : Tensor = aten::select(%151, %30, %175) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:30
+                          %189 : int = aten::Int(%188) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:26
+                          %190 : int = aten::mul(%189, %count.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:26
+                          %191 : int = aten::add(%190, %175) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:26
+                          %192 : Tensor = aten::select(%150, %30, %j.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:55
+                          %193 : int = aten::Int(%192) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:51
+                          %194 : int = aten::mul(%193, %count.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:51
+                          %195 : int = aten::add(%194, %j.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:51
+                          %196 : bool = aten::ge(%191, %195) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:26
+                          -> (%196)
+                        block1():
+                          -> (%20)
+                      %best.47 : bool = prim::If(%187) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:19:12
+                        block0():
+                          -> (%20)
+                        block1():
+                          -> (%best.19)
+                      -> (%19, %best.47)
+                  %198 : int = prim::If(%best.43) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:21:8
+                    block0():
+                      -> (%175)
+                    block1():
+                      -> (%152)
+                  -> (%best.43, %198, %43, %19)
+              %199 : bool, %200 : int = prim::If(%179)
+                block0():
+                  -> (%20, %180)
+                block1():
+                  %201 : bool = prim::If(%178)
+                    block0():
+                      -> (%181)
+                    block1():
+                      -> (%182)
+                  -> (%201, %152)
+              %202 : int = aten::add(%175, %25)
+              %203 : bool = aten::lt(%202, %count.1)
+              %204 : bool = aten::__and__(%203, %199)
+              -> (%204, %179, %200, %202)
+          %205 : int = prim::If(%169)
+            block0():
+              -> (%170)
+            block1():
+              -> (%33)
+          -> (%205)
+      %206 : bool = aten::eq(%policy.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:81:15
+      %proposal : int = prim::If(%206) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:81:12
+        block0():
+          %208 : Tensor = aten::to(%lower.1, %16, %20, %20, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:34:30
+          %209 : Tensor = aten::div(%208, %failure.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:34:30
+          %210 : Tensor = aten::to(%upper.1, %16, %20, %20, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:34:53
+          %211 : Tensor = aten::div(%210, %failure.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:34:53
+          %212 : Tensor = aten::to(%queried.1, %16, %20, %20, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:34:76
+          %213 : float = aten::Float(%remaining.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:35:44
+          %214 : float[] = prim::ListConstruct(%213)
+          %215 : Tensor = aten::tensor(%214, %31, %31, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:35:30
+          %216 : Tensor[] = prim::ListConstruct(%209, %211, %212, %215)
+          %features.1 : Tensor = aten::cat(%216, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:34:19
+          %input.5 : Tensor = aten::linear(%features.1, %self.controller.network.0.weight, %self.controller.network.0.bias) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:15
+          %input.9 : Tensor = aten::relu(%input.5) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+          %input.13 : Tensor = aten::linear(%input.9, %self.controller.network.2.weight, %self.controller.network.2.bias) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:15
+          %input.17 : Tensor = aten::relu(%input.13) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/functional.py:1697:17
+          %input.21 : Tensor = aten::linear(%input.17, %self.controller.network.4.weight, %self.controller.network.4.bias) # /workspace/.visuaml-setup/research-venv/lib/python3.12/site-packages/torch/nn/modules/linear.py:134:15
+          %223 : Tensor = aten::argmax(%input.21, %31, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:36:19
+          %proposal.1 : int = aten::Int(%223) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:36:15
+          -> (%proposal.1)
+        block1():
+          %225 : bool = aten::ge(%verdict.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:85:19
+          %proposal.87 : int = prim::If(%225) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:85:16
+            block0():
+              %proposal.3 : int = aten::add(%verdict.1, %29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:86:31
+              -> (%proposal.3)
+            block1():
+              %228 : bool = aten::gt(%remaining.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:87:21
+              %proposal.85 : int = prim::If(%228) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:87:16
+                block0():
+                  %230 : bool = aten::gt(%count.2, %30)
+                  %proposal.83 : int, %232 : int = prim::Loop(%34, %230, %22, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:88:20
+                    block0(%233 : int, %proposal.81 : int, %235 : int):
+                      %236 : Tensor = aten::select(%queried.1, %30, %235) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:35
+                      %237 : int = aten::Int(%236) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:31
+                      %238 : bool = aten::Bool(%237) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:31
+                      %239 : bool = aten::__not__(%238) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:27
+                      %240 : bool = prim::If(%239) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:27
+                        block0():
+                          %241 : Tensor = aten::select(%lower.1, %30, %235) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:55
+                          %242 : int = aten::Int(%241) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:51
+                          %243 : Tensor = aten::select(%upper.1, %30, %235) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:72
+                          %244 : int = aten::Int(%243) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:68
+                          %245 : bool = aten::ne(%242, %244) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:51
+                          -> (%245)
+                        block1():
+                          -> (%20)
+                      %246 : bool, %247 : int = prim::If(%240) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:89:24
+                        block0():
+                          -> (%20, %235)
+                        block1():
+                          -> (%19, %proposal.81)
+                      %248 : int = aten::add(%235, %25)
+                      %249 : bool = aten::lt(%248, %count.2)
+                      %250 : bool = aten::__and__(%249, %246)
+                      -> (%250, %247, %248)
+                  -> (%proposal.83)
+                block1():
+                  -> (%22)
+              -> (%proposal.85)
+          -> (%proposal.87)
+      %251 : Tensor = aten::select(%journal.1, %30, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:92:12
+      %252 : Tensor = aten::select(%251, %30, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:92:12
+      %253 : int = prim::dtype(%252)
+      %254 : Device = prim::device(%252)
+      %255 : Tensor = aten::tensor(%proposal, %253, %254, %20)
+      %256 : Tensor = aten::copy_(%252, %255, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:92:12
+      %257 : Tensor = aten::select(%journal.1, %30, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:93:12
+      %258 : Tensor = aten::select(%257, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:93:12
+      %259 : int = prim::dtype(%258)
+      %260 : Device = prim::device(%258)
+      %261 : Tensor = aten::tensor(%verdict.1, %259, %260, %20)
+      %262 : Tensor = aten::copy_(%258, %261, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:93:12
+      %263 : Tensor = aten::select(%journal.1, %30, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:94:12
+      %264 : Tensor = aten::slice(%263, %30, %28, %21, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:94:12
+      %265 : Tensor = aten::copy_(%264, %lower.1, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:94:12
+      %266 : Tensor = aten::select(%journal.1, %30, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:95:12
+      %267 : Tensor = aten::slice(%266, %30, %21, %24, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:95:12
+      %268 : Tensor = aten::copy_(%267, %upper.1, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:95:12
+      %269 : bool = aten::le(%29, %proposal) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:96:15
+      %270 : bool = prim::If(%269) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:96:15
+        block0():
+          %271 : bool = aten::le(%proposal, %22) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:96:20
+          -> (%271)
+        block1():
+          -> (%20)
+      %272 : bool, %273 : (Tensor, Tensor, int, bool) = prim::If(%270) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:96:12
+        block0():
+          %274 : bool = aten::ne(%proposal, %22) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:97:38
+          %claim.1 : int = prim::If(%274) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:97:24
+            block0():
+              %276 : int = aten::sub(%proposal, %29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:97:24
+              -> (%276)
+            block1():
+              -> (%33)
+          %277 : bool = aten::eq(%claim.1, %verdict.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:98:47
+          %278 : int = prim::If(%277) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:98:38
+            block0():
+              -> (%claim.1)
+            block1():
+              -> (%33)
+          %279 : (Tensor, Tensor, int, bool) = prim::TupleConstruct(%journal.1, %frames.1, %278, %277)
+          -> (%20, %279)
+        block1():
+          %280 : bool = aten::eq(%domain.1, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:99:31
+          %candidate_replay.5 : bool = prim::If(%280) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:99:31
+            block0():
+              %282 : bool = aten::eq(%proposal, %24) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:99:47
+              -> (%282)
+            block1():
+              -> (%20)
+          %283 : bool = aten::le(%remaining.1, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:100:15
+          %284 : bool = prim::If(%283) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:100:15
+            block0():
+              -> (%19)
+            block1():
+              %285 : bool = aten::__not__(%candidate_replay.5) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:100:34
+              %286 : bool = prim::If(%285) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:100:34
+                block0():
+                  %287 : bool = aten::le(%30, %proposal) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:100:63
+                  %288 : bool = prim::If(%287) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:100:63
+                    block0():
+                      %289 : bool = aten::lt(%proposal, %count.2) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:100:68
+                      -> (%289)
+                    block1():
+                      -> (%20)
+                  %290 : bool = aten::__not__(%288) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:100:59
+                  -> (%290)
+                block1():
+                  -> (%20)
+              -> (%286)
+          %291 : bool, %292 : bool, %293 : bool = prim::If(%284) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:100:12
+            block0():
+              -> (%19, %20, %43)
+            block1():
+              %294 : bool, %295 : bool = prim::If(%44) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:102:12
+                block0():
+                  %296 : Tensor = aten::select(%queried.1, %30, %proposal) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:103:19
+                  %297 : Tensor = aten::ne(%296, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:103:19
+                  %298 : bool = aten::Bool(%297) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:103:19
+                  %299 : bool = prim::If(%298) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:103:19
+                    block0():
+                      -> (%19)
+                    block1():
+                      %300 : bool = aten::lt(%coverage.1, %horizon.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:103:45
+                      -> (%300)
+                  %301 : bool = prim::If(%299) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:103:16
+                    block0():
+                      -> (%20)
+                    block1():
+                      %terrain.15 : Tensor = aten::clone(%walls.1, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:105:26
+                      %303 : bool = aten::ne(%proposal, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:106:19
+                       = prim::If(%303) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:106:16
+                        block0():
+                          %304 : int = aten::sub(%proposal, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:107:37
+                          %305 : Tensor = aten::select(%edits.1, %30, %304) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:107:31
+                          %edit.17 : int = aten::Int(%305) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:107:27
+                          %307 : bool = aten::le(%30, %edit.17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:108:27
+                          %308 : bool = prim::If(%307) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:108:27
+                            block0():
+                              %309 : int = aten::numel(%terrain.15) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:108:39
+                              %310 : bool = aten::lt(%edit.17, %309) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:108:32
+                              -> (%310)
+                            block1():
+                              -> (%20)
+                           = prim::If(%308) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:108:20
+                            block0():
+                              -> ()
+                            block1():
+                               = prim::RaiseException(%32, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:108:20
+                              -> ()
+                          %311 : Tensor = aten::flatten(%terrain.15, %30, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:109:20
+                          %312 : Tensor = aten::select(%311, %30, %edit.17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:109:20
+                          %313 : int = prim::dtype(%312)
+                          %314 : Device = prim::device(%312)
+                          %315 : Tensor = aten::tensor(%30, %313, %314, %20)
+                          %316 : Tensor = aten::copy_(%312, %315, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:109:20
+                          -> ()
+                        block1():
+                          -> ()
+                      %terrain.1 : Tensor = aten::clone(%terrain.15, %31) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:24:18
+                      %318 : Tensor[] = prim::ListConstruct()
+                      %signal4 : Tensor = prim::Loop(%horizon.1, %19, %signal.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:28:8
+                        block0(%320 : int, %signal4.7 : Tensor):
+                          %322 : Tensor = aten::conv2d(%signal4.7, %15, %31, %14, %14, %14, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                          %occupied.1 : Tensor = aten::clamp(%322, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:30:19
+                          %324 : Tensor = aten::neg(%terrain.1) # <string>:11:9
+                          %325 : Tensor = aten::add(%324, %25, %25) # <string>:11:9
+                          %signal5.1 : Tensor = aten::mul(%occupied.1, %325) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/replay_cellular_automata.py:31:15
+                          %327 : Tensor[] = aten::append(%318, %signal5.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:30:12
+                          -> (%19, %signal5.1)
+                      %328 : Tensor = aten::cat(%318, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/pocket_world_inference.py:31:46
+                      %329 : Tensor = aten::slice(%328, %30, %31, %31, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:111:40
+                      %330 : Tensor = aten::select(%329, %25, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:111:40
+                      %331 : Tensor = aten::select(%frames.1, %30, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:111:16
+                      %332 : Tensor = aten::slice(%331, %30, %31, %horizon.1, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:111:16
+                      %333 : Tensor = aten::copy_(%332, %330, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:111:16
+                      %334 : bool = aten::gt(%horizon.1, %30)
+                      %arrival.51 : int, %336 : int = prim::Loop(%34, %334, %30, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:113:16
+                        block0(%337 : int, %arrival.21 : int, %339 : int):
+                          %340 : Tensor = aten::select(%328, %30, %339) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:114:27
+                          %341 : Tensor = aten::flatten(%340, %30, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:114:27
+                          %342 : Tensor = aten::select(%341, %30, %target.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:114:27
+                          %343 : int = aten::Int(%342) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:114:23
+                          %344 : bool = aten::Bool(%343) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:114:23
+                          %345 : bool, %346 : int = prim::If(%344) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:114:20
+                            block0():
+                              %arrival.57 : int = aten::add(%339, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:115:34
+                              -> (%20, %arrival.57)
+                            block1():
+                              -> (%19, %arrival.21)
+                          %348 : int = aten::add(%339, %25)
+                          %349 : bool = aten::lt(%348, %horizon.1)
+                          %350 : bool = aten::__and__(%349, %345)
+                          -> (%350, %346, %348)
+                      %351 : bool = aten::eq(%arrival.51, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:117:34
+                      %cost.13 : int = prim::If(%351) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:117:23
+                        block0():
+                          -> (%failure.1)
+                        block1():
+                          %353 : bool = prim::If(%costly_edits.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:117:64
+                            block0():
+                              -> (%303)
+                            block1():
+                              -> (%20)
+                          %354 : int = prim::If(%353) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:117:59
+                            block0():
+                              -> (%23)
+                            block1():
+                              -> (%30)
+                          %355 : int = aten::add(%arrival.51, %354) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:117:50
+                          -> (%355)
+                      %356 : Tensor = aten::select(%lower.1, %30, %proposal) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:118:16
+                      %357 : int = prim::dtype(%356)
+                      %358 : Device = prim::device(%356)
+                      %359 : Tensor = aten::tensor(%cost.13, %357, %358, %20)
+                      %360 : Tensor = aten::copy_(%356, %359, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:118:68
+                      %361 : Tensor = aten::select(%upper.1, %30, %proposal) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:118:32
+                      %362 : int = prim::dtype(%361)
+                      %363 : Device = prim::device(%361)
+                      %364 : Tensor = aten::tensor(%cost.13, %362, %363, %20)
+                      %365 : Tensor = aten::copy_(%361, %364, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:118:68
+                      %366 : Tensor = aten::select(%queried.1, %30, %proposal) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:118:48
+                      %367 : int = prim::dtype(%366)
+                      %368 : Device = prim::device(%366)
+                      %369 : Tensor = aten::tensor(%25, %367, %368, %20)
+                      %370 : Tensor = aten::copy_(%366, %369, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:118:68
+                      %371 : Tensor = aten::select(%journal.1, %30, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:119:16
+                      %372 : Tensor = aten::select(%371, %30, %24) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:119:16
+                      %373 : int = prim::dtype(%372)
+                      %374 : Device = prim::device(%372)
+                      %375 : Tensor = aten::tensor(%arrival.51, %373, %374, %20)
+                      %376 : Tensor = aten::copy_(%372, %375, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:119:16
+                      %377 : Tensor = aten::select(%journal.1, %30, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:120:16
+                      %378 : Tensor = aten::select(%377, %30, %23) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:120:16
+                      %379 : int = prim::dtype(%378)
+                      %380 : Device = prim::device(%378)
+                      %381 : Tensor = aten::tensor(%horizon.1, %379, %380, %20)
+                      %382 : Tensor = aten::copy_(%378, %381, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:120:16
+                      -> (%43)
+                  -> (%299, %301)
+                block1():
+                  %383 : bool = prim::If(%candidate_replay.5) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:124:19
+                    block0():
+                      %384 : Tensor = aten::select(%queried.1, %30, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:124:40
+                      %385 : Tensor = aten::eq(%384, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:124:40
+                      %386 : bool = aten::Bool(%385) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:124:40
+                      -> (%386)
+                    block1():
+                      -> (%20)
+                  %387 : bool, %388 : bool = prim::If(%383) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:124:16
+                    block0():
+                      %389 : Tensor?[] = prim::ListConstruct(%source_slots.1)
+                      %390 : Tensor = aten::index(%live_locals.1, %389) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:125:31
+                      %391 : Tensor?[] = prim::ListConstruct(%plan_slots.1)
+                      %392 : Tensor = aten::index(%live_locals.1, %391) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:125:60
+                      %mismatch.9 : Tensor = aten::ne(%390, %392) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:125:31
+                      %394 : Tensor = aten::select(%queried.1, %30, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:126:20
+                      %395 : int = prim::dtype(%394)
+                      %396 : Device = prim::device(%394)
+                      %397 : Tensor = aten::tensor(%25, %395, %396, %20)
+                      %398 : Tensor = aten::copy_(%394, %397, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:126:20
+                      %399 : Tensor = aten::select(%mismatch.9, %30, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:127:43
+                      %400 : bool = aten::Bool(%399) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:127:38
+                      %difference.9 : int = prim::If(%400) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:127:33
+                        block0():
+                          -> (%25)
+                        block1():
+                          %402 : Tensor = aten::select(%mismatch.9, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:127:71
+                          %403 : bool = aten::Bool(%402) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:127:66
+                          %404 : int = prim::If(%403) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:127:61
+                            block0():
+                              -> (%28)
+                            block1():
+                              -> (%30)
+                          -> (%404)
+                      %405 : Tensor = aten::select(%journal.1, %30, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:128:20
+                      %406 : Tensor = aten::select(%405, %30, %24) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:128:20
+                      %407 : int = prim::dtype(%406)
+                      %408 : Device = prim::device(%406)
+                      %409 : Tensor = aten::tensor(%difference.9, %407, %408, %20)
+                      %410 : Tensor = aten::copy_(%406, %409, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:128:20
+                      %411 : bool = aten::Bool(%difference.9) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:129:23
+                       = prim::If(%411) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:129:20
+                        block0():
+                          %412 : Tensor = aten::select(%lower.1, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:130:24
+                          %413 : int = prim::dtype(%412)
+                          %414 : Device = prim::device(%412)
+                          %415 : Tensor = aten::tensor(%failure.1, %413, %414, %20)
+                          %416 : Tensor = aten::copy_(%412, %415, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:130:42
+                          %417 : Tensor = aten::select(%upper.1, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:130:33
+                          %418 : int = prim::dtype(%417)
+                          %419 : Device = prim::device(%417)
+                          %420 : Tensor = aten::tensor(%failure.1, %418, %419, %20)
+                          %421 : Tensor = aten::copy_(%417, %420, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:130:42
+                          -> ()
+                        block1():
+                          -> ()
+                      -> (%20, %43)
+                    block1():
+                      %422 : bool = aten::eq(%proposal, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:131:21
+                      %423 : bool = prim::If(%422) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:131:21
+                        block0():
+                          %424 : Tensor = aten::select(%queried.1, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:131:37
+                          %425 : Tensor = aten::eq(%424, %30) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:131:37
+                          %426 : bool = aten::Bool(%425) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:131:37
+                          -> (%426)
+                        block1():
+                          -> (%20)
+                      %427 : bool, %428 : bool = prim::If(%423) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:131:16
+                        block0():
+                          %429 : Tensor = aten::eq(%source_slots.1, %plan_slots.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:132:34
+                          %430 : Tensor = aten::all(%429) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:132:34
+                          %legal.9 : bool = aten::Bool(%430) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:132:28
+                          %432 : Tensor = aten::select(%queried.1, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:133:20
+                          %433 : int = prim::dtype(%432)
+                          %434 : Device = prim::device(%432)
+                          %435 : Tensor = aten::tensor(%25, %433, %434, %20)
+                          %436 : Tensor = aten::copy_(%432, %435, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:133:20
+                          %437 : (int, int) = prim::If(%legal.9) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:134:40
+                            block0():
+                              -> (%35)
+                            block1():
+                              %438 : (int, int) = prim::TupleConstruct(%failure.1, %failure.1)
+                              -> (%438)
+                          %439 : int, %440 : int = prim::TupleUnpack(%437)
+                          %441 : Tensor = aten::select(%lower.1, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:134:20
+                          %442 : int = prim::dtype(%441)
+                          %443 : Device = prim::device(%441)
+                          %444 : Tensor = aten::tensor(%439, %442, %443, %20)
+                          %445 : Tensor = aten::copy_(%441, %444, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:134:40
+                          %446 : Tensor = aten::select(%upper.1, %30, %25) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:134:29
+                          %447 : int = prim::dtype(%446)
+                          %448 : Device = prim::device(%446)
+                          %449 : Tensor = aten::tensor(%440, %447, %448, %20)
+                          %450 : Tensor = aten::copy_(%446, %449, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:134:40
+                          %451 : int = aten::Int(%legal.9) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:135:38
+                          %452 : Tensor = aten::select(%journal.1, %30, %148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:135:20
+                          %453 : Tensor = aten::select(%452, %30, %24) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:135:20
+                          %454 : int = prim::dtype(%453)
+                          %455 : Device = prim::device(%453)
+                          %456 : Tensor = aten::tensor(%451, %454, %455, %20)
+                          %457 : Tensor = aten::copy_(%453, %456, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/checked_decisions.py:135:20
+                          -> (%20, %43)
+                        block1():
+                          -> (%19, %20)
+                      -> (%427, %428)
+                  -> (%387, %388)
+              -> (%294, %295, %19)
+          %458 : bool = prim::If(%291)
+            block0():
+              -> (%292)
+            block1():
+              -> (%293)
+          -> (%458, %42)
+      %459 : int = aten::add(%148, %25)
+      %460 : bool = aten::lt(%459, %29)
+      %461 : bool = aten::__and__(%460, %272)
+      -> (%461, %270, %273, %459)
+  %462 : (Tensor, Tensor, int, bool) = prim::If(%142)
+    block0():
+      -> (%143)
+    block1():
+      %463 : (Tensor, Tensor, int, bool) = prim::TupleConstruct(%journal.1, %frames.1, %33, %20)
+      -> (%463)
+  return (%462)
