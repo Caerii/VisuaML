@@ -1,5 +1,6 @@
 """Direct journal writer and stable request-prefix Merkle comparison."""
 from contextlib import ExitStack
+from functools import lru_cache
 from hashlib import sha256
 import json
 import os
@@ -17,6 +18,18 @@ from .shards import merge_shards
 _ROWS_PER_CHUNK = 256
 _SCHEMA = 1
 _CHILD_QUERY = "SELECT key,count,digest FROM nodes WHERE key IN ("+",".join(["?"]*256)+")"
+
+@lru_cache(maxsize=512)
+def _encoded_label(label):
+    return canonical(label)
+
+
+def _encoded_value(value):
+    # Keep the exact bytes of the canonical encoder for the frequent integer case.
+    if type(value) is int:
+        return str(value).encode("ascii")
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+
 
 
 class JournalWriter:
@@ -47,12 +60,13 @@ class JournalWriter:
         return self
 
     def write(self, request, boundary, value, *, runtime, source=None):
-        if any(not isinstance(field, str) or not 1 <= len(field) <= 256
-               for field in (request, boundary, runtime)):
+        if (not isinstance(request, str) or not 1 <= len(request) <= 256
+                or not isinstance(boundary, str) or not 1 <= len(boundary) <= 256
+                or not isinstance(runtime, str) or not 1 <= len(runtime) <= 256):
             raise ValueError("Request, boundary and runtime must contain 1–256 characters")
         if self.previous is not None and request < self.previous:
             raise ValueError(f"Request {request!r} follows {self.previous!r} out of order")
-        encoded = json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+        encoded = _encoded_value(value)
         if len(encoded) > MAX_OBSERVATION_BYTES:
             raise ValueError("Observation exceeds 4096 bytes")
         key = request.encode("utf-8", "surrogatepass")[:self.width].ljust(self.width, b"\0")
@@ -60,9 +74,11 @@ class JournalWriter:
             self._seal_leaf()
             self.key = key
         self.previous = request
-        semantic = b"["+canonical(request)+b","+canonical(boundary)+b","+encoded+b"]"
-        provenance = {"shard": 0, "line": self.count+1} if source is None else source
-        self.rows.append(b"["+semantic+b","+canonical(runtime)+b","+canonical(provenance)+b"]\n")
+        request_json = b'"'+request.encode("ascii")+b'"' if request.isascii() and request.isalnum() else canonical(request)
+        semantic = b"["+request_json+b","+_encoded_label(boundary)+b","+encoded+b"]"
+        provenance = (b'{"line":'+str(self.count+1).encode("ascii")+b',"shard":0}'
+                      if source is None else canonical(source))
+        self.rows.append(b"["+semantic+b","+_encoded_label(runtime)+b","+provenance+b"]\n")
         self.semantics.update(semantic+b"\n")
         self.count += 1
         self.leaf_count += 1
@@ -100,6 +116,7 @@ class JournalWriter:
                 self.db.execute("INSERT INTO nodes VALUES (?,?,?)", (parent, total, tree.digest()))
         if not self.count:
             self.db.execute("INSERT INTO nodes VALUES (?,?,?)", (b"", 0, sha256().digest()))
+        self.db.execute("CREATE INDEX child_depth ON nodes(length(key), key)")
         self.db.execute("INSERT INTO metadata VALUES (?,?,?)", (_SCHEMA, self.width, uuid4().hex))
         self.db.commit()
 
@@ -144,6 +161,8 @@ class JournalTree:
             if meta is None or meta[0] != _SCHEMA or not 1 <= meta[1] <= 16:
                 raise ValueError("Incomplete or unsupported request tree")
             self.chunks_read = self.payload_bytes = 0
+            self.indexed_children = self.db.execute(
+                "SELECT 1 FROM sqlite_schema WHERE name='child_depth' AND type='index'").fetchone() is not None
             self.width = meta[1]
             self.artifact_id = meta[2] if len(meta) == 3 else None
             self.root = self.db.execute("SELECT count,digest FROM nodes WHERE key=x''").fetchone()
@@ -158,8 +177,14 @@ class JournalTree:
         self.db.close()
 
     def children(self, prefix):
-        keys = [prefix+bytes([branch]) for branch in range(256)]
-        return {key: (count, digest) for key, count, digest in self.db.execute(_CHILD_QUERY, keys)}
+        if self.indexed_children:
+            rows = self.db.execute(
+                "SELECT key,count,digest FROM nodes WHERE length(key)=? AND key BETWEEN ? AND ?",
+                (len(prefix)+1, prefix+b"\0", prefix+b"\xff"))
+        else:
+            keys = [prefix+bytes([branch]) for branch in range(256)]
+            rows = self.db.execute(_CHILD_QUERY, keys)
+        return {key: (count, digest) for key, count, digest in rows}
 
     def rows(self, key, *, later=False):
         if later:

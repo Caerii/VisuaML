@@ -261,3 +261,34 @@ PYTHONPATH=../backend python tools/benchmark_request_tree.py --workers
 npm run build
 node tools/benchmark_batch_viewer.mjs release/examples/pipeline/request-tree-batch.json
 ```
+
+### Faster capture and larger worker runs
+
+The writer reuses serialized boundary and runtime labels and emits common
+integer values and source coordinates directly. Complex values still use
+the canonical JSON encoder. A SQLite index lets readers look up the
+children of a request range directly. Earlier tree files remain readable.
+
+- Three alternating million-row pairs took **7.00 s** median on the v82
+  writer and **1.69 s** on the new writer, including publication. The
+  logical roots matched on every pair. The index increased the synthetic
+  artifact size from 7.39 MB to 7.54 MB.
+- On a separate 100,000-row fixture, the late mismatch took **1.39 ms**
+  median with the old child lookup and **0.50 ms** with the new index
+  across 51 samples per format. The resulting diagnostic was identical.
+- Four processes captured **40 million observations** in **17.46 s**
+  across 40 worker files on one host. The baseline occupied **301 MB**.
+  The alternate run reused 39 files and rebuilt one million-row worker
+  file. Linking both manifests took **19.4 ms**. The final mismatch
+  took **0.59 ms** median across 11 comparisons on already-open manifests,
+  and read **1,114 bytes** from two compressed payload chunks.
+
+These are local synthetic results with short integer observations.
+File-open and manifest-binding time precede the timed comparisons.
+The worker fixture uses disjoint request prefixes and shares unchanged
+artifacts by reference. [Raw timings](../examples/pipeline/capture-throughput.json)
+
+```sh
+PYTHONPATH=../backend python tools/benchmark_capture_throughput.py
+PYTHONPATH=../backend python tools/benchmark_capture_throughput.py --seek-only
+```

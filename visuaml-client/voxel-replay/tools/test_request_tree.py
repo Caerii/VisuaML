@@ -1,8 +1,10 @@
 """Check direct capture, layout independence, and range comparison parity."""
+from hashlib import sha256
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 
+from visuaml.replay._codec import canonical
 from visuaml.replay.pipeline import compare_observations, observation
 from visuaml.replay.request_tree import JournalTree, JournalWriter, compare_trees, link_trees, open_tree
 
@@ -59,6 +61,19 @@ class RequestTreeTests(unittest.TestCase):
             write(b, right)
             with self.assertRaisesRegex(ValueError, "root changed"), open_tree(manifest):
                 self.fail("Replacement must be rejected even if logical rows match")
+
+    def test_mixed_values_keep_canonical_hash(self):
+        values = [True, -1, -0.0, 0.25, 2**100, {"ü": [1, None]}, chr(10) + chr(34)]
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "mixed.sqlite"
+            with JournalWriter(path, prefix_bytes=1) as writer:
+                for index, value in enumerate(values):
+                    writer.write(f"a-{index}", "résult", value, runtime="python")
+            expected = sha256(b"".join(
+                canonical([f"a-{index}", "résult", value])+b"\n" for index, value in enumerate(values))).digest()
+            with JournalTree(path) as reader:
+                self.assertEqual(reader.children(b"")[b"a"], (len(values), expected))
+                self.assertEqual([row["value"] for row in reader.all_rows()], values)
 
     def test_interruption_and_empty(self):
         with TemporaryDirectory() as directory:

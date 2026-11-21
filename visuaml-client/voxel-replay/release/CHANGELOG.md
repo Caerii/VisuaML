@@ -1,5 +1,11 @@
 # VisuaML Replay changes
 
+## 0.11.0rc1
+
+- Reduced direct capture overhead while preserving canonical hashes and row provenance.
+- Added indexed child lookup with support for reading previous request trees.
+- Added a parallel 40-million-observation benchmark with immutable worker reuse.
+
 ## 0.10.0rc1
 
 - Added direct indexed journal capture and stable request-prefix comparison.
