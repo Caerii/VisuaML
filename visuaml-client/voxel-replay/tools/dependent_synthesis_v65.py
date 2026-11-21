@@ -137,26 +137,34 @@ def train(mode,seed):
             subset = [top]+rng.sample(valid,min(11,len(valid)))
             subset = (subset*12)[:12]
             rng.shuffle(subset)
-            data.append((torch.tensor([row[3] for row in subset]),subset.index(top)))
-            edge,test,charge,_ = top
+            edge,test,charge,features = top
             a,b,_ = space.factors[edge]
             x,y = TESTS[test]
-            space = space.observe(edge,test,keys[a]*x+keys[b]*y)
+            outcome = keys[a]*x+keys[b]*y
+            memory = [*features]
+            memory[4],memory[7] = -1,outcome/24
+            data.append((torch.tensor([row[3] for row in subset]),subset.index(top),memory))
+            space = space.observe(edge,test,outcome)
             budget -= charge
         episodes.append(data)
     x = torch.zeros(len(episodes),12,12,FEATURES)
     y = torch.full((len(episodes),12),-100,dtype=torch.long)
+    seen = torch.zeros(len(episodes),12,FEATURES)
     for i,episode in enumerate(episodes):
-        for j,(features,index) in enumerate(episode):
-            x[i,j],y[i,j] = features,index
-    model = Policy(mode!="stateless")
+        for j,(features,index,observed) in enumerate(episode):
+            x[i,j],y[i,j],seen[i,j] = features,index,torch.tensor(observed)
+    model = Policy(mode in ("full","truncated"))
     opt = torch.optim.AdamW(model.parameters(),lr=.002)
     for _ in range(480):
         batch = torch.randint(len(y),(24,))
         memory = torch.zeros(24,32)
         logits = []
         for t in range(12):
-            output,memory = model(x[batch,t],memory)
+            current = x[batch,t]
+            if mode=="full-history":
+                current = torch.cat((current,seen[batch,:t]),1)
+            output,memory = model(current,memory)
+            output = output[:,:12]
             if mode=="truncated" and t%3==2:
                 memory = memory.detach()
             logits.append(output)
@@ -174,7 +182,7 @@ def train(mode,seed):
 if __name__=="__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode",choices=("full","truncated","stateless"))
+    parser.add_argument("mode",choices=("full","truncated","stateless","full-history"))
     parser.add_argument("seed",type=int)
     args = parser.parse_args()
     train(args.mode,args.seed)

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VisuaML Dependency Fusion</title><link rel="stylesheet" href="./pocket.css"></head>
+<body><main>
+<header class="masthead"><a href="./index.html">VisuaML</a><span>Dependency fusion</span></header>
+<div class="page-title"><h1>Which neighbor did the program read?</h1></div>
+<section class="panel">
+<div class="run-controls">
+<label>Layout <select id="layout"></select></label>
+<label>Execution <select id="variant"><option value="fused">Verified fusion</option><option value="staged">Staged reference</option><option value="invalid">Rejected fusion</option></select></label>
+<a id="proofs" download="v65-dependency-proofs.json">Download proof bundle</a>
+</div>
+<p id="result" role="status"></p>
+<div id="graph" style="display:flex;align-items:center;gap:.5rem;overflow:auto;padding:.6rem 0" aria-label="Left-neighbor dependency graph"></div>
+<p id="effect" role="status"></p>
+<p id="scope"></p>
+</section>
+</main><script type="module" src="./dependency-fusion.mjs"></script></body></html>

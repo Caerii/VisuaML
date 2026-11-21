@@ -7,6 +7,7 @@ export default defineConfig({
     worldStatistics: fileURLToPath(new URL("./pocket-world-statistics.html", import.meta.url)),
     goalPlanning: fileURLToPath(new URL("./pocket-goal-planning.html", import.meta.url)),
     pairedGoals: fileURLToPath(new URL("./pocket-paired-goals.html", import.meta.url)),
+    dependencyFusion: fileURLToPath(new URL("./dependency-fusion.html", import.meta.url)),
     world: fileURLToPath(new URL("./pocket-world-inference.html", import.meta.url)),
     coupled: fileURLToPath(new URL("./pocket-coupled.html", import.meta.url)),
     cellular: fileURLToPath(new URL("./pocket-cellular.html", import.meta.url)),
