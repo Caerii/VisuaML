@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pocket World Inference</title><link rel="stylesheet" href="./pocket.css"></head>
+<body><main>
+<header class="masthead"><a href="./pocket-coupled.html">Signal Relay</a><span>World inference replay</span></header>
+<div class="page-title"><h1>Will opening this gate help?</h1></div>
+<section class="panel">
+<div class="run-controls">
+<label>Recorded run <select id="run">
+<option value="near">Near signal</option><option value="delayed">Delayed signal</option>
+<option value="near_substitute">Near scene · substitute feedback</option>
+<option value="near_precomputed">Near scene · precomputed reply</option>
+<option value="near_disabled">Tool disabled</option><option value="near_missing">Checkpoint unavailable</option>
+</select></label>
+<button id="open">Reconstruct forecast</button><button id="step">Step world</button>
+<a id="download" download="pocket-world-inference.json">Download journal</a>
+<a id="checkpoint" download="pocket-world-checkpoints.json">Download checkpoints</a>
+</div>
+<p id="prompt"></p>
+<canvas id="world" width="160" height="144" style="width:min(400px,90vw);image-rendering:pixelated"></canvas>
+<p id="status" role="status"></p>
+<pre id="details" style="white-space:pre-wrap"></pre>
+</section>
+</main><script type="module" src="./pocket-world-inference.mjs"></script></body></html>

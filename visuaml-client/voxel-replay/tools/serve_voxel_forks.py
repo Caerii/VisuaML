@@ -13,10 +13,20 @@ def main():
         checkpoint = make_checkpoint(witness)
 
     trace_relay = None
+    world_inference = None
 
     class Handler(BaseHTTPRequestHandler):
         def do_POST(self):
-            nonlocal trace_relay
+            nonlocal trace_relay, world_inference
+            if self.path in ("/api/pocket-world-reconstruct/near","/api/pocket-world-reconstruct/delayed"):
+                import torch
+                from replay_pocket_world_inference import OUT, reconstruct
+                with torch.inference_mode():
+                    if world_inference is None:
+                        torch.set_num_threads(1)
+                        world_inference = torch.jit.load(str(OUT / "inference.pt"))
+                    self.reply(reconstruct(self.path.rsplit("/",1)[-1],world_inference))
+                return
             if self.path == "/api/pocket-reconstruct":
                 import torch
                 from replay_on_demand_trace import DEMAND, OUT, Relay, reconstruct
