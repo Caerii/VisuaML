@@ -94,13 +94,15 @@ try {
   assert.equal((await rollingDownload).suggestedFilename(), 'rolling-context.json');
   await page.locator('#file').setInputFiles('evidence/rolling-context/replay.json');
   await rolling.waitFor();
-  await page.getByRole('button', { name: 'Open emitted checkpoint replay' }).click();
-  const emitted = page.getByText('519 instructions · 27 decoder-emitted checkpoints');
+  const checkpointPage = await browser.newPage();
+  await checkpointPage.goto(new URL('/replay-viewer.html', page.url()).href);
+  await checkpointPage.getByRole('button', { name: 'Open emitted checkpoint replay' }).click();
+  const emitted = checkpointPage.getByText('519 instructions · 27 decoder-emitted checkpoints');
   await emitted.waitFor();
-  assert.match(await page.locator('#detail').innerText(), /Retained word intervention first affects load 151/);
-  const emittedDownload = page.waitForEvent('download');
-  await page.getByRole('link', { name: 'Download emitted checkpoint replay' }).click();
+  assert.match(await checkpointPage.locator('#detail').innerText(), /Retained word intervention first affects load 151/);
+  const emittedDownload = checkpointPage.waitForEvent('download');
+  await checkpointPage.getByRole('link', { name: 'Download emitted checkpoint replay' }).click();
   assert.equal((await emittedDownload).suggestedFilename(), 'decoder-emitted-checkpoint.json');
-  await page.locator('#file').setInputFiles('evidence/decoder-emitted-checkpoint/replay.json');
+  await checkpointPage.locator('#file').setInputFiles('evidence/decoder-emitted-checkpoint/replay.json');
   await emitted.waitFor();
 } finally { await browser.close(); }
