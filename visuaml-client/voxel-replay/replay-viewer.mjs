@@ -1,3 +1,4 @@
+import emittedCheckpointUrl from './evidence/decoder-emitted-checkpoint/replay.json?url';
 import rollingUrl from './evidence/rolling-context/replay.json?url';
 import wordDecoder from './evidence/word-decoder/replay.json';
 import wordDecoderUrl from './evidence/word-decoder/replay.json?url';
@@ -23,6 +24,20 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.profile === 'visuaml-emitted-checkpoint-v1') {
+    const run = data.cases['rolling-519'].paths.emitted;
+    const checkpoint = run.segments[0].checkpoint_tokens;
+    const { intervention, missing_counter: missing } = data.controls.negatives;
+    get('title').textContent = 'Saved decoder-emitted checkpoint replay';
+    get('status').textContent = `${run.trace.length} instructions · ${run.segments.length - 1} decoder-emitted checkpoints`;
+    get('detail').textContent = [
+      `First checkpoint · ${checkpoint.length} tokens: ${checkpoint.join(' ')}`,
+      `Retained word intervention first affects load ${intervention.first_observed_effect.retired}.`,
+      `Missing counter first affects load ${missing.first_observed_effect.retired}.`,
+      `${data.controls.truncated_handoffs_rejected.length} truncated handoffs rejected.`,
+    ].join('\n');
+    return;
+  }
   if (data?.profile === 'visuaml-rolling-context-v1') {
     const run = data.runs['live-4-countdown-128'];
     const peak = Math.max(...run.chunks.map(chunk => chunk.peak_active_tokens));
@@ -246,3 +261,14 @@ get('rolling-context').onclick = async () => {
   }
 };
 get('rolling-context-download').href = rollingUrl;
+
+get('emitted-checkpoint').onclick = async () => {
+  try {
+    const response = await fetch(emittedCheckpointUrl);
+    if (!response.ok) throw Error('Could not load the saved checkpoint replay');
+    show(await response.json());
+  } catch (error) {
+    get('status').textContent = error.message;
+  }
+};
+get('emitted-checkpoint-download').href = emittedCheckpointUrl;

@@ -94,4 +94,13 @@ try {
   assert.equal((await rollingDownload).suggestedFilename(), 'rolling-context.json');
   await page.locator('#file').setInputFiles('evidence/rolling-context/replay.json');
   await rolling.waitFor();
+  await page.getByRole('button', { name: 'Open emitted checkpoint replay' }).click();
+  const emitted = page.getByText('519 instructions · 27 decoder-emitted checkpoints');
+  await emitted.waitFor();
+  assert.match(await page.locator('#detail').innerText(), /Retained word intervention first affects load 151/);
+  const emittedDownload = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download emitted checkpoint replay' }).click();
+  assert.equal((await emittedDownload).suggestedFilename(), 'decoder-emitted-checkpoint.json');
+  await page.locator('#file').setInputFiles('evidence/decoder-emitted-checkpoint/replay.json');
+  await emitted.waitFor();
 } finally { await browser.close(); }
