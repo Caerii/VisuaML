@@ -1,3 +1,5 @@
+import onDemandUrl from './evidence/pocket-on-demand-trace/replay.json?url';
+import pendingTraceUrl from './evidence/pocket-on-demand-trace/pending.json?url';
 import sharedReplayUrl from './evidence/pocket-shared-recovery/replay.json?url';
 import demandReplayUrl from './evidence/pocket-demand-region/replay.json?url';
 import replayUrl from './evidence/pocket-coupled-checkpoint/replay.json?url';
@@ -129,5 +131,38 @@ get('shared-load').onclick = async () => {
     ].join('\n');
   } catch (error) {
     get('shared-status').textContent = error.message;
+  }
+};
+
+get('trace-pending').href = pendingTraceUrl;
+get('open-instructions').onclick = async () => {
+  get('trace-status').textContent = 'Opening trace…';
+  try {
+    const saved = await fetch(onDemandUrl);
+    if (!saved.ok) throw Error('Could not open the saved journal');
+    const archive = await saved.json();
+    let details = archive.reconstructed;
+    let label = 'Saved reconstructed trace';
+    try {
+      const response = await fetch('/api/pocket-reconstruct', { method: 'POST' });
+      if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
+        details = await response.json();
+        label = 'Reconstructed on demand';
+      }
+    } catch {
+      // Production bundles can display the saved reconstruction.
+    }
+    const destination = archive.consumer.observations.at(-1);
+    get('trace-status').textContent = `${label} · remote LOAD at PC ${details.trace[0].pc}`;
+    get('trace-detail').textContent = [
+      ...details.trace.map(row => `PC ${row.pc} · ${row.opcode} → ${row.next_pc} · stack [${row.stack.join(', ')}]`),
+      `Recorded action opened gate (${archive.gate.coordinate.join(', ')}). No world effects delivered by reconstruction.`,
+      `Consumer tick ${destination.request.tick} · LOAD ${destination.value} · action ${destination.action}.`,
+      'Saved reconstruction of the tick-6 consumer:',
+      ...archive.consumer_reconstructed.trace.map(row =>
+        `PC ${row.pc} · ${row.opcode} → ${row.next_pc} · stack [${row.stack.join(', ')}]`),
+    ].join('\n');
+  } catch (error) {
+    get('trace-status').textContent = error.message;
   }
 };

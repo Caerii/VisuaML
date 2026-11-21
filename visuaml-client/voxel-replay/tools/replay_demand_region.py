@@ -148,7 +148,7 @@ def finish_read(relay, state, prefix, complete, value, requested_at, profile=Non
 
 
 def execute(relay, shared, choice, *, full=None, source_available=True, events_available=True, stale_tick_control=False, dig=True, edits_by_tick=None,
-            resolver=recover, horizon=HORIZON, broker=None):
+            resolver=recover, horizon=HORIZON, broker=None, journal=None):
     small = shared["local"]
     body = {key:value for key,value in small.items() if key != "checkpoint_sha256"}
     assert digest(canonical(body)) == small["checkpoint_sha256"]
@@ -187,7 +187,7 @@ def execute(relay, shared, choice, *, full=None, source_available=True, events_a
         signal = relay.rule(walls,signal)
         resident, prefix = pause_live(relay,complete)
         pending, export_ns = None, 0
-        if broker is None:
+        if broker is None or "state_sha256" not in prefix[-1] or journal is not None:
             export_start = perf_counter_ns()
             pending = encode(resident,relay.identity)
             export_ns = perf_counter_ns()-export_start
@@ -214,12 +214,14 @@ def execute(relay, shared, choice, *, full=None, source_available=True, events_a
             outcome = supply(relay,pending,prefix,complete,value,begin,phases)
         else:
             response = broker.certify(waiting,value)
+            if journal is not None:
+                journal.observe(pending, waiting.binding, response, prefix)
             outcome = broker.resume(relay,waiting,response,prefix,complete,begin,phases)
         complete, trace, suspended, resumed_execution = outcome
         branch = next(row for row in trace[len(prefix)+1:] if row["opcode"] == "br_if")
-        observations.append(dict(request=read, value=value, action=mailbox(complete)[5],
-                                 trace=trace, page_sha256=digest(complete), branch=branch,
-                                 recovery=detail))
+        row = dict(request=read, value=value, action=mailbox(complete)[5],
+                   trace=trace, page_sha256=digest(complete), branch=branch, recovery=detail)
+        observations.append(row if journal is None else journal.record(row))
         metrics.append(dict(tick=tick,suspended_ns=suspended,recovery_ns=elapsed, guest_execution_ns=resumed_execution, **phases, **(detail or {})))
     return dict(helper=helper, gate_store=store, observations=observations, stopped=stopped,
                 source_bytes=source.bytes, clock=len(ledger), ledger=ledger), metrics

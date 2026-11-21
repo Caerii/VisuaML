@@ -13,5 +13,5 @@ export default defineConfig({
     continuation: fileURLToPath(new URL("./voxel-call-checkpoint.html", import.meta.url)),
     replay: fileURLToPath(new URL("./replay-viewer.html", import.meta.url)),
   } } },
-  server: { proxy: { '/api/voxel-fork-search': 'http://127.0.0.1:4181', '/api/compiler-counterexample': 'http://127.0.0.1:4181' }, fs: { allow: [fileURLToPath(new URL('../../', import.meta.url))] } },
+  server: { proxy: { '/api/pocket-reconstruct': 'http://127.0.0.1:4181', '/api/voxel-fork-search': 'http://127.0.0.1:4181', '/api/compiler-counterexample': 'http://127.0.0.1:4181' }, fs: { allow: [fileURLToPath(new URL('../../', import.meta.url))] } },
 });

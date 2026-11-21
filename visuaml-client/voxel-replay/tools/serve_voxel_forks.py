@@ -12,8 +12,20 @@ def main():
     with patch(PACKED, side_effect=AssertionError("Unexpected packed fallback")):
         checkpoint = make_checkpoint(witness)
 
+    trace_relay = None
+
     class Handler(BaseHTTPRequestHandler):
         def do_POST(self):
+            nonlocal trace_relay
+            if self.path == "/api/pocket-reconstruct":
+                import torch
+                from replay_on_demand_trace import DEMAND, OUT, Relay, reconstruct
+                packet = json.loads((OUT / "pending.json").read_text())
+                with torch.inference_mode(), patch(PACKED, side_effect=AssertionError("Unexpected packed fallback")):
+                    if trace_relay is None:
+                        trace_relay = Relay(DEMAND / "signal-relay.wasm")
+                    self.reply(reconstruct(packet, trace_relay))
+                return
             if self.path == "/api/compiler-counterexample":
                 from search_compiler_counterexample import Experiment
                 with patch(PACKED, side_effect=AssertionError("Unexpected packed fallback")):
