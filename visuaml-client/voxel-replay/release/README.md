@@ -34,6 +34,42 @@ python tools/visuaml_replay.py open report.json --output result.json
 
 Use `--memory` with exactly 65,536 initial bytes and `--fuel` to set the initial allowance. The capture boundary must be a running source boundary. For a supported compiler preview at a `local.get` pair, use `pack --preview-local N`. A recipient needs only one file and the repository revision. Earlier checkpoint bundles still open through the same CLI.
 
+## Read and run the library
+
+Start with [The helper returns 7 after it writes 0](chapters/suspended-helper.md).
+The chapter reads the shipped report, tests restore and fork independence,
+and finds the first resumed divergence when a live local is lost.
+
+```sh
+PYTHONPATH=../backend python -m doctest release/chapters/suspended-helper.md
+PYTHONPATH=../backend python tools/benchmark_replay_capture.py
+```
+
+| Code | Responsibility |
+| --- | --- |
+| [Profile and frozen transition](../../backend/visuaml/compiler_lab/frozen_calls_v58.py) | Admit bytes as a validated program image and execute the source-step semantics. |
+| [Runtime](../../backend/visuaml/replay/runtime.py) | Load a trusted local graph, start runs, advance source transitions, and collect observations. |
+| [Checkpoint codec](../../backend/visuaml/replay/checkpoint.py) | Validate portable state and restore an invocation-private page and caller frames. |
+| [Reports](../../backend/visuaml/replay/reports.py) | Package and verify portable artifacts and compare ordered observations. |
+| [CLI](../tools/visuaml_replay.py) | Read and write files, expose commands, and render results. |
+
+Use `from visuaml.replay import Replay` to validate a module and reuse its
+program image across invocations. `start` and `restore` create independent
+live states. `advance` is for a source transition without a journal entry.
+`step` includes a source observation and `finish` collects the suffix from
+a checkpoint. The live state is owned by the invocation. Retain a serialized
+`checkpoint` when a boundary must survive further writes. `open_bundle`
+and `check_report` handle the existing portable version 1 artifacts. The
+default graph comes from the source tree; callers may supply a trusted local
+graph path when constructing a runtime. The report never supplies that path.
+
+The capture benchmark reuses one loaded runtime. It pairs 32 warm captures
+of the same 14-source-step prefix, including final serialization and
+excluding setup, Wasmtime verification, and filesystem I/O. Full prefix
+observations took **10.32 ms** median versus **5.47 ms** for unobserved
+capture. Both paths emitted the same checkpoint in every pair. This is a
+single-fixture CPU result. [Raw samples](chapters/capture-timings.json)
+
 ## Supported semantics
 
 The maintained entry point uses the frozen source-step direct-call profile. Its loader validates one fixed 64 KiB memory, the exports `run(i32) -> i32` and `memory`, up to eight unary i32 functions, and acyclic direct calls to lower-numbered functions. The opcode allowlist and stack/control limits are enforced by the canonical decoder. Imports, floating point, dynamic memory growth and general Rust standard-library binaries fall beyond this profile. The example cartridge legalizer can help with specific LLVM forms.
