@@ -6,6 +6,7 @@ from pathlib import Path
 import struct
 import sys
 
+import numpy as np
 import torch
 
 from visuaml.replay import (
@@ -13,6 +14,7 @@ from visuaml.replay import (
     execute_report, inspect_window, make_bundle, open_bundle, seal_report,
 )
 from visuaml.replay.checkpoint import canonical
+from visuaml.replay.artifacts import compare_exports, describe_export, describe_onnx, describe_wasm, load_export
 
 EXAMPLE = Path(__file__).with_name("assets") / "passage-report.json"
 
@@ -81,12 +83,38 @@ def main(argv=None):
     comparison.add_argument("bundle", type=Path)
     comparison.add_argument("--preview-local", type=int, required=True)
     comparison.add_argument("--output", type=Path)
+    describe = sub.add_parser("describe", help="Inspect WASM, ONNX, or a trusted PyTorch export")
+    describe.add_argument("artifact", type=Path)
+    exports = sub.add_parser("compare-exports", help="Compare trusted PyTorch exports on identical inputs")
+    exports.add_argument("reference", type=Path)
+    exports.add_argument("candidate", type=Path)
+    exports.add_argument("inputs", nargs="+", type=Path, help="One .npy file per positional tensor")
+    exports.add_argument("--rtol", type=float, default=0)
+    exports.add_argument("--atol", type=float, default=0)
     sub.add_parser("doctor", help="Check the installed reference runtime")
     example = sub.add_parser("example", help="Save the bundled Passage report")
     example.add_argument("output", type=Path)
     args = parser.parse_args(argv)
     torch.set_num_threads(1)
     try:
+        if args.command == "describe":
+            suffix = args.artifact.suffix
+            if suffix == ".wasm":
+                description = describe_wasm(args.artifact.read_bytes())
+            elif suffix == ".onnx":
+                description = describe_onnx(args.artifact.read_bytes())
+            elif suffix == ".pt2":
+                description = describe_export(load_export(args.artifact))
+            else:
+                raise ValueError("Expected .wasm, .onnx, or a trusted .pt2 export")
+            print(json.dumps(description, indent=2))
+            return
+        if args.command == "compare-exports":
+            inputs = [torch.from_numpy(np.load(path, allow_pickle=False)) for path in args.inputs]
+            result = compare_exports(load_export(args.reference), load_export(args.candidate),
+                                     inputs, rtol=args.rtol, atol=args.atol)
+            print(json.dumps(result, indent=2))
+            return
         if args.command == "example":
             args.output.write_bytes(EXAMPLE.read_bytes())
             print(f"Example written to {args.output}")
@@ -100,7 +128,7 @@ def main(argv=None):
             return
         if args.command == "capture":
             replay = Replay(args.wasm.read_bytes())
-            initial = args.memory.read_bytes() if args.memory else bytes(PAGE_BYTES)
+            initial = args.memory.read_bytes() if args.memory else None
             bundle = capture_report(replay, args.argument, initial, args.fuel, args.after_step, runner=args.runner)
             args.output.write_bytes(canonical(bundle)+b"\n")
             return

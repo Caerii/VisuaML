@@ -46,7 +46,7 @@ def _u32(value: int) -> bytes:
             return bytes(data)
 
 
-def _read_u32(data: bytes, position: int) -> tuple[int, int]:
+def _read_u32(data: bytes, position: int, *, canonical: bool = True) -> tuple[int, int]:
     start = position
     number = 0
     for i in range(5):
@@ -58,7 +58,7 @@ def _read_u32(data: bytes, position: int) -> tuple[int, int]:
             raise WasmBinaryError("u32 LEB128 overflow")
         number |= (b & 0x7F) << (7 * i)
         if not b & 0x80:
-            if data[start:position] != _u32(number):
+            if canonical and data[start:position] != _u32(number):
                 raise WasmBinaryError("Noncanonical LEB128")
             return number, position
     raise WasmBinaryError("Unterminated LEB128")

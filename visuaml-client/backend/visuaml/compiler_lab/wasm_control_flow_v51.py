@@ -327,22 +327,14 @@ def _decode_control_body(data, memory, max_operations, *, direct_calls=False):
         elif name == "call":
             # rust-lld leaves padded relocation immediates. The caller has
             # already validated the complete original module with Wasmtime.
-            imm = 0
-            for shift in range(0, 35, 7):
-                byte = data[pos]
-                pos += 1
-                imm |= (byte & 0x7f) << shift
-                if byte < 0x80:
-                    break
-            else:
-                raise ControlAdmissionError("Unterminated direct-call index")
+            imm, pos = _read_u32(data, pos, canonical=False)
         elif name in (*_LOCALS, "br", "br_if"):
             imm, pos = _read_u32(data, pos)
         elif name == "i32.const":
             imm, pos = _read_s32(data, pos)
         elif name in MEMORY_OPCODES:
             align, pos = _read_u32(data, pos)
-            offset, pos = _read_u32(data, pos)
+            offset, pos = _read_u32(data, pos, canonical=not direct_calls)
             imm = MemoryArgument(offset, align)
         ops.append(ControlOperation(name, imm))
         if len(ops) > max_operations:

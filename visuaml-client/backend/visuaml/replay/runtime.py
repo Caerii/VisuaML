@@ -50,7 +50,7 @@ class Replay:
                     returned=int(vm.stack[0]) if int(vm.status) == 1 else None,
                     page_sha256=digest(vm.page.numpy().tobytes()))
 
-    def start(self, argument: int, page: bytes, fuel: int) -> CallState:
+    def start(self, argument: int, page: bytes | None, fuel: int) -> CallState:
         """Allocate a private page and begin a new invocation."""
         return initialize(self.image, argument, page, fuel)
 

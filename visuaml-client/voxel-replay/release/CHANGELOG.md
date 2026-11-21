@@ -1,5 +1,11 @@
 # VisuaML Replay changes
 
+## 0.6.0rc1
+
+- Added WASM, ONNX, and PyTorch artifact descriptions.
+- Added aligned PyTorch export comparison with first differing tensor and activation.
+- Admitted active data and linker metadata in the bounded direct-call profile.
+
 ## 0.5.0rc1
 
 - Added the installable `visuaml-replay` command with a bundled report and a reference runtime check.

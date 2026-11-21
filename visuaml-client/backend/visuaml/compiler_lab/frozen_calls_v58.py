@@ -13,7 +13,7 @@ from .frozen_recurrent_v58 import (
 from .wasm_control_flow_v51 import (
     MAX_LOCALS, MAX_STACK, SCALED_MAX_OPERATIONS, SCALED_SCHEMA,
     ControlAdmissionError, ControlOperation, ControlProgram, WasmBinaryError,
-    _decode_control_body, _memory_section, _read_u32, _TYPE_PAYLOAD, _syntax, _u32,
+    _decode_control_body, _memory_section, _read_u32, _read_s32, _TYPE_PAYLOAD, _syntax, _u32,
     parse_section_envelope,
 )
 
@@ -30,17 +30,44 @@ class CallImage:
     starts: tuple[int, ...]
     binary_sha256: str
     image_sha256: str
+    data_segments: tuple[tuple[int, bytes], ...] = ()
+
+
+def _active_data(payload, capacity):
+    count, cursor = _read_u32(payload, 0)
+    segments = []
+    for _ in range(count):
+        mode, cursor = _read_u32(payload, cursor)
+        if mode != 0 or payload[cursor:cursor+1] != b"\x41":
+            raise ControlAdmissionError("Expected active memory-zero data with an i32.const offset")
+        address, cursor = _read_s32(payload, cursor+1)
+        if payload[cursor:cursor+1] != b"\x0b":
+            raise ControlAdmissionError("Expected end of data offset")
+        length, cursor = _read_u32(payload, cursor+1)
+        end = cursor+length
+        address &= 0xffffffff
+        if address+length > capacity or end > len(payload):
+            raise ControlAdmissionError("Active data lies outside replay memory")
+        segments.append((address, payload[cursor:end]))
+        cursor = end
+    if cursor != len(payload):
+        raise ControlAdmissionError("Trailing active data bytes")
+    return tuple(segments)
 
 
 def load_call_image(raw: bytes, *, memory_pages: int = 1) -> CallImage:
     """Validate fixed-memory, acyclic (lower-index) unary i32 calls."""
     try:
         wasmtime.Module.validate(wasmtime.Engine(), raw)
-        sections = {item.section_id: item.payload for item in parse_section_envelope(raw)}
-        if list(sections) != [1, 3, 5, 7, 10] or sections[1] != _TYPE_PAYLOAD:
+        sections = {item.section_id: item.payload for item in parse_section_envelope(raw) if item.section_id}
+        extras = set(sections) - {1, 3, 5, 7, 10, 11}
+        if extras:
+            raise ControlAdmissionError(f"Unsupported WASM core sections: {sorted(extras)}")
+        if not {1, 3, 5, 7, 10}.issubset(sections) or sections[1] != _TYPE_PAYLOAD:
             raise ControlAdmissionError("Expected unary i32 functions with fixed memory")
         if sections[5] != _memory_section(memory_pages):
             raise ControlAdmissionError("Unexpected fixed memory capacity")
+        data_segments = _active_data(sections[11], memory_pages*65536) if 11 in sections else ()
         count, pos = _read_u32(sections[3], 0)
         if not 1 <= count <= MAX_FUNCTIONS or sections[3][pos:] != bytes(count):
             raise ControlAdmissionError("Only bounded unary i32 functions admitted")
@@ -92,9 +119,11 @@ def load_call_image(raw: bytes, *, memory_pages: int = 1) -> CallImage:
         segments.append(torch.cat((rows, call_targets, returns), dim=1))
     segments.append(torch.tensor([[0, 0, 0, offset, offset, 0, 0, 0, 0, -1, 0]]))
     image = torch.cat(segments)
+    image_hash = sha256(image.numpy().astype("<i8", copy=False).tobytes())
+    if data_segments:
+        image_hash.update(sections[11])
     return CallImage(image, starts[entry], memory_pages, tuple(functions), tuple(starts),
-                     sha256(raw).hexdigest(),
-                     sha256(image.numpy().astype("<i8", copy=False).tobytes()).hexdigest())
+                     sha256(raw).hexdigest(), image_hash.hexdigest(), data_segments)
 
 
 class CallState(NamedTuple):
@@ -108,7 +137,11 @@ class CallTick(NamedTuple):
     access: Tensor
 
 
-def initialize(image: CallImage, argument: int, page: bytes | bytearray, fuel: int) -> CallState:
+def initialize(image: CallImage, argument: int, page: bytes | bytearray | None, fuel: int) -> CallState:
+    if page is None:
+        page = bytearray(image.memory_pages*65536)
+        for address, data in image.data_segments:
+            page[address:address+len(data)] = data
     vm = initial_state(argument, page, fuel, memory_pages=image.memory_pages)
     vm = vm._replace(pc=torch.tensor(image.entry, dtype=torch.int64))
     return CallState(vm, torch.zeros((), dtype=torch.int64),

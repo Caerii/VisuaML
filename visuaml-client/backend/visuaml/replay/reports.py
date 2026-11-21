@@ -90,7 +90,8 @@ def capture(replay, argument, initial, fuel, count, *, runner="reference"):
         store = wasmtime.Store()
         instance = wasmtime.Instance(store, wasmtime.Module(store.engine, replay.raw), [])
         exports = instance.exports(store)
-        exports["memory"].write(store, initial)
+        if initial is not None:
+            exports["memory"].write(store, initial)
         result = exports["run"](store, argument)
         page = exports["memory"].read(store)
         if result & 0xffffffff != completed["returned"] or digest(page) != completed["page_sha256"]:
