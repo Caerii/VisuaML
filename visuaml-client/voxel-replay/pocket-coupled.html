@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pocket Signal Relay Debugger</title><link rel="stylesheet" href="./pocket.css"></head>
+<body><main>
+<header class="masthead"><a href="./pocket-cellular.html">Signal Relay</a><span>Saved exact replay</span></header>
+<div class="page-title"><h1>Rust → Signal → Rust</h1></div>
+<section class="panel">
+<div class="run-controls">
+  <label>History
+    <select id="case"><option value="dig">Open gate · six-cell halo</option>
+    <option value="omitted">Leave gate closed</option><option value="short_halo">Five-cell diagnostic</option>
+    <option value="outside_read">Outside-read diagnostic</option></select>
+  </label>
+  <button id="step">Step replay</button><button id="reset">Reset</button>
+  <a id="download" download="coupled-signal.json">Download replay</a>
+  <a id="checkpoint" download="coupled-signal-checkpoint.json">Download checkpoint</a>
+</div>
+<canvas id="grid" width="160" height="144" style="width:min(480px,90vw);image-rendering:pixelated"></canvas>
+<p id="status" role="status"></p>
+<pre id="instruction" style="white-space:pre-wrap"></pre>
+</section>
+<p><a href="./pocket-cellular.html">Play the signal scene and inspect its automaton-only halo</a></p>
+</main><script type="module" src="./pocket-coupled.mjs"></script></body></html>
