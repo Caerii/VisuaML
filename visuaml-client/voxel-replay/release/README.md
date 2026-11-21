@@ -256,3 +256,6 @@ small threshold changes with paired feedback changes held fixed.
 
 The [live preservation replay](chapters/live-preservation-replay.md) opens
 the four v98 routing failures and checks a separate learned argument readout.
+
+The [tool and argument study](chapters/tool-argument-binding.md) crosses a
+comparison edit with learned selection of a live or saved argument slot.
