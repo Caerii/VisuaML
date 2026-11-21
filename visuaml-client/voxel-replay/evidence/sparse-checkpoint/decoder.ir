@@ -1,0 +1,709 @@
+graph(%self : __torch__.___torch_mangle_0.SparseCheckpoint,
+      %tokens.1 : Tensor,
+      %cache.1 : (Tensor, Tensor)[]):
+  %3 : int = prim::Constant[value=97]()
+  %4 : int = prim::Constant[value=65]()
+  %5 : int = prim::Constant[value=64]()
+  %6 : int[] = prim::Constant[value=[-1]]()
+  %7 : int[] = prim::Constant[value=[-1, 4, 8]]()
+  %8 : int[] = prim::Constant[value=[1]]()
+  %9 : int[] = prim::Constant[value=[0]]()
+  %10 : int[] = prim::Constant[value=[11, -1, -1]]()
+  %11 : Double(11, 1, strides=[1, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %12 : int = prim::Constant[value=7]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:75:16
+  %13 : bool = prim::Constant[value=0]()
+  %14 : int = prim::Constant[value=-1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:64:70
+  %15 : int = prim::Constant[value=-24]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:64:36
+  %16 : str = prim::Constant[value="AssertionError: Context exhausted"]()
+  %17 : NoneType = prim::Constant()
+  %18 : int = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:58:16
+  %19 : int = prim::Constant[value=1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:58:53
+  %20 : int = prim::Constant[value=512]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:60:39
+  %21 : int = prim::Constant[value=48]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:64:25
+  %22 : int = prim::Constant[value=10]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:69:20
+  %23 : int = prim::Constant[value=6]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:70:21
+  %24 : int = prim::Constant[value=21]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:70:30
+  %25 : int = prim::Constant[value=32]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:70:76
+  %26 : int = prim::Constant[value=4]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:71:23
+  %27 : int = prim::Constant[value=264]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:75:26
+  %28 : int = prim::Constant[value=9]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:76:31
+  %29 : int = prim::Constant[value=8]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:77:50
+  %30 : int = prim::Constant[value=8192]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:78:45
+  %31 : int = prim::Constant[value=5]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:82:45
+  %32 : int = prim::Constant[value=261]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:83:28
+  %33 : int = prim::Constant[value=2]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:92:31
+  %34 : int = prim::Constant[value=263]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:105:54
+  %35 : int = prim::Constant[value=3]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:108:78
+  %36 : int = prim::Constant[value=265]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:113:86
+  %37 : int = prim::Constant[value=267]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:118:51
+  %38 : int = prim::Constant[value=-2]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:40
+  %39 : float = prim::Constant[value=-inf]()
+  %40 : float = prim::Constant[value=0.75]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:66
+  %41 : float = prim::Constant[value=0.25]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:39
+  %self.decoder.weights : Long(8, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=   1    2    4    8   16   32   64  128 [ CPULongType{8} ]]()
+  %self.decoder.pc_increment : Double(16, 16, strides=[16, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.decoder.sparse : bool = prim::Constant[value=1]()
+  %self.decoder.address_width : int = prim::Constant[value=16]()
+  %self.decoder.embedding : Double(267, 29, strides=[29, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.decoder.phases : Long(512, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %self.decoder.positions : Double(512, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %49 : int = aten::len(%cache.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:58:25
+  %50 : bool = aten::gt(%49, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:58:25
+  %51 : bool = aten::__not__(%50) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:58:21
+  %start.2 : int = prim::If(%51) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:58:16
+    block0():
+      -> (%18)
+    block1():
+      %53 : (Tensor, Tensor) = aten::__getitem__(%cache.1, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:58:36
+      %54 : Tensor = prim::TupleIndex(%53, %18)
+      %55 : int = aten::size(%54, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:58:36
+      -> (%55)
+  %count.1 : int = aten::numel(%tokens.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:59:16
+  %57 : int = aten::add(%start.2, %count.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:60:22
+  %58 : bool = aten::le(%57, %20) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:60:22
+   = prim::If(%58) # <string>:8:2
+    block0():
+      -> ()
+    block1():
+       = prim::RaiseException(%16, %17) # <string>:8:2
+      -> ()
+  %pos.1 : Tensor = aten::slice(%self.decoder.positions, %18, %start.2, %57, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:61:14
+  %phase.1 : Tensor = aten::slice(%self.decoder.phases, %18, %start.2, %57, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:62:16
+  %61 : Tensor = aten::unsqueeze(%pos.1, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:63:17
+  %target.1 : Tensor = aten::sub(%61, %11, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:63:17
+  %63 : Tensor = aten::mul(%target.1, %21) # <string>:3:9
+  %64 : Tensor = aten::ones_like(%target.1, %17, %17, %17, %17, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:64:40
+  %65 : Tensor = aten::mul(%64, %15) # <string>:3:9
+  %66 : Tensor[] = prim::ListConstruct(%63, %65)
+  %q.1 : Tensor = aten::stack(%66, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:64:12
+  %68 : Tensor = aten::square(%pos.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:65:39
+  %69 : Tensor[] = prim::ListConstruct(%pos.1, %68)
+  %positional.1 : Tensor = aten::stack(%69, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:65:21
+  %71 : Tensor = aten::unsqueeze(%positional.1, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:66:38
+  %72 : Tensor = aten::expand(%71, %10, %13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:66:38
+  %73 : Tensor?[] = prim::ListConstruct(%tokens.1)
+  %74 : Tensor = aten::index(%self.decoder.embedding, %73) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:67:35
+  %75 : Tensor = aten::unsqueeze(%74, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:67:35
+  %76 : Tensor = aten::expand(%75, %10, %13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:67:35
+  %77 : (Tensor, Tensor)? = prim::If(%50) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:67:84
+    block0():
+      %78 : (Tensor, Tensor) = aten::__getitem__(%cache.1, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:67:84
+      -> (%78)
+    block1():
+      -> (%17)
+  %79 : bool = aten::__isnot__(%77, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:22:11
+  %key.10 : Tensor, %start.6 : int, %value.1 : Tensor = prim::If(%79) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:22:8
+    block0():
+      %past.8 : (Tensor, Tensor) = prim::unchecked_cast(%77)
+      %old_key.2 : Tensor, %old_value.2 : Tensor = prim::TupleUnpack(%past.8)
+      %start.8 : int = aten::size(%old_key.2, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:24:20
+      %87 : Tensor[] = prim::ListConstruct(%old_key.2, %72)
+      %key.12 : Tensor = aten::cat(%87, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:25:18
+      %89 : Tensor[] = prim::ListConstruct(%old_value.2, %76)
+      %value.6 : Tensor = aten::cat(%89, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:26:20
+      -> (%key.12, %start.8, %value.6)
+    block1():
+      -> (%72, %18, %76)
+  %91 : int = aten::size(%key.10, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:31
+  %92 : Tensor = aten::slice(%self.decoder.positions, %18, %17, %91, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %93 : Tensor = aten::unsqueeze(%92, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %94 : Tensor = aten::slice(%self.decoder.positions, %18, %start.6, %91, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:59
+  %95 : Tensor = aten::unsqueeze(%94, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:59
+  %mask.2 : Tensor = aten::gt(%93, %95) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %97 : Tensor = aten::transpose(%key.10, %38, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:26
+  %98 : Tensor = aten::matmul(%q.1, %97) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:18
+  %scores.2 : Tensor = aten::masked_fill(%98, %mask.2, %39) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:18
+  %100 : Tensor = aten::softmax(%scores.2, %14, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:29:15
+  %101 : Tensor = aten::matmul(%100, %value.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:29:15
+  %102 : (Tensor, Tensor) = prim::TupleConstruct(%key.10, %value.1)
+  %103 : Tensor = aten::sub(%101, %41, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:31
+  %104 : Tensor = aten::relu(%103) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:20
+  %105 : Tensor = aten::sub(%101, %40, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:58
+  %106 : Tensor = aten::relu(%105) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:47
+  %107 : Tensor = aten::sub(%104, %106, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:20
+  %fields.1 : Tensor = aten::mul(%107, %33) # <string>:3:9
+  %109 : Tensor = aten::select(%fields.1, %18, %22) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:69:13
+  %110 : Tensor = aten::slice(%109, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:69:13
+  %pc.1 : Tensor = aten::slice(%110, %19, %17, %self.decoder.address_width, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:69:13
+  %112 : Tensor = aten::slice(%fields.1, %18, %23, %22, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:70:14
+  %113 : Tensor = aten::slice(%112, %19, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:70:14
+  %114 : Tensor = aten::slice(%113, %33, %24, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:70:14
+  %115 : Tensor = aten::flip(%114, %9) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:70:14
+  %116 : Tensor = aten::transpose(%115, %18, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:70:14
+  %117 : int[] = prim::ListConstruct(%count.1, %25)
+  %reg.1 : Tensor = aten::reshape(%116, %117) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:70:14
+  %119 : Tensor = aten::slice(%fields.1, %18, %17, %26, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:71:15
+  %120 : Tensor = aten::slice(%119, %19, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:71:15
+  %121 : Tensor = aten::slice(%120, %33, %24, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:71:15
+  %122 : Tensor = aten::flip(%121, %9) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:71:15
+  %123 : Tensor = aten::transpose(%122, %18, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:71:15
+  %word.1 : Tensor = aten::reshape(%123, %117) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:71:15
+  %125 : Tensor = aten::slice(%pos.1, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:72:21
+  %126 : Tensor = aten::unsqueeze(%125, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:72:21
+  %recency.1 : Tensor = aten::mul(%126, %self.decoder.address_width) # <string>:3:9
+  %bias.1 : Tensor = aten::ones_like(%recency.1, %17, %17, %17, %17, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:73:15
+  %129 : Tensor = aten::select(%fields.1, %18, %26) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:74:18
+  %130 : Tensor = aten::slice(%129, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:74:18
+  %arg_key.1 : Tensor = aten::slice(%130, %19, %17, %self.decoder.address_width, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:74:18
+  %132 : Tensor = aten::eq(%tokens.1, %27) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:75:16
+  %133 : Tensor = aten::to(%132, %12, %13, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:75:16
+  %134 : Tensor = aten::slice(%133, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:75:16
+  %code.1 : Tensor = aten::unsqueeze(%134, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:75:16
+  %136 : Tensor = aten::select(%fields.1, %18, %28) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:76:24
+  %137 : Tensor = aten::slice(%136, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:76:24
+  %138 : Tensor = aten::slice(%137, %19, %17, %self.decoder.address_width, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:76:24
+  %139 : Tensor = aten::add(%138, %code.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %140 : Tensor = aten::sub(%139, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %key.1 : Tensor = aten::relu(%140) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %142 : Tensor = aten::select(%fields.1, %18, %29) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:77:43
+  %143 : Tensor = aten::slice(%142, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:77:43
+  %144 : Tensor = aten::slice(%143, %19, %self.decoder.address_width, %24, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:77:43
+  %145 : Tensor[] = prim::ListConstruct(%144, %arg_key.1, %word.1)
+  %146 : Tensor = aten::cat(%145, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:77:32
+  %147 : Tensor = aten::add(%146, %code.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %148 : Tensor = aten::sub(%147, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %instruction.1 : Tensor = aten::relu(%148) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %150 : Tensor = aten::mul(%pc.1, %30) # <string>:3:9
+  %151 : Tensor[] = prim::ListConstruct(%150, %bias.1)
+  %152 : Tensor = aten::cat(%151, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:78:34
+  %153 : Tensor = aten::unsqueeze(%152, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:78:34
+  %154 : Tensor[] = prim::ListConstruct(%key.1, %recency.1)
+  %155 : Tensor = aten::cat(%154, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:79:35
+  %156 : Tensor = aten::unsqueeze(%155, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:79:35
+  %157 : Tensor = aten::unsqueeze(%instruction.1, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:79:76
+  %158 : (Tensor, Tensor)? = prim::If(%50) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:80:35
+    block0():
+      %159 : (Tensor, Tensor) = aten::__getitem__(%cache.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:80:35
+      -> (%159)
+    block1():
+      -> (%17)
+  %160 : bool = aten::__isnot__(%158, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:22:11
+  %key.16 : Tensor, %start.12 : int, %value.8 : Tensor = prim::If(%160) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:22:8
+    block0():
+      %past.10 : (Tensor, Tensor) = prim::unchecked_cast(%158)
+      %old_key.4 : Tensor, %old_value.4 : Tensor = prim::TupleUnpack(%past.10)
+      %start.14 : int = aten::size(%old_key.4, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:24:20
+      %168 : Tensor[] = prim::ListConstruct(%old_key.4, %156)
+      %key.18 : Tensor = aten::cat(%168, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:25:18
+      %170 : Tensor[] = prim::ListConstruct(%old_value.4, %157)
+      %value.10 : Tensor = aten::cat(%170, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:26:20
+      -> (%key.18, %start.14, %value.10)
+    block1():
+      -> (%156, %18, %157)
+  %172 : int = aten::size(%key.16, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:31
+  %173 : Tensor = aten::slice(%self.decoder.positions, %18, %17, %172, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %174 : Tensor = aten::unsqueeze(%173, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %175 : Tensor = aten::slice(%self.decoder.positions, %18, %start.12, %172, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:59
+  %176 : Tensor = aten::unsqueeze(%175, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:59
+  %mask.4 : Tensor = aten::gt(%174, %176) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %178 : Tensor = aten::transpose(%key.16, %38, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:26
+  %179 : Tensor = aten::matmul(%153, %178) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:18
+  %scores.4 : Tensor = aten::masked_fill(%179, %mask.4, %39) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:18
+  %181 : Tensor = aten::softmax(%scores.4, %14, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:29:15
+  %182 : Tensor = aten::matmul(%181, %value.8) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:29:15
+  %183 : (Tensor, Tensor) = prim::TupleConstruct(%key.16, %value.8)
+  %184 : Tensor = aten::select(%182, %18, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:81:31
+  %185 : Tensor = aten::sub(%184, %41, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:31
+  %186 : Tensor = aten::relu(%185) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:20
+  %187 : Tensor = aten::sub(%184, %40, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:58
+  %188 : Tensor = aten::relu(%187) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:47
+  %189 : Tensor = aten::sub(%186, %188, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:20
+  %fetched.5 : Tensor = aten::mul(%189, %33) # <string>:3:9
+  %191 : Tensor = aten::slice(%fetched.5, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:82:33
+  %opcode.1 : Tensor = aten::slice(%191, %19, %17, %31, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:82:33
+  %193 : Tensor = aten::slice(%fetched.5, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:82:49
+  %arg.1 : Tensor = aten::slice(%193, %19, %31, %24, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:82:49
+  %195 : Tensor = aten::slice(%fetched.5, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:82:67
+  %immediate.1 : Tensor = aten::slice(%195, %19, %24, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:82:67
+  %197 : Tensor = aten::eq(%tokens.1, %32) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:83:18
+  %198 : Tensor = aten::to(%197, %12, %13, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:83:18
+  %199 : Tensor = aten::slice(%198, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:83:18
+  %commit.1 : Tensor = aten::unsqueeze(%199, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:83:18
+  %201 : Tensor = aten::slice(%arg_key.1, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:85:24
+  %202 : Tensor = aten::slice(%201, %19, %17, %self.decoder.address_width, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:85:24
+  %203 : Tensor = aten::add(%202, %commit.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %204 : Tensor = aten::sub(%203, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %key.6 : Tensor = aten::relu(%204) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %206 : Tensor = aten::add(%word.1, %commit.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %207 : Tensor = aten::sub(%206, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %payload.1 : Tensor = aten::relu(%207) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %209 : Tensor = aten::slice(%arg.1, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:87:21
+  %210 : Tensor = aten::slice(%209, %19, %17, %self.decoder.address_width, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:87:21
+  %query.1 : Tensor = aten::mul(%210, %30) # <string>:3:9
+  %212 : Tensor = aten::sum(%key.6, %8, %self.decoder.sparse, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:90:34
+  %213 : Tensor = aten::neg(%212) # <string>:11:9
+  %214 : Tensor = aten::add(%213, %19, %19) # <string>:11:9
+  %215 : Tensor = aten::add(%214, %commit.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %216 : Tensor = aten::sub(%215, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %default.1 : Tensor = aten::relu(%216) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %218 : Tensor[] = prim::ListConstruct(%key.6, %default.1)
+  %key.11 : Tensor = aten::cat(%218, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:91:18
+  %220 : Tensor = aten::mul(%query.1, %33) # <string>:3:9
+  %221 : Tensor = aten::mul(%bias.1, %30) # <string>:3:9
+  %222 : Tensor[] = prim::ListConstruct(%220, %221)
+  %query.5 : Tensor = aten::cat(%222, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:92:20
+  %224 : Tensor[] = prim::ListConstruct(%query.5, %bias.1)
+  %225 : Tensor = aten::cat(%224, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:93:31
+  %226 : Tensor = aten::unsqueeze(%225, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:93:31
+  %227 : Tensor[] = prim::ListConstruct(%key.11, %recency.1)
+  %228 : Tensor = aten::cat(%227, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:94:33
+  %229 : Tensor = aten::unsqueeze(%228, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:94:33
+  %230 : Tensor = aten::unsqueeze(%payload.1, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:94:74
+  %231 : (Tensor, Tensor)? = prim::If(%50) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:95:33
+    block0():
+      %232 : (Tensor, Tensor) = aten::__getitem__(%cache.1, %33) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:95:33
+      -> (%232)
+    block1():
+      -> (%17)
+  %233 : bool = aten::__isnot__(%231, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:22:11
+  %key.20 : Tensor, %start.18 : int, %value.12 : Tensor = prim::If(%233) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:22:8
+    block0():
+      %past.12 : (Tensor, Tensor) = prim::unchecked_cast(%231)
+      %old_key.6 : Tensor, %old_value.6 : Tensor = prim::TupleUnpack(%past.12)
+      %start.20 : int = aten::size(%old_key.6, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:24:20
+      %241 : Tensor[] = prim::ListConstruct(%old_key.6, %229)
+      %key.22 : Tensor = aten::cat(%241, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:25:18
+      %243 : Tensor[] = prim::ListConstruct(%old_value.6, %230)
+      %value.14 : Tensor = aten::cat(%243, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:26:20
+      -> (%key.22, %start.20, %value.14)
+    block1():
+      -> (%229, %18, %230)
+  %245 : int = aten::size(%key.20, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:31
+  %246 : Tensor = aten::slice(%self.decoder.positions, %18, %17, %245, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %247 : Tensor = aten::unsqueeze(%246, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %248 : Tensor = aten::slice(%self.decoder.positions, %18, %start.18, %245, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:59
+  %249 : Tensor = aten::unsqueeze(%248, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:59
+  %mask.6 : Tensor = aten::gt(%247, %249) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %251 : Tensor = aten::transpose(%key.20, %38, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:26
+  %252 : Tensor = aten::matmul(%226, %251) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:18
+  %scores.6 : Tensor = aten::masked_fill(%252, %mask.6, %39) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:18
+  %254 : Tensor = aten::softmax(%scores.6, %14, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:29:15
+  %255 : Tensor = aten::matmul(%254, %value.12) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:29:15
+  %256 : (Tensor, Tensor) = prim::TupleConstruct(%key.20, %value.12)
+  %257 : Tensor = aten::select(%255, %18, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:96:30
+  %258 : Tensor = aten::sub(%257, %41, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:31
+  %259 : Tensor = aten::relu(%258) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:20
+  %260 : Tensor = aten::sub(%257, %40, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:58
+  %261 : Tensor = aten::relu(%260) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:47
+  %262 : Tensor = aten::sub(%259, %261, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:20
+  %loaded.1 : Tensor = aten::mul(%262, %33) # <string>:3:9
+  %264 : Tensor = aten::add(%reg.1, %immediate.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:23:30
+  %265 : Tensor = aten::sub(%264, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:23:30
+  %generate.1 : Tensor = aten::relu(%265) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:23:19
+  %267 : Tensor = aten::mul(%generate.1, %33) # <string>:3:9
+  %xor.1 : Tensor = aten::sub(%264, %267, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:24:14
+  %269 : Tensor = aten::slice(%generate.1, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %270 : Tensor = aten::slice(%269, %19, %17, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %271 : Tensor = aten::slice(%269, %19, %19, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %272 : Tensor = aten::slice(%xor.1, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %273 : Tensor = aten::slice(%272, %19, %19, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %274 : Tensor = aten::slice(%269, %19, %17, %14, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:71
+  %275 : Tensor = aten::add(%273, %274, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %276 : Tensor = aten::sub(%275, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %277 : Tensor = aten::relu(%276) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:34
+  %278 : Tensor = aten::add(%271, %277, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %279 : Tensor[] = prim::ListConstruct(%270, %278)
+  %generate.11 : Tensor = aten::cat(%279, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:23
+  %281 : Tensor = aten::slice(%272, %19, %17, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:29:35
+  %282 : Tensor = aten::slice(%272, %19, %17, %14, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:72
+  %283 : Tensor = aten::add(%273, %282, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:46
+  %284 : Tensor = aten::sub(%283, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:46
+  %285 : Tensor = aten::relu(%284) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:35
+  %286 : Tensor[] = prim::ListConstruct(%281, %285)
+  %propagate.9 : Tensor = aten::cat(%286, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:29:24
+  %288 : Tensor = aten::slice(%generate.11, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %289 : Tensor = aten::slice(%288, %19, %17, %33, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %290 : Tensor = aten::slice(%288, %19, %33, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %291 : Tensor = aten::slice(%propagate.9, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %292 : Tensor = aten::slice(%291, %19, %33, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %293 : Tensor = aten::slice(%288, %19, %17, %38, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:71
+  %294 : Tensor = aten::add(%292, %293, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %295 : Tensor = aten::sub(%294, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %296 : Tensor = aten::relu(%295) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:34
+  %297 : Tensor = aten::add(%290, %296, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %298 : Tensor[] = prim::ListConstruct(%289, %297)
+  %generate.22 : Tensor = aten::cat(%298, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:23
+  %300 : Tensor = aten::slice(%291, %19, %17, %33, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:29:35
+  %301 : Tensor = aten::slice(%291, %19, %17, %38, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:72
+  %302 : Tensor = aten::add(%292, %301, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:46
+  %303 : Tensor = aten::sub(%302, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:46
+  %304 : Tensor = aten::relu(%303) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:35
+  %305 : Tensor[] = prim::ListConstruct(%300, %304)
+  %propagate.16 : Tensor = aten::cat(%305, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:29:24
+  %307 : Tensor = aten::slice(%generate.22, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %308 : Tensor = aten::slice(%307, %19, %17, %26, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %309 : Tensor = aten::slice(%307, %19, %26, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %310 : Tensor = aten::slice(%propagate.16, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %311 : Tensor = aten::slice(%310, %19, %26, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %312 : int = prim::Constant[value=-4]()
+  %313 : Tensor = aten::slice(%307, %19, %17, %312, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:71
+  %314 : Tensor = aten::add(%311, %313, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %315 : Tensor = aten::sub(%314, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %316 : Tensor = aten::relu(%315) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:34
+  %317 : Tensor = aten::add(%309, %316, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %318 : Tensor[] = prim::ListConstruct(%308, %317)
+  %generate.24 : Tensor = aten::cat(%318, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:23
+  %320 : Tensor = aten::slice(%310, %19, %17, %26, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:29:35
+  %321 : Tensor = aten::slice(%310, %19, %17, %312, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:72
+  %322 : Tensor = aten::add(%311, %321, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:46
+  %323 : Tensor = aten::sub(%322, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:46
+  %324 : Tensor = aten::relu(%323) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:35
+  %325 : Tensor[] = prim::ListConstruct(%320, %324)
+  %propagate.18 : Tensor = aten::cat(%325, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:29:24
+  %327 : Tensor = aten::slice(%generate.24, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %328 : Tensor = aten::slice(%327, %19, %17, %29, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %329 : Tensor = aten::slice(%327, %19, %29, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %330 : Tensor = aten::slice(%propagate.18, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %331 : Tensor = aten::slice(%330, %19, %29, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %332 : int = prim::Constant[value=-8]()
+  %333 : Tensor = aten::slice(%327, %19, %17, %332, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:71
+  %334 : Tensor = aten::add(%331, %333, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %335 : Tensor = aten::sub(%334, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %336 : Tensor = aten::relu(%335) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:34
+  %337 : Tensor = aten::add(%329, %336, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %338 : Tensor[] = prim::ListConstruct(%328, %337)
+  %generate.26 : Tensor = aten::cat(%338, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:23
+  %340 : Tensor = aten::slice(%330, %19, %17, %29, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:29:35
+  %341 : Tensor = aten::slice(%330, %19, %17, %332, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:72
+  %342 : Tensor = aten::add(%331, %341, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:46
+  %343 : Tensor = aten::sub(%342, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:46
+  %344 : Tensor = aten::relu(%343) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:30:35
+  %345 : Tensor[] = prim::ListConstruct(%340, %344)
+  %propagate.20 : Tensor = aten::cat(%345, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:29:24
+  %347 : Tensor = aten::slice(%generate.26, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %348 : Tensor = aten::slice(%347, %19, %17, %self.decoder.address_width, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:34
+  %349 : Tensor = aten::slice(%347, %19, %self.decoder.address_width, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %350 : Tensor = aten::slice(%propagate.20, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %351 : Tensor = aten::slice(%350, %19, %self.decoder.address_width, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %352 : int = prim::Constant[value=-16]()
+  %353 : Tensor = aten::slice(%347, %19, %17, %352, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:71
+  %354 : Tensor = aten::add(%351, %353, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %355 : Tensor = aten::sub(%354, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:45
+  %356 : Tensor = aten::relu(%355) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:28:34
+  %357 : Tensor = aten::add(%349, %356, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:58
+  %358 : Tensor[] = prim::ListConstruct(%348, %357)
+  %generate.28 : Tensor = aten::cat(%358, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:27:23
+  %360 : Tensor = aten::slice(%generate.28, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:31:44
+  %361 : Tensor = aten::slice(%360, %19, %17, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:31:44
+  %362 : Tensor = aten::zeros_like(%361, %17, %17, %17, %17, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:31:27
+  %363 : Tensor = aten::slice(%360, %19, %17, %14, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:31:62
+  %364 : Tensor[] = prim::ListConstruct(%362, %363)
+  %carry.1 : Tensor = aten::cat(%364, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:31:16
+  %366 : Tensor = aten::add(%xor.1, %carry.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:32:16
+  %367 : Tensor = aten::sub(%366, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:32:43
+  %368 : Tensor = aten::relu(%367) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:32:32
+  %369 : Tensor = aten::mul(%368, %33) # <string>:3:9
+  %total.1 : Tensor = aten::sub(%366, %369, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:32:16
+  %371 : Tensor = aten::sum(%reg.1, %8, %self.decoder.sparse, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:33:28
+  %372 : Tensor = aten::neg(%371) # <string>:11:9
+  %373 : Tensor = aten::add(%372, %19, %19) # <string>:11:9
+  %zero.1 : Tensor = aten::relu(%373) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:33:15
+  %375 : Tensor[] = aten::split(%opcode.1, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:98:41
+  %halt.1 : Tensor, %load.1 : Tensor, %store.1 : Tensor, %add.1 : Tensor, %branch.1 : Tensor = prim::ListUnpack(%375)
+  %381 : Tensor = aten::neg(%zero.1) # <string>:11:9
+  %382 : Tensor = aten::add(%381, %19, %19) # <string>:11:9
+  %383 : Tensor = aten::add(%382, %branch.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %384 : Tensor = aten::sub(%383, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %taken.1 : Tensor = aten::relu(%384) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %386 : Tensor = aten::matmul(%pc.1, %self.decoder.pc_increment) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:100:29
+  %387 : Tensor = aten::neg(%taken.1) # <string>:11:9
+  %388 : Tensor = aten::add(%387, %19, %19) # <string>:11:9
+  %389 : Tensor = aten::sub(%388, %halt.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:100:53
+  %390 : Tensor = aten::add(%386, %389, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %391 : Tensor = aten::sub(%390, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %392 : Tensor = aten::relu(%391) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %393 : Tensor = aten::add(%arg.1, %taken.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %394 : Tensor = aten::sub(%393, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %395 : Tensor = aten::relu(%394) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %396 : Tensor = aten::add(%392, %395, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:100:19
+  %397 : Tensor = aten::add(%pc.1, %halt.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %398 : Tensor = aten::sub(%397, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %399 : Tensor = aten::relu(%398) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %next_pc.1 : Tensor = aten::add(%396, %399, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:100:19
+  %401 : Tensor = aten::add(%loaded.1, %load.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %402 : Tensor = aten::sub(%401, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %403 : Tensor = aten::relu(%402) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %404 : Tensor = aten::add(%total.1, %add.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %405 : Tensor = aten::sub(%404, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %406 : Tensor = aten::relu(%405) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %407 : Tensor = aten::add(%403, %406, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:102:19
+  %408 : Tensor = aten::neg(%load.1) # <string>:11:9
+  %409 : Tensor = aten::add(%408, %19, %19) # <string>:11:9
+  %410 : Tensor = aten::sub(%409, %add.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:102:84
+  %411 : Tensor = aten::add(%reg.1, %410, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %412 : Tensor = aten::sub(%411, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %413 : Tensor = aten::relu(%412) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %next_reg.1 : Tensor = aten::add(%407, %413, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:102:19
+  %415 : Tensor = aten::slice(%arg.1, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:103:61
+  %416 : Tensor = aten::slice(%415, %19, %17, %self.decoder.address_width, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:103:61
+  %417 : Tensor = aten::add(%416, %store.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %418 : Tensor = aten::sub(%417, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %419 : Tensor = aten::relu(%418) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %420 : Tensor = aten::add(%reg.1, %store.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %421 : Tensor = aten::sub(%420, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %422 : Tensor = aten::relu(%421) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %423 : Tensor[] = prim::ListConstruct(%next_pc.1, %next_reg.1, %419, %store.1, %422, %halt.1)
+  %completion.1 : Tensor = aten::cat(%423, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:103:21
+  %425 : Tensor = aten::eq(%tokens.1, %34) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:105:44
+  %426 : Tensor = aten::to(%425, %12, %13, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:105:44
+  %427 : Tensor = aten::slice(%426, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:105:44
+  %428 : Tensor = aten::unsqueeze(%427, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:105:44
+  %429 : Tensor = aten::add(%completion.1, %428, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %430 : Tensor = aten::sub(%429, %19, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:26
+  %completion.5 : Tensor = aten::relu(%430) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:55:15
+  %432 : Tensor = aten::to(%phase.1, %12, %13, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:106:23
+  %target.7 : Tensor = aten::sub(%pos.1, %432, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:106:17
+  %434 : Tensor = aten::mul(%target.7, %21) # <string>:3:9
+  %435 : Tensor = aten::ones_like(%target.7, %17, %17, %17, %17, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:107:40
+  %436 : Tensor = aten::mul(%435, %15) # <string>:3:9
+  %437 : Tensor[] = prim::ListConstruct(%434, %436)
+  %438 : Tensor = aten::stack(%437, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:107:12
+  %q.5 : Tensor = aten::unsqueeze(%438, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:107:12
+  %440 : Tensor = aten::unsqueeze(%positional.1, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:108:36
+  %441 : Tensor = aten::unsqueeze(%completion.5, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:108:54
+  %442 : (Tensor, Tensor)? = prim::If(%50) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:108:72
+    block0():
+      %443 : (Tensor, Tensor) = aten::__getitem__(%cache.1, %35) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:108:72
+      -> (%443)
+    block1():
+      -> (%17)
+  %444 : bool = aten::__isnot__(%442, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:22:11
+  %key : Tensor, %start : int, %value : Tensor = prim::If(%444) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:22:8
+    block0():
+      %past.7 : (Tensor, Tensor) = prim::unchecked_cast(%442)
+      %old_key.1 : Tensor, %old_value.1 : Tensor = prim::TupleUnpack(%past.7)
+      %start.3 : int = aten::size(%old_key.1, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:24:20
+      %452 : Tensor[] = prim::ListConstruct(%old_key.1, %440)
+      %key.5 : Tensor = aten::cat(%452, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:25:18
+      %454 : Tensor[] = prim::ListConstruct(%old_value.1, %441)
+      %value.5 : Tensor = aten::cat(%454, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:26:20
+      -> (%key.5, %start.3, %value.5)
+    block1():
+      -> (%440, %18, %441)
+  %456 : int = aten::size(%key, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:31
+  %457 : Tensor = aten::slice(%self.decoder.positions, %18, %17, %456, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %458 : Tensor = aten::unsqueeze(%457, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %459 : Tensor = aten::slice(%self.decoder.positions, %18, %start, %456, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:59
+  %460 : Tensor = aten::unsqueeze(%459, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:59
+  %mask.1 : Tensor = aten::gt(%458, %460) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:27:15
+  %462 : Tensor = aten::transpose(%key, %38, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:26
+  %463 : Tensor = aten::matmul(%q.5, %462) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:18
+  %scores.1 : Tensor = aten::masked_fill(%463, %mask.1, %39) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:28:18
+  %465 : Tensor = aten::softmax(%scores.1, %14, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:29:15
+  %466 : Tensor = aten::matmul(%465, %value) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:29:15
+  %467 : (Tensor, Tensor) = prim::TupleConstruct(%key, %value)
+  %468 : Tensor = aten::select(%466, %18, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:109:30
+  %469 : Tensor = aten::sub(%468, %41, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:31
+  %470 : Tensor = aten::relu(%469) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:20
+  %471 : Tensor = aten::sub(%468, %40, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:58
+  %472 : Tensor = aten::relu(%471) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:47
+  %473 : Tensor = aten::sub(%470, %472, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/causal_kv_memory.py:32:20
+  %result.5 : Tensor = aten::mul(%473, %33) # <string>:3:9
+  %475 : Tensor = aten::slice(%result.5, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:110:21
+  %476 : Tensor = aten::slice(%475, %19, %self.decoder.address_width, %21, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:110:21
+  %477 : Tensor = aten::reshape(%476, %7) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:110:21
+  %478 : Tensor = aten::to(%477, %26, %13, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:110:21
+  %479 : Tensor = aten::mul(%478, %self.decoder.weights) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:110:21
+  %reg_bytes.1 : Tensor = aten::sum(%479, %6, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:110:21
+  %481 : Tensor = aten::slice(%475, %19, %4, %3, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:112:23
+  %482 : Tensor = aten::reshape(%481, %7) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:112:23
+  %483 : Tensor = aten::to(%482, %26, %13, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:112:23
+  %484 : Tensor = aten::mul(%483, %self.decoder.weights) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:112:23
+  %store_bytes.1 : Tensor = aten::sum(%484, %6, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:112:23
+  %486 : Tensor = aten::select(%475, %19, %5) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:113:30
+  %487 : Tensor = aten::eq(%486, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:113:30
+  %488 : Tensor = aten::slice(%475, %19, %21, %5, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:113:52
+  %489 : Tensor = aten::argmax(%488, %19, %13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:113:52
+  %address.1 : Tensor = aten::where(%487, %489, %36) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:113:18
+  %491 : Tensor = aten::slice(%475, %19, %17, %self.decoder.address_width, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:114:29
+  %492 : Tensor = aten::argmax(%491, %19, %13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:114:29
+  %493 : Tensor = aten::slice(%492, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:114:29
+  %494 : Tensor = aten::unsqueeze(%493, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:114:29
+  %495 : Tensor = aten::slice(%address.1, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:114:79
+  %496 : Tensor = aten::unsqueeze(%495, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:114:79
+  %497 : Tensor = aten::select(%475, %19, %3) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:115:47
+  %498 : Tensor = aten::to(%497, %26, %13, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:115:47
+  %499 : Tensor = aten::add(%498, %32, %19) # <string>:5:9
+  %500 : Tensor = aten::slice(%499, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:115:43
+  %501 : Tensor = aten::unsqueeze(%500, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:115:43
+  %502 : int[] = prim::ListConstruct(%count.1, %19)
+  %503 : Tensor = aten::full(%502, %34, %26, %17, %17, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:116:29
+  %504 : Tensor[] = prim::ListConstruct(%494, %reg_bytes.1, %496, %store_bytes.1, %501, %503)
+  %options.1 : Tensor = aten::cat(%504, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:114:18
+  %506 : Tensor = aten::slice(%phase.1, %18, %17, %17, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:117:35
+  %507 : Tensor = aten::unsqueeze(%506, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:117:35
+  %508 : Tensor = aten::gather(%options.1, %19, %507, %13) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:117:17
+  %chosen.1 : Tensor = aten::squeeze(%508, %19) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:117:17
+  %510 : Tensor = aten::one_hot(%chosen.1, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:118:15
+  %511 : Tensor = aten::to(%510, %12, %13, %13, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/word_decoder.py:118:15
+  %512 : (Tensor, Tensor)[] = prim::ListConstruct(%102, %183, %256, %467)
+  %513 : (Tensor, (Tensor, Tensor)[]) = prim::TupleConstruct(%511, %512)
+  return (%513)
+
+graph(%self : __torch__.___torch_mangle_0.SparseCheckpoint,
+      %cache.1 : (Tensor, Tensor)[],
+      %boundary.1 : int,
+      %address_range.1 : int,
+      %capacity.1 : int):
+  %163 : Long(6, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value= 265    0    0    0    0  261 [ CPULongType{6} ]]()
+  %161 : Long(1, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value={266}]()
+  %159 : int[] = prim::Constant[value=[1]]()
+  %158 : Double(5, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=-10  -9  -8  -7  -6 [ CPUDoubleType{5} ]]()
+  %157 : Long(1, 6, strides=[6, 1], requires_grad=0, device=cpu) = prim::Constant[value= 266    0    0    0    0    0 [ CPULongType{1,6} ]]()
+  %74 : int = prim::Constant[value=-24]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:48:40
+  %73 : str = prim::Constant[value="AssertionError: Sparse checkpoint overflow"]()
+  %71 : str = prim::Constant[value="AssertionError: Unreserved checkpoint"]()
+  %70 : str = prim::Constant[value="AssertionError: Live COMMIT required"]()
+  %65 : int = prim::Constant[value=261]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:40:34
+  %64 : int = prim::Constant[value=12]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:40:51
+  %62 : int = prim::Constant[value=512]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:41:72
+  %60 : int = prim::Constant[value=48]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:48:29
+  %59 : int = prim::Constant[value=21]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:51:30
+  %154 : int[] = prim::Constant[value=[-1]]()
+  %21 : int = prim::Constant[value=-1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:33:76
+  %20 : int = prim::Constant[value=7]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:30:52
+  %19 : str = prim::Constant[value="AssertionError: Address range must be 1 through 16"]()
+  %18 : NoneType = prim::Constant()
+  %17 : bool = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:28:22
+  %16 : int = prim::Constant[value=1]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:28:22
+  %15 : int = prim::Constant[value=16]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:28:44
+  %14 : int = prim::Constant[value=2]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:29:29
+  %13 : int = prim::Constant[value=16384]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:31:29
+  %12 : int = prim::Constant[value=8192]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:31:67
+  %11 : int = prim::Constant[value=0]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:32:58
+  %10 : int = prim::Constant[value=4]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:33:45
+  %9 : int = prim::Constant[value=8]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:33:48
+  %8 : float = prim::Constant[value=0.75]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:64
+  %7 : float = prim::Constant[value=0.25]() # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:38
+  %self.weights : Long(8, strides=[1], requires_grad=0, device=cpu) = prim::Constant[value=   1    2    4    8   16   32   64  128 [ CPULongType{8} ]]()
+  %self.addresses : Double(16, 16, strides=[16, 1], requires_grad=0, device=cpu) = prim::Constant[value=<Tensor>]()
+  %22 : bool = aten::le(%16, %address_range.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:28:22
+  %23 : bool = prim::If(%22) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:28:22
+    block0():
+      %24 : bool = aten::le(%address_range.1, %15) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:28:27
+      -> (%24)
+    block1():
+      -> (%17)
+   = prim::If(%23) # <string>:8:2
+    block0():
+      -> ()
+    block1():
+       = prim::RaiseException(%19, %18) # <string>:8:2
+      -> ()
+  %25 : (Tensor, Tensor) = aten::__getitem__(%cache.1, %14) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:29:23
+  %keys.2 : Tensor, %values.2 : Tensor = prim::TupleUnpack(%25)
+  %28 : int[] = prim::ListConstruct(%address_range.1, %16)
+  %bias.1 : Tensor = aten::ones(%28, %20, %18, %18, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:30:15
+  %31 : Tensor = aten::slice(%self.addresses, %11, %18, %address_range.1, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:31:35
+  %32 : Tensor = aten::mul(%31, %13) # <string>:3:9
+  %33 : Tensor = aten::mul(%bias.1, %12) # <string>:3:9
+  %34 : Tensor[] = prim::ListConstruct(%32, %33, %bias.1)
+  %queries.1 : Tensor = aten::cat(%34, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:31:18
+  %36 : Tensor = aten::select(%keys.2, %11, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:32:53
+  %37 : Tensor = aten::numpy_T(%36) # <string>:5:9
+  %38 : Tensor = aten::matmul(%queries.1, %37) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:32:43
+  %39 : Tensor = aten::softmax(%38, %16, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:32:29
+  %40 : Tensor = aten::select(%values.2, %11, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:32:73
+  %41 : Tensor = aten::matmul(%39, %40) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:32:29
+  %42 : Tensor = aten::sub(%41, %7, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:29
+  %43 : Tensor = aten::relu(%42) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:18
+  %44 : Tensor = aten::sub(%41, %8, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:55
+  %45 : Tensor = aten::relu(%44) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:44
+  %46 : Tensor = aten::sub(%43, %45, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:18
+  %lanes.2 : Tensor = aten::mul(%46, %14) # <string>:3:9
+  %48 : int[] = prim::ListConstruct(%address_range.1, %10, %9)
+  %49 : Tensor = aten::reshape(%lanes.2, %48) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:33:16
+  %50 : Tensor = aten::to(%49, %10, %17, %17, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:33:16
+  %52 : Tensor = aten::mul(%50, %self.weights) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:33:16
+  %54 : Tensor = aten::sum(%52, %154, %17, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:33:16
+  %76 : (Tensor, Tensor) = aten::__getitem__(%cache.1, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:38:23
+  %keys.1 : Tensor, %values.1 : Tensor = prim::TupleUnpack(%76)
+  %length.1 : int = aten::size(%keys.1, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:39:17
+  %80 : bool = aten::eq(%boundary.1, %65) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:40:22
+  %81 : bool = prim::If(%80) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:40:22
+    block0():
+      %82 : int = aten::remainder(%length.1, %64) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:40:42
+      %83 : bool = aten::eq(%82, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:40:42
+      -> (%83)
+    block1():
+      -> (%17)
+   = prim::If(%81) # <string>:8:2
+    block0():
+      -> ()
+    block1():
+       = prim::RaiseException(%70, %18) # <string>:8:2
+      -> ()
+  %84 : bool = aten::le(%11, %capacity.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:41:22
+  %85 : bool = prim::If(%84) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:41:22
+    block0():
+      %86 : bool = aten::le(%capacity.1, %15) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:41:27
+      -> (%86)
+    block1():
+      -> (%17)
+  %87 : bool = prim::If(%85) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:41:22
+    block0():
+      %88 : int = aten::add(%capacity.1, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:41:57
+      %89 : int = aten::mul(%88, %64) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:41:53
+      %90 : int = aten::add(%length.1, %89) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:41:46
+      %91 : bool = aten::le(%90, %62) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:41:46
+      -> (%91)
+    block1():
+      -> (%17)
+   = prim::If(%87) # <string>:8:2
+    block0():
+      -> ()
+    block1():
+       = prim::RaiseException(%71, %18) # <string>:8:2
+      -> ()
+  %92 : Tensor = aten::any(%54, %16, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:42:19
+  %93 : Tensor = aten::nonzero(%92) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:42:19
+  %retained.1 : Tensor = aten::flatten(%93, %11, %21) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:42:19
+  %95 : int = aten::len(%retained.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:43:22
+  %96 : bool = aten::le(%95, %capacity.1) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:43:22
+   = prim::If(%96) # <string>:8:2
+    block0():
+      -> ()
+    block1():
+       = prim::RaiseException(%73, %18) # <string>:8:2
+      -> ()
+  %101 : int[] = prim::ListConstruct(%95, %21)
+  %preamble.1 : Tensor = aten::expand(%157, %101, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:44:19
+  %103 : Tensor = aten::unsqueeze(%retained.1, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:45:38
+  %104 : Tensor?[] = prim::ListConstruct(%retained.1)
+  %105 : Tensor = aten::index(%54, %104) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:45:61
+  %107 : int[] = prim::ListConstruct(%95, %16)
+  %108 : Tensor = aten::full(%107, %65, %18, %18, %18, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:46:28
+  %109 : Tensor[] = prim::ListConstruct(%preamble.1, %103, %105, %108)
+  %memory.1 : Tensor = aten::cat(%109, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:45:17
+  %111 : int = aten::sub(%length.1, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:47:17
+  %target.1 : Tensor = aten::add(%158, %111, %16) # <string>:11:9
+  %115 : Tensor = aten::mul(%target.1, %60) # <string>:3:9
+  %116 : Tensor = aten::ones_like(%target.1, %18, %18, %18, %18, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:48:44
+  %117 : Tensor = aten::mul(%116, %74) # <string>:3:9
+  %118 : Tensor[] = prim::ListConstruct(%115, %117)
+  %query.1 : Tensor = aten::stack(%118, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:48:16
+  %120 : Tensor = aten::select(%keys.1, %11, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:49:51
+  %121 : Tensor = aten::numpy_T(%120) # <string>:5:9
+  %122 : Tensor = aten::matmul(%query.1, %121) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:49:43
+  %123 : Tensor = aten::softmax(%122, %16, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:49:29
+  %124 : Tensor = aten::select(%values.1, %11, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:49:71
+  %125 : Tensor = aten::matmul(%123, %124) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:49:29
+  %126 : Tensor = aten::sub(%125, %7, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:29
+  %127 : Tensor = aten::relu(%126) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:18
+  %128 : Tensor = aten::sub(%125, %8, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:55
+  %129 : Tensor = aten::relu(%128) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:44
+  %130 : Tensor = aten::sub(%127, %129, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:24:18
+  %lanes.1 : Tensor = aten::mul(%130, %14) # <string>:3:9
+  %132 : Tensor = aten::select(%lanes.1, %11, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:50:13
+  %133 : Tensor = aten::slice(%132, %11, %18, %15, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:50:13
+  %134 : Tensor = aten::argmax(%133, %18, %17) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:50:13
+  %pc.1 : Tensor = aten::reshape(%134, %159) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:50:13
+  %137 : Tensor = aten::slice(%lanes.1, %11, %16, %18, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:51:20
+  %138 : Tensor = aten::slice(%137, %16, %59, %18, %16) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:51:20
+  %139 : Tensor = aten::to(%138, %10, %17, %17, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:51:20
+  %141 : Tensor = aten::mul(%139, %self.weights) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:51:20
+  %register.1 : Tensor = aten::sum(%141, %154, %17, %18) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:51:20
+  %148 : Tensor = aten::flatten(%memory.1, %11, %21) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:53:26
+  %149 : Tensor[] = prim::ListConstruct(%148, %161, %pc.1, %register.1, %163)
+  %150 : Tensor = aten::cat(%149, %11) # /workspace/VisuaML/visuaml-client/voxel-replay/tools/sparse_checkpoint.py:53:15
+  return (%150)

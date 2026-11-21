@@ -35,9 +35,11 @@ class WordCircuit(nn.Module):
 
 
 class WordDecoder(CausalMemory):
-    def __init__(self):
+    def __init__(self, sparse=False):
         super().__init__()
         self.alu = WordCircuit(OPERATIONS)
+        self.sparse = sparse
+        self.address_width = 16 if sparse else 4
         self.register_buffer("lags", torch.arange(1, 12, dtype=torch.float64))
         self.register_buffer("phases", torch.arange(512) % 12)
         self.register_buffer("pc_increment", torch.eye(16, dtype=torch.float64).roll(1, dims=1))
@@ -79,9 +81,16 @@ class WordDecoder(CausalMemory):
         fetched = self.recover(fetched[0])
         opcode, arg, immediate = fetched[:, :5], fetched[:, 5:21], fetched[:, 21:]
         commit = (tokens == 261).double()[:, None]
-        key = self.gate(arg_key[:, :4], commit)
+        width = self.address_width
+        key = self.gate(arg_key[:, :width], commit)
         payload = self.gate(word, commit)
-        read, c3 = self.attend(torch.cat((8192*arg[:, :4], bias), dim=-1)[None],
+        query = 8192*arg[:, :width]
+        if self.sparse:
+            # A COMMIT without an address is a zero-valued default candidate.
+            default = self.gate(1-key.sum(dim=1, keepdim=True), commit)
+            key = torch.cat((key, default), dim=1)
+            query = torch.cat((2*query, 8192*bias), dim=1)
+        read, c3 = self.attend(torch.cat((query, bias), dim=-1)[None],
                                  torch.cat((key, recency), dim=-1)[None], payload[None],
                                  cache[2] if cache else None)
         loaded = self.recover(read[0])
@@ -91,7 +100,7 @@ class WordDecoder(CausalMemory):
         next_pc = (self.gate(pc @ self.pc_increment, 1-taken-halt)
                    + self.gate(arg, taken) + self.gate(pc, halt))
         next_reg = self.gate(loaded, load) + self.gate(added, add) + self.gate(reg, 1-load-add)
-        completion = torch.cat((next_pc, next_reg, self.gate(arg[:, :4], store),
+        completion = torch.cat((next_pc, next_reg, self.gate(arg[:, :width], store),
                                 store, self.gate(reg, store), halt), dim=-1)
         completion = self.gate(completion, (tokens == 263).double()[:, None])
         target = pos - phase.double()
@@ -99,10 +108,11 @@ class WordDecoder(CausalMemory):
         result, c4 = self.attend(q, positional[None], completion[None], cache[3] if cache else None)
         result = self.recover(result[0])
         reg_bytes = (result[:, 16:48].reshape(-1, 4, 8).long() * self.weights).sum(-1)
-        store_bytes = (result[:, 53:85].reshape(-1, 4, 8).long() * self.weights).sum(-1)
-        address = torch.where(result[:, 52] == 1, result[:, 48:52].argmax(dim=1), 265)
+        flag = 48 + width
+        store_bytes = (result[:, flag+1:flag+33].reshape(-1, 4, 8).long() * self.weights).sum(-1)
+        address = torch.where(result[:, flag] == 1, result[:, 48:flag].argmax(dim=1), 265)
         options = torch.cat((result[:, :16].argmax(dim=1)[:, None], reg_bytes, address[:, None],
-                             store_bytes, (261+result[:, 85].long())[:, None],
+                             store_bytes, (261+result[:, flag+33].long())[:, None],
                              torch.full((count, 1), 263, dtype=torch.long)), dim=1)
         chosen = options.gather(1, phase[:, None]).squeeze(1)
         return torch.nn.functional.one_hot(chosen, 267).double(), [c1, c2, c3, c4]
