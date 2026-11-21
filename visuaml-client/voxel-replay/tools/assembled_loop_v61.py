@@ -16,7 +16,7 @@ WIDTH = 32
 
 
 def sample(rng, holdout=False):
-    length = rng.randint(4,7) if holdout else rng.randint(1,4)
+    length = rng.randint(5,7) if holdout else rng.randint(1,4)
     start = rng.randrange(4)
     constant = rng.randrange(4)
     rows = []
@@ -167,6 +167,8 @@ def restore(raw,task,model,model_hash):
     if completed>task["budget"]:
         raise ValueError("checkpoint exceeds fuel")
     for _ in range(completed):
+        step(task,state,model)
+    if state["remaining"]==0 and state["status"]=="running":
         step(task,state,model)
     if checkpoint(task,state,model_hash)!=raw:
         raise ValueError("checkpoint state or identity differs from replay")
