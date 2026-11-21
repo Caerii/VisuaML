@@ -14,7 +14,8 @@ from visuaml.replay import (
     execute_report, inspect_window, make_bundle, open_bundle, seal_report,
 )
 from visuaml.replay.checkpoint import canonical
-from visuaml.replay.artifacts import compare_exports, describe_export, describe_onnx, describe_wasm, load_export
+from visuaml.replay.pipeline import compare_observations, read_observations
+from visuaml.replay.artifacts import compare_exports, compare_onnx, describe_export, describe_onnx, describe_wasm, load_export
 
 EXAMPLE = Path(__file__).with_name("assets") / "passage-report.json"
 
@@ -83,6 +84,19 @@ def main(argv=None):
     comparison.add_argument("bundle", type=Path)
     comparison.add_argument("--preview-local", type=int, required=True)
     comparison.add_argument("--output", type=Path)
+    cross = sub.add_parser("compare-onnx", help="Compare named ONNX Runtime outputs with a trusted PyTorch export")
+    cross.add_argument("reference", type=Path)
+    cross.add_argument("candidate", type=Path)
+    cross.add_argument("bindings", type=Path, help="JSON with ordered logical output bindings and ONNX input names")
+    cross.add_argument("inputs", nargs="+", type=Path)
+    cross.add_argument("--rtol", type=float, default=0)
+    cross.add_argument("--atol", type=float, default=0)
+    pipeline = sub.add_parser("compare-pipelines", help="Find the first difference in two JSONL observation streams")
+    pipeline.add_argument("reference", type=Path)
+    pipeline.add_argument("candidate", type=Path)
+    pipeline.add_argument("--output", type=Path)
+    pipeline.add_argument("--fail-on-difference", action="store_true", help="Exit 1 when a difference is found")
+    pipeline.add_argument("--tolerances", type=Path, help="JSON mapping boundary names to [rtol, atol]")
     describe = sub.add_parser("describe", help="Inspect WASM, ONNX, or a trusted PyTorch export")
     describe.add_argument("artifact", type=Path)
     exports = sub.add_parser("compare-exports", help="Compare trusted PyTorch exports on identical inputs")
@@ -97,6 +111,18 @@ def main(argv=None):
     args = parser.parse_args(argv)
     torch.set_num_threads(1)
     try:
+        if args.command == "compare-pipelines":
+            tolerances = json.loads(args.tolerances.read_text()) if args.tolerances else None
+            with args.reference.open() as left, args.candidate.open() as right:
+                result = compare_observations(read_observations(left), read_observations(right),
+                                              tolerances=tolerances)
+            data = json.dumps(result, indent=2)
+            if args.output:
+                args.output.write_text(data+"\n")
+            print(data)
+            if args.fail_on_difference and result["first_difference"] is not None:
+                raise SystemExit(1)
+            return
         if args.command == "describe":
             suffix = args.artifact.suffix
             if suffix == ".wasm":
@@ -108,6 +134,13 @@ def main(argv=None):
             else:
                 raise ValueError("Expected .wasm, .onnx, or a trusted .pt2 export")
             print(json.dumps(description, indent=2))
+            return
+        if args.command == "compare-onnx":
+            bindings = json.loads(args.bindings.read_text())
+            inputs = [np.load(path, allow_pickle=False) for path in args.inputs]
+            result = compare_onnx(load_export(args.reference), args.candidate, bindings, inputs,
+                                  rtol=args.rtol, atol=args.atol)
+            print(json.dumps(result, indent=2))
             return
         if args.command == "compare-exports":
             inputs = [torch.from_numpy(np.load(path, allow_pickle=False)) for path in args.inputs]

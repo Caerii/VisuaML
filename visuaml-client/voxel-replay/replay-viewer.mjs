@@ -28,6 +28,14 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.profile === 'visuaml-pipeline-comparison-v1' || data?.profile === 'visuaml-cross-runtime-v1') {
+    const first = data.first_difference;
+    get('title').textContent = 'Pipeline comparison';
+    const boundary = first?.boundary ?? first?.reference?.boundary ?? first?.candidate?.boundary;
+    get('status').textContent = first ? `First difference · ${boundary}` : 'All compared observations agree';
+    get('detail').textContent = JSON.stringify(first ?? data, null, 2);
+    return;
+  }
   if (data?.format_version === 1 && data.profile === 'visuaml-source-window-v1') {
     get('title').textContent = 'Reconstructed source trace';
     get('status').textContent = `After step ${data.start.retired_source_steps} · ${data.trace.length} trace rows`;

@@ -1,4 +1,4 @@
-# VisuaML Replay 0.6 release candidate
+# VisuaML Replay 0.7 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
@@ -28,6 +28,12 @@ See [changes and compatibility](CHANGELOG.md) and the [contributor guide](CONTRI
 Use `visuaml-replay describe` for a WASM binary, an ONNX graph, or a trusted
 PyTorch export. See the [artifact import walkthrough](chapters/import-artifacts.md)
 for the activation mismatch and unchanged Rust module examples.
+
+## Compare a model and tool pipeline
+
+Use the [pipeline walkthrough](chapters/pipeline-replay.md) to compare
+PyTorch with ONNX Runtime and locate model, WASM, and host handoff differences
+in a shared report. The JSONL interface is available for other harnesses.
 
 ## Capture a failing test in CI
 

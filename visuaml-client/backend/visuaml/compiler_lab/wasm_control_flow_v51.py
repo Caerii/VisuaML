@@ -318,7 +318,9 @@ def _decode_control_body(data, memory, max_operations, *, direct_calls=False):
         if code == 0x10 and direct_calls:
             name = "call"
         if name is None:
-            raise ControlAdmissionError("Unknown or excluded WASM instruction byte")
+            opcode = {0x23: "global.get", 0x24: "global.set", 0x11: "call_indirect",
+                      0x40: "memory.grow", 0x2d: "i32.load8_u", 0x3a: "i32.store8"}.get(code, f"0x{code:02x}")
+            raise ControlAdmissionError(f"Unsupported WASM opcode {opcode} at function body byte {pos-1}")
         imm = None
         if name in _BLOCKS:
             if pos >= len(data) or data[pos] != 0x40:

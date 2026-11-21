@@ -1,5 +1,11 @@
 # VisuaML Replay changes
 
+## 0.7.0rc1
+
+- Added ordered, streaming pipeline comparisons and named PyTorch-to-ONNX Runtime output checks.
+- Added an end-to-end pipeline fixture with independent model, guest, and handoff failures.
+- Admitted Rust linker global exports and identified unsupported instructions by function and offset.
+
 ## 0.6.0rc1
 
 - Added WASM, ONNX, and PyTorch artifact descriptions.

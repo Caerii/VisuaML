@@ -31,6 +31,7 @@ class CallImage:
     binary_sha256: str
     image_sha256: str
     data_segments: tuple[tuple[int, bytes], ...] = ()
+    linker_globals: tuple[tuple[str, int], ...] = ()
 
 
 def _active_data(payload, capacity):
@@ -55,12 +56,53 @@ def _active_data(payload, capacity):
     return tuple(segments)
 
 
+def _linker_exports(exports, globals_, entry):
+    if globals_ is None:
+        run = b"\x03run\x00" + _u32(entry)
+        memory = b"\x06memory\x02\x00"
+        if exports not in (b"\x02"+run+memory, b"\x02"+memory+run):
+            raise ControlAdmissionError("Expected memory and last function exported as run")
+        return ()
+
+    count, cursor = _read_u32(globals_, 0)
+    if not 1 <= count <= 2:
+        raise ControlAdmissionError("Only immutable Rust linker globals are supported")
+    values = []
+    for _ in range(count):
+        if globals_[cursor:cursor+3] != b"\x7f\x00\x41":
+            raise ControlAdmissionError("Expected immutable i32 linker global")
+        value, cursor = _read_s32(globals_, cursor+3)
+        if globals_[cursor:cursor+1] != b"\x0b":
+            raise ControlAdmissionError("Expected end of linker global initializer")
+        cursor += 1
+        values.append(value & 0xffffffff)
+    if cursor != len(globals_):
+        raise ControlAdmissionError("Trailing linker global data")
+
+    count, cursor = _read_u32(exports, 0)
+    fields = {}
+    for _ in range(count):
+        length, begin = _read_u32(exports, cursor)
+        end = begin+length
+        index, cursor = _read_u32(exports, end+1)
+        fields[exports[begin:end]] = (exports[end], index)
+    run = fields.pop(b"run", None)
+    memory = fields.pop(b"memory", None)
+    if cursor != len(exports) or run != (0, entry) or memory != (2, 0):
+        raise ControlAdmissionError("Expected memory and last function exported as run")
+    names = {b"__heap_base", b"__data_end"}
+    if not set(fields) <= names or any(kind != 3 for kind, _ in fields.values()) or (
+            {index for _, index in fields.values()} != set(range(len(values)))):
+        raise ControlAdmissionError("Only __heap_base and __data_end linker exports are supported")
+    return tuple((name.decode("ascii"), values[index]) for name, (_, index) in sorted(fields.items()))
+
+
 def load_call_image(raw: bytes, *, memory_pages: int = 1) -> CallImage:
     """Validate fixed-memory, acyclic (lower-index) unary i32 calls."""
     try:
         wasmtime.Module.validate(wasmtime.Engine(), raw)
         sections = {item.section_id: item.payload for item in parse_section_envelope(raw) if item.section_id}
-        extras = set(sections) - {1, 3, 5, 7, 10, 11}
+        extras = set(sections) - {1, 3, 5, 6, 7, 10, 11}
         if extras:
             raise ControlAdmissionError(f"Unsupported WASM core sections: {sorted(extras)}")
         if not {1, 3, 5, 7, 10}.issubset(sections) or sections[1] != _TYPE_PAYLOAD:
@@ -72,10 +114,7 @@ def load_call_image(raw: bytes, *, memory_pages: int = 1) -> CallImage:
         if not 1 <= count <= MAX_FUNCTIONS or sections[3][pos:] != bytes(count):
             raise ControlAdmissionError("Only bounded unary i32 functions admitted")
         entry = count - 1
-        run = b"\x03run\x00" + _u32(entry)
-        memory = b"\x06memory\x02\x00"
-        if sections[7] not in (b"\x02" + run + memory, b"\x02" + memory + run):
-            raise ControlAdmissionError("Expected memory and last function exported as run")
+        linker_globals = _linker_exports(sections[7], sections.get(6), entry)
         data = sections[10]
         bodies, pos = _read_u32(data, 0)
         if bodies != count:
@@ -85,9 +124,12 @@ def load_call_image(raw: bytes, *, memory_pages: int = 1) -> CallImage:
         offset = 0
         for function in range(count):
             size, pos = _read_u32(data, pos)
-            locals_, ops = _decode_control_body(
-                data[pos:pos + size], True, SCALED_MAX_OPERATIONS, direct_calls=True,
-            )
+            try:
+                locals_, ops = _decode_control_body(
+                    data[pos:pos + size], True, SCALED_MAX_OPERATIONS, direct_calls=True,
+                )
+            except ControlAdmissionError as error:
+                raise ControlAdmissionError(f"Function {function}: {error}") from error
             pos += size
             calls = {i: op.immediate for i, op in enumerate(ops) if op.opcode == "call"}
             if any(target >= function for target in calls.values()):
@@ -122,8 +164,11 @@ def load_call_image(raw: bytes, *, memory_pages: int = 1) -> CallImage:
     image_hash = sha256(image.numpy().astype("<i8", copy=False).tobytes())
     if data_segments:
         image_hash.update(sections[11])
+    if linker_globals:
+        image_hash.update(sections[6])
+        image_hash.update(sections[7])
     return CallImage(image, starts[entry], memory_pages, tuple(functions), tuple(starts),
-                     sha256(raw).hexdigest(), image_hash.hexdigest(), data_segments)
+                     sha256(raw).hexdigest(), image_hash.hexdigest(), data_segments, linker_globals)
 
 
 class CallState(NamedTuple):

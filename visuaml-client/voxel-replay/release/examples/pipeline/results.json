@@ -1,0 +1,367 @@
+{
+  "cross_runtime": {
+    "reference": {
+      "profile": "visuaml-cross-runtime-v1",
+      "reference_runtime": "PyTorch",
+      "candidate_runtime": "ONNX Runtime CPU",
+      "onnx_sha256": "0018eb869347904988c333927d5b6a122c7ef09b7f0b98e85dacb88ff168318d",
+      "rtol": 0.0,
+      "atol": 0.0,
+      "inputs": {
+        "value": {
+          "shape": [],
+          "dtype": "<i4",
+          "sha256": "b069d3efd7b5df9a081d9ae76d1c09a2ad50a36de3d8b64490e54b9655313537"
+        },
+        "feedback": {
+          "shape": [],
+          "dtype": "<i4",
+          "sha256": "aaa6518f2081561c071efa842723279a5e1680064f31c470cf08a691d9e4b0f5"
+        }
+      },
+      "observations": [
+        {
+          "boundary": "tool_request",
+          "onnx_output": "argument",
+          "difference": null,
+          "reference": {
+            "shape": [],
+            "dtype": "<i4",
+            "sha256": "b069d3efd7b5df9a081d9ae76d1c09a2ad50a36de3d8b64490e54b9655313537"
+          },
+          "candidate": {
+            "shape": [],
+            "dtype": "<i4",
+            "sha256": "b069d3efd7b5df9a081d9ae76d1c09a2ad50a36de3d8b64490e54b9655313537"
+          }
+        },
+        {
+          "boundary": "model_decision",
+          "onnx_output": "decision",
+          "difference": null,
+          "reference": {
+            "shape": [],
+            "dtype": "<i4",
+            "sha256": "3290b91dbb94871e6360f0a44652e07804d7cd6de62b45bfbe568ea28be71709"
+          },
+          "candidate": {
+            "shape": [],
+            "dtype": "<i4",
+            "sha256": "3290b91dbb94871e6360f0a44652e07804d7cd6de62b45bfbe568ea28be71709"
+          }
+        }
+      ],
+      "first_difference": null
+    },
+    "model": {
+      "profile": "visuaml-cross-runtime-v1",
+      "reference_runtime": "PyTorch",
+      "candidate_runtime": "ONNX Runtime CPU",
+      "onnx_sha256": "37cfad0ec5fc186cd8f7367a365f42fdeeafc663688e5b9cbbe5d2b80516bba3",
+      "rtol": 0.0,
+      "atol": 0.0,
+      "inputs": {
+        "value": {
+          "shape": [],
+          "dtype": "<i4",
+          "sha256": "b069d3efd7b5df9a081d9ae76d1c09a2ad50a36de3d8b64490e54b9655313537"
+        },
+        "feedback": {
+          "shape": [],
+          "dtype": "<i4",
+          "sha256": "aaa6518f2081561c071efa842723279a5e1680064f31c470cf08a691d9e4b0f5"
+        }
+      },
+      "observations": [
+        {
+          "boundary": "tool_request",
+          "onnx_output": "argument",
+          "difference": {
+            "reason": "value",
+            "index": [],
+            "expected": "4",
+            "actual": "5",
+            "dtype": "torch.int32",
+            "shape": []
+          },
+          "reference": {
+            "shape": [],
+            "dtype": "<i4",
+            "sha256": "b069d3efd7b5df9a081d9ae76d1c09a2ad50a36de3d8b64490e54b9655313537"
+          },
+          "candidate": {
+            "shape": [],
+            "dtype": "<i4",
+            "sha256": "dce02d6ad99fd4b64364295c177eca3e47e6c87e56707f79ce22b2141f6a4011"
+          }
+        },
+        {
+          "boundary": "model_decision",
+          "onnx_output": "decision",
+          "difference": null,
+          "reference": {
+            "shape": [],
+            "dtype": "<i4",
+            "sha256": "3290b91dbb94871e6360f0a44652e07804d7cd6de62b45bfbe568ea28be71709"
+          },
+          "candidate": {
+            "shape": [],
+            "dtype": "<i4",
+            "sha256": "3290b91dbb94871e6360f0a44652e07804d7cd6de62b45bfbe568ea28be71709"
+          }
+        }
+      ],
+      "first_difference": {
+        "boundary": "tool_request",
+        "onnx_output": "argument",
+        "difference": {
+          "reason": "value",
+          "index": [],
+          "expected": "4",
+          "actual": "5",
+          "dtype": "torch.int32",
+          "shape": []
+        },
+        "reference": {
+          "shape": [],
+          "dtype": "<i4",
+          "sha256": "b069d3efd7b5df9a081d9ae76d1c09a2ad50a36de3d8b64490e54b9655313537"
+        },
+        "candidate": {
+          "shape": [],
+          "dtype": "<i4",
+          "sha256": "dce02d6ad99fd4b64364295c177eca3e47e6c87e56707f79ce22b2141f6a4011"
+        }
+      }
+    }
+  },
+  "cases": {
+    "reference": {
+      "journal": [
+        {
+          "request": "case-1",
+          "boundary": "tool_request",
+          "runtime": "onnxruntime",
+          "value": {
+            "argument": 4,
+            "tool": "add"
+          }
+        },
+        {
+          "request": "case-1",
+          "boundary": "tool_result",
+          "runtime": "visuaml-wasm",
+          "value": {
+            "returned": 7,
+            "status": 1
+          }
+        },
+        {
+          "request": "case-1",
+          "boundary": "feedback",
+          "runtime": "host",
+          "value": 7
+        },
+        {
+          "request": "case-1",
+          "boundary": "model_decision",
+          "runtime": "onnxruntime",
+          "value": 1
+        }
+      ],
+      "model_sha256": "0018eb869347904988c333927d5b6a122c7ef09b7f0b98e85dacb88ff168318d",
+      "wasm_sha256": "477ba3d83ecd08bbd6c462272a4c8faeb771a7347b273b06858243839905f95e",
+      "report_bytes": 89205,
+      "report_sha256": "7838113f3b80edbc52f5f9933d5ac63890ecd227f75dd7c0e7f051df04e45711"
+    },
+    "model": {
+      "journal": [
+        {
+          "request": "case-1",
+          "boundary": "tool_request",
+          "runtime": "onnxruntime",
+          "value": {
+            "argument": 5,
+            "tool": "add"
+          }
+        },
+        {
+          "request": "case-1",
+          "boundary": "tool_result",
+          "runtime": "visuaml-wasm",
+          "value": {
+            "returned": 8,
+            "status": 1
+          }
+        },
+        {
+          "request": "case-1",
+          "boundary": "feedback",
+          "runtime": "host",
+          "value": 8
+        },
+        {
+          "request": "case-1",
+          "boundary": "model_decision",
+          "runtime": "onnxruntime",
+          "value": 1
+        }
+      ],
+      "model_sha256": "37cfad0ec5fc186cd8f7367a365f42fdeeafc663688e5b9cbbe5d2b80516bba3",
+      "wasm_sha256": "477ba3d83ecd08bbd6c462272a4c8faeb771a7347b273b06858243839905f95e",
+      "report_bytes": 89205,
+      "report_sha256": "3b625439b3f7b0cfa490cca698c8609f03df86672104dff35fa73ffd34b3cf8c",
+      "comparison": {
+        "profile": "visuaml-pipeline-comparison-v1",
+        "matched_observations": 0,
+        "first_difference": {
+          "index": 0,
+          "reason": "value",
+          "reference": {
+            "request": "case-1",
+            "boundary": "tool_request",
+            "runtime": "onnxruntime",
+            "value": {
+              "argument": 4,
+              "tool": "add"
+            }
+          },
+          "candidate": {
+            "request": "case-1",
+            "boundary": "tool_request",
+            "runtime": "onnxruntime",
+            "value": {
+              "argument": 5,
+              "tool": "add"
+            }
+          }
+        },
+        "tolerances": {}
+      }
+    },
+    "guest": {
+      "journal": [
+        {
+          "request": "case-1",
+          "boundary": "tool_request",
+          "runtime": "onnxruntime",
+          "value": {
+            "argument": 4,
+            "tool": "add"
+          }
+        },
+        {
+          "request": "case-1",
+          "boundary": "tool_result",
+          "runtime": "visuaml-wasm",
+          "value": {
+            "returned": 9,
+            "status": 1
+          }
+        },
+        {
+          "request": "case-1",
+          "boundary": "feedback",
+          "runtime": "host",
+          "value": 9
+        },
+        {
+          "request": "case-1",
+          "boundary": "model_decision",
+          "runtime": "onnxruntime",
+          "value": 1
+        }
+      ],
+      "model_sha256": "0018eb869347904988c333927d5b6a122c7ef09b7f0b98e85dacb88ff168318d",
+      "wasm_sha256": "2e0b29e71eddd1f6007a38536d3ebc828161e7e26d33a90a7450f26d2273d5ae",
+      "report_bytes": 89217,
+      "report_sha256": "6ce5cc8a6579d4a050eb9abc32a56b30fc0dc65fe512236ba4a9140dccd021d9",
+      "comparison": {
+        "profile": "visuaml-pipeline-comparison-v1",
+        "matched_observations": 1,
+        "first_difference": {
+          "index": 1,
+          "reason": "value",
+          "reference": {
+            "request": "case-1",
+            "boundary": "tool_result",
+            "runtime": "visuaml-wasm",
+            "value": {
+              "returned": 7,
+              "status": 1
+            }
+          },
+          "candidate": {
+            "request": "case-1",
+            "boundary": "tool_result",
+            "runtime": "visuaml-wasm",
+            "value": {
+              "returned": 9,
+              "status": 1
+            }
+          }
+        },
+        "tolerances": {}
+      }
+    },
+    "handoff": {
+      "journal": [
+        {
+          "request": "case-1",
+          "boundary": "tool_request",
+          "runtime": "onnxruntime",
+          "value": {
+            "argument": 4,
+            "tool": "add"
+          }
+        },
+        {
+          "request": "case-1",
+          "boundary": "tool_result",
+          "runtime": "visuaml-wasm",
+          "value": {
+            "returned": 7,
+            "status": 1
+          }
+        },
+        {
+          "request": "case-1",
+          "boundary": "feedback",
+          "runtime": "host",
+          "value": 0
+        },
+        {
+          "request": "case-1",
+          "boundary": "model_decision",
+          "runtime": "onnxruntime",
+          "value": 0
+        }
+      ],
+      "model_sha256": "0018eb869347904988c333927d5b6a122c7ef09b7f0b98e85dacb88ff168318d",
+      "wasm_sha256": "477ba3d83ecd08bbd6c462272a4c8faeb771a7347b273b06858243839905f95e",
+      "report_bytes": 89205,
+      "report_sha256": "7838113f3b80edbc52f5f9933d5ac63890ecd227f75dd7c0e7f051df04e45711",
+      "comparison": {
+        "profile": "visuaml-pipeline-comparison-v1",
+        "matched_observations": 2,
+        "first_difference": {
+          "index": 2,
+          "reason": "value",
+          "reference": {
+            "request": "case-1",
+            "boundary": "feedback",
+            "runtime": "host",
+            "value": 7
+          },
+          "candidate": {
+            "request": "case-1",
+            "boundary": "feedback",
+            "runtime": "host",
+            "value": 0
+          }
+        },
+        "tolerances": {}
+      }
+    }
+  }
+}

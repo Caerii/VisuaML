@@ -1,0 +1,54 @@
+[
+  {
+    "rows_each": 1000,
+    "input_bytes": [
+      76890,
+      76890
+    ],
+    "report_bytes": 329,
+    "ns": 10030176,
+    "traced_python_peak_bytes": 44107,
+    "first_difference": {
+      "index": 999,
+      "reason": "value",
+      "reference": {
+        "request": "999",
+        "boundary": "tool_result",
+        "runtime": "test",
+        "value": 7
+      },
+      "candidate": {
+        "request": "999",
+        "boundary": "tool_result",
+        "runtime": "test",
+        "value": 9
+      }
+    }
+  },
+  {
+    "rows_each": 100000,
+    "input_bytes": [
+      7888890,
+      7888890
+    ],
+    "report_bytes": 337,
+    "ns": 987720304,
+    "traced_python_peak_bytes": 44119,
+    "first_difference": {
+      "index": 99999,
+      "reason": "value",
+      "reference": {
+        "request": "99999",
+        "boundary": "tool_result",
+        "runtime": "test",
+        "value": 7
+      },
+      "candidate": {
+        "request": "99999",
+        "boundary": "tool_result",
+        "runtime": "test",
+        "value": 9
+      }
+    }
+  }
+]

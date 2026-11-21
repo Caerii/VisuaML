@@ -1,5 +1,6 @@
 """Inspect admitted program artifacts and compare aligned exported tensor graphs."""
 from pathlib import Path
+from hashlib import sha256
 
 import torch
 import wasmtime
@@ -27,7 +28,8 @@ def describe_wasm(raw):
     except ValueError as error:
         return dict(report, reason=str(error))
     return dict(report, replayable=True, memory_pages=image.memory_pages,
-                active_data_bytes=sum(len(data) for _, data in image.data_segments), functions=image.functions)
+                active_data_bytes=sum(len(data) for _, data in image.data_segments), functions=image.functions,
+                linker_globals=dict(image.linker_globals))
 
 
 def describe_onnx(raw):
@@ -161,3 +163,54 @@ def compare_exports(reference, candidate, inputs, *, rtol=0.0, atol=0.0):
 def load_export(path: Path):
     """Load a PyTorch export from a trusted sender."""
     return torch.export.load(path)
+
+
+class ONNXRunner:
+    """Reuse one CPU execution session across harness requests."""
+
+    def __init__(self, path):
+        try:
+            import onnxruntime as ort
+        except ImportError as error:
+            raise ValueError("ONNX execution requires the visuaml-replay[pipeline] extra") from error
+        options = ort.SessionOptions()
+        options.intra_op_num_threads = 1
+        options.inter_op_num_threads = 1
+        self.session = ort.InferenceSession(str(path), sess_options=options, providers=["CPUExecutionProvider"])
+
+    def run(self, feeds, outputs):
+        return dict(zip(outputs, self.session.run(outputs, feeds), strict=True))
+
+
+def compare_onnx(exported, path, bindings, inputs, *, rtol=0.0, atol=0.0):
+    """Compare flat tensor outputs against explicitly named ONNX observations."""
+    import numpy as np
+
+    names = bindings["inputs"]
+    outputs = bindings["outputs"]
+    if (not names or len(set(names)) != len(names) or len(names) != len(inputs)
+            or not isinstance(outputs, dict) or not outputs or len(set(outputs.values())) != len(outputs)):
+        raise ValueError("Specify unique named ONNX inputs and logical-to-ONNX output bindings")
+    if not 0 <= rtol < float("inf") or not 0 <= atol < float("inf"):
+        raise ValueError("Tolerances must be finite and nonnegative")
+    with torch.inference_mode():
+        expected = exported.module()(*[torch.from_numpy(array.copy()) for array in inputs])
+    expected = (expected,) if isinstance(expected, torch.Tensor) else expected
+    if not isinstance(expected, (tuple, list)) or len(expected) != len(outputs) or not all(
+            isinstance(value, torch.Tensor) for value in expected):
+        raise ValueError("Expected one PyTorch tensor per ordered output binding")
+    actual = ONNXRunner(path).run(dict(zip(names, inputs, strict=True)), list(outputs.values()))
+    from .pipeline import tensor_identity
+
+    observations = []
+    for (boundary, name), tensor in zip(outputs.items(), expected, strict=True):
+        if not isinstance(actual[name], np.ndarray):
+            raise ValueError(f"Expected an ONNX tensor at {name}")
+        delta = _difference(tensor, torch.from_numpy(actual[name]), rtol, atol)
+        observations.append(dict(boundary=boundary, onnx_output=name, difference=delta,
+                                 reference=tensor_identity(tensor.numpy()), candidate=tensor_identity(actual[name])))
+    return dict(profile="visuaml-cross-runtime-v1", reference_runtime="PyTorch", candidate_runtime="ONNX Runtime CPU",
+                onnx_sha256=sha256(Path(path).read_bytes()).hexdigest(), rtol=rtol, atol=atol,
+                inputs={name: tensor_identity(array) for name, array in zip(names, inputs, strict=True)},
+                observations=observations, first_difference=next(
+                    (row for row in observations if row["difference"] is not None), None))
