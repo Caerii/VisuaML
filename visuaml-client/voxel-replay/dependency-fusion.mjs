@@ -1,3 +1,7 @@
+import optimization from "./evidence/optimization-histories-v68/histories.json";
+import optimizationTimes from "./evidence/optimization-histories-v68/timings.json";
+import historiesUrl from "./evidence/optimization-histories-v68/histories.json?url";
+import historyProofUrl from "./evidence/optimization-histories-v68/proofs.json?url";
 import campaignEvidence from "./evidence/incremental-optimization-v67/campaigns.json";
 import campaignWall from "./evidence/incremental-optimization-v67/timings.json";
 import migration from "./evidence/incremental-optimization-v67/migration.json";
@@ -168,3 +172,49 @@ const saved = migration.saved;
 get("migration-summary").textContent = `The saved process captured record ${saved.state.record + 1} before committing outputs. ` +
   `A fresh process switched to reverse-order writes using the saved original carry and ${saved.state.fuel} remaining logical charges. ` +
   `Both schedules completed with page SHA-256 ${migration.expected[1]}.`;
+
+
+get("history-download").href = historiesUrl;
+get("history-proofs").href = historyProofUrl;
+const historySelect = get("optimization-history");
+const historyPolicy = get("history-policy");
+const historyStep = get("history-step");
+for (const [index, row] of optimization.rows.entries()) {
+  historySelect.add(new Option(`${row.family} · case ${row.index + 1}`, index));
+}
+for (const policy of Object.keys(optimization.rows[0].runs)) {
+  historyPolicy.add(new Option(policy, policy));
+}
+historyPolicy.value = "greedy";
+function showHistory() {
+  const index = Number(historySelect.value);
+  const position = Number(historyStep.value);
+  const policy = historyPolicy.value;
+  const row = optimization.rows[index];
+  const task = row.revisions[position];
+  const event = row.runs[policy].events[position];
+  const phase = optimizationTimes.online[index][policy][position];
+  const action = event.mode ? `${event.action} ${event.mode}` : event.action;
+  get("history-result").textContent = `Revision ${position + 1} · ${action}. Quoted profile ${event.quote_profile}, observed profile ${task.profile}. ` +
+    `Predicted net ${event.predicted.toFixed(1)} µs, realized modeled net ${event.realized.toFixed(1)} µs.`;
+  const proof = event.work ? `${event.work.fresh} new checks and ${event.work.reused} reused. ` : "";
+  get("history-cost").textContent = proof + `Measured proof lookup and validation ${(phase.verification_ns / 1e6).toFixed(2)} ms. ` +
+    `Measured deployment ${(phase.deploy_ns / 1e6).toFixed(2)} ms.`;
+  get("history-identity").textContent = `Revision ${event.revision}` + (event.root ? ` · Proof ${event.root} · Transition ${event.transition}` : "");
+}
+historySelect.addEventListener("change", () => { historyStep.value = 0; showHistory(); });
+historyPolicy.addEventListener("change", showHistory);
+historyStep.addEventListener("input", showHistory);
+showHistory();
+
+const branchEvent = get("branch-event");
+function showBranch() {
+  const position = Number(branchEvent.value);
+  const shared = optimization.branches.shared[position];
+  const isolated = optimization.branches.isolated[position];
+  const labels = ["Base revision", "Left fork", "Right fork", "Left fork revisits the base program"];
+  get("branch-result").textContent = `${labels[position]}. Shared evidence runs ${shared.work.fresh} fresh checks, versus ${isolated.work.fresh} in isolation.`;
+  get("branch-identity").textContent = `Revision ${shared.revision} · Proof ${shared.binary_proof}`;
+}
+branchEvent.addEventListener("input",showBranch);
+showBranch();

@@ -20,18 +20,17 @@ def pointer_binary(keys,wrong_stride=False):
     cap = SCRATCH//stride
     parts = []
     for i,a in enumerate(keys):
-        parts.append(
-            f"local.get 1 i32.const {4*i} i32.add local.set 2 "
-            "local.get 2 i32.load local.set 3 "
-            "local.get 2 i32.const 32768 i32.add local.get 3 i32.store "
-            f"local.get 2 local.get 3 i32.const {a} i32.mul local.get 4 i32.const {keys[i-1]} "
+        address = f"local.get 1 i32.const {4*i} i32.add "
+        parts.append(address+"i32.load local.set 3 "+
+            address+"i32.const 32768 i32.add local.get 3 i32.store "+
+            address+f"local.get 3 i32.const {a} i32.mul local.get 4 i32.const {keys[i-1]} "
             "i32.mul i32.add i32.store local.get 3 local.set 4 ")
     wat = f"""(module (memory (export "memory") 1 1)
-    (func (export "run") (param i32) (result i32) (local i32 i32 i32 i32 i32)
+    (func (export "run") (param i32) (result i32) (local i32 i32 i32 i32)
       local.get 0 i32.const 0 i32.lt_s if i32.const -1 return end
       local.get 0 i32.const {cap} i32.gt_s if i32.const -1 return end
-      local.get 0 i32.const {stride} i32.mul local.set 5
-      block loop local.get 1 local.get 5 i32.lt_s i32.eqz br_if 1
+      local.get 0 i32.const {stride} i32.mul local.set 2
+      block loop local.get 1 local.get 2 i32.lt_s i32.eqz br_if 1
       {" ".join(parts)}
       local.get 1 i32.const {stride-int(wrong_stride)*4} i32.add local.set 1 br 0 end end
       local.get 0))"""

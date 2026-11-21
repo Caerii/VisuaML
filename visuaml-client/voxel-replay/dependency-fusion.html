@@ -61,4 +61,23 @@
 <p id="migration-summary"></p>
 <a id="migration-download" download="v67-snapshot-checkpoint.json">Download snapshot checkpoint</a>
 </section>
+<section class="panel">
+<h2>Which optimization is worth buying?</h2>
+<div class="run-controls">
+<label>History <select id="optimization-history"></select></label>
+<label>Planner <select id="history-policy"></select></label>
+<label>Revision <input id="history-step" type="range" min="0" max="5" value="0"></label>
+<a id="history-download" download="v68-histories.json">Download histories</a>
+<a id="history-proofs" download="v68-proof-bundle.json">Download proofs</a>
+</div>
+<p id="history-result" role="status"></p>
+<p id="history-cost"></p>
+<p id="history-identity" style="overflow-wrap:anywhere"></p>
+</section>
+<section class="panel">
+<h2>What can a fork reuse?</h2>
+<label>Branch event <input id="branch-event" type="range" min="0" max="3" value="0"></label>
+<p id="branch-result" role="status"></p>
+<p id="branch-identity" style="overflow-wrap:anywhere"></p>
+</section>
 </main><script type="module" src="./dependency-fusion.mjs"></script></body></html>
