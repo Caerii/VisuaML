@@ -262,3 +262,6 @@ comparison edit with learned selection of a live or saved argument slot.
 
 The [tagged byte request study](chapters/tagged-byte-requests.md) reads
 WASM result records and emits the byte used in the follow-up call.
+
+The [computed argument replay](chapters/computed-argument.md) uses a
+WASM-computed delay to choose and supply the next request.
