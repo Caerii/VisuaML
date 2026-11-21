@@ -1,5 +1,10 @@
 # VisuaML Replay changes
 
+## 0.8.0rc1
+
+- Added streaming comparison of differently partitioned worker journals.
+- Added shard and line provenance for the first differing observations.
+
 ## 0.7.0rc1
 
 - Added ordered, streaming pipeline comparisons and named PyTorch-to-ONNX Runtime output checks.

@@ -102,3 +102,39 @@ is different. About 15.8 MB of input produces a 337-byte comparison in
 at about 44 kB, close to the same test at 1,000 rows. This measures the
 comparator on ordered journals. It excludes model serving, storage
 transport, and cross-worker merge costs. [Raw samples](../examples/pipeline/stream-timings.json)
+
+## Compare runs with different worker layouts
+
+Give each worker a JSONL journal. Sort each journal by logical request ID,
+keeping a request's observations in execution order and in one shard per
+run. Use zero-padded IDs when numeric ordering matters. The two runs can
+use different worker counts and assign requests to different workers.
+
+```sh
+visuaml-replay compare-shards \
+  --reference baseline/*.jsonl --candidate experiment/*.jsonl \
+  --output difference.json --fail-on-difference
+```
+
+The comparator merges by request ID and identifies the first differing
+observation. Each side of the mismatch carries the zero-based index of
+the shard in its argument list and the one-based line in that file. A
+split request or an out-of-order request in the examined prefix is an
+input error. Because comparison may stop as soon as it finds a difference,
+a result with a mismatch covers the examined prefix. A run with no mismatch
+consumes all input. Exit status is 1 for a difference with
+`--fail-on-difference`, and 2 for a journal error.
+
+The merge uses one lookahead row per shard and opens one file per shard.
+It assumes locally readable, already ordered files. The same merge is
+available as `visuaml.replay.shards.merge_shards` for open text streams.
+
+On one local run, 32 reference shards and 48 candidate shards each held
+one million observations in total. Comparing 158 MB across both runs
+found the difference on the last observation in 11.84 seconds. The
+measurement includes opening and scanning the journals and excludes
+generating them. [Raw result](../examples/pipeline/shard-timings.json)
+
+```sh
+PYTHONPATH=../backend python tools/benchmark_replay_shards.py
+```

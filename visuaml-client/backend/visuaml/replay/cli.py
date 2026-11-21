@@ -14,6 +14,7 @@ from visuaml.replay import (
     execute_report, inspect_window, make_bundle, open_bundle, seal_report,
 )
 from visuaml.replay.checkpoint import canonical
+from visuaml.replay.shards import compare_shards
 from visuaml.replay.pipeline import compare_observations, read_observations
 from visuaml.replay.artifacts import compare_exports, compare_onnx, describe_export, describe_onnx, describe_wasm, load_export
 
@@ -94,9 +95,13 @@ def main(argv=None):
     pipeline = sub.add_parser("compare-pipelines", help="Find the first difference in two JSONL observation streams")
     pipeline.add_argument("reference", type=Path)
     pipeline.add_argument("candidate", type=Path)
-    pipeline.add_argument("--output", type=Path)
-    pipeline.add_argument("--fail-on-difference", action="store_true", help="Exit 1 when a difference is found")
-    pipeline.add_argument("--tolerances", type=Path, help="JSON mapping boundary names to [rtol, atol]")
+    shards = sub.add_parser("compare-shards", help="Compare worker journals in logical request order")
+    shards.add_argument("--reference", type=Path, nargs="+", required=True)
+    shards.add_argument("--candidate", type=Path, nargs="+", required=True)
+    for command in (pipeline, shards):
+        command.add_argument("--output", type=Path)
+        command.add_argument("--fail-on-difference", action="store_true", help="Exit 1 when a difference is found")
+        command.add_argument("--tolerances", type=Path, help="JSON mapping boundary names to [rtol, atol]")
     describe = sub.add_parser("describe", help="Inspect WASM, ONNX, or a trusted PyTorch export")
     describe.add_argument("artifact", type=Path)
     exports = sub.add_parser("compare-exports", help="Compare trusted PyTorch exports on identical inputs")
@@ -111,11 +116,14 @@ def main(argv=None):
     args = parser.parse_args(argv)
     torch.set_num_threads(1)
     try:
-        if args.command == "compare-pipelines":
+        if args.command in ("compare-pipelines", "compare-shards"):
             tolerances = json.loads(args.tolerances.read_text()) if args.tolerances else None
-            with args.reference.open() as left, args.candidate.open() as right:
-                result = compare_observations(read_observations(left), read_observations(right),
-                                              tolerances=tolerances)
+            if args.command == "compare-shards":
+                result = compare_shards(args.reference, args.candidate, tolerances=tolerances)
+            else:
+                with args.reference.open(encoding="utf-8") as left, args.candidate.open(encoding="utf-8") as right:
+                    result = compare_observations(read_observations(left), read_observations(right),
+                                                  tolerances=tolerances)
             data = json.dumps(result, indent=2)
             if args.output:
                 args.output.write_text(data+"\n")

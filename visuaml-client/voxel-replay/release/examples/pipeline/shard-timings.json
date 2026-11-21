@@ -1,0 +1,41 @@
+{
+  "rows_per_run": 1000000,
+  "shard_counts": [
+    32,
+    48
+  ],
+  "comparison_ns": 11837186611,
+  "input_bytes": 158000000,
+  "result": {
+    "profile": "visuaml-pipeline-comparison-v1",
+    "matched_observations": 999999,
+    "first_difference": {
+      "index": 999999,
+      "reason": "value",
+      "reference": {
+        "request": "000000999999",
+        "boundary": "tool_result",
+        "runtime": "test",
+        "value": 7,
+        "source": {
+          "shard": 31,
+          "line": 31250
+        }
+      },
+      "candidate": {
+        "request": "000000999999",
+        "boundary": "tool_result",
+        "runtime": "test",
+        "value": 9,
+        "source": {
+          "shard": 15,
+          "line": 20834
+        }
+      }
+    },
+    "tolerances": {},
+    "reference_shards": 32,
+    "candidate_shards": 48
+  },
+  "report_bytes": 481
+}
