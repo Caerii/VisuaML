@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pocket Signal Relay</title><link rel="stylesheet" href="./pocket.css"></head>
+<body><main>
+<header class="masthead"><a href="./pocket.html">Pocket</a><span>Signal Relay</span></header>
+<div class="page-title"><h1>Signal Relay</h1><p>Open one gate. Compare the two signal histories.</p></div>
+<section class="panel">
+  <div class="run-controls">
+    <button id="dig">Dig gate</button><button id="step">Step</button>
+    <button id="play">Play</button><button id="reset">Reset</button>
+    <a id="download" download="signal-relay.json">Download verified replay</a>
+  </div>
+  <div style="display:flex;gap:1.2rem;flex-wrap:wrap">
+    <section><h2>Your history</h2><canvas id="live" width="160" height="144" style="width:min(320px,75vw);image-rendering:pixelated"></canvas></section>
+    <section><h2>Gate closed</h2><canvas id="closed" width="160" height="144" style="width:min(320px,75vw);image-rendering:pixelated"></canvas></section>
+  </div>
+  <p id="status" role="status"></p>
+</section>
+</main><script type="module" src="./pocket-cellular.mjs"></script></body></html>
