@@ -30,12 +30,15 @@ def pack(program, memory):
     return torch.tensor(tokens + [28, 0, 21, 23, 21, 26])
 
 
-def run(model, prefix, incremental, budget=150, substitute=None, halt_token=27):
-    if not 0 <= budget <= 512-prefix.numel():
+def run(model, prefix, incremental, budget=150, substitute=None, halt_token=27, prefix_cache=None):
+    if prefix_cache is not None and not incremental:
+        raise ValueError("Prefilled cache requires incremental execution")
+    cache_length = 0 if prefix_cache is None else prefix_cache[0][0].size(1)
+    if not 0 <= budget <= 512-prefix.numel()-cache_length:
         raise ValueError("Token budget exceeds context")
     tokens = []
     prefill_start = perf_counter_ns()
-    logits, cache = model(prefix, [])
+    logits, cache = model(prefix, [] if prefix_cache is None else prefix_cache)
     prefill_ns = perf_counter_ns()-prefill_start
     decode_start = perf_counter_ns()
     for _ in range(budget):

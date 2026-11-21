@@ -105,4 +105,15 @@ try {
   assert.equal((await emittedDownload).suggestedFilename(), 'decoder-emitted-checkpoint.json');
   await checkpointPage.locator('#file').setInputFiles('evidence/decoder-emitted-checkpoint/replay.json');
   await emitted.waitFor();
+  const reusePage = await browser.newPage();
+  await reusePage.goto(new URL('/replay-viewer.html', page.url()).href);
+  await reusePage.getByRole('button', { name: 'Open checkpoint prefix reuse replay' }).click();
+  const reuse = reusePage.getByText('3 histories · one identical checkpoint');
+  await reuse.waitFor();
+  assert.match(await reusePage.locator('#detail').innerText(), /sends the branch to PC 11/);
+  const reuseDownload = reusePage.waitForEvent('download');
+  await reusePage.getByRole('link', { name: 'Download checkpoint prefix reuse replay' }).click();
+  assert.equal((await reuseDownload).suggestedFilename(), 'checkpoint-prefix-reuse.json');
+  await reusePage.locator('#file').setInputFiles('evidence/checkpoint-prefix-reuse/replay.json');
+  await reuse.waitFor();
 } finally { await browser.close(); }

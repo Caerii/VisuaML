@@ -1,3 +1,4 @@
+import prefixReuseUrl from './evidence/checkpoint-prefix-reuse/replay.json?url';
 import emittedCheckpointUrl from './evidence/decoder-emitted-checkpoint/replay.json?url';
 import rollingUrl from './evidence/rolling-context/replay.json?url';
 import wordDecoder from './evidence/word-decoder/replay.json';
@@ -24,6 +25,19 @@ import pocket from './release/examples/pocket-checkpoint.json';
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.profile === 'visuaml-checkpoint-prefix-reuse-v1') {
+    const { histories, edit } = data.paired;
+    const long = data.runs['rolling-519'];
+    get('title').textContent = 'Saved checkpoint prefix reuse replay';
+    get('status').textContent = `${histories.length} histories · one identical checkpoint`;
+    get('detail').textContent = [
+      ...histories.map(history => `History joins at PC ${history.join_state[0]} after ${history.joins_after} instructions.`),
+      `Editing the retained word changes resumed instruction ${edit.first_changed_instruction} and sends the branch to PC ${edit.trace[1][0]}.`,
+      `Fresh and reused CODE caches agree through ${long.trace.length} retired instructions.`,
+      `${data.rejection_controls.bind_rejections.length} invalid cache bindings rejected.`,
+    ].join('\n');
+    return;
+  }
   if (data?.profile === 'visuaml-emitted-checkpoint-v1') {
     const run = data.cases['rolling-519'].paths.emitted;
     const checkpoint = run.segments[0].checkpoint_tokens;
@@ -272,3 +286,14 @@ get('emitted-checkpoint').onclick = async () => {
   }
 };
 get('emitted-checkpoint-download').href = emittedCheckpointUrl;
+
+get('prefix-reuse').onclick = async () => {
+  try {
+    const response = await fetch(prefixReuseUrl);
+    if (!response.ok) throw Error('Could not load the saved prefix reuse replay');
+    show(await response.json());
+  } catch (error) {
+    get('status').textContent = error.message;
+  }
+};
+get('prefix-reuse-download').href = prefixReuseUrl;
