@@ -75,3 +75,30 @@ between eligible ordinary instructions. It also checks fuel cutoffs and
 an out-of-range store that traps without writing. Both backends execute
 the full BFS task including the captured prefix and agree with Wasmtime on
 the return and all 64 KiB of memory. [Raw measurements](runner-handoff-timings.json)
+
+## Reconstruct a small window
+
+The window API starts at the checkpoint's ordinary continuation. Advance
+to an absolute retired source step, then record the next few transitions
+using the reference graph.
+
+```pycon
+>>> from visuaml.replay import inspect_window
+>>> window = inspect_window(report, after=16, limit=3, runner="compiled")
+>>> window["skipped_source_steps"], window["seek_runner"], window["trace_runner"]
+(2, 'compiled', 'reference')
+>>> window["trace"][0]["retired_after"], window["trace"][0]["stack"]
+(17, [65512, 7])
+
+```
+
+On the archived BFS module, a 12-row window after source step 8,192 matched
+on both paths, including every recorded state digest. Across three CPU
+pairs after a warm-up, median time was 3.28 s with the reference seek and
+0.24 s with the compiled seek. These measurements include program
+admission, checkpoint restore, seek, and reference observations. The
+operator was already built locally. [Raw measurements](replay-window-timings.json)
+
+```sh
+PYTHONPATH=.:../backend python tools/benchmark_replay_window.py
+```

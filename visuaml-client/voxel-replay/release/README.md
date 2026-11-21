@@ -1,4 +1,4 @@
-# VisuaML Replay 0.3 release candidate
+# VisuaML Replay 0.4 release candidate
 
 Send one JSON report with the exact WASM bytes, continuation, reproduction recipe, and expected replay digest. A recipient can run it with the pinned graph in this repository. The CLI executes and checks the report. The browser displays saved records.
 
@@ -64,6 +64,34 @@ Use `CXX` to select an alternative compatible compiler.
   For the trace from any imported boundary, use `Replay.finish(checkpoint)`.
 
 [Read the executable handoff chapter](chapters/runner-handoff.md).
+
+## Jump to a source instruction
+
+To view the Rust helper return and the caller's next two instructions:
+
+```sh
+python tools/visuaml_replay.py inspect release/examples/suspended-passage-report.json \
+  --after-step 16 --steps 3 --output passage-window.json
+```
+
+The report was captured after source step 14. The command advances two
+steps, then records the next three transitions. The first row is the
+helper return, with `[65512, 7]` on the caller's stack. Omit
+`--after-step` to start at the saved checkpoint. Add `--runner compiled`
+to seek faster through a long prefix on Linux. The selected runner
+advances without collecting observations. The reference runner then
+reconstructs up to 256 trace rows. Traps and exhaustion show up as
+transitions even when they retire no source instruction.
+
+Use the viewer's **Inspect the Rust helper return** button, or load your
+generated JSON with the file picker. The window records which runner
+reached its starting boundary and which reconstructed its rows. Its
+scope is the checkpoint's ordinary continuation. To run a report's
+recipe, including a compiler preview, and verify its expected result
+digest, use `open`.
+
+Python callers can use `inspect_window(report, after=16, limit=3)`.
+[Example window](examples/passage-window.json)
 
 ## Read and run the library
 

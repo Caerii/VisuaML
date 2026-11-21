@@ -21,12 +21,30 @@ import discovered from './evidence/counterexample-search/terrain-session.json';
 import counterexampleUrl from './evidence/counterexample-search/terrain-session.json?url';
 import passageReportUrl from './release/examples/suspended-passage-report.json?url';
 import compilerReportUrl from './release/examples/compiler-divergence-report.json?url';
+import passageWindow from './release/examples/passage-window.json';
 import voxel from './release/examples/terrain-comparison.json';
 import pocket from './release/examples/pocket-checkpoint.json';
 
 const get = id => document.getElementById(id);
 const profile = 'visuaml-direct-call-i32-v1';
 function show(data) {
+  if (data?.format_version === 1 && data.profile === 'visuaml-source-window-v1') {
+    get('title').textContent = 'Reconstructed source trace';
+    get('status').textContent = `After step ${data.start.retired_source_steps} · ${data.trace.length} trace rows`;
+    const lines = data.trace.map(row => {
+      const [kind, address, before, after] = row.access;
+      const memory = kind === 2 ? ` · write @${address} ${before} → ${after}` :
+        kind === 1 ? ` · read @${address} = ${before}` : kind === 3 ? ` · trap @${address}` : '';
+      const step = row.retired_before === row.retired_after
+        ? `after ${row.retired_before} (no retirement)` : `step ${row.retired_after}`;
+      return `${step} · PC ${row.pc} · ${row.opcode} · stack [${row.stack.join(', ')}]${memory}`;
+    });
+    const seek = data.seek_runner
+      ? `Seek · ${data.skipped_source_steps} source steps on ${data.seek_runner}`
+      : 'Started at the saved checkpoint';
+    get('detail').textContent = [seek, 'Trace · reconstructed by the reference runner', ...lines].join('\n');
+    return;
+  }
   if (data?.report_kind === 'visuaml-runnable-report' && data.report_version === 1) {
     show(data.bundle);
     get('title').textContent = 'Runnable WASM report';
@@ -227,6 +245,7 @@ function show(data) {
 }
 get('passage-report-download').href = passageReportUrl;
 get('compiler-report-download').href = compilerReportUrl;
+get('passage-window').onclick = () => show(passageWindow);
 get('terrain').onclick = () => show(voxel);
 get('pocket').onclick = () => show(pocket);
 get('file').onchange = async event => {

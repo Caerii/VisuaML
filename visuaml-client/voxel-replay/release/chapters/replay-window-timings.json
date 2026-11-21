@@ -1,0 +1,306 @@
+{
+  "samples_ns": {
+    "compiled": [
+      239184199,
+      272144635,
+      241998883
+    ],
+    "reference": [
+      3275452597,
+      3382214805,
+      3226538059
+    ]
+  },
+  "median_ns": {
+    "compiled": 241998883,
+    "reference": 3275452597
+  },
+  "compared_window": {
+    "format_version": 1,
+    "profile": "visuaml-source-window-v1",
+    "checkpoint_sha256": "6b7e02ffd0c0d954fe54e4e7841a24d3334c008bbb3a5f3fca17889710f1a694",
+    "source_checkpoint_step": 0,
+    "skipped_source_steps": 8192,
+    "trace_runner": "reference",
+    "start": {
+      "retired_source_steps": 8192,
+      "pc": 34,
+      "depth": 0,
+      "fuel": 91808,
+      "status": 0,
+      "stack": [
+        256
+      ]
+    },
+    "trace": [
+      {
+        "pc": 34,
+        "function": 0,
+        "source_index": 34,
+        "opcode": "local.get",
+        "next_pc": 35,
+        "fuel": 91807,
+        "status": 0,
+        "depth": 0,
+        "stack": [
+          256,
+          2
+        ],
+        "access": [
+          0,
+          256,
+          0,
+          0
+        ],
+        "state_sha256": "09ce02bc00644bdc06dda4bbac1079d38da56756dce9356ecc6000d343c7371d",
+        "retired_before": 8192,
+        "retired_after": 8193
+      },
+      {
+        "pc": 35,
+        "function": 0,
+        "source_index": 35,
+        "opcode": "i32.add",
+        "next_pc": 36,
+        "fuel": 91806,
+        "status": 0,
+        "depth": 0,
+        "stack": [
+          258
+        ],
+        "access": [
+          0,
+          2,
+          65536,
+          65536
+        ],
+        "state_sha256": "0a8cd94d723fa8ba90b5e61bf5fa1a2b1cd8d9b165f51ff683d7f802922e0d73",
+        "retired_before": 8193,
+        "retired_after": 8194
+      },
+      {
+        "pc": 36,
+        "function": 0,
+        "source_index": 36,
+        "opcode": "i32.const",
+        "next_pc": 37,
+        "fuel": 91805,
+        "status": 0,
+        "depth": 0,
+        "stack": [
+          258,
+          4
+        ],
+        "access": [
+          0,
+          258,
+          65536,
+          65536
+        ],
+        "state_sha256": "0dbdef3bca07b3ef9a079db11f151fb6bf1c048b750636bbe7b3e30bb0702e88",
+        "retired_before": 8194,
+        "retired_after": 8195
+      },
+      {
+        "pc": 37,
+        "function": 0,
+        "source_index": 37,
+        "opcode": "i32.mul",
+        "next_pc": 38,
+        "fuel": 91804,
+        "status": 0,
+        "depth": 0,
+        "stack": [
+          1032
+        ],
+        "access": [
+          0,
+          4,
+          1,
+          1
+        ],
+        "state_sha256": "dd7ab9f8e30a9807e0d158261c42ce8a3d539d2141383f57c844b55a28e83eeb",
+        "retired_before": 8195,
+        "retired_after": 8196
+      },
+      {
+        "pc": 38,
+        "function": 0,
+        "source_index": 38,
+        "opcode": "i32.load",
+        "next_pc": 39,
+        "fuel": 91803,
+        "status": 0,
+        "depth": 0,
+        "stack": [
+          0
+        ],
+        "access": [
+          1,
+          1544,
+          0,
+          0
+        ],
+        "state_sha256": "5c9adf77ec2015b80272799bb3b146d78fd2f192950ee328e0dd2d245eed72cf",
+        "retired_before": 8196,
+        "retired_after": 8197
+      },
+      {
+        "pc": 39,
+        "function": 0,
+        "source_index": 39,
+        "opcode": "if",
+        "next_pc": 68,
+        "fuel": 91802,
+        "status": 0,
+        "depth": 0,
+        "stack": [],
+        "access": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "state_sha256": "0951fc3b780fc940336cab045b28b003184487bf49a389ef07970c2df52e5fbc",
+        "retired_before": 8197,
+        "retired_after": 8198
+      },
+      {
+        "pc": 68,
+        "function": 0,
+        "source_index": 68,
+        "opcode": "local.get",
+        "next_pc": 69,
+        "fuel": 91801,
+        "status": 0,
+        "depth": 0,
+        "stack": [
+          2
+        ],
+        "access": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "state_sha256": "96f7c0ac765de8a646c64d1fddf64426e4c8dfcecc8ead27ce6df24bfea2a0e7",
+        "retired_before": 8198,
+        "retired_after": 8199
+      },
+      {
+        "pc": 69,
+        "function": 0,
+        "source_index": 69,
+        "opcode": "i32.const",
+        "next_pc": 70,
+        "fuel": 91800,
+        "status": 0,
+        "depth": 0,
+        "stack": [
+          2,
+          1
+        ],
+        "access": [
+          0,
+          2,
+          65536,
+          65536
+        ],
+        "state_sha256": "64ea7aeb5e4192d48f6f1d653acbf06048ac2fe64556f72b2605ab5cce780619",
+        "retired_before": 8199,
+        "retired_after": 8200
+      },
+      {
+        "pc": 70,
+        "function": 0,
+        "source_index": 70,
+        "opcode": "i32.add",
+        "next_pc": 71,
+        "fuel": 91799,
+        "status": 0,
+        "depth": 0,
+        "stack": [
+          3
+        ],
+        "access": [
+          0,
+          1,
+          16777216,
+          16777216
+        ],
+        "state_sha256": "bfa37dafd770209f8d420b536c94995c8f9673faa0b2ea33cc06c658b2973260",
+        "retired_before": 8200,
+        "retired_after": 8201
+      },
+      {
+        "pc": 71,
+        "function": 0,
+        "source_index": 71,
+        "opcode": "local.set",
+        "next_pc": 72,
+        "fuel": 91798,
+        "status": 0,
+        "depth": 0,
+        "stack": [],
+        "access": [
+          0,
+          3,
+          256,
+          256
+        ],
+        "state_sha256": "44a26b0889b915d3eae8edc8f201b90b74d98aefa252f73f7caa6226053a72ec",
+        "retired_before": 8201,
+        "retired_after": 8202
+      },
+      {
+        "pc": 72,
+        "function": 0,
+        "source_index": 72,
+        "opcode": "br",
+        "next_pc": 26,
+        "fuel": 91797,
+        "status": 0,
+        "depth": 0,
+        "stack": [],
+        "access": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "state_sha256": "d39f479c019c43cb5d4a527647d67e3941bce2b1ef52e9ab245aec23a3188dbb",
+        "retired_before": 8202,
+        "retired_after": 8203
+      },
+      {
+        "pc": 26,
+        "function": 0,
+        "source_index": 26,
+        "opcode": "local.get",
+        "next_pc": 27,
+        "fuel": 91796,
+        "status": 0,
+        "depth": 0,
+        "stack": [
+          3
+        ],
+        "access": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "state_sha256": "03f7331fcd2686bb0752d857ee99504577f625b2323ed999ceefb7ba034188fc",
+        "retired_before": 8203,
+        "retired_after": 8204
+      }
+    ],
+    "end": {
+      "retired_source_steps": 8204,
+      "status": 0,
+      "fuel": 91796,
+      "returned": null,
+      "page_sha256": "b7faf950b08a6a560ae432dafd0038e05e35d19827cd5e5648791777509c999f"
+    }
+  }
+}

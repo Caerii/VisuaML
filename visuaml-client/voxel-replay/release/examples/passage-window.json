@@ -1,0 +1,91 @@
+{
+  "format_version": 1,
+  "profile": "visuaml-source-window-v1",
+  "checkpoint_sha256": "ab3b7e5031893fac06f4568f0ae597272bcfff32c08d26182c1518c1be9acb86",
+  "source_checkpoint_step": 14,
+  "skipped_source_steps": 2,
+  "seek_runner": "compiled",
+  "trace_runner": "reference",
+  "start": {
+    "retired_source_steps": 16,
+    "pc": 13,
+    "depth": 1,
+    "fuel": 1984,
+    "status": 0,
+    "stack": [
+      7
+    ]
+  },
+  "trace": [
+    {
+      "pc": 13,
+      "function": 0,
+      "source_index": 13,
+      "opcode": "end",
+      "next_pc": 17,
+      "fuel": 1983,
+      "status": 0,
+      "depth": 0,
+      "stack": [
+        65512,
+        7
+      ],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "state_sha256": "ef0c5b508fe4890011914963b7ae5ffb7275cbd1b862124d1a29fd0ff76b99b1",
+      "retired_before": 16,
+      "retired_after": 17
+    },
+    {
+      "pc": 17,
+      "function": 1,
+      "source_index": 3,
+      "opcode": "i32.store",
+      "next_pc": 18,
+      "fuel": 1982,
+      "status": 0,
+      "depth": 0,
+      "stack": [],
+      "access": [
+        2,
+        65528,
+        4294967295,
+        7
+      ],
+      "state_sha256": "436638ffa4782ada0b2b65511680202a0e6324d5d6e9b12f51d0ee667bd60d08",
+      "retired_before": 17,
+      "retired_after": 18
+    },
+    {
+      "pc": 18,
+      "function": 1,
+      "source_index": 4,
+      "opcode": "block",
+      "next_pc": 19,
+      "fuel": 1981,
+      "status": 0,
+      "depth": 0,
+      "stack": [],
+      "access": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "state_sha256": "30b4df78693017ce6e87e997e07ca541c09762634d9c3ce0f445dae15e5d3b1e",
+      "retired_before": 18,
+      "retired_after": 19
+    }
+  ],
+  "end": {
+    "retired_source_steps": 19,
+    "status": 0,
+    "fuel": 1981,
+    "returned": null,
+    "page_sha256": "043df27455bf11aaeb6acc5a672ac57cb656aab271ecd66ce799df2754f4eac4"
+  }
+}

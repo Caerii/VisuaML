@@ -10,7 +10,7 @@ import torch
 
 from visuaml.replay import (
     PAGE_BYTES, REPORT_KIND, Replay, capture as capture_report, check_report, compare,
-    execute_report, make_bundle, open_bundle, seal_report,
+    execute_report, inspect_window, make_bundle, open_bundle, seal_report,
 )
 from visuaml.replay.checkpoint import canonical
 
@@ -57,6 +57,13 @@ def main():
     resume = sub.add_parser("resume", help="Resume a checkpoint and show the final state without a trace")
     resume.add_argument("bundle", type=Path)
     resume.add_argument("--runner", choices=("reference", "compiled"), default="reference")
+    window = sub.add_parser("inspect", help="Reconstruct a short source trace from a report or checkpoint")
+    window.add_argument("bundle", type=Path)
+    window.add_argument("--after-step", type=int, help="Start after this absolute retired source step")
+    window.add_argument("--steps", type=int, default=8, help="Maximum trace rows (1–256, default 8)")
+    window.add_argument("--runner", choices=("reference", "compiled"), default="reference",
+                        help="Runner used to reach the start of the trace")
+    window.add_argument("--output", type=Path, help="Save the window for the browser viewer")
     opening = sub.add_parser("open", help="Resume a portable bundle")
     opening.add_argument("bundle", type=Path)
     opening.add_argument("--output", type=Path, help="Save executable result as JSON")
@@ -95,7 +102,9 @@ def main():
                 state = replay.run(replay.restore(checkpoint), runner=args.runner)
                 print(json.dumps(replay.summary(state), indent=2))
                 return
-            if args.command == "open":
+            if args.command == "inspect":
+                result = inspect_window(bundle, after=args.after_step, limit=args.steps, runner=args.runner)
+            elif args.command == "open":
                 if bundle.get("report_kind") == REPORT_KIND:
                     result = check_report(bundle)
                 else:
